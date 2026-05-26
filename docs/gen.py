@@ -48,13 +48,21 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], out_dir: Path) ->
     dataset_id = entry["id"]
     lines = [f"# {entry['name']}", "", entry.get("domain") or "", "", *_kpi_table(entry, card)]
 
-    assets_src = ROOT / "datasets" / dataset_id / "assets"
+    src_dir = ROOT / "datasets" / dataset_id
+    assets_src = src_dir / "assets"
     if assets_src.exists():
         dst = out_dir / dataset_id
         dst.mkdir(parents=True, exist_ok=True)
         for png in sorted(assets_src.glob("*.png")):
             shutil.copy2(png, dst / png.name)
             lines += [f"![{png.stem}]({dataset_id}/{png.name})", ""]
+
+    croissant = src_dir / "croissant.json"
+    if croissant.exists():
+        dst = out_dir / dataset_id
+        dst.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(croissant, dst / "croissant.json")
+        lines += [f"**Metadata:** [Croissant (JSON-LD)]({dataset_id}/croissant.json)", ""]
 
     if card:
         # Colon-fence directive so the inner ```json fence cannot close the dropdown.

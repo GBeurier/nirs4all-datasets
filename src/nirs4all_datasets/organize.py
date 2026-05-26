@@ -97,7 +97,14 @@ def organize(
     if previous is not None and not changed and not force:
         return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True)
 
-    result = ingest(source, dataset_dir, target=target, signal=signal, task_type=descriptor.targets[0].task_type.value)
+    result = ingest(
+        source,
+        dataset_dir,
+        target=target,
+        signal=signal,
+        task_type=descriptor.targets[0].task_type.value,
+        target_names=[t.name for t in descriptor.targets],
+    )
     manifest = build_manifest(
         descriptor,
         dataset_dir=dataset_dir,
