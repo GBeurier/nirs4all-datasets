@@ -22,10 +22,12 @@ from typing import Any
 import numpy as np
 
 from nirs4all_datasets.ingest import resolve_config
-from nirs4all_datasets.manifest import descriptor_hash
+from nirs4all_datasets.manifest import descriptor_hash, read_manifest
 from nirs4all_datasets.qualify import metrics
+from nirs4all_datasets.qualify.croissant import render_croissant
+from nirs4all_datasets.qualify.datasheet import render_datasheet
 from nirs4all_datasets.qualify.plots import render_card_assets
-from nirs4all_datasets.schema import DatasetDescriptor
+from nirs4all_datasets.schema import DatasetDescriptor, FileRole
 
 SCHEMA_VERSION = "1.0"
 
@@ -196,4 +198,15 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
 
     card = _jsonify(card)
     (dataset_dir / "card.json").write_text(json.dumps(card, indent=2, sort_keys=True, allow_nan=False), encoding="utf-8")
+
+    # FAIR metadata: human-readable datasheet + machine-readable Croissant.
+    (dataset_dir / "card.md").write_text(render_datasheet(descriptor, card), encoding="utf-8")
+    manifest_path = dataset_dir / "manifest.json"
+    files: list[tuple[str, str | None, int | None]] = []
+    if manifest_path.exists():
+        manifest = read_manifest(manifest_path)
+        if manifest.descriptor_hash == descriptor_hash(descriptor):  # only a fresh manifest is trusted
+            files = [(Path(fe.path).name, fe.sha256, fe.file_id) for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")]
+    croissant = render_croissant(descriptor, card, files=files, instance=descriptor.dataverse.instance)
+    (dataset_dir / "croissant.json").write_text(json.dumps(croissant, indent=2), encoding="utf-8")
     return card

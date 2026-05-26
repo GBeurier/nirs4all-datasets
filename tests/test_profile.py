@@ -54,11 +54,14 @@ def test_build_card(tmp_path: Path) -> None:
     assert "warnings" in card
     assert card["spectral"]["spacing_unit"] == "nm"
     assert (tmp_path / "card.json").exists()
+    assert (tmp_path / "card.md").exists()  # datasheet
+    assert (tmp_path / "croissant.json").exists()  # Croissant metadata
     assert (tmp_path / "assets" / "spectra_envelope.png").exists()
     assert (tmp_path / "assets" / "target_distribution.png").exists()
-    # card.json is finite, valid JSON (no NaN/Inf)
+    # card.json is finite, valid JSON (no NaN/Inf); croissant is valid JSON
     loaded = json.loads((tmp_path / "card.json").read_text())
     assert loaded["inventory"]["n_samples"] == 40
+    assert json.loads((tmp_path / "croissant.json").read_text())["@type"] == "sc:Dataset"
 
 
 def _clf_descriptor() -> s.DatasetDescriptor:

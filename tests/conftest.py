@@ -29,6 +29,16 @@ _DESCRIPTOR: dict[str, Any] = {
 
 
 @pytest.fixture
+def descriptor() -> DatasetDescriptor:
+    """A fully-populated, publishable descriptor (with DataCite authors + DOI)."""
+    data = dict(_DESCRIPTOR)
+    data["citation"] = "Doe et al. (2024)"
+    data["datacite"] = {"authors": [{"name": "Doe", "orcid": "0000-0002-1825-0097", "affiliation": "CIRAD"}]}
+    data["dataverse"] = {"doi": "10.70112/abc"}
+    return DatasetDescriptor(**data)
+
+
+@pytest.fixture
 def registry(tmp_path: Path) -> Path:
     """A minimal registry root with one descriptor + a generated card and manifest."""
     descriptors = tmp_path / "catalog" / "datasets"
