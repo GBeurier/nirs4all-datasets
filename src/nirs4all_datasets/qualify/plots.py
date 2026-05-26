@@ -72,12 +72,19 @@ def target_distribution(dataset: Any, out_path: Path) -> None:
 
 
 def render_card_assets(dataset: Any, assets_dir: Path) -> dict[str, str]:
-    """Render the card plots into ``assets_dir``; return {name: relative path} for the card."""
+    """Render the card plots into ``assets_dir``; return {name: relative path} for the card.
+
+    The target-distribution plot is skipped for targetless (unsupervised) datasets.
+    """
     assets_dir = Path(assets_dir)
     assets_dir.mkdir(parents=True, exist_ok=True)
     spectra_envelope(dataset, assets_dir / "spectra_envelope.png")
-    target_distribution(dataset, assets_dir / "target_distribution.png")
-    return {
-        "spectra_envelope": "assets/spectra_envelope.png",
-        "target_distribution": "assets/target_distribution.png",
-    }
+    assets = {"spectra_envelope": "assets/spectra_envelope.png"}
+    try:
+        has_targets = np.asarray(dataset.y({})).size > 0
+    except Exception:  # noqa: BLE001 - targetless datasets may raise on y access
+        has_targets = False
+    if has_targets:
+        target_distribution(dataset, assets_dir / "target_distribution.png")
+        assets["target_distribution"] = "assets/target_distribution.png"
+    return assets
