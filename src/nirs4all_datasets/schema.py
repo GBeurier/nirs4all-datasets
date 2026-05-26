@@ -168,6 +168,7 @@ class Target(BaseModel):
     task_type: TaskType
     unit: str | None = None
     range: tuple[float, float] | None = None
+    classes: list[str] | None = None  # ordered class names (canonical Y stores their integer indices)
 
 
 class Instrument(BaseModel):

@@ -69,10 +69,51 @@ def test_multisource_deferred(tmp_path: Path) -> None:
         write_canonical(SimpleNamespace(n_sources=2), tmp_path)
 
 
-def test_classification_deferred(tmp_path: Path) -> None:
-    stub = SimpleNamespace(n_sources=1, task_type=SimpleNamespace(value="binary_classification"))
-    with pytest.raises(NotImplementedError):
-        write_canonical(stub, tmp_path)
+def test_classification_round_trip(tmp_path: Path) -> None:
+    ds = SpectroDataset("clf")
+    rng = np.random.RandomState(0)
+    ds.add_samples(rng.rand(30, 6).astype("float32"), headers=[str(1000 + 10 * i) for i in range(6)], header_unit="nm")
+    ds.add_targets(np.array([0, 1, 2] * 10))  # 3 classes
+    config, _hashes, _rows = write_canonical(ds, tmp_path)
+    assert config["task_type"] == "multiclass_classification"
+    try:
+        loaded = DatasetConfigs(resolve_config(tmp_path)).get_dataset_at(0)
+    except Exception as exc:  # noqa: BLE001
+        if "categorical_mode" in str(exc):
+            pytest.skip("requires the nirs4all ParquetLoader fix")
+        raise
+    assert loaded.is_classification
+    assert loaded.num_classes == 3
+
+
+def test_binary_classification_round_trip(tmp_path: Path) -> None:
+    ds = SpectroDataset("bin")
+    rng = np.random.RandomState(1)
+    ds.add_samples(rng.rand(24, 5).astype("float32"), headers=[str(1000 + i) for i in range(5)], header_unit="nm")
+    ds.add_targets(np.array([0, 1] * 12))
+    config, _hashes, _rows = write_canonical(ds, tmp_path)
+    assert config["task_type"] == "binary_classification"
+    try:
+        loaded = DatasetConfigs(resolve_config(tmp_path)).get_dataset_at(0)
+    except Exception as exc:  # noqa: BLE001
+        _maybe_skip_parquet(exc)
+        raise
+    assert loaded.is_classification and loaded.num_classes == 2
+
+
+def test_task_type_override_forces_regression(tmp_path: Path) -> None:
+    ds = SpectroDataset("ord")
+    rng = np.random.RandomState(2)
+    ds.add_samples(rng.rand(30, 5).astype("float32"), headers=[str(1000 + i) for i in range(5)], header_unit="nm")
+    ds.add_targets(np.array([0, 1, 2] * 10))  # integer labels would auto-detect as classification
+    config, _hashes, _rows = write_canonical(ds, tmp_path, task_type="regression")
+    assert config["task_type"] == "regression"
+    try:
+        loaded = DatasetConfigs(resolve_config(tmp_path)).get_dataset_at(0)
+    except Exception as exc:  # noqa: BLE001
+        _maybe_skip_parquet(exc)
+        raise
+    assert loaded.is_regression
 
 
 def test_write_table_validates_headers(tmp_path: Path) -> None:
