@@ -13,9 +13,13 @@ Both yield a ``SpectroDataset`` written to ``<out>/canonical/`` as Parquet plus 
 to turn it into an absolute, loadable config). Parquet is chosen because Dataverse does not
 auto-ingest it, so the canonical bytes stay pristine.
 
-MVP scope: single-source **regression** datasets with targets. Classification (label-semantics
-preservation), targetless datasets, and multi-source export are explicit ``NotImplementedError``
-rather than silent/lossy conversions.
+Scope: single-source **regression and classification** datasets with targets. Regression targets
+are written as float64; classification targets are written as nirs4all's **encoded numeric class
+indices** (string labels are encoded by nirs4all, so original class *names* belong in the
+descriptor's ``Target.classes``), and the task type is recorded in ``nirs4all_config.json``. The
+effective task type can be forced via ``task_type`` (the descriptor's intent) to avoid an
+integer-valued regression target being auto-detected as classification. Targetless and multi-source
+export remain explicit ``NotImplementedError``.
 """
 from __future__ import annotations
 
@@ -127,17 +131,19 @@ def _write_table(array: np.ndarray, columns: list[str], path: Path) -> str:
     return sha256_file(path)
 
 
-def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | None = None) -> tuple[dict[str, Any], dict[str, str], dict[str, int]]:
+def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | None = None, task_type: str | None = None) -> tuple[dict[str, Any], dict[str, str], dict[str, int]]:
     """Write a ``SpectroDataset`` to ``out_dir/canonical`` as Parquet + ``nirs4all_config.json``.
 
-    Returns ``(config, canonical_hashes, row_counts)``. Raises ``NotImplementedError`` for
-    multi-source, classification, or targetless datasets (deferred to a later phase).
+    Regression targets are float64; classification targets are encoded numeric class indices.
+    ``task_type`` (e.g. the descriptor's intent) overrides nirs4all's auto-detected task, except the
+    sentinel ``"auto"``. Returns ``(config, canonical_hashes, row_counts)``. Raises
+    ``NotImplementedError`` for multi-source or targetless datasets (deferred to a later phase).
     """
     if dataset.n_sources != 1:
         raise NotImplementedError(f"multi-source canonical export not supported yet (n_sources={dataset.n_sources}).")
-    task = dataset.task_type
-    if task is not None and task.value in _CLASSIFICATION:
-        raise NotImplementedError("classification canonical export deferred (raw-label semantics not yet preserved).")
+    auto_task = dataset.task_type.value if dataset.task_type is not None else "regression"
+    task_value = task_type if (task_type and task_type != "auto") else auto_task
+    is_classification = task_value in _CLASSIFICATION
 
     x_obj = dataset.x({}, layout="2d", concat_source=False)
     x_all = np.asarray(x_obj[0] if isinstance(x_obj, list) else x_obj, dtype="float32")
@@ -148,7 +154,8 @@ def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | No
         raise NotImplementedError("targetless datasets not supported yet (no targets to export).")
     if y_all.ndim == 1:
         y_all = y_all.reshape(-1, 1)
-    y_all = y_all.astype("float64")
+    if not is_classification:
+        y_all = y_all.astype("float64")  # regression: numeric; classification: preserve labels as-is
     if target_names is not None and len(target_names) != y_all.shape[1]:
         raise ValueError(f"target_names has {len(target_names)} entries but y has {y_all.shape[1]} columns.")
     y_cols = target_names or [f"y{i}" for i in range(y_all.shape[1])]
@@ -162,7 +169,7 @@ def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | No
     canonical.mkdir(parents=True)
     masks = _resolve_partitions(dataset, n_samples)
     x_params = {"header_unit": header_unit}
-    config: dict[str, Any] = {"task_type": "regression", "train_x_params": x_params}
+    config: dict[str, Any] = {"task_type": task_value, "train_x_params": x_params}
     hashes: dict[str, str] = {}
     rows: dict[str, int] = {}
 
@@ -202,16 +209,16 @@ def resolve_config(dataset_dir: str | Path) -> dict[str, Any]:
     return config
 
 
-def ingest(source: str | Path, out_dir: str | Path, *, target: str | None = None, signal: str | None = None, target_names: list[str] | None = None) -> IngestResult:
+def ingest(source: str | Path, out_dir: str | Path, *, target: str | None = None, signal: str | None = None, target_names: list[str] | None = None, task_type: str | None = None) -> IngestResult:
     """Ingest ``source`` into ``out_dir/canonical`` and report provenance.
 
-    Unsupported conversions (multi-source, classification, targetless) are reported as
-    ``ConversionStatus.FAILED``; unexpected I/O errors propagate.
+    ``task_type`` forces the effective task (the descriptor's intent). Unsupported conversions
+    (multi-source, targetless) are reported as ``ConversionStatus.FAILED``; unexpected I/O errors propagate.
     """
     out = Path(out_dir)
     dataset, converter, version, conv_config, warnings = load_dataset(source, target=target, signal=signal)
     try:
-        config, hashes, rows = write_canonical(dataset, out, target_names=target_names)
+        config, hashes, rows = write_canonical(dataset, out, target_names=target_names, task_type=task_type)
     except NotImplementedError as exc:
         warnings.append(str(exc))
         return IngestResult(out, out / "canonical", {}, converter, version, conv_config, ConversionStatus.FAILED, warnings=warnings)
