@@ -34,6 +34,22 @@ n4ad.card("corn_protein")         # the dataset identity card (dict)
 ds = n4ad.load("corn_protein")    # -> nirs4all DatasetConfigs (downloaded, checksummed, cached)
 ```
 
+## Adding a dataset
+
+Full walkthrough: **[CONTRIBUTING.md](CONTRIBUTING.md)**. In short:
+
+```bash
+cp catalog/datasets/example_corn.yaml catalog/datasets/<id>.yaml   # 1. describe (edit fields + governance)
+n4a-datasets add <raw_source> <id>                                 # 2. ingest -> canonical + card + Croissant
+n4a-datasets card <id>                                             # 3. inspect the identity card
+git add catalog/ datasets/<id>/card.json datasets/<id>/*.md datasets/<id>/croissant.json datasets/<id>/manifest.json && git commit
+# 4. (optional, needs a Dataverse token) publish + mint a DOI:
+n4a-datasets publish <id> --collection <alias> --contact-email you@cirad.fr
+```
+
+Raw/canonical **bytes** live on Dataverse (gitignored); the descriptor, card, datasheet, Croissant,
+manifest and catalog are git-tracked. `n4a-datasets <command> --help` documents every command.
+
 ## API token — where to put it
 
 A Dataverse API token is **only** needed to **upload/publish** datasets or to download
