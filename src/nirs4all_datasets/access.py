@@ -1,0 +1,115 @@
+"""Fetch datasets on demand (cached) and load them as nirs4all ``DatasetConfigs``.
+
+Local-first: an already-organized dataset directory loads directly. Otherwise public datasets
+are fetched **by pinned DOI** via pooch (download + checksum-verify + OS cache), and
+private/restricted ones via the Dataverse access API with the token. Downloads are verified
+against the manifest's local SHA-256 -- which matches only because files are uploaded with
+``tabIngest=false`` (pristine bytes). Cached files are reused on subsequent calls.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+from nirs4all_datasets.ingest import resolve_config
+from nirs4all_datasets.manifest import Manifest, sha256_file
+from nirs4all_datasets.schema import FileRole
+
+
+def default_cache_dir() -> Path:
+    """OS-specific cache directory for downloaded datasets."""
+    import pooch
+
+    return Path(pooch.os_cache("nirs4all-datasets"))
+
+
+def load_local(dataset_dir: str | Path) -> Any:
+    """Load an already-present dataset directory as a nirs4all ``DatasetConfigs``."""
+    from nirs4all.data import DatasetConfigs
+
+    return DatasetConfigs(resolve_config(dataset_dir))
+
+
+def canonical_registry(manifest: Manifest) -> dict[str, str]:
+    """Map canonical filename -> local SHA-256 (the frozen, pinned download registry)."""
+    return {Path(fe.path).name: fe.sha256 for fe in manifest.files if fe.role is FileRole.CANONICAL}
+
+
+def canonical_file_ids(manifest: Manifest) -> dict[str, int]:
+    """Map canonical filename -> Dataverse file id (for the private access API)."""
+    return {Path(fe.path).name: fe.file_id for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.file_id is not None}
+
+
+def fetch_public(doi: str, registry: dict[str, str], cache_dir: str | Path) -> dict[str, Path]:
+    """Download canonical files of a public dataset by DOI via pooch (verified + cached).
+
+    The SHA-256 registry guarantees byte identity even though pooch resolves files by basename
+    from the DOI's latest version (canonical filenames are unique within a dataset).
+    """
+    import pooch
+
+    bare_doi = doi[4:] if doi.lower().startswith("doi:") else doi
+    pup = pooch.create(path=str(cache_dir), base_url=f"doi:{bare_doi}/", registry={name: f"sha256:{sha}" for name, sha in registry.items()})
+    return {name: Path(pup.fetch(name)) for name in registry}
+
+
+def fetch_private(
+    file_ids: dict[str, int],
+    registry: dict[str, str],
+    cache_dir: str | Path,
+    *,
+    instance: str,
+    token: str,
+    session: Any | None = None,
+) -> dict[str, Path]:
+    """Download canonical files via the Dataverse access API (token), verify SHA-256, cache."""
+    import os
+
+    import requests
+
+    sess = session if session is not None else requests.Session()
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    out: dict[str, Path] = {}
+    for name, expected in registry.items():
+        dest = cache_dir / name
+        if dest.exists() and sha256_file(dest) == expected:
+            out[name] = dest
+            continue
+        if name not in file_ids:
+            raise RuntimeError(f"no Dataverse file id for {name!r} (cannot download privately).")
+        # Do not follow redirects with the token: signed S3 storage must not receive the key.
+        resp = sess.get(f"{instance}/api/access/datafile/{file_ids[name]}", headers={"X-Dataverse-key": token}, timeout=120, allow_redirects=False)
+        if getattr(resp, "is_redirect", False):
+            location = resp.headers.get("Location")
+            if not location:
+                raise RuntimeError(f"download {name} redirected without a Location header.")
+            resp = sess.get(location, timeout=300)  # follow to storage host WITHOUT the Dataverse key
+        if not resp.ok:
+            raise RuntimeError(f"download {name} failed: HTTP {resp.status_code} {resp.reason}")
+        tmp = dest.with_name(dest.name + ".tmp")
+        tmp.write_bytes(resp.content)
+        if sha256_file(tmp) != expected:
+            tmp.unlink(missing_ok=True)
+            raise RuntimeError(f"checksum mismatch for {name} after download.")
+        os.replace(tmp, dest)
+        out[name] = dest
+    return out
+
+
+def fetch_and_load(dataset_id: str, doi: str, manifest: Manifest, *, cache_dir: str | Path | None = None, instance: str | None = None, token: str | None = None) -> Any:
+    """Fetch a dataset's canonical files into the cache and load them as ``DatasetConfigs``.
+
+    Public datasets (``token is None``) are fetched by DOI via pooch; otherwise the Dataverse
+    access API is used. Returns a nirs4all ``DatasetConfigs`` ready for ``nirs4all.run``.
+    """
+    cache_root = Path(cache_dir) if cache_dir is not None else default_cache_dir()
+    canonical = cache_root / dataset_id / "canonical"
+    registry = canonical_registry(manifest)
+    if token is None:
+        fetch_public(doi, registry, canonical)
+    else:
+        if instance is None:
+            raise ValueError("instance is required for private downloads.")
+        fetch_private(canonical_file_ids(manifest), registry, canonical, instance=instance, token=token)
+    return load_local(cache_root / dataset_id)

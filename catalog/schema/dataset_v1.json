@@ -1,0 +1,766 @@
+{
+  "$defs": {
+    "Author": {
+      "additionalProperties": false,
+      "description": "A dataset author for DataCite/Dataverse metadata.",
+      "properties": {
+        "affiliation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Affiliation"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "orcid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Orcid"
+        },
+        "ror": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ror"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Author",
+      "type": "object"
+    },
+    "AxisUnit": {
+      "description": "Spectral axis unit (mirrors ``nirs4all`` ``HeaderUnit``).",
+      "enum": [
+        "cm-1",
+        "nm",
+        "none",
+        "text",
+        "index"
+      ],
+      "title": "AxisUnit",
+      "type": "string"
+    },
+    "ConfidentialityClass": {
+      "description": "Data confidentiality classification.",
+      "enum": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "title": "ConfidentialityClass",
+      "type": "string"
+    },
+    "ConversionStatus": {
+      "description": "Outcome of raw->canonical conversion.",
+      "enum": [
+        "ok",
+        "partial",
+        "failed"
+      ],
+      "title": "ConversionStatus",
+      "type": "string"
+    },
+    "DataCite": {
+      "additionalProperties": false,
+      "description": "Rich metadata mapped onto native Dataverse/DataCite fields at publish.",
+      "properties": {
+        "authors": {
+          "items": {
+            "$ref": "#/$defs/Author"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "funding": {
+          "items": {
+            "$ref": "#/$defs/Funding"
+          },
+          "title": "Funding",
+          "type": "array"
+        },
+        "related_publications": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Publications",
+          "type": "array"
+        },
+        "related_software": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Software",
+          "type": "array"
+        }
+      },
+      "title": "DataCite",
+      "type": "object"
+    },
+    "DataverseRef": {
+      "additionalProperties": false,
+      "description": "Pointer to the dataset's Dataverse location and pinned version.",
+      "properties": {
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Version"
+        },
+        "doi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Doi"
+        },
+        "instance": {
+          "default": "https://entrepot.recherche.data.gouv.fr",
+          "title": "Instance",
+          "type": "string"
+        }
+      },
+      "title": "DataverseRef",
+      "type": "object"
+    },
+    "Funding": {
+      "additionalProperties": false,
+      "description": "Funding information for DataCite metadata.",
+      "properties": {
+        "award_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Award Number"
+        },
+        "award_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Award Title"
+        },
+        "funder": {
+          "title": "Funder",
+          "type": "string"
+        }
+      },
+      "required": [
+        "funder"
+      ],
+      "title": "Funding",
+      "type": "object"
+    },
+    "Governance": {
+      "additionalProperties": false,
+      "description": "Legal/ethical metadata. Publication is gated on these fields (see publication_blockers).",
+      "properties": {
+        "access_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Access Policy"
+        },
+        "anonymization_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Anonymization Status"
+        },
+        "confidentiality_class": {
+          "$ref": "#/$defs/ConfidentialityClass",
+          "default": "internal"
+        },
+        "consent_ethics_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Consent Ethics Status"
+        },
+        "embargo_until": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Embargo Until"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "owner_steward": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner Steward"
+        },
+        "permitted_use": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Permitted Use"
+        },
+        "redistribution_rights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Redistribution Rights"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility",
+          "default": "restricted"
+        }
+      },
+      "required": [
+        "license"
+      ],
+      "title": "Governance",
+      "type": "object"
+    },
+    "Instrument": {
+      "additionalProperties": false,
+      "description": "Acquisition instrument and signal description (NIRS FAIR fields).",
+      "properties": {
+        "acquisition_settings": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Acquisition Settings",
+          "type": "object"
+        },
+        "axis_range": {
+          "anyOf": [
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Axis Range"
+        },
+        "axis_unit": {
+          "$ref": "#/$defs/AxisUnit",
+          "default": "nm"
+        },
+        "firmware": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firmware"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality",
+          "default": "NIR"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "serial": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serial"
+        },
+        "signal_type": {
+          "$ref": "#/$defs/SignalType",
+          "default": "auto"
+        },
+        "vendor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vendor"
+        }
+      },
+      "title": "Instrument",
+      "type": "object"
+    },
+    "Modality": {
+      "description": "Spectroscopic modality.",
+      "enum": [
+        "NIR",
+        "MIR",
+        "Raman",
+        "UV-Vis",
+        "hyperspectral",
+        "other"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Where the data came from and how it was converted.",
+      "properties": {
+        "collection_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Collection Date"
+        },
+        "contributor": {
+          "title": "Contributor",
+          "type": "string"
+        },
+        "conversion_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConversionStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ingest_reader": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ingest Reader"
+        },
+        "ingest_reader_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ingest Reader Version"
+        },
+        "known_exclusions": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Known Exclusions"
+        },
+        "lab_protocol": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lab Protocol"
+        },
+        "raw_sha256": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Raw Sha256",
+          "type": "array"
+        },
+        "reference_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference Method"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "contributor"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "SignalType": {
+      "description": "Signal type (mirrors ``nirs4all`` ``SignalTypeEnum``).",
+      "enum": [
+        "auto",
+        "absorbance",
+        "reflectance",
+        "reflectance%",
+        "transmittance",
+        "transmittance%",
+        "log(1/R)",
+        "kubelka-munk"
+      ],
+      "title": "SignalType",
+      "type": "string"
+    },
+    "Target": {
+      "additionalProperties": false,
+      "description": "A prediction target carried by the dataset.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Range"
+        },
+        "task_type": {
+          "$ref": "#/$defs/TaskType"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "name",
+        "task_type"
+      ],
+      "title": "Target",
+      "type": "object"
+    },
+    "TaskType": {
+      "description": "Supervised task type (mirrors ``nirs4all`` ``TaskType``).",
+      "enum": [
+        "auto",
+        "regression",
+        "binary_classification",
+        "multiclass_classification"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    },
+    "Visibility": {
+      "description": "Publication visibility on the Dataverse instance.",
+      "enum": [
+        "public",
+        "restricted",
+        "embargo"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Hand-authored descriptor for one NIRS dataset (``catalog/datasets/<id>.yaml``).",
+  "properties": {
+    "citation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Citation"
+    },
+    "datacite": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataCite"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "dataverse": {
+      "$ref": "#/$defs/DataverseRef"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Domain"
+    },
+    "governance": {
+      "$ref": "#/$defs/Governance"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "instrument": {
+      "$ref": "#/$defs/Instrument"
+    },
+    "keywords": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Keywords",
+      "type": "array"
+    },
+    "n_features": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "N Features"
+    },
+    "n_samples": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "N Samples"
+    },
+    "n_sources": {
+      "default": 1,
+      "minimum": 1,
+      "title": "N Sources",
+      "type": "integer"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "predefined_split": {
+      "default": false,
+      "title": "Predefined Split",
+      "type": "boolean"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "repetition_column": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Repetition Column"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "targets": {
+      "items": {
+        "$ref": "#/$defs/Target"
+      },
+      "minItems": 1,
+      "title": "Targets",
+      "type": "array"
+    },
+    "version": {
+      "default": "0.1.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "instrument",
+    "targets",
+    "provenance",
+    "governance"
+  ],
+  "title": "DatasetDescriptor",
+  "type": "object"
+}
