@@ -13,13 +13,13 @@ Both yield a ``SpectroDataset`` written to ``<out>/canonical/`` as Parquet plus 
 to turn it into an absolute, loadable config). Parquet is chosen because Dataverse does not
 auto-ingest it, so the canonical bytes stay pristine.
 
-Scope: single-source **regression and classification** datasets with targets. Regression targets
-are written as float64; classification targets are written as nirs4all's **encoded numeric class
-indices** (string labels are encoded by nirs4all, so original class *names* belong in the
-descriptor's ``Target.classes``), and the task type is recorded in ``nirs4all_config.json``. The
-effective task type can be forced via ``task_type`` (the descriptor's intent) to avoid an
-integer-valued regression target being auto-detected as classification. Targetless and multi-source
-export remain explicit ``NotImplementedError``.
+Scope: single- and multi-source **regression and classification** datasets, with or without targets.
+Regression targets are written as float64; classification targets are written as nirs4all's
+**encoded numeric class indices** (string labels are encoded by nirs4all, so original class *names*
+belong in the descriptor's ``Target.classes``). Multi-source datasets write one X file per source
+(``train_x`` becomes a list); targetless datasets write no Y. The task type is recorded in
+``nirs4all_config.json`` and can be forced via ``task_type`` (the descriptor's intent) to avoid an
+integer-valued regression target being auto-detected as classification.
 """
 from __future__ import annotations
 
@@ -131,65 +131,79 @@ def _write_table(array: np.ndarray, columns: list[str], path: Path) -> str:
     return sha256_file(path)
 
 
+def _source_blocks(dataset: Any) -> list[np.ndarray]:
+    """Per-source 2D feature blocks (a single-source dataset yields a one-element list)."""
+    x = dataset.x({}, layout="2d", concat_source=False)
+    blocks = x if isinstance(x, list) else [x]
+    return [np.asarray(block, dtype="float32") for block in blocks]
+
+
 def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | None = None, task_type: str | None = None) -> tuple[dict[str, Any], dict[str, str], dict[str, int]]:
     """Write a ``SpectroDataset`` to ``out_dir/canonical`` as Parquet + ``nirs4all_config.json``.
 
-    Regression targets are float64; classification targets are encoded numeric class indices.
-    ``task_type`` (e.g. the descriptor's intent) overrides nirs4all's auto-detected task, except the
-    sentinel ``"auto"``. Returns ``(config, canonical_hashes, row_counts)``. Raises
-    ``NotImplementedError`` for multi-source or targetless datasets (deferred to a later phase).
+    Handles single- and multi-source datasets (one X file per source; ``train_x`` becomes a list of
+    paths with a matching list of ``train_x_params``), train-only / train+test splits, and targetless
+    datasets (no Y written). Regression targets are float64; classification targets are encoded numeric
+    class indices. ``task_type`` overrides nirs4all's auto-detected task (except the sentinel ``"auto"``).
     """
-    if dataset.n_sources != 1:
-        raise NotImplementedError(f"multi-source canonical export not supported yet (n_sources={dataset.n_sources}).")
-    auto_task = dataset.task_type.value if dataset.task_type is not None else "regression"
-    task_value = task_type if (task_type and task_type != "auto") else auto_task
+    blocks = _source_blocks(dataset)
+    n_sources = len(blocks)
+    n_samples = blocks[0].shape[0]
+
+    y_raw = np.asarray(dataset.y({}))
+    has_targets = y_raw.size > 0
+
+    if task_type and task_type != "auto":
+        task_value = task_type
+    elif not has_targets:
+        task_value = "auto"  # no targets -> do not assert a supervised task
+    else:
+        task_value = dataset.task_type.value if dataset.task_type is not None else "regression"
     is_classification = task_value in _CLASSIFICATION
 
-    x_obj = dataset.x({}, layout="2d", concat_source=False)
-    x_all = np.asarray(x_obj[0] if isinstance(x_obj, list) else x_obj, dtype="float32")
-    n_samples, n_features = x_all.shape
-
-    y_all = np.asarray(dataset.y({}))
-    if y_all.size == 0:
-        raise NotImplementedError("targetless datasets not supported yet (no targets to export).")
-    if y_all.ndim == 1:
-        y_all = y_all.reshape(-1, 1)
-    if not is_classification:
-        y_all = y_all.astype("float64")  # regression: numeric; classification: preserve labels as-is
-    if target_names is not None and len(target_names) != y_all.shape[1]:
+    y_all = (y_raw.reshape(-1, 1) if y_raw.ndim == 1 else y_raw) if has_targets else y_raw
+    if has_targets and not is_classification:
+        y_all = y_all.astype("float64")
+    if has_targets and target_names is not None and len(target_names) != y_all.shape[1]:
         raise ValueError(f"target_names has {len(target_names)} entries but y has {y_all.shape[1]} columns.")
-    y_cols = target_names or [f"y{i}" for i in range(y_all.shape[1])]
+    y_cols = (target_names or [f"y{i}" for i in range(y_all.shape[1])]) if has_targets else []
 
-    headers = [str(h) for h in (dataset.headers(0) or [str(i) for i in range(n_features)])]
-    header_unit = dataset.header_unit(0)
+    headers = [[str(h) for h in (dataset.headers(src) or [str(i) for i in range(blocks[src].shape[1])])] for src in range(n_sources)]
+    units = [dataset.header_unit(src) for src in range(n_sources)]
 
     canonical = out_dir / "canonical"
     if canonical.exists():
-        shutil.rmtree(canonical)  # avoid stale artifacts when the layout changes (split <-> single)
+        shutil.rmtree(canonical)  # avoid stale artifacts when the layout changes
     canonical.mkdir(parents=True)
     masks = _resolve_partitions(dataset, n_samples)
-    x_params = {"header_unit": header_unit}
+
+    x_params: Any = {"header_unit": units[0]} if n_sources == 1 else [{"header_unit": u} for u in units]
     config: dict[str, Any] = {"task_type": task_value, "train_x_params": x_params}
+    if "test" in masks:
+        config["test_x_params"] = x_params
     hashes: dict[str, str] = {}
     rows: dict[str, int] = {}
 
+    def _write_partition(part: str, key_prefix: str) -> None:
+        mask = masks[part]
+        rows[part] = int(mask.sum())
+        x_label = "X" if part == "all" else f"X{part}"
+        x_paths = []
+        for src in range(n_sources):
+            filename = f"{x_label}.parquet" if n_sources == 1 else f"{x_label}_{src}.parquet"
+            hashes[filename] = _write_table(blocks[src][mask], headers[src], canonical / filename)
+            x_paths.append(f"canonical/{filename}")
+        config[f"{key_prefix}_x"] = x_paths[0] if n_sources == 1 else x_paths
+        if has_targets:
+            y_filename = "Y.parquet" if part == "all" else f"Y{part}.parquet"
+            hashes[y_filename] = _write_table(y_all[mask], y_cols, canonical / y_filename)
+            config[f"{key_prefix}_y"] = f"canonical/{y_filename}"
+
     if "test" in masks:
-        plan = {"train": ("Xtrain.parquet", "Ytrain.parquet"), "test": ("Xtest.parquet", "Ytest.parquet")}
-        for part, (xf, yf) in plan.items():
-            mask = masks[part]
-            hashes[xf] = _write_table(x_all[mask], headers, canonical / xf)
-            hashes[yf] = _write_table(y_all[mask], y_cols, canonical / yf)
-            rows[part] = int(mask.sum())
-        config |= {
-            "train_x": "canonical/Xtrain.parquet", "train_y": "canonical/Ytrain.parquet",
-            "test_x": "canonical/Xtest.parquet", "test_y": "canonical/Ytest.parquet",
-            "test_x_params": x_params,
-        }
+        _write_partition("train", "train")
+        _write_partition("test", "test")
     else:
-        hashes["X.parquet"] = _write_table(x_all, headers, canonical / "X.parquet")
-        hashes["Y.parquet"] = _write_table(y_all, y_cols, canonical / "Y.parquet")
-        rows["all"] = n_samples
-        config |= {"train_x": "canonical/X.parquet", "train_y": "canonical/Y.parquet"}
+        _write_partition("all", "train")
 
     (canonical / "nirs4all_config.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
     return config, hashes, rows
@@ -203,8 +217,14 @@ def resolve_config(dataset_dir: str | Path) -> dict[str, Any]:
     """
     root = Path(dataset_dir)
     config: dict[str, Any] = json.loads((root / "canonical" / "nirs4all_config.json").read_text(encoding="utf-8"))
-    for key in ("train_x", "train_y", "test_x", "test_y", "folds"):
-        if key in config:
+    for key in ("train_x", "test_x"):  # may be a list of paths (multi-source) or a single path
+        value = config.get(key)
+        if isinstance(value, list):
+            config[key] = [str((root / item).resolve()) for item in value]
+        elif isinstance(value, str):
+            config[key] = str((root / value).resolve())
+    for key in ("train_y", "test_y", "folds"):  # single path if present (folds may be an inline spec -> leave it)
+        if isinstance(config.get(key), str):
             config[key] = str((root / config[key]).resolve())
     return config
 

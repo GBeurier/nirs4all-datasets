@@ -78,13 +78,34 @@ def _inventory(dataset: Any) -> dict[str, Any]:
     return inventory
 
 
-def _native_axis(dataset: Any, unit: str) -> np.ndarray | None:
+def _native_axis(dataset: Any, unit: str, src: int = 0) -> np.ndarray | None:
     """Wavelength axis in its *native* unit (so spacing is meaningful); None for non-spectral axes."""
     if unit == "nm":
-        return np.asarray(dataset.wavelengths_nm(0), dtype=float)
+        return np.asarray(dataset.wavelengths_nm(src), dtype=float)
     if unit == "cm-1":
-        return np.asarray(dataset.wavelengths_cm1(0), dtype=float)
+        return np.asarray(dataset.wavelengths_cm1(src), dtype=float)
     return None
+
+
+def _per_source(dataset: Any) -> list[dict[str, Any]]:
+    """Per-source spectral summary (for multi-source datasets)."""
+    features = dataset.num_features if isinstance(dataset.num_features, list) else [dataset.num_features]
+    entries: list[dict[str, Any]] = []
+    for src in range(dataset.n_sources):
+        unit = dataset.header_unit(src)
+        entry: dict[str, Any] = {"source": src, "n_features": int(features[src]), "wavelength_unit": unit, "spacing": None, "signal_type": None}
+        axis = _native_axis(dataset, unit, src)
+        if axis is not None and axis.size:
+            entry["spacing"] = metrics.wavelength_spacing(axis)
+            entry["wavelength_range"] = [float(axis.min()), float(axis.max())]
+        try:
+            signal_type, confidence, _ = dataset.detect_signal_type(src)
+            entry["signal_type"] = getattr(signal_type, "value", str(signal_type))
+            entry["signal_type_confidence"] = float(confidence)
+        except Exception:  # noqa: BLE001 - detection optional
+            pass
+        entries.append(entry)
+    return entries
 
 
 def _spectral(dataset: Any, base: dict[str, Any], n_features: int, warnings: list[str]) -> dict[str, Any]:
@@ -116,6 +137,12 @@ def _spectral(dataset: Any, base: dict[str, Any], n_features: int, warnings: lis
 
 
 def _targets(dataset: Any, base: dict[str, Any], warnings: list[str]) -> dict[str, Any]:
+    try:
+        has_targets = np.asarray(dataset.y({})).size > 0
+    except Exception:  # noqa: BLE001 - targetless datasets may raise on y access
+        has_targets = False
+    if not has_targets:
+        return {"task_type": None, "note": "no targets (unsupervised / prediction set)"}
     if dataset.is_classification:
         distribution = (base.get("y_stats") or {}).get("class_distribution") or {}
         out: dict[str, Any] = {"task_type": "classification", "class_distribution": distribution, "balance": None}
@@ -183,6 +210,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         "spectral": _spectral(dataset, base, inventory["n_features"], warnings),
         "targets": _targets(dataset, base, warnings),
         "quality": _quality(dataset, x_outlier_method, warnings),
+        "per_source": _per_source(dataset) if dataset.n_sources > 1 else None,
         "integrity": {
             "content_hash": dataset.content_hash(),
             "nirs4all_version": nirs4all.__version__,

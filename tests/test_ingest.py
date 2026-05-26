@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
-from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -64,9 +63,38 @@ def test_canonical_round_trip_via_resolve_config(tmp_path: Path) -> None:
     assert ds.task_type is not None and ds.task_type.value == "regression"
 
 
-def test_multisource_deferred(tmp_path: Path) -> None:
-    with pytest.raises(NotImplementedError):
-        write_canonical(SimpleNamespace(n_sources=2), tmp_path)
+def test_multisource_round_trip(tmp_path: Path) -> None:
+    ds = SpectroDataset("ms")
+    rng = np.random.RandomState(0)
+    ds.add_samples(
+        [rng.rand(20, 5).astype("float32"), rng.rand(20, 7).astype("float32")],
+        headers=[[str(1000 + i) for i in range(5)], [str(2000 + i) for i in range(7)]],
+        header_unit=["nm", "nm"],
+    )
+    ds.add_targets(np.linspace(0.0, 1.0, 20))
+    config, _hashes, _rows = write_canonical(ds, tmp_path)
+    assert isinstance(config["train_x"], list) and len(config["train_x"]) == 2
+    try:
+        loaded = DatasetConfigs(resolve_config(tmp_path)).get_dataset_at(0)
+    except Exception as exc:  # noqa: BLE001
+        _maybe_skip_parquet(exc)
+        raise
+    assert loaded.n_sources == 2
+    assert list(loaded.num_features) == [5, 7]
+
+
+def test_targetless_round_trip(tmp_path: Path) -> None:
+    ds = SpectroDataset("tl")
+    rng = np.random.RandomState(0)
+    ds.add_samples(rng.rand(15, 5).astype("float32"), headers=[str(1000 + i) for i in range(5)], header_unit="nm")
+    config, _hashes, _rows = write_canonical(ds, tmp_path)
+    assert "train_y" not in config
+    try:
+        loaded = DatasetConfigs(resolve_config(tmp_path)).get_dataset_at(0)
+    except Exception as exc:  # noqa: BLE001
+        _maybe_skip_parquet(exc)
+        raise
+    assert loaded.num_samples == 15
 
 
 def test_classification_round_trip(tmp_path: Path) -> None:
