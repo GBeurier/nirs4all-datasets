@@ -1,0 +1,129 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nirs4all-datasets"
+version = "0.1.0.dev0"
+description = "Store, qualify, and organize NIRS reference datasets on Recherche Data Gouv / Dataverse, with pooch-style cached access."
+authors = [
+    { name = "Gregory Beurier", email = "beurier@cirad.fr" },
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = [
+    "nirs",
+    "near-infrared",
+    "spectroscopy",
+    "dataset",
+    "registry",
+    "dataverse",
+    "FAIR",
+    "benchmark",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+requires-python = ">=3.11"
+dependencies = [
+    # Data
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+    "pyarrow>=14.0.0",
+    # Schema / config
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0.0",
+    "jsonschema>=4.17.0",
+    "python-dotenv>=1.0.0",
+    # Visualization (cards)
+    "matplotlib>=3.7.0",
+    # Access + repository (Dataverse Native API is plain REST via requests)
+    "pooch>=1.8.0",
+    "requests>=2.31.0",
+    # CLI
+    "typer>=0.12.0",
+    # NIRS ecosystem (pin nirs4all-io exactly: alpha)
+    "nirs4all>=0.9",
+    "nirs4all-io==0.1.0a0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "types-requests",
+    "types-PyYAML",
+    "build>=1.0.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "myst-parser>=2.0.0",
+    "furo>=2024.1.29",
+    "sphinx-design>=0.5.0",
+    "sphinx-copybutton>=0.5.0",
+]
+
+[project.scripts]
+n4a-datasets = "nirs4all_datasets.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/GBeurier/nirs4all-datasets"
+Repository = "https://github.com/GBeurier/nirs4all-datasets"
+Issues = "https://github.com/GBeurier/nirs4all-datasets/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["nirs4all_datasets*"]
+
+[tool.setuptools.package-data]
+nirs4all_datasets = ["py.typed"]
+
+# Editable local sources for development (uv); CI pins published versions.
+[tool.uv.sources]
+nirs4all = { path = "../nirs4all", editable = true }
+nirs4all-io = { path = "../nirs4all-io/bindings/python", editable = true }
+
+[tool.ruff]
+line-length = 220
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = ["E402", "F841", "F401", "E501", "SIM108"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403", "F405"]
+"tests/*" = ["B", "SIM"]
+"src/nirs4all_datasets/cli.py" = ["B008"]  # typer.Option(...) defaults are the documented Typer pattern
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+exclude = ["build", "\\.venv", "docs/_build"]
+
+# External deps: do not type-check their internals (they are not ours to fix here).
+[[tool.mypy.overrides]]
+module = ["nirs4all.*", "nirs4all_io.*", "pyarrow.*", "pooch.*", "requests.*", "dotenv.*"]
+follow_imports = "skip"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+markers = [
+    "network: tests that hit a live Dataverse instance (deselect with -m 'not network')",
+]

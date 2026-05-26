@@ -1,0 +1,42 @@
+name: Publish
+
+# Manual, environment-gated publication of one dataset to Dataverse.
+# The token is a protected-environment secret; never expose it to fork PRs.
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_id:
+        description: Dataset id (matches catalog/datasets/<id>.yaml)
+        required: true
+      collection:
+        description: Dataverse collection alias
+        required: true
+      contact_email:
+        description: Dataset contact email
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: dataverse-publish  # require manual approval on this protected environment
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Governance gate (public/embargo datasets must be publishable)
+        run: python catalog/scripts/validate.py --check-publish
+      - name: Publish
+        env:
+          NIRS4ALL_DATAVERSE_TOKEN: ${{ secrets.DATAVERSE_TOKEN }}
+        run: |
+          python -m nirs4all_datasets.cli publish "${{ inputs.dataset_id }}" \
+            --collection "${{ inputs.collection }}" \
+            --contact-email "${{ inputs.contact_email }}" \
+            --root .

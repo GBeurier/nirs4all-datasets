@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        # Installs nirs4all + nirs4all-io from PyPI. NOTE: the full canonical round-trip tests
+        # require the nirs4all ParquetLoader fix (>= 0.9.2); with an older nirs4all they skip.
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Ruff
+        run: ruff check .
+      - name: Mypy
+        run: mypy --config-file pyproject.toml src
+      - name: Validate catalog
+        run: python catalog/scripts/validate.py
+      - name: Catalog index is up to date
+        run: |
+          python -m nirs4all_datasets.cli catalog --root .
+          git diff --exit-code catalog/datasets.yaml
+      - name: Tests
+        run: pytest -q
