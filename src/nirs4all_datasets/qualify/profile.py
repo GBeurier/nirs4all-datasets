@@ -132,6 +132,8 @@ def _spectral(dataset: Any, base: dict[str, Any], n_features: int, warnings: lis
     if axis is not None and axis.size:
         spectral["spacing"] = metrics.wavelength_spacing(axis)
         spectral["spacing_unit"] = unit
+        if spectral["wavelength_range"] is None:  # derive from the (parsed) axis if nirs4all didn't supply it
+            spectral["wavelength_range"] = [float(axis.min()), float(axis.max())]
     elif unit in ("none", "index", "text"):
         warnings.append(f"wavelength spacing not computed for non-spectral axis (unit={unit!r})")
     else:

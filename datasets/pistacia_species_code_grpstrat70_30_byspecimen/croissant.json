@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "pistacia_species_code_grpstrat70_30_byspecimen",
+  "description": "PISTACIA dataset (classification). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "pistacia",
+    "nir",
+    "classification"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtest.parquet",
+      "name": "Xtest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "4a4519c8bd3c3fd641a778d320ba0257056c3e0bcf747e9b32c186131cc3ba91"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtrain.parquet",
+      "name": "Xtrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "82bbb258c6fd117a1be34621fb74271a4bfa34f9e37d155c6a980cad53ed6de3"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytest.parquet",
+      "name": "Ytest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "a362c9517fe36e791e26260d22fbc407730ac6d624d0f5f6e2b62bb024e9677f"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytrain.parquet",
+      "name": "Ytrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "b89d5f3c8000ef1a2d8ac1f75e24732d04a79e9cdb7ac0c081f921926e163b09"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (7323 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "Xtest.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/Species_code",
+          "name": "Species_code",
+          "description": "Target 'Species_code' (multiclass_classification).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "Ytest.parquet"
+            },
+            "extract": {
+              "column": "Species_code"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
