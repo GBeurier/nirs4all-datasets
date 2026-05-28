@@ -12,7 +12,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Instances:** 490 spectra × 1003 wavelengths, 1 source(s).
 - **Modality / instrument:** NIR — *Not specified.* *Not specified.* (firmware *Not specified.*).
-- **Spectral axis:** *Not specified.* nm; signal type unknown.
+- **Spectral axis:** [852.78, 2502.37] nm; signal type unknown.
 - **Targets:** K2O (regression)
 - **Contains missing values:** False
 

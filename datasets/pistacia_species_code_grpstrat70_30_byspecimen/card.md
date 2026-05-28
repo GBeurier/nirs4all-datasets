@@ -1,25 +1,25 @@
-# Datasheet — MANURE21 — All_manure_AN_SPXY_strat_Manure_type
+# Datasheet — PISTACIA — Species_code_grpStrat70_30_bySpecimen
 
 _Generated from the dataset descriptor and identity card (Datasheets for Datasets, Gebru et al. 2021)._
 
 ## Motivation
 
-- **Domain / purpose:** manure21
-- **Description:** MANURE21 dataset (regression). Auto-generated descriptor (verify before publication).
+- **Domain / purpose:** pistacia
+- **Description:** PISTACIA dataset (classification). Auto-generated descriptor (verify before publication).
 - **Contributor:** tabpfn NIRS benchmark collection
 
 ## Composition
 
-- **Instances:** 490 spectra × 1003 wavelengths, 1 source(s).
+- **Instances:** 7323 spectra × 1951 wavelengths, 1 source(s).
 - **Modality / instrument:** NIR — *Not specified.* *Not specified.* (firmware *Not specified.*).
-- **Spectral axis:** [852.78, 2502.37] nm; signal type unknown.
-- **Targets:** AN (regression)
+- **Spectral axis:** [500.0, 2450.0] nm; signal type unknown.
+- **Targets:** Species_code (multiclass_classification)
 - **Contains missing values:** False
 
 ## Statistics
 
-- **PCA / dimensionality:** effective rank 1.18; 2 PC(s) → 95% variance, 3 → 99%.
-- **Train↔test target shift:** std. mean diff -0.195, KS 0.158 (p 0.0102), Wasserstein 0.524
+- **PCA / dimensionality:** effective rank 1.34; 3 PC(s) → 95% variance, 6 → 99%.
+- **Train↔test target shift:** Jensen–Shannon 0.0121, max class-proportion Δ 0.00781
 
 ## Collection process
 
