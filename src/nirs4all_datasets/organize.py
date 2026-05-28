@@ -60,6 +60,16 @@ def _place_raw(source: Path, dataset_dir: Path) -> list[Path]:
     return placed
 
 
+def _source_raw_pairs(source: Path) -> list[tuple[str, Path]]:
+    """Map each source file to the ``raw/<relpath>`` it will occupy under the dataset dir.
+
+    Used to compare *source* bytes against the previous manifest before copying anything.
+    """
+    if source.is_file():
+        return [(f"raw/{source.name}", source)]
+    return [(f"raw/{p.relative_to(source).as_posix()}", p) for p in sorted(source.rglob("*")) if p.is_file()]
+
+
 def organize(
     source: str | Path,
     descriptor: DatasetDescriptor,
@@ -83,20 +93,27 @@ def organize(
     manifest_path = dataset_dir / "manifest.json"
     previous = read_manifest(manifest_path) if manifest_path.exists() else None
 
-    placed = _place_raw(source, dataset_dir)
     converter_name, converter_version = _converter_identity(source)
+    is_dir = source.is_dir()
+    header_unit = descriptor.instrument.axis_unit.value if is_dir else None
+    # The folder route's effective load knobs; recorded so a change in them forces a rebuild (and so a
+    # multi-GB dataset is skipped from its *source* bytes, without copying, when nothing changed).
+    converter_config = {"na_policy": "ignore", "header_unit": header_unit or ""} if is_dir else None
+
     changed, reasons = needs_rebuild(
         descriptor,
         dataset_dir=dataset_dir,
         previous=previous,
         converter_name=converter_name,
         converter_version=converter_version,
-        raw_files=placed,
+        converter_config=converter_config,
+        raw_files=_source_raw_pairs(source),
         verify_outputs=True,
     )
     if previous is not None and not changed and not force:
         return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True)
 
+    placed = _place_raw(source, dataset_dir)
     result = ingest(
         source,
         dataset_dir,
@@ -104,6 +121,7 @@ def organize(
         signal=signal,
         task_type=descriptor.targets[0].task_type.value,
         target_names=[t.name for t in descriptor.targets],
+        header_unit=header_unit,
     )
     manifest = build_manifest(
         descriptor,

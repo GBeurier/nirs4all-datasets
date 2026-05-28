@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "arabidopsis_cefe_inout_1264",
+  "description": "ARABIDOPSIS_CEFE dataset (classification). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "arabidopsis_cefe",
+    "nir",
+    "classification"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtest.parquet",
+      "name": "Xtest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "c54b114f50a8ff2114c2ab5d362c859a7032c623e07b393ad482834d43e7437a"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtrain.parquet",
+      "name": "Xtrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "df906be4a8a3bd6b1cb41fb475e9911a32d99f84c05657a6a8b52ddc906f06ad"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytest.parquet",
+      "name": "Ytest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "2e7374ccc43e62b357b11015d7af8f334cf5af52077d924ff86ae12132f258b0"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytrain.parquet",
+      "name": "Ytrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "0afbcad9a3caed2361c1b962be37facac7a0ad139d553e2746bdb3439b3c86ab"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (1263 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "Xtest.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/InOut",
+          "name": "InOut",
+          "description": "Target 'InOut' (binary_classification).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "Ytest.parquet"
+            },
+            "extract": {
+              "column": "InOut"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

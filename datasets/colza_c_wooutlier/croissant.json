@@ -1,0 +1,120 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "colza_c_wooutlier",
+  "description": "COLZA dataset (regression). Sample: Oilseed rape plant tissues. Trait: C content. Split: not specified. Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "etalab-2.0",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": "https://doi.org/10.1016/j.dib.2024.111163",
+  "keywords": [
+    "colza",
+    "nir",
+    "regression",
+    "c_content"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtest.parquet",
+      "name": "Xtest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "9b984ac40f3ab5a99dce427a67dcd94457e84acff858028beabdfedfce966025"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtrain.parquet",
+      "name": "Xtrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "6228f52b75de0af23d4a32d0e5f59e43d0ec3c1e2de681ffdc161caff032f892"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytest.parquet",
+      "name": "Ytest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "2aff3bd240c4332a93f8c74ed5da58508b5a80b8176dadee67a9dcb462487a40"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytrain.parquet",
+      "name": "Ytrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "ef716521d94c021094018e9efd92ac6bc1bf757b4e4faa208b94b527c0419259"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (2419 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "Xtest.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/C content",
+          "name": "C content",
+          "description": "Target 'C content' (regression).",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "Ytest.parquet"
+            },
+            "extract": {
+              "column": "C content"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

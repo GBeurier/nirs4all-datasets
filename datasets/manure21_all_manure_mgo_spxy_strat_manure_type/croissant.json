@@ -1,0 +1,120 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "manure21_all_manure_mgo_spxy_strat_manure_type",
+  "description": "MANURE21 dataset (regression). Sample: Cattle manure. Trait: MgO content. Split: strat spxy. Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "etalab-2.0",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": "https://doi.org/10.1016/j.dib.2020.106647",
+  "keywords": [
+    "manure21",
+    "nir",
+    "regression",
+    "mgo_content"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtest.parquet",
+      "name": "Xtest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "2d394096e09d5951f4a7c84bd9e4391b738adf291246998d2437c07c88687442"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtrain.parquet",
+      "name": "Xtrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "1c79c954ef46ee8fa123bfbf3f99444e3ec5dce5bfdc23a362cd03dec58f55fe"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytest.parquet",
+      "name": "Ytest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "f492a2055bda3e473c9a711a9b7731a1479b3bf98461eb0862cbfcd100988694"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytrain.parquet",
+      "name": "Ytrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "12e2e85a1bac852a316a9ee680b400441bbfb8d13811b77a82194c896ef11378"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (490 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "Xtest.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/MgO",
+          "name": "MgO",
+          "description": "Target 'MgO' (regression).",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "Ytest.parquet"
+            },
+            "extract": {
+              "column": "MgO"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

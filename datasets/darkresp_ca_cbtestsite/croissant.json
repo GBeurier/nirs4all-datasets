@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "darkresp_ca_cbtestsite",
+  "description": "DarkResp dataset (regression). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "darkresp",
+    "nir",
+    "regression"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtest.parquet",
+      "name": "Xtest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "04f05f8c4470fbed6ad6d5c491a4344e7ab6fd6051b9c824be9becceb505a7bd"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Xtrain.parquet",
+      "name": "Xtrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "138db8111e851c3efc8404666471d5ed55cccd5f40212e3a8e3e4dd829b4dddf"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytest.parquet",
+      "name": "Ytest.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "76f0d2da3e8cc846443f3bace26b16cc4bc3879cecb5d956eebe7692872a4e21"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Ytrain.parquet",
+      "name": "Ytrain.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "523d731d1ff40c8fa0341dcdc178660bbb6f2b67ea357b37f9e662afcfeda150"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (505 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "Xtest.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/Ca",
+          "name": "Ca",
+          "description": "Target 'Ca' (regression).",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "Ytest.parquet"
+            },
+            "extract": {
+              "column": "Ca"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

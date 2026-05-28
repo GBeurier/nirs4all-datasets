@@ -21,8 +21,9 @@ from pathlib import Path
 from nirs4all_datasets.schema import DatasetDescriptor, FileEntry, FileRole, Manifest
 
 _CHUNK = 1 << 20
-# Descriptor fields assigned at publish time; excluded from the processing hash.
-_HASH_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}}
+# Descriptor fields assigned at publish/bootstrap time; excluded from the processing hash so that
+# publishing (doi/version) or refreshing generation provenance never triggers a spurious rebuild.
+_HASH_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True}
 
 
 def sha256_file(path: str | Path, chunk: int = _CHUNK) -> str:
@@ -120,7 +121,7 @@ def needs_rebuild(
     converter_name: str | None = None,
     converter_version: str | None = None,
     converter_config: dict[str, str] | None = None,
-    raw_files: Iterable[str | Path] = (),
+    raw_files: Iterable[str | Path | tuple[str, str | Path]] = (),
     verify_outputs: bool = False,
 ) -> tuple[bool, list[str]]:
     """Decide whether a dataset must be (re)processed by comparing inputs to ``previous``.
@@ -129,6 +130,10 @@ def needs_rebuild(
     (name + version + config) -- canonical outputs are derived from these. A size pre-filter
     avoids hashing unchanged files. With ``verify_outputs`` the recorded canonical files are
     also checked on disk (skip then also guarantees the local outputs are intact).
+
+    ``raw_files`` items are either a path under ``dataset_dir`` (relativized here) or an explicit
+    ``(manifest_relpath, actual_path)`` pair -- the latter lets a caller compare *source* bytes
+    before copying them into ``dataset_dir/raw`` (so an unchanged dataset is skipped without a copy).
 
     Returns ``(changed, reasons)``; ``reasons`` is empty iff processing can be skipped.
     """
@@ -146,8 +151,14 @@ def needs_rebuild(
     if converter_config is not None and dict(converter_config) != previous.converter_config:
         reasons.append("converter config changed")
 
+    def _key_path(raw: str | Path | tuple[str, str | Path]) -> tuple[str, Path]:
+        if isinstance(raw, tuple):
+            rel, actual = raw
+            return rel.replace("\\", "/"), Path(actual)
+        return _relpath(raw, base), Path(raw)
+
     previous_raw = {fe.path: fe for fe in previous.files if fe.role is FileRole.RAW}
-    current_raw = {_relpath(raw, base): Path(raw) for raw in raw_files}
+    current_raw = dict(_key_path(raw) for raw in raw_files)
     if set(current_raw) != set(previous_raw):
         reasons.append("raw file set changed")
     else:

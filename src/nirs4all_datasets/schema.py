@@ -290,6 +290,25 @@ class DataverseRef(BaseModel):
         return text
 
 
+class Generation(BaseModel):
+    """Provenance for a machine-generated descriptor (bulk bootstrap).
+
+    Present only on auto-generated descriptors. ``source_relpath`` (relative to a source root) lets
+    the bootstrapper find the raw leaf again for ``build-all``; ``managed`` gates idempotent
+    regeneration (only managed descriptors are overwritten, never a human-edited one). Excluded from
+    ``descriptor_hash`` so refreshing these fields never triggers a spurious canonical rebuild.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    managed: bool = False
+    generator: str | None = None
+    generator_version: str | None = None
+    source_relpath: str | None = None
+    source_fingerprint: str | None = None
+    xlsx_row: int | None = None
+
+
 # =============================================================================
 # Descriptor
 # =============================================================================
@@ -319,6 +338,7 @@ class DatasetDescriptor(BaseModel):
     governance: Governance
     datacite: DataCite | None = None
     dataverse: DataverseRef = Field(default_factory=DataverseRef)
+    generation: Generation | None = None  # set on auto-generated descriptors; excluded from descriptor_hash
 
     @field_validator("schema_version")
     @classmethod

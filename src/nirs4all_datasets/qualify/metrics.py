@@ -14,13 +14,18 @@ Definitions are deliberately documented and conservative:
 """
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 from scipy import stats
+from scipy.spatial.distance import jensenshannon
 
 _CLASS_KEYS = ("n_classes", "normalized_entropy", "imbalance_ratio", "gini_simpson", "minority_fraction")
 _SHAPE_KEYS = ("n", "skewness", "kurtosis", "normality_p", "is_normal")
 _QUALITY_KEYS = ("noise_proxy_db", "smoothness", "dynamic_range", "saturation_fraction")
 _SPACING_KEYS = ("mean", "std", "min", "max", "median", "is_uniform")
+_TARGET_SHIFT_KEYS = ("n_train", "n_test", "mean_train", "mean_test", "std_train", "std_test", "standardized_mean_diff", "ks_statistic", "ks_p", "wasserstein")
+_CLASS_SHIFT_KEYS = ("n_classes", "max_abs_proportion_delta", "jensen_shannon", "unseen_in_test", "unseen_in_train")
 
 
 def _nulls(keys: tuple[str, ...]) -> dict[str, object]:
@@ -104,4 +109,81 @@ def wavelength_spacing(wavelengths: object) -> dict[str, object]:
         "max": float(steps.max()),
         "median": float(np.median(steps)),
         "is_uniform": bool(steps.std() / abs(mean) < 1e-3) if mean != 0 else None,
+    }
+
+
+def effective_rank(explained_variance: object) -> float | None:
+    """Participation ratio of the eigenvalue spectrum, ``(Σλ)² / Σλ²`` (a soft dimensionality, ≥1).
+
+    Reported as a lower bound when only the leading components are supplied (truncated spectrum).
+    """
+    lam = np.asarray(explained_variance, dtype=float)
+    lam = lam[np.isfinite(lam) & (lam > 0)]
+    if lam.size == 0:
+        return None
+    return float((lam.sum() ** 2) / float(np.sum(lam**2)))
+
+
+def impute_columns(x: object, *, reference: object | None = None) -> tuple[np.ndarray, dict[str, int]]:
+    """Replace NaN in a 2D block with column means (of ``reference`` if given, else of ``x``).
+
+    Rows are never dropped (sample count preserved); all-NaN columns become 0. Returns
+    ``(filled, report)`` counting affected cells/rows/columns so the card can disclose imputation.
+    """
+    arr = np.array(x, dtype="float64", copy=True)
+    if arr.ndim != 2:
+        return arr, {"n_nan_cells": 0, "n_nan_rows": 0, "n_nan_columns": 0}
+    nan_mask = ~np.isfinite(arr)
+    report = {
+        "n_nan_cells": int(nan_mask.sum()),
+        "n_nan_rows": int(np.any(nan_mask, axis=1).sum()),
+        "n_nan_columns": int(np.any(nan_mask, axis=0).sum()),
+    }
+    if report["n_nan_cells"]:
+        ref = np.asarray(reference, dtype="float64") if reference is not None else arr
+        with warnings.catch_warnings():  # all-NaN columns -> nan (replaced by 0 below); silence "Mean of empty slice"
+            warnings.simplefilter("ignore", RuntimeWarning)
+            col_mean = np.nanmean(ref if ref.shape[1:] == arr.shape[1:] else arr, axis=0)
+        col_mean = np.where(np.isfinite(col_mean), col_mean, 0.0)
+        rows, cols = np.where(nan_mask)
+        arr[rows, cols] = np.take(col_mean, cols)
+    return arr, report
+
+
+def target_shift(y_train: object, y_test: object) -> dict[str, object]:
+    """Regression train↔test target shift: standardized mean difference, KS test, Wasserstein distance."""
+    a = np.asarray(y_train, dtype=float).ravel()
+    a = a[np.isfinite(a)]
+    b = np.asarray(y_test, dtype=float).ravel()
+    b = b[np.isfinite(b)]
+    if a.size < 2 or b.size < 2:
+        return _nulls(_TARGET_SHIFT_KEYS)
+    pooled = float(np.sqrt((a.var(ddof=1) + b.var(ddof=1)) / 2.0))
+    ks = stats.ks_2samp(a, b)
+    return {
+        "n_train": int(a.size), "n_test": int(b.size),
+        "mean_train": float(a.mean()), "mean_test": float(b.mean()),
+        "std_train": float(a.std(ddof=1)), "std_test": float(b.std(ddof=1)),
+        "standardized_mean_diff": float((b.mean() - a.mean()) / pooled) if pooled > 0 else None,
+        "ks_statistic": float(ks.statistic), "ks_p": float(ks.pvalue),
+        "wasserstein": float(stats.wasserstein_distance(a, b)),
+    }
+
+
+def class_shift(train_counts: dict[str, int], test_counts: dict[str, int]) -> dict[str, object]:
+    """Classification train↔test label shift: max class-proportion delta + Jensen-Shannon distance."""
+    classes = sorted(set(train_counts) | set(test_counts))
+    unseen_test = [c for c in classes if train_counts.get(c, 0) > 0 and test_counts.get(c, 0) == 0]
+    unseen_train = [c for c in classes if test_counts.get(c, 0) > 0 and train_counts.get(c, 0) == 0]
+    p = np.array([train_counts.get(c, 0) for c in classes], dtype=float)
+    q = np.array([test_counts.get(c, 0) for c in classes], dtype=float)
+    if not classes or p.sum() == 0 or q.sum() == 0:
+        return {**_nulls(_CLASS_SHIFT_KEYS), "n_classes": len(classes), "unseen_in_test": unseen_test, "unseen_in_train": unseen_train}
+    js = jensenshannon(p / p.sum(), q / q.sum(), base=2)
+    return {
+        "n_classes": len(classes),
+        "max_abs_proportion_delta": float(np.max(np.abs(p / p.sum() - q / q.sum()))),
+        "jensen_shannon": float(js) if np.isfinite(js) else None,
+        "unseen_in_test": unseen_test,
+        "unseen_in_train": unseen_train,
     }

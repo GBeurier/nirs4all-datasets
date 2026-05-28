@@ -104,6 +104,33 @@ canonical (and raw) files **with `tabIngest=false`** (so bytes stay pristine), p
 and mints a **DOI**. Record the returned DOI in the descriptor's `dataverse.doi`, re-run
 `n4a-datasets qualify <id>` (so the card/Croissant carry the DOI), and commit.
 
+## Bulk local qualification (many datasets at once)
+
+To ingest, qualify, and preview a whole tree of datasets locally (no Dataverse), three commands wrap
+the per-dataset flow above:
+
+```bash
+# 1. Auto-generate one descriptor per leaf dataset under a source tree (nirs4all Xtrain/Ytrain/... convention),
+#    enriched from an optional master sheet. Descriptors are marked generation.managed=true (regenerable),
+#    visibility: restricted (workflow state — not published), confidentiality honest per licence.
+n4a-datasets bootstrap <source_tree> --root . --xlsx <DatabaseDetail.xlsx>
+
+# 2. Organize (copy raw → canonical Parquet, incremental) + build every identity card, in parallel,
+#    then refresh the catalog and build the interactive site. Per-dataset failures are isolated and
+#    summarized in bulk_report.json (gitignored); one bad dataset never aborts the run.
+n4a-datasets build-all --source-tree <source_tree> --root . [--workers N] [--only id1,id2] [--force]
+
+# 3. (re)build only the static site from the catalog + cards (also done by build-all unless --no-site).
+n4a-datasets site --root . --out site/
+open site/index.html      # or: python -m http.server --directory site
+```
+
+`bootstrap` re-runs are idempotent (unchanged managed descriptors are skipped; a descriptor with
+`generation.managed: false` is treated as human-owned and never overwritten). `build-all` skips
+datasets whose source bytes + descriptor are unchanged and whose card is intact. The site is a
+self-contained `site/` (searchable/sortable index + per-dataset card pages with plots, statistics,
+datasheet, provenance/governance, and Croissant/JSON downloads) that opens from `file://` too.
+
 ## Conventions
 
 - `id`: lowercase slug, stable forever (it is the Dataverse/URL identity).
