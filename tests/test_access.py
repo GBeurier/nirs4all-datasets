@@ -2,14 +2,16 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import numpy as np
 import pytest
+import yaml
 
 from nirs4all_datasets import schema as s
-from nirs4all_datasets.access import canonical_file_ids, canonical_registry, fetch_private, fetch_public, load_local
-from nirs4all_datasets.manifest import sha256_bytes
+from nirs4all_datasets.access import canonical_file_ids, canonical_registry, fetch_private, fetch_public, load, load_local
+from nirs4all_datasets.manifest import sha256_bytes, write_manifest
 
 _HASH = "a" * 64
 
@@ -68,6 +70,77 @@ def test_fetch_private_rejects_checksum_mismatch(tmp_path: Path) -> None:
     session.get.return_value = resp
     with pytest.raises(RuntimeError, match="checksum mismatch"):
         fetch_private({"X.parquet": 11}, {"X.parquet": _HASH}, tmp_path, instance="https://dv.example", token="TKN", session=session)
+
+
+def _write_registry(tmp_path: Path, *, visibility: str = "public", doi: str | None = "10.70112/ABC", local: bool = False) -> Path:
+    """A minimal registry: one descriptor + manifest, optionally with local canonical data."""
+    (tmp_path / "catalog" / "datasets").mkdir(parents=True)
+    descriptor = {
+        "id": "corn", "name": "Corn", "version": "1.0.0", "description": "x",
+        "instrument": {"modality": "NIR"}, "targets": [{"name": "y", "task_type": "regression"}],
+        "provenance": {"contributor": "Lab"},
+        "governance": {
+            "license": "CC-BY-4.0", "visibility": visibility,
+            "confidentiality_class": "public" if visibility == "public" else "internal",
+            "owner_steward": "L", "redistribution_rights": "r", "consent_ethics_status": "n/a",
+            "anonymization_status": "n/a", "permitted_use": "r", "access_policy": "o",
+        },
+        "dataverse": ({"doi": doi} if doi else {}),
+    }
+    (tmp_path / "catalog" / "datasets" / "corn.yaml").write_text(yaml.safe_dump(descriptor), encoding="utf-8")
+    dataset_dir = tmp_path / "datasets" / "corn"
+    dataset_dir.mkdir(parents=True)
+    write_manifest(_manifest(), dataset_dir / "manifest.json")
+    if local:
+        (dataset_dir / "canonical").mkdir()
+        (dataset_dir / "canonical" / "nirs4all_config.json").write_text("{}", encoding="utf-8")
+    return tmp_path
+
+
+def test_load_prefers_local_canonical(tmp_path: Path, monkeypatch: Any) -> None:
+    root = _write_registry(tmp_path, local=True)
+    seen: dict[str, Path] = {}
+    monkeypatch.setattr("nirs4all_datasets.access.load_local", lambda d: seen.setdefault("dir", Path(d)))
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_and_load", lambda *a, **k: pytest.fail("must not fetch when local present"))
+    load("corn", root=root)
+    assert seen["dir"] == root / "datasets" / "corn"
+
+
+def test_load_public_fetches_by_doi_without_token(tmp_path: Path, monkeypatch: Any) -> None:
+    root = _write_registry(tmp_path, visibility="public", local=False)
+    rec: dict[str, Any] = {}
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_and_load", lambda name, doi, manifest, **k: rec.update(name=name, doi=doi, token=k.get("token")))
+    load("corn", root=root)
+    assert rec["name"] == "corn" and rec["doi"] == "10.70112/ABC" and rec["token"] is None
+
+
+def test_load_restricted_resolves_token_from_settings(tmp_path: Path, monkeypatch: Any) -> None:
+    root = _write_registry(tmp_path, visibility="restricted", local=False)
+    rec: dict[str, Any] = {}
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_and_load", lambda name, doi, manifest, **k: rec.update(token=k.get("token")))
+    monkeypatch.setenv("NIRS4ALL_DATAVERSE_TOKEN", "TKN-XYZ")
+    load("corn", root=root)
+    assert rec["token"] == "TKN-XYZ"
+
+
+def test_load_explicit_token_wins(tmp_path: Path, monkeypatch: Any) -> None:
+    root = _write_registry(tmp_path, visibility="restricted", local=False)
+    rec: dict[str, Any] = {}
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_and_load", lambda name, doi, manifest, **k: rec.update(token=k.get("token")))
+    load("corn", root=root, token="EXPLICIT")
+    assert rec["token"] == "EXPLICIT"
+
+
+def test_load_unpublished_without_local_raises(tmp_path: Path) -> None:
+    root = _write_registry(tmp_path, doi=None, local=False)
+    with pytest.raises(ValueError, match="not published"):
+        load("corn", root=root)
+
+
+def test_public_api_is_exposed() -> None:
+    import nirs4all_datasets as n4ad
+
+    assert all(callable(getattr(n4ad, fn)) for fn in ("load", "load_local", "list", "card"))
 
 
 def test_load_local_round_trip(tmp_path: Path) -> None:

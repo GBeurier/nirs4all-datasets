@@ -113,3 +113,54 @@ def fetch_and_load(dataset_id: str, doi: str, manifest: Manifest, *, cache_dir: 
             raise ValueError("instance is required for private downloads.")
         fetch_private(canonical_file_ids(manifest), registry, canonical, instance=instance, token=token)
     return load_local(cache_root / dataset_id)
+
+
+def load(name: str, *, root: str | Path = ".", token: str | None = None, instance: str | None = None, cache_dir: str | Path | None = None) -> Any:
+    """Load a catalog dataset by ``name`` as a nirs4all ``DatasetConfigs``.
+
+    Local-first: if ``<root>/datasets/<name>/canonical`` is present it loads directly (no network).
+    Otherwise it fetches by the dataset's pinned DOI -- **public** datasets via pooch (download +
+    checksum-verify + cache), **restricted** ones via the Dataverse access API with a token (passed
+    explicitly, or, for a non-public dataset, resolved from settings: env / config.toml / ``.env``).
+
+    Args:
+        name: Dataset id (a ``catalog/datasets/<name>.yaml`` descriptor under ``root``).
+        root: Registry root (defaults to the current directory).
+        token: Dataverse API token for private downloads; auto-resolved from settings if omitted.
+        instance: Dataverse instance override (else the descriptor's instance).
+        cache_dir: Download cache (defaults to pooch's OS cache).
+
+    Returns:
+        A nirs4all ``DatasetConfigs`` ready for ``nirs4all.run``.
+    """
+    import yaml
+
+    from nirs4all_datasets.manifest import read_manifest
+    from nirs4all_datasets.schema import DatasetDescriptor, Visibility
+
+    root = Path(root)
+    dataset_dir = root / "datasets" / name
+    if (dataset_dir / "canonical" / "nirs4all_config.json").exists():
+        return load_local(dataset_dir)  # already present locally -> no download
+
+    descriptor_path = root / "catalog" / "datasets" / f"{name}.yaml"
+    if not descriptor_path.exists():
+        raise FileNotFoundError(f"unknown dataset {name!r}: no local canonical data and no descriptor at {descriptor_path}")
+    descriptor = DatasetDescriptor(**(yaml.safe_load(descriptor_path.read_text(encoding="utf-8")) or {}))
+    manifest_path = dataset_dir / "manifest.json"
+    if not manifest_path.exists():
+        raise FileNotFoundError(f"no manifest for {name!r} at {manifest_path}; build it before remote access")
+    manifest = read_manifest(manifest_path)
+
+    doi = descriptor.dataverse.doi or manifest.doi
+    if not doi:
+        raise ValueError(f"{name!r} is not published (no DOI) and has no local canonical data to load")
+
+    resolved_instance = instance or descriptor.dataverse.instance
+    resolved_token = token
+    if resolved_token is None and descriptor.governance.visibility is not Visibility.PUBLIC:
+        from nirs4all_datasets.config import get_settings
+
+        settings = get_settings(instance=resolved_instance)
+        resolved_token = settings.token.get_secret_value() if settings.token else None
+    return fetch_and_load(name, doi, manifest, cache_dir=cache_dir, instance=resolved_instance, token=resolved_token)
