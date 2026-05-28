@@ -78,6 +78,7 @@ def _summary_record(entry: dict[str, Any], card: dict[str, Any]) -> dict[str, An
     return {
         "id": entry["id"],
         "name": entry.get("name") or entry["id"],
+        "version": entry.get("version") or "",
         "domain": entry.get("domain") or "",
         "task": entry.get("task_type") or (card.get("targets") or {}).get("task_type") or "",
         "targets": ", ".join(entry.get("targets") or []),
@@ -183,10 +184,12 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
     prov = descriptor.get("provenance") or {}
     inst = descriptor.get("instrument") or {}
     name = ident.get("name") or entry.get("name") or did
+    version = ident.get("version") or entry.get("version")
+    dataverse_version = (descriptor.get("dataverse") or {}).get("dataset_version")
 
     badges = "".join(
         f'<span class="badge">{_esc(b)}</span>'
-        for b in [entry.get("task_type"), entry.get("visibility"), entry.get("license")]
+        for b in [(f"v{version}" if version else None), entry.get("task_type"), entry.get("visibility"), entry.get("license")]
         if b
     )
     if entry.get("is_stale"):
@@ -236,7 +239,9 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
         ("Visibility", gov.get("visibility")),
         ("Confidentiality", gov.get("confidentiality_class")),
         ("Redistribution", gov.get("redistribution_rights")),
+        ("Catalog version", version),
         ("DOI", f'<a href="https://doi.org/{_esc(ident.get("doi"))}">{_esc(ident.get("doi"))}</a>' if ident.get("doi") else None),
+        ("Dataverse version", dataverse_version),
         ("Citation", descriptor.get("citation")),
     ]))
 
@@ -300,9 +305,9 @@ def _index_page(records: list[dict[str, Any]]) -> str:
 <div class="top-scroll" id="topScroll"><div class="top-scroll-inner" id="topScrollInner"></div></div>
 <div class="table-wrap" id="tableWrap">
 <table id="catalog">
-<colgroup><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:6%"><col style="width:5%"><col style="width:8%"><col style="width:5%"><col style="width:9%"><col style="width:4%"><col style="width:7%"><col style="width:5%"><col style="width:9%"><col style="width:6%"></colgroup>
+<colgroup><col style="width:19%"><col style="width:8%"><col style="width:8%"><col style="width:5%"><col style="width:6%"><col style="width:5%"><col style="width:8%"><col style="width:5%"><col style="width:8%"><col style="width:4%"><col style="width:6%"><col style="width:4%"><col style="width:8%"><col style="width:6%"></colgroup>
 <thead><tr>
-  <th data-k="name" class="col-name">Dataset</th><th data-k="domain">Family</th><th data-k="task">Task</th>
+  <th data-k="name" class="col-name">Dataset</th><th data-k="domain">Family</th><th data-k="task">Task</th><th data-k="version">Ver.</th>
   <th data-k="n_samples" class="num">Samples</th><th data-k="n_features" class="num">λ</th>
   <th data-k="wl">Range</th><th data-k="unit">Unit</th><th data-k="signal">Signal</th>
   <th data-k="n_classes" class="num">Cls</th><th data-k="eff_rank" class="num">Eff.rank</th>
@@ -431,7 +436,7 @@ _APP_JS = """
       return String(x).localeCompare(String(y),undefined,{numeric:true})*sortDir;});
     rows.innerHTML=list.map(d=>`<tr>
       <td class="col-name"><a href="dataset/${esc(d.id)}.html" title="${esc(d.name)}">${esc(d.name)}</a></td>
-      <td title="${esc(d.domain)}">${esc(d.domain)}</td><td>${esc(d.task)}</td>
+      <td title="${esc(d.domain)}">${esc(d.domain)}</td><td>${esc(d.task)}</td><td>${esc(d.version)}</td>
       <td class="num">${fmt(d.n_samples)}</td><td class="num">${fmt(d.n_features)}</td>
       <td title="${esc(d.wl)}">${esc(d.wl)}</td><td>${esc(d.unit)}</td><td title="${esc(d.signal)}">${esc(d.signal)}</td>
       <td class="num">${d.n_classes==null?'':d.n_classes}</td>

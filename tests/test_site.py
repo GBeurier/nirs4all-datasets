@@ -16,7 +16,7 @@ def _registry(tmp_path: Path, dataset_id: str = "corn_oil", name: str = "Corn â€
         "schema_version": "1.0",
         "n_datasets": 1,
         "datasets": [{
-            "id": dataset_id, "name": name, "domain": "corn", "task_type": "regression",
+            "id": dataset_id, "name": name, "version": "1.0.0", "domain": "corn", "task_type": "regression",
             "targets": ["oil"], "n_samples": 80, "n_features": 700, "signal_type": "absorbance",
             "license": "CC-BY-4.0", "visibility": "restricted", "has_card": True, "is_stale": False, "doi": None,
         }],
@@ -35,7 +35,7 @@ def _registry(tmp_path: Path, dataset_id: str = "corn_oil", name: str = "Corn â€
     (dd / "assets").mkdir(parents=True)
     (dd / "assets" / "spectra_envelope.png").write_bytes(b"\x89PNG\r\n\x1a\n")  # stub
     (dd / "card.json").write_text(json.dumps({
-        "identity": {"id": dataset_id, "name": name, "description": "desc", "doi": None},
+        "identity": {"id": dataset_id, "name": name, "version": "1.0.0", "description": "desc", "doi": None},
         "inventory": {"n_samples": 80, "n_features": 700, "n_sources": 1, "n_folds": 0},
         "spectral": {"wavelength_unit": "nm", "wavelength_range": [1100.0, 2498.0], "signal_type": "absorbance"},
         "dimensionality": {"effective_rank": 3.2, "n_components_95": 4, "n_components_99": 9, "explained_variance_ratio": [0.99]},
@@ -70,6 +70,16 @@ def test_index_json_escapes_script(tmp_path: Path) -> None:
     index = (out / "index.html").read_text(encoding="utf-8")
     assert "</script><b>" not in index  # raw breakout neutralized
     assert "<\\/script>" in index  # escaped form present
+
+
+def test_version_shown_in_index_and_card(tmp_path: Path) -> None:
+    root = _registry(tmp_path)
+    out = build_site(root, tmp_path / "site")
+    index = (out / "index.html").read_text(encoding="utf-8")
+    assert '"version": "1.0.0"' in index  # embedded in the index data
+    assert ">Ver.<" in index  # version column header present
+    card = (out / "dataset" / "corn_oil.html").read_text(encoding="utf-8")
+    assert "1.0.0" in card and "Catalog version" in card
 
 
 def test_skips_entries_without_card(tmp_path: Path) -> None:

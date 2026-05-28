@@ -76,14 +76,17 @@ class DataverseClient:
         resp = self._sess().post(self._url(f"/api/dataverses/{collection}/datasets"), headers=self._headers(), json=metadata, timeout=self.timeout)
         return str(self._data_dict(resp, "create_dataset")["persistentId"])
 
-    def upload_file(self, doi: str, path: str | Path, *, tab_ingest: bool = False, description: str | None = None, directory_label: str | None = None) -> dict[str, Any]:
+    def upload_file(self, doi: str, path: str | Path, *, tab_ingest: bool = False, description: str | None = None, directory_label: str | None = None, restrict: bool = False) -> dict[str, Any]:
         """Upload one file to a dataset draft. ``tab_ingest=False`` (default) keeps bytes pristine.
 
-        File metadata (``tabIngest``, ``description``, ``directoryLabel``) goes in the ``jsonData``
-        multipart part, as Dataverse requires; ``directory_label`` preserves sub-directory structure.
+        File metadata (``tabIngest``, ``restrict``, ``description``, ``directoryLabel``) goes in the
+        ``jsonData`` multipart part, as Dataverse requires; ``directory_label`` preserves sub-directory
+        structure; ``restrict=True`` marks the file access-restricted (download needs a permitted token).
         """
         path = Path(path)
         metadata: dict[str, str] = {"tabIngest": "true" if tab_ingest else "false"}
+        if restrict:
+            metadata["restrict"] = "true"
         if description:
             metadata["description"] = description
         if directory_label:
@@ -98,6 +101,66 @@ class DataverseClient:
                 timeout=self.timeout,
             )
         return self._data_dict(resp, "upload_file")
+
+    def replace_file(self, file_id: int, path: str | Path, *, tab_ingest: bool = False, directory_label: str | None = None, restrict: bool = False) -> dict[str, Any]:
+        """Replace an existing datafile's content (creates a new draft version on publish).
+
+        ``file_id`` is the current Dataverse datafile id; ``forceReplace`` allows a differing content
+        type. Used by the versioned-update flow to re-upload changed canonical bytes in place.
+        """
+        path = Path(path)
+        metadata: dict[str, str] = {"forceReplace": "true", "tabIngest": "true" if tab_ingest else "false"}
+        if restrict:
+            metadata["restrict"] = "true"
+        if directory_label:
+            metadata["directoryLabel"] = directory_label
+        with path.open("rb") as fh:
+            resp = self._sess().post(
+                self._url(f"/api/files/{file_id}/replace"),
+                headers=self._headers(),
+                files={"file": (path.name, fh)},
+                data={"jsonData": json.dumps(metadata)},
+                timeout=self.timeout,
+            )
+        return self._data_dict(resp, "replace_file")
+
+    def restrict_file(self, file_id: int, restrict: bool = True) -> None:
+        """Restrict (or, with ``restrict=False``, un-restrict) a published/draft datafile."""
+        resp = self._sess().put(
+            self._url(f"/api/files/{file_id}/restrict"),
+            headers=self._headers(),
+            data="true" if restrict else "false",
+            timeout=self.timeout,
+        )
+        if not resp.ok:
+            raise DataverseError(f"restrict_file failed: HTTP {resp.status_code} {resp.reason}")
+
+    def dataset_db_id(self, doi: str) -> int:
+        """Return the numeric database id of a dataset (needed by the role-assignment endpoints)."""
+        resp = self._sess().get(self._url("/api/datasets/:persistentId/"), params={"persistentId": doi}, headers=self._headers(), timeout=self.timeout)
+        return int(self._data_dict(resp, "dataset_db_id")["id"])
+
+    def assign_role(self, dataset_db_id: int, assignee: str, role: str) -> dict[str, Any]:
+        """Grant ``role`` on a dataset to ``assignee`` (``@user`` or ``&group``). Returns the assignment."""
+        resp = self._sess().post(
+            self._url(f"/api/datasets/{dataset_db_id}/assignments"),
+            headers=self._headers(),
+            json={"assignee": assignee, "role": role},
+            timeout=self.timeout,
+        )
+        return self._data_dict(resp, "assign_role")
+
+    def list_assignments(self, dataset_db_id: int) -> list[dict[str, Any]]:
+        """List role assignments on a dataset (each has ``id``, ``assignee``, ``_roleAlias``)."""
+        resp = self._sess().get(self._url(f"/api/datasets/{dataset_db_id}/assignments"), headers=self._headers(), timeout=self.timeout)
+        data = self._data(resp, "list_assignments")
+        return data if isinstance(data, list) else []
+
+    def delete_assignment(self, dataset_db_id: int, assignment_id: int) -> None:
+        """Revoke a role assignment by its id."""
+        resp = self._sess().delete(self._url(f"/api/datasets/{dataset_db_id}/assignments/{assignment_id}"), headers=self._headers(), timeout=self.timeout)
+        if not resp.ok:
+            raise DataverseError(f"delete_assignment failed: HTTP {resp.status_code} {resp.reason}")
 
     def publish_dataset(self, doi: str, *, version_type: str = "major") -> dict[str, Any]:
         """Publish the dataset's draft as a whole version (``major`` or ``minor``)."""

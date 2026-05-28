@@ -82,6 +82,58 @@ def test_no_token_means_no_auth_header() -> None:
     assert session.get.call_args.kwargs["headers"] == {}
 
 
+def test_upload_file_restrict_flag(tmp_path: Path) -> None:
+    f = tmp_path / "X.parquet"
+    f.write_bytes(b"data")
+    session = MagicMock()
+    session.post.return_value = _resp({"data": {"files": [{"dataFile": {"id": 1}}]}})
+    _client(session).upload_file("doi:10.70112/ABC", f, restrict=True)
+    meta = json.loads(session.post.call_args.kwargs["data"]["jsonData"])
+    assert meta["restrict"] == "true"
+
+
+def test_replace_file_endpoint(tmp_path: Path) -> None:
+    f = tmp_path / "X.parquet"
+    f.write_bytes(b"new")
+    session = MagicMock()
+    session.post.return_value = _resp({"data": {"files": [{"dataFile": {"id": 7}}]}})
+    _client(session).replace_file(7, f, directory_label="canonical")
+    args, kwargs = session.post.call_args
+    assert args[0].endswith("/api/files/7/replace")
+    assert json.loads(kwargs["data"]["jsonData"])["forceReplace"] == "true"
+
+
+def test_restrict_file_endpoint() -> None:
+    session = MagicMock()
+    session.put.return_value = _resp({"data": {}}, method="PUT")
+    _client(session).restrict_file(7, restrict=True)
+    args, kwargs = session.put.call_args
+    assert args[0].endswith("/api/files/7/restrict")
+    assert kwargs["data"] == "true"
+
+
+def test_dataset_db_id_resolves_numeric_id() -> None:
+    session = MagicMock()
+    session.get.return_value = _resp({"data": {"id": 42, "persistentId": "doi:10.70112/ABC"}}, method="GET")
+    assert _client(session).dataset_db_id("doi:10.70112/ABC") == 42
+
+
+def test_role_assignment_lifecycle() -> None:
+    session = MagicMock()
+    session.post.return_value = _resp({"data": {"id": 100, "assignee": "@bob"}})
+    assignment = _client(session).assign_role(42, "@bob", "fileDownloader")
+    assert assignment["id"] == 100
+    assert session.post.call_args.args[0].endswith("/api/datasets/42/assignments")
+    assert session.post.call_args.kwargs["json"] == {"assignee": "@bob", "role": "fileDownloader"}
+
+    session.get.return_value = _resp({"data": [{"id": 100, "assignee": "@bob"}]}, method="GET")
+    assert _client(session).list_assignments(42)[0]["assignee"] == "@bob"
+
+    session.delete.return_value = _resp({"data": {}}, method="DELETE")
+    _client(session).delete_assignment(42, 100)  # no raise
+    assert session.delete.call_args.args[0].endswith("/api/datasets/42/assignments/100")
+
+
 def test_dataset_metadata_maps_authors_license_and_validates_subjects() -> None:
     meta = dataset_metadata(
         title="Corn",

@@ -12,7 +12,13 @@ from pathlib import Path
 from typing import Any
 
 from nirs4all_datasets.dataverse import DataverseClient, dataset_metadata
-from nirs4all_datasets.schema import DatasetDescriptor
+from nirs4all_datasets.manifest import read_manifest, write_manifest
+from nirs4all_datasets.schema import DatasetDescriptor, Visibility
+
+
+def _persistent_id(doi: str) -> str:
+    """Dataverse API persistentId form (``doi:<suffix>``) from a bare or prefixed DOI."""
+    return doi if doi.startswith("doi:") else f"doi:{doi}"
 
 # SPDX -> Dataverse license object (open licences only; others inherit the collection default).
 _LICENSE_MAP: dict[str, dict[str, str]] = {
@@ -79,15 +85,76 @@ def publish_dataset(
     """
     assert_publishable(descriptor)
     if descriptor.dataverse.doi is not None:
-        raise NotImplementedError(f"dataset already has DOI {descriptor.dataverse.doi}; updating an existing dataset is a later phase.")
+        raise NotImplementedError(f"dataset already has DOI {descriptor.dataverse.doi}; use update_dataset() to publish a new version.")
 
     dataset_dir = Path(dataset_dir)
+    restrict = descriptor.governance.visibility is not Visibility.PUBLIC  # restricted/embargo -> access-gated files
     doi = client.create_dataset(collection, to_dataverse_metadata(descriptor, contact_email=contact_email, subjects=subjects))
 
     files = _payload_files(dataset_dir)
     for path, directory_label in files:
-        client.upload_file(doi, path, tab_ingest=False, directory_label=directory_label or None)
+        client.upload_file(doi, path, tab_ingest=False, directory_label=directory_label or None, restrict=restrict)
 
     result = client.publish_dataset(doi, version_type=version_type)
     client.wait_for_indexing(doi)
     return {"doi": doi, "files": len(files), "version": result.get("versionNumber")}
+
+
+def update_dataset(
+    descriptor: DatasetDescriptor,
+    dataset_dir: str | Path,
+    client: DataverseClient,
+    *,
+    version_type: str = "major",
+) -> dict[str, Any]:
+    """Publish a new version of an already-published dataset (replace changed files, add new ones).
+
+    Requires ``descriptor.dataverse.doi``. Canonical/raw files present on Dataverse are replaced in
+    place (so file ids stay stable); files not yet on Dataverse are added. Returns ``{"doi","files","version"}``.
+    """
+    assert_publishable(descriptor)
+    if descriptor.dataverse.doi is None:
+        raise ValueError("update_dataset requires descriptor.dataverse.doi (use publish_dataset for the first publication).")
+
+    dataset_dir = Path(dataset_dir)
+    pid = _persistent_id(descriptor.dataverse.doi)
+    restrict = descriptor.governance.visibility is not Visibility.PUBLIC
+    existing = client.file_checksums(pid)  # filename -> {type, value, file_id}
+
+    files = _payload_files(dataset_dir)
+    for path, directory_label in files:
+        info = existing.get(path.name)
+        if info and info.get("file_id") is not None:
+            client.replace_file(int(info["file_id"]), path, tab_ingest=False, directory_label=directory_label or None, restrict=restrict)
+        else:
+            client.upload_file(pid, path, tab_ingest=False, directory_label=directory_label or None, restrict=restrict)
+
+    result = client.publish_dataset(pid, version_type=version_type)
+    client.wait_for_indexing(pid)
+    return {"doi": descriptor.dataverse.doi, "files": len(files), "version": result.get("versionNumber")}
+
+
+def record_publication(dataset_dir: str | Path, client: DataverseClient, doi: str, dataset_version: Any) -> None:
+    """Refresh the manifest after (re)publication: record Dataverse file ids + native checksums + version.
+
+    This is what makes private/restricted access work: ``access.fetch_private`` downloads by the file
+    ids recorded here (with a permitted token). No-op if there is no manifest.
+    """
+    manifest_path = Path(dataset_dir) / "manifest.json"
+    if not manifest_path.exists():
+        return
+    manifest = read_manifest(manifest_path)
+    checks = client.file_checksums(_persistent_id(doi))
+    for entry in manifest.files:
+        info = checks.get(Path(entry.path).name)
+        if not info:
+            continue
+        if info.get("file_id") is not None:
+            entry.file_id = int(info["file_id"])
+        if info.get("type") and info.get("value"):
+            entry.native_checksum_type = str(info["type"])
+            entry.native_checksum = str(info["value"])
+    manifest.doi = doi[4:] if doi.startswith("doi:") else doi
+    if dataset_version is not None:
+        manifest.dataset_version = str(dataset_version)
+    write_manifest(manifest, manifest_path)
