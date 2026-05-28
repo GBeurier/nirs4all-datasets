@@ -283,11 +283,16 @@ def site_cmd(
 
 
 @app.command()
-def load(dataset_id: str, root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
-    """Load a local dataset and print a one-line summary (smoke test)."""
-    from nirs4all_datasets.access import load_local
+def load(
+    dataset_id: str,
+    root: Path = typer.Option(Path("."), help="Registry root."),
+    token: str | None = typer.Option(None, help="Dataverse token for a private/restricted dataset (else resolved from settings)."),
+    instance: str | None = typer.Option(None, help="Dataverse instance URL override."),
+) -> None:
+    """Load a dataset (local if present, else fetched by DOI) and print a one-line summary."""
+    from nirs4all_datasets.access import load as load_dataset
 
-    dataset = load_local(root / "datasets" / dataset_id).get_dataset_at(0)
+    dataset = load_dataset(dataset_id, root=root, token=token, instance=instance).get_dataset_at(0)
     typer.echo(f"loaded {dataset_id}: {dataset.num_samples} samples x {dataset.num_features} features ({dataset.task_type})")
 
 

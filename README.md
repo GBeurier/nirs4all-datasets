@@ -50,6 +50,10 @@ n4a-datasets publish <id> --collection <alias> --contact-email you@cirad.fr
 Raw/canonical **bytes** live on Dataverse (gitignored); the descriptor, card, datasheet, Croissant,
 manifest and catalog are git-tracked. `n4a-datasets <command> --help` documents every command.
 
+**Publishing (public *and* private) + reading back:** see the step-by-step
+**[docs/PUBLISHING.md](docs/PUBLISHING.md)** — sandbox rehearsal, `publish`/update, `grant`/`revoke`/`restrict`
+for access control, and `load("name", token=...)` for token-gated private downloads.
+
 ## API token — where to put it
 
 A Dataverse API token is **only** needed to **upload/publish** datasets or to download
