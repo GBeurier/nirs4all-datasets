@@ -6,6 +6,7 @@ never fabricated.
 """
 from __future__ import annotations
 
+import math
 from typing import Any
 
 from nirs4all_datasets.schema import DatasetDescriptor
@@ -19,6 +20,17 @@ def _na(value: Any) -> str:
     return str(value).replace("\r", " ").replace("\n", " ").replace("|", "\\|").strip()
 
 
+def _fmt(value: Any, nd: int = 3) -> str:
+    """Compact rendering of a number (rounded) for the datasheet; falls back to ``_na``."""
+    if isinstance(value, bool) or value is None:
+        return _na(value)
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, float):
+        return _na(None) if not math.isfinite(value) else f"{value:.{nd}g}"
+    return _na(value)
+
+
 def render_datasheet(descriptor: DatasetDescriptor, card: dict[str, Any]) -> str:
     """Return a Datasheets-for-Datasets Markdown document for a dataset."""
     gov = descriptor.governance
@@ -27,9 +39,18 @@ def render_datasheet(descriptor: DatasetDescriptor, card: dict[str, Any]) -> str
     inventory = card.get("inventory", {})
     spectral = card.get("spectral", {})
     quality = card.get("quality", {})
+    dim = card.get("dimensionality") or {}
+    shift = (card.get("shift") or {}).get("target") or {}
 
     targets = ", ".join(f"{t.name} ({t.task_type.value}{', ' + t.unit if t.unit else ''})" for t in descriptor.targets)
     conversion = prov.conversion_status.value if prov.conversion_status is not None else None
+
+    if "standardized_mean_diff" in shift:
+        shift_summary = f"std. mean diff {_fmt(shift.get('standardized_mean_diff'))}, KS {_fmt(shift.get('ks_statistic'))} (p {_fmt(shift.get('ks_p'))}), Wasserstein {_fmt(shift.get('wasserstein'))}"
+    elif "jensen_shannon" in shift:
+        shift_summary = f"Jensen–Shannon {_fmt(shift.get('jensen_shannon'))}, max class-proportion Δ {_fmt(shift.get('max_abs_proportion_delta'))}"
+    else:
+        shift_summary = _na(None)
 
     lines = [
         f"# Datasheet — {descriptor.name}",
@@ -50,6 +71,12 @@ def render_datasheet(descriptor: DatasetDescriptor, card: dict[str, Any]) -> str
         f"- **Spectral axis:** {_na(spectral.get('wavelength_range'))} {_na(spectral.get('wavelength_unit'))}; signal type {_na(spectral.get('signal_type'))}.",
         f"- **Targets:** {_na(targets)}",
         f"- **Contains missing values:** {_na(quality.get('has_nan'))}",
+        "",
+        "## Statistics",
+        "",
+        f"- **PCA / dimensionality:** effective rank {_fmt(dim.get('effective_rank'))}; "
+        f"{_na(dim.get('n_components_95'))} PC(s) → 95% variance, {_na(dim.get('n_components_99'))} → 99%.",
+        f"- **Train↔test target shift:** {shift_summary}",
         "",
         "## Collection process",
         "",

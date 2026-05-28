@@ -76,29 +76,85 @@ def _load_via_dataverse_io(path: Path, *, target: str | None, signal: str | None
     return dataset, "nirs4all-io", nio.__version__, conv_config, warnings
 
 
-def _load_via_dataset_configs(path: Path) -> tuple[Any, str, str, dict[str, str], list[str]]:
-    """Tabular route: load a directory with nirs4all DatasetConfigs."""
+def _has_data_rows(path: Path) -> bool:
+    """Whether a tabular file holds at least one data row (not missing / 0-byte / header-only)."""
+    try:
+        if not path.exists() or path.stat().st_size == 0:
+            return False
+    except OSError:
+        return False
+    with path.open("r", encoding="utf-8", errors="replace") as fh:
+        non_empty = sum(1 for line in fh if line.strip())
+        if non_empty > 1:  # short-circuit: a header + >=1 data row
+            return True
+    return False
+
+
+def _build_folder_config(path: Path, *, header_unit: str | None, na_policy: str) -> tuple[dict[str, Any], list[str]]:
+    """Build an explicit nirs4all config from a folder, robust to real-world data.
+
+    Reuses nirs4all's ``FolderParser`` for the (case-insensitive) file→role mapping — this package
+    never re-derives the naming rules — then augments it: ``na_policy`` on the X/Y loaders (``ignore``
+    keeps NaN so the card can report it instead of the loader aborting), an explicit ``header_unit``
+    for the spectral axis, and dropping ``*_group`` metadata files that are empty/header-only (which
+    otherwise crash the loader). Returns ``(config, warnings)``.
+    """
+    from nirs4all.data.parsers.folder_parser import FolderParser
+
+    result = FolderParser().parse(str(path))
+    if not result.success:
+        raise ValueError(f"{path}: could not parse folder: {'; '.join(result.errors)}")
+    config: dict[str, Any] = {k: v for k, v in result.config.items() if v is not None}
+    warnings: list[str] = list(result.warnings or [])
+
+    def _params_for(value: Any, base: dict[str, str]) -> Any:
+        return [dict(base) for _ in value] if isinstance(value, list) else dict(base)
+
+    x_base = {"na_policy": na_policy} | ({"header_unit": header_unit} if header_unit else {})
+    y_base = {"na_policy": na_policy}
+    for side in ("train", "test"):
+        if config.get(f"{side}_x") is not None:
+            config[f"{side}_x_params"] = _params_for(config[f"{side}_x"], x_base)
+        if config.get(f"{side}_y") is not None:
+            config[f"{side}_y_params"] = _params_for(config[f"{side}_y"], y_base)
+
+    for gkey in ("train_group", "test_group"):
+        value = config.get(gkey)
+        if isinstance(value, str) and not _has_data_rows(Path(value)):
+            config.pop(gkey, None)
+            config.pop(f"{gkey}_params", None)
+            warnings.append(f"dropped empty/header-only metadata file for {gkey}")
+    return config, warnings
+
+
+def _load_via_dataset_configs(path: Path, *, header_unit: str | None, na_policy: str) -> tuple[Any, str, str, dict[str, str], list[str]]:
+    """Tabular route: load a directory with nirs4all DatasetConfigs (robust explicit config)."""
     import nirs4all
     from nirs4all.data import DatasetConfigs
 
-    dataset = DatasetConfigs(str(path)).get_dataset_at(0)
-    return dataset, "nirs4all-DatasetConfigs", nirs4all.__version__, {}, []
+    config, warnings = _build_folder_config(path, header_unit=header_unit, na_policy=na_policy)
+    dataset = DatasetConfigs(config).get_dataset_at(0)
+    # Record the load knobs so the manifest/incrementality reacts if they change (not NIRS logic).
+    conv_config = {"na_policy": na_policy, "header_unit": str(header_unit or "")}
+    return dataset, "nirs4all-DatasetConfigs", nirs4all.__version__, conv_config, warnings
 
 
-def load_dataset(source: str | Path, *, target: str | None = None, signal: str | None = None) -> tuple[Any, str, str, dict[str, str], list[str]]:
+def load_dataset(source: str | Path, *, target: str | None = None, signal: str | None = None, header_unit: str | None = None, na_policy: str = "ignore") -> tuple[Any, str, str, dict[str, str], list[str]]:
     """Load any supported input into a ``SpectroDataset``.
 
     Args:
         source: A directory (tabular convention) or a single instrument file.
         target: For instrument files, the target key to attach (optional).
         signal: For multi-signal instrument files, the signal to use (optional).
+        header_unit: Spectral axis unit for the X loader (e.g. ``"nm"``/``"cm-1"``; folder route only).
+        na_policy: NA handling for the X/Y loaders (folder route); ``"ignore"`` keeps NaN in place.
 
     Returns:
         ``(dataset, converter_name, converter_version, converter_config, warnings)``.
     """
     path = Path(source)
     if path.is_dir():
-        return _load_via_dataset_configs(path)
+        return _load_via_dataset_configs(path, header_unit=header_unit, na_policy=na_policy)
     if path.is_file():
         return _load_via_dataverse_io(path, target=target, signal=signal)
     raise FileNotFoundError(f"ingest source does not exist: {source}")
@@ -177,10 +233,17 @@ def write_canonical(dataset: Any, out_dir: Path, *, target_names: list[str] | No
     canonical.mkdir(parents=True)
     masks = _resolve_partitions(dataset, n_samples)
 
-    x_params: Any = {"header_unit": units[0]} if n_sources == 1 else [{"header_unit": u} for u in units]
+    # Persist na_policy="ignore" in the canonical config so reloading the Parquet for the card never
+    # re-aborts on NaN (ParquetLoader otherwise defaults to abort). Header unit is carried through too.
+    na = "ignore"
+    x_params: Any = {"header_unit": units[0], "na_policy": na} if n_sources == 1 else [{"header_unit": u, "na_policy": na} for u in units]
     config: dict[str, Any] = {"task_type": task_value, "train_x_params": x_params}
     if "test" in masks:
         config["test_x_params"] = x_params
+    if has_targets:
+        config["train_y_params"] = {"na_policy": na}
+        if "test" in masks:
+            config["test_y_params"] = {"na_policy": na}
     hashes: dict[str, str] = {}
     rows: dict[str, int] = {}
 
@@ -229,14 +292,15 @@ def resolve_config(dataset_dir: str | Path) -> dict[str, Any]:
     return config
 
 
-def ingest(source: str | Path, out_dir: str | Path, *, target: str | None = None, signal: str | None = None, target_names: list[str] | None = None, task_type: str | None = None) -> IngestResult:
+def ingest(source: str | Path, out_dir: str | Path, *, target: str | None = None, signal: str | None = None, target_names: list[str] | None = None, task_type: str | None = None, header_unit: str | None = None) -> IngestResult:
     """Ingest ``source`` into ``out_dir/canonical`` and report provenance.
 
-    ``task_type`` forces the effective task (the descriptor's intent). Unsupported conversions
-    (multi-source, targetless) are reported as ``ConversionStatus.FAILED``; unexpected I/O errors propagate.
+    ``task_type`` forces the effective task (the descriptor's intent); ``header_unit`` sets the spectral
+    axis unit for the folder route. Unsupported conversions are reported as ``ConversionStatus.FAILED``;
+    unexpected I/O errors propagate.
     """
     out = Path(out_dir)
-    dataset, converter, version, conv_config, warnings = load_dataset(source, target=target, signal=signal)
+    dataset, converter, version, conv_config, warnings = load_dataset(source, target=target, signal=signal, header_unit=header_unit)
     try:
         config, hashes, rows = write_canonical(dataset, out, target_names=target_names, task_type=task_type)
     except NotImplementedError as exc:

@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from scipy import stats
 
 from nirs4all_datasets.ingest import resolve_config
 from nirs4all_datasets.manifest import descriptor_hash, read_manifest
@@ -50,7 +51,7 @@ def _jsonify(obj: Any) -> Any:
 
 def _features(dataset: Any, selector: dict[str, str]) -> np.ndarray:
     x = dataset.x(selector, layout="2d", concat_source=False)
-    return np.asarray(x[0] if isinstance(x, list) else x, dtype=float)
+    return np.asarray(x[0] if isinstance(x, list) else x, dtype="float32")  # float32 to bound memory on large X
 
 
 def _train_features(dataset: Any) -> np.ndarray:
@@ -79,11 +80,18 @@ def _inventory(dataset: Any) -> dict[str, Any]:
 
 
 def _native_axis(dataset: Any, unit: str, src: int = 0) -> np.ndarray | None:
-    """Wavelength axis in its *native* unit (so spacing is meaningful); None for non-spectral axes."""
-    if unit == "nm":
-        return np.asarray(dataset.wavelengths_nm(src), dtype=float)
-    if unit == "cm-1":
-        return np.asarray(dataset.wavelengths_cm1(src), dtype=float)
+    """Wavelength axis in its *native* unit (so spacing is meaningful); None for non-spectral axes.
+
+    Exception-safe: some headers carry unit suffixes (e.g. ``852.78_nm``) nirs4all cannot parse to a
+    float axis — that degrades the spectral summary but must never fail the card.
+    """
+    try:
+        if unit == "nm":
+            return np.asarray(dataset.wavelengths_nm(src), dtype=float)
+        if unit == "cm-1":
+            return np.asarray(dataset.wavelengths_cm1(src), dtype=float)
+    except Exception:  # noqa: BLE001 - unparseable header axis is non-fatal
+        return None
     return None
 
 
@@ -126,6 +134,8 @@ def _spectral(dataset: Any, base: dict[str, Any], n_features: int, warnings: lis
         spectral["spacing_unit"] = unit
     elif unit in ("none", "index", "text"):
         warnings.append(f"wavelength spacing not computed for non-spectral axis (unit={unit!r})")
+    else:
+        warnings.append(f"wavelength axis unavailable (unit={unit!r}; header values not parseable, e.g. unit-suffixed)")
     try:
         signal_type, confidence, reason = dataset.detect_signal_type(0)
         spectral["signal_type"] = getattr(signal_type, "value", str(signal_type))
@@ -163,16 +173,164 @@ def _targets(dataset: Any, base: dict[str, Any], warnings: list[str]) -> dict[st
 def _quality(dataset: Any, x_outlier_method: str, warnings: list[str]) -> dict[str, Any]:
     quality: dict[str, Any] = {"has_nan": bool(dataset.has_nan), "nan": dataset.nan_summary, "x_outliers": None}
     train = _train_features(dataset)
-    quality["spectral"] = metrics.spectral_quality(train)
+    quality["spectral"] = metrics.spectral_quality(train)  # nan-aware (nanmean/MAD)
+    filled, imputed = metrics.impute_columns(train)  # XOutlierFilter (Mahalanobis/PCA) cannot ingest NaN
     try:
         from nirs4all.operators.filters import XOutlierFilter
 
         filt = XOutlierFilter(method=x_outlier_method, random_state=0)
-        filt.fit(train)
-        quality["x_outliers"] = {"method": x_outlier_method, **filt.get_filter_stats(train)}
+        filt.fit(filled)
+        quality["x_outliers"] = {"method": x_outlier_method, "imputed": imputed if imputed["n_nan_cells"] else None, **filt.get_filter_stats(filled)}
     except Exception as exc:  # noqa: BLE001 - outlier detection is best-effort
         warnings.append(f"x-outlier detection failed: {type(exc).__name__}")
     return quality
+
+
+_DIM_MAX_ROWS = 4000
+_DIM_MAX_COMPONENTS = 60
+
+
+def _subsample(x: np.ndarray, max_rows: int, seed: int) -> tuple[np.ndarray, int]:
+    """Row-subsample (seeded) to bound PCA/plot cost on large datasets; returns ``(x, n_rows_used)``."""
+    if x.shape[0] <= max_rows:
+        return x, int(x.shape[0])
+    idx = np.sort(np.random.RandomState(seed).choice(x.shape[0], max_rows, replace=False))
+    return x[idx], int(max_rows)
+
+
+def _partition_set(dataset: Any) -> set[str]:
+    try:
+        return {str(p) for p in dataset.index_column("partition")}
+    except Exception:  # noqa: BLE001 - partition column may be absent
+        return set()
+
+
+def _class_counts(dataset: Any, partition: str) -> dict[str, int]:
+    """Per-partition class counts keyed by the (integer) class index as a string."""
+    y = np.asarray(dataset.y({"partition": partition})).ravel()
+    if y.size == 0:
+        return {}
+    vals, counts = np.unique(y, return_counts=True)
+    out: dict[str, int] = {}
+    for v, c in zip(vals, counts, strict=False):
+        try:
+            key = str(int(v))
+        except (ValueError, TypeError):
+            key = str(v)
+        out[key] = int(c)
+    return out
+
+
+def _dimensionality(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
+    """PCA dimensionality summary of the (NaN-imputed, subsampled) training spectra.
+
+    Reuses nirs4all's ``compute_pca_projection``; reports leading explained variance, components to
+    reach 95%/99% variance (censored ``">k"`` when truncated), and the effective rank, with the
+    row/component budget and any imputation disclosed (honest, reproducible).
+    """
+    from nirs4all.analysis.projections import compute_pca_projection
+
+    x = _train_features(dataset)
+    if x.ndim != 2 or x.shape[0] < 2 or x.shape[1] < 2:
+        return None
+    filled, imputed = metrics.impute_columns(x)
+    sub, n_rows = _subsample(filled, _DIM_MAX_ROWS, seed=0)
+    k = int(min(_DIM_MAX_COMPONENTS, sub.shape[0] - 1, sub.shape[1]))
+    if k < 2:
+        return None
+    try:
+        proj = compute_pca_projection(np.asarray(sub, dtype="float64"), max_components=k, variance_threshold=0.999)
+    except Exception as exc:  # noqa: BLE001 - PCA is best-effort
+        warnings.append(f"dimensionality (PCA) failed: {type(exc).__name__}")
+        return None
+    evr = np.asarray(proj["explained_variance_ratio"], dtype=float)
+    cum = np.cumsum(evr)
+
+    def _n_for(threshold: float) -> int | str:
+        if cum.size == 0 or float(cum[-1]) < threshold:
+            return f">{k}"
+        return int(np.searchsorted(cum, threshold) + 1)
+
+    return {
+        "n_rows_used": int(n_rows),
+        "n_features": int(x.shape[1]),
+        "n_components_computed": int(k),
+        "explained_variance_ratio": [float(v) for v in evr[:10]],
+        "cumulative_variance_top10": float(cum[min(9, cum.size - 1)]),
+        "n_components_95": _n_for(0.95),
+        "n_components_99": _n_for(0.99),
+        "effective_rank": metrics.effective_rank(proj["explained_variance"]),
+        "imputed": imputed if imputed["n_nan_cells"] else None,
+        "seed": 0,
+    }
+
+
+def _x_pca_shift(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
+    """Train↔test covariate shift: standardized centroid distance + PC1 KS in a shared PCA space."""
+    from nirs4all.analysis.projections import compute_pca_projection
+
+    xtr, _ = _subsample(metrics.impute_columns(_features(dataset, {"partition": "train"}))[0], _DIM_MAX_ROWS, seed=0)
+    raw_test = _features(dataset, {"partition": "test"})
+    xte, _ = _subsample(metrics.impute_columns(raw_test, reference=_features(dataset, {"partition": "train"}))[0], _DIM_MAX_ROWS, seed=1)
+    if xtr.shape[0] < 2 or xte.shape[0] < 2 or xtr.shape[1] != xte.shape[1]:
+        return None
+    stacked = np.asarray(np.vstack([xtr, xte]), dtype="float64")
+    k = int(min(10, stacked.shape[0] - 1, stacked.shape[1]))
+    if k < 2:
+        return None
+    try:
+        proj = compute_pca_projection(stacked, max_components=k, variance_threshold=0.999)
+    except Exception as exc:  # noqa: BLE001 - best-effort
+        warnings.append(f"x-shift PCA failed: {type(exc).__name__}")
+        return None
+    coords = np.asarray(proj["coordinates"], dtype=float)
+    scale = np.sqrt(np.where(np.asarray(proj["explained_variance"], dtype=float) > 0, proj["explained_variance"], 1.0))
+    tr, te = coords[: xtr.shape[0]], coords[xtr.shape[0] :]
+    ks = stats.ks_2samp(tr[:, 0], te[:, 0])
+    return {
+        "pc_space_centroid_distance_std": float(np.sqrt(np.sum(((te.mean(0) - tr.mean(0)) / scale) ** 2))),
+        "pc1_ks_statistic": float(ks.statistic),
+        "pc1_ks_p": float(ks.pvalue),
+        "n_components": int(k),
+    }
+
+
+def _shift(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
+    """Train↔test distribution shift (only when a test partition exists)."""
+    if "test" not in _partition_set(dataset):
+        return None
+    out: dict[str, Any] = {"covariate": _x_pca_shift(dataset, warnings)}
+    try:
+        if dataset.is_classification:
+            out["target"] = metrics.class_shift(_class_counts(dataset, "train"), _class_counts(dataset, "test"))
+        else:
+            ytr = np.asarray(dataset.y({"partition": "train"}), dtype=float)
+            yte = np.asarray(dataset.y({"partition": "test"}), dtype=float)
+            out["target"] = metrics.target_shift(ytr, yte)
+    except Exception as exc:  # noqa: BLE001 - best-effort
+        warnings.append(f"target shift failed: {type(exc).__name__}")
+        out["target"] = None
+    return out
+
+
+def _target_partitions(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
+    """Per-partition target summary (train vs test): regression stats or class counts."""
+    present = [p for p in ("train", "test") if p in _partition_set(dataset)]
+    if len(present) < 2:
+        return None
+    if dataset.is_classification:
+        return {p: _class_counts(dataset, p) for p in present}
+    import nirs4all.core.metrics as core_metrics
+
+    out: dict[str, Any] = {}
+    for p in present:
+        y = np.asarray(dataset.y({"partition": p}), dtype=float).ravel()
+        y = y[np.isfinite(y)]
+        try:
+            out[p] = core_metrics.get_stats(y) if y.size else None
+        except Exception:  # noqa: BLE001 - best-effort
+            out[p] = None
+    return out
 
 
 def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, x_outlier_method: str = "robust_mahalanobis") -> dict[str, Any]:
@@ -186,13 +344,20 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
 
     dataset_dir = Path(dataset_dir)
     dataset = DatasetConfigs(resolve_config(dataset_dir)).get_dataset_at(0)
-    base = dataset.get_dataset_metadata(include_y_stats=True) or {}
-    gov = descriptor.governance
     warnings: list[str] = []
+    try:  # best-effort: e.g. unit-suffixed headers can break the (optional) wavelength_range it computes
+        base = dataset.get_dataset_metadata(include_y_stats=True) or {}
+    except Exception as exc:  # noqa: BLE001
+        warnings.append(f"dataset metadata partially unavailable: {type(exc).__name__}")
+        base = {}
+    gov = descriptor.governance
     if dataset.n_sources != 1:
         warnings.append(f"multi-source dataset (n_sources={dataset.n_sources}); profiling source 0 only")
 
     inventory = _inventory(dataset)
+    targets = _targets(dataset, base, warnings)
+    if "note" not in targets:  # supervised → attach the per-partition (train/test) breakdown
+        targets["partitions"] = _target_partitions(dataset, warnings)
     card: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "identity": {
@@ -208,7 +373,9 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         },
         "inventory": inventory,
         "spectral": _spectral(dataset, base, inventory["n_features"], warnings),
-        "targets": _targets(dataset, base, warnings),
+        "targets": targets,
+        "dimensionality": _dimensionality(dataset, warnings),
+        "shift": _shift(dataset, warnings),
         "quality": _quality(dataset, x_outlier_method, warnings),
         "per_source": _per_source(dataset) if dataset.n_sources > 1 else None,
         "integrity": {
@@ -222,7 +389,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     }
 
     if compute_assets:
-        card["assets"] = render_card_assets(dataset, dataset_dir / "assets")
+        card["assets"] = render_card_assets(dataset, dataset_dir / "assets", warnings)
 
     card = _jsonify(card)
     (dataset_dir / "card.json").write_text(json.dumps(card, indent=2, sort_keys=True, allow_nan=False), encoding="utf-8")

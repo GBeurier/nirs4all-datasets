@@ -114,6 +114,66 @@ def publish(
 
 
 @app.command()
+def bootstrap(
+    source_tree: Path,
+    root: Path = typer.Option(Path("."), help="Registry root."),
+    xlsx: Path | None = typer.Option(None, help="DatabaseDetail.xlsx master sheet (optional metadata enrichment)."),
+    force: bool = typer.Option(False, help="Overwrite managed descriptors even when unchanged."),
+) -> None:
+    """Auto-generate schema-valid descriptors for every dataset leaf under SOURCE_TREE."""
+    from nirs4all_datasets.catalog import build_catalog
+    from nirs4all_datasets.discover import bootstrap as run_bootstrap
+
+    report = run_bootstrap(source_tree, root, xlsx_path=xlsx, force=force)
+    typer.echo(f"bootstrap: created={len(report['created'])} updated={len(report['updated'])} skipped={len(report['skipped'])} errors={len(report['errors'])}")
+    for err in report["errors"][:10]:
+        typer.echo(f"  ERROR {err['leaf']}: {err['error']}", err=True)
+    build_catalog(root)
+
+
+@app.command("build-all")
+def build_all_cmd(
+    source_tree: Path = typer.Option(..., help="Read-only source tree the descriptors were generated from."),
+    root: Path = typer.Option(Path("."), help="Registry root."),
+    workers: int | None = typer.Option(None, help="Parallel workers (default: CPU-2, capped at 6)."),
+    only: str | None = typer.Option(None, help="Comma-separated dataset ids to (re)build."),
+    skip_assets: bool = typer.Option(False, help="Skip plot rendering (faster cards)."),
+    force: bool = typer.Option(False, help="Rebuild even when unchanged."),
+    site: bool = typer.Option(True, help="Build the static site afterwards."),
+) -> None:
+    """Organize + qualify all datasets (parallel), refresh the catalog, and build the site."""
+    from nirs4all_datasets.bulk import build_all, write_report
+    from nirs4all_datasets.catalog import build_catalog
+
+    only_ids = [s.strip() for s in only.split(",") if s.strip()] if only else None
+
+    def _progress(done: int, total: int, rec: dict) -> None:
+        mark = {"ok": "✓", "partial": "~", "skipped": "·", "failed": "✗"}.get(rec["status"], "?")
+        suffix = f"  ({rec.get('reason')})" if rec["status"] == "failed" else ""
+        typer.echo(f"[{done}/{total}] {mark} {rec['id']}{suffix}")
+
+    report = build_all(root, source_tree, workers=workers, only=only_ids, skip_assets=skip_assets, force=force, progress=_progress)
+    write_report(report, root / "bulk_report.json")
+    typer.echo(f"build-all: {report['counts']} -> {root / 'bulk_report.json'}")
+    build_catalog(root)
+    if site:
+        from nirs4all_datasets.site import build_site
+
+        typer.echo(f"site: {build_site(root, root / 'site')}")
+
+
+@app.command("site")
+def site_cmd(
+    root: Path = typer.Option(Path("."), help="Registry root."),
+    out: Path = typer.Option(Path("site"), help="Output directory for the static site."),
+) -> None:
+    """Build the interactive static catalog site from the catalog + generated cards."""
+    from nirs4all_datasets.site import build_site
+
+    typer.echo(f"site: {build_site(root, out)}")
+
+
+@app.command()
 def load(dataset_id: str, root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
     """Load a local dataset and print a one-line summary (smoke test)."""
     from nirs4all_datasets.access import load_local
