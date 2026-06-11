@@ -13,7 +13,7 @@ descriptor, the card, the manifest, and the catalog index. The whole flow is dri
 ## 0. One-time setup
 
 ```bash
-uv venv && uv pip install -e ".[dev,docs]"     # editable nirs4all + nirs4all-io
+uv venv && uv pip install -e ".[dev]"     # editable nirs4all + nirs4all-io
 ```
 
 A Dataverse API token is only needed for **publishing** (step 4), not for steps 1–3. See the

@@ -26,7 +26,7 @@ publish/fetch, and config/secrets.
 
 ```bash
 # Dev install (uses editable local nirs4all + nirs4all-io via [tool.uv.sources])
-uv venv && uv pip install -e ".[dev,docs]"
+uv venv && uv pip install -e ".[dev]"
 
 # Green gate (mirror of CI, run before reporting work complete)
 ruff check .
