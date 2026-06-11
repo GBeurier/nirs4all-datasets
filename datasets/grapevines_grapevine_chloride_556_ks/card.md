@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** grapevines
 - **Description:** GRAPEVINES dataset (regression). Sample: Fresh leaf. Trait: Leaf chlorid content. Split: ks. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://github.com/diazgarcialab/grapevine-chloride-prediction
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://github.com/diazgarcialab/grapevine-chloride-prediction
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

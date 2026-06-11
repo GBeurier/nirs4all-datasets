@@ -13,7 +13,7 @@ from typing import Any
 
 from nirs4all_datasets.ingest import resolve_config
 from nirs4all_datasets.manifest import Manifest, sha256_file
-from nirs4all_datasets.schema import FileRole
+from nirs4all_datasets.schema import _DOI_RE, DatasetDescriptor, FileRole, SourceAccess, SourceKind, SourceMode
 
 
 def default_cache_dir() -> Path:
@@ -115,7 +115,60 @@ def fetch_and_load(dataset_id: str, doi: str, manifest: Manifest, *, cache_dir: 
     return load_local(cache_root / dataset_id)
 
 
-def load(name: str, *, root: str | Path = ".", token: str | None = None, instance: str | None = None, cache_dir: str | Path | None = None) -> Any:
+# Origin kinds pooch can resolve by DOI (Zenodo / figshare / Dataverse). url / manual / script sources
+# are never auto-fetched in the consumer path: scripts are maintainer-only (no code execution on load),
+# and url/manual need a human (click-through licence, registration, raw scraping).
+_FETCHABLE_KINDS = frozenset({SourceKind.DATAVERSE, SourceKind.ZENODO, SourceKind.FIGSHARE})
+
+
+def _origin_sources_message(name: str, descriptor: DatasetDescriptor) -> str:
+    """Actionable error when nothing can be auto-fetched: say exactly where the data lives."""
+    if not descriptor.sources:
+        return f"{name!r} is not published (no DOI) and has no local canonical data to load"
+    lines = [f"  - {s.kind.value} [{s.access.value}/{s.mode.value}]: {s.locator}" + (f"  ({s.title})" if s.title else "") for s in descriptor.sources]
+    hint = "\n(open DOI sources can be auto-reproduced with reproduce=True)" if any(s.access is SourceAccess.OPEN and s.kind in _FETCHABLE_KINDS for s in descriptor.sources) else ""
+    return f"{name!r} has no local data and no minted DOI. Fetch it from one of its original sources:\n" + "\n".join(lines) + hint
+
+
+def fetch_from_origin(name: str, descriptor: DatasetDescriptor, manifest: Manifest, *, cache_dir: str | Path | None = None, reproduce: bool = False) -> Any | None:
+    """Load a dataset from one of its OPEN original sources, or return ``None`` if none is auto-fetchable.
+
+    A ``canonical``-mode source is fetched by DOI and verified against the manifest's canonical SHA-256
+    (byte-pinned). A ``raw``-mode source is attempted only when ``reproduce`` is set: its raw files are
+    fetched, verified against the manifest's raw SHA-256, then **re-ingested locally** -- the result is a
+    *reproduced* canonical (NOT byte-identical to a published Parquet, due to float32/zstd/version drift),
+    the honest best obtainable from upstream vendor files. Script/manual/token/url sources are never
+    auto-fetched here.
+    """
+    cache_root = Path(cache_dir) if cache_dir is not None else default_cache_dir()
+    for src in descriptor.sources:
+        if src.access is not SourceAccess.OPEN or src.kind not in _FETCHABLE_KINDS or not _DOI_RE.match(src.locator):
+            continue
+        if src.mode is SourceMode.CANONICAL:
+            canonical = cache_root / name / "canonical"
+            try:
+                fetch_public(src.locator, canonical_registry(manifest), canonical)
+            except Exception:  # noqa: BLE001 - byte mismatch / rot: try the next source
+                continue
+            return load_local(cache_root / name)
+        if reproduce:
+            raw_registry = {Path(fe.path).name: fe.sha256 for fe in manifest.files if fe.role is FileRole.RAW}
+            if not raw_registry:
+                continue
+            staging = cache_root / name / "_origin_raw"
+            try:
+                fetch_public(src.locator, raw_registry, staging)
+            except Exception:  # noqa: BLE001
+                continue
+            from nirs4all_datasets.ingest import ingest
+
+            out = cache_root / name
+            ingest(staging, out, task_type=descriptor.targets[0].task_type.value, target_names=[t.name for t in descriptor.targets])
+            return load_local(out)
+    return None
+
+
+def load(name: str, *, root: str | Path = ".", token: str | None = None, instance: str | None = None, cache_dir: str | Path | None = None, reproduce: bool = False) -> Any:
     """Load a catalog dataset by ``name`` as a nirs4all ``DatasetConfigs``.
 
     Local-first: if ``<root>/datasets/<name>/canonical`` is present it loads directly (no network).
@@ -136,7 +189,7 @@ def load(name: str, *, root: str | Path = ".", token: str | None = None, instanc
     import yaml
 
     from nirs4all_datasets.manifest import read_manifest
-    from nirs4all_datasets.schema import DatasetDescriptor, Visibility
+    from nirs4all_datasets.schema import Visibility
 
     root = Path(root)
     dataset_dir = root / "datasets" / name
@@ -153,14 +206,18 @@ def load(name: str, *, root: str | Path = ".", token: str | None = None, instanc
     manifest = read_manifest(manifest_path)
 
     doi = descriptor.dataverse.doi or manifest.doi
-    if not doi:
-        raise ValueError(f"{name!r} is not published (no DOI) and has no local canonical data to load")
+    if doi:
+        resolved_instance = instance or descriptor.dataverse.instance
+        resolved_token = token
+        if resolved_token is None and descriptor.governance.visibility is not Visibility.PUBLIC:
+            from nirs4all_datasets.config import get_settings
 
-    resolved_instance = instance or descriptor.dataverse.instance
-    resolved_token = token
-    if resolved_token is None and descriptor.governance.visibility is not Visibility.PUBLIC:
-        from nirs4all_datasets.config import get_settings
+            settings = get_settings(instance=resolved_instance)
+            resolved_token = settings.token.get_secret_value() if settings.token else None
+        return fetch_and_load(name, doi, manifest, cache_dir=cache_dir, instance=resolved_instance, token=resolved_token)
 
-        settings = get_settings(instance=resolved_instance)
-        resolved_token = settings.token.get_secret_value() if settings.token else None
-    return fetch_and_load(name, doi, manifest, cache_dir=cache_dir, instance=resolved_instance, token=resolved_token)
+    # No minted DOI: fall back to the original open sources (or guide the user to a manual source).
+    origin = fetch_from_origin(name, descriptor, manifest, cache_dir=cache_dir, reproduce=reproduce)
+    if origin is not None:
+        return origin
+    raise ValueError(_origin_sources_message(name, descriptor))

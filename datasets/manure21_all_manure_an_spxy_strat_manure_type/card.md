@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** manure21
 - **Description:** MANURE21 dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** Portail Data INRAE
 
 ## Composition
 
@@ -37,18 +37,18 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Citation:** https://doi.org/10.1016/j.dib.2020.106647
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
+- **License:** etalab-2.0
 - **Visibility:** restricted
-- **Confidentiality class:** internal
+- **Confidentiality class:** public
 - **DOI:** *Not specified.*
-- **Redistribution rights:** Original source licence applies; verify before redistribution.
+- **Redistribution rights:** Open redistribution under etalab-2.0.
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** Portail Data INRAE
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

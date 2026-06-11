@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** amylose
 - **Description:** AMYLOSE dataset (regression). Sample: Rice Flour. Trait: Amylose content. Split: Y sorted. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.1016/j.dib.2017.09.077
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** https://doi.org/10.1016/j.foodchem.2017.09.058
+- **Citation:** https://doi.org/10.1016/j.dib.2017.09.077
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.1016/j.dib.2017.09.077
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

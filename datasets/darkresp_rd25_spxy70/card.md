@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** darkresp
 - **Description:** DarkResp dataset (regression). Sample: Forest tree fresh leaf. Trait: Dark respiration. Split: spxy. Auto-generated descriptor (verify before publication).
-- **Contributor:** doi: 10.1111/nph.20267
+- **Contributor:** figshare
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** https://doi.org/10.6084/m9.figshare.27641136
+- **Citation:** https://doi.org/10.1111/nph.20267
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** doi: 10.1111/nph.20267
+- **Owner / steward:** figshare
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

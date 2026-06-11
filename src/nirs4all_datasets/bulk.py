@@ -36,7 +36,7 @@ def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_as
     Module-level (picklable) so it can run inside a :class:`ProcessPoolExecutor` worker.
     """
     from nirs4all_datasets.organize import organize
-    from nirs4all_datasets.qualify.profile import build_card
+    from nirs4all_datasets.qualify.profile import build_card, card_metadata_fresh
 
     root, source_tree = Path(root_str), Path(source_tree_str)
     try:
@@ -53,7 +53,10 @@ def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_as
 
     try:
         result = organize(source, descriptor, root / "datasets", force=force)
-        if result.skipped and (result.dataset_dir / "card.json").exists() and not force:
+        # organize.skipped means canonical bytes are unchanged (descriptor_hash). The card also *displays*
+        # provenance, so a metadata-only edit (sources/citation) must still rebuild it -> check metadata_hash.
+        card_path = result.dataset_dir / "card.json"
+        if result.skipped and not force and card_metadata_fresh(card_path, descriptor):
             return {"id": dataset_id, "status": "skipped", "reason": "unchanged"}
         card = build_card(result.dataset_dir, descriptor, compute_assets=not skip_assets)
         warns = card.get("warnings") or []

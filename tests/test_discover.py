@@ -114,3 +114,21 @@ def test_bootstrap_is_idempotent_and_protects_human_edits(source_tree: Path, tmp
     path.write_text(yaml.safe_dump(data), encoding="utf-8")
     discover.bootstrap(source_tree, root)
     assert "Hand-edited" in path.read_text()
+
+
+def test_bootstrap_detects_metadata_only_change(source_tree: Path, tmp_path: Path) -> None:
+    """A provenance-only edit (excluded from descriptor_hash) must still be re-bootstrapped."""
+    from nirs4all_datasets.manifest import descriptor_hash, metadata_hash
+
+    root = tmp_path / "registry"
+    discover.bootstrap(source_tree, root)
+    path = root / "catalog" / "datasets" / "berry_brix_split.yaml"
+    data = yaml.safe_load(path.read_text())
+    before = DatasetDescriptor(**data)
+    data["sources"] = [{"kind": "zenodo", "mode": "raw", "locator": "10.5281/zenodo.123", "access": "open"}]  # sources excluded from descriptor_hash
+    path.write_text(yaml.safe_dump(data), encoding="utf-8")
+    after = DatasetDescriptor(**data)
+    assert descriptor_hash(before) == descriptor_hash(after)  # canonical bytes unaffected by sources
+    assert metadata_hash(before) != metadata_hash(after)  # but the card/catalog must notice
+    again = discover.bootstrap(source_tree, root)  # non-force
+    assert any(u["id"] == "berry_brix_split" for u in again["updated"])  # rewritten, not skipped as "unchanged"

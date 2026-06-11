@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** phosphorus
 - **Description:** PHOSPHORUS dataset (regression). Sample: Fresh leaf. Trait: metabolite P content. Split: spxy by species. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.6084/m9.figshare.28675304
+- **Contributor:** figshare
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** doi: 10.1111/nph.70219
+- **Citation:** https://doi.org/10.1111/nph.70219
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.6084/m9.figshare.28675304
+- **Owner / steward:** figshare
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** soil_esdac_19969
 - **Description:** SOIL_ESDAC_19969 dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

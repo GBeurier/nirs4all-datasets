@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** ecosis_leaftraits
 - **Description:** ECOSIS_LeafTraits dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Citation:** https://doi.org/10.1111/nph.19807
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

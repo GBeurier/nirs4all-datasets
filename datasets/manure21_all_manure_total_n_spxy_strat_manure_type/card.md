@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** manure21
 - **Description:** MANURE21 dataset (regression). Sample: Cattle manure. Trait: N content. Split: strat spxy. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.15454/JIGO8R
+- **Contributor:** Portail Data INRAE
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.15454/JIGO8R
+- **Owner / steward:** Portail Data INRAE
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

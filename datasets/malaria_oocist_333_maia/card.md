@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** malaria
 - **Description:** MALARIA dataset (regression). Sample: Mosquito. Trait: oocyst content. Split: Random. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.7910/DVN/YD34OX
+- **Contributor:** Harvard Dataverse
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.7910/DVN/YD34OX
+- **Owner / steward:** Harvard Dataverse
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

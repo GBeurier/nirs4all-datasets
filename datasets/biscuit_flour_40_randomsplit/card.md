@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** biscuit
 - **Description:** BISCUIT dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -37,11 +37,11 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Citation:** https://doi.org/10.1198/016214501753168118
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
+- **License:** GPL-2.0-or-later
 - **Visibility:** restricted
 - **Confidentiality class:** internal
 - **DOI:** *Not specified.*
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

@@ -17,33 +17,108 @@ open license, else ``internal``). Publishing later is a deliberate, separate act
 from __future__ import annotations
 
 import hashlib
+import json
 import re
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import pandas as pd
 import yaml
 
-from nirs4all_datasets.manifest import descriptor_hash
+from nirs4all_datasets.manifest import metadata_hash
 from nirs4all_datasets.schema import (
     _OPEN_LICENSES,
     AxisUnit,
     ConfidentialityClass,
+    DataCite,
     DatasetDescriptor,
     Generation,
     Governance,
     Instrument,
     Modality,
+    OriginSource,
     Provenance,
+    PublicationRef,
     SignalType,
+    SourceAccess,
+    SourceKind,
     Target,
     TaskType,
     Visibility,
 )
 
 GENERATOR = "discover"
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
+
+# Trees under a NIRS DB source root that hold reference-ready leaves. Everything else
+# (``Publications/`` PDFs, ``chantiers/`` and ``v2.0/`` work-in-progress, ``unusableDB/``) is skipped.
+_LEAF_TREES = ("regression", "classification", "multimachines")
+
+# Data-repository DOI prefixes -> (OriginSource.kind, human repository name). A DOI under one of these
+# is where the *bytes* live (-> sources[]); any other 10.x DOI is a journal paper (-> citation).
+_DATA_DOI_PREFIXES: dict[str, tuple[str, str]] = {
+    "10.57745": ("dataverse", "Recherche Data Gouv"),
+    "10.15454": ("dataverse", "Portail Data INRAE"),
+    "10.18710": ("dataverse", "DataverseNO"),
+    "10.7910": ("dataverse", "Harvard Dataverse"),
+    "10.34725": ("dataverse", "Dataverse"),
+    "10.18167": ("dataverse", "CIRAD Dataverse"),
+    "10.5281": ("zenodo", "Zenodo"),
+    "10.6084": ("figshare", "figshare"),
+    "10.5061": ("url", "Dryad"),
+}
+_DOI_IN_TEXT = re.compile(r"(10\.\d{4,9}/[^\s,;\"'<>]+)")
+# Instrument tokens encoded in multimachines leaf names (e.g. ``An_..._byCultivar_MicroNIR_NeoSpectra``).
+_INSTRUMENT_TOKENS = (("micronir_neospectra", "MicroNIR + NeoSpectra"), ("micronir", "MicroNIR"), ("neospectra", "NeoSpectra"), ("asd", "ASD"))
+
+
+def _extract_doi(text: str) -> str | None:
+    """Pull a bare DOI out of a ``doi:`` / ``https://doi.org/...`` / raw string; None if absent."""
+    match = _DOI_IN_TEXT.search(str(text))
+    return match.group(1).rstrip(".") if match else None
+
+
+def _classify_origin(raw: Any) -> tuple[str, dict[str, Any] | str | None]:
+    """Classify a master-sheet ``Source``/``Ref`` cell.
+
+    Returns ``('source', origin_kwargs)`` for a data home (DOI in a data repo, or a data URL),
+    ``('paper', doi)`` for a journal/publisher DOI, ``('manual', text)`` for a non-DOI non-URL note,
+    or ``('skip', None)`` when blank. This is what keeps a *paper* DOI out of ``sources[]``.
+    """
+    if raw is None:
+        return ("skip", None)
+    text = str(raw).strip()
+    if not text or text.lower() in ("none", "nan", "n/a"):
+        return ("skip", None)
+    doi = _extract_doi(text)
+    if doi:
+        prefix = doi.split("/", 1)[0]
+        if prefix in _DATA_DOI_PREFIXES:
+            kind, repo = _DATA_DOI_PREFIXES[prefix]
+            return ("source", {"kind": kind, "mode": "raw", "locator": doi, "access": "open", "title": repo})
+        return ("paper", doi)  # any other DOI is a journal/publisher DOI -> citation, not a data source
+    if text.lower().startswith("http"):
+        host = urlparse(text).netloc.lower()
+        if "zenodo.org" in host:
+            return ("source", {"kind": "zenodo", "mode": "raw", "locator": text, "access": "open", "title": "Zenodo"})
+        if "github.com" in host:
+            return ("source", {"kind": "url", "mode": "raw", "locator": text, "access": "open", "title": "GitHub"})
+        # registration/click-through portals must be fetched by hand.
+        access = "manual" if any(h in host for h in ("esdac.jrc", "eigenvector.com", "ucphchemometrics", "rdrr.io")) else "open"
+        return ("source", {"kind": "url", "mode": "raw", "locator": text, "access": access})
+    return ("manual", text)
+
+
+def _instrument_model(name: str) -> str | None:
+    """Device encoded in a (multimachines) leaf name, e.g. ``..._MicroNIR_NeoSpectra`` -> that label."""
+    low = name.lower()
+    for token, label in _INSTRUMENT_TOKENS:
+        if token in low:
+            return label
+    return None
 
 # Y headers too generic to use as a target name (fall back to the xlsx trait / leaf name). Compared
 # after normalizing (lower-case, alphanumerics only), so "y_cal"/"X.1" match. "x"/"v1" are R's
@@ -107,22 +182,26 @@ class Leaf:
 
 
 def find_leaves(source_root: str | Path) -> list[Leaf]:
-    """Find every leaf dataset directory under ``<source_root>/{regression,classification}``.
+    """Find every reference-ready leaf dataset under ``<source_root>/{regression,classification,multimachines}``.
 
     A leaf is a directory nirs4all's ``FolderParser`` maps to a training X file (so family folders that
-    only hold sub-datasets, papers, or raw extras are skipped).
+    only hold sub-datasets, papers, or raw extras are skipped). ``multimachines`` leaves are treated as
+    regression; any path with a ``_todo``/``todo`` segment is skipped (work-in-progress).
     """
     root = Path(source_root)
     leaves: list[Leaf] = []
-    for task_root in ("regression", "classification"):
-        base = root / task_root
+    for tree in _LEAF_TREES:
+        base = root / tree
         if not base.is_dir():
             continue
+        task_root = "classification" if tree == "classification" else "regression"
         for d in sorted(p for p in base.rglob("*") if p.is_dir()):
+            rel = d.relative_to(base)
+            if any(part.lower() == "todo" or part.lower().endswith("_todo") for part in rel.parts):
+                continue  # work-in-progress leaf/family
             config = _folder_config(d)
             if not config.get("train_x"):
                 continue
-            rel = d.relative_to(base)
             family = rel.parts[0]
             leaves.append(Leaf(path=d, source_relpath=d.relative_to(root).as_posix(), family=family, name=d.name, task_root=task_root, config=config))
     return leaves
@@ -218,7 +297,12 @@ def _target_info(leaf: Leaf) -> tuple[str | None, list[str] | None, str | None]:
 
 
 def load_xlsx(xlsx_path: str | Path) -> dict[str, dict[str, Any]]:
-    """Index the ``DatabaseDetail.xlsx`` master sheet by the (lower-cased) ``Dataset`` leaf name."""
+    """Index the ``DatabaseDetail.xlsx`` master sheet by the (lower-cased) ``Dataset`` leaf name.
+
+    Also adds ``family::<database>`` fallback keys (the first row seen per family) so split-variant
+    leaves that are not themselves a sheet row can still inherit the family-constant provenance
+    (``Source``/``Ref``/``Licence``).
+    """
     import openpyxl
 
     wb = openpyxl.load_workbook(xlsx_path, data_only=True, read_only=True)
@@ -227,12 +311,18 @@ def load_xlsx(xlsx_path: str | Path) -> dict[str, dict[str, Any]]:
         return {}
     header = [str(c).strip().lower() if c is not None else "" for c in rows[0]]
     index: dict[str, dict[str, Any]] = {}
+    family: dict[str, dict[str, Any]] = {}
     for i, row in enumerate(rows[1:], start=2):
         record = {header[j]: row[j] for j in range(min(len(header), len(row)))}
+        record["_row"] = i
         key = record.get("dataset")
         if key is not None and str(key).strip():
-            record["_row"] = i
             index[str(key).strip().lower()] = record
+        fam = record.get("database")
+        if fam is not None and str(fam).strip():
+            family.setdefault(str(fam).strip().lower(), record)
+    for fam, record in family.items():
+        index.setdefault(f"family::{fam}", record)
     return index
 
 
@@ -281,6 +371,13 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
     """Build a schema-valid descriptor for one leaf, enriched from the master sheet where matched."""
     warnings: list[str] = []
     meta = xlsx_index.get(leaf.name.lower(), {})
+    fam_meta = xlsx_index.get(f"family::{leaf.family.lower()}", {})
+
+    def _meta(key: str) -> Any:
+        """Leaf row value, falling back to the family row for family-constant provenance."""
+        value = meta.get(key)
+        return value if value not in (None, "") else fam_meta.get(key)
+
     did = dataset_id(leaf.family, leaf.name)
 
     y_header, classes, target_warn = _target_info(leaf)
@@ -300,8 +397,34 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
         target_name = _trait_from_leaf(leaf.family, leaf.name) or slugify(leaf.name) or "target"
 
     axis_unit = _infer_axis_unit(_first_path(leaf.config.get("train_x")) or leaf.path)
-    license_spdx = _spdx(meta.get("licence") or meta.get("license"))
-    owner = str(meta.get("source") or "tabpfn NIRS benchmark collection").strip()
+    license_spdx = _spdx(_meta("licence") or _meta("license"))
+
+    # Classify the master-sheet Source (data home) and Ref (paper): data DOIs/URLs -> sources[];
+    # journal DOIs -> related_publications. The owner/steward is the hosting repository (an honest
+    # steward), never the raw DOI string that the old generator stuffed into contributor.
+    sources: list[OriginSource] = []
+    publications: list[PublicationRef] = []
+    steward: str | None = None
+    seen_loc: set[str] = set()
+    seen_doi: set[str] = set()
+    for cell in (_meta("source"), _meta("ref")):
+        kind, payload = _classify_origin(cell)
+        if kind == "source" and isinstance(payload, dict):
+            if payload["locator"] in seen_loc:
+                continue
+            seen_loc.add(payload["locator"])
+            try:
+                sources.append(OriginSource(**payload))
+                steward = steward or payload.get("title")
+            except Exception as exc:  # noqa: BLE001 - a malformed cell must not abort the leaf
+                warnings.append(f"unparseable origin source {cell!r}: {exc}")
+        elif kind == "paper" and isinstance(payload, str) and payload not in seen_doi:
+            seen_doi.add(payload)
+            publications.append(PublicationRef(doi=payload))
+        elif kind == "manual" and isinstance(payload, str) and payload not in seen_loc:
+            seen_loc.add(payload)
+            sources.append(OriginSource(kind=SourceKind.MANUAL, locator=payload, access=SourceAccess.MANUAL))
+    owner = steward or "NIRS DB reference collection"
 
     sample = str(meta["sample"]).strip() if meta.get("sample") else None
     split = str(meta["split"]).strip() if meta.get("split") else None
@@ -315,12 +438,7 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
     descr_bits.append("Auto-generated descriptor (verify before publication).")
 
     keywords = [k for k in [slugify(leaf.family), "nir", leaf.task_root, slugify(trait) if trait else None] if k]
-    citation = None
-    for col in ("ref", "source"):
-        val = meta.get(col)
-        if val and str(val).strip():
-            citation = str(val).strip()
-            break
+    citation = f"https://doi.org/{publications[0].doi}" if publications else None
 
     descriptor = DatasetDescriptor(
         id=did,
@@ -330,7 +448,7 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
         domain=leaf.family.lower(),
         keywords=keywords,
         citation=citation,
-        instrument=Instrument(modality=Modality.NIR, axis_unit=AxisUnit(axis_unit), signal_type=SignalType.AUTO),
+        instrument=Instrument(modality=Modality.NIR, model=_instrument_model(leaf.name), axis_unit=AxisUnit(axis_unit), signal_type=SignalType.AUTO),
         targets=[Target(name=target_name, task_type=TaskType(task_type), unit=None, classes=classes)],
         provenance=Provenance(
             contributor=owner,
@@ -339,6 +457,8 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
             known_exclusions=None,
         ),
         governance=_governance(license_spdx, owner),
+        datacite=DataCite(related_publications=publications) if publications else None,
+        sources=sources,
         generation=Generation(
             managed=True,
             generator=GENERATOR,
@@ -358,12 +478,17 @@ def _write_descriptor(descriptor: DatasetDescriptor, path: Path) -> None:
     path.write_text(banner + yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding="utf-8")
 
 
-def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: str | Path | None = None, force: bool = False) -> dict[str, Any]:
+def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: str | Path | None = None, force: bool = False, prune: bool = False) -> dict[str, Any]:
     """Generate/refresh descriptors for every leaf under ``source_root``.
 
     Idempotent: a human-edited descriptor (``generation.managed`` false/absent) is never overwritten;
-    a managed one is rewritten only when ``force`` or its ``descriptor_hash`` changed. Returns a report
-    ``{created, updated, skipped, errors, ids}``.
+    a managed one is rewritten only when ``force`` or its ``metadata_hash`` changed (so a provenance-only
+    edit, e.g. ``sources``/``citation`` — excluded from ``descriptor_hash`` — still triggers a refresh).
+
+    Reconciliation (``new replaces old``): a *managed* descriptor whose id the source no longer
+    produces is an orphan. With ``prune`` it is deleted (human-authored orphans are always kept and
+    only flagged). A committed ``catalog/reconciliation.json`` records the full add/update/remove diff.
+    Returns a report ``{created, updated, skipped, errors, ids, removed, kept_human_orphans, pruned}``.
     """
     out_dir = Path(catalog_root) / "catalog" / "datasets"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -379,7 +504,7 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: s
             continue
         did = descriptor.id
         if did in seen_ids:
-            report["errors"].append({"leaf": leaf.source_relpath, "error": f"id collision {did!r} (also {seen_ids[did]})"})
+            report["errors"].append({"leaf": leaf.source_relpath, "error": f"id collision {did!r} (kept {seen_ids[did]})"})
             continue
         seen_ids[did] = leaf.source_relpath
         report["ids"][did] = leaf.source_relpath
@@ -394,7 +519,7 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: s
             if not (old.generation and old.generation.managed) and not force:
                 report["skipped"].append({"id": did, "reason": "human-managed (generation.managed not set)"})
                 continue
-            if not force and descriptor_hash(old) == descriptor_hash(descriptor):
+            if not force and metadata_hash(old) == metadata_hash(descriptor):
                 report["skipped"].append({"id": did, "reason": "unchanged"})
                 continue
             _write_descriptor(descriptor, path)
@@ -402,4 +527,44 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: s
         else:
             _write_descriptor(descriptor, path)
             report["created"].append({"id": did, "warnings": warns})
+
+    # Reconciliation: prune managed orphans (descriptors the source no longer produces); never touch a
+    # human-authored descriptor (only flag it). Always write a committed reconciliation report.
+    new_ids = set(report["ids"])
+    removed: list[str] = []
+    kept_human: list[str] = []
+    for path in sorted(out_dir.glob("*.yaml")):
+        did = path.stem
+        if did in new_ids:
+            continue
+        try:
+            old = DatasetDescriptor(**(yaml.safe_load(path.read_text(encoding="utf-8")) or {}))
+        except Exception:  # noqa: BLE001 - unreadable: leave it for a human
+            continue
+        if old.generation and old.generation.managed:
+            removed.append(did)
+            if prune:
+                path.unlink()
+                data_dir = Path(catalog_root) / "datasets" / did
+                if data_dir.exists():
+                    shutil.rmtree(data_dir)  # drop the orphan's tracked card/manifest/croissant + any local bytes
+        else:
+            kept_human.append(did)
+    report["removed"] = sorted(removed)
+    report["kept_human_orphans"] = sorted(kept_human)
+    report["pruned"] = bool(prune)
+
+    recon = {
+        "source_root": str(source_root),
+        "n_datasets": len(new_ids),
+        "created": sorted(c["id"] for c in report["created"]),
+        "updated": sorted(u["id"] for u in report["updated"]),
+        "skipped": report["skipped"],
+        "removed_managed_orphans": report["removed"],
+        "pruned": bool(prune),
+        "kept_human_orphans": report["kept_human_orphans"],
+        "id_collisions": [e for e in report["errors"] if "collision" in e["error"]],
+        "errors": [e for e in report["errors"] if "collision" not in e["error"]],
+    }
+    (Path(catalog_root) / "catalog" / "reconciliation.json").write_text(json.dumps(recon, indent=2, sort_keys=True), encoding="utf-8")
     return report

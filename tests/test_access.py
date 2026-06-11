@@ -72,7 +72,7 @@ def test_fetch_private_rejects_checksum_mismatch(tmp_path: Path) -> None:
         fetch_private({"X.parquet": 11}, {"X.parquet": _HASH}, tmp_path, instance="https://dv.example", token="TKN", session=session)
 
 
-def _write_registry(tmp_path: Path, *, visibility: str = "public", doi: str | None = "10.70112/ABC", local: bool = False) -> Path:
+def _write_registry(tmp_path: Path, *, visibility: str = "public", doi: str | None = "10.70112/ABC", local: bool = False, sources: list[dict[str, Any]] | None = None) -> Path:
     """A minimal registry: one descriptor + manifest, optionally with local canonical data."""
     (tmp_path / "catalog" / "datasets").mkdir(parents=True)
     descriptor = {
@@ -86,6 +86,7 @@ def _write_registry(tmp_path: Path, *, visibility: str = "public", doi: str | No
             "anonymization_status": "n/a", "permitted_use": "r", "access_policy": "o",
         },
         "dataverse": ({"doi": doi} if doi else {}),
+        "sources": sources or [],
     }
     (tmp_path / "catalog" / "datasets" / "corn.yaml").write_text(yaml.safe_dump(descriptor), encoding="utf-8")
     dataset_dir = tmp_path / "datasets" / "corn"
@@ -141,6 +142,51 @@ def test_public_api_is_exposed() -> None:
     import nirs4all_datasets as n4ad
 
     assert all(callable(getattr(n4ad, fn)) for fn in ("load", "load_local", "list", "card"))
+
+
+def test_fetch_from_origin_canonical_verifies_against_manifest(tmp_path: Path, monkeypatch: Any) -> None:
+    from nirs4all_datasets.access import fetch_from_origin
+
+    desc = s.DatasetDescriptor(
+        id="corn", name="Corn", description="x", instrument=s.Instrument(),
+        targets=[s.Target(name="y", task_type="regression")], provenance=s.Provenance(contributor="L"),
+        governance=s.Governance(license="CC-BY-4.0"),
+        sources=[s.OriginSource(kind="zenodo", mode="canonical", locator="10.5281/zenodo.9", access="open")],
+    )
+    seen: dict[str, Any] = {}
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_public", lambda doi, reg, cache: seen.update(doi=doi, reg=reg) or {})
+    monkeypatch.setattr("nirs4all_datasets.access.load_local", lambda d: "LOADED")
+    out = fetch_from_origin("corn", desc, _manifest(), cache_dir=tmp_path)
+    assert out == "LOADED" and seen["doi"] == "10.5281/zenodo.9"
+    assert seen["reg"] == canonical_registry(_manifest())  # verified against the manifest, not the source
+
+
+def test_fetch_from_origin_skips_manual_script_and_url(tmp_path: Path) -> None:
+    from nirs4all_datasets.access import fetch_from_origin
+
+    desc = s.DatasetDescriptor(
+        id="corn", name="Corn", description="x", instrument=s.Instrument(),
+        targets=[s.Target(name="y", task_type="regression")], provenance=s.Provenance(contributor="L"),
+        governance=s.Governance(license="CC-BY-4.0"),
+        sources=[
+            s.OriginSource(kind="script", mode="raw", locator="scripts/corn.py", access="open"),
+            s.OriginSource(kind="url", mode="raw", locator="https://example.org/x.zip", access="manual"),
+            s.OriginSource(kind="zenodo", mode="raw", locator="10.5281/zenodo.9", access="open"),  # raw + reproduce off
+        ],
+    )
+    assert fetch_from_origin("corn", desc, _manifest(), cache_dir=tmp_path, reproduce=False) is None
+
+
+def test_load_no_doi_falls_back_to_origin(tmp_path: Path, monkeypatch: Any) -> None:
+    root = _write_registry(tmp_path, doi=None, local=False, sources=[{"kind": "zenodo", "mode": "canonical", "locator": "10.5281/zenodo.9", "access": "open"}])
+    monkeypatch.setattr("nirs4all_datasets.access.fetch_from_origin", lambda name, desc, man, **k: "FROM_ORIGIN")
+    assert load("corn", root=root) == "FROM_ORIGIN"
+
+
+def test_load_no_doi_unfetchable_source_raises_with_guidance(tmp_path: Path) -> None:
+    root = _write_registry(tmp_path, doi=None, local=False, sources=[{"kind": "url", "mode": "raw", "locator": "https://esdac.example/lucas", "access": "manual"}])
+    with pytest.raises(ValueError, match="original sources"):
+        load("corn", root=root)
 
 
 def test_load_local_round_trip(tmp_path: Path) -> None:

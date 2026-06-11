@@ -24,15 +24,16 @@ except PackageNotFoundError:  # running from a source checkout without install
 
 # Public API. These are thin lazy wrappers: the heavy modules (numpy/pyarrow/nirs4all) are imported
 # only when a function is actually called, so ``import nirs4all_datasets`` stays cheap.
-def load(name: str, *, root: str | Path = ".", token: str | None = None, instance: str | None = None, cache_dir: str | Path | None = None) -> Any:
-    """Load a catalog dataset as a nirs4all ``DatasetConfigs`` (local-first, else fetch by DOI).
+def load(name: str, *, root: str | Path = ".", token: str | None = None, instance: str | None = None, cache_dir: str | Path | None = None, reproduce: bool = False) -> Any:
+    """Load a catalog dataset as a nirs4all ``DatasetConfigs`` (local-first, else fetch).
 
-    Public datasets need no token; restricted ones download with a token (explicit or resolved from
-    settings). See :func:`nirs4all_datasets.access.load`.
+    Resolution order: local canonical -> the personal Dataverse DOI (public via pooch, restricted via
+    token) -> an OPEN original source (``reproduce=True`` re-ingests a raw source into a *reproduced*
+    canonical). Public datasets need no token. See :func:`nirs4all_datasets.access.load`.
     """
     from nirs4all_datasets.access import load as _load
 
-    return _load(name, root=root, token=token, instance=instance, cache_dir=cache_dir)
+    return _load(name, root=root, token=token, instance=instance, cache_dir=cache_dir, reproduce=reproduce)
 
 
 def load_local(dataset_dir: str | Path) -> Any:

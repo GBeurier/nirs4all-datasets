@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** beefmarbling
 - **Description:** BEEFMARBLING dataset (regression). Sample: Fresh beef carcasse muscle. Trait: Marbling. Split: Random. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.57745/FRDOJC
+- **Contributor:** Recherche Data Gouv
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.57745/FRDOJC
+- **Owner / steward:** Recherche Data Gouv
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

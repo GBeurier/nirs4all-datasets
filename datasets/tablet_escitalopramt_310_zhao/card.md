@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** tablet
 - **Description:** TABLET dataset (regression). Sample: Tablet. Trait: Active Substance. Split: ks. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://ucphchemometrics.com/tablet/
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://ucphchemometrics.com/tablet/
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

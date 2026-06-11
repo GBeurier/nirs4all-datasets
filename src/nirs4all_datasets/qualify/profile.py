@@ -23,7 +23,7 @@ import numpy as np
 from scipy import stats
 
 from nirs4all_datasets.ingest import resolve_config
-from nirs4all_datasets.manifest import descriptor_hash, read_manifest
+from nirs4all_datasets.manifest import descriptor_hash, metadata_hash, read_manifest
 from nirs4all_datasets.qualify import metrics
 from nirs4all_datasets.qualify.croissant import render_croissant
 from nirs4all_datasets.qualify.datasheet import render_datasheet
@@ -335,6 +335,59 @@ def _target_partitions(dataset: Any, warnings: list[str]) -> dict[str, Any] | No
     return out
 
 
+def _provenance_section(descriptor: DatasetDescriptor) -> dict[str, Any]:
+    """Surfaced origin + citation block: where the bytes come from and how to cite the dataset.
+
+    ``sources`` are the original (authoritative) homes (data DOIs/URLs); ``publications`` are the
+    related papers (journal DOIs). The two are kept apart so a paper is never advertised as a data
+    source. ``republished_doi`` is our own minted Dataverse DOI when published.
+    """
+    pubs = descriptor.datacite.related_publications if descriptor.datacite else []
+    return {
+        "contributor": descriptor.provenance.contributor,
+        "reference_method": descriptor.provenance.reference_method,
+        "sources": [{"kind": s.kind.value, "mode": s.mode.value, "locator": s.locator, "access": s.access.value, "license": s.license, "title": s.title} for s in descriptor.sources],
+        "citation": descriptor.citation,
+        "publications": [{"doi": p.doi, "title": p.title, "authors": p.authors, "year": p.year, "citation": p.citation} for p in pubs],
+        "republished_doi": descriptor.dataverse.doi,
+        "dataset_version": descriptor.dataverse.dataset_version,
+    }
+
+
+def _traceability(descriptor: DatasetDescriptor, manifest: Any, manifest_fresh: bool) -> dict[str, Any]:
+    """The origin -> raw -> canonical -> card hash chain. The manifest is the byte-identity authority.
+
+    ``manifest_fresh`` is False when the manifest's ``descriptor_hash`` no longer matches the current
+    descriptor (a rebuild is due); then the per-file hashes are omitted rather than reported stale.
+    """
+    raw = [fe.sha256 for fe in manifest.files if fe.role is FileRole.RAW] if manifest_fresh else []
+    canonical = {Path(fe.path).name: fe.sha256 for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")} if manifest_fresh else {}
+    return {
+        "origin_locators": [s.locator for s in descriptor.sources],
+        "raw_sha256": raw or list(descriptor.provenance.raw_sha256),
+        "canonical_sha256": canonical,
+        "manifest_fresh": bool(manifest_fresh),
+    }
+
+
+def card_metadata_fresh(card_path: str | Path, descriptor: DatasetDescriptor) -> bool:
+    """Whether an existing ``card.json`` displays up-to-date provenance (origin sources, citations).
+
+    Canonical bytes are governed by ``descriptor_hash`` (organize/manifest); the card *also* displays
+    metadata, so a metadata-only edit leaves canonical untouched yet must refresh the card. The card
+    stores ``integrity.metadata_hash`` for this check. A card that is missing/unreadable or lacks the
+    field is treated as **not** fresh (so it gets rebuilt and picks up the current sections).
+    """
+    path = Path(card_path)
+    if not path.exists():
+        return False
+    try:
+        card = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001 - unreadable card -> rebuild
+        return False
+    return (card.get("integrity") or {}).get("metadata_hash") == metadata_hash(descriptor)
+
+
 def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, x_outlier_method: str = "robust_mahalanobis") -> dict[str, Any]:
     """Build (and write) the identity card for a dataset directory.
 
@@ -356,6 +409,10 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     if dataset.n_sources != 1:
         warnings.append(f"multi-source dataset (n_sources={dataset.n_sources}); profiling source 0 only")
 
+    manifest_path = dataset_dir / "manifest.json"
+    manifest = read_manifest(manifest_path) if manifest_path.exists() else None
+    manifest_fresh = manifest is not None and manifest.descriptor_hash == descriptor_hash(descriptor)
+
     inventory = _inventory(dataset)
     targets = _targets(dataset, base, warnings)
     if "note" not in targets:  # supervised → attach the per-partition (train/test) breakdown
@@ -373,6 +430,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
             "visibility": gov.visibility.value,
             "doi": descriptor.dataverse.doi,
         },
+        "provenance": _provenance_section(descriptor),
         "inventory": inventory,
         "spectral": _spectral(dataset, base, inventory["n_features"], warnings),
         "targets": targets,
@@ -384,6 +442,8 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
             "content_hash": dataset.content_hash(),
             "nirs4all_version": nirs4all.__version__,
             "descriptor_hash": descriptor_hash(descriptor),
+            "metadata_hash": metadata_hash(descriptor),
+            "traceability": _traceability(descriptor, manifest, manifest_fresh),
             "generated_at": datetime.now(UTC).isoformat(),  # volatile (excluded from reproducibility)
         },
         "warnings": warnings,
@@ -398,12 +458,9 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
 
     # FAIR metadata: human-readable datasheet + machine-readable Croissant.
     (dataset_dir / "card.md").write_text(render_datasheet(descriptor, card), encoding="utf-8")
-    manifest_path = dataset_dir / "manifest.json"
     files: list[tuple[str, str | None, int | None]] = []
-    if manifest_path.exists():
-        manifest = read_manifest(manifest_path)
-        if manifest.descriptor_hash == descriptor_hash(descriptor):  # only a fresh manifest is trusted
-            files = [(Path(fe.path).name, fe.sha256, fe.file_id) for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")]
+    if manifest_fresh and manifest is not None:  # only a fresh manifest is trusted (computed above)
+        files = [(Path(fe.path).name, fe.sha256, fe.file_id) for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")]
     croissant = render_croissant(descriptor, card, files=files, instance=descriptor.dataverse.instance)
     (dataset_dir / "croissant.json").write_text(json.dumps(croissant, indent=2), encoding="utf-8")
     return card

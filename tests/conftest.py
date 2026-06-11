@@ -8,7 +8,7 @@ from typing import Any
 import pytest
 import yaml
 
-from nirs4all_datasets.manifest import descriptor_hash
+from nirs4all_datasets.manifest import descriptor_hash, metadata_hash
 from nirs4all_datasets.schema import DatasetDescriptor
 
 _DESCRIPTOR: dict[str, Any] = {
@@ -46,6 +46,7 @@ def registry(tmp_path: Path) -> Path:
     (descriptors / "corn.yaml").write_text(yaml.safe_dump(_DESCRIPTOR), encoding="utf-8")
 
     dhash = descriptor_hash(DatasetDescriptor(**_DESCRIPTOR))
+    mhash = metadata_hash(DatasetDescriptor(**_DESCRIPTOR))
     data_dir = tmp_path / "datasets" / "corn"
     data_dir.mkdir(parents=True)
     (data_dir / "card.json").write_text(
@@ -53,7 +54,7 @@ def registry(tmp_path: Path) -> Path:
             "identity": {"id": "corn"},
             "inventory": {"n_samples": 80, "n_features": 700},
             "spectral": {"signal_type": "absorbance"},
-            "integrity": {"content_hash": "abc123", "descriptor_hash": dhash},
+            "integrity": {"content_hash": "abc123", "descriptor_hash": dhash, "metadata_hash": mhash},
         }),
         encoding="utf-8",
     )

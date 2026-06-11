@@ -98,12 +98,14 @@ def add(
     """Ingest raw SOURCE into datasets/<id>, build its card, and refresh the catalog."""
     from nirs4all_datasets.catalog import build_catalog
     from nirs4all_datasets.organize import organize
-    from nirs4all_datasets.qualify.profile import build_card
+    from nirs4all_datasets.qualify.profile import build_card, card_metadata_fresh
 
     descriptor = _descriptor(root, dataset_id)
     result = organize(source, descriptor, root / "datasets", signal=signal)
     typer.echo(f"organize: {'skipped (unchanged)' if result.skipped else 'processed'} -> {result.dataset_dir}")
-    if not result.skipped or not (result.dataset_dir / "card.json").exists():
+    # Rebuild the card unless canonical is unchanged AND the card already displays current metadata
+    # (a sources/citation-only edit must still refresh the card even when organize skips).
+    if not result.skipped or not card_metadata_fresh(result.dataset_dir / "card.json", descriptor):
         build_card(result.dataset_dir, descriptor)
         typer.echo("card built")
     build_catalog(root)
@@ -228,13 +230,17 @@ def bootstrap(
     root: Path = typer.Option(Path("."), help="Registry root."),
     xlsx: Path | None = typer.Option(None, help="DatabaseDetail.xlsx master sheet (optional metadata enrichment)."),
     force: bool = typer.Option(False, help="Overwrite managed descriptors even when unchanged."),
+    prune: bool = typer.Option(False, help="Re-base: delete managed descriptors no longer in the source (writes catalog/reconciliation.json)."),
 ) -> None:
     """Auto-generate schema-valid descriptors for every dataset leaf under SOURCE_TREE."""
     from nirs4all_datasets.catalog import build_catalog
     from nirs4all_datasets.discover import bootstrap as run_bootstrap
 
-    report = run_bootstrap(source_tree, root, xlsx_path=xlsx, force=force)
-    typer.echo(f"bootstrap: created={len(report['created'])} updated={len(report['updated'])} skipped={len(report['skipped'])} errors={len(report['errors'])}")
+    report = run_bootstrap(source_tree, root, xlsx_path=xlsx, force=force, prune=prune)
+    typer.echo(
+        f"bootstrap: created={len(report['created'])} updated={len(report['updated'])} skipped={len(report['skipped'])} "
+        f"removed={len(report.get('removed', []))}{'(pruned)' if report.get('pruned') else '(kept)'} errors={len(report['errors'])}"
+    )
     for err in report["errors"][:10]:
         typer.echo(f"  ERROR {err['leaf']}: {err['error']}", err=True)
     build_catalog(root)

@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** colza
 - **Description:** COLZA dataset (regression). Sample: Oilseed rape plant tissues. Trait: C content. Split: not specified. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.57745/6VYUQN
+- **Contributor:** Recherche Data Gouv
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.57745/6VYUQN
+- **Owner / steward:** Recherche Data Gouv
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

@@ -6,12 +6,12 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** grapevine_leaftraits
 - **Description:** GRAPEVINE_LeafTraits dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** Recherche Data Gouv
 
 ## Composition
 
 - **Instances:** 1444 spectra × 257 wavelengths, 1 source(s).
-- **Modality / instrument:** NIR — *Not specified.* *Not specified.* (firmware *Not specified.*).
+- **Modality / instrument:** NIR — *Not specified.* NeoSpectra (firmware *Not specified.*).
 - **Spectral axis:** [1350.15546339642, 2549.99998242594] nm; signal type unknown.
 - **Targets:** WCf (regression)
 - **Contains missing values:** False
@@ -37,18 +37,18 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Citation:** https://doi.org/10.1002/ppj2.70059
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
+- **License:** etalab-2.0
 - **Visibility:** restricted
-- **Confidentiality class:** internal
+- **Confidentiality class:** public
 - **DOI:** *Not specified.*
-- **Redistribution rights:** Original source licence applies; verify before redistribution.
+- **Redistribution rights:** Open redistribution under etalab-2.0.
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** Recherche Data Gouv
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.
