@@ -3,14 +3,16 @@
 Resolution order for :func:`get`:
 
 1. **local** — ``<root>/datasets/<name>/canonical`` is present: load it directly (no network);
-2. **personal Dataverse DOI** — fetch the canonical Parquet by the descriptor's pinned DOI; public via
-   pooch, private/anonymized via the Dataverse access API with a token;
+2. **personal Dataverse DOI** — fetch the canonical Parquet by the descriptor's pinned DOI (public
+   without a token; private/anonymized with one);
 3. **open origin source** — fetch the canonical bytes from an OPEN ``origin_sources`` entry by DOI.
 
-Every download is SHA-256-verified against the manifest's recorded hashes — which match only because
-canonical files are uploaded with ``tabIngest=false`` (pristine bytes). Verified files are cached and
-reused. A token is required to fetch the bytes of a ``private`` or ``anonymized`` dataset that is not
-already local; an actionable error is raised otherwise.
+The download itself — DOI/version-pinned resolution, the redirect-safe Dataverse fetch (the
+``X-Dataverse-key`` never reaches signed storage), streaming SHA-256 verification against the manifest
+and the pooch-style cache — lives in the native acquisition core (Rust, ``crates/nirs4all-datasets-core``)
+behind the ``n4ds_`` C ABI and is reached here through :mod:`nirs4all_datasets._acquire`. This module
+owns only the *policy* around it: local-first short-circuit, the token gate, the actionable
+"where do the bytes live" error, and wrapping the result as a :class:`NirsDataset`.
 """
 from __future__ import annotations
 
@@ -18,127 +20,37 @@ from pathlib import Path
 from typing import Any
 
 from nirs4all_datasets.dataset import NirsDataset
-from nirs4all_datasets.manifest import Manifest, sha256_file
-from nirs4all_datasets.schema import _DOI_RE, DatasetDescriptor, FileRole, SourceAccess, SourceKind, SourceMode, Tier
+from nirs4all_datasets.schema import _DOI_RE, DatasetDescriptor, SourceAccess, SourceKind, SourceMode, Tier
 
-
-def default_cache_dir() -> Path:
-    """OS-specific cache directory for downloaded datasets."""
-    import pooch
-
-    return Path(pooch.os_cache("nirs4all-datasets"))
-
-
-def canonical_registry(manifest: Manifest) -> dict[str, str]:
-    """Map canonical filename -> local SHA-256 (the frozen, pinned download registry)."""
-    return {Path(fe.path).name: fe.sha256 for fe in manifest.files if fe.role is FileRole.CANONICAL}
-
-
-def canonical_file_ids(manifest: Manifest) -> dict[str, int]:
-    """Map canonical filename -> Dataverse file id (for the private access API)."""
-    return {Path(fe.path).name: fe.file_id for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.file_id is not None}
-
-
-def fetch_public(doi: str, registry: dict[str, str], cache_dir: str | Path) -> dict[str, Path]:
-    """Download canonical files of a public dataset by DOI via pooch (verified + cached).
-
-    The SHA-256 registry guarantees byte identity even though pooch resolves files by basename
-    from the DOI's latest version (canonical filenames are unique within a dataset).
-    """
-    import pooch
-
-    bare_doi = doi[4:] if doi.lower().startswith("doi:") else doi
-    pup = pooch.create(path=str(cache_dir), base_url=f"doi:{bare_doi}/", registry={name: f"sha256:{sha}" for name, sha in registry.items()})
-    return {name: Path(pup.fetch(name)) for name in registry}
-
-
-def fetch_private(
-    file_ids: dict[str, int],
-    registry: dict[str, str],
-    cache_dir: str | Path,
-    *,
-    instance: str,
-    token: str,
-    session: Any | None = None,
-) -> dict[str, Path]:
-    """Download canonical files via the Dataverse access API (token), verify SHA-256, cache."""
-    import os
-
-    import requests
-
-    sess = session if session is not None else requests.Session()
-    cache_dir = Path(cache_dir)
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    out: dict[str, Path] = {}
-    for name, expected in registry.items():
-        dest = cache_dir / name
-        if dest.exists() and sha256_file(dest) == expected:
-            out[name] = dest
-            continue
-        if name not in file_ids:
-            raise RuntimeError(f"no Dataverse file id for {name!r} (cannot download privately).")
-        # Do not follow redirects with the token: signed S3 storage must not receive the key.
-        resp = sess.get(f"{instance}/api/access/datafile/{file_ids[name]}", headers={"X-Dataverse-key": token}, timeout=120, allow_redirects=False)
-        if getattr(resp, "is_redirect", False):
-            location = resp.headers.get("Location")
-            if not location:
-                raise RuntimeError(f"download {name} redirected without a Location header.")
-            resp = sess.get(location, timeout=300)  # follow to storage host WITHOUT the Dataverse key
-        if not resp.ok:
-            raise RuntimeError(f"download {name} failed: HTTP {resp.status_code} {resp.reason}")
-        tmp = dest.with_name(dest.name + ".tmp")
-        tmp.write_bytes(resp.content)
-        if sha256_file(tmp) != expected:
-            tmp.unlink(missing_ok=True)
-            raise RuntimeError(f"checksum mismatch for {name} after download.")
-        os.replace(tmp, dest)
-        out[name] = dest
-    return out
-
-
-def fetch_by_doi(dataset_id: str, doi: str, manifest: Manifest, *, cache_dir: str | Path | None = None, instance: str | None = None, token: str | None = None) -> Path:
-    """Fetch a dataset's canonical files (by its pinned DOI) into the cache and return its directory.
-
-    Public datasets (``token is None``) are fetched by DOI via pooch; otherwise the Dataverse access
-    API is used. Returns the dataset directory (whose ``canonical/`` now holds the verified files).
-    """
-    cache_root = Path(cache_dir) if cache_dir is not None else default_cache_dir()
-    canonical = cache_root / dataset_id / "canonical"
-    registry = canonical_registry(manifest)
-    if token is None:
-        fetch_public(doi, registry, canonical)
-    else:
-        if instance is None:
-            raise ValueError("instance is required for private downloads.")
-        fetch_private(canonical_file_ids(manifest), registry, canonical, instance=instance, token=token)
-    return cache_root / dataset_id
-
-
-# Origin kinds pooch can resolve by DOI (Dataverse / Zenodo / figshare). url / manual / script sources
-# are never auto-fetched in the consumer path: scripts are maintainer-only (no code execution on get),
-# and url/manual need a human (click-through licence, registration, raw scraping).
+# Origin kinds the acquisition core can resolve by DOI (Dataverse / Zenodo / figshare). url / manual /
+# script sources are never auto-fetched on the consumer path: scripts are maintainer-only (no code
+# execution on get), and url/manual need a human (click-through licence, registration, raw scraping).
 _FETCHABLE_KINDS = frozenset({SourceKind.DATAVERSE, SourceKind.ZENODO, SourceKind.FIGSHARE})
 
 
-def fetch_from_origin(name: str, descriptor: DatasetDescriptor, manifest: Manifest, *, cache_dir: str | Path | None = None) -> Path | None:
-    """Fetch canonical bytes from an OPEN ``origin_sources`` entry, or ``None`` if none is auto-fetchable.
+def _has_fetchable_origin(descriptor: DatasetDescriptor) -> bool:
+    """Whether any origin is an OPEN canonical DOI the core can auto-fetch + verify byte-for-byte."""
+    return any(
+        src.access is SourceAccess.OPEN and src.mode is SourceMode.CANONICAL and src.kind in _FETCHABLE_KINDS and bool(_DOI_RE.match(src.locator))
+        for src in descriptor.origin_sources
+    )
 
-    Only ``canonical``-mode open DOI origins are auto-fetched here: the bytes are verified against the
-    manifest's canonical SHA-256, so they are byte-identical to a published dataset. Raw-mode origins
-    would require local re-ingestion (a *reproduction*, not byte-identical) and are not fetched on the
-    consumer path. Returns the dataset directory on success, else ``None``.
-    """
-    cache_root = Path(cache_dir) if cache_dir is not None else default_cache_dir()
-    for src in descriptor.origin_sources:
-        if src.access is not SourceAccess.OPEN or src.kind not in _FETCHABLE_KINDS or src.mode is not SourceMode.CANONICAL or not _DOI_RE.match(src.locator):
-            continue
-        canonical = cache_root / name / "canonical"
-        try:
-            fetch_public(src.locator, canonical_registry(manifest), canonical)
-        except Exception:  # noqa: BLE001 - byte mismatch / link rot: try the next origin
-            continue
-        return cache_root / name
-    return None
+
+def _resolved_contract(root: Path, descriptor: DatasetDescriptor) -> dict[str, Any]:
+    """Build the resolved download contract the native core consumes (from descriptor + manifest)."""
+    from nirs4all_datasets.index import index_entry
+
+    entry = index_entry(root, descriptor)
+    dv = entry["dataverse"]
+    return {
+        "id": descriptor.id,
+        "tier": entry["tier"],
+        "instance": dv["instance"],
+        "doi": dv["doi"],
+        "dataset_version": dv["dataset_version"],
+        "files": entry["files"],
+        "origins": entry["origins"],
+    }
 
 
 def _origin_message(name: str, descriptor: DatasetDescriptor) -> str:
@@ -163,18 +75,20 @@ def get(
     """Resolve a catalog dataset by ``name`` and return it as a :class:`NirsDataset`.
 
     Resolution order: local ``<root>/datasets/<name>/canonical`` -> the descriptor's personal Dataverse
-    DOI (public via pooch, private/anonymized via token) -> an OPEN ``origin_sources`` entry. The first
-    that yields verified canonical bytes wins.
+    DOI (public via the origin, private/anonymized via token) -> an OPEN ``origin_sources`` entry. The
+    first that yields verified canonical bytes wins. Every download is SHA-256-verified by the native
+    core against the manifest's hashes (byte-identical because canonical files are stored with
+    ``tabIngest=false``); verified files are cached and reused.
 
     Args:
         name: Dataset id (a ``catalog/datasets/<name>.yaml`` descriptor under ``root``).
         root: Registry root holding ``catalog/`` and ``datasets/`` (defaults to the current directory).
-        source: Forwarded to the returned dataset's accessors (recorded for the consumer's convenience).
+        source: Forwarded to the returned dataset's accessors (validated against the dataset's sources).
         split: Forwarded similarly (the named native split to apply downstream).
         token: Dataverse API token for private/anonymized downloads; auto-resolved from settings if
             omitted for a non-public dataset.
         instance: Dataverse instance override (else the descriptor's instance).
-        cache_dir: Download cache (defaults to pooch's OS cache).
+        cache_dir: Download cache (defaults to the native core's OS cache).
         concat: Default ``x()`` concat behaviour recorded on the returned dataset (informational).
 
     Returns:
@@ -185,8 +99,6 @@ def get(
         RuntimeError: If a private/anonymized dataset must be fetched but no token is available.
         ValueError: If nothing can be auto-fetched (guides the user to the origin sources).
     """
-    from nirs4all_datasets.manifest import read_manifest
-
     root = Path(root)
     dataset_dir = root / "datasets" / name
 
@@ -198,34 +110,43 @@ def get(
     manifest_path = dataset_dir / "manifest.json"
     if not manifest_path.exists():
         raise FileNotFoundError(f"no manifest for {name!r} at {manifest_path}; build it before remote access.")
-    manifest = read_manifest(manifest_path)
 
-    resolved_token = token
+    contract = _resolved_contract(root, descriptor)
+    fetchable = bool(contract["doi"]) or _has_fetchable_origin(descriptor)
+    if not fetchable:
+        raise ValueError(_origin_message(name, descriptor))
+
+    # 2. Token gate (private/anonymized): resolve a token, and refuse before any network without one.
     needs_token = descriptor.tier is not Tier.PUBLIC
     resolved_instance = instance or descriptor.dataverse.instance
+    resolved_token = token
     if needs_token and resolved_token is None:
         from nirs4all_datasets.config import get_settings
 
         settings = get_settings(instance=resolved_instance)
         resolved_token = settings.token.get_secret_value() if settings.token else None
+    if needs_token and resolved_token is None:
+        raise RuntimeError(
+            f"{name!r} is tier {descriptor.tier.value!r}: a Dataverse token is required to fetch it. "
+            f"Pass token=..., set NIRS4ALL_DATAVERSE_TOKEN, or configure ~/.config/nirs4all-datasets/config.toml."
+        )
 
-    # 2. Personal Dataverse DOI (public via pooch, private/anonymized via token).
-    doi = descriptor.dataverse.doi or manifest.doi
-    if doi:
-        if needs_token and resolved_token is None:
-            raise RuntimeError(
-                f"{name!r} is tier {descriptor.tier.value!r}: a Dataverse token is required to fetch it. "
-                f"Pass token=..., set NIRS4ALL_DATAVERSE_TOKEN, or configure ~/.config/nirs4all-datasets/config.toml."
-            )
-        fetched = fetch_by_doi(name, doi, manifest, cache_dir=cache_dir, instance=resolved_instance, token=resolved_token if needs_token else None)
-        return _wrap(fetched, descriptor, source=source, split=split, concat=concat)
+    # 3. Hand the resolved contract to the native core: download + verify + cache.
+    opts: dict[str, Any] = {}
+    if cache_dir is not None:
+        opts["cache_dir"] = str(cache_dir)
+    if instance is not None:
+        opts["instance"] = instance
+    if needs_token and resolved_token:
+        opts["token"] = resolved_token
 
-    # 3. No minted DOI: fall back to an OPEN origin source (private/anonymized never have an open origin).
-    if not needs_token:
-        from_origin = fetch_from_origin(name, descriptor, manifest, cache_dir=cache_dir)
-        if from_origin is not None:
-            return _wrap(from_origin, descriptor, source=source, split=split, concat=concat)
-    raise ValueError(_origin_message(name, descriptor))
+    from nirs4all_datasets import _acquire
+
+    try:
+        result = _acquire.fetch(contract, opts)
+    except ValueError:  # the core found nothing auto-fetchable: guide to the origin sources
+        raise ValueError(_origin_message(name, descriptor)) from None
+    return _wrap(result["dir"], descriptor, source=source, split=split, concat=concat)
 
 
 def _read_descriptor(root: Path, name: str) -> DatasetDescriptor:

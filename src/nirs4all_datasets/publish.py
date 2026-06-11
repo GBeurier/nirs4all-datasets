@@ -147,8 +147,8 @@ def update_dataset(
 def record_publication(dataset_dir: str | Path, client: DataverseClient, doi: str, dataset_version: Any) -> None:
     """Refresh the manifest after (re)publication: record Dataverse file ids + native checksums + version.
 
-    This is what makes private/restricted access work: ``access.fetch_private`` downloads by the file
-    ids recorded here (with a permitted token). No-op if there is no manifest.
+    This is what makes private/restricted access work: the native acquisition core downloads by the
+    file ids recorded here (with a permitted token). No-op if there is no manifest.
     """
     manifest_path = Path(dataset_dir) / "manifest.json"
     if not manifest_path.exists():

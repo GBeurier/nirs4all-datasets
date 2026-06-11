@@ -44,7 +44,7 @@ def get(
 ) -> NirsDataset:
     """Resolve a catalog dataset and return it as a :class:`NirsDataset` (local-first, else fetch).
 
-    Resolution order: local canonical -> the personal Dataverse DOI (public via pooch, private/
+    Resolution order: local canonical -> the personal Dataverse DOI (public via its origin, private/
     anonymized via token) -> an OPEN origin source. Public datasets need no token. See
     :func:`nirs4all_datasets.access.get`.
     """
