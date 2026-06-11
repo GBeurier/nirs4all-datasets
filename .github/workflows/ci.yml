@@ -14,11 +14,12 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install
-        # Installs nirs4all + nirs4all-io from PyPI. NOTE: the full canonical round-trip tests
-        # require the nirs4all ParquetLoader fix (>= 0.9.2); with an older nirs4all they skip.
+        # The nirs4all extra pulls the published nirs4all (card metrics + to_nirs4all tests). The core
+        # package no longer depends on the unpublished nirs4all-io (it was never imported) -- which both
+        # unblocks PyPI install and fixes this CI install step.
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          pip install -e ".[dev,nirs4all]"
       - name: Ruff
         run: ruff check .
       - name: Mypy

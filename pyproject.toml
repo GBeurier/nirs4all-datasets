@@ -50,12 +50,16 @@ dependencies = [
     "requests>=2.31.0",
     # CLI
     "typer>=0.12.0",
-    # NIRS ecosystem (pin nirs4all-io exactly: alpha)
-    "nirs4all>=0.9",
-    "nirs4all-io==0.1.0a0",
 ]
 
 [project.optional-dependencies]
+# The nirs4all bridge: NirsDataset.to_nirs4all() + nirs4all-powered card metrics (PCA, outlier filter).
+# The catalog, get()/NirsDataset readers (numpy/pandas), and the site all work WITHOUT this extra — the
+# nirs4all imports are lazy and degrade gracefully (PCA -> None + a card warning; to_nirs4all -> a clear
+# error if nirs4all is absent). Install it to qualify cards and to hand datasets to nirs4all.
+nirs4all = [
+    "nirs4all>=0.9",
+]
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
@@ -64,6 +68,7 @@ dev = [
     "types-requests",
     "types-PyYAML",
     "build>=1.0.0",
+    "twine>=5.0.0",
 ]
 
 [project.scripts]
@@ -81,10 +86,9 @@ include = ["nirs4all_datasets*"]
 [tool.setuptools.package-data]
 nirs4all_datasets = ["py.typed"]
 
-# Editable local sources for development (uv); CI pins published versions.
+# Editable local source for development (uv); CI / PyPI use the published nirs4all.
 [tool.uv.sources]
 nirs4all = { path = "../nirs4all", editable = true }
-nirs4all-io = { path = "../nirs4all-io/bindings/python", editable = true }
 
 [tool.ruff]
 line-length = 220

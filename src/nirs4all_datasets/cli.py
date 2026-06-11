@@ -167,6 +167,15 @@ def catalog(root: Path = typer.Option(Path("."), help="Registry root.")) -> None
     typer.echo(f"catalog: {result['n_datasets']} dataset(s) -> {root / 'catalog' / 'datasets.yaml'}")
 
 
+@app.command()
+def status(root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
+    """Refresh the validation registry + write the status reports (DATASET_STATUS.md, PRIVATE_DATASETS.md)."""
+    from nirs4all_datasets.status import build_reports
+
+    paths = build_reports(root)
+    typer.echo(f"status: {paths['status'].relative_to(root)} + {paths['private'].relative_to(root)} (validation registry: {paths['validation'].relative_to(root)})")
+
+
 @app.command("site")
 def site_cmd(
     root: Path = typer.Option(Path("."), help="Registry root."),
