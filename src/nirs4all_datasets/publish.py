@@ -13,7 +13,7 @@ from typing import Any
 
 from nirs4all_datasets.dataverse import DataverseClient, dataset_metadata
 from nirs4all_datasets.manifest import read_manifest, write_manifest
-from nirs4all_datasets.schema import DatasetDescriptor, Visibility
+from nirs4all_datasets.schema import DatasetDescriptor, Tier
 
 
 def _persistent_id(doi: str) -> str:
@@ -88,7 +88,7 @@ def publish_dataset(
         raise NotImplementedError(f"dataset already has DOI {descriptor.dataverse.doi}; use update_dataset() to publish a new version.")
 
     dataset_dir = Path(dataset_dir)
-    restrict = descriptor.governance.visibility is not Visibility.PUBLIC  # restricted/embargo -> access-gated files
+    restrict = descriptor.tier is not Tier.PUBLIC  # private/anonymized -> access-gated files
     doi = client.create_dataset(collection, to_dataverse_metadata(descriptor, contact_email=contact_email, subjects=subjects))
 
     files = _payload_files(dataset_dir)
@@ -118,7 +118,7 @@ def update_dataset(
 
     dataset_dir = Path(dataset_dir)
     pid = _persistent_id(descriptor.dataverse.doi)
-    restrict = descriptor.governance.visibility is not Visibility.PUBLIC
+    restrict = descriptor.tier is not Tier.PUBLIC
     existing = client.file_checksums(pid)  # filename -> {type, value, file_id}
 
     files = _payload_files(dataset_dir)
