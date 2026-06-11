@@ -160,11 +160,20 @@ def health_check_cmd(
 
 @app.command()
 def catalog(root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
-    """(Re)assemble catalog/datasets.yaml from all descriptors + cards + health."""
+    """(Re)assemble catalog/datasets.yaml (+ the cross-language catalog/index.json) from all descriptors."""
     from nirs4all_datasets.catalog import build_catalog
 
     result = build_catalog(root)
-    typer.echo(f"catalog: {result['n_datasets']} dataset(s) -> {root / 'catalog' / 'datasets.yaml'}")
+    typer.echo(f"catalog: {result['n_datasets']} dataset(s) -> {root / 'catalog' / 'datasets.yaml'} (+ index.json)")
+
+
+@app.command()
+def index(root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
+    """(Re)build catalog/index.json — the distributable, cross-language download contract."""
+    from nirs4all_datasets.index import build_index
+
+    result = build_index(root)
+    typer.echo(f"index: {result['n_datasets']} dataset(s) -> {root / 'catalog' / 'index.json'}")
 
 
 @app.command()

@@ -162,8 +162,11 @@ def build_catalog(root: str | Path, *, write: bool = True) -> dict[str, Any]:
     ]
     catalog = {"schema_version": SCHEMA_VERSION, "n_datasets": len(entries), "summary": bank_summary(entries), "datasets": entries}
     if write:
+        from nirs4all_datasets.index import build_index  # lazy: avoid a module-load cycle (index imports catalog)
+
         (root / "catalog").mkdir(parents=True, exist_ok=True)
         (root / "catalog" / "datasets.yaml").write_text(yaml.safe_dump(catalog, sort_keys=False, allow_unicode=True), encoding="utf-8")
+        build_index(root, write=True)  # the cross-language download contract, kept in lock-step with the index
     return catalog
 
 
