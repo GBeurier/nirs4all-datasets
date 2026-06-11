@@ -28,7 +28,7 @@ import pandas as pd
 
 from nirs4all_datasets.canonical import resolve_config
 from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
-from nirs4all_datasets.qualify import croissant, datasheet, plots, registry
+from nirs4all_datasets.qualify import anonymize, croissant, datasheet, plots, registry
 from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
 
 SCHEMA_VERSION = "2.0"
@@ -215,20 +215,24 @@ def _variable_type(var: Variable) -> bool:
 
 
 def _variable_section(var: Variable, values: pd.Series, warnings: list[str]) -> dict[str, Any]:
-    """Build one ``variables[]`` card entry: numeric or categorical stats per the declared type."""
+    """Build one ``variables[]`` card entry. Numeric or categorical stats per the declared type, but a
+    variable *declared* numeric whose values do not parse as numbers is profiled as CATEGORICAL instead
+    (the card's ``type`` records the effective type) — the descriptor's guess never yields empty stats."""
     variable_metrics = registry.metrics_for("variable")
-    is_numeric = _variable_type(var)
-    if is_numeric:
+    effective_type = var.type
+    if var.type is VarType.NUMERIC:
         numeric = pd.to_numeric(values, errors="coerce")
         if values.notna().any() and numeric.notna().sum() == 0:
-            warnings.append(f"variable {var.name!r} declared numeric but no value parses as a number; stats are empty")
-        stats = variable_metrics["numeric_stats"](numeric.to_numpy(dtype="float64"))
+            effective_type = VarType.CATEGORICAL
+            stats = variable_metrics["categorical_stats"](values)
+        else:
+            stats = variable_metrics["numeric_stats"](numeric.to_numpy(dtype="float64"))
     else:
         stats = variable_metrics["categorical_stats"](values)
     return {
         "name": var.name,
         "role": var.role.value,
-        "type": var.type.value,
+        "type": effective_type.value,
         "unit": var.unit,
         "stats": stats,
         "assets": [],
@@ -355,8 +359,9 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
             section["assets"] = relpaths
             assets["sources"][section["source_id"]] = relpaths
         for var_section in variable_sections:
-            var = next(v for v in descriptor.variables if v.name == var_section["name"])
-            relpaths = plots.render_variable_asset(var.name, variables_df[var.name], _variable_type(var), assets_dir, warnings)  # type: ignore[index]
+            # Plot per the EFFECTIVE type (a declared-numeric-but-unparseable var was reprofiled categorical).
+            is_numeric_eff = var_section["type"] == VarType.NUMERIC.value
+            relpaths = plots.render_variable_asset(var_section["name"], variables_df[var_section["name"]], is_numeric_eff, assets_dir, warnings)  # type: ignore[index]
             var_section["assets"] = relpaths
             assets["variables"].extend(relpaths)
 
@@ -397,14 +402,21 @@ def qualify(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_a
     ``<dataset_dir>/assets/`` (when ``compute_assets``), and writes the full artifact set —
     ``card.json`` (machine-readable), ``card.md`` (Datasheets-for-Datasets), and ``croissant.json``
     (MLCommons Croissant JSON-LD).
+
+    For the ``anonymized`` tier the written artifacts are the *public-safe* views (masked variable names,
+    z-scored stats, no identifying free text): the tracked ``card.json``/``card.md``/``croissant.json`` are
+    derived from :func:`anonymize.public_card` + :func:`anonymize.public_descriptor`, so an anonymized
+    dataset cannot leak through any tracked or served artifact. Returns the written (public) card.
     """
     dataset_dir = Path(dataset_dir)
-    card = build_card(dataset_dir, descriptor, compute_assets=compute_assets, compute_pca=compute_pca)
+    full_card = build_card(dataset_dir, descriptor, compute_assets=compute_assets, compute_pca=compute_pca)
+    card = anonymize.public_card(full_card, descriptor.tier)
+    pub_descriptor = anonymize.public_descriptor(descriptor)
     write_card(card, dataset_dir / "card.json")
 
     manifest_path = dataset_dir / "manifest.json"
     hashes = read_manifest(manifest_path).canonical_hashes if manifest_path.exists() else {}
-    (dataset_dir / "card.md").write_text(datasheet.render_datasheet(card, descriptor), encoding="utf-8")
-    croissant_doc = croissant.render_croissant(card, descriptor, hashes=hashes, file_ids={}, instance=descriptor.dataverse.instance)
+    (dataset_dir / "card.md").write_text(datasheet.render_datasheet(card, pub_descriptor), encoding="utf-8")
+    croissant_doc = croissant.render_croissant(card, pub_descriptor, hashes=hashes, file_ids={}, instance=pub_descriptor.dataverse.instance)
     (dataset_dir / "croissant.json").write_text(json.dumps(croissant_doc, indent=2, sort_keys=True), encoding="utf-8")
     return card

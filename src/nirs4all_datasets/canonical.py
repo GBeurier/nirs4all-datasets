@@ -41,7 +41,7 @@ import pyarrow.parquet as pq
 
 from nirs4all_datasets import __version__ as _PKG_VERSION
 from nirs4all_datasets.manifest import sha256_file
-from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor
+from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
 
 CONVERTER_NAME = "nirs4all-datasets-canonical"
 CONVERTER_VERSION = _PKG_VERSION or "2.0"
@@ -201,7 +201,7 @@ def _to_float(value: str) -> float | None:
         return None
 
 
-def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str]) -> tuple[pd.DataFrame | None, list[str]]:
+def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str]) -> tuple[pd.DataFrame | None, list[str]]:
     """Build the per-sample variables table (Y columns UNION extra M columns), one row per sample_id.
 
     Y.csv columns and non-structural M columns are merged on ``observation_id``, then collapsed to one
@@ -222,7 +222,9 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
             frames.append(y)
 
     if m is not None:
-        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample]
+        # Drop structural plumbing + the standardization script's `source_*` provenance-tracking columns
+        # (file paths, repo refs, grouped-export notes): these are bookkeeping, not sample measurements.
+        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not str(c).startswith("source_")]
         m_extra = m[keep]
         if m_extra.shape[1] > 1:
             frames.append(m_extra)
@@ -246,6 +248,19 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
             warnings.append(f"variables: column {col!r} has >1 distinct value within a sample_id; kept the first.")
     grouped = merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
     grouped[JOIN_KEY] = grouped[JOIN_KEY].astype(str)
+    # Coerce comma-decimal float columns (European locales export "12,5") to real floats -- but ONLY for
+    # columns the descriptor declares NUMERIC, so a genuinely numeric target/metadata is not stranded as an
+    # unparseable string while a declared-categorical code (e.g. "001") is never silently turned into a float.
+    for col in value_cols:
+        if col not in numeric_cols or grouped[col].dtype != object:
+            continue
+        text = grouped[col].astype("string").str.strip()
+        nonblank = text[text.notna() & (text != "") & (text.str.lower() != "nan")]
+        if nonblank.empty:
+            continue
+        as_num = pd.to_numeric(nonblank.str.replace(",", ".", regex=False), errors="coerce")
+        if as_num.notna().mean() >= 0.9:
+            grouped[col] = pd.to_numeric(text.str.replace(",", ".", regex=False), errors="coerce")
     phantom = sorted(set(grouped[JOIN_KEY]) - spectral_samples)
     if phantom:
         warnings.append(f"variables: {len(phantom)} sample_id(s) have Y/metadata but no spectra in any source (e.g. {phantom[:3]}); kept.")
@@ -337,7 +352,8 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         (canonical / "dataset.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
         return CanonicalResult(out, canonical, config, CONVERTER_NAME, CONVERTER_VERSION, ConversionStatus.FAILED, hashes, row_counts, warnings)
 
-    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples)
+    numeric_cols = {v.name for v in descriptor.variables if v.type is VarType.NUMERIC}
+    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols)
     warnings.extend(var_warnings)
     variables_path: str | None = None
     if variables is not None:

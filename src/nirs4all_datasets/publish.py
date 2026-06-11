@@ -40,19 +40,29 @@ def assert_publishable(descriptor: DatasetDescriptor) -> None:
 
 
 def to_dataverse_metadata(descriptor: DatasetDescriptor, *, contact_email: str, subjects: list[str] | None = None) -> dict[str, Any]:
-    """Map a descriptor onto a Dataverse metadata payload (citation block + open license)."""
-    if descriptor.datacite and descriptor.datacite.authors:
-        authors = [{"name": a.name, "affiliation": a.affiliation, "orcid": a.orcid} for a in descriptor.datacite.authors]
+    """Map a descriptor onto a Dataverse metadata payload (citation block + open license).
+
+    Anonymized datasets publish only *sanitized* citation metadata: the public descriptor (opaque title,
+    masked description, no DataCite authors/keywords) and a generic ``Anonymized`` author — the original
+    title/description/authors/contributor/owner are never written into public Dataverse metadata.
+    """
+    from nirs4all_datasets.qualify.anonymize import public_descriptor
+
+    pub = public_descriptor(descriptor)
+    if pub.tier is Tier.ANONYMIZED:
+        authors: list[dict[str, Any]] = [{"name": "Anonymized", "affiliation": None, "orcid": None}]
+    elif pub.datacite and pub.datacite.authors:
+        authors = [{"name": a.name, "affiliation": a.affiliation, "orcid": a.orcid} for a in pub.datacite.authors]
     else:
-        authors = [{"name": descriptor.governance.owner_steward or descriptor.provenance.contributor, "affiliation": None, "orcid": None}]
+        authors = [{"name": pub.governance.owner_steward or pub.provenance.contributor, "affiliation": None, "orcid": None}]
     return dataset_metadata(
-        title=descriptor.name,
-        description=descriptor.description,
+        title=pub.name,
+        description=pub.description,
         authors=authors,
         contact_email=contact_email,
         subjects=subjects or ["Other"],
-        keywords=descriptor.keywords or None,
-        license=_LICENSE_MAP.get(descriptor.governance.license),
+        keywords=pub.keywords or None,
+        license=_LICENSE_MAP.get(pub.governance.license),
     )
 
 

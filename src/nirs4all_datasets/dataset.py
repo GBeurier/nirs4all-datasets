@@ -76,8 +76,16 @@ class NirsDataset:
 
     @property
     def descriptor(self) -> DatasetDescriptor:
-        """The bound :class:`DatasetDescriptor`."""
-        return self._descriptor
+        """The dataset's *public* descriptor — identical to the bound one for public/private tiers; for the
+        anonymized tier a masked copy (``var_NNN`` variable names, no identifying free text) so the
+        consumer API cannot leak an anonymized identity. Internal joins use the real descriptor."""
+        return self._public_descriptor
+
+    @cached_property
+    def _public_descriptor(self) -> DatasetDescriptor:
+        from nirs4all_datasets.qualify.anonymize import public_descriptor
+
+        return public_descriptor(self._descriptor)
 
     @property
     def tier(self) -> Tier:
@@ -90,12 +98,17 @@ class NirsDataset:
         return resolve_config(self._dir)
 
     def card(self) -> dict[str, Any] | None:
-        """Return the generated identity ``card.json`` as a dict, or ``None`` if it has not been built."""
+        """Return the generated identity ``card.json`` as a dict, or ``None`` if it has not been built.
+
+        The qualify stage already writes an anonymized ``card.json`` for the anonymized tier; this also
+        applies the public-card transform on read as a defence in depth (a stale/full card never leaks)."""
         path = self._dir / "card.json"
         if not path.exists():
             return None
+        from nirs4all_datasets.qualify.anonymize import public_card
+
         card: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
-        return card
+        return public_card(card, self.tier)
 
     # -- structure ---------------------------------------------------------------------------------
     def sources(self) -> list[str]:
@@ -103,8 +116,9 @@ class NirsDataset:
         return [str(s["source_id"]) for s in self._config["sources"]]
 
     def variables(self) -> list[Variable]:
-        """The descriptor's declared :class:`Variable` list (targets + metadata)."""
-        return list(self._descriptor.variables)
+        """The declared :class:`Variable` list (targets + metadata) — masked (``var_NNN``) for the
+        anonymized tier so variable names never leak through the public API."""
+        return list(self._public_descriptor.variables)
 
     def _source_entry(self, source_id: str) -> dict[str, Any]:
         entry: dict[str, Any]

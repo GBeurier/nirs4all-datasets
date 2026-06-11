@@ -102,7 +102,9 @@ def test_build_card_multi_source_targets_and_metadata(canonical_dataset: Any) ->
     assert set(variables["variety"]["stats"]) == _CATEGORICAL_STATS_KEYS
     assert isinstance(variables["variety"]["stats"]["top_classes"], list)
     assert variables["note_field"]["role"] == "metadata"
-    assert set(variables["note_field"]["stats"]) == _NUMERIC_STATS_KEYS
+    # A string-valued metadata column is typed CATEGORICAL from its values (not defaulted numeric).
+    assert variables["note_field"]["type"] == "categorical"
+    assert set(variables["note_field"]["stats"]) == _CATEGORICAL_STATS_KEYS
 
     # --- splits: native split partition counts ---
     assert len(card["splits"]) == 1

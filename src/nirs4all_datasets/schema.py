@@ -525,6 +525,8 @@ class DatasetDescriptor(BaseModel):
         if gov.license not in _OPEN_LICENSES:
             blockers.append(f"public tier requires an open license (one of: {', '.join(sorted(_OPEN_LICENSES))}); got {gov.license!r}.")
         for src in self.origin_sources:
+            if src.kind is SourceKind.SCRIPT:
+                continue  # a reproduction script (maintainer-only) is provenance, not a public data home
             if src.access is not SourceAccess.OPEN:
                 blockers.append(f"public tier requires open origin sources; {src.locator!r} has access {src.access.value!r}.")
             if src.license is not None and src.license not in _OPEN_LICENSES:

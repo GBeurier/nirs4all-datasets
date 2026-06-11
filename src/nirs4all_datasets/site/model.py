@@ -7,9 +7,9 @@ per dataset, *which* card to serve and *what* may be shown:
   metadata downloads (``card.json`` / ``croissant.json``) are exposed.
 * ``private`` -> the full ``card.json`` (it holds no bytes), plots, and stats — but **no** byte
   download, and no card/croissant download buttons that imply open bytes.
-* ``anonymized`` -> ``card.anon.json`` (masked ``var_NNN`` names, normalized Y). Per-variable PNG
-  assets are **never** served (their filenames embed real names) and the description/keywords/
-  contributor are never printed; only structure + normalized stats.
+* ``anonymized`` -> ``card.json`` (the qualify stage writes it already anonymized: masked ``var_NNN``
+  names, normalized Y). Per-variable PNG assets are **never** served (their filenames embed real names)
+  and the description/keywords/contributor are never printed; only structure + normalized stats.
 
 No tier ever serves the dataset bytes — the site links to origins/DOI. The catalog index summary is
 passed through verbatim (it is whole-bank aggregate, computed upstream by ``catalog.bank_summary``).
@@ -90,7 +90,7 @@ def _read_json(path: Path) -> dict[str, Any] | None:
 
 
 def _dataset_view(root: Path, entry: dict[str, Any]) -> DatasetView:
-    """Resolve one catalog entry into its tier-gated view (choose card.anon for anonymized)."""
+    """Resolve one catalog entry into its tier-gated view (card.json is already anon for anonymized)."""
     dataset_id = str(entry["id"])
     tier = str(entry.get("tier") or PUBLIC)
     dataset_dir = root / "datasets" / dataset_id
@@ -99,16 +99,14 @@ def _dataset_view(root: Path, entry: dict[str, Any]) -> DatasetView:
     # descriptor-only "card pending" state) so the site never advertises outdated facts.
     fresh_card = bool(entry.get("has_card")) and not entry.get("is_stale")
 
+    # card.json is the single public-safe artifact: the qualify stage writes it already-anonymized
+    # (masked var_NNN names, normalized Y, no identifying text) for the anonymized tier, so every tier
+    # reads the same file. Anonymized still serves NO per-variable PNGs (their filenames embed real names).
     card: dict[str, Any] | None = None
     asset_id = ""
     if fresh_card:
-        if tier == ANONYMIZED:
-            card = _read_json(dataset_dir / "card.anon.json")
-            # anonymized never serves per-variable PNGs (filenames embed real names); we copy no assets
-            asset_id = ""
-        else:
-            card = _read_json(dataset_dir / "card.json")
-            asset_id = dataset_id if card is not None else ""
+        card = _read_json(dataset_dir / "card.json")
+        asset_id = dataset_id if (card is not None and tier != ANONYMIZED) else ""
 
     return DatasetView(
         entry=entry,
