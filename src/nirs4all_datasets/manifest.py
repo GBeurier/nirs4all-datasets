@@ -2,12 +2,14 @@
 
 A dataset's manifest is its content-addressed source of truth: per-file local SHA-256
 (authoritative for byte identity, stored alongside but never replaced by the Dataverse
-native checksum), a stable ``descriptor_hash``, and the converter identity. Re-processing is
-driven by comparing the *inputs* (raw files + descriptor + converter name/version/config)
-against the previous manifest -- unchanged inputs are skipped.
+native checksum), a stable ``processing_hash``, and the converter identity. Re-processing is
+driven by comparing the *inputs* (raw files + processing-relevant descriptor fields + converter
+name/version/config) against the previous manifest -- unchanged inputs are skipped.
 
-``descriptor_hash`` excludes publish-assigned Dataverse fields (``doi``/``dataset_version``)
-so publishing does not spuriously trigger a rebuild.
+Two hash axes: ``processing_hash`` (byte-determining fields only -> rebuild) and ``metadata_hash``
+(human-authored/displayed content -> card re-render). The metric-protocol version
+(``versions.schema_protocol``) is excluded from ``processing_hash`` so re-qualifying under a new
+metric protocol never rebuilds canonical bytes.
 """
 from __future__ import annotations
 
@@ -21,11 +23,20 @@ from pathlib import Path
 from nirs4all_datasets.schema import DatasetDescriptor, FileEntry, FileRole, Manifest
 
 _CHUNK = 1 << 20
-# Excluded from the *processing* hash: publish-assigned Dataverse ids, bootstrap provenance, and the
-# origin-source registry -- none affect the canonical bytes, so editing them never forces a rebuild.
-_HASH_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True, "sources": True}
-# Excluded from the *metadata* hash: only the volatile publish/bootstrap identifiers. Everything a human
-# authored and the card displays (sources, citation, datacite, governance, ...) is included.
+# The PROCESSING hash includes only fields that determine the canonical BYTES (the X source structure,
+# the id keying, the alignment level, native splits, and the content version). Everything else is
+# descriptive/displayed and is excluded -- so editing a name, a tier, a variable's role, the origin
+# sources, or bumping the metric protocol never triggers a canonical rebuild.
+_PROCESSING_EXCLUDE: dict = {
+    "name": True, "description": True, "domain": True, "keywords": True, "citation": True,
+    "variables": True, "tier": True, "governance": True, "provenance": True,
+    "origin_sources": True, "publications": True, "datacite": True, "reproducibility": True,
+    "dataverse": True, "generation": True,
+    "versions": {"schema_protocol"},  # keep versions.content (a byte change), drop the metric-protocol axis
+}
+# The METADATA hash includes everything a human authored and the card displays (variables, tier,
+# governance, origin sources, citations, ...); only the volatile publish/bootstrap ids are excluded.
+# It drives card/site re-render without rebuilding canonical bytes.
 _METADATA_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True}
 
 
@@ -43,22 +54,23 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def descriptor_hash(descriptor: DatasetDescriptor) -> str:
-    """Stable hash of a descriptor's *processing-relevant* content (drives canonical rebuild).
+def processing_hash(descriptor: DatasetDescriptor) -> str:
+    """Stable hash of the descriptor fields that determine the canonical BYTES (drives rebuild).
 
-    Independent of YAML formatting, of publish-assigned Dataverse identifiers, and of the origin-source
-    registry (editing where data is fetched from must not rebuild canonical Parquet).
+    Independent of YAML formatting, of publish-assigned Dataverse identifiers, of all descriptive
+    metadata (name/variables/tier/governance/origin sources/...), and of the metric-protocol version
+    (``versions.schema_protocol``). Editing those must not rebuild canonical Parquet.
     """
-    data = descriptor.model_dump(mode="json", exclude=_HASH_EXCLUDE)
+    data = descriptor.model_dump(mode="json", exclude=_PROCESSING_EXCLUDE)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 
 def metadata_hash(descriptor: DatasetDescriptor) -> str:
-    """Stable hash of a descriptor's human-authored, *displayed* content (drives card/site re-render).
+    """Stable hash of the descriptor's human-authored, *displayed* content (drives card/site re-render).
 
-    Includes origin ``sources``, ``citation``, ``datacite``, governance, instrument, targets; excludes
-    only the volatile publish/bootstrap identifiers. Editing ``sources``/``citation`` bumps this (the
-    card refreshes) without changing :func:`descriptor_hash` (canonical Parquet is not rebuilt).
+    Includes ``variables``, ``tier``, ``governance``, ``origin_sources``, ``publications``, citations;
+    excludes only the volatile publish/bootstrap identifiers. Editing those bumps this (the card
+    refreshes) without changing :func:`processing_hash` (canonical Parquet is not rebuilt).
     """
     data = descriptor.model_dump(mode="json", exclude=_METADATA_EXCLUDE)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
@@ -102,7 +114,7 @@ def build_manifest(
     canonical_hashes = {Path(fe.path).name: fe.sha256 for fe in files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")}
     return Manifest(
         dataset_id=descriptor.id,
-        descriptor_hash=descriptor_hash(descriptor),
+        processing_hash=processing_hash(descriptor),
         converter_name=converter_name,
         converter_version=converter_version,
         converter_config=dict(converter_config),
@@ -157,8 +169,8 @@ def needs_rebuild(
 
     base = Path(dataset_dir)
     reasons: list[str] = []
-    if descriptor_hash(descriptor) != previous.descriptor_hash:
-        reasons.append("descriptor changed")
+    if processing_hash(descriptor) != previous.processing_hash:
+        reasons.append("processing-relevant descriptor fields changed")
     if converter_name is not None and converter_name != previous.converter_name:
         reasons.append(f"converter changed ({previous.converter_name} -> {converter_name})")
     if converter_version is not None and converter_version != previous.converter_version:

@@ -1,31 +1,32 @@
-"""Pydantic models for dataset descriptors, manifests, and subsets.
+"""Pydantic models for dataset descriptors, manifests, and subsets (schema 2.0).
 
-The descriptor (``catalog/datasets/<id>.yaml``) is the hand-authored source of truth
-for a dataset's identity, provenance, governance, and Dataverse location. The manifest
-(``cards/<id>/manifest.json``) is machine-generated and drives incremental processing.
+A **dataset** is the *raw measured reality*, first-class — not a benchmark task. It carries:
 
-Two separate concerns:
+* 1..n **X sources** (:class:`Source`) kept separate, possibly of different sizes (asymmetric
+  spectral repetitions); aligned by **sample identity** (:class:`IdentitySpec`), never by row position;
+* 0..n **variables** (:class:`Variable`) — Y *and* metadata are the same kind of thing (every metadata
+  column is a potential target). A dataset may declare no target at all (X-only / metadata-only);
+* native **splits/folds** (:class:`SplitRef`) — documented, never auto-applied;
+* a visibility **tier** (:class:`Tier`), provenance, origin sources, publications, and two version axes.
 
-* **Schema validity** (every field well-formed) — enforced by the model validators and
-  the ``catalog/scripts/validate.py`` CI gate. Confidential/internal descriptors are
-  *valid*; they simply must not be published.
-* **Publishability** (safe to release on a public/institutional Dataverse) — enforced by
-  :meth:`DatasetDescriptor.publication_blockers`, called by the publish workflow.
+Two separate concerns are preserved from the prior schema:
 
-Enum *values* mirror nirs4all's canonical vocabulary (``nirs4all.data.schema.config``)
-so a descriptor maps cleanly onto a ``DatasetConfigs``. The mirror is intentional (it
-keeps schema validation free of a heavy nirs4all import); ``tests/test_schema.py`` guards
-against drift by comparing against the real nirs4all enums when installed.
+* **Schema validity** (every field well-formed) — model validators + ``catalog/scripts/validate.py``.
+* **Publishability** (safe to release openly) — :meth:`DatasetDescriptor.publication_blockers`. Private
+  and anonymized tiers are *valid* in the catalog; they are simply token-gated, never published openly.
+
+The acquisition vocabulary (``SourceKind``/``SourceMode``/``SourceAccess``/``VariableRole``/``VarType``/
+``Tier``) is this package's OWN domain. ``AxisUnit``/``SignalType``/``Modality`` mirror nirs4all's
+vocabulary by value (kept import-light); ``tests/test_schema.py`` guards against drift.
 """
 from __future__ import annotations
 
 import re
-from datetime import date
 from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "2.0"
 
 # Slug / semver / DOI / hash patterns.
 _ID_RE = re.compile(r"^[a-z0-9]+(?:_[a-z0-9]+)*$")
@@ -61,30 +62,33 @@ def _validate_license_syntax(value: str) -> str:
         raise ValueError("license must be non-empty.")
     if stripped == "proprietary" or stripped.startswith("LicenseRef-"):
         return stripped
-    tokens = stripped.split()
-    for token in tokens:
+    for token in stripped.split():
         if token in _SPDX_OPERATORS:
             continue
         bare = token.strip("()")
         if not bare or not _SPDX_TOKEN_RE.match(bare):
-            raise ValueError(
-                f"license {value!r} is not a valid SPDX id/expression, 'LicenseRef-<name>', or 'proprietary'."
-            )
+            raise ValueError(f"license {value!r} is not a valid SPDX id/expression, 'LicenseRef-<name>', or 'proprietary'.")
     return stripped
 
 
+def _normalize_doi(value: str | None) -> str | None:
+    """Strip a ``doi:``/``https://doi.org/...`` prefix; validate the bare ``10.x/y`` form."""
+    if value is None:
+        return None
+    text = value.strip()
+    for prefix in ("https://doi.org/", "http://doi.org/", "https://dx.doi.org/", "http://dx.doi.org/", "doi:"):
+        if text.lower().startswith(prefix):
+            text = text[len(prefix):].strip()
+            break
+    if not _DOI_RE.match(text):
+        raise ValueError(f"invalid DOI {value!r} (expected '10.<prefix>/<suffix>').")
+    return text
+
+
 # =============================================================================
-# Enums (values mirror nirs4all.data.schema.config; guarded by tests)
+# Enums
 # =============================================================================
-class TaskType(StrEnum):
-    """Supervised task type (mirrors ``nirs4all`` ``TaskType``)."""
-
-    AUTO = "auto"
-    REGRESSION = "regression"
-    BINARY_CLASSIFICATION = "binary_classification"
-    MULTICLASS_CLASSIFICATION = "multiclass_classification"
-
-
+# --- mirror nirs4all.data.schema.config (guarded by tests) ---------------------------------------
 class AxisUnit(StrEnum):
     """Spectral axis unit (mirrors ``nirs4all`` ``HeaderUnit``)."""
 
@@ -115,24 +119,44 @@ class Modality(StrEnum):
     MIR = "MIR"
     RAMAN = "Raman"
     UV_VIS = "UV-Vis"
+    VSWIR = "VSWIR"
+    TIR = "TIR"
     HYPERSPECTRAL = "hyperspectral"
     OTHER = "other"
 
 
-class Visibility(StrEnum):
-    """Publication visibility on the Dataverse instance."""
+# --- this package's own domain --------------------------------------------------------------------
+class Tier(StrEnum):
+    """Visibility / access tier (replaces the prior visibility + confidentiality split)."""
 
-    PUBLIC = "public"
-    RESTRICTED = "restricted"
-    EMBARGO = "embargo"
+    PUBLIC = "public"  # everything shown + exportable by all (from the origin)
+    PRIVATE = "private"  # everything shown; export requires a token (Dataverse)
+    ANONYMIZED = "anonymized"  # metadata names masked + Y normalized; export requires a token
 
 
-class ConfidentialityClass(StrEnum):
-    """Data confidentiality classification."""
+class VariableRole(StrEnum):
+    """Role of a non-spectral column. There is no intrinsic Y/metadata distinction; a metadata
+    column is a *potential* target. ``target`` is set only when the source explicitly declares it."""
 
-    PUBLIC = "public"
-    INTERNAL = "internal"
-    CONFIDENTIAL = "confidential"
+    TARGET = "target"
+    METADATA = "metadata"
+
+
+class VarType(StrEnum):
+    """Statistical type of a variable (drives the card's per-variable dataviz)."""
+
+    NUMERIC = "numeric"
+    CATEGORICAL = "categorical"
+    TEXT = "text"
+    IDENTIFIER = "identifier"
+    DATETIME = "datetime"
+
+
+class AlignmentLevel(StrEnum):
+    """How a source's spectra align to samples / to other sources."""
+
+    OBSERVATION = "observation"  # one spectrum per sample, sources share the observation order
+    SAMPLE = "sample"  # spectra group under sample_id; sources may differ in size (asymmetric reps)
 
 
 class ConversionStatus(StrEnum):
@@ -150,7 +174,6 @@ class FileRole(StrEnum):
     CANONICAL = "canonical"
 
 
-# --- Acquisition vocabulary (this package's OWN domain; NOT mirrored from nirs4all) --------------
 class SourceKind(StrEnum):
     """Where a dataset's original (authoritative) bytes live."""
 
@@ -158,16 +181,15 @@ class SourceKind(StrEnum):
     ZENODO = "zenodo"
     FIGSHARE = "figshare"
     URL = "url"  # direct file(s) over http(s)
-    SCRIPT = "script"  # reproducible acquisition script (maintainer-side only)
+    SCRIPT = "script"  # reproducible acquisition script (maintainer-side only; never run on consumer get)
     MANUAL = "manual"  # licence requires a manual download; we only document + checksum
 
 
 class SourceMode(StrEnum):
     """What an origin source yields.
 
-    ``canonical`` = the full canonical set (incl. ``nirs4all_config.json``), verifiable byte-for-byte
-    against the manifest. ``raw`` = original vendor files that must be re-ingested locally (the
-    re-ingested canonical is a *reproduction*, not the pinned artifact -- never byte-asserted).
+    ``canonical`` = the full canonical set, verifiable byte-for-byte against the manifest. ``raw`` =
+    original vendor files re-ingested locally (the re-ingested canonical is a *reproduction*).
     """
 
     CANONICAL = "canonical"
@@ -191,32 +213,86 @@ def _validate_schema_version(value: str) -> str:
 # =============================================================================
 # Descriptor sub-models
 # =============================================================================
-class Target(BaseModel):
-    """A prediction target carried by the dataset."""
+class Source(BaseModel):
+    """One X source = one instrument / acquisition, kept separate. Sources may differ in size
+    (asymmetric repetitions); they are linked by sample identity, never by row position."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    source_id: str  # "X", "X1", ... (matches the canonical parquet + the spectral block)
+    name: str | None = None
+    vendor: str | None = None
+    instrument_name: str | None = None
+    modality: Modality = Modality.NIR
+    axis_unit: AxisUnit = AxisUnit.NONE
+    axis_min: float | None = None
+    axis_max: float | None = None
+    axis_resolution: float | None = None
+    signal_type: SignalType = SignalType.AUTO
+    n_observations: int | None = Field(default=None, ge=0)
+    n_variables: int | None = Field(default=None, ge=0)
+
+    @field_validator("source_id")
+    @classmethod
+    def _check_source_id(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Source.source_id must be non-empty.")
+        return value.strip()
+
+
+class Variable(BaseModel):
+    """A non-spectral column (a target OR a metadata column — the same kind of thing). Carries no
+    task_type: the supervised task is a *consumer* choice (pick a variable + a split), not a property
+    of the dataset."""
 
     model_config = ConfigDict(extra="forbid")
 
     name: str
-    task_type: TaskType
+    role: VariableRole = VariableRole.METADATA
+    type: VarType = VarType.NUMERIC
     unit: str | None = None
-    range: tuple[float, float] | None = None
-    classes: list[str] | None = None  # ordered class names (canonical Y stores their integer indices)
+    classes: list[str] | None = None  # ordered class names for a categorical variable
 
 
-class Instrument(BaseModel):
-    """Acquisition instrument and signal description (NIRS FAIR fields)."""
+class SplitRef(BaseModel):
+    """A native split/fold, *documented but never auto-applied*. ``applied`` is always False here."""
 
     model_config = ConfigDict(extra="forbid")
 
-    vendor: str | None = None
-    model: str | None = None
-    serial: str | None = None
-    firmware: str | None = None
-    modality: Modality = Modality.NIR
-    axis_unit: AxisUnit = AxisUnit.WAVELENGTH
-    axis_range: tuple[float, float] | None = None
-    signal_type: SignalType = SignalType.AUTO
-    acquisition_settings: dict[str, str] = Field(default_factory=dict)
+    name: str
+    kind: str = "train_test"  # train_test | kfold | group | custom
+    path: str | None = None  # canonical/splits/<name>.parquet (sample_id -> partition [+ fold])
+    n_folds: int | None = Field(default=None, ge=1)
+    documented_origin: str | None = None
+    applied: bool = False
+
+
+class Versions(BaseModel):
+    """Two independent version axes (see DESIGN §5)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    content: str = "1.0.0"  # bumps when the dataset bytes change (semver)
+    schema_protocol: str = SCHEMA_VERSION  # bumps when the metric/schema protocol evolves (re-qualify, not rebuild)
+
+    @field_validator("content")
+    @classmethod
+    def _check_content(cls, value: str) -> str:
+        if not _SEMVER_RE.match(value):
+            raise ValueError(f"versions.content {value!r} must be semantic (e.g. '1.0.0').")
+        return value
+
+
+class IdentitySpec(BaseModel):
+    """The id columns that link spectra <-> samples <-> Y/metadata. ``observation_id`` is per-spectrum;
+    ``sample_id`` is the physical sample (groups repetitions). When ``sample_id`` is unavailable, each
+    observation is its own sample group."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    observation_id: str = "observation_id"
+    sample_id: str = "sample_id"
+    sample_id_available: bool = True
 
 
 class Provenance(BaseModel):
@@ -258,12 +334,8 @@ class Funding(BaseModel):
 
 
 class PublicationRef(BaseModel):
-    """A related publication (the *paper*), for citation.
-
-    ``doi`` is a journal/publisher DOI -- distinct from a data-repository DOI, which is an
-    :class:`OriginSource` (where the *bytes* live). Keeping the two apart is what prevents modelling a
-    journal article as a fetchable data source.
-    """
+    """A related publication (the *paper*), for citation. ``doi`` is a journal/publisher DOI — distinct
+    from a data-repository DOI, which is an :class:`OriginSource` (where the *bytes* live)."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -276,17 +348,8 @@ class PublicationRef(BaseModel):
 
     @field_validator("doi")
     @classmethod
-    def _normalize_doi(cls, value: str | None) -> str | None:
-        if value is None:
-            return None
-        text = value.strip()
-        for prefix in ("https://doi.org/", "http://doi.org/", "http://dx.doi.org/", "https://dx.doi.org/", "doi:"):
-            if text.lower().startswith(prefix):
-                text = text[len(prefix):].strip()
-                break
-        if not _DOI_RE.match(text):
-            raise ValueError(f"invalid publication DOI {value!r} (expected '10.<prefix>/<suffix>').")
-        return text
+    def _norm_doi(cls, value: str | None) -> str | None:
+        return _normalize_doi(value)
 
 
 class DataCite(BaseModel):
@@ -301,37 +364,27 @@ class DataCite(BaseModel):
 
 
 class Governance(BaseModel):
-    """Legal/ethical metadata. Publication is gated on these fields (see publication_blockers)."""
+    """Legal/ethical metadata. Public release is gated on these fields (see publication_blockers)."""
 
     model_config = ConfigDict(extra="forbid")
 
     license: str
-    visibility: Visibility = Visibility.RESTRICTED
-    confidentiality_class: ConfidentialityClass = ConfidentialityClass.INTERNAL
     owner_steward: str | None = None
     redistribution_rights: str | None = None
     consent_ethics_status: str | None = None
     anonymization_status: str | None = None
     permitted_use: str | None = None
     access_policy: str | None = None
-    embargo_until: date | None = None
 
     @field_validator("license")
     @classmethod
     def _check_license_syntax(cls, value: str) -> str:
         return _validate_license_syntax(value)
 
-    @model_validator(mode="after")
-    def _check_embargo_present(self) -> Governance:
-        # Structural check only: presence. The "not yet lapsed" check lives in the
-        # publication gate so descriptors do not start failing as time passes.
-        if self.visibility is Visibility.EMBARGO and self.embargo_until is None:
-            raise ValueError("visibility 'embargo' requires 'embargo_until'.")
-        return self
-
 
 class DataverseRef(BaseModel):
-    """Pointer to the dataset's Dataverse location and pinned version."""
+    """Pointer to the dataset's (future) personal Dataverse location and pinned version — the
+    token-gated fallback for private/anonymized data and for origins that have rotted."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -341,28 +394,13 @@ class DataverseRef(BaseModel):
 
     @field_validator("doi")
     @classmethod
-    def _normalize_doi(cls, value: str | None) -> str | None:
-        if value is None:
-            return None
-        text = value.strip()
-        for prefix in ("https://doi.org/", "http://doi.org/", "doi:"):
-            if text.lower().startswith(prefix):
-                text = text[len(prefix):]
-                break
-        if not _DOI_RE.match(text):
-            raise ValueError(f"invalid DOI {value!r} (expected '10.<prefix>/<suffix>').")
-        return text
+    def _norm_doi(cls, value: str | None) -> str | None:
+        return _normalize_doi(value)
 
 
 class OriginSource(BaseModel):
-    """An original (authoritative) home of a dataset's bytes.
-
-    Distinct from :class:`DataverseRef` (the *personal* republish location + pinned DOI used as the
-    licensed-data fallback). This records **where/how to fetch**, never checksums -- the manifest is the
-    single byte-identity authority, so per-file hashes are not duplicated here (they would be a parallel,
-    drift-prone store). ``OriginSource`` is excluded from the processing hash (editing where data comes
-    from never rebuilds canonical) and included in the metadata hash (cards display it).
-    """
+    """An original (authoritative) home of a dataset's bytes — where to fetch from, never checksums
+    (the manifest is the single byte-identity authority). Excluded from the processing hash."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -374,6 +412,8 @@ class OriginSource(BaseModel):
     license: str | None = None  # SPDX of the source, if it differs from governance.license
     title: str | None = None
     expected_files: list[str] = Field(default_factory=list)  # basenames to fetch (no checksums here)
+    last_checked: str | None = None  # ISO timestamp of the last health-check
+    alive: bool | None = None  # last health-check result
     notes: str | None = None
 
     @field_validator("locator")
@@ -390,21 +430,14 @@ class OriginSource(BaseModel):
 
     @model_validator(mode="after")
     def _check_access(self) -> OriginSource:
-        # A token for a non-Dataverse host needs an explicit, host-scoped credential reference; the
-        # Dataverse key is never sent to a generic host (also enforced at fetch time).
         if self.access is SourceAccess.TOKEN and self.kind is not SourceKind.DATAVERSE and self.credential_ref is None:
             raise ValueError("token access to a non-Dataverse source requires a credential_ref (host-scoped secret name).")
         return self
 
 
 class Generation(BaseModel):
-    """Provenance for a machine-generated descriptor (bulk bootstrap).
-
-    Present only on auto-generated descriptors. ``source_relpath`` (relative to a source root) lets
-    the bootstrapper find the raw leaf again for ``build-all``; ``managed`` gates idempotent
-    regeneration (only managed descriptors are overwritten, never a human-edited one). Excluded from
-    ``descriptor_hash`` so refreshing these fields never triggers a spurious canonical rebuild.
-    """
+    """Provenance for a machine-generated descriptor (bulk bootstrap). Present only on auto-generated
+    descriptors; excluded from the processing hash so refreshing it never triggers a rebuild."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -413,40 +446,41 @@ class Generation(BaseModel):
     generator_version: str | None = None
     source_relpath: str | None = None
     source_fingerprint: str | None = None
-    xlsx_row: int | None = None
 
 
 # =============================================================================
 # Descriptor
 # =============================================================================
 class DatasetDescriptor(BaseModel):
-    """Hand-authored descriptor for one NIRS dataset (``catalog/datasets/<id>.yaml``)."""
+    """Descriptor for one RAW NIRS dataset (``catalog/datasets/<id>.yaml``)."""
 
     model_config = ConfigDict(extra="forbid")
 
     schema_version: str = SCHEMA_VERSION
     id: str
     name: str
-    version: str = "0.1.0"
     description: str
     domain: str | None = None
     keywords: list[str] = Field(default_factory=list)
     citation: str | None = None
 
-    instrument: Instrument
-    targets: list[Target] = Field(min_length=1)
-    repetition_column: str | None = None
-    predefined_split: bool = False
-    n_samples: int | None = Field(default=None, ge=1)
-    n_features: int | None = Field(default=None, ge=1)
-    n_sources: int = Field(default=1, ge=1)
+    sources: list[Source] = Field(min_length=1)
+    variables: list[Variable] = Field(default_factory=list)  # may be empty (X-only datasets are valid)
+    ids: IdentitySpec = Field(default_factory=IdentitySpec)
+    alignment_level: AlignmentLevel = AlignmentLevel.OBSERVATION
+    splits: list[SplitRef] = Field(default_factory=list)
+
+    tier: Tier = Tier.PRIVATE
+    versions: Versions = Field(default_factory=Versions)
 
     provenance: Provenance
     governance: Governance
+    origin_sources: list[OriginSource] = Field(default_factory=list)  # where the bytes live; excl. from processing hash
+    publications: list[PublicationRef] = Field(default_factory=list)
     datacite: DataCite | None = None
     dataverse: DataverseRef = Field(default_factory=DataverseRef)
-    sources: list[OriginSource] = Field(default_factory=list)  # original homes; excluded from processing hash
-    generation: Generation | None = None  # set on auto-generated descriptors; excluded from descriptor_hash
+    reproducibility: dict[str, str] = Field(default_factory=dict)
+    generation: Generation | None = None  # set on auto-generated descriptors; excluded from processing hash
 
     @field_validator("schema_version")
     @classmethod
@@ -460,41 +494,41 @@ class DatasetDescriptor(BaseModel):
             raise ValueError(f"id {value!r} must match {_ID_RE.pattern} (lowercase, digits, single underscores).")
         return value
 
-    @field_validator("version")
-    @classmethod
-    def _validate_version(cls, value: str) -> str:
-        if not _SEMVER_RE.match(value):
-            raise ValueError(f"version {value!r} must be semantic (e.g. '1.0.0').")
-        return value
+    @model_validator(mode="after")
+    def _check_source_ids_unique(self) -> DatasetDescriptor:
+        ids = [s.source_id for s in self.sources]
+        if len(ids) != len(set(ids)):
+            raise ValueError("source_id values must be unique within a dataset.")
+        return self
+
+    @property
+    def targets(self) -> list[Variable]:
+        """The variables explicitly declared as prediction targets (may be empty)."""
+        return [v for v in self.variables if v.role is VariableRole.TARGET]
+
+    @property
+    def metadata_variables(self) -> list[Variable]:
+        """The non-target variables (potential targets; shown with their own dataviz)."""
+        return [v for v in self.variables if v.role is VariableRole.METADATA]
 
     def publication_blockers(self) -> list[str]:
-        """Return reasons why this dataset must not be published (empty == publishable).
+        """Reasons this dataset must not be published *openly* (empty == publishable).
 
-        Enforces: confidential is a hard stop; public visibility requires public
-        confidentiality and an open license; a live embargo blocks; and every governance
-        field required for responsible release must be a non-blank string.
+        Only the ``public`` tier is gated: it requires an open license, open origin sources (no
+        re-hosting non-open data as open), and the responsible-release governance fields. ``private``
+        and ``anonymized`` are valid catalog entries — they are token-gated, never published openly.
         """
+        if self.tier is not Tier.PUBLIC:
+            return []
         blockers: list[str] = []
         gov = self.governance
-
-        if gov.confidentiality_class is ConfidentialityClass.CONFIDENTIAL:
-            blockers.append(
-                "confidentiality_class is 'confidential': not allowed on Dataverse "
-                "(requires DPO/legal approval and a dedicated secure backend)."
-            )
-        if gov.visibility is Visibility.PUBLIC and gov.confidentiality_class is not ConfidentialityClass.PUBLIC:
-            blockers.append(
-                f"visibility 'public' is inconsistent with confidentiality_class "
-                f"{gov.confidentiality_class.value!r}."
-            )
-        if gov.visibility is Visibility.PUBLIC and gov.license not in _OPEN_LICENSES:
-            blockers.append(
-                f"visibility 'public' requires an open license (one of: {', '.join(sorted(_OPEN_LICENSES))}); "
-                f"got {gov.license!r}."
-            )
-        if gov.visibility is Visibility.EMBARGO and gov.embargo_until and gov.embargo_until > date.today():
-            blockers.append(f"under embargo until {gov.embargo_until.isoformat()}.")
-
+        if gov.license not in _OPEN_LICENSES:
+            blockers.append(f"public tier requires an open license (one of: {', '.join(sorted(_OPEN_LICENSES))}); got {gov.license!r}.")
+        for src in self.origin_sources:
+            if src.access is not SourceAccess.OPEN:
+                blockers.append(f"public tier requires open origin sources; {src.locator!r} has access {src.access.value!r}.")
+            if src.license is not None and src.license not in _OPEN_LICENSES:
+                blockers.append(f"origin source {src.locator!r} is licensed {src.license!r} (not open): cannot re-host as open data under {gov.license!r}.")
         required = {
             "redistribution_rights": gov.redistribution_rights,
             "consent_ethics_status": gov.consent_ethics_status,
@@ -503,16 +537,7 @@ class DatasetDescriptor(BaseModel):
             "owner_steward": gov.owner_steward,
             "access_policy": gov.access_policy,
         }
-        blockers.extend(f"governance.{field} is required for publication." for field, value in required.items() if _is_blank(value))
-
-        # Origin-source rule (publishability tier only -- a restricted/internal descriptor stays valid):
-        # non-open origin data must never be re-hosted as open. (The "a public dataset must be fetchable"
-        # catalog-integrity check lives in validate.py --check-publish, where first-publish DOI minting
-        # is not yet in tension.)
-        if gov.visibility is Visibility.PUBLIC:
-            for src in self.sources:
-                if src.license is not None and src.license not in _OPEN_LICENSES:
-                    blockers.append(f"origin source {src.locator!r} is licensed {src.license!r} (not open): cannot re-host as open data under {gov.license!r}.")
+        blockers.extend(f"governance.{field} is required for public release." for field, value in required.items() if _is_blank(value))
         return blockers
 
 
@@ -555,13 +580,13 @@ class Manifest(BaseModel):
 
     schema_version: str = SCHEMA_VERSION
     dataset_id: str
-    descriptor_hash: str
+    processing_hash: str  # content-derived; drives canonical rebuild
     converter_name: str
     converter_version: str
     converter_config: dict[str, str] = Field(default_factory=dict)
     files: list[FileEntry] = Field(default_factory=list)
-    canonical_hashes: dict[str, str] = Field(default_factory=dict)  # X/Y/M/folds -> sha256
-    row_counts: dict[str, int] = Field(default_factory=dict)
+    canonical_hashes: dict[str, str] = Field(default_factory=dict)  # canonical basename -> sha256
+    row_counts: dict[str, int] = Field(default_factory=dict)  # per-source / targets / metadata
     doi: str | None = None
     dataset_version: str | None = None
     expected_previous_version: str | None = None
@@ -581,10 +606,10 @@ class Manifest(BaseModel):
 
 
 # =============================================================================
-# Subset (definition only; no data duplication)
+# Subset (definition only; no data duplication) — keyed by sample identity
 # =============================================================================
 class Subset(BaseModel):
-    """A row-selector view over a parent dataset (no byte duplication)."""
+    """A sample-selector view over a parent dataset (no byte duplication)."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -592,10 +617,10 @@ class Subset(BaseModel):
     id: str
     parent: str
     description: str | None = None
-    # Exactly one selector kind is expected.
+    # Exactly one selector kind is expected (all keyed by sample_id).
     sample_ids: list[str] | None = None
     metadata_filter: dict[str, str] | None = None
-    folds: list[int] | None = None
+    split: str | None = None  # name of a native SplitRef on the parent
 
     @field_validator("schema_version")
     @classmethod
@@ -611,18 +636,13 @@ class Subset(BaseModel):
 
     @model_validator(mode="after")
     def _validate_selector(self) -> Subset:
-        selectors = [self.sample_ids, self.metadata_filter, self.folds]
+        selectors = [self.sample_ids, self.metadata_filter, self.split]
         if sum(s is not None for s in selectors) != 1:
-            raise ValueError("a subset must define exactly one of: sample_ids, metadata_filter, folds.")
+            raise ValueError("a subset must define exactly one of: sample_ids, metadata_filter, split.")
         if self.sample_ids is not None and not self.sample_ids:
             raise ValueError("sample_ids must be non-empty.")
         if self.metadata_filter is not None and not self.metadata_filter:
             raise ValueError("metadata_filter must be non-empty.")
-        if self.folds is not None:
-            if not self.folds:
-                raise ValueError("folds must be non-empty.")
-            if any(f < 0 for f in self.folds):
-                raise ValueError("fold ids must be non-negative.")
         return self
 
 
@@ -635,7 +655,7 @@ if __name__ == "__main__":  # pragma: no cover
     import json
     import sys
 
-    out = sys.argv[1] if len(sys.argv) > 1 else "catalog/schema/dataset_v1.json"
+    out = sys.argv[1] if len(sys.argv) > 1 else "catalog/schema/dataset_v2.json"
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(dataset_json_schema(), fh, indent=2, sort_keys=True)
     print(f"wrote {out}")
