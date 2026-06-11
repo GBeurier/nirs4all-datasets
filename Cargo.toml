@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: MIT
+#
+# The dataset-acquisition core of nirs4all-datasets: resolve a dataset id (from the
+# distributable catalog/index.json) to its pinned origin, download the canonical
+# Parquet (Dataverse / Zenodo / figshare / URL), SHA-256-verify against the index,
+# and cache it. The scientific *analysis* layer (qualify/card/site/health) stays in
+# Python; only acquisition lives here. See migration_ABI_C.md.
+[workspace]
+resolver = "2"
+members = [
+    "crates/nirs4all-datasets-core",
+    "crates/nirs4all-datasets-capi",
+    "crates/nirs4all-datasets-cli",
+]
+# Language bindings build with their own toolchains (maturin / wasm-pack) and are
+# excluded from the cargo workspace so `cargo test --workspace` stays self-contained.
+exclude = [
+    "bindings/python",
+    "bindings/wasm",
+]
+
+[workspace.package]
+version = "0.2.0-alpha.1"
+edition = "2021"
+license = "MIT"
+authors = ["Gregory Beurier <beurier@cirad.fr>"]
+repository = "https://github.com/GBeurier/nirs4all-datasets"
+homepage = "https://github.com/GBeurier/nirs4all-datasets"
+
+[workspace.dependencies]
+# Internal crates (path deps; a `version` is REQUIRED for crates.io publishing and
+# is kept in lock-step with [workspace.package] by scripts/bump_version.sh).
+nirs4all-datasets-core = { path = "crates/nirs4all-datasets-core", version = "0.2.0-alpha.1" }
+# Third-party.
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order", "float_roundtrip"] }
+thiserror = "2.0"
+sha2 = "0.10"
+hex = "0.4"
+directories = "5"
+ureq = "2"
+clap = { version = "4.5", features = ["derive"] }
+tempfile = "3"
+
+[profile.release]
+opt-level = 2
+strip = "debuginfo"
