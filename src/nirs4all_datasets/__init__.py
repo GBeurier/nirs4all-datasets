@@ -1,9 +1,10 @@
 """nirs4all-datasets — store, qualify, and serve curated RAW NIRS reference datasets.
 
-Data bytes live on Recherche Data Gouv / Dataverse (DOI-citable, FAIR); descriptors and generated
-metadata live in git; datasets are fetched on demand and cached locally (pooch-style). This package
-reuses ``nirs4all`` for qualification and ``nirs4all-io`` for instrument-file reads — it never
-re-implements NIRS or IO logic.
+Data bytes live at each dataset's origin (a data Dataverse / Zenodo / vendor archive); descriptors and
+generated metadata live in git; datasets are fetched on demand and cached locally (pooch-style). This
+package reuses ``nirs4all`` (optional ``[nirs4all]`` extra) for the card metrics + the ``to_nirs4all``
+bridge, and never re-implements NIRS or IO logic; the catalog, ``get()``/``NirsDataset`` readers and the
+site work without it.
 
 The consumer entry point is :func:`get`, which resolves a dataset (local-first, else fetch by DOI or
 open origin) and returns a :class:`~nirs4all_datasets.dataset.NirsDataset` wrapping the local canonical
