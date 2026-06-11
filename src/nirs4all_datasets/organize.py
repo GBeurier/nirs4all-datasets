@@ -1,9 +1,10 @@
-"""Idempotent local organization: preserve raw, ingest to canonical, write the manifest.
+"""Idempotent local organization: preserve raw, convert to canonical, write the manifest.
 
-Given a raw ``source`` and its descriptor, this places the raw bytes under
-``<datasets_root>/<id>/raw/``, converts them to the canonical form, and writes the manifest.
-Re-running on unchanged inputs is a no-op (the manifest's content hashes decide), so adding
-new datasets and re-running only (re)processes the new or changed ones.
+Given a raw v2.0 leaf and its descriptor, this places the raw bytes under
+``<datasets_root>/<id>/raw/``, converts them to the canonical per-source / sample-identity-joined
+form (:func:`nirs4all_datasets.canonical.build_canonical`), and writes the manifest. Re-running on
+unchanged inputs is a no-op (the manifest's content hashes decide), so adding new datasets and
+re-running only (re)processes the new or changed ones.
 """
 from __future__ import annotations
 
@@ -11,7 +12,7 @@ import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from nirs4all_datasets.ingest import IngestResult, ingest
+from nirs4all_datasets.canonical import CONVERTER_NAME, CONVERTER_VERSION, CanonicalResult, build_canonical
 from nirs4all_datasets.manifest import build_manifest, needs_rebuild, read_manifest, write_manifest
 from nirs4all_datasets.schema import DatasetDescriptor
 
@@ -25,18 +26,7 @@ class OrganizeResult:
     manifest_path: Path
     skipped: bool
     reasons: list[str] = field(default_factory=list)
-    ingest_result: IngestResult | None = None
-
-
-def _converter_identity(source: Path) -> tuple[str | None, str | None]:
-    """Cheap converter name+version for the rebuild decision (detects a nirs4all/io upgrade)."""
-    if source.is_dir():
-        import nirs4all
-
-        return "nirs4all-DatasetConfigs", nirs4all.__version__
-    import nirs4all_io as nio
-
-    return "nirs4all-io", nio.__version__
+    canonical_result: CanonicalResult | None = None
 
 
 def _place_raw(source: Path, dataset_dir: Path) -> list[Path]:
@@ -75,14 +65,15 @@ def organize(
     descriptor: DatasetDescriptor,
     datasets_root: str | Path,
     *,
-    target: str | None = None,
-    signal: str | None = None,
     force: bool = False,
 ) -> OrganizeResult:
     """Place raw, (re)build the canonical form + manifest for one dataset, idempotently.
 
-    Skips work when the descriptor and raw bytes are unchanged and the canonical outputs are
-    intact (``verify_outputs``). Pass ``force=True`` to rebuild regardless.
+    Skips work when the descriptor and raw bytes are unchanged and the canonical outputs are intact
+    (``verify_outputs``). Pass ``force=True`` to rebuild regardless. The converter identity is this
+    package's own canonical converter (decoupled from any nirs4all version), so a nirs4all upgrade no
+    longer forces a rebuild — only a change in the raw bytes, the processing-relevant descriptor
+    fields, or this package's converter version does.
     """
     source = Path(source)
     if not source.exists():
@@ -93,20 +84,13 @@ def organize(
     manifest_path = dataset_dir / "manifest.json"
     previous = read_manifest(manifest_path) if manifest_path.exists() else None
 
-    converter_name, converter_version = _converter_identity(source)
-    is_dir = source.is_dir()
-    header_unit = descriptor.instrument.axis_unit.value if is_dir else None
-    # The folder route's effective load knobs; recorded so a change in them forces a rebuild (and so a
-    # multi-GB dataset is skipped from its *source* bytes, without copying, when nothing changed).
-    converter_config = {"na_policy": "ignore", "header_unit": header_unit or ""} if is_dir else None
-
     changed, reasons = needs_rebuild(
         descriptor,
         dataset_dir=dataset_dir,
         previous=previous,
-        converter_name=converter_name,
-        converter_version=converter_version,
-        converter_config=converter_config,
+        converter_name=CONVERTER_NAME,
+        converter_version=CONVERTER_VERSION,
+        converter_config={},
         raw_files=_source_raw_pairs(source),
         verify_outputs=True,
     )
@@ -114,23 +98,15 @@ def organize(
         return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True)
 
     placed = _place_raw(source, dataset_dir)
-    result = ingest(
-        source,
-        dataset_dir,
-        target=target,
-        signal=signal,
-        task_type=descriptor.targets[0].task_type.value,
-        target_names=[t.name for t in descriptor.targets],
-        header_unit=header_unit,
-    )
+    result = build_canonical(source, descriptor, dataset_dir)
     manifest = build_manifest(
         descriptor,
         dataset_dir=dataset_dir,
         converter_name=result.converter_name,
         converter_version=result.converter_version,
-        converter_config=result.converter_config,
+        converter_config={},
         row_counts=result.row_counts,
         raw_files=placed,
     )
     write_manifest(manifest, manifest_path)
-    return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=False, reasons=reasons, ingest_result=result)
+    return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=False, reasons=reasons, canonical_result=result)
