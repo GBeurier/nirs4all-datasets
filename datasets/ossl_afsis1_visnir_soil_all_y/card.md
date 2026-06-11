@@ -101,7 +101,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | texture_class | metadata | categorical | *Not specified.* | n=1904, missing=1904, classes=0, — |
 | pedon_taxa | metadata | categorical | *Not specified.* | n=1904, missing=1904, classes=0, — |
 | horizon_designation | metadata | categorical | *Not specified.* | n=1904, missing=1904, classes=0, — |
-| raw_label | metadata | categorical | *Not specified.* | n=1904, missing=0, classes=995, top 6.09 (×11) |
+| raw_label | metadata | categorical | *Not specified.* | n=1904, missing=0, classes=995, top 6.19 (×11) |
 | reference_value | metadata | numeric | *Not specified.* | n=1904, missing=0, range 3.61–9.86, mean 6.207 ± 1.068 |
 | class_index | metadata | categorical | *Not specified.* | n=1904, missing=1904, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=1904, missing=1904, classes=0, — |
@@ -150,5 +150,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `79222583bc1f1c31d434cc25d2ab77fb923fefafecc9441897562861b9a425aa`
+- **Content hash:** `b9df52f729c0e23cdd189ccbfaac98dfca9bcd588885b385dcfa54e99ffaf922`
 - **Processing hash:** `8d7394e76905207a16ad779020deb5af0c3448e19b72a86455fcc0929bf92224` | **metadata hash:** `1808fcb51af69d8335e2a81b123bc279a8b6ba1532b72f5d41c0af051c4156c5`

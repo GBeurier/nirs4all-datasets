@@ -28,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | chembl_id | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
 | compound_name | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
 | molecular_formula | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
-| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top N#C[C@@H]1CCCN1C(=O)[C@@H]1CCCN1C(=O)c1cccc(c1)C(=O)N1CCC[C@H]1C(=O)N1CCCC1 (×2) |
+| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top CCCCCCCCCCCCC/C=C/[C@H]([C@@H](NC(=O)C)CO)O (×2) |
 | inchi | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
 | inchikey | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
 | compound_class | target | categorical | *Not specified.* | n=50000, missing=0, classes=1, top ChEMBL molecule (×50000) |
@@ -101,5 +101,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `aa693603c43de5780a8cfd9b6615ff539db5b13bd3dffe59b6c4d05ee23e6c18`
+- **Content hash:** `5ecb062cf972de48f712c673efcfe67c1373b01a6f9d14584d338b074f250866`
 - **Processing hash:** `c5b73d4dee4f3766906fc8de9daa9327a1061dba5a7a2a8406935b1e4be19552` | **metadata hash:** `6356d2eac781d8a13ddfe7ae4ee7bf3dbe9aea09d965cc2e25d3aa487550b7d3`

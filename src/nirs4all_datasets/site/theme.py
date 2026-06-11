@@ -349,11 +349,41 @@ table.kv caption, table.data caption {
 }
 table.kv th, table.kv td, table.data th, table.data td { text-align: left; padding: 8px 18px; border-top: 1px solid var(--border); vertical-align: top; }
 table.kv tr:first-child th, table.kv tr:first-child td { border-top: none; }
-table.kv th { color: var(--text-3); font-weight: 600; width: 44%; }
+table.kv th { color: var(--text-3); font-weight: 600; width: 40%; }
+/* keep long values (DOIs, descriptions, numbers) inside the key/value table */
+table.kv td { word-break: break-word; overflow-wrap: anywhere; }
 table.data thead th { background: var(--bg-alt); color: var(--text-3); font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; border-top: none; position: sticky; top: 0; }
 table.data tbody tr:hover { background: var(--bg-alt); }
-table.data td.num, table.data th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.data td.num, table.data th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.data td { overflow-wrap: anywhere; }
 .table-scroll { overflow-x: auto; }
+
+/* ── Dataset-page: per-source + per-variable cards with inline interactive charts ── */
+.source-card, .var-card {
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 16px;
+}
+.var-group { font-family: var(--display); font-size: .95rem; margin: 22px 0 12px; color: var(--text-2); }
+.var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.var-card { margin-bottom: 0; display: flex; flex-direction: column; gap: 10px; }
+.var-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.var-card-head h4 { margin: 0; font-family: var(--display); font-size: .92rem; word-break: break-word; }
+.var-tag { font-size: .7rem; color: var(--text-3); text-transform: lowercase; white-space: nowrap; }
+.var-chart svg, .viz-spectra svg, .viz-scree svg { width: 100%; height: auto; display: block; }
+.var-chart svg text, .viz-spectra svg text, .viz-scree svg text { font-family: var(--font); fill: var(--text-2); }
+.var-chart svg .axis, .viz-spectra svg .axis { stroke: var(--border); stroke-width: 1; }
+.viz-spectra { margin: 4px 0 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; flex-direction: column; gap: 1px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; min-width: 0;
+}
+.chip span { font-size: .64rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); }
+.chip b { font-size: .82rem; font-variant-numeric: tabular-nums; color: var(--text); word-break: break-word; }
+.viz-extra { margin-top: 10px; }
+.viz-extra summary { cursor: pointer; font-size: .78rem; color: var(--text-2); }
+.viz-extra[open] summary { margin-bottom: 8px; }
+.viz-scree { max-width: 480px; }
 
 figure.plot { margin: 0; }
 figure.plot img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); background: #fff; }

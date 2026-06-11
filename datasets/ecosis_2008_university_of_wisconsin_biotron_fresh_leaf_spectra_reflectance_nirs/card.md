@@ -27,7 +27,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | USDA_Species_Code | target | categorical | *Not specified.* | n=87, missing=0, classes=2, top PODE3 (×50) |
 | Geo_Species_Info | target | categorical | *Not specified.* | n=87, missing=0, classes=5, top WCW (×45) |
 | House_Num | target | numeric | *Not specified.* | n=87, missing=0, range 1–6, mean 3.586 ± 1.702 |
-| Plant_Number | target | categorical | *Not specified.* | n=87, missing=0, classes=46, top 32 (×5) |
+| Plant_Number | target | categorical | *Not specified.* | n=87, missing=0, classes=46, top 20 (×5) |
 | LI6400_Measurement_Temperature_degC | target | numeric | *Not specified.* | n=87, missing=33, range 20.39–30.95, mean 25.86 ± 3.842 |
 | PLSR_Leaf_Temp_degC | target | numeric | *Not specified.* | n=87, missing=0, range 17.47–32.47, mean 24.54 ± 3.701 |
 | Ev | target | numeric | *Not specified.* | n=87, missing=0, range 49.43–61.33, mean 54.49 ± 5.917 |
@@ -110,5 +110,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `bde3277a25b22e3c9355aeb7252e445b008975119674abcab97358ed9b8ccf87`
+- **Content hash:** `592f160701ee303888c35553854a194b4c8130f5fe86c868f31365c64b5f967e`
 - **Processing hash:** `081276bfd0d650100e8090c7cfe5a7f63e424ec4da90420c01ddd874321b8a8c` | **metadata hash:** `6203418a359eb53395d6f78c2b95ff855ea66c6f76c92d37ea346762557d7dbd`

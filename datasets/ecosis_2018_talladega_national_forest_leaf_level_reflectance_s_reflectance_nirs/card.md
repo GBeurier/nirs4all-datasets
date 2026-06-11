@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | longitude | metadata | numeric | *Not specified.* | n=156, missing=0, range 3.645e+06–3.648e+06, mean 3.646e+06 ± 876.4 |
 | coordinate_precision_notes | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top source-provided coordinates when available (×156) |
 | year | metadata | numeric | *Not specified.* | n=156, missing=0, range 2018–2018, mean 2018 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180514 (×24) |
+| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180512 (×24) |
 | species | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top falcate (×18) |
 | genus | metadata | categorical | *Not specified.* | n=156, missing=0, classes=5, top Quercus (×63) |
 | family | metadata | categorical | *Not specified.* | n=156, missing=156, classes=0, — |
@@ -98,5 +98,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0f162eb6e1a559019a2d6393e640cdeb25114312b799f3322045147c596aad34`
+- **Content hash:** `70dfa304ca50166f58d5ccb43bf1f3716eae671fcd62cd7da1ea2e039fc8aa07`
 - **Processing hash:** `9a001cc4bc00912f6a5de2224711646e82a3a13b5b387770ddc12d89180aaaa4` | **metadata hash:** `c8e24d2a464d2b8dbc3702153a6479d7a4bf98943e37407d8ec91d8bec3ba5df`

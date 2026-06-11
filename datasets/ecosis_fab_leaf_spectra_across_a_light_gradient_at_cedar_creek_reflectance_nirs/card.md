@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1 sample(s), 138 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 138–138 (mean 138).
+- **Alignment:** observation level; 138 sample(s), 138 observation(s) total; sample_id available: True.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,37 +24,37 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| SpeciesCode | target | categorical | *Not specified.* | n=1, missing=0, classes=1, top QUMA (×1) |
-| Genus | target | categorical | *Not specified.* | n=1, missing=0, classes=1, top Quercus (×1) |
-| Species | target | categorical | *Not specified.* | n=1, missing=0, classes=1, top macrocarpa (×1) |
-| Treatment | target | categorical | *Not specified.* | n=1, missing=0, classes=1, top Monoculture (×1) |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top a3b4c504-c975-423c-9abb-0a8075cefc85 (×1) |
-| site | metadata | numeric | *Not specified.* | n=1, missing=0, range 7–7, mean 7 ± 0 |
-| location | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Cedar Creek LTER (×1) |
-| country | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top source-provided coordinates when available (×1) |
-| year | metadata | numeric | *Not specified.* | n=1, missing=0, range 2018–2018, mean 2018 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top macrocarpa (×1) |
-| genus | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Quercus (×1) |
-| family | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Leaf (×1) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top leaf (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Spectral Evolution PSR+ 3500 (×1) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Contact (×1) |
-| signal_type | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top reflectance (×1) |
-| axis_unit | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top nm (×1) |
-| axis_min | metadata | numeric | *Not specified.* | n=1, missing=0, range 350–350, mean 350 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=1, missing=0, range 2500–2500, mean 2500 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=1, missing=0, range 2151–2151, mean 2151 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 10.1101/845701 \| 10.21232/FR7US97g (×1) |
-| citation | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Shan Kothari, Rebecca Montgomery and Jeannine Cavender-Bares. 2018. FAB Leaf Spectra Across a Light Gradient at Cedar Creek LTER. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS). 10.21232/FR7US97g (×1) |
-| license | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Creative Commons Attribution (×1) |
-| rights_status | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top explicit_open (×1) |
-| usage_scope | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top public_reuse_possible (×1) |
-| notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top EcoSIS package fab-leaf-spectra-across-a-light-gradient-at-cedar-creek-lter, no interpolation applied by project. (×1) |
+| SpeciesCode | target | categorical | *Not specified.* | n=138, missing=0, classes=8, top QUMA (×18) |
+| Genus | target | categorical | *Not specified.* | n=138, missing=0, classes=4, top Quercus (×72) |
+| Species | target | categorical | *Not specified.* | n=138, missing=0, classes=8, top macrocarpa (×18) |
+| Treatment | target | categorical | *Not specified.* | n=138, missing=0, classes=3, top Monoculture (×48) |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top a3b4c504-c975-423c-9abb-0a8075cefc85 (×138) |
+| site | metadata | numeric | *Not specified.* | n=138, missing=0, range 7–147, mean 71.07 ± 43.8 |
+| location | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Cedar Creek LTER (×138) |
+| country | metadata | categorical | *Not specified.* | n=138, missing=138, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=138, missing=138, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=138, missing=138, classes=0, — |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top source-provided coordinates when available (×138) |
+| year | metadata | numeric | *Not specified.* | n=138, missing=0, range 2018–2018, mean 2018 ± 0 |
+| date | metadata | categorical | *Not specified.* | n=138, missing=138, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=138, missing=0, classes=8, top macrocarpa (×18) |
+| genus | metadata | categorical | *Not specified.* | n=138, missing=0, classes=4, top Quercus (×72) |
+| family | metadata | categorical | *Not specified.* | n=138, missing=138, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Leaf (×138) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top leaf (×138) |
+| instrument | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Spectral Evolution PSR+ 3500 (×138) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Contact (×138) |
+| signal_type | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top reflectance (×138) |
+| axis_unit | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top nm (×138) |
+| axis_min | metadata | numeric | *Not specified.* | n=138, missing=0, range 350–350, mean 350 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=138, missing=0, range 2500–2500, mean 2500 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=138, missing=0, range 2151–2151, mean 2151 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top 10.1101/845701 \| 10.21232/FR7US97g (×138) |
+| citation | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Shan Kothari, Rebecca Montgomery and Jeannine Cavender-Bares. 2018. FAB Leaf Spectra Across a Light Gradient at Cedar Creek LTER. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS). 10.21232/FR7US97g (×138) |
+| license | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top Creative Commons Attribution (×138) |
+| rights_status | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top explicit_open (×138) |
+| usage_scope | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top public_reuse_possible (×138) |
+| notes | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top EcoSIS package fab-leaf-spectra-across-a-light-gradient-at-cedar-creek-lter, no interpolation applied by project. (×138) |
 
 ## Statistics — splits
 
@@ -96,5 +96,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7459f8be50df761a924bc34c4da2d28337e83bc0759a0f29009877840a94ea9a`
+- **Content hash:** `07704969b530d6e86f9f780d2db6084f773dff56558492d40ff5bb9d8c785c96`
 - **Processing hash:** `466d229d0dafaacbae817442886bcf3f5872558ca7985cb003710419a6e189d6` | **metadata hash:** `908db3924f866ba8b559a187a412e0afcc38d7b69023d53100483a355493c0b3`

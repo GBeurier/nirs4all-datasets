@@ -124,6 +124,48 @@ def effective_rank(explained_variance: object) -> float | None:
     return float((lam.sum() ** 2) / float(np.sum(lam**2)))
 
 
+def spectral_curve(spectra: object, axis: object, *, max_points: int = 140) -> dict[str, list[float]] | None:
+    """Subsampled per-wavelength quantile bands of a spectra block — the site's spectra-with-quantiles chart.
+
+    Returns ``{axis, q05, q25, median, q75, q95, mean}`` (each a list over up to ``max_points`` wavelengths,
+    evenly subsampled along the spectral axis), or ``None`` when there is nothing to summarize. Pure data;
+    the site renders it as an interactive SVG (no matplotlib).
+    """
+    arr = np.asarray(spectra, dtype="float64")
+    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 2:
+        return None
+    ax = np.asarray(axis, dtype="float64")
+    cols = arr.shape[1]
+    idx = np.unique(np.linspace(0, cols - 1, num=min(max_points, cols)).round().astype(int))
+    sub = arr[:, idx]
+    with warnings.catch_warnings():  # all-NaN columns -> nan; the site skips non-finite points
+        warnings.simplefilter("ignore", RuntimeWarning)
+        q05, q25, med, q75, q95 = np.nanpercentile(sub, [5, 25, 50, 75, 95], axis=0)
+        mean = np.nanmean(sub, axis=0)
+
+    def _row(values: np.ndarray) -> list[float]:
+        return [float(v) for v in values]
+
+    return {"axis": _row(ax[idx]), "q05": _row(q05), "q25": _row(q25), "median": _row(med), "q75": _row(q75), "q95": _row(q95), "mean": _row(mean)}
+
+
+def histogram_bins(values: object, *, n_bins: int = 24) -> dict[str, list[float]] | None:
+    """Histogram (``{edges, counts}``) of a numeric column — the site's per-variable distribution chart.
+
+    ``edges`` has ``n_bins + 1`` entries; ``counts`` has ``n_bins``. ``None`` when there are too few finite
+    values or zero range (a constant column carries no distribution).
+    """
+    arr = np.asarray(values, dtype="float64").ravel()
+    arr = arr[np.isfinite(arr)]
+    if arr.size < 2:
+        return None
+    lo, hi = float(arr.min()), float(arr.max())
+    if hi <= lo:
+        return None
+    counts, edges = np.histogram(arr, bins=n_bins, range=(lo, hi))
+    return {"edges": [float(e) for e in edges], "counts": [int(c) for c in counts]}
+
+
 def impute_columns(x: object, *, reference: object | None = None) -> tuple[np.ndarray, dict[str, int]]:
     """Replace NaN in a 2D block with column means (of ``reference`` if given, else of ``x``).
 

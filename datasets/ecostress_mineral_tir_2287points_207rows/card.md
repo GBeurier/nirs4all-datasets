@@ -24,7 +24,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=125, missing=0, classes=100, top Topaz Al2SiO4(F,OH)2 (×4) |
+| material_name | target | categorical | *Not specified.* | n=125, missing=0, classes=100, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×4) |
 | class_label | target | categorical | *Not specified.* | n=125, missing=0, classes=7, top Silicate (×101) |
 | subclass | target | categorical | *Not specified.* | n=125, missing=24, classes=7, top Nesosilicate (×27) |
 | particle_size | target | categorical | *Not specified.* | n=125, missing=0, classes=2, top Coarse (×120) |
@@ -99,5 +99,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `cb2ce0952d6b460cfd922d7a42e321bcf7755e6f6e9bf26c88dbf8c66a9c06d0`
+- **Content hash:** `0cb52841daac1462707cfde8f17f90bb4694be66f41735f732069a2afbe449b6`
 - **Processing hash:** `1c77e388be66eba83251d0c1e7d3f8651b3b80805e3f8665eae164fa60e91fa1` | **metadata hash:** `1585d62466871de6a92d46cff2cfe77460d827db0c8d7b91b341a0ef4a9837ee`

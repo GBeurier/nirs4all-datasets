@@ -27,35 +27,35 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| LMA | target | numeric | *Not specified.* | n=2079, missing=0, range 1.429–7.586, mean 4.573 ± 0.9536 |
-| WCf | target | numeric | *Not specified.* | n=2079, missing=643, range 0.6061–0.8584, mean 0.7293 ± 0.03172 |
-| WQ | target | numeric | *Not specified.* | n=2079, missing=643, range 41.1–189.5, mean 86.39 ± 17.06 |
-| An | target | numeric | *Not specified.* | n=2079, missing=1972, range 0.05647–16.47, mean 6.299 ± 3.6 |
-| PSI | target | numeric | *Not specified.* | n=2079, missing=1974, range -1.966–-0.26, mean -0.9622 ± 0.3938 |
-| WUEintr | target | numeric | *Not specified.* | n=2079, missing=1975, range 14.13–187.6, mean 90.95 ± 37.11 |
-| WUEinst | target | numeric | *Not specified.* | n=2079, missing=1975, range 0.8329–12.39, mean 4.364 ± 2.044 |
-| gsw | target | numeric | *Not specified.* | n=2079, missing=1, range -0.01938–0.9363, mean 0.1479 ± 0.1499 |
-| gbw | target | numeric | *Not specified.* | n=2079, missing=1, range 2.916–2.921, mean 2.919 ± 0.0007109 |
-| gtw | target | numeric | *Not specified.* | n=2079, missing=1, range -0.01951–0.7074, mean 0.1342 ± 0.1278 |
-| E_apparent | target | numeric | *Not specified.* | n=2079, missing=1, range -0.000356–0.01696, mean 0.003423 ± 0.003517 |
-| VPcham | target | numeric | *Not specified.* | n=2079, missing=1, range 1.683–3.282, mean 2.374 ± 0.2638 |
-| VPref | target | numeric | *Not specified.* | n=2079, missing=1, range 1.611–3.106, mean 2.278 ± 0.3003 |
-| VPleaf | target | numeric | *Not specified.* | n=2079, missing=1, range 3.391–7.227, mean 4.879 ± 0.5416 |
-| VPDleaf | target | numeric | *Not specified.* | n=2079, missing=1, range 1.009–5.169, mean 2.505 ± 0.6768 |
-| H2O_r | target | numeric | *Not specified.* | n=2079, missing=1, range 15.88–30.58, mean 22.49 ± 2.95 |
-| H2O_s | target | numeric | *Not specified.* | n=2079, missing=1, range 16.6–32.32, mean 23.43 ± 2.596 |
-| H2O_leaf | target | numeric | *Not specified.* | n=2079, missing=1, range 33.51–71.71, mean 48.17 ± 5.398 |
-| Fs | target | numeric | *Not specified.* | n=2079, missing=1, range 68.21–327.4, mean 138.7 ± 36.84 |
-| Fm. | target | numeric | *Not specified.* | n=2079, missing=1, range 71–455.7, mean 239.9 ± 74.46 |
-| PhiPS2 | target | numeric | *Not specified.* | n=2079, missing=1, range 0.009246–0.7361, mean 0.383 ± 0.163 |
-| ETR | target | numeric | *Not specified.* | n=2079, missing=1, range 3.983–370.7, mean 128.8 ± 67.05 |
-| rh_s | target | numeric | *Not specified.* | n=2079, missing=1, range 31.04–76.22, mean 49.97 ± 7.556 |
-| rh_r | target | numeric | *Not specified.* | n=2079, missing=1, range 29.23–73.59, mean 48.05 ± 8.434 |
-| Tref | target | numeric | *Not specified.* | n=2079, missing=1, range 24.88–36.44, mean 32.02 ± 1.625 |
-| Tleaf | target | numeric | *Not specified.* | n=2079, missing=1, range 26.09–39.52, mean 32.29 ± 1.938 |
-| P_atm | target | numeric | *Not specified.* | n=2079, missing=1, range 100.7–101.9, mean 101.3 ± 0.2958 |
-| Qamb | target | numeric | *Not specified.* | n=2079, missing=1, range 114.5–1938, mean 947.9 ± 475 |
-| G | target | numeric | *Not specified.* | n=2079, missing=1, range -0.01938–0.9363, mean 0.1479 ± 0.1499 |
+| LMA | target | categorical | *Not specified.* | n=2079, missing=0, classes=1168, top 4,83831026999362 (×11) |
+| WCf | target | categorical | *Not specified.* | n=2079, missing=643, classes=1423, top 0,730133752950433 (×2) |
+| WQ | target | numeric | *Not specified.* | n=2079, missing=1993, range 61–137, mean 88.62 ± 15.03 |
+| An | target | categorical | *Not specified.* | n=2079, missing=1972, classes=107, top 1,639896968 (×1) |
+| PSI | target | categorical | *Not specified.* | n=2079, missing=1974, classes=102, top -0,637 (×2) |
+| WUEintr | target | categorical | *Not specified.* | n=2079, missing=1975, classes=104, top 183,344392601678 (×1) |
+| WUEinst | target | categorical | *Not specified.* | n=2079, missing=1975, classes=104, top 11,3140818666648 (×1) |
+| gsw | target | categorical | *Not specified.* | n=2079, missing=1, classes=2074, top 0,3240405 (×2) |
+| gbw | target | categorical | *Not specified.* | n=2079, missing=1, classes=1739, top 2,918605 (×5) |
+| gtw | target | categorical | *Not specified.* | n=2079, missing=1, classes=2072, top 0,0147365 (×2) |
+| E_apparent | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 0,0002330015 (×2) |
+| VPcham | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 2,3235295 (×2) |
+| VPref | target | categorical | *Not specified.* | n=2079, missing=1, classes=2076, top 2,5061955 (×2) |
+| VPleaf | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 4,5957205 (×2) |
+| VPDleaf | target | categorical | *Not specified.* | n=2079, missing=1, classes=2075, top 2,441038 (×2) |
+| H2O_r | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 22,7950135 (×2) |
+| H2O_s | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 22,859375 (×2) |
+| H2O_leaf | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 45,213667 (×2) |
+| Fs | target | categorical | *Not specified.* | n=2079, missing=1, classes=2076, top 110,3550185 (×2) |
+| Fm. | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 108,7147905 (×2) |
+| PhiPS2 | target | categorical | *Not specified.* | n=2079, missing=1, classes=2075, top 0,3937105 (×2) |
+| ETR | target | categorical | *Not specified.* | n=2079, missing=1, classes=2077, top 57,317551 (×2) |
+| rh_s | target | numeric | *Not specified.* | n=2079, missing=2071, range 38–59, mean 47.38 ± 7.558 |
+| rh_r | target | numeric | *Not specified.* | n=2079, missing=2072, range 33–58, mean 47.43 ± 8.696 |
+| Tref | target | numeric | *Not specified.* | n=2079, missing=2071, range 31–34, mean 32.25 ± 1.165 |
+| Tleaf | target | numeric | *Not specified.* | n=2079, missing=2066, range 31–35, mean 32.85 ± 1.405 |
+| P_atm | target | numeric | *Not specified.* | n=2079, missing=2045, range 101–101, mean 101 ± 0 |
+| Qamb | target | numeric | *Not specified.* | n=2079, missing=1045, range 131–1932, mean 913.1 ± 470.1 |
+| G | target | categorical | *Not specified.* | n=2079, missing=1, classes=2074, top 0,3240405 (×2) |
 | Species_code_grpStrat | target | categorical | *Not specified.* | n=2079, missing=536, classes=246, top V1576 (×13) |
 | Brix | target | categorical | *Not specified.* | n=2079, missing=0, classes=1, top not_available_in_grapevine_source (×2079) |
 | Leaf_ID | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2079, top 4005_20/07/21 (×1) |
@@ -102,5 +102,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e82b52f5e07d78e1faa3fde635eaa716c2e7e73973650abf6a2fb14f76417336`
+- **Content hash:** `2b36cd90db0658aec00a485eac10b03ad70e34018e530bc51dd3e6e1628065e8`
 - **Processing hash:** `22f21b9ac57b6f69247aae6f79f94a14da7d999a7e8e5491e11d9b690e0f6077` | **metadata hash:** `bda8a3d59ea36308dbc93f190365aaf3188879af90dd047f5d471b78f53052c1`

@@ -277,41 +277,85 @@ def _kv(rows: list[tuple[str, Any]]) -> str:
     return table("", kv_rows(rows), css_class="kv").replace("<caption></caption>", "")
 
 
+def _chip(label: str, value: Any) -> str:
+    return f'<div class="chip"><span>{esc(label)}</span><b>{esc(value)}</b></div>'
+
+
 def _sources_panel(view: DatasetView, rel: str) -> str:
+    """One card per spectral source: the interactive spectra-with-quantiles chart + key facts + PCA scree."""
     card = view.card or {}
     sources = card.get("sources") or []
     if not sources:
         return ""
-    headers = ["Source", "Instrument", "Modality", "Axis", "Range", "Obs.", "λ", "Outliers"]
-    num_cols = {5, 6, 7}
-    rows: list[list[Any]] = []
+    blocks: list[str] = []
     for s in sources:
         spec = s.get("spectral") or {}
-        axis_unit = s.get("axis_unit") or ""
-        rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(axis_unit)}' if s.get("axis_min") is not None and s.get("axis_max") is not None else "—"
-        rows.append([
-            s.get("source_id") or "—",
-            s.get("instrument_name") or "—",
-            s.get("modality") or "—",
-            axis_unit or "—",
-            rng,
-            num(s.get("n_observations")),
-            num(s.get("n_variables")),
-            num(spec.get("n_outliers")) if spec.get("n_outliers") is not None else "—",
-        ])
-    table_html = C.data_table("Spectral sources", headers, rows, num_cols=num_cols)
+        unit = s.get("axis_unit") or ""
+        rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (s.get("axis_min") is not None and s.get("axis_max") is not None) else "full span"
+        chips = [
+            _chip("source", s.get("source_id") or "—"),
+            _chip("instrument", s.get("instrument_name") or "—"),
+            _chip("modality", s.get("modality") or "—"),
+            _chip("axis", rng),
+            _chip("observations", num(s.get("n_observations"))),
+            _chip("wavelengths", num(s.get("n_variables"))),
+        ]
+        if spec.get("n_outliers") is not None:
+            chips.append(_chip("outliers", num(spec.get("n_outliers"))))
 
-    # per-source plots (public/private only; anonymized copies no assets so asset_dataset_id == "")
-    plots = ""
-    if view.asset_dataset_id:
-        figs: list[str] = []
-        for s in sources:
-            for asset in s.get("assets") or []:
-                title = f'{s.get("source_id")}: {asset.rsplit("/", 1)[-1].rsplit(".", 1)[0].replace("_", " ")}'
-                figs.append(f'<figure class="plot"><img loading="lazy" src="{rel}assets/{esc(view.id)}/{esc(asset)}" alt="{esc(title)}"><figcaption>{esc(title)}</figcaption></figure>')
-        if figs:
-            plots = f'<div class="plot-grid" style="margin-top:18px">{"".join(figs)}</div>'
-    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{table_html}{plots}</div></section>'
+        curve = spec.get("curve")
+        chart = ""
+        if view.show_variable_plots and curve and curve.get("axis"):
+            src_title = f'{s.get("name") or s.get("source_id")} spectra'
+            chart = f'<div class="viz-spectra">{charts.spectra_quantile(curve, title=src_title, axis_label="wavelength", unit=unit)}</div>'
+        scree = ""
+        pca = spec.get("pca") or {}
+        evr = [v for v in (pca.get("explained_variance_ratio") or [])[:8] if isinstance(v, (int, float)) and not isinstance(v, bool)]
+        if view.show_variable_plots and evr:
+            bars = [(f"PC{i + 1}", round(float(v) * 100, 1)) for i, v in enumerate(evr)]
+            scree = f'<details class="viz-extra"><summary>PCA explained variance (top {len(bars)})</summary><div class="viz-scree">{charts.bar_chart(bars, title="PCA explained variance", unit="%")}</div></details>'
+
+        blocks.append(f'<div class="source-card"><div class="chips">{"".join(chips)}</div>{chart}{scree}</div>')
+    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{"".join(blocks)}</div></section>'
+
+
+def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
+    """One variable as a card: its own distribution chart + only the stats that apply (no `—` columns)."""
+    stats = v.get("stats") or {}
+    is_num = v.get("type") == "numeric"
+    name = v.get("name") or "—"
+    unit = v.get("unit")
+    tag = " · ".join(filter(None, [v.get("type"), unit]))
+
+    chart = ""
+    if view.show_variable_plots:
+        if is_num:
+            hist = v.get("histogram") or {}
+            if hist.get("counts") and hist.get("edges"):
+                chart = charts.histogram_bins(hist["edges"], hist["counts"], title=f"{name} distribution", unit=unit or "")
+            else:
+                chart = charts.boxplot(stats, title=f"{name} distribution", unit=unit or "")
+        else:
+            tc = stats.get("top_classes") or []
+            if tc:
+                chart = charts.bar_chart([(str(c.get("name")), float(c.get("count") or 0)) for c in tc], title=f"{name} classes", top_n=10)
+
+    chips = [_chip("n", num(stats.get("n"))), _chip("missing", num(stats.get("n_missing")))]
+    if is_num and view.show_value_stats:
+        if stats.get("mean") is not None:
+            chips.append(_chip("mean", num(stats.get("mean"), nd=3)))
+        if stats.get("median") is not None:
+            chips.append(_chip("median", num(stats.get("median"), nd=3)))
+        if stats.get("min") is not None and stats.get("max") is not None:
+            chips.append(_chip("range", f'{num(stats.get("min"), nd=3)}–{num(stats.get("max"), nd=3)}'))
+    elif not is_num and stats.get("n_classes") is not None:
+        chips.append(_chip("classes", num(stats.get("n_classes"))))
+
+    chart_html = f'<div class="var-chart">{chart}</div>' if chart else ""
+    return (
+        f'<div class="var-card"><div class="var-card-head"><h4>{esc(name)}</h4>'
+        f'<span class="var-tag">{esc(tag)}</span></div>{chart_html}<div class="chips">{"".join(chips)}</div></div>'
+    )
 
 
 def _variables_panel(view: DatasetView, rel: str) -> str:
@@ -323,48 +367,14 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
 
     targets = [v for v in variables if v.get("role") == "target"]
     meta = [v for v in variables if v.get("role") != "target"]
-
-    def var_rows(vs: list[dict[str, Any]], *, numeric_value_stats: bool) -> str:
-        headers = ["Variable", "Type", "Unit", "n", "Missing", "Mean", "Std", "Range", "Classes"]
-        num_cols = {3, 4, 5, 6}
-        rows: list[list[Any]] = []
-        for v in vs:
-            stats = v.get("stats") or {}
-            is_num = v.get("type") == "numeric"
-            mean = num(stats.get("mean")) if (numeric_value_stats and is_num) else "—"
-            std = num(stats.get("std")) if (numeric_value_stats and is_num) else "—"
-            rng = "—"
-            if numeric_value_stats and is_num and stats.get("min") is not None and stats.get("max") is not None:
-                rng = f'{num(stats.get("min"))} – {num(stats.get("max"))}'
-            classes = num(stats.get("n_classes")) if (not is_num and stats.get("n_classes") is not None) else "—"
-            rows.append([
-                v.get("name") or "—",
-                v.get("type") or "—",
-                v.get("unit") or "—",
-                num(stats.get("n")),
-                num(stats.get("n_missing")),
-                mean, std, rng, classes,
-            ])
-        return C.data_table("", headers, rows, num_cols=num_cols)
-
     blocks: list[str] = []
     if targets:
-        blocks.append(f"<h3 style='font-family:var(--display);font-size:.95rem;margin-bottom:8px'>Targets ({len(targets)})</h3>")
-        blocks.append(var_rows(targets, numeric_value_stats=view.show_value_stats))
+        blocks.append(f'<h3 class="var-group">Targets ({len(targets)})</h3>')
+        blocks.append(f'<div class="var-grid">{"".join(_variable_card(view, v) for v in targets)}</div>')
     if meta:
-        blocks.append(f"<h3 style='font-family:var(--display);font-size:.95rem;margin:18px 0 8px'>Metadata ({len(meta)})</h3>")
-        blocks.append(var_rows(meta, numeric_value_stats=view.show_value_stats))
-
-    plots = ""
-    if view.show_variable_plots and view.asset_dataset_id:
-        figs: list[str] = []
-        for v in variables:
-            for asset in v.get("assets") or []:
-                title = f'{v.get("name")} distribution'
-                figs.append(f'<figure class="plot"><img loading="lazy" src="{rel}assets/{esc(view.id)}/{esc(asset)}" alt="{esc(title)}"><figcaption>{esc(title)}</figcaption></figure>')
-        if figs:
-            plots = f'<div class="plot-grid" style="margin-top:18px">{"".join(figs)}</div>'
-    return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{"".join(blocks)}{plots}</div></section>'
+        blocks.append(f'<h3 class="var-group">Metadata ({len(meta)})</h3>')
+        blocks.append(f'<div class="var-grid">{"".join(_variable_card(view, v) for v in meta)}</div>')
+    return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{"".join(blocks)}</div></section>'
 
 
 def _alignment_panel(view: DatasetView) -> str:

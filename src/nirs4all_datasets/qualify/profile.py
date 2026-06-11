@@ -28,7 +28,7 @@ import pandas as pd
 
 from nirs4all_datasets.canonical import resolve_config
 from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
-from nirs4all_datasets.qualify import anonymize, croissant, datasheet, plots, registry
+from nirs4all_datasets.qualify import anonymize, croissant, datasheet, registry
 from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
 
 SCHEMA_VERSION = "2.0"
@@ -113,7 +113,18 @@ def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[i
     }
 
 
-def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
+def _source_axis(spectral_cols: list[str]) -> np.ndarray:
+    """The numeric wavelength axis parsed from the spectral column headers, or the feature index."""
+    parsed: list[float] = []
+    for col in spectral_cols:
+        try:
+            parsed.append(float(col))
+        except (TypeError, ValueError):
+            return np.arange(len(spectral_cols), dtype="float64")
+    return np.asarray(parsed, dtype="float64") if parsed else np.arange(len(spectral_cols), dtype="float64")
+
+
+def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool, compute_curve: bool = False) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
     """Build one ``sources[]`` card entry from a source Parquet; return ``(section, frame, sample_ids)``.
 
     Reads the Parquet, computes the registered ``value_range``/``spectral_quality`` source metrics and
@@ -141,6 +152,12 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "n_outliers": n_outliers,
         "pca": pca,
     }
+    if compute_curve and spectral_cols:
+        from nirs4all_datasets.qualify import metrics
+
+        curve = metrics.spectral_curve(spectra, _source_axis(spectral_cols))
+        if curve is not None:
+            spectral["curve"] = curve
     warnings.extend(f"source {source_id}: {w}" for w in src_warnings)
     section = {
         "source_id": source_id,
@@ -214,12 +231,16 @@ def _variable_type(var: Variable) -> bool:
     return var.type is VarType.NUMERIC
 
 
-def _variable_section(var: Variable, values: pd.Series, warnings: list[str]) -> dict[str, Any]:
+def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, compute_histogram: bool = False) -> dict[str, Any]:
     """Build one ``variables[]`` card entry. Numeric or categorical stats per the declared type, but a
     variable *declared* numeric whose values do not parse as numbers is profiled as CATEGORICAL instead
-    (the card's ``type`` records the effective type) — the descriptor's guess never yields empty stats."""
+    (the card's ``type`` records the effective type) — the descriptor's guess never yields empty stats.
+
+    When ``compute_histogram`` and the effective type is numeric, a ``histogram`` block (``edges``/``counts``)
+    is attached for the site's interactive distribution chart (categorical vars use ``stats.top_classes``)."""
     variable_metrics = registry.metrics_for("variable")
     effective_type = var.type
+    histogram: dict[str, Any] | None = None
     if var.type is VarType.NUMERIC:
         numeric = pd.to_numeric(values, errors="coerce")
         if values.notna().any() and numeric.notna().sum() == 0:
@@ -227,9 +248,13 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str]) -> 
             stats = variable_metrics["categorical_stats"](values)
         else:
             stats = variable_metrics["numeric_stats"](numeric.to_numpy(dtype="float64"))
+            if compute_histogram:
+                from nirs4all_datasets.qualify import metrics
+
+                histogram = metrics.histogram_bins(numeric.to_numpy(dtype="float64"))
     else:
         stats = variable_metrics["categorical_stats"](values)
-    return {
+    section: dict[str, Any] = {
         "name": var.name,
         "role": var.role.value,
         "type": effective_type.value,
@@ -237,6 +262,9 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str]) -> 
         "stats": stats,
         "assets": [],
     }
+    if histogram is not None:
+        section["histogram"] = histogram
+    return section
 
 
 def _splits_sections(config: dict[str, Any], warnings: list[str]) -> list[dict[str, Any]]:
@@ -326,13 +354,11 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
 
     # --- sources (per spectral block) ---
     source_sections: list[dict[str, Any]] = []
-    source_frames: dict[str, pd.DataFrame] = {}
     all_sample_ids: set[str] = set()
     reps_counts: list[int] = []
     for entry in config.get("sources", []):
-        section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca)
+        section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca, compute_curve=compute_assets)
         source_sections.append(section)
-        source_frames[section["source_id"]] = df
         all_sample_ids |= src_samples
         if _SAMPLE_KEY in df.columns:
             reps_counts.extend(int(c) for c in df[_SAMPLE_KEY].astype(str).value_counts().to_numpy())
@@ -348,22 +374,12 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         if var.name not in present_cols:
             warnings.append(f"variable {var.name!r} declared but absent from canonical variables.parquet; skipped")
             continue
-        variable_sections.append(_variable_section(var, variables_df[var.name], warnings))  # type: ignore[index]
+        variable_sections.append(_variable_section(var, variables_df[var.name], warnings, compute_histogram=compute_assets))  # type: ignore[index]
 
-    # --- assets (per source + per variable) ---
+    # Visuals are inline SVG on the site, rendered from the card's own data (per-source spectral
+    # quantile curves + per-variable histogram bins) — no matplotlib PNG assets. The ``assets`` block
+    # is retained (empty) for schema stability.
     assets: dict[str, Any] = {"sources": {}, "variables": []}
-    if compute_assets:
-        assets_dir = dataset_dir / "assets"
-        for section in source_sections:
-            relpaths = plots.render_source_assets(section["source_id"], source_frames[section["source_id"]], assets_dir, warnings)
-            section["assets"] = relpaths
-            assets["sources"][section["source_id"]] = relpaths
-        for var_section in variable_sections:
-            # Plot per the EFFECTIVE type (a declared-numeric-but-unparseable var was reprofiled categorical).
-            is_numeric_eff = var_section["type"] == VarType.NUMERIC.value
-            relpaths = plots.render_variable_asset(var_section["name"], variables_df[var_section["name"]], is_numeric_eff, assets_dir, warnings)  # type: ignore[index]
-            var_section["assets"] = relpaths
-            assets["variables"].extend(relpaths)
 
     card: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,

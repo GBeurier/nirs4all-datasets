@@ -167,6 +167,7 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     for var in out.get("variables") or []:
         if not isinstance(var, dict):
             continue
+        var.pop("histogram", None)  # the raw-value histogram would leak the real distribution/range
         if "assets" in var:
             var["assets"] = _mask_variable_assets(var.get("assets") or [], name_map)
         original = str(var.get("name"))

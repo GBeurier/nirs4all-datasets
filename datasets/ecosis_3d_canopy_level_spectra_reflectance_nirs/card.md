@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1 sample(s), 59 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 59–59 (mean 59).
+- **Alignment:** observation level; 59 sample(s), 59 observation(s) total; sample_id available: True.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,36 +24,36 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| easting | target | numeric | *Not specified.* | n=1, missing=0, range 3.07e+05–3.07e+05, mean 3.07e+05 ± 0 |
-| northing | target | numeric | *Not specified.* | n=1, missing=0, range 5.117e+06–5.117e+06, mean 5.117e+06 ± 0 |
-| lma_g_m2 | target | numeric | *Not specified.* | n=1, missing=0, range 52.12–52.12, mean 52.12 ± 0 |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 0290ec63-4a5b-4168-aa43-4e6664db57f7 (×1) |
-| site | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top NEON Domain 5 Great Lakes (×1) |
-| country | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top source-provided coordinates when available (×1) |
-| year | metadata | numeric | *Not specified.* | n=1, missing=0, range 2016–2016, mean 2016 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Canopy (×1) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top canopy (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top NEON AOP (×1) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Proximal (×1) |
-| signal_type | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top reflectance (×1) |
-| axis_unit | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top nm (×1) |
-| axis_min | metadata | numeric | *Not specified.* | n=1, missing=0, range 405–405, mean 405 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=1, missing=0, range 2445–2445, mean 2445 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=1, missing=0, range 351–351, mean 351 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 10.1016/j.rse.2020.112043 \| 10.21232/dep7jvyq (×1) |
-| citation | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Chlus et al.. 2020. 3D LMA Canopy Level Spectra. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×1) |
-| license | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top not specified (×1) |
-| rights_status | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top manual_review_needed (×1) |
-| usage_scope | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top private_use_only (×1) |
-| notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top EcoSIS package 3d-lma-canopy-level-spectra, no interpolation applied by project. (×1) |
+| easting | target | numeric | *Not specified.* | n=59, missing=0, range 3.027e+05–7.296e+05, mean 4.063e+05 ± 1.812e+05 |
+| northing | target | numeric | *Not specified.* | n=59, missing=0, range 5.037e+06–5.127e+06, mean 5.104e+06 ± 2.545e+04 |
+| lma_g_m2 | target | numeric | *Not specified.* | n=59, missing=0, range 48.26–117.7, mean 84.81 ± 16.34 |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top 0290ec63-4a5b-4168-aa43-4e6664db57f7 (×59) |
+| site | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top NEON Domain 5 Great Lakes (×59) |
+| country | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top source-provided coordinates when available (×59) |
+| year | metadata | numeric | *Not specified.* | n=59, missing=0, range 2016–2017, mean 2017 ± 0.4644 |
+| date | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=59, missing=59, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top Canopy (×59) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top canopy (×59) |
+| instrument | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top NEON AOP (×59) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top Proximal (×59) |
+| signal_type | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top reflectance (×59) |
+| axis_unit | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top nm (×59) |
+| axis_min | metadata | numeric | *Not specified.* | n=59, missing=0, range 405–405, mean 405 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=59, missing=0, range 2445–2445, mean 2445 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=59, missing=0, range 351–351, mean 351 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top 10.1016/j.rse.2020.112043 \| 10.21232/dep7jvyq (×59) |
+| citation | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top Chlus et al.. 2020. 3D LMA Canopy Level Spectra. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×59) |
+| license | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top not specified (×59) |
+| rights_status | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top manual_review_needed (×59) |
+| usage_scope | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top private_use_only (×59) |
+| notes | metadata | categorical | *Not specified.* | n=59, missing=0, classes=1, top EcoSIS package 3d-lma-canopy-level-spectra, no interpolation applied by project. (×59) |
 
 ## Statistics — splits
 
@@ -95,5 +95,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `cd0a8ea48bab6e0b286181f19bbbf5483b65dd792a8cd8dbc1d2b8c2f057d237`
+- **Content hash:** `27d3d23ad52d83f95d71e2eaef30eb97e13b498829ffa815d4ee715429558d92`
 - **Processing hash:** `f458de515b1324b11086c9559c0bccb1713012163bb995c0ad11a6c44b3c02ea` | **metadata hash:** `8033bc2259f1fa570c76052ef8d1ae3bad11b927f88bf65dc4cc508981f02003`

@@ -56,8 +56,12 @@ def _card(dataset_id: str, *, name: str, description: str, target_name: str, fam
         {
             "source_id": f"X{i + 1}", "instrument_name": f"Spectro {i + 1}", "modality": family,
             "axis_unit": "nm", "axis_min": 1100.0, "axis_max": 2498.0, "n_observations": 80, "n_variables": 700,
-            "spectral": {"value_min": 0.0, "value_max": 1.2, "mean_min": 0.1, "mean_max": 0.9, "n_outliers": 3, "pca": None},
-            "assets": [f"assets/X{i + 1}/spectra_envelope.png"],
+            "spectral": {
+                "value_min": 0.0, "value_max": 1.2, "mean_min": 0.1, "mean_max": 0.9, "n_outliers": 3,
+                "pca": {"n_components": 3, "explained_variance_ratio": [0.8, 0.15, 0.05]},
+                "curve": {"axis": [1100.0, 1300.0, 1500.0], "q05": [0.1, 0.2, 0.15], "q25": [0.2, 0.3, 0.25], "median": [0.3, 0.4, 0.35], "q75": [0.4, 0.5, 0.45], "q95": [0.5, 0.6, 0.55], "mean": [0.3, 0.4, 0.35]},
+            },
+            "assets": [],
         }
         for i in range(n_sources)
     ]
@@ -68,8 +72,8 @@ def _card(dataset_id: str, *, name: str, description: str, target_name: str, fam
         "alignment": {"level": "sample", "sample_id_available": True, "n_samples": 80, "n_observations_total": 160, "reps_per_sample": {"min": 2, "max": 2, "mean": 2.0}},
         "sources": sources,
         "variables": [
-            {"name": target_name, "role": "target", "type": "numeric", "unit": "%", "stats": {"n": 80, "n_missing": 0, "min": 3.0, "max": 9.0, "mean": 6.1, "std": 1.2, "median": 6.0, "q1": 5.0, "q3": 7.0}, "assets": [f"assets/variables/{target_name}.png"]},
-            {"name": "variety", "role": "metadata", "type": "categorical", "unit": None, "stats": {"n": 80, "n_missing": 0, "n_classes": 3, "top_classes": [{"name": "a", "count": 40}]}, "assets": ["assets/variables/variety.png"]},
+            {"name": target_name, "role": "target", "type": "numeric", "unit": "%", "stats": {"n": 80, "n_missing": 0, "min": 3.0, "max": 9.0, "mean": 6.1, "std": 1.2, "median": 6.0, "q1": 5.0, "q3": 7.0}, "histogram": {"edges": [3.0, 5.0, 7.0, 9.0], "counts": [20, 40, 20]}, "assets": []},
+            {"name": "variety", "role": "metadata", "type": "categorical", "unit": None, "stats": {"n": 80, "n_missing": 0, "n_classes": 3, "top_classes": [{"name": "a", "count": 40}]}, "assets": []},
         ],
         "splits": [{"name": "cv", "applied": False, "partitions": {"train": 60, "test": 20}}],
         "provenance": {"contributor": "Secret Lab", "reference_method": "Kjeldahl", "conversion_status": "complete", "origin_sources": [{"kind": "zenodo", "locator": "10.5281/zenodo.1", "access": "open", "license": "CC-BY-4.0", "title": "Origin title"}], "publications": [{"doi": "10.1038/s41586-020-0", "title": "Paper", "year": 2020}], "warnings": []},
@@ -179,7 +183,10 @@ def test_public_full_with_downloads(tmp_path: Path) -> None:
     assert "card.json" in page and "croissant.json" in page  # metadata downloads offered
     assert (out / "data" / "corn_oil.card.json").exists()
     assert (out / "data" / "corn_oil.croissant.json").exists()
-    assert (out / "assets" / "corn_oil" / "X1" / "spectra_envelope.png").exists()  # spectra plot copied
+    # visuals are inline interactive SVG (no PNG assets are copied anymore)
+    assert "viz-spectra" in page and "<svg" in page and "<polygon" in page  # spectra-with-quantiles chart
+    assert "var-card" in page  # per-variable distribution cards
+    assert not (out / "assets").exists()
 
 
 def test_private_no_byte_download_but_full_metadata(tmp_path: Path) -> None:
@@ -190,8 +197,8 @@ def test_private_no_byte_download_but_full_metadata(tmp_path: Path) -> None:
     # no downloadable metadata files for a private dataset
     assert not (out / "data" / "wheat_protein.card.json").exists()
     assert not (out / "data" / "wheat_protein.croissant.json").exists()
-    # but plots + metrics are still shown
-    assert (out / "assets" / "wheat_protein" / "X1" / "spectra_envelope.png").exists()
+    # but interactive charts + metrics are still shown (inline SVG)
+    assert "viz-spectra" in page and "<svg" in page
     assert "Spectro 1" in page  # instrument metadata shown
 
 
