@@ -1,44 +1,54 @@
-"""Build a dataset identity ``card.json`` by reusing nirs4all + the descriptive metrics.
+"""Build a dataset identity ``card.json`` directly from the canonical Parquet (schema 2.0).
 
-The card combines hand-authored identity/provenance (the descriptor) with computed inventory,
-spectral, target, quality, and integrity sections. nirs4all does the heavy lifting
-(``get_dataset_metadata``, ``detect_signal_type``, ``nan_summary``, outlier-filter stats,
-``core.metrics.get_stats``); :mod:`nirs4all_datasets.qualify.metrics` fills the gaps.
+The card is the qualification protocol's output: hand-authored identity/provenance/governance (the
+descriptor) joined with computed alignment, per-source spectral, per-variable, split, and integrity
+sections. It is re-derivable from the canonical bytes alone — :func:`build_card` reads
+``canonical/dataset.json`` (via :func:`canonical.resolve_config`) and each source/variables/splits
+Parquet, never the raw files — so a ``--protocol-refresh`` (bumping :data:`registry.PROTOCOL_VERSION`)
+re-qualifies without rebuilding canonical bytes.
 
-Section keys are stable: when an optional computation fails, the value is ``None`` and a message
-is appended to the card's ``warnings`` list (failures are never silently dropped). The outlier
-path is seeded (``random_state=0``) so the card is reproducible apart from the volatile
-``integrity.generated_at`` timestamp. All values are sanitized to finite JSON (no NaN/Inf).
+The numerics are not reimplemented here: they are the registered metrics
+(:mod:`nirs4all_datasets.qualify.registry`, wrapping :mod:`metrics`) and nirs4all's
+``compute_pca_projection``. Card invariants: every section key is stable (a failed optional
+computation becomes ``None`` plus a ``warnings[]`` entry, never a dropped key) and every float is
+finite-sanitized (no NaN/Inf in the JSON). The card is robust to no-Y (``variables == []``) and to
+many-Y (e.g. OSSL's 53 targets + metadata).
 """
 from __future__ import annotations
 
 import json
 import math
-from collections import Counter
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 import numpy as np
-from scipy import stats
+import pandas as pd
 
-from nirs4all_datasets.ingest import resolve_config
-from nirs4all_datasets.manifest import descriptor_hash, metadata_hash, read_manifest
-from nirs4all_datasets.qualify import metrics
-from nirs4all_datasets.qualify.croissant import render_croissant
-from nirs4all_datasets.qualify.datasheet import render_datasheet
-from nirs4all_datasets.qualify.plots import render_card_assets
-from nirs4all_datasets.schema import DatasetDescriptor, FileRole
+from nirs4all_datasets.canonical import resolve_config
+from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
+from nirs4all_datasets.qualify import croissant, datasheet, plots, registry
+from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "2.0"
+_OBS_KEY = "observation_id"
+_SAMPLE_KEY = "sample_id"
+_PCA_MAX_ROWS = 4000
+_PCA_MAX_COMPONENTS = 30
 
 
+# =============================================================================
+# Finite-sanitization (salvaged from the prior profile.py)
+# =============================================================================
 def _jsonify(obj: Any) -> Any:
-    """Recursively convert numpy scalars/arrays and replace non-finite floats with None."""
+    """Recursively convert numpy scalars/arrays and replace non-finite floats with ``None``."""
+    if isinstance(obj, bool):
+        return obj
     if isinstance(obj, (float, np.floating)):
         value = float(obj)
         return value if math.isfinite(value) else None
-    if isinstance(obj, np.integer):
+    if isinstance(obj, (np.integer,)):
         return int(obj)
     if isinstance(obj, np.ndarray):
         return [_jsonify(v) for v in obj.tolist()]
@@ -49,336 +59,237 @@ def _jsonify(obj: Any) -> Any:
     return obj
 
 
-def _features(dataset: Any, selector: dict[str, str]) -> np.ndarray:
-    x = dataset.x(selector, layout="2d", concat_source=False)
-    return np.asarray(x[0] if isinstance(x, list) else x, dtype="float32")  # float32 to bound memory on large X
-
-
-def _train_features(dataset: Any) -> np.ndarray:
-    train = _features(dataset, {"partition": "train"})
-    return train if train.shape[0] else _features(dataset, {})
-
-
-def _inventory(dataset: Any) -> dict[str, Any]:
-    n_features = dataset.num_features if isinstance(dataset.num_features, int) else dataset.num_features[0]
-    inventory: dict[str, Any] = {
-        "n_samples": int(dataset.num_samples),
-        "n_features": int(n_features),
-        "n_sources": int(dataset.n_sources),
-        "task_type": dataset.task_type.value if dataset.task_type is not None else None,
-        "n_folds": int(dataset.num_folds),
-        "metadata_columns": list(dataset.metadata_columns),
-        "partitions": None,
+# =============================================================================
+# Section builders
+# =============================================================================
+def _identity(descriptor: DatasetDescriptor) -> dict[str, Any]:
+    return {
+        "id": descriptor.id,
+        "name": descriptor.name,
+        "domain": descriptor.domain,
+        "tier": descriptor.tier.value,
+        "description": descriptor.description,
+        "keywords": list(descriptor.keywords),
     }
-    if dataset.is_classification:
-        inventory["num_classes"] = int(dataset.num_classes)
-    parts = [str(p) for p in dataset.index_column("partition")]
-    labels = Counter(p for p in parts if p and p != "None")
-    if labels:
-        inventory["partitions"] = dict(labels)
-    return inventory
 
 
-def _native_axis(dataset: Any, unit: str, src: int = 0) -> np.ndarray | None:
-    """Wavelength axis in its *native* unit (so spacing is meaningful); None for non-spectral axes.
+def _versions(descriptor: DatasetDescriptor) -> dict[str, Any]:
+    return {"content": descriptor.versions.content, "schema_protocol": descriptor.versions.schema_protocol}
 
-    Exception-safe: some headers carry unit suffixes (e.g. ``852.78_nm``) nirs4all cannot parse to a
-    float axis — that degrades the spectral summary but must never fail the card.
+
+def _governance(descriptor: DatasetDescriptor) -> dict[str, Any]:
+    gov = descriptor.governance
+    return {
+        "license": gov.license,
+        "tier": descriptor.tier.value,
+        "permitted_use": gov.permitted_use,
+        "access_policy": gov.access_policy,
+        "redistribution_rights": gov.redistribution_rights,
+    }
+
+
+def _provenance(descriptor: DatasetDescriptor) -> dict[str, Any]:
+    """Surfaced origin + citation block (where the bytes live + how to cite), with its own warnings."""
+    prov = descriptor.provenance
+    return {
+        "contributor": prov.contributor,
+        "reference_method": prov.reference_method,
+        "conversion_status": prov.conversion_status.value if prov.conversion_status is not None else None,
+        "origin_sources": [{"kind": s.kind.value, "locator": s.locator, "access": s.access.value, "license": s.license, "title": s.title} for s in descriptor.origin_sources],
+        "publications": [{"doi": p.doi, "title": p.title, "year": p.year} for p in descriptor.publications],
+        "warnings": list(prov.warnings),
+    }
+
+
+def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor) -> dict[str, Any]:
+    n_observations_total = int(sum(int(s.get("n_observations") or 0) for s in config.get("sources", [])))
+    reps = registry.metrics_for("dataset")["reps_per_sample"](np.asarray(reps_counts, dtype="float64")) if reps_counts else None
+    return {
+        "level": config.get("alignment_level"),
+        "sample_id_available": bool(descriptor.ids.sample_id_available),
+        "n_samples": len(sample_ids),
+        "n_observations_total": n_observations_total,
+        "reps_per_sample": reps,
+    }
+
+
+def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
+    """Build one ``sources[]`` card entry from a source Parquet; return ``(section, frame, sample_ids)``.
+
+    Reads the Parquet, computes the registered ``value_range``/``spectral_quality`` source metrics and
+    (optionally) a PCA explained-variance summary, and pulls the declared :class:`Source` metadata
+    (name/instrument/modality). ``sample_ids`` is the set of sample_ids backed by this source's spectra.
     """
-    try:
-        if unit == "nm":
-            return np.asarray(dataset.wavelengths_nm(src), dtype=float)
-        if unit == "cm-1":
-            return np.asarray(dataset.wavelengths_cm1(src), dtype=float)
-    except Exception:  # noqa: BLE001 - unparseable header axis is non-fatal
-        return None
-    return None
+    src_warnings: list[str] = []
+    source_id = entry["source_id"]
+    declared = next((s for s in descriptor.sources if s.source_id == source_id), None)
+    df = pd.read_parquet(entry["path"])
+    spectral_cols = [c for c in df.columns if c not in (_OBS_KEY, _SAMPLE_KEY)]
+    spectra = df[spectral_cols].to_numpy(dtype="float64") if spectral_cols else np.empty((len(df), 0))
+    sample_ids = set(df[_SAMPLE_KEY].astype(str)) if _SAMPLE_KEY in df.columns else set()
 
+    source_metrics = registry.metrics_for("source")
+    value_range = source_metrics["value_range"](spectra)
+    n_outliers = _x_outliers(spectra, src_warnings)
+    pca = _source_pca(spectra, src_warnings) if compute_pca else None
 
-def _per_source(dataset: Any) -> list[dict[str, Any]]:
-    """Per-source spectral summary (for multi-source datasets)."""
-    features = dataset.num_features if isinstance(dataset.num_features, list) else [dataset.num_features]
-    entries: list[dict[str, Any]] = []
-    for src in range(dataset.n_sources):
-        unit = dataset.header_unit(src)
-        entry: dict[str, Any] = {"source": src, "n_features": int(features[src]), "wavelength_unit": unit, "spacing": None, "signal_type": None}
-        axis = _native_axis(dataset, unit, src)
-        if axis is not None and axis.size:
-            entry["spacing"] = metrics.wavelength_spacing(axis)
-            entry["wavelength_range"] = [float(axis.min()), float(axis.max())]
-        try:
-            signal_type, confidence, _ = dataset.detect_signal_type(src)
-            entry["signal_type"] = getattr(signal_type, "value", str(signal_type))
-            entry["signal_type_confidence"] = float(confidence)
-        except Exception:  # noqa: BLE001 - detection optional
-            pass
-        entries.append(entry)
-    return entries
-
-
-def _spectral(dataset: Any, base: dict[str, Any], n_features: int, warnings: list[str]) -> dict[str, Any]:
-    unit = dataset.header_unit(0)
     spectral: dict[str, Any] = {
-        "wavelength_unit": unit,
-        "n_wavelengths": int(n_features),
-        "wavelength_range": base.get("wavelength_range"),
-        "spacing": None,
-        "spacing_unit": None,
-        "signal_type": None,
-        "signal_type_confidence": None,
-        "signal_type_reason": None,
+        "value_min": value_range["value_min"],
+        "value_max": value_range["value_max"],
+        "mean_min": value_range["mean_min"],
+        "mean_max": value_range["mean_max"],
+        "n_outliers": n_outliers,
+        "pca": pca,
     }
-    axis = _native_axis(dataset, unit)
-    if axis is not None and axis.size:
-        spectral["spacing"] = metrics.wavelength_spacing(axis)
-        spectral["spacing_unit"] = unit
-        if spectral["wavelength_range"] is None:  # derive from the (parsed) axis if nirs4all didn't supply it
-            spectral["wavelength_range"] = [float(axis.min()), float(axis.max())]
-    elif unit in ("none", "index", "text"):
-        warnings.append(f"wavelength spacing not computed for non-spectral axis (unit={unit!r})")
-    else:
-        warnings.append(f"wavelength axis unavailable (unit={unit!r}; header values not parseable, e.g. unit-suffixed)")
-    try:
-        signal_type, confidence, reason = dataset.detect_signal_type(0)
-        spectral["signal_type"] = getattr(signal_type, "value", str(signal_type))
-        spectral["signal_type_confidence"] = float(confidence)
-        spectral["signal_type_reason"] = reason
-    except Exception as exc:  # noqa: BLE001 - detection is best-effort
-        warnings.append(f"signal type detection failed: {type(exc).__name__}")
-    return spectral
+    warnings.extend(f"source {source_id}: {w}" for w in src_warnings)
+    section = {
+        "source_id": source_id,
+        "name": declared.name if declared else None,
+        "instrument_name": declared.instrument_name if declared else None,
+        "modality": declared.modality.value if declared else None,
+        "axis_unit": entry.get("axis_unit"),
+        "axis_min": entry.get("axis_min"),
+        "axis_max": entry.get("axis_max"),
+        "n_observations": int(entry.get("n_observations") or len(df)),
+        "n_variables": int(entry.get("n_variables") or len(spectral_cols)),
+        "spectral": spectral,
+        "assets": [],
+        "warnings": src_warnings,
+    }
+    return section, df, sample_ids
 
 
-def _targets(dataset: Any, base: dict[str, Any], warnings: list[str]) -> dict[str, Any]:
-    try:
-        has_targets = np.asarray(dataset.y({})).size > 0
-    except Exception:  # noqa: BLE001 - targetless datasets may raise on y access
-        has_targets = False
-    if not has_targets:
-        return {"task_type": None, "note": "no targets (unsupervised / prediction set)"}
-    if dataset.is_classification:
-        distribution = (base.get("y_stats") or {}).get("class_distribution") or {}
-        out: dict[str, Any] = {"task_type": "classification", "class_distribution": distribution, "balance": None}
-        if distribution:
-            out["balance"] = metrics.class_balance(list(distribution.values()))
-        return out
-    y = np.asarray(dataset.y({}), dtype=float).ravel()
-    try:
-        import nirs4all.core.metrics as core_metrics
+def _x_outliers(spectra: np.ndarray, warnings: list[str]) -> int | None:
+    """Count multivariate outliers via nirs4all's ``XOutlierFilter`` (NaN-imputed); None if unavailable."""
+    if spectra.ndim != 2 or spectra.shape[0] < 3 or spectra.shape[1] < 2:
+        return None
+    from nirs4all_datasets.qualify import metrics
 
-        stats = core_metrics.get_stats(y)
-    except Exception as exc:  # noqa: BLE001 - fall back to dataset metadata
-        warnings.append(f"regression stats fallback: {type(exc).__name__}")
-        stats = base.get("y_stats", {})
-    return {"task_type": "regression", "stats": stats, "shape": metrics.distribution_shape(y)}
-
-
-def _quality(dataset: Any, x_outlier_method: str, warnings: list[str]) -> dict[str, Any]:
-    quality: dict[str, Any] = {"has_nan": bool(dataset.has_nan), "nan": dataset.nan_summary, "x_outliers": None}
-    train = _train_features(dataset)
-    quality["spectral"] = metrics.spectral_quality(train)  # nan-aware (nanmean/MAD)
-    filled, imputed = metrics.impute_columns(train)  # XOutlierFilter (Mahalanobis/PCA) cannot ingest NaN
+    filled, _ = metrics.impute_columns(spectra)
     try:
         from nirs4all.operators.filters import XOutlierFilter
 
-        filt = XOutlierFilter(method=x_outlier_method, random_state=0)
+        filt = XOutlierFilter(method="robust_mahalanobis", random_state=0)
         filt.fit(filled)
-        quality["x_outliers"] = {"method": x_outlier_method, "imputed": imputed if imputed["n_nan_cells"] else None, **filt.get_filter_stats(filled)}
+        stats = filt.get_filter_stats(filled)
     except Exception as exc:  # noqa: BLE001 - outlier detection is best-effort
         warnings.append(f"x-outlier detection failed: {type(exc).__name__}")
-    return quality
-
-
-_DIM_MAX_ROWS = 4000
-_DIM_MAX_COMPONENTS = 60
-
-
-def _subsample(x: np.ndarray, max_rows: int, seed: int) -> tuple[np.ndarray, int]:
-    """Row-subsample (seeded) to bound PCA/plot cost on large datasets; returns ``(x, n_rows_used)``."""
-    if x.shape[0] <= max_rows:
-        return x, int(x.shape[0])
-    idx = np.sort(np.random.RandomState(seed).choice(x.shape[0], max_rows, replace=False))
-    return x[idx], int(max_rows)
-
-
-def _partition_set(dataset: Any) -> set[str]:
-    try:
-        return {str(p) for p in dataset.index_column("partition")}
-    except Exception:  # noqa: BLE001 - partition column may be absent
-        return set()
-
-
-def _class_counts(dataset: Any, partition: str) -> dict[str, int]:
-    """Per-partition class counts keyed by the (integer) class index as a string."""
-    y = np.asarray(dataset.y({"partition": partition})).ravel()
-    if y.size == 0:
-        return {}
-    vals, counts = np.unique(y, return_counts=True)
-    out: dict[str, int] = {}
-    for v, c in zip(vals, counts, strict=False):
-        try:
-            key = str(int(v))
-        except (ValueError, TypeError):
-            key = str(v)
-        out[key] = int(c)
-    return out
-
-
-def _dimensionality(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
-    """PCA dimensionality summary of the (NaN-imputed, subsampled) training spectra.
-
-    Reuses nirs4all's ``compute_pca_projection``; reports leading explained variance, components to
-    reach 95%/99% variance (censored ``">k"`` when truncated), and the effective rank, with the
-    row/component budget and any imputation disclosed (honest, reproducible).
-    """
-    from nirs4all.analysis.projections import compute_pca_projection
-
-    x = _train_features(dataset)
-    if x.ndim != 2 or x.shape[0] < 2 or x.shape[1] < 2:
         return None
-    filled, imputed = metrics.impute_columns(x)
-    sub, n_rows = _subsample(filled, _DIM_MAX_ROWS, seed=0)
-    k = int(min(_DIM_MAX_COMPONENTS, sub.shape[0] - 1, sub.shape[1]))
-    if k < 2:
+    for key in ("n_excluded", "num_outliers", "n_filtered", "n_outliers"):
+        if key in stats:
+            try:
+                return int(stats[key])
+            except (TypeError, ValueError):
+                break
+    warnings.append("x-outlier count not reported by XOutlierFilter")
+    return None
+
+
+def _source_pca(spectra: np.ndarray, warnings: list[str]) -> dict[str, Any] | None:
+    """PCA explained-variance summary of a source's (NaN-imputed, subsampled) spectra; None if unavailable."""
+    if spectra.ndim != 2 or spectra.shape[0] < 2 or spectra.shape[1] < 2:
+        return None
+    from nirs4all_datasets.qualify import metrics
+
+    filled, _ = metrics.impute_columns(spectra)
+    n = filled.shape[0]
+    idx = np.sort(np.random.RandomState(0).choice(n, _PCA_MAX_ROWS, replace=False)) if n > _PCA_MAX_ROWS else np.arange(n)
+    sub = filled[idx]
+    k = int(min(_PCA_MAX_COMPONENTS, sub.shape[0] - 1, sub.shape[1]))
+    if k < 1:
         return None
     try:
+        from nirs4all.analysis.projections import compute_pca_projection
+
         proj = compute_pca_projection(np.asarray(sub, dtype="float64"), max_components=k, variance_threshold=0.999)
     except Exception as exc:  # noqa: BLE001 - PCA is best-effort
-        warnings.append(f"dimensionality (PCA) failed: {type(exc).__name__}")
+        warnings.append(f"PCA failed: {type(exc).__name__}")
         return None
-    evr = np.asarray(proj["explained_variance_ratio"], dtype=float)
-    cum = np.cumsum(evr)
+    evr = [float(v) for v in proj["explained_variance_ratio"]]
+    return {"n_components": int(proj["n_components"]), "explained_variance_ratio": evr}
 
-    def _n_for(threshold: float) -> int | str:
-        if cum.size == 0 or float(cum[-1]) < threshold:
-            return f">{k}"
-        return int(np.searchsorted(cum, threshold) + 1)
 
+def _variable_type(var: Variable) -> bool:
+    """Whether a declared variable is treated as numeric (``False`` => categorical dataviz/stats)."""
+    return var.type is VarType.NUMERIC
+
+
+def _variable_section(var: Variable, values: pd.Series, warnings: list[str]) -> dict[str, Any]:
+    """Build one ``variables[]`` card entry: numeric or categorical stats per the declared type."""
+    variable_metrics = registry.metrics_for("variable")
+    is_numeric = _variable_type(var)
+    if is_numeric:
+        numeric = pd.to_numeric(values, errors="coerce")
+        if values.notna().any() and numeric.notna().sum() == 0:
+            warnings.append(f"variable {var.name!r} declared numeric but no value parses as a number; stats are empty")
+        stats = variable_metrics["numeric_stats"](numeric.to_numpy(dtype="float64"))
+    else:
+        stats = variable_metrics["categorical_stats"](values)
     return {
-        "n_rows_used": int(n_rows),
-        "n_features": int(x.shape[1]),
-        "n_components_computed": int(k),
-        "explained_variance_ratio": [float(v) for v in evr[:10]],
-        "cumulative_variance_top10": float(cum[min(9, cum.size - 1)]),
-        "n_components_95": _n_for(0.95),
-        "n_components_99": _n_for(0.99),
-        "effective_rank": metrics.effective_rank(proj["explained_variance"]),
-        "imputed": imputed if imputed["n_nan_cells"] else None,
-        "seed": 0,
+        "name": var.name,
+        "role": var.role.value,
+        "type": var.type.value,
+        "unit": var.unit,
+        "stats": stats,
+        "assets": [],
     }
 
 
-def _x_pca_shift(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
-    """Train↔test covariate shift: standardized centroid distance + PC1 KS in a shared PCA space."""
-    from nirs4all.analysis.projections import compute_pca_projection
-
-    xtr, _ = _subsample(metrics.impute_columns(_features(dataset, {"partition": "train"}))[0], _DIM_MAX_ROWS, seed=0)
-    raw_test = _features(dataset, {"partition": "test"})
-    xte, _ = _subsample(metrics.impute_columns(raw_test, reference=_features(dataset, {"partition": "train"}))[0], _DIM_MAX_ROWS, seed=1)
-    if xtr.shape[0] < 2 or xte.shape[0] < 2 or xtr.shape[1] != xte.shape[1]:
-        return None
-    stacked = np.asarray(np.vstack([xtr, xte]), dtype="float64")
-    k = int(min(10, stacked.shape[0] - 1, stacked.shape[1]))
-    if k < 2:
-        return None
-    try:
-        proj = compute_pca_projection(stacked, max_components=k, variance_threshold=0.999)
-    except Exception as exc:  # noqa: BLE001 - best-effort
-        warnings.append(f"x-shift PCA failed: {type(exc).__name__}")
-        return None
-    coords = np.asarray(proj["coordinates"], dtype=float)
-    scale = np.sqrt(np.where(np.asarray(proj["explained_variance"], dtype=float) > 0, proj["explained_variance"], 1.0))
-    tr, te = coords[: xtr.shape[0]], coords[xtr.shape[0] :]
-    ks = stats.ks_2samp(tr[:, 0], te[:, 0])
-    return {
-        "pc_space_centroid_distance_std": float(np.sqrt(np.sum(((te.mean(0) - tr.mean(0)) / scale) ** 2))),
-        "pc1_ks_statistic": float(ks.statistic),
-        "pc1_ks_p": float(ks.pvalue),
-        "n_components": int(k),
-    }
-
-
-def _shift(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
-    """Train↔test distribution shift (only when a test partition exists)."""
-    if "test" not in _partition_set(dataset):
-        return None
-    out: dict[str, Any] = {"covariate": _x_pca_shift(dataset, warnings)}
-    try:
-        if dataset.is_classification:
-            out["target"] = metrics.class_shift(_class_counts(dataset, "train"), _class_counts(dataset, "test"))
-        else:
-            ytr = np.asarray(dataset.y({"partition": "train"}), dtype=float)
-            yte = np.asarray(dataset.y({"partition": "test"}), dtype=float)
-            out["target"] = metrics.target_shift(ytr, yte)
-    except Exception as exc:  # noqa: BLE001 - best-effort
-        warnings.append(f"target shift failed: {type(exc).__name__}")
-        out["target"] = None
-    return out
-
-
-def _target_partitions(dataset: Any, warnings: list[str]) -> dict[str, Any] | None:
-    """Per-partition target summary (train vs test): regression stats or class counts."""
-    present = [p for p in ("train", "test") if p in _partition_set(dataset)]
-    if len(present) < 2:
-        return None
-    if dataset.is_classification:
-        return {p: _class_counts(dataset, p) for p in present}
-    import nirs4all.core.metrics as core_metrics
-
-    out: dict[str, Any] = {}
-    for p in present:
-        y = np.asarray(dataset.y({"partition": p}), dtype=float).ravel()
-        y = y[np.isfinite(y)]
+def _splits_sections(config: dict[str, Any], warnings: list[str]) -> list[dict[str, Any]]:
+    """Per-split partition counts from each ``splits/<name>.parquet`` (``applied`` is always False)."""
+    sections: list[dict[str, Any]] = []
+    for split in config.get("splits", []):
+        name = split.get("name")
         try:
-            out[p] = core_metrics.get_stats(y) if y.size else None
-        except Exception:  # noqa: BLE001 - best-effort
-            out[p] = None
-    return out
+            df = pd.read_parquet(split["path"])
+            counts = df["partition"].astype(str).value_counts()
+            partitions = {str(k): int(v) for k, v in counts.items()}
+        except Exception as exc:  # noqa: BLE001 - a malformed split must not fail the card
+            warnings.append(f"split {name!r}: could not read partitions ({type(exc).__name__})")
+            partitions = {}
+        sections.append({"name": name, "applied": False, "partitions": partitions})
+    return sections
 
 
-def _provenance_section(descriptor: DatasetDescriptor) -> dict[str, Any]:
-    """Surfaced origin + citation block: where the bytes come from and how to cite the dataset.
+def _content_hash(canonical_hashes: dict[str, str]) -> str:
+    """Stable content hash: sha256 over the canonical basename->sha256 map sorted by basename."""
+    payload = json.dumps(dict(sorted(canonical_hashes.items())), sort_keys=True, separators=(",", ":"))
+    return sha256_bytes(payload.encode("utf-8"))
 
-    ``sources`` are the original (authoritative) homes (data DOIs/URLs); ``publications`` are the
-    related papers (journal DOIs). The two are kept apart so a paper is never advertised as a data
-    source. ``republished_doi`` is our own minted Dataverse DOI when published.
-    """
-    pubs = descriptor.datacite.related_publications if descriptor.datacite else []
+
+def _integrity(dataset_dir: Path, descriptor: DatasetDescriptor, warnings: list[str]) -> dict[str, Any]:
+    """Integrity block: content hash (from the manifest's canonical hashes) + processing/metadata hashes."""
+    manifest_path = dataset_dir / "manifest.json"
+    canonical_hashes: dict[str, str] = {}
+    if manifest_path.exists():
+        try:
+            canonical_hashes = dict(read_manifest(manifest_path).canonical_hashes)
+        except Exception as exc:  # noqa: BLE001 - unreadable manifest -> content hash unavailable
+            warnings.append(f"manifest unreadable; content_hash unavailable ({type(exc).__name__})")
+    else:
+        warnings.append("manifest.json absent; content_hash unavailable")
     return {
-        "contributor": descriptor.provenance.contributor,
-        "reference_method": descriptor.provenance.reference_method,
-        "sources": [{"kind": s.kind.value, "mode": s.mode.value, "locator": s.locator, "access": s.access.value, "license": s.license, "title": s.title} for s in descriptor.sources],
-        "citation": descriptor.citation,
-        "publications": [{"doi": p.doi, "title": p.title, "authors": p.authors, "year": p.year, "citation": p.citation} for p in pubs],
-        "republished_doi": descriptor.dataverse.doi,
-        "dataset_version": descriptor.dataverse.dataset_version,
+        "content_hash": _content_hash(canonical_hashes) if canonical_hashes else None,
+        "processing_hash": processing_hash(descriptor),
+        "metadata_hash": metadata_hash(descriptor),
+        "manifest": "manifest.json",
     }
 
 
-def _traceability(descriptor: DatasetDescriptor, manifest: Any, manifest_fresh: bool) -> dict[str, Any]:
-    """The origin -> raw -> canonical -> card hash chain. The manifest is the byte-identity authority.
+# =============================================================================
+# Freshness predicate (consumed by catalog/cli) — name + semantics preserved
+# =============================================================================
+def card_metadata_fresh(card_path_or_dir: str | Path, descriptor: DatasetDescriptor) -> bool:
+    """Whether an existing card displays up-to-date metadata for ``descriptor``.
 
-    ``manifest_fresh`` is False when the manifest's ``descriptor_hash`` no longer matches the current
-    descriptor (a rebuild is due); then the per-file hashes are omitted rather than reported stale.
+    The card stores ``integrity.metadata_hash``; a metadata-only descriptor edit leaves the canonical
+    bytes untouched yet must refresh the card. Accepts either the ``card.json`` path or the dataset
+    directory (``<dir>/card.json``). A missing/unreadable card, or one lacking the field, is **not**
+    fresh (so it gets rebuilt and picks up the current sections).
     """
-    raw = [fe.sha256 for fe in manifest.files if fe.role is FileRole.RAW] if manifest_fresh else []
-    canonical = {Path(fe.path).name: fe.sha256 for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")} if manifest_fresh else {}
-    return {
-        "origin_locators": [s.locator for s in descriptor.sources],
-        "raw_sha256": raw or list(descriptor.provenance.raw_sha256),
-        "canonical_sha256": canonical,
-        "manifest_fresh": bool(manifest_fresh),
-    }
-
-
-def card_metadata_fresh(card_path: str | Path, descriptor: DatasetDescriptor) -> bool:
-    """Whether an existing ``card.json`` displays up-to-date provenance (origin sources, citations).
-
-    Canonical bytes are governed by ``descriptor_hash`` (organize/manifest); the card *also* displays
-    metadata, so a metadata-only edit leaves canonical untouched yet must refresh the card. The card
-    stores ``integrity.metadata_hash`` for this check. A card that is missing/unreadable or lacks the
-    field is treated as **not** fresh (so it gets rebuilt and picks up the current sections).
-    """
-    path = Path(card_path)
+    path = Path(card_path_or_dir)
+    if path.is_dir():
+        path = path / "card.json"
     if not path.exists():
         return False
     try:
@@ -388,79 +299,112 @@ def card_metadata_fresh(card_path: str | Path, descriptor: DatasetDescriptor) ->
     return (card.get("integrity") or {}).get("metadata_hash") == metadata_hash(descriptor)
 
 
-def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, x_outlier_method: str = "robust_mahalanobis") -> dict[str, Any]:
-    """Build (and write) the identity card for a dataset directory.
+# =============================================================================
+# Card assembly
+# =============================================================================
+def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, compute_pca: bool = True) -> dict[str, Any]:
+    """Build the identity card for a dataset directory from its canonical Parquet.
 
-    Loads the canonical form via :func:`resolve_config`, assembles the card, renders the plot
-    assets into ``<dataset_dir>/assets/`` and writes a finite, JSON-valid ``<dataset_dir>/card.json``.
+    Reads ``canonical/dataset.json`` (via :func:`resolve_config`) and each source/variables/splits
+    Parquet; computes the alignment, per-source spectral, per-variable, split and integrity sections;
+    optionally renders the plot assets (:mod:`plots`). Returns a finite-sanitized dict matching the
+    schema-2.0 card contract (it does not write — :func:`write_card` / :func:`qualify` do).
+
+    Args:
+        dataset_dir: The dataset directory containing ``canonical/``.
+        descriptor: The dataset descriptor (identity, variables, governance, provenance).
+        compute_assets: Render the per-source/per-variable PNGs (off => no plot files, no asset paths).
+        compute_pca: Compute the per-source PCA explained-variance summary (off => ``pca: null``).
     """
-    import nirs4all
-    from nirs4all.data import DatasetConfigs
-
     dataset_dir = Path(dataset_dir)
-    dataset = DatasetConfigs(resolve_config(dataset_dir)).get_dataset_at(0)
+    config = resolve_config(dataset_dir)
     warnings: list[str] = []
-    try:  # best-effort: e.g. unit-suffixed headers can break the (optional) wavelength_range it computes
-        base = dataset.get_dataset_metadata(include_y_stats=True) or {}
-    except Exception as exc:  # noqa: BLE001
-        warnings.append(f"dataset metadata partially unavailable: {type(exc).__name__}")
-        base = {}
-    gov = descriptor.governance
-    if dataset.n_sources != 1:
-        warnings.append(f"multi-source dataset (n_sources={dataset.n_sources}); profiling source 0 only")
 
-    manifest_path = dataset_dir / "manifest.json"
-    manifest = read_manifest(manifest_path) if manifest_path.exists() else None
-    manifest_fresh = manifest is not None and manifest.descriptor_hash == descriptor_hash(descriptor)
+    # --- sources (per spectral block) ---
+    source_sections: list[dict[str, Any]] = []
+    source_frames: dict[str, pd.DataFrame] = {}
+    all_sample_ids: set[str] = set()
+    reps_counts: list[int] = []
+    for entry in config.get("sources", []):
+        section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca)
+        source_sections.append(section)
+        source_frames[section["source_id"]] = df
+        all_sample_ids |= src_samples
+        if _SAMPLE_KEY in df.columns:
+            reps_counts.extend(int(c) for c in df[_SAMPLE_KEY].astype(str).value_counts().to_numpy())
 
-    inventory = _inventory(dataset)
-    targets = _targets(dataset, base, warnings)
-    if "note" not in targets:  # supervised → attach the per-partition (train/test) breakdown
-        targets["partitions"] = _target_partitions(dataset, warnings)
+    # --- variables (Y + metadata; only those actually present in the canonical variables.parquet) ---
+    variable_sections: list[dict[str, Any]] = []
+    variables_block = config.get("variables")
+    variables_df: pd.DataFrame | None = None
+    if variables_block is not None and variables_block.get("path"):
+        variables_df = pd.read_parquet(variables_block["path"])
+    present_cols = set(variables_df.columns) if variables_df is not None else set()
+    for var in descriptor.variables:
+        if var.name not in present_cols:
+            warnings.append(f"variable {var.name!r} declared but absent from canonical variables.parquet; skipped")
+            continue
+        variable_sections.append(_variable_section(var, variables_df[var.name], warnings))  # type: ignore[index]
+
+    # --- assets (per source + per variable) ---
+    assets: dict[str, Any] = {"sources": {}, "variables": []}
+    if compute_assets:
+        assets_dir = dataset_dir / "assets"
+        for section in source_sections:
+            relpaths = plots.render_source_assets(section["source_id"], source_frames[section["source_id"]], assets_dir, warnings)
+            section["assets"] = relpaths
+            assets["sources"][section["source_id"]] = relpaths
+        for var_section in variable_sections:
+            var = next(v for v in descriptor.variables if v.name == var_section["name"])
+            relpaths = plots.render_variable_asset(var.name, variables_df[var.name], _variable_type(var), assets_dir, warnings)  # type: ignore[index]
+            var_section["assets"] = relpaths
+            assets["variables"].extend(relpaths)
+
     card: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
-        "identity": {
-            "id": descriptor.id,
-            "name": descriptor.name,
-            "version": descriptor.version,
-            "domain": descriptor.domain,
-            "description": descriptor.description,
-            "keywords": descriptor.keywords,
-            "license": gov.license,
-            "visibility": gov.visibility.value,
-            "doi": descriptor.dataverse.doi,
-        },
-        "provenance": _provenance_section(descriptor),
-        "inventory": inventory,
-        "spectral": _spectral(dataset, base, inventory["n_features"], warnings),
-        "targets": targets,
-        "dimensionality": _dimensionality(dataset, warnings),
-        "shift": _shift(dataset, warnings),
-        "quality": _quality(dataset, x_outlier_method, warnings),
-        "per_source": _per_source(dataset) if dataset.n_sources > 1 else None,
-        "integrity": {
-            "content_hash": dataset.content_hash(),
-            "nirs4all_version": nirs4all.__version__,
-            "descriptor_hash": descriptor_hash(descriptor),
-            "metadata_hash": metadata_hash(descriptor),
-            "traceability": _traceability(descriptor, manifest, manifest_fresh),
-            "generated_at": datetime.now(UTC).isoformat(),  # volatile (excluded from reproducibility)
-        },
+        "protocol_version": registry.PROTOCOL_VERSION,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "identity": _identity(descriptor),
+        "versions": _versions(descriptor),
+        "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor),
+        "sources": source_sections,
+        "variables": variable_sections,
+        "splits": _splits_sections(config, warnings),
+        "provenance": _provenance(descriptor),
+        "integrity": _integrity(dataset_dir, descriptor, warnings),
+        "governance": _governance(descriptor),
+        "assets": assets,
         "warnings": warnings,
-        "assets": {},
     }
+    sanitized: dict[str, Any] = _jsonify(card)
+    return sanitized
 
-    if compute_assets:
-        card["assets"] = render_card_assets(dataset, dataset_dir / "assets", warnings)
 
-    card = _jsonify(card)
-    (dataset_dir / "card.json").write_text(json.dumps(card, indent=2, sort_keys=True, allow_nan=False), encoding="utf-8")
+def write_card(card: dict[str, Any], path: str | Path) -> None:
+    """Atomically write a card as pretty, finite JSON (temp file + ``os.replace``; ``allow_nan=False``)."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(card, indent=2, sort_keys=True, allow_nan=False), encoding="utf-8")
+    os.replace(tmp, path)
 
-    # FAIR metadata: human-readable datasheet + machine-readable Croissant.
-    (dataset_dir / "card.md").write_text(render_datasheet(descriptor, card), encoding="utf-8")
-    files: list[tuple[str, str | None, int | None]] = []
-    if manifest_fresh and manifest is not None:  # only a fresh manifest is trusted (computed above)
-        files = [(Path(fe.path).name, fe.sha256, fe.file_id) for fe in manifest.files if fe.role is FileRole.CANONICAL and fe.path.endswith(".parquet")]
-    croissant = render_croissant(descriptor, card, files=files, instance=descriptor.dataverse.instance)
-    (dataset_dir / "croissant.json").write_text(json.dumps(croissant, indent=2), encoding="utf-8")
+
+def qualify(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, compute_pca: bool = True) -> dict[str, Any]:
+    """Build, render assets for, and write ``<dataset_dir>/card.json``; return the card.
+
+    The single qualify-stage entry point: it (re)derives the card from the canonical bytes (so a
+    protocol refresh needs no rebuild), renders the per-source/per-variable plot assets into
+    ``<dataset_dir>/assets/`` (when ``compute_assets``), and writes the full artifact set —
+    ``card.json`` (machine-readable), ``card.md`` (Datasheets-for-Datasets), and ``croissant.json``
+    (MLCommons Croissant JSON-LD).
+    """
+    dataset_dir = Path(dataset_dir)
+    card = build_card(dataset_dir, descriptor, compute_assets=compute_assets, compute_pca=compute_pca)
+    write_card(card, dataset_dir / "card.json")
+
+    manifest_path = dataset_dir / "manifest.json"
+    hashes = read_manifest(manifest_path).canonical_hashes if manifest_path.exists() else {}
+    (dataset_dir / "card.md").write_text(datasheet.render_datasheet(card, descriptor), encoding="utf-8")
+    croissant_doc = croissant.render_croissant(card, descriptor, hashes=hashes, file_ids={}, instance=descriptor.dataverse.instance)
+    (dataset_dir / "croissant.json").write_text(json.dumps(croissant_doc, indent=2, sort_keys=True), encoding="utf-8")
     return card

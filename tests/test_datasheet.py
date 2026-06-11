@@ -1,27 +1,48 @@
-"""Tests for the Datasheets-for-Datasets renderer (pure, no nirs4all)."""
+"""Tests for the Datasheets-for-Datasets renderer (pure card+descriptor -> Markdown, no nirs4all in the asserts)."""
 from __future__ import annotations
 
-from nirs4all_datasets import schema as s
+from typing import Any
+
 from nirs4all_datasets.qualify.datasheet import render_datasheet
+from nirs4all_datasets.qualify.profile import qualify
 
-_SECTIONS = ["## Motivation", "## Composition", "## Collection process", "## Preprocessing", "## Uses", "## Distribution", "## Maintenance"]
+_SECTIONS = [
+    "## Motivation",
+    "## Composition",
+    "## Collection process",
+    "## Preprocessing",
+    "## Uses",
+    "## Distribution",
+    "## Maintenance",
+]
 
 
-def test_render_datasheet_has_all_sections(descriptor: s.DatasetDescriptor) -> None:
-    card = {"inventory": {"n_samples": 80, "n_features": 700}, "spectral": {"signal_type": "absorbance", "wavelength_unit": "nm"}, "quality": {"has_nan": False}}
-    md = render_datasheet(descriptor, card)
+def test_render_datasheet_has_sections_variables_and_tier(canonical_dataset: Any) -> None:
+    """The datasheet has the Gebru sections, a Sources table, the variables, and the tier wording."""
+    dataset_dir, desc = canonical_dataset("corn", blocks=("X1", "X2"), sample_of={"o1": "s1", "o2": "s2"})
+    card = qualify(dataset_dir, desc, compute_assets=False, compute_pca=False)
+
+    md = render_datasheet(card, desc)
+    assert md.strip()  # non-empty
+
     for section in _SECTIONS:
         assert section in md
-    assert "80" in md
-    assert "CC-BY-4.0" in md
-    assert "10.70112/abc" in md
+    assert "### Sources (X)" in md
+    for source in desc.sources:
+        assert source.source_id in md  # each source row appears
+    for var in desc.variables:
+        assert var.name in md  # Moisture, variety
+    # Tier wording: the visibility tier and its one-line distribution policy.
+    assert desc.tier.value in md
+    assert "redistributable" in md  # from the tier-wording line
 
 
-def test_datasheet_marks_missing_fields() -> None:
-    minimal = s.DatasetDescriptor(
-        id="bare", name="Bare", version="1.0.0", description="x",
-        instrument={"modality": "NIR"}, targets=[{"name": "y", "task_type": "regression"}],
-        provenance={"contributor": "Lab"}, governance={"license": "CC-BY-4.0"},
-    )
-    md = render_datasheet(minimal, {})
-    assert "*Not specified.*" in md  # e.g. collection date, reference method, DOI
+def test_render_datasheet_links_publications(canonical_dataset: Any) -> None:
+    """Related publications are rendered as resolvable DOI links."""
+    dataset_dir, desc = canonical_dataset("corn", blocks=("X1",), sample_of={"o1": "s1", "o2": "s2"})
+    card = qualify(dataset_dir, desc, compute_assets=False, compute_pca=False)
+
+    md = render_datasheet(card, desc)
+    assert "### Related publications" in md
+    for pub in desc.publications:
+        assert pub.doi and f"https://doi.org/{pub.doi}" in md

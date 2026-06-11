@@ -42,9 +42,15 @@ def make_v2_leaf(
         (leaf / f"{b}.csv").write_text("observation_id;1100;1102\n" + "\n".join(rows) + "\n", encoding="utf-8")
         spectral_blocks.append({"block_id": b, "x_file": f"{b}.csv", "instrument_name": f"inst_{b}", "axis_unit": "nm", "axis_min": "1100", "axis_max": "1102", "n_rows": len(obs), "n_spectral_variables": 2})
 
-    # Y.csv (per observation, like the real corpus). Omit target columns -> X-only-ish (header only).
+    # Y.csv (per observation, like the real corpus). Numeric targets get varying numeric values (so
+    # std/quantiles are exercised), categorical targets get two classes. Omit targets -> header only.
     yhead = ["observation_id", *targets]
-    yrows = [";".join([o, *["3.1" if t == "numeric" else "a" for t in targets]]) for o in all_obs]
+    yrows = []
+    for i, o in enumerate(all_obs):
+        cells = [o]
+        for vtype in targets.values():
+            cells.append(str(round(1.0 + i * 0.5, 3)) if vtype == "numeric" else f"class_{i % 2}")
+        yrows.append(";".join(cells))
     (leaf / "Y.csv").write_text(";".join(yhead) + "\n" + "\n".join(yrows) + "\n", encoding="utf-8")
 
     # M.csv
@@ -101,6 +107,26 @@ _DESCRIPTOR: dict[str, Any] = {
 def v2_leaf():  # noqa: ANN201 - factory fixture
     """Factory returning :func:`make_v2_leaf` (build a synthetic v2.0 package in a tmp dir)."""
     return make_v2_leaf
+
+
+@pytest.fixture
+def canonical_dataset(tmp_path: Path, v2_leaf: Any):  # noqa: ANN201 - factory fixture
+    """Factory: build a real canonical dataset from a synthetic v2.0 leaf.
+
+    Returns ``(dataset_dir, descriptor)`` — ``dataset_dir`` holds ``canonical/`` + ``manifest.json``,
+    ready for the qualify stage and the plugin. Accepts the same kwargs as :func:`make_v2_leaf`.
+    """
+
+    def _make(name: str = "ds", **leaf_kwargs: Any) -> tuple[Path, Any]:
+        from nirs4all_datasets.bootstrap import build_descriptor_from_card
+        from nirs4all_datasets.organize import organize
+
+        leaf = make_v2_leaf(tmp_path / "src" / name, **leaf_kwargs)
+        desc, _ = build_descriptor_from_card(leaf)
+        organize(leaf, desc, tmp_path / "datasets")
+        return tmp_path / "datasets" / desc.id, desc
+
+    return _make
 
 
 @pytest.fixture
