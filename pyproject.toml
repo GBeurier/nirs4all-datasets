@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.5,<2"]
+build-backend = "maturin"
 
 [project]
 name = "nirs4all-datasets"
@@ -45,8 +45,8 @@ dependencies = [
     "python-dotenv>=1.0.0",
     # Visualization (cards)
     "matplotlib>=3.7.0",
-    # Access + repository (Dataverse Native API is plain REST via requests)
-    "pooch>=1.8.0",
+    # Publish + health probe (Dataverse Native API is plain REST via requests). Dataset *download* is
+    # the native acquisition core (embedded `nirs4all_datasets._n4ds`), not pooch/requests.
     "requests>=2.31.0",
     # CLI
     "typer>=0.12.0",
@@ -79,12 +79,16 @@ Homepage = "https://github.com/GBeurier/nirs4all-datasets"
 Repository = "https://github.com/GBeurier/nirs4all-datasets"
 Issues = "https://github.com/GBeurier/nirs4all-datasets/issues"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["nirs4all_datasets*"]
-
-[tool.setuptools.package-data]
-nirs4all_datasets = ["py.typed"]
+# The `nirs4all-datasets` wheel bundles BOTH the pure-Python analysis layer (src/) and
+# the native acquisition extension `nirs4all_datasets._n4ds` (Rust core via pyo3, in
+# bindings/python). There is no separate Python distribution — `pip install
+# nirs4all-datasets` gets analysis + native acquisition together.
+[tool.maturin]
+python-source = "src"
+module-name = "nirs4all_datasets._n4ds"
+manifest-path = "bindings/python/Cargo.toml"
+features = ["pyo3/extension-module"]
+include = ["catalog/index.json"]
 
 # Editable local source for development (uv); CI / PyPI use the published nirs4all.
 [tool.uv.sources]
