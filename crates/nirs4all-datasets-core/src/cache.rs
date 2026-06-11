@@ -10,11 +10,40 @@
 
 use std::fs;
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 
 use directories::ProjectDirs;
 
 use crate::error::{Error, Result};
+
+/// Join a contract's `relpath` under `base`, rejecting anything that could escape the
+/// cache directory: an absolute path, a Windows prefix, a root, or any `..` component.
+/// The index is normally trusted, but a stale/hostile contract must never be able to
+/// read or write outside `<cache>/<id>` — defense in depth for both fetch and verify.
+pub fn safe_join(base: &Path, relpath: &str) -> Result<PathBuf> {
+    let mut out = base.to_path_buf();
+    let mut pushed = false;
+    for component in Path::new(relpath).components() {
+        match component {
+            Component::Normal(c) => {
+                out.push(c);
+                pushed = true;
+            }
+            Component::CurDir => {}
+            Component::ParentDir | Component::RootDir | Component::Prefix(_) => {
+                return Err(Error::InvalidArgument(format!(
+                    "unsafe path in contract (escapes the cache dir): {relpath:?}"
+                )));
+            }
+        }
+    }
+    if !pushed {
+        return Err(Error::InvalidArgument(format!(
+            "empty or invalid relpath in contract: {relpath:?}"
+        )));
+    }
+    Ok(out)
+}
 
 /// The OS cache directory for downloaded datasets (the pooch `os_cache` equivalent).
 pub fn default_cache_dir() -> Result<PathBuf> {
@@ -70,5 +99,21 @@ mod tests {
     fn default_cache_dir_is_namespaced() {
         let d = default_cache_dir().unwrap();
         assert!(d.to_string_lossy().contains("nirs4all-datasets"));
+    }
+
+    #[test]
+    fn safe_join_allows_normal_relpaths_and_rejects_escapes() {
+        let base = Path::new("/cache/demo");
+        assert_eq!(
+            safe_join(base, "canonical/sources/X.parquet").unwrap(),
+            base.join("canonical/sources/X.parquet")
+        );
+        assert_eq!(
+            safe_join(base, "./canonical/X.parquet").unwrap(),
+            base.join("canonical/X.parquet")
+        );
+        for bad in ["../escape", "canonical/../../etc/passwd", "/etc/passwd", ""] {
+            assert!(safe_join(base, bad).is_err(), "{bad:?} must be rejected");
+        }
     }
 }

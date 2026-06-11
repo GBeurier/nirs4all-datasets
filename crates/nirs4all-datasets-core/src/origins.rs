@@ -8,7 +8,7 @@
 //!   file is fetched from the Dataverse Access API by its `file_id`
 //!   (`/api/access/datafile/<id>`); the `file_id` itself pins the exact bytes of the
 //!   published version. A missing `file_id` is resolved by listing the pinned
-//!   version's files (Native API, `excludeFiles=false`).
+//!   version's files (Native API `…/versions/{version}/files`).
 //! * **open origin** — when there is no personal DOI, the first OPEN *canonical*
 //!   origin (Zenodo / figshare / Dataverse) that exposes every canonical file wins.
 //!   `url` / `script` / `manual` origins are never auto-fetched (they need a human),
@@ -190,7 +190,23 @@ pub mod dataverse {
         }
     }
 
-    /// List a pinned version's files via the Native API (`excludeFiles=false`).
+    /// Percent-encode a query-parameter value (RFC 3986 unreserved kept verbatim) — the
+    /// persistentId carries `:` and `/`, which we encode so every instance accepts it.
+    fn encode_query(value: &str) -> String {
+        let mut out = String::with_capacity(value.len() + value.len() / 2);
+        for b in value.bytes() {
+            match b {
+                b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'.' | b'_' | b'~' => {
+                    out.push(b as char)
+                }
+                _ => out.push_str(&format!("%{b:02X}")),
+            }
+        }
+        out
+    }
+
+    /// List a pinned version's files via the Native API list-files endpoint
+    /// (`/versions/{version}/files`, which returns the file metadata array directly).
     pub fn list_version_files(
         http: &dyn HttpClient,
         instance: &str,
@@ -199,10 +215,10 @@ pub mod dataverse {
         token: Option<&str>,
     ) -> Result<Vec<DvFile>> {
         let url = format!(
-            "{}/api/datasets/:persistentId/versions/{}/files?persistentId={}&excludeFiles=false",
+            "{}/api/datasets/:persistentId/versions/{}/files?persistentId={}",
             instance.trim_end_matches('/'),
             version,
-            persistent_id(doi),
+            encode_query(&persistent_id(doi)),
         );
         let headers: Vec<(String, String)> = token
             .map(|t| vec![("X-Dataverse-key".to_string(), t.to_string())])

@@ -83,14 +83,25 @@ def test_index_carries_download_contract(tmp_path):
 
 
 def test_anonymized_descriptor_is_masked_in_index(tmp_path):
-    desc = _descriptor(id="secret", tier=Tier.ANONYMIZED, variables=[{"name": "SecretYield", "role": "target", "type": "numeric"}])
-    _write_dataset(tmp_path, desc, _manifest("secret"))
+    desc = _descriptor(
+        id="secret",
+        tier=Tier.ANONYMIZED,
+        variables=[{"name": "SecretYield", "role": "target", "type": "numeric"}],
+        dataverse={"instance": "https://dv.example", "doi": "10.70112/SECRET", "dataset_version": "1.0"},
+    )
+    _write_dataset(tmp_path, desc, _manifest("secret", file_id=678))
     entry = resolve(build_index(tmp_path), "secret")
     # the embedded descriptor must leak no identifying names
     blob = json.dumps(entry)
     assert "SecretYield" not in blob
     assert entry["descriptor"]["variables"][0]["name"] == "var_001"
     assert entry["descriptor"]["name"] == "secret"  # opaque id reused as display name
+    # acquisition pointers that would re-identify the dataset are stripped from the PUBLIC index
+    assert entry["dataverse"]["doi"] is None
+    assert entry["dataverse"]["dataset_version"] is None
+    assert entry["origins"] == []
+    assert all(f["file_id"] is None for f in entry["files"])
+    assert "10.70112/SECRET" not in blob
 
 
 def test_index_is_deterministic_and_roundtrips(tmp_path):

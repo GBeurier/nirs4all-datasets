@@ -10,7 +10,7 @@ use std::path::Path;
 
 use serde::{Deserialize, Serialize};
 
-use crate::cache::{default_cache_dir, part_path};
+use crate::cache::{default_cache_dir, part_path, safe_join};
 use crate::error::{Error, Result};
 use crate::hash::{sha256_hex_file, HashingWriter};
 use crate::http::HttpClient;
@@ -88,20 +88,19 @@ pub fn fetch(
         .clone()
         .unwrap_or_else(|| resolved.instance.clone());
 
-    // Which files are already present and valid? (a cache hit skips the network)
-    let cached: HashMap<String, bool> = resolved
-        .files
-        .iter()
-        .map(|f| {
-            let dest = dataset_dir.join(&f.relpath);
-            let ok = dest.exists()
-                && sha256_hex_file(&dest)
-                    .map(|s| s == f.sha256.to_lowercase())
-                    .unwrap_or(false);
-            (f.relpath.clone(), ok)
-        })
-        .collect();
-    let all_cached = cached.values().all(|&ok| ok);
+    // Validate every relpath (it must not escape the cache dir) and classify each file
+    // as already-cached (present + verified) or needing a download — in one pass.
+    let mut plans: Vec<(&crate::model::FileContract, std::path::PathBuf, bool)> =
+        Vec::with_capacity(resolved.files.len());
+    for f in &resolved.files {
+        let dest = safe_join(&dataset_dir, &f.relpath)?;
+        let cached = dest.exists()
+            && sha256_hex_file(&dest)
+                .map(|s| s == f.sha256.to_lowercase())
+                .unwrap_or(false);
+        plans.push((f, dest, cached));
+    }
+    let all_cached = plans.iter().all(|(_, _, cached)| *cached);
 
     // Token gate (mirrors Python): a private/anonymized dataset needs a token unless
     // every file is already cached locally.
@@ -120,9 +119,8 @@ pub fn fetch(
     };
 
     let mut statuses = Vec::with_capacity(resolved.files.len());
-    for f in &resolved.files {
-        let dest = dataset_dir.join(&f.relpath);
-        if *cached.get(&f.relpath).unwrap_or(&false) {
+    for (f, dest, cached) in &plans {
+        if *cached {
             statuses.push(FileStatus {
                 name: f.name.clone(),
                 relpath: f.relpath.clone(),
@@ -134,7 +132,7 @@ pub fn fetch(
         let loc = locations.get(&f.relpath).ok_or_else(|| {
             Error::NotFetchable(format!("no download location for {}", f.relpath))
         })?;
-        download_verified(http, loc, &dest, &f.name, &f.sha256)?;
+        download_verified(http, loc, dest, &f.name, &f.sha256)?;
         statuses.push(FileStatus {
             name: f.name.clone(),
             relpath: f.relpath.clone(),
@@ -192,13 +190,17 @@ fn download_verified(
         )));
     }
 
+    // Stream to a sibling `.part`, hashing as we go; remove it on any failure so a
+    // partial/corrupt temp is never left behind.
     let tmp = part_path(dest);
     let mut body = resp.body;
-    let (file, sha, _n) = {
-        let mut hw = HashingWriter::new(fs::File::create(&tmp)?);
-        std::io::copy(&mut body, &mut hw)?;
-        hw.finish()
-    };
+    let mut hw = HashingWriter::new(fs::File::create(&tmp)?);
+    if let Err(e) = std::io::copy(&mut body, &mut hw) {
+        drop(hw);
+        let _ = fs::remove_file(&tmp);
+        return Err(e.into());
+    }
+    let (file, sha, _n) = hw.finish();
     file.sync_all().ok();
 
     if sha != expected_sha.to_lowercase() {
@@ -209,7 +211,15 @@ fn download_verified(
             actual: sha,
         });
     }
-    fs::rename(&tmp, dest)?;
+    // Replace-portable: drop any existing (e.g. corrupt) destination first so the
+    // rename succeeds on every platform (Windows rename is not replace-by-default).
+    if dest.exists() {
+        let _ = fs::remove_file(dest);
+    }
+    if let Err(e) = fs::rename(&tmp, dest) {
+        let _ = fs::remove_file(&tmp);
+        return Err(e.into());
+    }
     Ok(())
 }
 
