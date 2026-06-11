@@ -45,9 +45,29 @@ It reuses [`nirs4all`](../nirs4all) for qualification and [`nirs4all-io`](../nir
 ## Install (development)
 
 ```bash
-uv venv && uv pip install -e ".[dev]"
-# (uses local editable nirs4all + nirs4all-io via [tool.uv.sources])
+uv venv && uv pip install -e ".[dev]"   # maturin: builds the native acquisition core into the package
+# (uses local editable nirs4all via [tool.uv.sources]; needs a Rust toolchain)
 ```
+
+## Native acquisition core & language bindings
+
+The **download** of a dataset — version-pinned DOI resolution, redirect-safe Dataverse / Zenodo /
+figshare fetch, streaming SHA-256 verification and the pooch-style cache — lives in a small **Rust
+core** (`crates/nirs4all-datasets-core`) behind a stable **C ABI** (`n4ds_`), and is published like the
+rest of the ecosystem (`nirs4all-io` is the template). The scientific **analysis** layer (cards,
+qualify, site, health) stays in pure Python. The cross-language contract is one distributable
+`catalog/index.json`; the `n4ds` CLI is the parity oracle. Bindings (all over the same C ABI):
+
+| Binding | Package | Status |
+|---|---|---|
+| Python | embedded in `nirs4all-datasets` (`nirs4all_datasets._n4ds`, pyo3) | built + tested |
+| Rust | `nirs4all-datasets-core` / `-capi` (crates.io) | built + tested |
+| WASM/JS | `@nirs4all/datasets-wasm` (npm) — metadata + small public datasets | built |
+| R | `nirs4alldatasets` (C shim, r-universe / Release) | built + tested |
+| Octave/MATLAB | MEX (GitHub Release zip) | built + tested |
+
+See [`bindings/SPEC.md`](bindings/SPEC.md) (the binding contract) and
+[`docs/dev/release_process.md`](docs/dev/release_process.md).
 
 ## Quickstart
 
