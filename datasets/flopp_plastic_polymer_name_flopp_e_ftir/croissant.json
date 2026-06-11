@@ -1,0 +1,105 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "flopp_plastic_polymer_name_flopp_e_ftir",
+  "description": "FLOPP dataset (classification). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "flopp",
+    "nir",
+    "classification"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "X.parquet",
+      "name": "X.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "929a0a4e17a94351a8d39f0b63491b4c9ce5907c8f5b934e677ed5a8305bacf7"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Y.parquet",
+      "name": "Y.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "b6a69282392e4f0ebda1be0fdd6a3f301b0bac2a2a5694d70fc5046e65a89d27"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (195 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "X.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/polymer_name",
+          "name": "polymer_name",
+          "description": "Target 'polymer_name' (multiclass_classification).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "Y.parquet"
+            },
+            "extract": {
+              "column": "polymer_name"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

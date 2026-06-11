@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** lucas
 - **Description:** LUCAS dataset (regression). Sample: Dried topsoil. Trait: Soil pH. Split: random. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://esdac.jrc.ec.europa.eu/content/lucas2015-topsoil-data#tabs-0-description=0
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** doi:10.3390/rs8121035
+- **Citation:** https://doi.org/10.3390/rs8121035
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://esdac.jrc.ec.europa.eu/content/lucas2015-topsoil-data#tabs-0-description=0
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

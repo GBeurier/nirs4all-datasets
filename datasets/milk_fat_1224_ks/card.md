@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** milk
 - **Description:** MILK dataset (regression). Sample: Milk. Trait: Fat content. Split: ks. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://zenodo.org/records/8263430
+- **Contributor:** Zenodo
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://zenodo.org/records/8263430
+- **Owner / steward:** Zenodo
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

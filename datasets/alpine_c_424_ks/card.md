@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** alpine
 - **Description:** ALPINE dataset (regression). Sample: Ground dried leaves. Trait: C. Split: KS. Auto-generated descriptor (verify before publication).
-- **Contributor:** doi.org/10.18710/CXRCUW
+- **Contributor:** DataverseNO
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** doi.org/10.18710/CXRCUW
+- **Owner / steward:** DataverseNO
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

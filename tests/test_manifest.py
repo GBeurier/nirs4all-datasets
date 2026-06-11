@@ -73,6 +73,17 @@ def test_descriptor_hash_excludes_publish_fields() -> None:
     assert plain == published
 
 
+def test_sources_excluded_from_processing_but_in_metadata_hash() -> None:
+    from nirs4all_datasets.manifest import metadata_hash
+
+    base = _descriptor()
+    with_src = base.model_copy(update={"sources": [s.OriginSource(kind="zenodo", locator="10.5281/zenodo.1")]})
+    # Editing where data is fetched from must NOT rebuild canonical...
+    assert descriptor_hash(base) == descriptor_hash(with_src)
+    # ...but the card/site must refresh (origin is displayed).
+    assert metadata_hash(base) != metadata_hash(with_src)
+
+
 def test_build_records_all_canonical_and_derives_hashes(tmp_path: Path) -> None:
     _canonical(tmp_path)
     raw = _raw_file(tmp_path)

@@ -47,6 +47,30 @@ Tests use **no network** — the Dataverse client/access layer are tested with a
 (`pytest -m "not network"` to deselect). Some canonical round-trip tests need the nirs4all
 ParquetLoader fix (`nirs4all >= 0.9.2`) and **skip** on older versions.
 
+### CLI surface (`n4a-datasets <cmd>`)
+
+A thin typer layer (`cli.py`) over the stage modules. The lifecycle below shows how they chain; these
+are the commands it does not name inline:
+
+```bash
+# Author / build the catalog
+n4a-datasets bootstrap <source_tree> [--xlsx DatabaseDetail.xlsx]   # discover.py: write a descriptor per leaf
+n4a-datasets add <raw_source> <id>                                  # one raw source -> canonical + card + index
+n4a-datasets build-all --source-tree <tree> [--only a,b] [--force]  # bulk.py: parallel organize+qualify, then site
+n4a-datasets qualify <id>                                           # (re)build one card.json from canonical data
+n4a-datasets catalog                                                # regenerate catalog/datasets.yaml
+n4a-datasets site [--out site]                                      # site.py: interactive static catalog
+n4a-datasets list   /   n4a-datasets card <id>                      # inspect the local catalog
+
+# Publish + governance (needs a Dataverse token; see Token hygiene)
+n4a-datasets publish <id> --collection <alias> --contact-email <addr>  # first publish mints a DOI; later = version update
+n4a-datasets restrict <id> [--off]                                  # (un)restrict all files, then publish a minor version
+n4a-datasets grant|revoke <id> --to @user|&group [--role fileDownloader]
+
+# Access
+n4a-datasets load <id> [--token ...]                                # local-first, else fetch by DOI; print a summary
+```
+
 ## The dataset lifecycle (core data flow)
 
 Adding/maintaining a dataset is a pipeline driven by the `n4a-datasets` CLI (`src/.../cli.py`, a thin
@@ -73,6 +97,20 @@ publish.py + dataverse.py         6. PUBLISH    create dataset, upload, mint DOI
 access.py  ◄── load("<id>")       USE          fetch by DOI (pooch) / token (private), verify, cache, load
 ```
 
+**One dataset vs. the whole fleet.** The diagram is the per-dataset path (`add`). The catalog itself is
+populated in bulk: `discover.py` (`bootstrap`) walks a `<task>/<family>/<leaf>` source tree and writes
+one schema-valid descriptor per leaf — reusing nirs4all's `FolderParser` for file→role mapping and
+authoring everything else here (axis-unit/SPDX inference, honest governance defaults). `bulk.py`
+(`build-all`) then runs organize + qualify across a process pool with **per-dataset failure isolation**
+(each result is `ok`/`partial`/`failed`/`skipped` in a deterministic `bulk_report.json`; one failure
+never aborts the run). `site.py` (`site`) renders the static catalog by pure formatting of
+already-generated artifacts — no nirs4all import, no recomputation.
+
+The `qualify/` package splits the card build (step 4): `profile.py` orchestrates and owns the card
+schema, `metrics.py` computes the descriptive stats nirs4all does not expose, `plots.py` renders the
+PNG assets (Agg backend), and `croissant.py` / `datasheet.py` emit the MLCommons Croissant JSON-LD and
+the Datasheets-for-Datasets `card.md`.
+
 ### What lives where (3-tier storage)
 
 - **git-tracked** (small): `catalog/datasets/<id>.yaml` (descriptor), `catalog/datasets.yaml` (index),
@@ -89,6 +127,11 @@ access.py  ◄── load("<id>")       USE          fetch by DOI (pooch) / toke
   hashes + `descriptor_hash` + converter name/version/config) against the previous manifest;
   unchanged inputs are skipped. `descriptor_hash` deliberately **excludes** `dataverse.doi` /
   `dataset_version` so publishing does not trigger a spurious rebuild.
+- **Hand-authored vs. machine-generated descriptors.** `bootstrap` / `build-all` only ever touch
+  descriptors flagged `generation.managed: true`; a human-edited descriptor is never overwritten
+  (`--force` re-overwrites, still only managed ones). `generation.source_relpath` is how `build-all`
+  finds the raw leaf again, and the whole `generation` block is **excluded from `descriptor_hash`** so
+  refreshing it never forces a canonical rebuild.
 - **Staleness, not lies.** `catalog.py` only enriches an index entry from a card/manifest whose
   `descriptor_hash` matches the current descriptor; otherwise it flags `is_stale` and omits the
   computed fields. Card sections (`profile.py`) use stable keys: a failed optional computation

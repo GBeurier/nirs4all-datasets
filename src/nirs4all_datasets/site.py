@@ -173,6 +173,43 @@ def _targets_html(targets: dict[str, Any]) -> str:
     return _table("Targets", _kv_rows(rows))
 
 
+def _locator_link(locator: Any) -> str:
+    """Render a source/publication locator as a link (DOI -> doi.org, http(s) as-is, else plain)."""
+    loc = str(locator or "")
+    if loc.startswith("http"):
+        return f'<a href="{_esc(loc)}">{_esc(loc)}</a>'
+    if loc.startswith("10."):
+        return f'<a href="https://doi.org/{_esc(loc)}">{_esc(loc)}</a>'
+    return _esc(loc)
+
+
+def _origin_html(descriptor: dict[str, Any], card: dict[str, Any]) -> str:
+    """Where the data actually lives + how to cite it (origin sources, papers, provenance chain).
+
+    Metadata only -- it points to each dataset's licensed home, it never serves the bytes, so it is
+    license-respecting for restricted datasets too.
+    """
+    sources = descriptor.get("sources") or []
+    pubs = ((descriptor.get("datacite") or {}).get("related_publications")) or []
+    citation = descriptor.get("citation")
+    if not sources and not pubs and not citation:
+        return ""
+    rows: list[str] = []
+    for src in sources:
+        label = f"{src.get('kind')} [{src.get('access')}/{src.get('mode')}]" + (f" — {src.get('title')}" if src.get("title") else "")
+        rows.append(f"<tr><th>{_esc(label)}</th><td>{_locator_link(src.get('locator'))}</td></tr>")
+    for pub in pubs:
+        if pub.get("doi"):
+            rows.append(f"<tr><th>Publication</th><td>{_locator_link(pub['doi'])}</td></tr>")
+    if citation and not pubs:
+        rows.append(f"<tr><th>Citation</th><td>{_esc(citation)}</td></tr>")
+    chain = ((card.get("integrity") or {}).get("traceability")) or {}
+    if chain:
+        summary = f"{len(chain.get('origin_locators') or [])} origin → {len(chain.get('raw_sha256') or [])} raw → {len(chain.get('canonical_sha256') or {})} canonical → card"
+        rows.append(f"<tr><th>Provenance chain</th><td>{_esc(summary)}</td></tr>")
+    return _table("Origin &amp; citation", "".join(rows))
+
+
 def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[str, Any]) -> str:
     did = entry["id"]
     ident = card.get("identity") or {}
@@ -263,7 +300,7 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
 {warn_html}
 <div class="kpis">{kpis}</div>
 {_plots_html(did, card.get('assets') or {})}
-<div class="grid">{spectral_tbl}{dim_tbl}{_shift_html(card.get('shift') or {})}{_targets_html(card.get('targets') or {})}{quality_tbl}{gov_tbl}</div>
+<div class="grid">{spectral_tbl}{dim_tbl}{_shift_html(card.get('shift') or {})}{_targets_html(card.get('targets') or {})}{quality_tbl}{gov_tbl}{_origin_html(descriptor, card)}</div>
 <div class="downloads"><strong>Downloads:</strong>
  <a href="../data/{_esc(did)}.card.json">card.json</a>
  <a href="../data/{_esc(did)}.croissant.json">croissant.json</a></div>

@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** darkresp
 - **Description:** DarkResp dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** figshare
 
 ## Composition
 
@@ -37,18 +37,18 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Citation:** https://doi.org/10.1111/nph.20267
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
+- **License:** CC-BY-4.0
 - **Visibility:** restricted
-- **Confidentiality class:** internal
+- **Confidentiality class:** public
 - **DOI:** *Not specified.*
-- **Redistribution rights:** Original source licence applies; verify before redistribution.
+- **Redistribution rights:** Open redistribution under CC-BY-4.0.
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** figshare
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

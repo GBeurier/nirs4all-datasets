@@ -21,9 +21,12 @@ from pathlib import Path
 from nirs4all_datasets.schema import DatasetDescriptor, FileEntry, FileRole, Manifest
 
 _CHUNK = 1 << 20
-# Descriptor fields assigned at publish/bootstrap time; excluded from the processing hash so that
-# publishing (doi/version) or refreshing generation provenance never triggers a spurious rebuild.
-_HASH_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True}
+# Excluded from the *processing* hash: publish-assigned Dataverse ids, bootstrap provenance, and the
+# origin-source registry -- none affect the canonical bytes, so editing them never forces a rebuild.
+_HASH_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True, "sources": True}
+# Excluded from the *metadata* hash: only the volatile publish/bootstrap identifiers. Everything a human
+# authored and the card displays (sources, citation, datacite, governance, ...) is included.
+_METADATA_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True}
 
 
 def sha256_file(path: str | Path, chunk: int = _CHUNK) -> str:
@@ -41,11 +44,23 @@ def sha256_bytes(data: bytes) -> str:
 
 
 def descriptor_hash(descriptor: DatasetDescriptor) -> str:
-    """Stable hash of a descriptor's *processing-relevant* content.
+    """Stable hash of a descriptor's *processing-relevant* content (drives canonical rebuild).
 
-    Independent of YAML formatting and of publish-assigned Dataverse identifiers.
+    Independent of YAML formatting, of publish-assigned Dataverse identifiers, and of the origin-source
+    registry (editing where data is fetched from must not rebuild canonical Parquet).
     """
     data = descriptor.model_dump(mode="json", exclude=_HASH_EXCLUDE)
+    return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+
+
+def metadata_hash(descriptor: DatasetDescriptor) -> str:
+    """Stable hash of a descriptor's human-authored, *displayed* content (drives card/site re-render).
+
+    Includes origin ``sources``, ``citation``, ``datacite``, governance, instrument, targets; excludes
+    only the volatile publish/bootstrap identifiers. Editing ``sources``/``citation`` bumps this (the
+    card refreshes) without changing :func:`descriptor_hash` (canonical Parquet is not rebuilt).
+    """
+    data = descriptor.model_dump(mode="json", exclude=_METADATA_EXCLUDE)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 

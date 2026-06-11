@@ -33,6 +33,18 @@ def test_stale_card_is_flagged_and_ignored(registry: Path) -> None:
     assert entry["n_samples"] is None  # falls back to the descriptor (which declares none)
 
 
+def test_metadata_stale_card_is_flagged_but_stats_trusted(registry: Path) -> None:
+    # Canonical is unchanged (descriptor_hash matches) but provenance was edited (metadata_hash differs):
+    # the card must be flagged stale, yet its canonical-derived enrichment stays trusted.
+    card_path = registry / "datasets" / "corn" / "card.json"
+    card = json.loads(card_path.read_text())
+    card["integrity"]["metadata_hash"] = "0" * 64
+    card_path.write_text(json.dumps(card))
+    entry = build_catalog(registry)["datasets"][0]
+    assert entry["is_stale"] is True
+    assert entry["n_samples"] == 80  # descriptor_hash still matches -> stats not discarded
+
+
 def test_load_and_search(registry: Path) -> None:
     build_catalog(registry)
     assert len(load_catalog(registry)["datasets"]) == 1
@@ -45,3 +57,18 @@ def test_load_and_search(registry: Path) -> None:
 def test_get_card(registry: Path) -> None:
     assert get_card(registry, "corn")["inventory"]["n_samples"] == 80
     assert get_card(registry, "missing") is None
+
+
+def test_card_metadata_fresh_helper(tmp_path: Path, descriptor) -> None:  # noqa: ANN001 - fixture
+    """The shared freshness check used by `add`/`build-all` to rebuild cards on metadata-only edits."""
+    from nirs4all_datasets.manifest import metadata_hash
+    from nirs4all_datasets.qualify.profile import card_metadata_fresh
+
+    card_path = tmp_path / "card.json"
+    assert card_metadata_fresh(card_path, descriptor) is False  # missing -> rebuild
+    card_path.write_text(json.dumps({"integrity": {"metadata_hash": metadata_hash(descriptor)}}), encoding="utf-8")
+    assert card_metadata_fresh(card_path, descriptor) is True
+    card_path.write_text(json.dumps({"integrity": {"metadata_hash": "0" * 64}}), encoding="utf-8")
+    assert card_metadata_fresh(card_path, descriptor) is False  # provenance edited
+    card_path.write_text(json.dumps({"integrity": {}}), encoding="utf-8")
+    assert card_metadata_fresh(card_path, descriptor) is False  # legacy card without it -> rebuild

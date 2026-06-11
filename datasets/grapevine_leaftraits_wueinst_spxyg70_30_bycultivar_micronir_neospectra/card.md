@@ -6,12 +6,12 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** grapevine_leaftraits
 - **Description:** GRAPEVINE_LeafTraits dataset (regression). Sample: Fresh leaf. Trait: Water use efficiency. Split: spxy. Auto-generated descriptor (verify before publication).
-- **Contributor:** doi.org/10.57745/WVAPOL
+- **Contributor:** Recherche Data Gouv
 
 ## Composition
 
 - **Instances:** 112 spectra × 276 wavelengths, 1 source(s).
-- **Modality / instrument:** NIR — *Not specified.* *Not specified.* (firmware *Not specified.*).
+- **Modality / instrument:** NIR — *Not specified.* MicroNIR + NeoSpectra (firmware *Not specified.*).
 - **Spectral axis:** [908.1, 2549.99998242594] nm; signal type absorbance.
 - **Targets:** WUEinst (regression)
 - **Contains missing values:** False
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** DOI: 10.1002/ppj2.70059
+- **Citation:** https://doi.org/10.1002/ppj2.70059
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** doi.org/10.57745/WVAPOL
+- **Owner / steward:** Recherche Data Gouv
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

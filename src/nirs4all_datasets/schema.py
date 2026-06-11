@@ -150,6 +150,38 @@ class FileRole(StrEnum):
     CANONICAL = "canonical"
 
 
+# --- Acquisition vocabulary (this package's OWN domain; NOT mirrored from nirs4all) --------------
+class SourceKind(StrEnum):
+    """Where a dataset's original (authoritative) bytes live."""
+
+    DATAVERSE = "dataverse"  # any Dataverse instance (data-gouv, CIRAD, Harvard, INRAE...)
+    ZENODO = "zenodo"
+    FIGSHARE = "figshare"
+    URL = "url"  # direct file(s) over http(s)
+    SCRIPT = "script"  # reproducible acquisition script (maintainer-side only)
+    MANUAL = "manual"  # licence requires a manual download; we only document + checksum
+
+
+class SourceMode(StrEnum):
+    """What an origin source yields.
+
+    ``canonical`` = the full canonical set (incl. ``nirs4all_config.json``), verifiable byte-for-byte
+    against the manifest. ``raw`` = original vendor files that must be re-ingested locally (the
+    re-ingested canonical is a *reproduction*, not the pinned artifact -- never byte-asserted).
+    """
+
+    CANONICAL = "canonical"
+    RAW = "raw"
+
+
+class SourceAccess(StrEnum):
+    """How an origin source is reached."""
+
+    OPEN = "open"  # public, no credential
+    TOKEN = "token"  # needs a host-scoped credential (referenced by name, never stored here)
+    MANUAL = "manual"  # human must fetch it (click-through licence, registration...)
+
+
 def _validate_schema_version(value: str) -> str:
     if value != SCHEMA_VERSION:
         raise ValueError(f"unsupported schema_version {value!r} (expected {SCHEMA_VERSION!r}).")
@@ -225,6 +257,38 @@ class Funding(BaseModel):
     award_title: str | None = None
 
 
+class PublicationRef(BaseModel):
+    """A related publication (the *paper*), for citation.
+
+    ``doi`` is a journal/publisher DOI -- distinct from a data-repository DOI, which is an
+    :class:`OriginSource` (where the *bytes* live). Keeping the two apart is what prevents modelling a
+    journal article as a fetchable data source.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    doi: str | None = None
+    title: str | None = None
+    authors: list[str] = Field(default_factory=list)
+    year: int | None = None
+    citation: str | None = None  # free-text or a resolved CSL/APA string
+    bibtex: str | None = None
+
+    @field_validator("doi")
+    @classmethod
+    def _normalize_doi(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        text = value.strip()
+        for prefix in ("https://doi.org/", "http://doi.org/", "http://dx.doi.org/", "https://dx.doi.org/", "doi:"):
+            if text.lower().startswith(prefix):
+                text = text[len(prefix):].strip()
+                break
+        if not _DOI_RE.match(text):
+            raise ValueError(f"invalid publication DOI {value!r} (expected '10.<prefix>/<suffix>').")
+        return text
+
+
 class DataCite(BaseModel):
     """Rich metadata mapped onto native Dataverse/DataCite fields at publish."""
 
@@ -232,7 +296,7 @@ class DataCite(BaseModel):
 
     authors: list[Author] = Field(default_factory=list)
     funding: list[Funding] = Field(default_factory=list)
-    related_publications: list[str] = Field(default_factory=list)
+    related_publications: list[PublicationRef] = Field(default_factory=list)
     related_software: list[str] = Field(default_factory=list)
 
 
@@ -290,6 +354,49 @@ class DataverseRef(BaseModel):
         return text
 
 
+class OriginSource(BaseModel):
+    """An original (authoritative) home of a dataset's bytes.
+
+    Distinct from :class:`DataverseRef` (the *personal* republish location + pinned DOI used as the
+    licensed-data fallback). This records **where/how to fetch**, never checksums -- the manifest is the
+    single byte-identity authority, so per-file hashes are not duplicated here (they would be a parallel,
+    drift-prone store). ``OriginSource`` is excluded from the processing hash (editing where data comes
+    from never rebuilds canonical) and included in the metadata hash (cards display it).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    kind: SourceKind
+    mode: SourceMode = SourceMode.RAW
+    locator: str  # version-pinned DOI ('10.x/y'), URL, or 'scripts/<id>.py'
+    access: SourceAccess = SourceAccess.OPEN
+    credential_ref: str | None = None  # NAME of a host-scoped secret; never the secret value
+    license: str | None = None  # SPDX of the source, if it differs from governance.license
+    title: str | None = None
+    expected_files: list[str] = Field(default_factory=list)  # basenames to fetch (no checksums here)
+    notes: str | None = None
+
+    @field_validator("locator")
+    @classmethod
+    def _check_locator(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("OriginSource.locator must be non-empty.")
+        return value.strip()
+
+    @field_validator("license")
+    @classmethod
+    def _check_license(cls, value: str | None) -> str | None:
+        return _validate_license_syntax(value) if value is not None else None
+
+    @model_validator(mode="after")
+    def _check_access(self) -> OriginSource:
+        # A token for a non-Dataverse host needs an explicit, host-scoped credential reference; the
+        # Dataverse key is never sent to a generic host (also enforced at fetch time).
+        if self.access is SourceAccess.TOKEN and self.kind is not SourceKind.DATAVERSE and self.credential_ref is None:
+            raise ValueError("token access to a non-Dataverse source requires a credential_ref (host-scoped secret name).")
+        return self
+
+
 class Generation(BaseModel):
     """Provenance for a machine-generated descriptor (bulk bootstrap).
 
@@ -338,6 +445,7 @@ class DatasetDescriptor(BaseModel):
     governance: Governance
     datacite: DataCite | None = None
     dataverse: DataverseRef = Field(default_factory=DataverseRef)
+    sources: list[OriginSource] = Field(default_factory=list)  # original homes; excluded from processing hash
     generation: Generation | None = None  # set on auto-generated descriptors; excluded from descriptor_hash
 
     @field_validator("schema_version")
@@ -396,6 +504,15 @@ class DatasetDescriptor(BaseModel):
             "access_policy": gov.access_policy,
         }
         blockers.extend(f"governance.{field} is required for publication." for field, value in required.items() if _is_blank(value))
+
+        # Origin-source rule (publishability tier only -- a restricted/internal descriptor stays valid):
+        # non-open origin data must never be re-hosted as open. (The "a public dataset must be fetchable"
+        # catalog-integrity check lives in validate.py --check-publish, where first-publish DOI minting
+        # is not yet in tension.)
+        if gov.visibility is Visibility.PUBLIC:
+            for src in self.sources:
+                if src.license is not None and src.license not in _OPEN_LICENSES:
+                    blockers.append(f"origin source {src.locator!r} is licensed {src.license!r} (not open): cannot re-host as open data under {gov.license!r}.")
         return blockers
 
 

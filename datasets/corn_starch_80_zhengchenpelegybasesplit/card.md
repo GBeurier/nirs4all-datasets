@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** corn
 - **Description:** CORN dataset (regression). Sample: Corn kernel. Trait: Starch content. Split: Y sorted. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://eigenvector.com/resources/data-sets/
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** http://dx.doi.org/10.1016/j.cclet.2014.10.023
+- **Citation:** https://doi.org/10.1016/j.cclet.2014.10.023
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://eigenvector.com/resources/data-sets/
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** biscuit
 - **Description:** BISCUIT dataset (regression). Sample: Biscuit dough. Trait: Fat content. Split: Random. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://rdrr.io/cran/fds/man/Biscuit.html
+- **Contributor:** NIRS DB reference collection
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://rdrr.io/cran/fds/man/Biscuit.html
+- **Owner / steward:** NIRS DB reference collection
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

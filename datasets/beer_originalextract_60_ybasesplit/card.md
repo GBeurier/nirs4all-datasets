@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** beer
 - **Description:** BEER dataset (regression). Sample: Beer. Trait: Original extract. Split: Y sorted. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://github.com/nanxstats/OHPL/raw/master/data/beer.rda
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** 10.1016/j.chemolab.2017.07.004
+- **Citation:** https://doi.org/10.1016/j.chemolab.2017.07.004
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://github.com/nanxstats/OHPL/raw/master/data/beer.rda
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

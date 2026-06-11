@@ -123,6 +123,39 @@ def test_invalid_dois(doi: str) -> None:
         s.DataverseRef(doi=doi)
 
 
+def test_origin_source_syntactic_validation() -> None:
+    src = s.OriginSource(kind="zenodo", locator="10.5281/zenodo.123", title="Origin")
+    assert src.mode is s.SourceMode.RAW and src.access is s.SourceAccess.OPEN
+    with pytest.raises(ValidationError):
+        s.OriginSource(kind="zenodo", locator="   ")  # blank locator
+    with pytest.raises(ValidationError):
+        s.OriginSource(kind="url", locator="http://x/y", access="token")  # token + non-Dataverse + no cred
+    # a host-scoped credential reference makes token access to a non-Dataverse host valid
+    s.OriginSource(kind="figshare", locator="10.6084/m9.figshare.1", access="token", credential_ref="figshare_pat")
+    with pytest.raises(ValidationError):
+        s.OriginSource(kind="url", locator="http://x", license="Not A License!")
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [("DOI: 10.1002/ppj2.70059", "10.1002/ppj2.70059"), ("https://doi.org/10.1111/abc", "10.1111/abc"), ("10.1038/s41586-020-1", "10.1038/s41586-020-1")],
+)
+def test_publication_ref_doi_normalization(raw: str, expected: str) -> None:
+    assert s.PublicationRef(doi=raw).doi == expected
+
+
+def test_publication_ref_invalid_doi_rejected() -> None:
+    with pytest.raises(ValidationError):
+        s.PublicationRef(doi="not-a-doi")
+
+
+def test_nonopen_origin_cannot_be_rehosted_as_open() -> None:
+    blocked = s.DatasetDescriptor(**_desc(sources=[{"kind": "zenodo", "locator": "10.5281/z", "access": "open", "license": "CC-BY-NC-4.0"}]))
+    assert any("cannot re-host" in b for b in blocked.publication_blockers())
+    ok = s.DatasetDescriptor(**_desc(sources=[{"kind": "zenodo", "locator": "10.5281/z", "access": "open", "license": "CC-BY-4.0"}]))
+    assert not any("cannot re-host" in b for b in ok.publication_blockers())
+
+
 def test_file_entry_validation() -> None:
     fe = s.FileEntry(path="canonical/X.parquet", role="canonical", sha256=_HASH.upper(), size=10)
     assert fe.sha256 == _HASH  # normalized to lowercase

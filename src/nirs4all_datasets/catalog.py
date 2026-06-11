@@ -13,7 +13,7 @@ from typing import Any
 
 import yaml
 
-from nirs4all_datasets.manifest import descriptor_hash
+from nirs4all_datasets.manifest import descriptor_hash, metadata_hash
 from nirs4all_datasets.schema import DatasetDescriptor
 
 SCHEMA_VERSION = "1.0"
@@ -42,9 +42,14 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, 
     card = _read_json(data_dir / "card.json") or {}
     manifest = _read_json(data_dir / "manifest.json") or {}
     current = descriptor_hash(descriptor)
-    card_fresh = bool(card) and (card.get("integrity") or {}).get("descriptor_hash") == current
+    current_meta = metadata_hash(descriptor)
+    card_integrity = card.get("integrity") or {}
+    card_fresh = bool(card) and card_integrity.get("descriptor_hash") == current
     manifest_fresh = bool(manifest) and manifest.get("descriptor_hash") == current
-    is_stale = (bool(card) and not card_fresh) or (bool(manifest) and not manifest_fresh)
+    # A card can be canonical-fresh yet display stale provenance (sources/citation edited): flag it when
+    # it carries a metadata_hash that no longer matches. Legacy cards without one are not judged on it.
+    card_meta_stale = bool(card) and "metadata_hash" in card_integrity and card_integrity.get("metadata_hash") != current_meta
+    is_stale = (bool(card) and not card_fresh) or card_meta_stale or (bool(manifest) and not manifest_fresh)
 
     inventory = card.get("inventory", {}) if card_fresh else {}
     return {

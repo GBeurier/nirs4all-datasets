@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** berry
 - **Description:** BERRY dataset (regression). Sample: Fresh leaf. Trait: Winegrape berry tartaric acid content. Split: Stratified. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://github.com/WongCYS/grapevine_RMI_2025
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://github.com/WongCYS/grapevine_RMI_2025
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

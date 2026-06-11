@@ -1,0 +1,105 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "ecosis_leaf_sample_type_fresh_dry_ecosis",
+  "description": "ECOSIS dataset (classification). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "ecosis",
+    "nir",
+    "classification"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "X.parquet",
+      "name": "X.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "d94fa3f1deb3748a71191ad7c119323f6cdf04c89fce15f3cf90680ecddbaf81"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Y.parquet",
+      "name": "Y.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "ef1af2ee1e09d41859d987dd25cae83434a87e4a1847fb3fc1d6d633b0a75a40"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (75 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "X.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/Sample_Type",
+          "name": "Sample_Type",
+          "description": "Target 'Sample_Type' (multiclass_classification).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "Y.parquet"
+            },
+            "extract": {
+              "column": "Sample_Type"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

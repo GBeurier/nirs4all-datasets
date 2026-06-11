@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** plums
 - **Description:** PLUMS dataset (regression). Sample: Plum. Trait: Firmness. Split: spxy. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://github.com/nevernervous78/nirpyresearch/blob/master/data
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** none
+- **Citation:** *Not specified.*
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://github.com/nevernervous78/nirpyresearch/blob/master/data
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

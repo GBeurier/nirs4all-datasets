@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** wood_density
 - **Description:** WOOD_density dataset (regression). Sample: Ground dried wood auger cores. Trait: N content. Split: ks. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.34725/DVN/24522
+- **Contributor:** Dataverse
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** DOI: 10.5923/j.aac.20130303.01
+- **Citation:** https://doi.org/10.5923/j.aac.20130303.01
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.34725/DVN/24522
+- **Owner / steward:** Dataverse
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

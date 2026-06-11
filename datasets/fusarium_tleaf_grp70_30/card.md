@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** fusarium
 - **Description:** FUSARIUM dataset (regression). Sample: Fresh leaf. Trait: Leaf temperature. Split: Group stratified. Auto-generated descriptor (verify before publication).
-- **Contributor:** https://doi.org/10.5281/zenodo.16217833
+- **Contributor:** Zenodo
 
 ## Composition
 
@@ -37,7 +37,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 ## Uses
 
 - **Permitted use:** Research and benchmarking.
-- **Citation:** DOI: 10.1002/ppj2.70046
+- **Citation:** https://doi.org/10.1002/ppj2.70046
 
 ## Distribution
 
@@ -49,6 +49,6 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Maintenance
 
-- **Owner / steward:** https://doi.org/10.5281/zenodo.16217833
+- **Owner / steward:** Zenodo
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.

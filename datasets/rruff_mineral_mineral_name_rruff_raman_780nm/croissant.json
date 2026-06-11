@@ -1,0 +1,105 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "rruff_mineral_mineral_name_rruff_raman_780nm",
+  "description": "RRUFF dataset (classification). Auto-generated descriptor (verify before publication).",
+  "version": "0.1.0",
+  "license": "LicenseRef-unknown",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "citeAs": null,
+  "keywords": [
+    "rruff",
+    "nir",
+    "classification"
+  ],
+  "creator": [],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "X.parquet",
+      "name": "X.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "7771f575767b21857f63cb632f945e1f63722cdebc24fcdd3e0c8c0f70f05049"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "Y.parquet",
+      "name": "Y.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "f49592851a5bf3cbc63f9bad4f4b09f001e9dff75386501c9939d1461ad0aece"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "records",
+      "name": "records",
+      "description": "One record per spectrum (1669 samples).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "records/spectrum",
+          "name": "spectrum",
+          "description": "Spectral intensities across the wavelength axis.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "X.parquet"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "records/mineral_name",
+          "name": "mineral_name",
+          "description": "Target 'mineral_name' (multiclass_classification).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "Y.parquet"
+            },
+            "extract": {
+              "column": "mineral_name"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

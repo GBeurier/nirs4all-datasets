@@ -6,7 +6,7 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 - **Domain / purpose:** quartz
 - **Description:** QUARTZ dataset (regression). Auto-generated descriptor (verify before publication).
-- **Contributor:** tabpfn NIRS benchmark collection
+- **Contributor:** GitHub
 
 ## Composition
 
@@ -41,14 +41,14 @@ _Generated from the dataset descriptor and identity card (Datasheets for Dataset
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
+- **License:** MIT
 - **Visibility:** restricted
-- **Confidentiality class:** internal
+- **Confidentiality class:** public
 - **DOI:** *Not specified.*
-- **Redistribution rights:** Original source licence applies; verify before redistribution.
+- **Redistribution rights:** Open redistribution under MIT.
 
 ## Maintenance
 
-- **Owner / steward:** tabpfn NIRS benchmark collection
+- **Owner / steward:** GitHub
 - **Version:** 0.1.0
 - **Access policy:** Local use; not published to Dataverse.
