@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | p_ext_usda_a1070_mg_kg | target | numeric | *Not specified.* | n=8151, missing=7889, range 0.3618–256.4, mean 25.99 ± 31.44 |
 | k_ext_usda_a1065_mg_kg | target | numeric | *Not specified.* | n=8151, missing=7889, range 0–730.2, mean 167 ± 117.1 |
 | ec_usda_a364_ds_m | target | numeric | *Not specified.* | n=8151, missing=4378, range 0.012–81.93, mean 1.423 ± 6.264 |
-| ID_sample | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=2106, top 122183 (×19) |
+| ID_sample | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=2106, top 67922 (×19) |
 | SpectralRep | metadata | numeric | *Not specified.* | n=8151, missing=0, range 1–19, mean 2.941 ± 1.963 |
 | dataset | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top Neospectra database v1.2 (×8151) |
 | collection_name | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top neospectra_nir (×8151) |
@@ -59,7 +59,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top clay_tot_usda_a334_w_pct (×8151) |
 | trait_header_original | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top clay.tot_usda.a334_w.pct (×8151) |
 | spectral_kind | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top nir (×8151) |
-| scan_local_id | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=8067, top NEO6_121256 (×4) |
+| scan_local_id | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=8067, top NEO2_067922 (×4) |
 | scan_lab | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=2, top KSSL (×5009) |
 | scan_model_name | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=9, top NEO3 (×1132) |
 | scan_model_code | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=9, top 21020076 (×1132) |
@@ -120,5 +120,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `94abb62b1f120eb55f878b9047f9fa84bb1affa02bc9c8ef83a9b3c77cdb873c`
+- **Content hash:** `8238c194c27b95b8955abbf9070ea1043181500687f9e9be6bd2dbd152a4916e`
 - **Processing hash:** `8c86b608e46fa2dd770ca0a316a56569c803166018c1774c8d02ad6bc15e3da6` | **metadata hash:** `902df92da3f382b136a16f524b1f3544e9ab02ce2df633d601cd674fae79c29d`

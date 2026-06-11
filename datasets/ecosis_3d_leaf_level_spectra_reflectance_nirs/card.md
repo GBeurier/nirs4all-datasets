@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1 sample(s), 1485 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1485–1485 (mean 1485).
+- **Alignment:** observation level; 1485 sample(s), 1485 observation(s) total; sample_id available: True.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,34 +24,34 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| lma_g_m2 | target | numeric | *Not specified.* | n=1, missing=0, range 37.19–37.19, mean 37.19 ± 0 |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top fccb20b5-7d47-4878-9da6-eba7798197a7 (×1) |
-| site | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| country | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top source-provided coordinates when available (×1) |
-| year | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Leaf (×1) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top leaf (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top ASD, Spectral Evolution Fieldspec 3, PSR 3500+ (×1) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Contact (×1) |
-| signal_type | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top reflectance (×1) |
-| axis_unit | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top nm (×1) |
-| axis_min | metadata | numeric | *Not specified.* | n=1, missing=0, range 400–400, mean 400 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=1, missing=0, range 2500–2500, mean 2500 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=1, missing=0, range 2101–2101, mean 2101 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 10.21232/dep7jvyq (×1) |
-| citation | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Chlus A Kruger E.L. Townsend P.A.. 3D LMA Leaf Level Spectra. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×1) |
-| license | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top not specified (×1) |
-| rights_status | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top manual_review_needed (×1) |
-| usage_scope | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top private_use_only (×1) |
-| notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top EcoSIS package 3d-lma-leaf-level-spectra, no interpolation applied by project. (×1) |
+| lma_g_m2 | target | numeric | *Not specified.* | n=1485, missing=0, range 16.11–138.7, mean 55.5 ± 23.06 |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top fccb20b5-7d47-4878-9da6-eba7798197a7 (×1485) |
+| site | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| country | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top source-provided coordinates when available (×1485) |
+| year | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=1485, missing=1485, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top Leaf (×1485) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top leaf (×1485) |
+| instrument | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top ASD, Spectral Evolution Fieldspec 3, PSR 3500+ (×1485) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top Contact (×1485) |
+| signal_type | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top reflectance (×1485) |
+| axis_unit | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top nm (×1485) |
+| axis_min | metadata | numeric | *Not specified.* | n=1485, missing=0, range 400–400, mean 400 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=1485, missing=0, range 2500–2500, mean 2500 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=1485, missing=0, range 2101–2101, mean 2101 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top 10.21232/dep7jvyq (×1485) |
+| citation | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top Chlus A Kruger E.L. Townsend P.A.. 3D LMA Leaf Level Spectra. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×1485) |
+| license | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top not specified (×1485) |
+| rights_status | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top manual_review_needed (×1485) |
+| usage_scope | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top private_use_only (×1485) |
+| notes | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top EcoSIS package 3d-lma-leaf-level-spectra, no interpolation applied by project. (×1485) |
 
 ## Statistics — splits
 
@@ -92,5 +92,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `8f308148b8585c8cd79d4d584926491ac387c7016644fe54d31bc1e776884b4e`
+- **Content hash:** `1d6a62d60e4756d1ee7628b37950a98dd92d4183c3c0af1891cc42f2d9696438`
 - **Processing hash:** `3d1247d4196488a68431938e982204d55caf88b05a7d3c1f2ed72cb5535e1891` | **metadata hash:** `df6b0acc1f509ad9005896cde03725026322ad265db399c3b8dad27aad1a5af4`

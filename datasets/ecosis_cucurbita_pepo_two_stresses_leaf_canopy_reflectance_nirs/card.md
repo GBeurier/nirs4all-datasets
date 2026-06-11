@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1 sample(s), 541 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 541–541 (mean 541).
+- **Alignment:** observation level; 541 sample(s), 541 observation(s) total; sample_id available: True.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,46 +24,46 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| Treatment | target | categorical | *Not specified.* | n=1, missing=0, classes=1, top sink (×1) |
-| Temperature | target | numeric | *Not specified.* | n=1, missing=0, range 29–29, mean 29 ± 0 |
-| Chlorophyll | target | numeric | *Not specified.* | n=1, missing=0, range 63.34–63.34, mean 63.34 ± 0 |
-| PhiPSII | target | numeric | *Not specified.* | n=1, missing=0, range 0.492–0.492, mean 0.492 ± 0 |
-| RWC | target | numeric | *Not specified.* | n=1, missing=0, range 77.59–77.59, mean 77.59 ± 0 |
-| LMA | target | numeric | *Not specified.* | n=1, missing=0, range 54.69–54.69, mean 54.69 ± 0 |
-| AminoAcids | target | numeric | *Not specified.* | n=1, missing=0, range 2.672–2.672, mean 2.672 ± 0 |
-| Glucose | target | numeric | *Not specified.* | n=1, missing=0, range 13.84–13.84, mean 13.84 ± 0 |
-| Fructose | target | numeric | *Not specified.* | n=1, missing=0, range 3.964–3.964, mean 3.964 ± 0 |
-| Sucrose | target | numeric | *Not specified.* | n=1, missing=0, range 5.285–5.285, mean 5.285 ± 0 |
-| Starch | target | numeric | *Not specified.* | n=1, missing=0, range 82.03–82.03, mean 82.03 ± 0 |
-| TNC | target | numeric | *Not specified.* | n=1, missing=0, range 105.1–105.1, mean 105.1 ± 0 |
-| Protein | target | numeric | *Not specified.* | n=1, missing=0, range 8.518–8.518, mean 8.518 ± 0 |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top a9282ba1-4b8e-4318-88bf-cda8b9dd42a6 (×1) |
-| site | metadata | numeric | *Not specified.* | n=1, missing=0, range 1–1, mean 1 ± 0 |
-| location | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Brookhaven National Laboratory (×1) |
-| country | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top source-provided coordinates when available (×1) |
-| year | metadata | numeric | *Not specified.* | n=1, missing=0, range 2020–2020, mean 2020 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 2019-07-03 (×1) |
-| species | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top CUPE (×1) |
-| genus | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=1, missing=1, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Leaf (×1) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top canopy (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Spectral Evolution, Spectra Vista Corporation (leaf clip only) PSR+ (×1) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Other, Proximal (×1) |
-| signal_type | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top reflectance (×1) |
-| axis_unit | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top nm (×1) |
-| axis_min | metadata | numeric | *Not specified.* | n=1, missing=0, range 350–350, mean 350 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=1, missing=0, range 2500–2500, mean 2500 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=1, missing=0, range 2151–2151, mean 2151 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top 10.1111/pce.14056 \| 10.21232/RLmYbmE3 \| 10.21232/rlmybme3 (×1) |
-| citation | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Angela C Burnett Shawn P Serbin Alistair Rogers. 2020. Leaf and canopy spectroscopy and biochemical data of field-grown Cucurbita pepo under two stresses. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS). 10.21232/RLmYbmE3 (×1) |
-| license | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top Creative Commons Attribution (×1) |
-| rights_status | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top explicit_open (×1) |
-| usage_scope | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top public_reuse_possible (×1) |
-| notes | metadata | categorical | *Not specified.* | n=1, missing=0, classes=1, top EcoSIS package leaf-and-canopy-spectroscopy-and-biochemical-data-of-field-grown-cucurbita-pepo-under-two-stresses, no interpolation applied by project. (×1) |
+| Treatment | target | categorical | *Not specified.* | n=541, missing=24, classes=3, top sink (×176) |
+| Temperature | target | numeric | *Not specified.* | n=541, missing=24, range 19.5–33.3, mean 25.04 ± 2.552 |
+| Chlorophyll | target | numeric | *Not specified.* | n=541, missing=173, range 6.79–74.29, mean 59.77 ± 6.08 |
+| PhiPSII | target | numeric | *Not specified.* | n=541, missing=173, range 0.392–0.728, mean 0.5466 ± 0.05872 |
+| RWC | target | numeric | *Not specified.* | n=541, missing=291, range 67.05–86.53, mean 79.55 ± 3.548 |
+| LMA | target | numeric | *Not specified.* | n=541, missing=291, range 28.82–75.45, mean 48.96 ± 11.39 |
+| AminoAcids | target | numeric | *Not specified.* | n=541, missing=292, range 1.401–6.412, mean 3.111 ± 0.9596 |
+| Glucose | target | numeric | *Not specified.* | n=541, missing=292, range 1.994–24.23, mean 11.95 ± 4.285 |
+| Fructose | target | numeric | *Not specified.* | n=541, missing=292, range 0.7051–11.05, mean 3.523 ± 1.855 |
+| Sucrose | target | numeric | *Not specified.* | n=541, missing=292, range 2.189–15.27, mean 5.37 ± 2.217 |
+| Starch | target | numeric | *Not specified.* | n=541, missing=292, range 9.787–156.2, mean 67.56 ± 35.65 |
+| TNC | target | numeric | *Not specified.* | n=541, missing=292, range 17.85–171.8, mean 88.39 ± 38.11 |
+| Protein | target | numeric | *Not specified.* | n=541, missing=292, range 3.782–12.82, mean 7.431 ± 1.558 |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top a9282ba1-4b8e-4318-88bf-cda8b9dd42a6 (×541) |
+| site | metadata | numeric | *Not specified.* | n=541, missing=24, range 1–18, mean 9.267 ± 5.149 |
+| location | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Brookhaven National Laboratory (×541) |
+| country | metadata | categorical | *Not specified.* | n=541, missing=541, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=541, missing=541, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=541, missing=541, classes=0, — |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top source-provided coordinates when available (×541) |
+| year | metadata | numeric | *Not specified.* | n=541, missing=0, range 2020–2020, mean 2020 ± 0 |
+| date | metadata | categorical | *Not specified.* | n=541, missing=24, classes=10, top 2019-07-19 (×54) |
+| species | metadata | categorical | *Not specified.* | n=541, missing=24, classes=1, top CUPE (×517) |
+| genus | metadata | categorical | *Not specified.* | n=541, missing=541, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=541, missing=541, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Leaf (×541) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top canopy (×541) |
+| instrument | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Spectral Evolution, Spectra Vista Corporation (leaf clip only) PSR+ (×541) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Other, Proximal (×541) |
+| signal_type | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top reflectance (×541) |
+| axis_unit | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top nm (×541) |
+| axis_min | metadata | numeric | *Not specified.* | n=541, missing=0, range 350–350, mean 350 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=541, missing=0, range 2500–2500, mean 2500 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=541, missing=0, range 2151–2151, mean 2151 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top 10.1111/pce.14056 \| 10.21232/RLmYbmE3 \| 10.21232/rlmybme3 (×541) |
+| citation | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Angela C Burnett Shawn P Serbin Alistair Rogers. 2020. Leaf and canopy spectroscopy and biochemical data of field-grown Cucurbita pepo under two stresses. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS). 10.21232/RLmYbmE3 (×541) |
+| license | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top Creative Commons Attribution (×541) |
+| rights_status | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top explicit_open (×541) |
+| usage_scope | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top public_reuse_possible (×541) |
+| notes | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top EcoSIS package leaf-and-canopy-spectroscopy-and-biochemical-data-of-field-grown-cucurbita-pepo-under-two-stresses, no interpolation applied by project. (×541) |
 
 ## Statistics — splits
 
@@ -106,5 +106,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `453effdd9d548428684deb13967f760ac83357e06bd9c3d6651e32640227d647`
+- **Content hash:** `b2a30b835fb7330914feffcaef09046297b97b70e0a3227646488b8ec2fba67e`
 - **Processing hash:** `0f3958cf8d3638db936b022c6e295d14734d7865b042f76500de7458a4745371` | **metadata hash:** `d4335dccc8237e278e7490c3910a8a88c1d11c231278620c8041b59e7c6cfd22`

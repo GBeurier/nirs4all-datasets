@@ -24,7 +24,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| row_id | target | categorical | *Not specified.* | n=761, missing=0, classes=226, top 388 (×13) |
+| row_id | target | categorical | *Not specified.* | n=761, missing=0, classes=226, top 253 (×13) |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=761, missing=0, classes=1, top 1d5f5b6f-9d0e-4719-a655-587f681bcc18 (×761) |
 | site | metadata | categorical | *Not specified.* | n=761, missing=761, classes=0, — |
 | location | metadata | categorical | *Not specified.* | n=761, missing=761, classes=0, — |
@@ -92,5 +92,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `a08c61a3994dbd4860a74dc00b97760125fd2787d1624d6ca057f24c40f75f02`
+- **Content hash:** `a2d3d60e8d2662d54c5016edebbd089fb8b3bb8c9f39032bc6735529ca8f2388`
 - **Processing hash:** `549b868fa63cb11db22d32b7fb179104cfb609899a7bf26ceb397fcf7a623d7c` | **metadata hash:** `cc863cec0b259b8b204a6688b33a0511aca1c887c188f00d099a773d2cc10ff5`

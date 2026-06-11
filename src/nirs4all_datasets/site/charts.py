@@ -242,6 +242,155 @@ def histogram(values: list[float], *, title: str, n_bins: int = 12, log: bool = 
 
 
 # =============================================================================
+# Spectra with quantile bands (per-source) — the interactive spectral chart
+# =============================================================================
+def _finite(seq: list[Any]) -> list[float]:
+    return [float(v) for v in seq if v is not None and isinstance(v, bool) is False and math.isfinite(float(v))]
+
+
+def spectra_quantile(curve: dict[str, list[float]], *, title: str, axis_label: str = "wavelength", unit: str = "") -> str:
+    """Mean spectrum with shaded inter-quantile bands (q05–q95, q25–q75) over the wavelength axis.
+
+    ``curve`` is the card's ``sources[i].spectral.curve`` (``axis`` + ``q05/q25/median/q75/q95/mean``).
+    Hover strips give a per-wavelength readout (native SVG ``<title>``). Self-contained, scalable SVG.
+    """
+    axis = curve.get("axis") or []
+    n = len(axis)
+    if n < 2:
+        return _svg(720, 280, '<text x="360" y="144" text-anchor="middle">no spectral data</text>', title=title)
+    q05, q25, med, q75, q95 = (curve.get(k) or [] for k in ("q05", "q25", "median", "q75", "q95"))
+    ally = _finite(q05) + _finite(q95) + _finite(med)
+    if not ally:
+        return _svg(720, 280, '<text x="360" y="144" text-anchor="middle">no spectral data</text>', title=title)
+    lo, hi = min(ally), max(ally)
+    if hi <= lo:
+        hi = lo + 1.0
+    amin, amax = float(axis[0]), float(axis[-1])
+    aspan = (amax - amin) or 1.0
+
+    W, H = 720, 300
+    pad_l, pad_r, pad_t, pad_b = 52, 16, 14, 36
+    pw, ph = W - pad_l - pad_r, H - pad_t - pad_b
+
+    def ok(v: Any) -> bool:
+        # card arrays carry None where a wavelength column was all-NaN (sanitized from NaN)
+        return v is not None and isinstance(v, bool) is False and math.isfinite(v)
+
+    def px(a: float) -> float:
+        return pad_l + (a - amin) / aspan * pw
+
+    def py(v: float) -> float:
+        return pad_t + (1.0 - (v - lo) / (hi - lo)) * ph
+
+    def band(lower: list[float], upper: list[float]) -> str:
+        up = " ".join(f"{px(axis[i]):.1f},{py(upper[i]):.1f}" for i in range(n) if ok(upper[i]) and ok(axis[i]))
+        dn = " ".join(f"{px(axis[i]):.1f},{py(lower[i]):.1f}" for i in range(n - 1, -1, -1) if ok(lower[i]) and ok(axis[i]))
+        return f"{up} {dn}"
+
+    def line(values: list[float]) -> str:
+        pts = [f"{px(axis[i]):.1f},{py(values[i]):.1f}" for i in range(n) if ok(values[i]) and ok(axis[i])]
+        return " ".join(pts)
+
+    teal = PALETTE[0]
+    parts: list[str] = [
+        f'<polygon points="{band(q05, q95)}" fill="{teal}" fill-opacity="0.13"></polygon>',
+        f'<polygon points="{band(q25, q75)}" fill="{teal}" fill-opacity="0.26"></polygon>',
+        f'<polyline points="{line(med)}" fill="none" stroke="{teal}" stroke-width="1.8" stroke-linejoin="round"></polyline>',
+    ]
+    # y axis ticks
+    for t in range(3):
+        v = lo + (hi - lo) * t / 2
+        y = py(v)
+        parts.append(f'<line class="axis" x1="{pad_l}" y1="{y:.1f}" x2="{W - pad_r}" y2="{y:.1f}" opacity="0.5"></line>')
+        parts.append(f'<text x="{pad_l - 6}" y="{y + 3:.1f}" text-anchor="end" font-size="10" fill="#64748b">{num(v, nd=3)}</text>')
+    # x axis ticks
+    for t in range(5):
+        a = amin + aspan * t / 4
+        x = px(a)
+        parts.append(f'<text x="{x:.1f}" y="{H - 16}" text-anchor="middle" font-size="10" fill="#64748b">{num(a, nd=4)}</text>')
+    parts.append(f'<text x="{pad_l + pw / 2:.1f}" y="{H - 2}" text-anchor="middle" font-size="10" fill="#94a3b8">{esc(axis_label)}{(" (" + esc(unit) + ")") if unit else ""}</text>')
+    # invisible hover strips for a per-wavelength readout
+    bw = pw / n
+    for i in range(n):
+        if not (ok(med[i]) and ok(q25[i]) and ok(q75[i]) and ok(axis[i])):
+            continue
+        x = px(axis[i]) - bw / 2
+        parts.append(
+            f'<rect x="{x:.1f}" y="{pad_t}" width="{bw:.2f}" height="{ph:.1f}" fill="transparent">'
+            f'<title>{num(axis[i], nd=5)}{esc(unit)} — median {num(med[i], nd=4)} (q25–q75 {num(q25[i], nd=4)}–{num(q75[i], nd=4)})</title></rect>'
+        )
+    return _svg(W, H, "".join(parts), title=title)
+
+
+# =============================================================================
+# Histogram from precomputed bins (per-variable distribution)
+# =============================================================================
+def histogram_bins(edges: list[float], counts: list[int], *, title: str, x_label: str = "", unit: str = "") -> str:
+    """Bar histogram from precomputed ``edges`` (n+1) + ``counts`` (n). Per-bar hover gives the range."""
+    nb = len(counts)
+    if nb < 1 or len(edges) != nb + 1:
+        return _svg(560, 200, '<text x="280" y="104" text-anchor="middle">not enough data</text>', title=title)
+    cmax = max(counts) or 1
+    W, H = 560, 220
+    pad_l, pad_b, pad_t, pad_r = 38, 32, 12, 10
+    pw, ph = W - pad_l - pad_r, H - pad_b - pad_t
+    bw = pw / nb
+    parts: list[str] = [_grad_defs([_color(0)]), f'<line class="axis" x1="{pad_l}" y1="{pad_t + ph}" x2="{W - pad_r}" y2="{pad_t + ph}"></line>']
+    for i, c in enumerate(counts):
+        h = (c / cmax) * ph
+        x = pad_l + i * bw
+        y = pad_t + ph - h
+        parts.append(
+            f'<g class="bar-row"><rect x="{x + 0.6:.1f}" y="{y:.1f}" width="{max(0.6, bw - 1.2):.1f}" height="{h:.1f}" rx="1.5" fill="{_fill(_color(0))}">'
+            f'<title>{num(edges[i], nd=4)} – {num(edges[i + 1], nd=4)}{esc(unit)}: {c}</title></rect></g>'
+        )
+    for t in range(5):
+        idx = round(t * nb / 4)
+        x = pad_l + idx * bw
+        parts.append(f'<text x="{x:.1f}" y="{pad_t + ph + 20}" text-anchor="middle" font-size="10" fill="#64748b">{num(edges[idx], nd=4)}</text>')
+    parts.append(f'<text x="{pad_l - 6}" y="{pad_t + 9}" text-anchor="end" font-size="10" fill="#64748b">{cmax}</text>')
+    parts.append(f'<text x="{pad_l - 6}" y="{pad_t + ph}" text-anchor="end" font-size="10" fill="#64748b">0</text>')
+    if x_label:
+        parts.append(f'<text x="{pad_l + pw / 2:.1f}" y="{H - 2}" text-anchor="middle" font-size="10" fill="#94a3b8">{esc(x_label)}</text>')
+    return _svg(W, H, "".join(parts), title=title)
+
+
+# =============================================================================
+# Box-and-whisker (numeric 5-number summary, when no histogram bins)
+# =============================================================================
+def boxplot(stats: dict[str, Any], *, title: str, unit: str = "") -> str:
+    """Horizontal box-and-whisker from a 5-number summary (``min,q1,median,q3,max`` + ``mean`` marker)."""
+    keys = ("min", "q1", "median", "q3", "max")
+    vals = [stats.get(k) for k in keys]
+    if any(v is None or not isinstance(v, (int, float)) or isinstance(v, bool) or not math.isfinite(float(v)) for v in vals):
+        return _svg(560, 96, '<text x="280" y="52" text-anchor="middle">no numeric range</text>', title=title)
+    vmin, q1, med, q3, vmax = (float(v) for v in vals)  # type: ignore[arg-type]
+    span = (vmax - vmin) or 1.0
+    W, H = 560, 96
+    pad_l, pad_r = 16, 16
+    pw = W - pad_l - pad_r
+    cy = 40
+
+    def x(v: float) -> float:
+        return pad_l + (v - vmin) / span * pw
+
+    teal = PALETTE[0]
+    parts = [
+        f'<line x1="{x(vmin):.1f}" y1="{cy}" x2="{x(vmax):.1f}" y2="{cy}" stroke="{teal}" stroke-width="1.4" opacity="0.7"></line>',
+        f'<line x1="{x(vmin):.1f}" y1="{cy - 8}" x2="{x(vmin):.1f}" y2="{cy + 8}" stroke="{teal}" stroke-width="1.4"></line>',
+        f'<line x1="{x(vmax):.1f}" y1="{cy - 8}" x2="{x(vmax):.1f}" y2="{cy + 8}" stroke="{teal}" stroke-width="1.4"></line>',
+        f'<rect x="{x(q1):.1f}" y="{cy - 14}" width="{max(2.0, x(q3) - x(q1)):.1f}" height="28" rx="4" fill="{teal}" fill-opacity="0.26" stroke="{teal}" stroke-width="1.2"><title>q1 {num(q1, nd=4)} – q3 {num(q3, nd=4)}</title></rect>',
+        f'<line x1="{x(med):.1f}" y1="{cy - 14}" x2="{x(med):.1f}" y2="{cy + 14}" stroke="{teal}" stroke-width="2.2"><title>median {num(med, nd=4)}</title></line>',
+    ]
+    mean = stats.get("mean")
+    if isinstance(mean, (int, float)) and not isinstance(mean, bool) and math.isfinite(float(mean)):
+        parts.append(f'<circle cx="{x(float(mean)):.1f}" cy="{cy}" r="3.4" fill="#d97706"><title>mean {num(float(mean), nd=4)}</title></circle>')
+    for v, anc in ((vmin, "start"), (vmax, "end")):
+        parts.append(f'<text x="{x(v):.1f}" y="{cy + 30}" text-anchor="{anc}" font-size="10" fill="#64748b">{num(v, nd=4)}{esc(unit)}</text>')
+    return _svg(W, H, "".join(parts), title=title)
+
+
+# =============================================================================
 # Wavelength-coverage range chart
 # =============================================================================
 def range_chart(items: list[dict[str, Any]], *, title: str, unit_label: str = "nm", max_rows: int = 40) -> str:

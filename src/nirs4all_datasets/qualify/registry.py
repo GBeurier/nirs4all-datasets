@@ -18,7 +18,7 @@ import numpy as np
 
 from nirs4all_datasets.qualify import metrics
 
-PROTOCOL_VERSION = "1"
+PROTOCOL_VERSION = "2"  # 2: cards carry per-source spectral quantile curves + per-variable histogram bins (interactive site charts)
 
 Scope = Literal["source", "variable", "dataset"]
 MetricFn = Callable[..., Any]
