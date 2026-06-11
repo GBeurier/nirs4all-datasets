@@ -1,0 +1,426 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": "https://doi.org/10.1038/s41597-025-04848-6",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Flanagan API compounds Raman. v2.0 standardized NIRS package: 1 spectral source(s), 3 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Flanagan Raman spectra",
+      "sha256": "84359c39e05a8e0fd863e074bb3e41cc42edbbf4e053a3d0fa255ced0bbd9602"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "f57f6eec132c44df5cba8ed7839ef16f3f6a320e1baeb859cae772a4eeedc1f9"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "flanagan"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "flanagan_api_compounds_raman",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Flanagan Raman spectra' (3510 observations x 3276 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/compound",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'compound' (role target, type categorical).",
+          "name": "compound",
+          "source": {
+            "extract": {
+              "column": "compound"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/common_application",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'common_application' (role target, type categorical).",
+          "name": "common_application",
+          "source": {
+            "extract": {
+              "column": "common_application"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/solvent_reagent",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'solvent_reagent' (role target, type categorical).",
+          "name": "solvent_reagent",
+          "source": {
+            "extract": {
+              "column": "solvent_reagent"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/compound_rep_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'compound_rep_index' (role metadata, type numeric).",
+          "name": "compound_rep_index",
+          "source": {
+            "extract": {
+              "column": "compound_rep_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/publication_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'publication_url' (role metadata, type categorical).",
+          "name": "publication_url",
+          "source": {
+            "extract": {
+              "column": "publication_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/sample_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'sample_type' (role metadata, type categorical).",
+          "name": "sample_type",
+          "source": {
+            "extract": {
+              "column": "sample_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/formula",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'formula' (role metadata, type categorical).",
+          "name": "formula",
+          "source": {
+            "extract": {
+              "column": "formula"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/organic",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'organic' (role metadata, type categorical).",
+          "name": "organic",
+          "source": {
+            "extract": {
+              "column": "organic"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/supplier_product",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'supplier_product' (role metadata, type categorical).",
+          "name": "supplier_product",
+          "source": {
+            "extract": {
+              "column": "supplier_product"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/assay_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'assay_pct' (role metadata, type numeric).",
+          "name": "assay_pct",
+          "source": {
+            "extract": {
+              "column": "assay_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/exposure_secs",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'exposure_secs' (role metadata, type numeric).",
+          "name": "exposure_secs",
+          "source": {
+            "extract": {
+              "column": "exposure_secs"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pixel_fill_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'pixel_fill_pct' (role metadata, type numeric).",
+          "name": "pixel_fill_pct",
+          "source": {
+            "extract": {
+              "column": "pixel_fill_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/compound_source_sample_count",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'compound_source_sample_count' (role metadata, type numeric).",
+          "name": "compound_source_sample_count",
+          "source": {
+            "extract": {
+              "column": "compound_source_sample_count"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/approx_raman_bands_source",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'approx_raman_bands_source' (role metadata, type categorical).",
+          "name": "approx_raman_bands_source",
+          "source": {
+            "extract": {
+              "column": "approx_raman_bands_source"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://doi.org/10.1038/s41597-025-04848-6",
+    "10.6084/m9.figshare.27931131",
+    "https://api.figshare.com/v2/articles/27931131",
+    "https://www.nature.com/articles/s41597-025-04848-6",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

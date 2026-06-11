@@ -1,0 +1,350 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Perten cereals NIR. v2.0 standardized NIRS package: 1 spectral source(s), 2 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Perten NIR spectra",
+      "sha256": "fc4e46362f8699abd41ae3b7d4d360270505d1afedc64bf0ea6c396ce052250a"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "92c7cbb92b6b79acbd321f90f36d513528a96e2f54545fff6d9aa4876f130d04"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "perten"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "perten_cereals_nir",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Perten NIR spectra' (450 observations x 141 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Moisture",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Moisture' (role target, type numeric).",
+          "name": "Moisture",
+          "source": {
+            "extract": {
+              "column": "Moisture"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Protein",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Protein' (role target, type numeric).",
+          "name": "Protein",
+          "source": {
+            "extract": {
+              "column": "Protein"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cereal_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'cereal_type' (role metadata, type categorical).",
+          "name": "cereal_type",
+          "source": {
+            "extract": {
+              "column": "cereal_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/crop",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'crop' (role metadata, type categorical).",
+          "name": "crop",
+          "source": {
+            "extract": {
+              "column": "crop"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/product_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'product_type' (role metadata, type categorical).",
+          "name": "product_type",
+          "source": {
+            "extract": {
+              "column": "product_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/target_set",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'target_set' (role metadata, type categorical).",
+          "name": "target_set",
+          "source": {
+            "extract": {
+              "column": "target_set"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/original_row_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'original_row_id' (role metadata, type categorical).",
+          "name": "original_row_id",
+          "source": {
+            "extract": {
+              "column": "original_row_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instrument",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instrument' (role metadata, type categorical).",
+          "name": "instrument",
+          "source": {
+            "extract": {
+              "column": "instrument"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/acquisition_mode",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'acquisition_mode' (role metadata, type categorical).",
+          "name": "acquisition_mode",
+          "source": {
+            "extract": {
+              "column": "acquisition_mode"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wavelength_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'wavelength_unit' (role metadata, type categorical).",
+          "name": "wavelength_unit",
+          "source": {
+            "extract": {
+              "column": "wavelength_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/country",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'country' (role metadata, type categorical).",
+          "name": "country",
+          "source": {
+            "extract": {
+              "column": "country"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/year",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'year' (role metadata, type numeric).",
+          "name": "year",
+          "source": {
+            "extract": {
+              "column": "year"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/variety",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'variety' (role metadata, type categorical).",
+          "name": "variety",
+          "source": {
+            "extract": {
+              "column": "variety"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://zenodo.org/records/15838136",
+    "https://zenodo.org/api/records/15838136/files/sensAIfood_Perten.zip/content",
+    "10.5281/zenodo.15838136",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}
