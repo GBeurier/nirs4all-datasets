@@ -27,7 +27,7 @@ sys.path.insert(0, str(REPO / "src"))
 import yaml  # noqa: E402
 from pydantic import ValidationError  # noqa: E402
 
-from nirs4all_datasets.schema import DatasetDescriptor, Manifest, Subset, Visibility  # noqa: E402
+from nirs4all_datasets.schema import DatasetDescriptor, Manifest, Subset, Tier  # noqa: E402
 
 
 def _load_yaml(path: Path) -> dict[str, object]:
@@ -53,7 +53,7 @@ def validate_descriptors(root: Path, *, check_publish: bool) -> tuple[dict[str, 
         if descriptor.id in found:
             errors.append(f"{path.name}: duplicate dataset id {descriptor.id!r}.")
         found[descriptor.id] = descriptor
-        if check_publish and descriptor.governance.visibility in (Visibility.PUBLIC, Visibility.EMBARGO):
+        if check_publish and descriptor.tier is Tier.PUBLIC:
             for blocker in descriptor.publication_blockers():
                 errors.append(f"{path.name}: not publishable: {blocker}")
     return found, errors
