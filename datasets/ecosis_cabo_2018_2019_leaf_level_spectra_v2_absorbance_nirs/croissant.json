@@ -1,0 +1,1276 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": "https://doi.org/10.1111/1365-2745.13972",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "EcoSIS CABO 2018-2019 Leaf-Level Spectra v2 (absorbance). v2.0 standardized NIRS package: 1 spectral source(s), 51 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "ref_spec.csv",
+      "sha256": "b535377609de9c599b69fed889658ade6ac1eda49ab771777c8eb58ebe946336"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "191defef310f3832edcc9eae09c5504c57704ba4fe9f63aba399a2e62bf615a2"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "ecosis"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "ecosis_cabo_2018_2019_leaf_level_spectra_v2_absorbance_nirs",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'ref_spec.csv' (1971 observations x 2001 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/species",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'species' (role target, type categorical).",
+          "name": "species",
+          "source": {
+            "extract": {
+              "column": "species"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latin.genus",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'latin.genus' (role target, type categorical).",
+          "name": "latin.genus",
+          "source": {
+            "extract": {
+              "column": "latin.genus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latin.species",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'latin.species' (role target, type categorical).",
+          "name": "latin.species",
+          "source": {
+            "extract": {
+              "column": "latin.species"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/plant.id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'plant.id' (role target, type categorical).",
+          "name": "plant.id",
+          "source": {
+            "extract": {
+              "column": "plant.id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/growth.form",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'growth.form' (role target, type categorical).",
+          "name": "growth.form",
+          "source": {
+            "extract": {
+              "column": "growth.form"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/family",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'family' (role target, type categorical).",
+          "name": "family",
+          "source": {
+            "extract": {
+              "column": "family"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/genus",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'genus' (role target, type categorical).",
+          "name": "genus",
+          "source": {
+            "extract": {
+              "column": "genus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/functional.group",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'functional.group' (role target, type categorical).",
+          "name": "functional.group",
+          "source": {
+            "extract": {
+              "column": "functional.group"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/LMA",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'LMA' (role target, type numeric).",
+          "name": "LMA",
+          "source": {
+            "extract": {
+              "column": "LMA"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/LDMC",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'LDMC' (role target, type numeric).",
+          "name": "LDMC",
+          "source": {
+            "extract": {
+              "column": "LDMC"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/EWT",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'EWT' (role target, type numeric).",
+          "name": "EWT",
+          "source": {
+            "extract": {
+              "column": "EWT"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cmass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cmass' (role target, type numeric).",
+          "name": "Cmass",
+          "source": {
+            "extract": {
+              "column": "Cmass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Nmass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Nmass' (role target, type numeric).",
+          "name": "Nmass",
+          "source": {
+            "extract": {
+              "column": "Nmass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/solubles_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'solubles_mass' (role target, type numeric).",
+          "name": "solubles_mass",
+          "source": {
+            "extract": {
+              "column": "solubles_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/hemicellulose_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'hemicellulose_mass' (role target, type numeric).",
+          "name": "hemicellulose_mass",
+          "source": {
+            "extract": {
+              "column": "hemicellulose_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cellulose_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cellulose_mass' (role target, type numeric).",
+          "name": "cellulose_mass",
+          "source": {
+            "extract": {
+              "column": "cellulose_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/lignin_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'lignin_mass' (role target, type numeric).",
+          "name": "lignin_mass",
+          "source": {
+            "extract": {
+              "column": "lignin_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chlA_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chlA_mass' (role target, type numeric).",
+          "name": "chlA_mass",
+          "source": {
+            "extract": {
+              "column": "chlA_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chlB_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chlB_mass' (role target, type numeric).",
+          "name": "chlB_mass",
+          "source": {
+            "extract": {
+              "column": "chlB_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/car_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'car_mass' (role target, type numeric).",
+          "name": "car_mass",
+          "source": {
+            "extract": {
+              "column": "car_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Al_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Al_mass' (role target, type numeric).",
+          "name": "Al_mass",
+          "source": {
+            "extract": {
+              "column": "Al_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/B208.9_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'B208.9_mass' (role target, type numeric).",
+          "name": "B208.9_mass",
+          "source": {
+            "extract": {
+              "column": "B208.9_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/B249.8_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'B249.8_mass' (role target, type numeric).",
+          "name": "B249.8_mass",
+          "source": {
+            "extract": {
+              "column": "B249.8_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ca_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ca_mass' (role target, type numeric).",
+          "name": "Ca_mass",
+          "source": {
+            "extract": {
+              "column": "Ca_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cu_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cu_mass' (role target, type numeric).",
+          "name": "Cu_mass",
+          "source": {
+            "extract": {
+              "column": "Cu_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fe_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fe_mass' (role target, type numeric).",
+          "name": "Fe_mass",
+          "source": {
+            "extract": {
+              "column": "Fe_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/K_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'K_mass' (role target, type numeric).",
+          "name": "K_mass",
+          "source": {
+            "extract": {
+              "column": "K_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Mg_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Mg_mass' (role target, type numeric).",
+          "name": "Mg_mass",
+          "source": {
+            "extract": {
+              "column": "Mg_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Mn_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Mn_mass' (role target, type numeric).",
+          "name": "Mn_mass",
+          "source": {
+            "extract": {
+              "column": "Mn_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Na_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Na_mass' (role target, type numeric).",
+          "name": "Na_mass",
+          "source": {
+            "extract": {
+              "column": "Na_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/P_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'P_mass' (role target, type numeric).",
+          "name": "P_mass",
+          "source": {
+            "extract": {
+              "column": "P_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Zn_mass",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Zn_mass' (role target, type numeric).",
+          "name": "Zn_mass",
+          "source": {
+            "extract": {
+              "column": "Zn_mass"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Narea",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Narea' (role target, type numeric).",
+          "name": "Narea",
+          "source": {
+            "extract": {
+              "column": "Narea"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Carea",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Carea' (role target, type numeric).",
+          "name": "Carea",
+          "source": {
+            "extract": {
+              "column": "Carea"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/solubles_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'solubles_area' (role target, type numeric).",
+          "name": "solubles_area",
+          "source": {
+            "extract": {
+              "column": "solubles_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/hemicellulose_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'hemicellulose_area' (role target, type numeric).",
+          "name": "hemicellulose_area",
+          "source": {
+            "extract": {
+              "column": "hemicellulose_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cellulose_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cellulose_area' (role target, type numeric).",
+          "name": "cellulose_area",
+          "source": {
+            "extract": {
+              "column": "cellulose_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/lignin_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'lignin_area' (role target, type numeric).",
+          "name": "lignin_area",
+          "source": {
+            "extract": {
+              "column": "lignin_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chlA_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chlA_area' (role target, type numeric).",
+          "name": "chlA_area",
+          "source": {
+            "extract": {
+              "column": "chlA_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chlB_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chlB_area' (role target, type numeric).",
+          "name": "chlB_area",
+          "source": {
+            "extract": {
+              "column": "chlB_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/car_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'car_area' (role target, type numeric).",
+          "name": "car_area",
+          "source": {
+            "extract": {
+              "column": "car_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Al_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Al_area' (role target, type numeric).",
+          "name": "Al_area",
+          "source": {
+            "extract": {
+              "column": "Al_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ca_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ca_area' (role target, type numeric).",
+          "name": "Ca_area",
+          "source": {
+            "extract": {
+              "column": "Ca_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cu_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cu_area' (role target, type numeric).",
+          "name": "Cu_area",
+          "source": {
+            "extract": {
+              "column": "Cu_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fe_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fe_area' (role target, type numeric).",
+          "name": "Fe_area",
+          "source": {
+            "extract": {
+              "column": "Fe_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/K_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'K_area' (role target, type numeric).",
+          "name": "K_area",
+          "source": {
+            "extract": {
+              "column": "K_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Mg_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Mg_area' (role target, type numeric).",
+          "name": "Mg_area",
+          "source": {
+            "extract": {
+              "column": "Mg_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Mn_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Mn_area' (role target, type numeric).",
+          "name": "Mn_area",
+          "source": {
+            "extract": {
+              "column": "Mn_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Na_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Na_area' (role target, type numeric).",
+          "name": "Na_area",
+          "source": {
+            "extract": {
+              "column": "Na_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/P_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'P_area' (role target, type numeric).",
+          "name": "P_area",
+          "source": {
+            "extract": {
+              "column": "P_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Zn_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Zn_area' (role target, type numeric).",
+          "name": "Zn_area",
+          "source": {
+            "extract": {
+              "column": "Zn_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ecosis_resource_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'ecosis_resource_id' (role metadata, type categorical).",
+          "name": "ecosis_resource_id",
+          "source": {
+            "extract": {
+              "column": "ecosis_resource_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/site",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'site' (role metadata, type categorical).",
+          "name": "site",
+          "source": {
+            "extract": {
+              "column": "site"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/location",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'location' (role metadata, type categorical).",
+          "name": "location",
+          "source": {
+            "extract": {
+              "column": "location"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/country",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'country' (role metadata, type categorical).",
+          "name": "country",
+          "source": {
+            "extract": {
+              "column": "country"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'latitude' (role metadata, type numeric).",
+          "name": "latitude",
+          "source": {
+            "extract": {
+              "column": "latitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/longitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'longitude' (role metadata, type numeric).",
+          "name": "longitude",
+          "source": {
+            "extract": {
+              "column": "longitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/coordinate_precision_notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'coordinate_precision_notes' (role metadata, type categorical).",
+          "name": "coordinate_precision_notes",
+          "source": {
+            "extract": {
+              "column": "coordinate_precision_notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/year",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'year' (role metadata, type numeric).",
+          "name": "year",
+          "source": {
+            "extract": {
+              "column": "year"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/date",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'date' (role metadata, type categorical).",
+          "name": "date",
+          "source": {
+            "extract": {
+              "column": "date"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/plant_part",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'plant_part' (role metadata, type categorical).",
+          "name": "plant_part",
+          "source": {
+            "extract": {
+              "column": "plant_part"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/canopy_or_leaf",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'canopy_or_leaf' (role metadata, type categorical).",
+          "name": "canopy_or_leaf",
+          "source": {
+            "extract": {
+              "column": "canopy_or_leaf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instrument",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instrument' (role metadata, type categorical).",
+          "name": "instrument",
+          "source": {
+            "extract": {
+              "column": "instrument"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/acquisition_mode",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'acquisition_mode' (role metadata, type categorical).",
+          "name": "acquisition_mode",
+          "source": {
+            "extract": {
+              "column": "acquisition_mode"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/signal_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'signal_type' (role metadata, type categorical).",
+          "name": "signal_type",
+          "source": {
+            "extract": {
+              "column": "signal_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/publication_doi",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'publication_doi' (role metadata, type categorical).",
+          "name": "publication_doi",
+          "source": {
+            "extract": {
+              "column": "publication_doi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/citation",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'citation' (role metadata, type categorical).",
+          "name": "citation",
+          "source": {
+            "extract": {
+              "column": "citation"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://doi.org/10.1111/1365-2745.13972",
+    "https://doi.org/10.1111/nph.18713",
+    "https://doi.org/10.5683/SP3/NYABAG",
+    "https://doi.org/10.21232/58kApoRy",
+    "https://doi.org/10.1016/j.rse.2023.113926",
+    "https://doi.org/10.1080/00103624.2016.1228952",
+    "https://doi.org/10.1186/s13007-021-00816-4",
+    "https://doi.org/10.17504/protocols.io.q26g7rn23vwz/v2",
+    "https://doi.org/10.21232/44vxHorW",
+    "https://doi.org/10.21232/44vxhorw",
+    "https://doi.org/10.21232/deP7jVyq",
+    "https://doi.org/10.21232/dep7jvyq",
+    "https://data.ecosis.org/dataset/cabo-2018-2019-leaf-level-spectra-v2",
+    "10.5281/zenodo.10735410",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

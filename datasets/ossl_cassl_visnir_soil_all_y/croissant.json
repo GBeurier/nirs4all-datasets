@@ -1,0 +1,1400 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "ossl cassl visnir soil all y. v2.0 standardized NIRS package: 1 spectral source(s), 53 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "recovered_spectra",
+      "sha256": "09a74e30d7b4d18eee17728750b6f599f11d8466b20beeb1749e0c13624c4028"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "d303fad75b4c9d59b8ba392a1bd47891e961d71be0608e261e5eea4cdaf1341d"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "ossl"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "ossl_cassl_visnir_soil_all_y",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'recovered_spectra' (1578 observations x 1076 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/acidity_usda_a795_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'acidity_usda_a795_cmolc_kg' (role target, type numeric).",
+          "name": "acidity_usda_a795_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "acidity_usda_a795_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/aggstb_usda_a1_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'aggstb_usda_a1_w_pct' (role target, type numeric).",
+          "name": "aggstb_usda_a1_w_pct",
+          "source": {
+            "extract": {
+              "column": "aggstb_usda_a1_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/al_dith_usda_a65_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'al_dith_usda_a65_w_pct' (role target, type numeric).",
+          "name": "al_dith_usda_a65_w_pct",
+          "source": {
+            "extract": {
+              "column": "al_dith_usda_a65_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/al_ext_aquaregia_g_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'al_ext_aquaregia_g_kg' (role target, type numeric).",
+          "name": "al_ext_aquaregia_g_kg",
+          "source": {
+            "extract": {
+              "column": "al_ext_aquaregia_g_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/al_ext_usda_a1056_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'al_ext_usda_a1056_mg_kg' (role target, type numeric).",
+          "name": "al_ext_usda_a1056_mg_kg",
+          "source": {
+            "extract": {
+              "column": "al_ext_usda_a1056_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/al_ext_usda_a69_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'al_ext_usda_a69_cmolc_kg' (role target, type numeric).",
+          "name": "al_ext_usda_a69_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "al_ext_usda_a69_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/al_ox_usda_a59_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'al_ox_usda_a59_w_pct' (role target, type numeric).",
+          "name": "al_ox_usda_a59_w_pct",
+          "source": {
+            "extract": {
+              "column": "al_ox_usda_a59_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/awc_33_1500kPa_usda_c80_w_frac",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'awc_33_1500kPa_usda_c80_w_frac' (role target, type numeric).",
+          "name": "awc_33_1500kPa_usda_c80_w_frac",
+          "source": {
+            "extract": {
+              "column": "awc_33_1500kPa_usda_c80_w_frac"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/b_ext_mel3_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'b_ext_mel3_mg_kg' (role target, type numeric).",
+          "name": "b_ext_mel3_mg_kg",
+          "source": {
+            "extract": {
+              "column": "b_ext_mel3_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/bd_usda_a4_g_cm3",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'bd_usda_a4_g_cm3' (role target, type numeric).",
+          "name": "bd_usda_a4_g_cm3",
+          "source": {
+            "extract": {
+              "column": "bd_usda_a4_g_cm3"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/c_tot_usda_a622_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'c_tot_usda_a622_w_pct' (role target, type numeric).",
+          "name": "c_tot_usda_a622_w_pct",
+          "source": {
+            "extract": {
+              "column": "c_tot_usda_a622_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ca_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ca_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "ca_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "ca_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ca_ext_usda_a1059_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ca_ext_usda_a1059_mg_kg' (role target, type numeric).",
+          "name": "ca_ext_usda_a1059_mg_kg",
+          "source": {
+            "extract": {
+              "column": "ca_ext_usda_a1059_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ca_ext_usda_a722_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ca_ext_usda_a722_cmolc_kg' (role target, type numeric).",
+          "name": "ca_ext_usda_a722_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "ca_ext_usda_a722_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/caco3_usda_a54_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'caco3_usda_a54_w_pct' (role target, type numeric).",
+          "name": "caco3_usda_a54_w_pct",
+          "source": {
+            "extract": {
+              "column": "caco3_usda_a54_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cec_usda_a723_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cec_usda_a723_cmolc_kg' (role target, type numeric).",
+          "name": "cec_usda_a723_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "cec_usda_a723_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cf_usda_c236_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cf_usda_c236_w_pct' (role target, type numeric).",
+          "name": "cf_usda_c236_w_pct",
+          "source": {
+            "extract": {
+              "column": "cf_usda_c236_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/clay_tot_usda_a334_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'clay_tot_usda_a334_w_pct' (role target, type numeric).",
+          "name": "clay_tot_usda_a334_w_pct",
+          "source": {
+            "extract": {
+              "column": "clay_tot_usda_a334_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cu_ext_usda_a1063_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cu_ext_usda_a1063_mg_kg' (role target, type numeric).",
+          "name": "cu_ext_usda_a1063_mg_kg",
+          "source": {
+            "extract": {
+              "column": "cu_ext_usda_a1063_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ec_usda_a364_ds_m",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ec_usda_a364_ds_m' (role target, type numeric).",
+          "name": "ec_usda_a364_ds_m",
+          "source": {
+            "extract": {
+              "column": "ec_usda_a364_ds_m"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/efferv_usda_a479_class",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'efferv_usda_a479_class' (role target, type categorical).",
+          "name": "efferv_usda_a479_class",
+          "source": {
+            "extract": {
+              "column": "efferv_usda_a479_class"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/fe_dith_usda_a66_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'fe_dith_usda_a66_w_pct' (role target, type numeric).",
+          "name": "fe_dith_usda_a66_w_pct",
+          "source": {
+            "extract": {
+              "column": "fe_dith_usda_a66_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/fe_ext_aquaregia_g_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'fe_ext_aquaregia_g_kg' (role target, type numeric).",
+          "name": "fe_ext_aquaregia_g_kg",
+          "source": {
+            "extract": {
+              "column": "fe_ext_aquaregia_g_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/fe_ext_usda_a1064_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'fe_ext_usda_a1064_mg_kg' (role target, type numeric).",
+          "name": "fe_ext_usda_a1064_mg_kg",
+          "source": {
+            "extract": {
+              "column": "fe_ext_usda_a1064_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/fe_ox_usda_a60_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'fe_ox_usda_a60_w_pct' (role target, type numeric).",
+          "name": "fe_ox_usda_a60_w_pct",
+          "source": {
+            "extract": {
+              "column": "fe_ox_usda_a60_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/k_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'k_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "k_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "k_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/k_ext_usda_a1065_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'k_ext_usda_a1065_mg_kg' (role target, type numeric).",
+          "name": "k_ext_usda_a1065_mg_kg",
+          "source": {
+            "extract": {
+              "column": "k_ext_usda_a1065_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/k_ext_usda_a725_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'k_ext_usda_a725_cmolc_kg' (role target, type numeric).",
+          "name": "k_ext_usda_a725_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "k_ext_usda_a725_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mg_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mg_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "mg_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "mg_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mg_ext_usda_a1066_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mg_ext_usda_a1066_mg_kg' (role target, type numeric).",
+          "name": "mg_ext_usda_a1066_mg_kg",
+          "source": {
+            "extract": {
+              "column": "mg_ext_usda_a1066_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mg_ext_usda_a724_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mg_ext_usda_a724_cmolc_kg' (role target, type numeric).",
+          "name": "mg_ext_usda_a724_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "mg_ext_usda_a724_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mn_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mn_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "mn_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "mn_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mn_ext_usda_a1067_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mn_ext_usda_a1067_mg_kg' (role target, type numeric).",
+          "name": "mn_ext_usda_a1067_mg_kg",
+          "source": {
+            "extract": {
+              "column": "mn_ext_usda_a1067_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mn_ext_usda_a70_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'mn_ext_usda_a70_mg_kg' (role target, type numeric).",
+          "name": "mn_ext_usda_a70_mg_kg",
+          "source": {
+            "extract": {
+              "column": "mn_ext_usda_a70_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_tot_usda_a623_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_tot_usda_a623_w_pct' (role target, type numeric).",
+          "name": "n_tot_usda_a623_w_pct",
+          "source": {
+            "extract": {
+              "column": "n_tot_usda_a623_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/na_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'na_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "na_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "na_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/na_ext_usda_a1068_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'na_ext_usda_a1068_mg_kg' (role target, type numeric).",
+          "name": "na_ext_usda_a1068_mg_kg",
+          "source": {
+            "extract": {
+              "column": "na_ext_usda_a1068_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/na_ext_usda_a726_cmolc_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'na_ext_usda_a726_cmolc_kg' (role target, type numeric).",
+          "name": "na_ext_usda_a726_cmolc_kg",
+          "source": {
+            "extract": {
+              "column": "na_ext_usda_a726_cmolc_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/oc_usda_c729_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'oc_usda_c729_w_pct' (role target, type numeric).",
+          "name": "oc_usda_c729_w_pct",
+          "source": {
+            "extract": {
+              "column": "oc_usda_c729_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/p_ext_aquaregia_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'p_ext_aquaregia_mg_kg' (role target, type numeric).",
+          "name": "p_ext_aquaregia_mg_kg",
+          "source": {
+            "extract": {
+              "column": "p_ext_aquaregia_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/p_ext_usda_a1070_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'p_ext_usda_a1070_mg_kg' (role target, type numeric).",
+          "name": "p_ext_usda_a1070_mg_kg",
+          "source": {
+            "extract": {
+              "column": "p_ext_usda_a1070_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/p_ext_usda_a270_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'p_ext_usda_a270_mg_kg' (role target, type numeric).",
+          "name": "p_ext_usda_a270_mg_kg",
+          "source": {
+            "extract": {
+              "column": "p_ext_usda_a270_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/p_ext_usda_a274_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'p_ext_usda_a274_mg_kg' (role target, type numeric).",
+          "name": "p_ext_usda_a274_mg_kg",
+          "source": {
+            "extract": {
+              "column": "p_ext_usda_a274_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ph_cacl2_usda_a481_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ph_cacl2_usda_a481_index' (role target, type numeric).",
+          "name": "ph_cacl2_usda_a481_index",
+          "source": {
+            "extract": {
+              "column": "ph_cacl2_usda_a481_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ph_h2o_usda_a268_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ph_h2o_usda_a268_index' (role target, type numeric).",
+          "name": "ph_h2o_usda_a268_index",
+          "source": {
+            "extract": {
+              "column": "ph_h2o_usda_a268_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/s_ext_mel3_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 's_ext_mel3_mg_kg' (role target, type numeric).",
+          "name": "s_ext_mel3_mg_kg",
+          "source": {
+            "extract": {
+              "column": "s_ext_mel3_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/s_tot_usda_a624_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 's_tot_usda_a624_w_pct' (role target, type numeric).",
+          "name": "s_tot_usda_a624_w_pct",
+          "source": {
+            "extract": {
+              "column": "s_tot_usda_a624_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/sand_tot_usda_c60_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'sand_tot_usda_c60_w_pct' (role target, type numeric).",
+          "name": "sand_tot_usda_c60_w_pct",
+          "source": {
+            "extract": {
+              "column": "sand_tot_usda_c60_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/silt_tot_usda_c62_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'silt_tot_usda_c62_w_pct' (role target, type numeric).",
+          "name": "silt_tot_usda_c62_w_pct",
+          "source": {
+            "extract": {
+              "column": "silt_tot_usda_c62_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wr_10kPa_usda_a414_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'wr_10kPa_usda_a414_w_pct' (role target, type numeric).",
+          "name": "wr_10kPa_usda_a414_w_pct",
+          "source": {
+            "extract": {
+              "column": "wr_10kPa_usda_a414_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wr_1500kPa_usda_a417_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'wr_1500kPa_usda_a417_w_pct' (role target, type numeric).",
+          "name": "wr_1500kPa_usda_a417_w_pct",
+          "source": {
+            "extract": {
+              "column": "wr_1500kPa_usda_a417_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wr_33kPa_usda_a415_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'wr_33kPa_usda_a415_w_pct' (role target, type numeric).",
+          "name": "wr_33kPa_usda_a415_w_pct",
+          "source": {
+            "extract": {
+              "column": "wr_33kPa_usda_a415_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/zn_ext_usda_a1073_mg_kg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'zn_ext_usda_a1073_mg_kg' (role target, type numeric).",
+          "name": "zn_ext_usda_a1073_mg_kg",
+          "source": {
+            "extract": {
+              "column": "zn_ext_usda_a1073_mg_kg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ID_sample",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'ID_sample' (role metadata, type categorical).",
+          "name": "ID_sample",
+          "source": {
+            "extract": {
+              "column": "ID_sample"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/SpectralRep",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'SpectralRep' (role metadata, type numeric).",
+          "name": "SpectralRep",
+          "source": {
+            "extract": {
+              "column": "SpectralRep"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset' (role metadata, type categorical).",
+          "name": "dataset",
+          "source": {
+            "extract": {
+              "column": "dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/collection_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'collection_name' (role metadata, type categorical).",
+          "name": "collection_name",
+          "source": {
+            "extract": {
+              "column": "collection_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_code' (role metadata, type categorical).",
+          "name": "dataset_code",
+          "source": {
+            "extract": {
+              "column": "dataset_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_title",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_title' (role metadata, type categorical).",
+          "name": "dataset_title",
+          "source": {
+            "extract": {
+              "column": "dataset_title"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_owner",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_owner' (role metadata, type categorical).",
+          "name": "dataset_owner",
+          "source": {
+            "extract": {
+              "column": "dataset_owner"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_slug",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_slug' (role metadata, type categorical).",
+          "name": "dataset_slug",
+          "source": {
+            "extract": {
+              "column": "dataset_slug"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/task_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'task_type' (role metadata, type categorical).",
+          "name": "task_type",
+          "source": {
+            "extract": {
+              "column": "task_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/trait_header",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'trait_header' (role metadata, type categorical).",
+          "name": "trait_header",
+          "source": {
+            "extract": {
+              "column": "trait_header"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/trait_header_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'trait_header_original' (role metadata, type categorical).",
+          "name": "trait_header_original",
+          "source": {
+            "extract": {
+              "column": "trait_header_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectral_kind",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectral_kind' (role metadata, type categorical).",
+          "name": "spectral_kind",
+          "source": {
+            "extract": {
+              "column": "spectral_kind"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_local_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_local_id' (role metadata, type categorical).",
+          "name": "scan_local_id",
+          "source": {
+            "extract": {
+              "column": "scan_local_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_lab",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_lab' (role metadata, type categorical).",
+          "name": "scan_lab",
+          "source": {
+            "extract": {
+              "column": "scan_lab"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_model_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_model_name' (role metadata, type categorical).",
+          "name": "scan_model_name",
+          "source": {
+            "extract": {
+              "column": "scan_model_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_model_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_model_code' (role metadata, type categorical).",
+          "name": "scan_model_code",
+          "source": {
+            "extract": {
+              "column": "scan_model_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_optics",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_optics' (role metadata, type categorical).",
+          "name": "scan_optics",
+          "source": {
+            "extract": {
+              "column": "scan_optics"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_preparation",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_preparation' (role metadata, type categorical).",
+          "name": "scan_preparation",
+          "source": {
+            "extract": {
+              "column": "scan_preparation"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/country_iso3166",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'country_iso3166' (role metadata, type categorical).",
+          "name": "country_iso3166",
+          "source": {
+            "extract": {
+              "column": "country_iso3166"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/upper_depth_cm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'upper_depth_cm' (role metadata, type numeric).",
+          "name": "upper_depth_cm",
+          "source": {
+            "extract": {
+              "column": "upper_depth_cm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/lower_depth_cm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'lower_depth_cm' (role metadata, type numeric).",
+          "name": "lower_depth_cm",
+          "source": {
+            "extract": {
+              "column": "lower_depth_cm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/texture_class",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'texture_class' (role metadata, type categorical).",
+          "name": "texture_class",
+          "source": {
+            "extract": {
+              "column": "texture_class"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pedon_taxa",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'pedon_taxa' (role metadata, type categorical).",
+          "name": "pedon_taxa",
+          "source": {
+            "extract": {
+              "column": "pedon_taxa"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/horizon_designation",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'horizon_designation' (role metadata, type categorical).",
+          "name": "horizon_designation",
+          "source": {
+            "extract": {
+              "column": "horizon_designation"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raw_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raw_label' (role metadata, type categorical).",
+          "name": "raw_label",
+          "source": {
+            "extract": {
+              "column": "raw_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/reference_value",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'reference_value' (role metadata, type numeric).",
+          "name": "reference_value",
+          "source": {
+            "extract": {
+              "column": "reference_value"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/class_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'class_index' (role metadata, type categorical).",
+          "name": "class_index",
+          "source": {
+            "extract": {
+              "column": "class_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/class_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'class_label' (role metadata, type categorical).",
+          "name": "class_label",
+          "source": {
+            "extract": {
+              "column": "class_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/feature_count_per_dimension",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'feature_count_per_dimension' (role metadata, type numeric).",
+          "name": "feature_count_per_dimension",
+          "source": {
+            "extract": {
+              "column": "feature_count_per_dimension"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dimensions",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dimensions' (role metadata, type categorical).",
+          "name": "dimensions",
+          "source": {
+            "extract": {
+              "column": "dimensions"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wavelength_note",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'wavelength_note' (role metadata, type categorical).",
+          "name": "wavelength_note",
+          "source": {
+            "extract": {
+              "column": "wavelength_note"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_soillab_L1_v1.2.csv.gz",
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_visnir_L0_v1.2.csv.gz",
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_soilsite_L0_v1.2.csv.gz",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

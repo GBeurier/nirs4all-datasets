@@ -11,8 +11,10 @@ One dataset failing never aborts the run: each result carries a status (``ok``/`
 from __future__ import annotations
 
 import json
+import multiprocessing
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 from typing import Any
 
@@ -104,13 +106,30 @@ def build_all(
             if progress:
                 progress(i, len(ids), rec)
     else:
-        with ProcessPoolExecutor(max_workers=n_workers) as pool:
-            futures = {pool.submit(process_one, str(root), str(source_tree), did, skip_assets=skip_assets, force=force, protocol_refresh=protocol_refresh): did for did in ids}
-            for i, fut in enumerate(as_completed(futures), 1):
-                rec = fut.result()
-                results.append(rec)
-                if progress:
-                    progress(i, len(ids), rec)
+        done: set[str] = set()
+        # 'spawn', not the Linux default 'fork': qualify imports numpy/matplotlib/pyarrow (multi-threaded);
+        # forking a multi-threaded process deadlocks/aborts workers (-> BrokenProcessPool). Spawn is safe.
+        ctx = multiprocessing.get_context("spawn")
+        try:
+            with ProcessPoolExecutor(max_workers=n_workers, mp_context=ctx) as pool:
+                futures = {pool.submit(process_one, str(root), str(source_tree), did, skip_assets=skip_assets, force=force, protocol_refresh=protocol_refresh): did for did in ids}
+                for fut in as_completed(futures):
+                    did = futures[fut]
+                    try:
+                        rec = fut.result()
+                    except Exception as exc:  # noqa: BLE001 - a worker that died (OOM/segfault) is a per-dataset failure, not a run abort
+                        rec = {"id": did, "status": "failed", "reason": f"worker terminated: {type(exc).__name__}"}
+                    results.append(rec)
+                    done.add(rec["id"])
+                    if progress:
+                        progress(len(results), len(ids), rec)
+        except BrokenProcessPool:
+            pass  # the pool died mid-run; finish the rest serially below (lower peak memory isolates the killer)
+        for did in [d for d in ids if d not in done]:
+            rec = process_one(str(root), str(source_tree), did, skip_assets=skip_assets, force=force, protocol_refresh=protocol_refresh)
+            results.append(rec)
+            if progress:
+                progress(len(results), len(ids), rec)
 
     results.sort(key=lambda r: r["id"])
     counts: dict[str, int] = {}

@@ -54,6 +54,9 @@ GENERATOR_VERSION = "1"
 
 # Id columns that link spectra <-> samples <-> Y/metadata; never authored as a Variable.
 _ID_COLUMNS = frozenset({"observation_id", "sample_id", "dataset_id"})
+# Structural M columns canonical.py drops from variables.parquet (split/index plumbing); excluded here too
+# so a declared metadata Variable never goes missing from the canonical data (mirrors canonical._M_STRUCTURAL).
+_M_STRUCTURAL = frozenset({"source_sample_index", "split_original", "split_source"})
 
 # Data-repository DOI prefixes -> (OriginSource.kind, human repository name). A DOI under one of these
 # is where the *bytes* live (-> origin_sources); any other 10.x DOI is a journal paper (-> publications).
@@ -215,9 +218,12 @@ def _to_float(value: Any) -> float | None:
         return None
 
 
-def _v2_numeric_columns(y_path: Path, sample_rows: int = 80) -> dict[str, bool]:
-    """Per-column numeric-ness of a v2.0 ``Y.csv`` (header + a sample), to type a target without an
-    explicit ``target_types`` entry: mostly-numeric -> numeric, else categorical. Keyed by ``_norm_key``."""
+def _v2_numeric_columns(y_path: Path, sample_rows: int = 80, *, default_numeric: bool = True) -> dict[str, bool]:
+    """Per-column numeric-ness of a v2.0 CSV (header + a sample), keyed by ``_norm_key``.
+
+    A column whose nonempty values are >=80% float-parseable is numeric. A column with **no** evidence
+    (all empty in the sample) falls back to ``default_numeric`` — ``True`` for targets (the NIRS norm),
+    ``False`` for metadata (an empty metadata column must not be invented as numeric)."""
     if not y_path.exists():
         return {}
     lines = [ln for ln in y_path.read_text(encoding="utf-8", errors="replace").splitlines() if ln.strip()][: sample_rows + 1]
@@ -230,7 +236,7 @@ def _v2_numeric_columns(y_path: Path, sample_rows: int = 80) -> dict[str, bool]:
         vals = [row.split(delim)[i].strip().strip('"').strip("'") for row in lines[1:] if i < len(row.split(delim))]
         nonempty = [v for v in vals if v.lower() not in _NA_TOKENS]
         if not nonempty:
-            numeric[_norm_key(header)] = True  # no evidence -> default numeric
+            numeric[_norm_key(header)] = default_numeric  # no evidence -> caller's default
             continue
         ok = sum(1 for v in nonempty if _is_float(v))
         numeric[_norm_key(header)] = ok >= 0.8 * len(nonempty)
@@ -322,13 +328,15 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
 
     Targets are typed from ``target_types`` (numeric/categorical), overridden to CATEGORICAL for an
     identifier-looking name, and otherwise inferred from the ``Y.csv`` dtype (default NUMERIC). Metadata
-    columns carry no type evidence beyond their name, so they default to NUMERIC (the card does not
-    profile them; the qualify stage refines per-variable dataviz later).
+    columns are typed from their actual ``M.csv`` values: NUMERIC only when the values parse as numbers
+    (comma-decimals handled), else CATEGORICAL — most metadata (urls, instruments, descriptions, sites) is
+    text, so blanket-NUMERIC would leave the card with empty stats and broken plots.
     """
     tsum = card.get("target_summary") or {}
     target_vars = [str(v) for v in (tsum.get("target_variables") or [])]
     target_types = {str(k): str(v).lower() for k, v in (tsum.get("target_types") or {}).items()}
     y_numeric = _v2_numeric_columns(leaf_dir / "Y.csv")
+    m_numeric = _v2_numeric_columns(leaf_dir / "M.csv", default_numeric=False)
 
     def _vartype(name: str) -> VarType:
         if _CLF_NAME_RE.search(_norm_tokens(name)):
@@ -350,12 +358,20 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
         seen.add(name)
         variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name)))
 
+    m_header = set(_csv_header(leaf_dir / "M.csv"))
     m_fields = [str(f) for f in ((card.get("metadata_fields_summary") or {}).get("m_fields") or [])]
     for name in m_fields:
-        if name in _ID_COLUMNS or name in seen:
+        # Only declare a metadata variable that is actually a column in M.csv (no phantom "absent" vars);
+        # skip id/structural plumbing + the standardization script's source_* provenance-tracking columns.
+        if name in _ID_COLUMNS or name in _M_STRUCTURAL or name in seen or name.startswith("source_"):
+            continue
+        if name not in m_header:  # a metadata variable must be a real M.csv column (none if M.csv is absent)
             continue
         seen.add(name)
-        vtype = VarType.CATEGORICAL if _CLF_NAME_RE.search(_norm_tokens(name)) else VarType.NUMERIC
+        if _CLF_NAME_RE.search(_norm_tokens(name)):
+            vtype = VarType.CATEGORICAL
+        else:
+            vtype = VarType.NUMERIC if m_numeric.get(_norm_key(name)) is True else VarType.CATEGORICAL
         variables.append(Variable(name=name, role=VariableRole.METADATA, type=vtype))
     return variables
 

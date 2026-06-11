@@ -113,9 +113,10 @@ def _build_fixture(tmp_path: Path) -> Path:
     prv = _card("wheat_protein", name="Wheat — protein", description="Private wheat protein dataset.", target_name="protein", n_sources=2)
     _write_dataset(root, "wheat_protein", prv, n_sources=2)
 
+    # The qualify stage writes card.json ALREADY anonymized for the anonymized tier, so the fixture's
+    # tracked card.json IS the anon card (no separate card.anon.json) -- the site reads card.json for all tiers.
     ano_full = _card("grass_secret", name="Grass — SECRETNAME", description="Top secret grass description.", target_name="MOISTURE_SECRET")
-    ano = anonymize_card(ano_full)
-    _write_dataset(root, "grass_secret", ano_full, anon=ano)
+    _write_dataset(root, "grass_secret", anonymize_card(ano_full))
 
     entries = [
         _entry("corn_oil", tier="public"),

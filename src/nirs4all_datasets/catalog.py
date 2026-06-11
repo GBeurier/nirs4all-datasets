@@ -59,35 +59,40 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
     card_meta_stale = bool(card) and "metadata_hash" in integ and integ.get("metadata_hash") != current_meta
     is_stale = (bool(card) and not card_fresh) or card_meta_stale or (bool(manifest) and not manifest_fresh)
 
+    # Display fields come from the PUBLIC descriptor (masked name/targets/domain for the anonymized tier);
+    # the integrity hashes above stay keyed to the real descriptor (the card/manifest were hashed from it).
+    from nirs4all_datasets.qualify.anonymize import public_descriptor  # lazy: keeps `import catalog` light
+
+    pub = public_descriptor(descriptor)
     alignment = card.get("alignment", {}) if card_fresh else {}
-    targets = descriptor.targets
-    metadata_vars = descriptor.metadata_variables
-    n_features_total = sum(s.n_variables for s in descriptor.sources if s.n_variables is not None) or None
+    targets = pub.targets
+    metadata_vars = pub.metadata_variables
+    n_features_total = sum(s.n_variables for s in pub.sources if s.n_variables is not None) or None
 
     entry: dict[str, Any] = {
-        "id": descriptor.id,
-        "name": descriptor.name,
-        "domain": descriptor.domain,
-        "tier": descriptor.tier.value,
-        "license": descriptor.governance.license,
-        "content_version": descriptor.versions.content,
-        "schema_protocol": descriptor.versions.schema_protocol,
-        "spectro_family": _spectro_family(descriptor),
-        "modalities": sorted({s.modality.value for s in descriptor.sources}),
-        "n_sources": len(descriptor.sources),
-        "source_ids": [s.source_id for s in descriptor.sources],
+        "id": pub.id,
+        "name": pub.name,
+        "domain": pub.domain,
+        "tier": pub.tier.value,
+        "license": pub.governance.license,
+        "content_version": pub.versions.content,
+        "schema_protocol": pub.versions.schema_protocol,
+        "spectro_family": _spectro_family(pub),
+        "modalities": sorted({s.modality.value for s in pub.sources}),
+        "n_sources": len(pub.sources),
+        "source_ids": [s.source_id for s in pub.sources],
         "n_features_total": n_features_total,
-        "alignment_level": descriptor.alignment_level.value,
+        "alignment_level": pub.alignment_level.value,
         "n_targets": len(targets),
         "targets": [t.name for t in targets],
         "n_metadata": len(metadata_vars),
-        "has_split": bool(descriptor.splits),
-        "splits": [s.name for s in descriptor.splits],
+        "has_split": bool(pub.splits),
+        "splits": [s.name for s in pub.splits],
         "n_samples": alignment.get("n_samples"),
-        "doi": descriptor.dataverse.doi,
-        "origin_kinds": sorted({s.kind.value for s in descriptor.origin_sources}),
-        "origin_access": sorted({s.access.value for s in descriptor.origin_sources}),
-        "n_publications": len(descriptor.publications),
+        "doi": pub.dataverse.doi,
+        "origin_kinds": sorted({s.kind.value for s in pub.origin_sources}),
+        "origin_access": sorted({s.access.value for s in pub.origin_sources}),
+        "n_publications": len(pub.publications),
         "card_protocol": card.get("protocol_version") if card_fresh else None,
         "content_hash": integ.get("content_hash") if card_fresh else None,
         "processing_hash": current,

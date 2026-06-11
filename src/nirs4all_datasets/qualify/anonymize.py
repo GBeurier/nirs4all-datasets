@@ -156,6 +156,7 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
         identity["name"] = identity.get("id")  # the slug id is already opaque; reuse it as the display name
         identity["description"] = _MASK
         identity["keywords"] = []
+        identity["domain"] = None  # the domain (e.g. "grapevine", "soil") reveals what the dataset is
 
     for source in out.get("sources") or []:
         if isinstance(source, dict):
@@ -200,3 +201,47 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
                 pub["title"] = None
 
     return out
+
+
+def public_card(card: dict[str, Any], tier: Any) -> dict[str, Any]:
+    """The public-safe card for a ``tier``: :func:`anonymize_card` for ``ANONYMIZED``, else unchanged.
+
+    The single chokepoint every reader of ``card.json`` (the CLI ``card``, the catalog, the site) goes
+    through, so an anonymized card can never be served raw.
+    """
+    from nirs4all_datasets.schema import Tier
+
+    return anonymize_card(card) if tier is Tier.ANONYMIZED else card
+
+
+def public_descriptor(descriptor: DatasetDescriptor) -> DatasetDescriptor:
+    """The public-safe descriptor for a dataset's tier.
+
+    For the ``ANONYMIZED`` tier, a copy with every variable name masked to its ``var_NNN`` slot and every
+    identifying field removed (name -> opaque id, description/keywords/domain/citation/contributor/origin &
+    publication titles/DataCite); other tiers are returned unchanged. The catalog index, the plugin
+    accessors, the datasheet/Croissant renderers and Dataverse publication all derive their descriptor
+    fields from this, so no path can leak an anonymized identity.
+    """
+    from nirs4all_datasets.schema import Tier
+
+    if descriptor.tier is not Tier.ANONYMIZED:
+        return descriptor
+    variables = [v.model_copy(update={"name": _generic_name(i), "unit": None}) for i, v in enumerate(descriptor.variables)]
+    provenance = descriptor.provenance.model_copy(update={"contributor": _MASK, "reference_method": None})
+    publications = [p.model_copy(update={"title": None}) for p in descriptor.publications]
+    origin_sources = [o.model_copy(update={"title": None}) for o in descriptor.origin_sources]
+    return descriptor.model_copy(
+        update={
+            "name": descriptor.id,
+            "description": _MASK,
+            "keywords": [],
+            "domain": None,
+            "citation": None,
+            "variables": variables,
+            "provenance": provenance,
+            "publications": publications,
+            "origin_sources": origin_sources,
+            "datacite": None,
+        }
+    )

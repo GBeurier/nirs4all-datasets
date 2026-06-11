@@ -1,0 +1,815 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Grapevine LeafTraits multisensor NIR. v2.0 standardized NIRS package: 4 spectral source(s), 31 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X1.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "micronir",
+      "sha256": "3762ab480c08728612684eac36de9f65d2a7e5edeb2b25a3196919b1af0585d7"
+    },
+    {
+      "@id": "file/X2.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "neospectra",
+      "sha256": "b07af56437201ecdce2b3b3c39776f7378d40b6569bc5f361c6bdcc1a19974bd"
+    },
+    {
+      "@id": "file/X3.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "micronir_neospectra",
+      "sha256": "563b5060d9bdf21bcdc9a5b4b48b9f9c2741225b9af50da8bbf85fe3714e00c4"
+    },
+    {
+      "@id": "file/X4.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "asd",
+      "sha256": "95221f7ee493f9552df83dc245ee2ea01142fe60db2bb74ba4a7101d5880421e"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "da620447f0281b0fa22f7acad9f6e911e2eea6c821224b5060704d15c2f6f696"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "grapevine"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "grapevine_leaftraits_multisensor_nir",
+  "recordSet": [
+    {
+      "@id": "X1",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'micronir' (2079 observations x 125 wavelengths).",
+      "field": [
+        {
+          "@id": "X1/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X1/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X1/sample_id"
+      },
+      "name": "X1"
+    },
+    {
+      "@id": "X2",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'neospectra' (2079 observations x 257 wavelengths).",
+      "field": [
+        {
+          "@id": "X2/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X2/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X2/sample_id"
+      },
+      "name": "X2"
+    },
+    {
+      "@id": "X3",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'micronir_neospectra' (2079 observations x 276 wavelengths).",
+      "field": [
+        {
+          "@id": "X3/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X3.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X3/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X3.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X3/sample_id"
+      },
+      "name": "X3"
+    },
+    {
+      "@id": "X4",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'asd' (2079 observations x 2101 wavelengths).",
+      "field": [
+        {
+          "@id": "X4/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X4.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X4/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X4.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X4/sample_id"
+      },
+      "name": "X4"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/LMA",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'LMA' (role target, type numeric).",
+          "name": "LMA",
+          "source": {
+            "extract": {
+              "column": "LMA"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/WCf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'WCf' (role target, type numeric).",
+          "name": "WCf",
+          "source": {
+            "extract": {
+              "column": "WCf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/WQ",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'WQ' (role target, type numeric).",
+          "name": "WQ",
+          "source": {
+            "extract": {
+              "column": "WQ"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/An",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'An' (role target, type numeric).",
+          "name": "An",
+          "source": {
+            "extract": {
+              "column": "An"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/PSI",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'PSI' (role target, type numeric).",
+          "name": "PSI",
+          "source": {
+            "extract": {
+              "column": "PSI"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/WUEintr",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'WUEintr' (role target, type numeric).",
+          "name": "WUEintr",
+          "source": {
+            "extract": {
+              "column": "WUEintr"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/WUEinst",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'WUEinst' (role target, type numeric).",
+          "name": "WUEinst",
+          "source": {
+            "extract": {
+              "column": "WUEinst"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/gsw",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'gsw' (role target, type numeric).",
+          "name": "gsw",
+          "source": {
+            "extract": {
+              "column": "gsw"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/gbw",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'gbw' (role target, type numeric).",
+          "name": "gbw",
+          "source": {
+            "extract": {
+              "column": "gbw"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/gtw",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'gtw' (role target, type numeric).",
+          "name": "gtw",
+          "source": {
+            "extract": {
+              "column": "gtw"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/E_apparent",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'E_apparent' (role target, type numeric).",
+          "name": "E_apparent",
+          "source": {
+            "extract": {
+              "column": "E_apparent"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/VPcham",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPcham' (role target, type numeric).",
+          "name": "VPcham",
+          "source": {
+            "extract": {
+              "column": "VPcham"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/VPref",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPref' (role target, type numeric).",
+          "name": "VPref",
+          "source": {
+            "extract": {
+              "column": "VPref"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/VPleaf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPleaf' (role target, type numeric).",
+          "name": "VPleaf",
+          "source": {
+            "extract": {
+              "column": "VPleaf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/VPDleaf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPDleaf' (role target, type numeric).",
+          "name": "VPDleaf",
+          "source": {
+            "extract": {
+              "column": "VPDleaf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/H2O_r",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_r' (role target, type numeric).",
+          "name": "H2O_r",
+          "source": {
+            "extract": {
+              "column": "H2O_r"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/H2O_s",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_s' (role target, type numeric).",
+          "name": "H2O_s",
+          "source": {
+            "extract": {
+              "column": "H2O_s"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/H2O_leaf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_leaf' (role target, type numeric).",
+          "name": "H2O_leaf",
+          "source": {
+            "extract": {
+              "column": "H2O_leaf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fs",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fs' (role target, type numeric).",
+          "name": "Fs",
+          "source": {
+            "extract": {
+              "column": "Fs"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fm.",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fm.' (role target, type numeric).",
+          "name": "Fm.",
+          "source": {
+            "extract": {
+              "column": "Fm."
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/PhiPS2",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'PhiPS2' (role target, type numeric).",
+          "name": "PhiPS2",
+          "source": {
+            "extract": {
+              "column": "PhiPS2"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ETR",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ETR' (role target, type numeric).",
+          "name": "ETR",
+          "source": {
+            "extract": {
+              "column": "ETR"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rh_s",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'rh_s' (role target, type numeric).",
+          "name": "rh_s",
+          "source": {
+            "extract": {
+              "column": "rh_s"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rh_r",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'rh_r' (role target, type numeric).",
+          "name": "rh_r",
+          "source": {
+            "extract": {
+              "column": "rh_r"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Tref",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Tref' (role target, type numeric).",
+          "name": "Tref",
+          "source": {
+            "extract": {
+              "column": "Tref"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Tleaf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Tleaf' (role target, type numeric).",
+          "name": "Tleaf",
+          "source": {
+            "extract": {
+              "column": "Tleaf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/P_atm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'P_atm' (role target, type numeric).",
+          "name": "P_atm",
+          "source": {
+            "extract": {
+              "column": "P_atm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Qamb",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Qamb' (role target, type numeric).",
+          "name": "Qamb",
+          "source": {
+            "extract": {
+              "column": "Qamb"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/G",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'G' (role target, type numeric).",
+          "name": "G",
+          "source": {
+            "extract": {
+              "column": "G"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Species_code_grpStrat",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Species_code_grpStrat' (role target, type categorical).",
+          "name": "Species_code_grpStrat",
+          "source": {
+            "extract": {
+              "column": "Species_code_grpStrat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Brix",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Brix' (role target, type categorical).",
+          "name": "Brix",
+          "source": {
+            "extract": {
+              "column": "Brix"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Leaf_ID",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Leaf_ID' (role metadata, type categorical).",
+          "name": "Leaf_ID",
+          "source": {
+            "extract": {
+              "column": "Leaf_ID"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Experiment",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Experiment' (role metadata, type categorical).",
+          "name": "Experiment",
+          "source": {
+            "extract": {
+              "column": "Experiment"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phenotyping_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Phenotyping_type' (role metadata, type categorical).",
+          "name": "Phenotyping_type",
+          "source": {
+            "extract": {
+              "column": "Phenotyping_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/li600_present",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'li600_present' (role metadata, type categorical).",
+          "name": "li600_present",
+          "source": {
+            "extract": {
+              "column": "li600_present"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instruments",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instruments' (role metadata, type categorical).",
+          "name": "instruments",
+          "source": {
+            "extract": {
+              "column": "instruments"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}
