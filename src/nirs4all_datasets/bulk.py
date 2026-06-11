@@ -30,13 +30,15 @@ def _descriptor_ids(root: Path) -> list[str]:
     return sorted(p.stem for p in (root / "catalog" / "datasets").glob("*.yaml"))
 
 
-def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_assets: bool, force: bool) -> dict[str, Any]:
+def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_assets: bool, force: bool, protocol_refresh: bool = False) -> dict[str, Any]:
     """Organize + qualify a single dataset; return a status record (never raises).
 
     Module-level (picklable) so it can run inside a :class:`ProcessPoolExecutor` worker.
+    ``protocol_refresh`` re-qualifies (rebuilds the card under a new metric protocol) even when the
+    canonical bytes are unchanged — without rebuilding canonical.
     """
     from nirs4all_datasets.organize import organize
-    from nirs4all_datasets.qualify.profile import build_card, card_metadata_fresh
+    from nirs4all_datasets.qualify.profile import card_metadata_fresh, qualify
 
     root, source_tree = Path(root_str), Path(source_tree_str)
     try:
@@ -56,16 +58,18 @@ def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_as
         # organize.skipped means canonical bytes are unchanged (descriptor_hash). The card also *displays*
         # provenance, so a metadata-only edit (sources/citation) must still rebuild it -> check metadata_hash.
         card_path = result.dataset_dir / "card.json"
-        if result.skipped and not force and card_metadata_fresh(card_path, descriptor):
+        if result.skipped and not force and not protocol_refresh and card_metadata_fresh(card_path, descriptor):
             return {"id": dataset_id, "status": "skipped", "reason": "unchanged"}
-        card = build_card(result.dataset_dir, descriptor, compute_assets=not skip_assets)
+        card = qualify(result.dataset_dir, descriptor, compute_assets=not skip_assets)
         warns = card.get("warnings") or []
-        inv = card.get("inventory") or {}
+        align = card.get("alignment") or {}
+        n_features = sum((s.get("n_variables") or 0) for s in card.get("sources", [])) or None
         return {
             "id": dataset_id,
             "status": "partial" if warns else "ok",
-            "n_samples": inv.get("n_samples"),
-            "n_features": inv.get("n_features"),
+            "n_samples": align.get("n_samples"),
+            "n_features": n_features,
+            "n_sources": len(card.get("sources", [])),
             "warnings": warns[:6],
         }
     except Exception as exc:  # noqa: BLE001 - isolate per-dataset failures
@@ -80,6 +84,7 @@ def build_all(
     only: list[str] | None = None,
     skip_assets: bool = False,
     force: bool = False,
+    protocol_refresh: bool = False,
     progress: Any = None,
 ) -> dict[str, Any]:
     """Organize + qualify every (or ``only``) descriptor under ``root`` against ``source_tree``.
@@ -94,13 +99,13 @@ def build_all(
     results: list[dict[str, Any]] = []
     if n_workers <= 1:
         for i, did in enumerate(ids, 1):
-            rec = process_one(str(root), str(source_tree), did, skip_assets=skip_assets, force=force)
+            rec = process_one(str(root), str(source_tree), did, skip_assets=skip_assets, force=force, protocol_refresh=protocol_refresh)
             results.append(rec)
             if progress:
                 progress(i, len(ids), rec)
     else:
         with ProcessPoolExecutor(max_workers=n_workers) as pool:
-            futures = {pool.submit(process_one, str(root), str(source_tree), did, skip_assets=skip_assets, force=force): did for did in ids}
+            futures = {pool.submit(process_one, str(root), str(source_tree), did, skip_assets=skip_assets, force=force, protocol_refresh=protocol_refresh): did for did in ids}
             for i, fut in enumerate(as_completed(futures), 1):
                 rec = fut.result()
                 results.append(rec)
