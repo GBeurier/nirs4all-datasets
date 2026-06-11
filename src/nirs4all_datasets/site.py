@@ -231,6 +231,8 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
     )
     if entry.get("is_stale"):
         badges += '<span class="badge warn">stale card</span>'
+    if not card:
+        badges += '<span class="badge warn">card pending</span>'
 
     wl = spec.get("wavelength_range")
     kpis = "".join([
@@ -285,6 +287,12 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
     warnings = card.get("warnings") or []
     warn_html = f'<div class="warnings"><strong>Warnings:</strong> {_esc("; ".join(warnings))}</div>' if warnings else ""
     keywords = " ".join(f'<span class="kw">{_esc(k)}</span>' for k in (descriptor.get("keywords") or []))
+    downloads_html = (
+        f'<div class="downloads"><strong>Downloads:</strong> <a href="../data/{_esc(did)}.card.json">card.json</a>'
+        f' <a href="../data/{_esc(did)}.croissant.json">croissant.json</a></div>'
+        if card
+        else '<div class="downloads"><em>Identity card pending — dataset cataloged with full provenance; statistical diagnostics not yet computed.</em></div>'
+    )
 
     return _PAGE_TMPL.format(
         title=_esc(name),
@@ -301,9 +309,7 @@ def _dataset_page(entry: dict[str, Any], card: dict[str, Any], descriptor: dict[
 <div class="kpis">{kpis}</div>
 {_plots_html(did, card.get('assets') or {})}
 <div class="grid">{spectral_tbl}{dim_tbl}{_shift_html(card.get('shift') or {})}{_targets_html(card.get('targets') or {})}{quality_tbl}{gov_tbl}{_origin_html(descriptor, card)}</div>
-<div class="downloads"><strong>Downloads:</strong>
- <a href="../data/{_esc(did)}.card.json">card.json</a>
- <a href="../data/{_esc(did)}.croissant.json">croissant.json</a></div>
+{downloads_html}
 """,
     )
 
@@ -371,21 +377,22 @@ def build_site(root: str | Path, out_dir: str | Path) -> Path:
     catalog = yaml.safe_load((root / "catalog" / "datasets.yaml").read_text(encoding="utf-8")) if (root / "catalog" / "datasets.yaml").exists() else {"datasets": []}
     records: list[dict[str, Any]] = []
     for entry in catalog.get("datasets", []):
-        if not entry.get("has_card"):
-            continue
         dataset_dir = root / "datasets" / entry["id"]
-        card = _read_json(dataset_dir / "card.json")
-        if not card:
-            continue
-        descriptor = yaml.safe_load((root / "catalog" / "datasets" / f"{entry['id']}.yaml").read_text(encoding="utf-8")) or {}
-        # copy assets + downloadable artifacts
-        assets_src = dataset_dir / "assets"
-        if assets_src.exists():
-            shutil.copytree(assets_src, out / "assets" / entry["id"])
-        for suffix in ("card.json", "croissant.json"):
-            src = dataset_dir / suffix
-            if src.exists():
-                shutil.copy2(src, out / "data" / f"{entry['id']}.{suffix}")
+        descriptor_path = root / "catalog" / "datasets" / f"{entry['id']}.yaml"
+        descriptor = (yaml.safe_load(descriptor_path.read_text(encoding="utf-8")) or {}) if descriptor_path.exists() else {}
+        # Use the card only when present AND fresh: a stale card holds wrong stats for the current
+        # descriptor, and a cardless dataset (e.g. v2.0 cataloged, diagnostics not yet computed) has
+        # none. Both render descriptor-driven (the page flags "card pending"); never show wrong stats.
+        card = _read_json(dataset_dir / "card.json") if (entry.get("has_card") and not entry.get("is_stale")) else None
+        card = card or {}
+        if card:
+            assets_src = dataset_dir / "assets"
+            if assets_src.exists():
+                shutil.copytree(assets_src, out / "assets" / entry["id"])
+            for suffix in ("card.json", "croissant.json"):
+                src = dataset_dir / suffix
+                if src.exists():
+                    shutil.copy2(src, out / "data" / f"{entry['id']}.{suffix}")
         (out / "dataset" / f"{entry['id']}.html").write_text(_dataset_page(entry, card, descriptor), encoding="utf-8")
         records.append(_summary_record(entry, card))
 

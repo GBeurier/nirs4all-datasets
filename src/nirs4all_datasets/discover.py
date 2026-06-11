@@ -45,6 +45,7 @@ from nirs4all_datasets.schema import (
     SignalType,
     SourceAccess,
     SourceKind,
+    SourceMode,
     Target,
     TaskType,
     Visibility,
@@ -71,6 +72,25 @@ _DATA_DOI_PREFIXES: dict[str, tuple[str, str]] = {
     "10.5061": ("url", "Dryad"),
 }
 _DOI_IN_TEXT = re.compile(r"(10\.\d{4,9}/[^\s,;\"'<>]+)")
+# Target names that are categorical/identifier regardless of dtype (an integer-encoded ``*_type`` or a
+# numeric ``row_no`` is still not a regression target). Applied to a token-normalized name (camelCase +
+# separators -> ``_``); whole-token match so soil props like ``rubidium``/``carbon`` don't false-hit.
+_CLF_NAME_RE = re.compile(
+    r"(?:^|_)(id|type|class|category|categorical|label|group|species|genus|family|name|code|smiles|inchi|inchikey|formula|variety|cultivar|origin|authenticity|adulteration|material|mineral|subclass|date|datetime|timestamp|row|rowno|unnamed|observation)(?:_|$)",
+    re.IGNORECASE,
+)
+_NA_TOKENS = frozenset({"", "nan", "na", "null", "none", "n/a", "<na>", "."})
+
+
+def _norm_key(name: str) -> str:
+    """Normalize a column name for robust matching (lowercase, drop all non-alphanumerics)."""
+    return re.sub(r"[^a-z0-9]", "", str(name).lower())
+
+
+def _norm_tokens(name: str) -> str:
+    """Token form of a name: split camelCase, collapse separators to ``_`` (so ``LeafNumber`` -> ``leaf_number``, ``plant.id`` -> ``plant_id``)."""
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", str(name))
+    return re.sub(r"[^a-z0-9]+", "_", spaced.lower()).strip("_")
 # Instrument tokens encoded in multimachines leaf names (e.g. ``An_..._byCultivar_MicroNIR_NeoSpectra``).
 _INSTRUMENT_TOKENS = (("micronir_neospectra", "MicroNIR + NeoSpectra"), ("micronir", "MicroNIR"), ("neospectra", "NeoSpectra"), ("asd", "ASD"))
 
@@ -471,6 +491,179 @@ def build_descriptor(leaf: Leaf, xlsx_index: dict[str, dict[str, Any]]) -> tuple
     return descriptor, warnings
 
 
+GENERATOR_V2 = "discover-v2"
+
+
+def _dir_fingerprint(path: Path) -> str:
+    """Cheap content fingerprint of a leaf dir: sha256 over its sorted ``(name, size)`` files."""
+    parts = [f"{p.name}:{p.stat().st_size}" for p in sorted(path.iterdir()) if p.is_file()]
+    return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
+
+
+def _v2_axis_unit(blocks: list[dict[str, Any]]) -> str:
+    """Map a v2.0 spectral block's ``axis_unit`` onto our enum (only nm/cm-1 are representable)."""
+    unit = str((blocks[0].get("axis_unit") if blocks else "") or "").strip().lower()
+    if "cm-1" in unit or "wavenumber" in unit:
+        return AxisUnit.WAVENUMBER.value
+    if unit in ("nm", "nanometer", "nanometers") or "wavelength (nm)" in unit:
+        return AxisUnit.WAVELENGTH.value
+    return AxisUnit.NONE.value  # micrometers / unknown -> not representable; declared honestly as none
+
+
+def _v2_numeric_columns(y_path: Path, sample_rows: int = 80) -> dict[str, bool]:
+    """Per-column numeric-ness of a v2.0 ``Y.csv`` (header + a sample), to type targets without an
+    explicit ``target_types`` entry: mostly-numeric -> regression, else classification."""
+    if not y_path.exists():
+        return {}
+    lines = [ln for ln in y_path.read_text(encoding="utf-8", errors="replace").splitlines() if ln.strip()][: sample_rows + 1]
+    if len(lines) < 2:
+        return {}
+    delim = ";" if lines[0].count(";") >= lines[0].count(",") else ","
+    headers = [h.strip().strip('"').strip("'") for h in lines[0].split(delim)]
+    numeric: dict[str, bool] = {}
+    for i, header in enumerate(headers):
+        vals = [row.split(delim)[i].strip().strip('"').strip("'") for row in lines[1:] if i < len(row.split(delim))]
+        nonempty = [v for v in vals if v.lower() not in _NA_TOKENS]
+        if not nonempty:
+            numeric[_norm_key(header)] = True  # no evidence -> default regression
+            continue
+        ok = sum(1 for v in nonempty if _is_float(v))
+        numeric[_norm_key(header)] = ok >= 0.8 * len(nonempty)
+    return numeric
+
+
+def _is_float(value: str) -> bool:
+    try:
+        float(value.replace(",", "."))
+        return True
+    except ValueError:
+        return False
+
+
+def find_v2_leaves(source_root: str | Path) -> list[Path]:
+    """v2.0 standardized leaves: dirs under ``v2.0/`` holding a ``dataset_card.json`` + ``Y.csv``.
+
+    These are Frictionless-style packages (machine-readable card declaring targets/sources/license), so
+    the descriptor is authored from the card -- no free-text guessing.
+    """
+    base = Path(source_root) / "v2.0"
+    if not base.is_dir():
+        return []
+    return sorted(d for d in base.iterdir() if d.is_dir() and (d / "dataset_card.json").exists() and (d / "Y.csv").exists())
+
+
+def build_v2_descriptor(leaf_dir: Path) -> tuple[DatasetDescriptor, list[str]]:
+    """Author a descriptor for one v2.0 package from its authoritative ``dataset_card.json``.
+
+    Targets come from ``target_summary.target_variables`` (so metadata columns are never mistaken for
+    targets); sources from ``detected_sources`` (+ the maintainer ``source_to_standard.py`` script);
+    governance from ``license_summary`` (``public_release_allowed: false`` -> restricted/internal).
+    """
+    warnings: list[str] = []
+    card = json.loads((leaf_dir / "dataset_card.json").read_text(encoding="utf-8"))
+    did = slugify(card.get("dataset_id") or leaf_dir.name)
+
+    tsum = card.get("target_summary") or {}
+    tvars = [str(v) for v in (tsum.get("target_variables") or [])]
+    ttypes = {str(k): str(v).lower() for k, v in (tsum.get("target_types") or {}).items()}
+    y_numeric = _v2_numeric_columns(leaf_dir / "Y.csv")
+
+    def _task(var: str) -> TaskType:
+        # A categorical/identifier *name* (tablet_type, sample_id, smiles, molecular_formula, Row_No,
+        # Data_Collection_Date, ...) is never a regression target -- this overrides even an explicit
+        # card type, which is demonstrably wrong for these. Matched on a token-normalized name.
+        if _CLF_NAME_RE.search(_norm_tokens(var)):
+            return TaskType.MULTICLASS_CLASSIFICATION
+        kind = ttypes.get(var, "")
+        if kind.startswith("regress"):
+            return TaskType.REGRESSION
+        if kind and ("class" in kind or "label" in kind or "categor" in kind):
+            return TaskType.MULTICLASS_CLASSIFICATION
+        # No explicit type (e.g. OSSL's many soil-chemistry targets): infer from the Y column dtype
+        # (normalized name match), defaulting to regression (the NIRS norm) -- never blanket-classification.
+        return TaskType.MULTICLASS_CLASSIFICATION if y_numeric.get(_norm_key(var)) is False else TaskType.REGRESSION
+
+    targets = [Target(name=v, task_type=_task(v)) for v in tvars]
+    if not targets:
+        targets = [Target(name="target", task_type=TaskType.REGRESSION)]
+        warnings.append("dataset_card.json declares no target_variables; placeholder target used")
+
+    # Harvest origin URLs/DOIs from everywhere the card records them (detected_sources, source_summary,
+    # official_source); ignore local filesystem paths. The standardization script is a maintainer source.
+    sources: list[OriginSource] = []
+    publications: list[PublicationRef] = []
+    seen_loc: set[str] = set()
+    seen_doi: set[str] = set()
+    candidates: list[Any] = [e.get("url") for e in (card.get("detected_sources") or []) if e.get("url")]
+    candidates.append((card.get("source_summary") or {}).get("source_url"))
+    official = card.get("official_source") or {}
+    for key in ("download_urls", "landing_urls", "urls", "download_page", "landing_page", "source_page", "url"):
+        value = official.get(key)
+        candidates.extend(value if isinstance(value, list) else [value])
+    for raw_url in candidates:
+        if not raw_url or not (str(raw_url).startswith("http") or _extract_doi(str(raw_url))):
+            continue  # skip blanks + local filesystem paths (e.g. D:\... cache paths)
+        kind, payload = _classify_origin(raw_url)
+        if kind == "source" and isinstance(payload, dict) and payload["locator"] not in seen_loc:
+            seen_loc.add(payload["locator"])
+            try:
+                sources.append(OriginSource(**payload))
+            except Exception as exc:  # noqa: BLE001 - a malformed url must not abort the leaf
+                warnings.append(f"unparseable v2 source {raw_url!r}: {exc}")
+        elif kind == "paper" and isinstance(payload, str) and payload not in seen_doi:
+            seen_doi.add(payload)
+            publications.append(PublicationRef(doi=payload))
+    if (leaf_dir / "source_to_standard.py").exists():
+        sources.append(OriginSource(kind=SourceKind.SCRIPT, mode=SourceMode.RAW, locator="source_to_standard.py", access=SourceAccess.MANUAL, title="standardization script (maintainer-only)"))
+
+    lic = card.get("license_summary") or {}
+    rights = card.get("rights") or {}
+    public_ok = bool(lic.get("public_release_allowed", rights.get("public_release_allowed", False)))
+    source_name = str((card.get("source_summary") or {}).get("source_name") or "NIRS DB v2.0 collection")
+    governance = Governance(
+        license="LicenseRef-not-cleared" if not public_ok else "LicenseRef-review-before-use",
+        visibility=Visibility.RESTRICTED,
+        confidentiality_class=ConfidentialityClass.INTERNAL if not public_ok else ConfidentialityClass.PUBLIC,
+        owner_steward=source_name,
+        redistribution_rights=str(lic.get("rights_notes") or "Redistribution not cleared; verify source terms before release."),
+        consent_ethics_status="Not assessed (auto-generated from v2.0 package; verify before release).",
+        anonymization_status="Not assessed (auto-generated from v2.0 package; verify before release).",
+        permitted_use="Research and benchmarking; private use only." if not public_ok else "Research and benchmarking.",
+        access_policy="Local use; not published to Dataverse." + ("" if public_ok else " Manual download / private-use-only per source."),
+    )
+
+    blocks = card.get("spectral_blocks") or []
+    model = str(blocks[0].get("instrument_name")) if blocks and blocks[0].get("instrument_name") else None
+    instrument = Instrument(modality=Modality.NIR, model=model, axis_unit=AxisUnit(_v2_axis_unit(blocks)), signal_type=SignalType.AUTO)
+    n_sources = max(1, len(blocks))
+    family = slugify(did.split("_")[0]) or None
+
+    descriptor = DatasetDescriptor(
+        id=did,
+        name=str(card.get("dataset_name") or leaf_dir.name),
+        version="0.1.0",
+        description=f"{card.get('dataset_name') or did}. v2.0 standardized package: {len(tvars)} target(s), {n_sources} spectral block(s). Auto-generated from dataset_card.json (verify before publication).",
+        domain=family,
+        keywords=[k for k in ["nir", "v2", family] if k],
+        citation=f"https://doi.org/{publications[0].doi}" if publications else None,
+        instrument=instrument,
+        targets=targets,
+        n_sources=n_sources,
+        provenance=Provenance(contributor=source_name, ingest_reader="tabular", warnings=warnings),
+        governance=governance,
+        datacite=DataCite(related_publications=publications) if publications else None,
+        sources=sources,
+        generation=Generation(
+            managed=True,
+            generator=GENERATOR_V2,
+            generator_version=GENERATOR_VERSION,
+            source_relpath=f"v2.0/{leaf_dir.name}",
+            source_fingerprint=_dir_fingerprint(leaf_dir),
+        ),
+    )
+    return descriptor, warnings
+
+
 def _write_descriptor(descriptor: DatasetDescriptor, path: Path) -> None:
     """Write a descriptor as clean YAML with an auto-generated banner."""
     data = descriptor.model_dump(mode="json", exclude_none=True)
@@ -495,19 +688,32 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, xlsx_path: s
     xlsx_index = load_xlsx(xlsx_path) if xlsx_path and Path(xlsx_path).exists() else {}
 
     report: dict[str, Any] = {"created": [], "updated": [], "skipped": [], "errors": [], "ids": {}}
-    seen_ids: dict[str, str] = {}
+
+    # Build descriptors. v2.0 standardized packages are emitted FIRST so they win id collisions over the
+    # raw regression/ equivalents (v2.0 is the cleaner, machine-described version).
+    items: list[tuple[DatasetDescriptor, list[str], str]] = []
+    for v2dir in find_v2_leaves(source_root):
+        rel = f"v2.0/{v2dir.name}"
+        try:
+            descriptor, warns = build_v2_descriptor(v2dir)
+            items.append((descriptor, warns, rel))
+        except Exception as exc:  # noqa: BLE001 - one bad package must not abort the sweep
+            report["errors"].append({"leaf": rel, "error": f"{type(exc).__name__}: {exc}"})
     for leaf in find_leaves(source_root):
         try:
             descriptor, warns = build_descriptor(leaf, xlsx_index)
+            items.append((descriptor, warns, leaf.source_relpath))
         except Exception as exc:  # noqa: BLE001 - one bad leaf must not abort the sweep
             report["errors"].append({"leaf": leaf.source_relpath, "error": f"{type(exc).__name__}: {exc}"})
-            continue
+
+    seen_ids: dict[str, str] = {}
+    for descriptor, warns, source_relpath in items:
         did = descriptor.id
         if did in seen_ids:
-            report["errors"].append({"leaf": leaf.source_relpath, "error": f"id collision {did!r} (kept {seen_ids[did]})"})
+            report["errors"].append({"leaf": source_relpath, "error": f"id collision {did!r} (kept {seen_ids[did]})"})
             continue
-        seen_ids[did] = leaf.source_relpath
-        report["ids"][did] = leaf.source_relpath
+        seen_ids[did] = source_relpath
+        report["ids"][did] = source_relpath
 
         path = out_dir / f"{did}.yaml"
         if path.exists():
