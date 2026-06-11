@@ -1,12 +1,14 @@
 name: Site (GitHub Pages)
 
-# Builds and deploys the interactive catalog site (src/nirs4all_datasets/site.py) to GitHub Pages.
-# The site is pure rendering over the committed catalog + cards + assets, so the build needs only a
-# few light dependencies (no nirs4all / matplotlib / heavy stack) and runs in seconds.
+# Builds and deploys the interactive catalog site (src/nirs4all_datasets/site/) to GitHub Pages.
+# The site renderer itself reads only PyYAML + the committed catalog/cards/PNG assets (charts are
+# inline SVG rendered at build time — no nirs4all / pandas / matplotlib), so the build is light and
+# runs in seconds. The handful of extra packages below (pydantic / python-dotenv) are only needed
+# because importing the `nirs4all_datasets` package shell pulls in its config module.
 
 on:
   push:
-    branches: [main]
+    branches: [main, redesign-v2]
   workflow_dispatch:
 
 permissions:
@@ -29,12 +31,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install site-render deps (no nirs4all needed)
+      - name: Install site-render deps (no nirs4all / pandas / matplotlib)
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml pydantic python-dotenv
-      - name: Build interactive catalog site
-        run: PYTHONPATH=src python -c "from nirs4all_datasets.site import build_site; build_site('.', 'site')"
+      - name: Build the static catalog site
+        run: PYTHONPATH=src python -c "from nirs4all_datasets.site import build_site; print(build_site('.', 'site'))"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
