@@ -82,10 +82,15 @@ def test_version_shown_in_index_and_card(tmp_path: Path) -> None:
     assert "1.0.0" in card and "Catalog version" in card
 
 
-def test_skips_entries_without_card(tmp_path: Path) -> None:
+def test_renders_cardless_entry_descriptor_only(tmp_path: Path) -> None:
+    # A cataloged dataset whose diagnostics card is not yet computed (e.g. a v2.0 package) must still
+    # appear on the site — rendered from its descriptor and flagged "card pending" — never dropped.
     root = _registry(tmp_path)
     cat = yaml.safe_load((root / "catalog" / "datasets.yaml").read_text())
-    cat["datasets"].append({"id": "nocard", "name": "No Card", "task_type": "regression", "has_card": False})
+    cat["datasets"].append({"id": "nocard", "name": "No Card", "domain": "x", "task_type": "regression", "targets": ["y"], "license": "LicenseRef-not-cleared", "visibility": "restricted", "has_card": False, "is_stale": False})
     (root / "catalog" / "datasets.yaml").write_text(yaml.safe_dump(cat), encoding="utf-8")
     out = build_site(root, tmp_path / "site")
-    assert not (out / "dataset" / "nocard.html").exists()
+    page = out / "dataset" / "nocard.html"
+    assert page.exists() and "card pending" in page.read_text(encoding="utf-8")
+    assert "nocard" in (out / "index.html").read_text(encoding="utf-8")  # also in the catalog table
+    assert not (out / "data" / "nocard.card.json").exists()  # no fake download for a cardless dataset
