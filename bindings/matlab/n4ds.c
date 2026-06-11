@@ -38,7 +38,8 @@ static mxArray *owned_to_mx(char *owned) {
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-    (void)nlhs;
+    if (nlhs > 1)
+        mexErrMsgIdAndTxt("n4ds:nargout", "at most one output argument is returned");
     if (nrhs < 1 || !mxIsChar(prhs[0]))
         mexErrMsgIdAndTxt("n4ds:arg", "first argument must be a command string");
     char *cmd = mxArrayToString(prhs[0]);

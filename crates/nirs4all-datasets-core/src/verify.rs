@@ -6,6 +6,7 @@ use std::path::Path;
 
 use serde::Serialize;
 
+use crate::cache::safe_join;
 use crate::error::Result;
 use crate::hash::sha256_hex_file;
 use crate::model::Resolved;
@@ -37,7 +38,7 @@ pub fn verify_cached(resolved: &Resolved, dir: &Path) -> Result<VerifyResult> {
     let mut files = Vec::with_capacity(resolved.files.len());
     let mut all_ok = true;
     for f in &resolved.files {
-        let path = dir.join(&f.relpath);
+        let path = safe_join(dir, &f.relpath)?;
         let status = if !path.exists() {
             all_ok = false;
             "missing"

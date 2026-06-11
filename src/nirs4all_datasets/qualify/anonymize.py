@@ -230,7 +230,10 @@ def public_descriptor(descriptor: DatasetDescriptor) -> DatasetDescriptor:
     variables = [v.model_copy(update={"name": _generic_name(i), "unit": None}) for i, v in enumerate(descriptor.variables)]
     provenance = descriptor.provenance.model_copy(update={"contributor": _MASK, "reference_method": None})
     publications = [p.model_copy(update={"title": None}) for p in descriptor.publications]
-    origin_sources = [o.model_copy(update={"title": None}) for o in descriptor.origin_sources]
+    # A DOI / origin locator / Dataverse version resolves to the *named* dataset, so for the
+    # anonymized tier they are dropped (not just title-masked): the acquisition pointers are
+    # re-identifying. Fetching still works from the maintainer's real local descriptor.
+    dataverse = descriptor.dataverse.model_copy(update={"doi": None, "dataset_version": None})
     return descriptor.model_copy(
         update={
             "name": descriptor.id,
@@ -241,7 +244,8 @@ def public_descriptor(descriptor: DatasetDescriptor) -> DatasetDescriptor:
             "variables": variables,
             "provenance": provenance,
             "publications": publications,
-            "origin_sources": origin_sources,
+            "origin_sources": [],
+            "dataverse": dataverse,
             "datacite": None,
         }
     )

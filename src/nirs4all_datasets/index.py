@@ -79,6 +79,7 @@ def index_entry(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, An
     exactly the policy the catalog index and the static site already apply.
     """
     from nirs4all_datasets.qualify.anonymize import public_descriptor  # lazy: keep `import index` light
+    from nirs4all_datasets.schema import Tier
 
     pub = public_descriptor(descriptor)
     manifest_path = Path(root) / "datasets" / descriptor.id / "manifest.json"
@@ -87,12 +88,25 @@ def index_entry(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, An
     dv = pub.dataverse
     doi = dv.doi or (manifest.doi if manifest else None)
     dataset_version = dv.dataset_version or (manifest.dataset_version if manifest else None)
+    files = _file_contract(manifest) if manifest else []
+    origins = _origins(pub)
+
+    # The anonymized tier hides *what* a dataset is, so the PUBLIC index must not leak its
+    # acquisition pointers either: a DOI / origin locator resolves to the named dataset, and a
+    # Dataverse file id is tied to it. Strip them here (the file SHA-256 contract stays, for
+    # display/integrity). Fetching an anonymized dataset is token-gated and uses the real,
+    # locally-known descriptor (see access._resolved_contract), never this public index.
+    if pub.tier is Tier.ANONYMIZED:
+        doi = None
+        dataset_version = None
+        origins = []
+        files = [{**f, "file_id": None} for f in files]
 
     return {
         "tier": pub.tier.value,
         "dataverse": {"instance": dv.instance, "doi": doi, "dataset_version": dataset_version},
-        "files": _file_contract(manifest) if manifest else [],
-        "origins": _origins(pub),
+        "files": files,
+        "origins": origins,
         "descriptor": pub.model_dump(mode="json"),
     }
 

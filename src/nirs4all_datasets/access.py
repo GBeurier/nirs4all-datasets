@@ -37,19 +37,26 @@ def _has_fetchable_origin(descriptor: DatasetDescriptor) -> bool:
 
 
 def _resolved_contract(root: Path, descriptor: DatasetDescriptor) -> dict[str, Any]:
-    """Build the resolved download contract the native core consumes (from descriptor + manifest)."""
-    from nirs4all_datasets.index import index_entry
+    """Build the resolved download contract the native core consumes (from descriptor + manifest).
 
-    entry = index_entry(root, descriptor)
-    dv = entry["dataverse"]
+    This uses the **real** local descriptor (DOI, origins, file ids) — unlike the public
+    ``catalog/index.json``, which sanitizes anonymized-tier acquisition pointers. The maintainer's
+    local checkout is trusted, so an anonymized dataset is still fetchable here (token-gated).
+    """
+    from nirs4all_datasets.index import _file_contract, _origins
+    from nirs4all_datasets.manifest import read_manifest
+
+    manifest_path = root / "datasets" / descriptor.id / "manifest.json"
+    manifest = read_manifest(manifest_path) if manifest_path.exists() else None
+    dv = descriptor.dataverse
     return {
         "id": descriptor.id,
-        "tier": entry["tier"],
-        "instance": dv["instance"],
-        "doi": dv["doi"],
-        "dataset_version": dv["dataset_version"],
-        "files": entry["files"],
-        "origins": entry["origins"],
+        "tier": descriptor.tier.value,
+        "instance": dv.instance,
+        "doi": dv.doi or (manifest.doi if manifest else None),
+        "dataset_version": dv.dataset_version or (manifest.dataset_version if manifest else None),
+        "files": _file_contract(manifest) if manifest else [],
+        "origins": _origins(descriptor),
     }
 
 
