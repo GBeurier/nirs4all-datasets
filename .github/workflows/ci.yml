@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 name: CI
 
 on:
@@ -6,29 +7,56 @@ on:
   pull_request:
 
 jobs:
-  test:
+  rust:
+    name: Rust green gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Put cargo bin on PATH
+        run: echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Format
+        run: cargo fmt --all --check
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Test
+        run: cargo test --workspace
+      - name: Build core (no default features)
+        run: cargo build -p nirs4all-datasets-core --no-default-features
+
+  python:
+    name: Python green gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Put cargo bin on PATH
+        run: echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.11"
-      - name: Install
-        # The nirs4all extra pulls the published nirs4all (card metrics + to_nirs4all tests). The core
-        # package no longer depends on the unpublished nirs4all-io (it was never imported) -- which both
-        # unblocks PyPI install and fixes this CI install step.
+      - name: Install maturin
+        run: uv tool install maturin
+      - name: Install (editable, with the native acquisition extension)
+        # The root pyproject is a maturin project: `uv pip install -e .[dev]`
+        # builds the embedded `nirs4all_datasets._n4ds` Rust extension and the
+        # pure-Python analysis layer together. The nirs4all card-metric bridge is
+        # a separate optional extra (unpublished editable nirs4all), skipped here.
         run: |
-          python -m pip install --upgrade pip
-          pip install -e ".[dev,nirs4all]"
+          uv venv
+          uv pip install -e ".[dev]"
       - name: Ruff
-        run: ruff check .
+        run: uv run ruff check .
       - name: Mypy
-        run: mypy --config-file pyproject.toml src
-      - name: Validate catalog
-        run: python catalog/scripts/validate.py
+        run: uv run mypy --config-file pyproject.toml src
+      - name: Validate catalog descriptors
+        run: uv run python catalog/scripts/validate.py
       - name: Catalog index is up to date
         run: |
-          python -m nirs4all_datasets.cli catalog --root .
+          uv run python -m nirs4all_datasets.cli catalog --root .
           git diff --exit-code catalog/datasets.yaml
-      - name: Tests
-        run: pytest -q
+      - name: Pytest (no network)
+        run: uv run pytest -m "not network"

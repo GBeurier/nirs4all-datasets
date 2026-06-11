@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+# Compile the C glue against the committed C ABI header and link the prebuilt
+# nirs4all-datasets-capi cdylib. Set these before `R CMD INSTALL` (see
+# bindings/r/build_and_test.sh):
+#   N4DS_INCLUDE  -> dir containing nirs4all_datasets.h
+#   N4DS_CAPI_DIR -> dir containing libnirs4all_datasets_capi.so
+PKG_CPPFLAGS = -I$(N4DS_INCLUDE)
+PKG_LIBS = -L$(N4DS_CAPI_DIR) -lnirs4all_datasets_capi -Wl,-rpath,$(N4DS_CAPI_DIR)

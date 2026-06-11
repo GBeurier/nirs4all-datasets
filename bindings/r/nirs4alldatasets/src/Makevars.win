@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+# Windows (Rtools / mingw-w64, UCRT) link line for the C glue over the prebuilt
+# nirs4all-datasets-capi staticlib. The capi is built with the
+# x86_64-pc-windows-gnu toolchain (see build_and_test.sh) so its ABI matches
+# Rtools' mingw gcc, which performs the final link of the Rust archive into
+# nirs4alldatasets.dll.
+#
+# R's gcc driver (not rustc) drives the link, so it does NOT auto-append the Rust
+# std + ureq/rustls/ring native system libs. The exact set is whatever
+# `rustc --print native-static-libs` reports for nirs4all-datasets-capi on
+# x86_64-pc-windows-gnu; the list below is the superset those crates need, plus
+# -lgcc for the panic_unwind EH/personality + __chkstk refs (Rtools' mingw merges
+# the unwinder into libgcc.a — there is no separate libgcc_eh.a). System libs MUST
+# come AFTER the archive (mingw ld is order-sensitive). The staticlib is referenced
+# by EXACT PATH so all symbols land inside the self-contained nirs4alldatasets.dll
+# (Windows has no rpath). The abi-check / release-r CI legs validate this set.
+PKG_CPPFLAGS = -I$(N4DS_INCLUDE)
+PKG_LIBS = $(N4DS_CAPI_DIR)/libnirs4all_datasets_capi.a \
+  -lkernel32 -ladvapi32 -lntdll -luserenv -lws2_32 -lbcrypt -lcrypt32 -lsecur32 -lncrypt -ldbghelp -lgcc
