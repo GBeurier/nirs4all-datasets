@@ -1,0 +1,319 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": "https://doi.org/10.1038/s41597-019-0170-y",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Cartilage spectroscopy Scientific Data NIR. v2.0 standardized NIRS package: 1 spectral source(s), 12 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "cartilage_spectra",
+      "sha256": "a2669230aa2441789db4f524501f72c76cc8ed28495c7ae45b4fd23f29d9af32"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "69ad740ba4656b31fccfb8fc932e8409d2560520d2684d6f364dcdae80e7f823"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "cartilage"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "cartilage_spectroscopy_scientificdata_nir",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'cartilage_spectra' (2605 observations x 812 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/joint_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'joint_id' (role target, type categorical).",
+          "name": "joint_id",
+          "source": {
+            "extract": {
+              "column": "joint_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/bone_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'bone_type' (role target, type categorical).",
+          "name": "bone_type",
+          "source": {
+            "extract": {
+              "column": "bone_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cartilage_thickness",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cartilage_thickness' (role target, type numeric).",
+          "name": "cartilage_thickness",
+          "source": {
+            "extract": {
+              "column": "cartilage_thickness"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instantaneous_modulus",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'instantaneous_modulus' (role target, type numeric).",
+          "name": "instantaneous_modulus",
+          "source": {
+            "extract": {
+              "column": "instantaneous_modulus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/equilibrium_modulus",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'equilibrium_modulus' (role target, type numeric).",
+          "name": "equilibrium_modulus",
+          "source": {
+            "extract": {
+              "column": "equilibrium_modulus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_01_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_01_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_01_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_01_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_025_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_025_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_025_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_025_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_05_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_05_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_05_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_05_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_0625_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_0625_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_0625_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_0625_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_0833_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_0833_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_0833_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_0833_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_1_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_1_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_1_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_1_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dynamic_modulus_at_2_hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'dynamic_modulus_at_2_hz' (role target, type numeric).",
+          "name": "dynamic_modulus_at_2_hz",
+          "source": {
+            "extract": {
+              "column": "dynamic_modulus_at_2_hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://doi.org/10.1038/s41597-019-0170-y",
+    "https://static-content.springer.com/esm/art%3A10.1038%2Fs41597-019-0170-y/MediaObjects/41597_2019_170_MOESM1_ESM.zip",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

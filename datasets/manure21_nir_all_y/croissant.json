@@ -1,0 +1,302 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "MANURE21 NIR all chemistry targets. v2.0 standardized NIRS package: 1 spectral source(s), 8 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "spectra-1",
+      "sha256": "432c788ee2dc1edd0019f83215a61f89e4e26a9292b38f1c0451f991f496e496"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "b152ff7f24eb102c3a71b86d3e2247fcee51b0cbc0df7470b033c75fb5382f35"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "manure21"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "manure21_nir_all_y",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'spectra-1' (490 observations x 1003 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/DM",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'DM' (role target, type numeric).",
+          "name": "DM",
+          "source": {
+            "extract": {
+              "column": "DM"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/OM",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'OM' (role target, type numeric).",
+          "name": "OM",
+          "source": {
+            "extract": {
+              "column": "OM"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/AN",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'AN' (role target, type numeric).",
+          "name": "AN",
+          "source": {
+            "extract": {
+              "column": "AN"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Total_N",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Total_N' (role target, type numeric).",
+          "name": "Total_N",
+          "source": {
+            "extract": {
+              "column": "Total_N"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/P2O5",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'P2O5' (role target, type numeric).",
+          "name": "P2O5",
+          "source": {
+            "extract": {
+              "column": "P2O5"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/K2O",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'K2O' (role target, type numeric).",
+          "name": "K2O",
+          "source": {
+            "extract": {
+              "column": "K2O"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/CaO",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'CaO' (role target, type numeric).",
+          "name": "CaO",
+          "source": {
+            "extract": {
+              "column": "CaO"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/MgO",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'MgO' (role target, type numeric).",
+          "name": "MgO",
+          "source": {
+            "extract": {
+              "column": "MgO"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latitude_wgs84",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'latitude_wgs84' (role metadata, type numeric).",
+          "name": "latitude_wgs84",
+          "source": {
+            "extract": {
+              "column": "latitude_wgs84"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/longitude_wgs84",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'longitude_wgs84' (role metadata, type numeric).",
+          "name": "longitude_wgs84",
+          "source": {
+            "extract": {
+              "column": "longitude_wgs84"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manure_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manure_type' (role metadata, type categorical).",
+          "name": "manure_type",
+          "source": {
+            "extract": {
+              "column": "manure_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

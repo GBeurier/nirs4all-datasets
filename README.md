@@ -1,26 +1,51 @@
 # nirs4all-datasets
 
-Store, **qualify**, and organize NIRS (Near-Infrared Spectroscopy) reference datasets for
-benchmarks and lab experiments — following research/industrial ML standards (FAIR, DOI-citable,
-reproducible).
+A **citable, reproducible bank of raw NIRS** (Near-Infrared Spectroscopy) **reference datasets** — for
+benchmarking, exploring, and comparing models on a common, version-pinned, provenance-rich footing.
 
-- **Code** lives on GitHub (this repo): the Python package, the dataset **catalog** (descriptors +
-  generated *identity cards*), and a static site.
-- **Data** lives on [Recherche Data Gouv](https://entrepot.recherche.data.gouv.fr) (a French national
-  [Dataverse](https://dataverse.org) instance, INRAE) — free, sovereign, with native DOIs, versions,
-  embargoes and restricted files. The [CIRAD Dataverse](https://dataverse.cirad.fr) is also supported.
-- **Access** is *pooch-style*: `load("name")` downloads a dataset on demand by its pinned DOI/version,
-  verifies its checksum, and caches it locally for reuse.
+A dataset here is **raw measured reality, not a benchmark task**: one or more spectral **sources**
+(instruments), any number of **variables** (every target *and* metadata column — nothing is invented, and
+nothing is thrown away), the native splits if the source defined them, and full provenance back to the
+**origin** that published the data. The *task* — which Y, which split, which metric — is a choice the
+consumer makes; it is never baked into the dataset.
 
-It reuses [`nirs4all`](../nirs4all) for qualification and [`nirs4all-io`](../nirs4all-io) for reading
-instrument formats (OPUS, JCAMP-DX, SPC, ASD, …). It never re-implements NIRS/IO logic.
+Three deliverables:
 
-> Status: **alpha / under construction.** See [`docs`](docs/) and the implementation plan.
+1. a git-tracked **catalog** — one hand-checkable descriptor + a machine-generated *identity card* (stats,
+   per-source/per-variable dataviz, MLCommons Croissant, a Datasheet) per dataset. The heavy bytes never
+   enter git.
+2. a Python **plugin** — `get("name")` downloads a dataset on demand from its **origin**, verifies its
+   SHA-256, caches it, and returns a `NirsDataset`.
+3. a **static site** — a browsable, qualified catalog with whole-bank dataviz and per-dataset id-cards.
+
+It reuses [`nirs4all`](../nirs4all) for qualification and [`nirs4all-io`](../nirs4all-io) /
+[`nirs4all-formats`](../nirs4all-formats) for reading instrument files (OPUS, JCAMP-DX, SPC, ASD, …).
+**It never re-implements NIRS/IO logic.**
+
+> Status: **alpha (0.x), pre-1.0** — the on-disk and API contracts may still change.
+
+## The dataset model
+
+- **Sources (X) — `1..n`, kept separate.** Multi-instrument / multi-block datasets keep each block as its
+  own source. Sources may even carry *different numbers of spectra* (asymmetric repetitions): they are
+  aligned by **sample identity** (`sample_id`), **never by row position**.
+- **Variables (Y + metadata) — `0..n`.** There is no intrinsic Y/metadata distinction: every column is a
+  *potential* target. A dataset may declare no target at all (X-only / metadata-only is valid). Declared
+  targets are flagged; everything else is kept as metadata, with full per-variable dataviz either way.
+- **Splits — documented, never auto-applied.** Native train/test/fold partitions are recorded so you can
+  reproduce a paper's split, but `get()` never silently applies one.
+- **Tiers — how a dataset is shown and exported.** `public` (everything shown, openly fetchable from the
+  origin), `private` (everything shown; export needs a token), `anonymized` (variable names masked +
+  targets normalized; export needs a token). **Bytes are never served from git or the site** — the catalog
+  points at the origin DOI/URL; a personal Dataverse is only a *future* fallback for protected datasets.
+- **Versions — two axes.** A **content** version (bumps when the dataset bytes change) and a
+  **metric-protocol** version (lets the cards be re-qualified under a new protocol without rebuilding the
+  data).
 
 ## Install (development)
 
 ```bash
-uv venv && uv pip install -e ".[dev,docs]"
+uv venv && uv pip install -e ".[dev]"
 # (uses local editable nirs4all + nirs4all-io via [tool.uv.sources])
 ```
 
@@ -29,35 +54,47 @@ uv venv && uv pip install -e ".[dev,docs]"
 ```python
 import nirs4all_datasets as n4ad
 
-n4ad.list()                       # the catalog
-n4ad.card("corn_protein")         # the dataset identity card (dict)
-ds = n4ad.load("corn_protein")    # -> nirs4all DatasetConfigs (downloaded, checksummed, cached)
+n4ad.list()                              # the catalog index
+n4ad.card("corn_eigenvector_nir")        # the identity card (dict): sources, variables, stats, provenance
+
+ds = n4ad.get("corn_eigenvector_nir")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
+ds.sources()                             # ['X1', 'X2', 'X3'] — the same corn measured on three NIR instruments
+ds.x("X1")                               # one source's spectra as a 2D numpy array
+ds.x(concat=False)                       # {source_id: array} for every source (sample-aligned, not row-aligned)
+ds.y()                                   # all declared targets, per sample
+ds.metadata()                            # the metadata columns (each a potential target)
+ds.split("original")                     # the native split labels, if the source defined one
+ds.to_nirs4all()                         # hand off to nirs4all for modelling
 ```
 
-## Adding a dataset
+Private / anonymized datasets need a Dataverse token: `n4ad.get("name", token=...)`.
 
-Full walkthrough: **[CONTRIBUTING.md](CONTRIBUTING.md)**. In short:
+## CLI (`n4a-datasets`)
 
-```bash
-cp catalog/datasets/example_corn.yaml catalog/datasets/<id>.yaml   # 1. describe (edit fields + governance)
-n4a-datasets add <raw_source> <id>                                 # 2. ingest -> canonical + card + Croissant
-n4a-datasets card <id>                                             # 3. inspect the identity card
-git add catalog/ datasets/<id>/card.json datasets/<id>/*.md datasets/<id>/croissant.json datasets/<id>/manifest.json && git commit
-# 4. (optional, needs a Dataverse token) publish + mint a DOI:
-n4a-datasets publish <id> --collection <alias> --contact-email you@cirad.fr
+```text
+bootstrap <tree>                 author schema-2.0 descriptors from <tree>/v2.0/*  (--prune to re-base)
+build-all --source-tree <tree>   organize + qualify every dataset in parallel  (--protocol-refresh, --site)
+add <raw_source> <id>            one raw source -> canonical + card + index
+qualify <id>                     (re)build a dataset's card  (--anonymize -> card.anon.json)
+health-check                     probe each dataset's open origins -> catalog/health.json
+catalog | list | card | get      regenerate the index / inspect / load a dataset
+publish | grant | revoke | restrict   personal-Dataverse governance for protected data (future)
 ```
 
-Raw/canonical **bytes** live on Dataverse (gitignored); the descriptor, card, datasheet, Croissant,
-manifest and catalog are git-tracked. `n4a-datasets <command> --help` documents every command.
+`n4a-datasets <command> --help` documents every flag.
 
-**Publishing (public *and* private) + reading back:** see the step-by-step
-**[docs/PUBLISHING.md](docs/PUBLISHING.md)** — sandbox rehearsal, `publish`/update, `grant`/`revoke`/`restrict`
-for access control, and `load("name", token=...)` for token-gated private downloads.
+## What lives where (3-tier storage)
+
+- **git** (small, tracked): `catalog/datasets/<id>.yaml` (descriptor), `catalog/datasets.yaml` (index +
+  whole-bank summary), and per-dataset `card.json` / `card.md` / `croissant.json` / `manifest.json`.
+- **the origin** (Zenodo, a data Dataverse, a vendor archive, …): the raw + canonical **bytes**, fetched
+  on demand and never re-hosted by this project.
+- **local cache** (downloaded on demand): the verified canonical Parquet under `pooch.os_cache`.
 
 ## API token — where to put it
 
-A Dataverse API token is **only** needed to **upload/publish** datasets or to download
-**private/restricted** ones; public datasets need no token. Resolution order:
+A Dataverse API token is **only** needed to fetch **private/anonymized** datasets or to publish to a
+personal Dataverse; public datasets need none. Resolution order:
 
 1. Environment variable `NIRS4ALL_DATAVERSE_TOKEN` (recommended; required in CI).
 2. `~/.config/nirs4all-datasets/config.toml` (`chmod 600`):
@@ -68,9 +105,21 @@ A Dataverse API token is **only** needed to **upload/publish** datasets or to do
    ```
 3. A project `.env` (gitignored) — see `.env.example`.
 
-In CI, store it as a GitHub Actions secret `DATAVERSE_TOKEN`. **Never commit it**
-(`.env`, `config.toml`, `*.token` are gitignored). Tokens expire after 1 year — rotate them.
+The token travels only in the `X-Dataverse-key` header, is never logged, and is never sent on a redirect
+to signed object storage. **Never commit it** (`.env`, `config.toml`, `*.token` are gitignored).
+
+## Contributing
+
+Full walkthrough in **[CONTRIBUTING.md](CONTRIBUTING.md)**; the design is in
+**[docs/DESIGN.md](docs/DESIGN.md)**. The green gate (run before every commit) mirrors CI:
+
+```bash
+ruff check . && mypy --config-file pyproject.toml src
+python catalog/scripts/validate.py            # every descriptor is schema-valid
+pytest -q
+```
 
 ## License
 
-Code: MIT (see [`LICENSE`](LICENSE)). Each dataset carries its own SPDX license in its descriptor.
+Code: MIT (see [`LICENSE`](LICENSE)). Each dataset carries its **own** SPDX license in its descriptor, and
+is only ever linked to its origin — open data is never re-hosted under a different license.

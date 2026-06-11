@@ -1,54 +1,84 @@
-# Datasheet — TIMESERIES — vin_cepage_type_ts
+# Datasheet — vin_cepage_type_ts
 
-_Generated from the dataset descriptor and identity card (Datasheets for Datasets, Gebru et al. 2021)._
+_Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
 ## Motivation
 
 - **Domain / purpose:** timeseries
-- **Description:** TIMESERIES dataset (classification). Auto-generated descriptor (verify before publication).
-- **Contributor:** NIRS DB reference collection
+- **Description:** vin_cepage_type_ts. v2.0 standardized NIRS package: 1 spectral source(s), 1 declared target(s). Auto-generated from dataset_card.json (verify before publication).
+- **Keywords:** nir, v2, timeseries
+- **Contributor:** timeseries_classif_nirs_database
 
 ## Composition
 
-- **Instances:** 111 spectra × 234 wavelengths, 1 source(s).
-- **Modality / instrument:** NIR — *Not specified.* *Not specified.* (firmware *Not specified.*).
-- **Spectral axis:** [400.0, 4000.0] cm-1; signal type preprocessed.
-- **Targets:** cepage_type (binary_classification)
-- **Contains missing values:** False
+- **Alignment:** observation level; 111 sample(s), 111 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
-## Statistics
+### Sources (X)
 
-- **PCA / dimensionality:** effective rank 1.42; 2 PC(s) → 95% variance, 5 → 99%.
-- **Train↔test target shift:** Jensen–Shannon 0.0224, max class-proportion Δ 0.0263
+| ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
+| --- | --- | --- | --- | --- | --- | --- |
+| X | recovered_spectra | unknown | NIR | 400–4000 none | 111 | 234 |
+
+### Variables (Y / metadata)
+
+| Name | Role | Type | Unit | Summary |
+| --- | --- | --- | --- | --- |
+| cepage_type | target | categorical | *Not specified.* | n=111, missing=0, classes=2, top 0 (×57) |
+| ID_sample | metadata | categorical | *Not specified.* | n=111, missing=0, classes=111, top Wine_train_0001 (×1) |
+| SpectralRep | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–1, mean 1 ± 0 |
+| dataset | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Wine (×111) |
+| product | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top vin (×111) |
+| trait_header | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top cepage_type (×111) |
+| trait_description | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Type de vin (Cabernet Sauvignon vs Shiraz, codes bruts du dataset). (×111) |
+| split | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top train (×57) |
+| spectro | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top FTIR-ATR (×111) |
+| raw_label | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 1 (×57) |
+| reference_value | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–2, mean 1.486 ± 0.5021 |
+| class_index | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 0 (×57) |
+| dimensions | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–1, mean 1 ± 0 |
+| feature_count_per_dimension | metadata | numeric | *Not specified.* | n=111, missing=0, range 234–234, mean 234 ± 0 |
+| wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Hypothese utilisateur: meme convention spectrale que Strawberry, axe lineaire interpole applique ici en ordre decroissant 4000->400 sur 234 variables. (×111) |
+
+## Statistics — splits
+
+Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
+
+- **original** (documented, not applied): train: 57, test: 54
 
 ## Collection process
 
-- **Collection date:** *Not specified.*
 - **Reference method:** *Not specified.*
-- **Lab protocol:** *Not specified.*
-- **Consent / ethics status:** Not assessed (auto-generated; verify before release).
-- **Anonymization status:** Not assessed (auto-generated; verify before release).
+- **Conversion status:** *Not specified.*
+
+### Origin sources (where the bytes live)
+
+- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://www.timeseriesclassification.com/aeon-toolkit/Wine.zip`
+- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://www.timeseriesclassification.com/description.php?Dataset=Wine`
+- standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion:** tabular (status *Not specified.*).
-- **Known exclusions:** *Not specified.*
+- **Conversion warnings:** *Not specified.*
 
 ## Uses
 
-- **Permitted use:** Research and benchmarking.
-- **Citation:** *Not specified.*
+- **Permitted use:** Research and benchmarking; private use only.
+- **Access policy:** Manual download / private-use-only per source.
+
+### Related publications
+
+- *No related publication.*
 
 ## Distribution
 
-- **License:** LicenseRef-unknown
-- **Visibility:** restricted
-- **Confidentiality class:** internal
+- **License:** LicenseRef-not-cleared
+- **Tier:** private — Private — export requires an access token (Dataverse); not openly redistributable.
+- **Redistribution rights:** Recovered from local initial-source exports; rights not cleared for redistribution.
 - **DOI:** *Not specified.*
-- **Redistribution rights:** Original source licence applies; verify before redistribution.
 
 ## Maintenance
 
-- **Owner / steward:** NIRS DB reference collection
-- **Version:** 0.1.0
-- **Access policy:** Local use; not published to Dataverse.
+- **Content version:** 1.0.0 | **schema/protocol:** 2.0
+- **Content hash:** `02986c343c43877f82d235e25fde9a4d7d396615eaee25b54e139480241d18f3`
+- **Processing hash:** `78826f045fad9b65a8b70cf6d2388aa91bd76c3fe2f2afb70d3ae42300d7a25e` | **metadata hash:** `42daa3bae145eda04fd90cf177dc589419f3e12123bf04dad307af9930004fa4`
