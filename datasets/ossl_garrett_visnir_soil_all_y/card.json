@@ -3,6 +3,16 @@
     "level": "observation",
     "n_observations_total": 184,
     "n_samples": 184,
+    "profile_scores": {
+      "integrity_risk": 1.0,
+      "local_artefact_risk": 0.0,
+      "noise_risk": 0.5,
+      "outlier_pressure": 0.0,
+      "reference_spread": 0.0,
+      "repeatability_risk": 0.0,
+      "shape_drift": 0.0,
+      "structure_complexity": 0.0
+    },
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -14,7 +24,7 @@
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-12T00:48:53.660372+00:00",
+  "generated_at": "2026-06-12T13:59:46.470862+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -40,7 +50,7 @@
     "metadata_hash": "8bcbbffbff09965cfe4e054d491bbcbad25757739bbfe7735a1c968d459af2f7",
     "processing_hash": "06859b870c395692ceb5beef0f16734dcfd9a90736177f9946363b4d6e7354bf"
   },
-  "protocol_version": "4",
+  "protocol_version": "5",
   "provenance": {
     "contributor": "OSSL_NIRS",
     "conversion_status": null,
@@ -1134,6 +1144,203 @@
           ],
           "n_components": 30
         },
+        "profile": {
+          "amplitude": {
+            "area_under_curve": null,
+            "mean_reflectance": null,
+            "peak_to_peak": null,
+            "variance": null
+          },
+          "artefacts": {
+            "clip_fraction": null,
+            "jump_count": 0,
+            "jump_rate": 0.0,
+            "spike_count": 0,
+            "spike_rate": 0.0
+          },
+          "diagnostics": [
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Variance tr\u00e8s faible"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "artefacts faibles"
+                },
+                {
+                  "level": 0.5,
+                  "signal": "SNR bas"
+                }
+              ],
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "score": 0.6,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 0.5,
+                  "signal": "faibles anomalies"
+                }
+              ],
+              "interpretation": "Spectre conforme \u00e0 la population, acquisition correcte.",
+              "key": "normal",
+              "label": "Spectre normal",
+              "score": 0.5,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 0.5,
+                  "signal": "Noise RMS"
+                },
+                {
+                  "level": 0.5,
+                  "signal": "SNR bas"
+                }
+              ],
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "score": 0.25,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 0.5,
+                  "signal": "artefacts faibles"
+                }
+              ],
+              "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "key": "out_of_domain",
+              "label": "Spectre hors domaine valide",
+              "score": 0.1,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 0.5,
+                  "signal": "Noise RMS faible"
+                }
+              ],
+              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
+              "key": "resampling_error",
+              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
+              "score": 0.09285714285714285,
+              "strength": "faible"
+            },
+            {
+              "evidence": [],
+              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
+              "key": "partial_coverage",
+              "label": "M\u00e9lange feuille + fond",
+              "score": 0.09166666666666667,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 0.5,
+                  "signal": "Bruit/artefacts variables"
+                }
+              ],
+              "interpretation": "Positionnement, op\u00e9rateur ou protocole instable; investiguer les r\u00e9p\u00e9titions intra-ID.",
+              "key": "poor_repeatability",
+              "label": "Mauvaise r\u00e9p\u00e9tabilit\u00e9 d'acquisition",
+              "score": 0.08333333333333333,
+              "strength": "faible"
+            },
+            {
+              "evidence": [],
+              "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "key": "background_shift",
+              "label": "Fond diff\u00e9rent",
+              "score": 0.075,
+              "strength": "faible"
+            }
+          ],
+          "integrity": {
+            "finite_ratio": 0.0,
+            "inf_count": 0,
+            "nan_ratio": 1.0,
+            "zero_column_ratio": 0.0,
+            "zero_ratio": 0.0
+          },
+          "noise": {
+            "bandwise_snr_median": null,
+            "bandwise_snr_min": null,
+            "noise_rms": null,
+            "snr": null,
+            "snr_db": null,
+            "worst_band_axis": null,
+            "worst_band_index": null
+          },
+          "outliers": {
+            "hotelling_t2_max": null,
+            "hotelling_t2_median": null,
+            "hotelling_t2_p95": null,
+            "hotelling_t2_ratio": null,
+            "mahalanobis_h_max": null,
+            "mahalanobis_h_median": null,
+            "mahalanobis_h_p95": null,
+            "mahalanobis_h_ratio": null,
+            "pca_q_max": null,
+            "pca_q_median": null,
+            "pca_q_p95": null,
+            "pca_q_ratio": null
+          },
+          "profile_scores": {
+            "integrity_risk": 1.0,
+            "local_artefact_risk": 0.0,
+            "noise_risk": 0.5,
+            "outlier_pressure": 0.0,
+            "reference_spread": 0.0,
+            "repeatability_risk": 0.0,
+            "shape_drift": 0.0,
+            "structure_complexity": 0.0
+          },
+          "reference": {
+            "affine_gain_median": null,
+            "affine_gain_p95_abs_delta": null,
+            "affine_offset_median": null,
+            "affine_offset_p95_abs": null,
+            "affine_residual_rms_median": null,
+            "affine_residual_rms_p95": null,
+            "peak_position_std": null,
+            "rms_to_mean_spectrum": null,
+            "rms_to_mean_spectrum_p95": null,
+            "sam_to_mean_spectrum": null,
+            "sam_to_mean_spectrum_p95": null,
+            "xcorr_lag_p95_axis": null,
+            "xcorr_lag_p95_features": null
+          },
+          "repeatability": {
+            "cv_intra_id": null,
+            "distance_to_centroid_p95": null,
+            "n_repeat_groups": 0,
+            "rms_intra_id": null,
+            "sam_intra_id": null
+          },
+          "shape": {
+            "baseline_slope": null,
+            "curvature_rms": null,
+            "d1_rms": null,
+            "edge_noise_ratio": null
+          },
+          "structure": {
+            "density_cv": null,
+            "isolation_forest_score_p95": null,
+            "local_outlier_factor_p95": null,
+            "pca_score_density": null
+          }
+        },
         "quality": {
           "dynamic_range": null,
           "noise_proxy_db": null,
@@ -1149,7 +1356,8 @@
           "std": 0.0
         },
         "value_max": null,
-        "value_min": null
+        "value_min": null,
+        "xy": []
       },
       "warnings": []
     }

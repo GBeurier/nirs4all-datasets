@@ -163,6 +163,11 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
             source["name"] = source.get("source_id")
             source["instrument_name"] = None
             source["warnings"] = []  # per-source warnings may quote authored text
+            spectral = source.get("spectral")
+            if isinstance(spectral, dict):
+                for xy in spectral.get("xy") or []:
+                    if isinstance(xy, dict) and xy.get("target") is not None:
+                        xy["target"] = name_map.get(str(xy.get("target")), str(xy.get("target")))
 
     for var in out.get("variables") or []:
         if not isinstance(var, dict):
