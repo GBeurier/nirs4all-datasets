@@ -60,12 +60,33 @@ def _resolved_contract(root: Path, descriptor: DatasetDescriptor) -> dict[str, A
     }
 
 
+def _origin_link(locator: str) -> str:
+    """A resolvable URL for an origin locator: a DOI -> doi.org, an http(s) URL as-is, else verbatim."""
+    loc = str(locator).strip()
+    if bool(_DOI_RE.match(loc)):
+        return f"https://doi.org/{loc}"
+    return loc
+
+
 def _origin_message(name: str, descriptor: DatasetDescriptor) -> str:
-    """Actionable error when nothing can be auto-fetched: say exactly where the bytes live."""
+    """Actionable error when nothing can be auto-fetched: a resolvable download link per origin.
+
+    The bank's origins are mostly ``raw`` (the original vendor data) — fetching one yields raw files
+    that must be re-ingested locally (a reproduction), so it is not the verified-canonical ``get()``
+    path. The message therefore points at *where to download*, with a usable link.
+    """
     if not descriptor.origin_sources:
-        return f"{name!r} has no local canonical data, no minted DOI, and no documented origin source."
-    lines = [f"  - {s.kind.value} [{s.access.value}/{s.mode.value}]: {s.locator}" + (f"  ({s.title})" if s.title else "") for s in descriptor.origin_sources]
-    return f"{name!r} has no local data and no minted DOI. Fetch it from one of its origin sources:\n" + "\n".join(lines)
+        return f"{name!r} has no local canonical data, no published canonical DOI, and no documented origin source."
+    lines: list[str] = []
+    for s in descriptor.origin_sources:
+        what = "canonical bytes" if s.mode is SourceMode.CANONICAL else "raw data (re-ingest locally)"
+        note = f"  — {s.title}" if s.title else ""
+        access = "" if s.access is SourceAccess.OPEN else f" [{s.access.value} access]"
+        lines.append(f"  • {s.kind.value}{access}, {what}: {_origin_link(s.locator)}{note}")
+    return (
+        f"{name!r} is not auto-fetchable: it has no local canonical data and no published canonical DOI yet. "
+        f"Download it from one of its origin sources:\n" + "\n".join(lines)
+    )
 
 
 def get(
