@@ -186,8 +186,8 @@ crates.io is immutable, so a bad version can only be **yanked**, never replaced.
 ### JS → npm (`@nirs4all/datasets-wasm`)
 
 `release-npm.yml` builds the wasm-pack `nodejs` target, pins the scoped name +
-provenance in the generated `package.json`, runs the committed Node smoke, and
-publishes via `npm publish`.
+provenance in the generated `package.json`, runs the committed Node smoke
+including `n4ds` CLI parity for `resolve`, and publishes via `npm publish`.
 
 One-time: own the `@nirs4all` scope on [npmjs.com](https://www.npmjs.com) (*Add
 Organization* → create the free org `nirs4all`), generate a granular
