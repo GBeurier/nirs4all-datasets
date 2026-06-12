@@ -35,6 +35,7 @@ n4ds_verify_cached <- function(resolved_json, dir) {
 }
 
 #' The C ABI version string.
+#' @return The C ABI version as a string.
 #' @export
 n4ds_abi_version <- function() {
   .Call("r_n4ds_abi_version")

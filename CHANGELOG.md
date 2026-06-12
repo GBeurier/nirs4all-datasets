@@ -2,9 +2,38 @@
 # Changelog
 
 All notable changes to **nirs4all-datasets** are documented here. The format
-follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the project uses
-an `0.2.0-alpha.*` line whose public surface is stable in shape but may still
-change before `1.0`.
+follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
+surface is stable in shape but may still change before `1.0`.
+
+## [0.2.0] - 2026-06-12
+
+First release cut (from the `0.2.0-alpha.1` line). Version synced across every
+binding manifest by `scripts/bump_version.sh --bump 0.2.0`.
+
+### Changed
+
+- **R binding (`nirs4alldatasets`) is now CRAN-self-contained.** Reworked from a
+  C shim over a **prebuilt** `libnirs4all_datasets_capi` cdylib (linked via
+  `N4DS_INCLUDE` / `N4DS_CAPI_DIR`, not installable on CRAN's farm) into a
+  vendored, offline-compiled static-library build mirroring the proven
+  `nirs4all-io` / `nirs4all-formats` pattern:
+  - a `configure` (`N4DS_R_VENDOR=1`) copies the workspace crates
+    (`nirs4all-datasets-core`, `nirs4all-datasets-capi`) into `src/rust/vendored/`,
+    emits a self-contained `src/rust/Cargo.toml`, copies the committed C ABI header
+    next to the shim, and `cargo vendor`s the crates.io closure into
+    `src/rust/vendor.tar.xz` — dropping the test-only / `cbindgen` build deps and
+    pruning the never-linked Windows import-library blobs (~76 MB) to keep the
+    source tarball at ~9.4 MB (under CRAN's 10 MB cap);
+  - `src/Makevars(.win)` extract the vendor archive and `cargo build -p
+    nirs4all-datasets-capi --release --offline` the staticlib, then link it into
+    `nirs4alldatasets.{so,dll}` by exact path, with a build-local `CARGO_HOME` /
+    `CARGO_TARGET_DIR` (never `~/.cargo`), `-j 2`, a post-link `rust_clean`, and —
+    on Windows — relocation of the cargo dirs to a short `$TMPDIR` path to dodge the
+    260-char `MAX_PATH` limit and a `-lgcc` (staticlib-only) link;
+  - `DESCRIPTION` declares `SystemRequirements: Cargo (Rust toolchain), rustc`,
+    `License: MIT + file LICENSE`, ships `man/*.Rd`, and `release-r.yml` runs the
+    full `R CMD check --as-cran` matrix (Linux release/devel, macOS arm64, Windows).
+  `R CMD check --as-cran` is clean (0 ERRORs / 0 WARNINGs).
 
 ## [0.2.0-alpha.1] - 2026-06-12
 
