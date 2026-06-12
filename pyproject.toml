@@ -60,6 +60,13 @@ dependencies = [
 nirs4all = [
     "nirs4all>=0.9",
 ]
+# Read vendor instrument files + assemble a dataset from an OPEN origin's RAW bytes, delegated to the
+# ecosystem readers (never re-implemented here): nirs4all-io owns assembly, nirs4all-formats the
+# vendor decoders. Needed only by the (opt-in) "reproduce from origin" acquisition path.
+io = [
+    "nirs4all-io>=0.1",
+    "nirs4all-formats>=0.1",
+]
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
@@ -90,9 +97,11 @@ manifest-path = "bindings/python/Cargo.toml"
 features = ["pyo3/extension-module"]
 include = ["catalog/index.json"]
 
-# Editable local source for development (uv); CI / PyPI use the published nirs4all.
+# Editable local source for development (uv); CI / PyPI use the published packages.
 [tool.uv.sources]
 nirs4all = { path = "../nirs4all", editable = true }
+nirs4all-io = { path = "../nirs4all-io", editable = true }
+nirs4all-formats = { path = "../nirs4all-formats/bindings/python", editable = true }
 
 [tool.ruff]
 line-length = 220
