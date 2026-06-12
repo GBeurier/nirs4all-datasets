@@ -26,6 +26,41 @@ jobs:
       - name: Build core (no default features)
         run: cargo build -p nirs4all-datasets-core --no-default-features
 
+  wasm:
+    name: WASM/JS green gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: 'v0.15.0'
+      - name: Build Node WASM package
+        run: wasm-pack build bindings/wasm --release --target nodejs --out-dir pkg-node --scope nirs4all
+      - name: Pin package name used for npm
+        working-directory: bindings/wasm/pkg-node
+        run: |
+          node -e '
+            const fs = require("fs");
+            const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            p.name = "@nirs4all/datasets-wasm";
+            fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
+          '
+          node -e 'const p = require("./package.json"); if (p.name !== "@nirs4all/datasets-wasm") throw new Error(p.name)'
+      - name: Smoke-test Node WASM package
+        run: node bindings/wasm/tests/node_smoke.cjs
+      - name: npm pack dry-run
+        working-directory: bindings/wasm/pkg-node
+        run: npm pack --dry-run
+      - name: Build browser WASM package
+        run: wasm-pack build bindings/wasm --release --target web --out-dir pkg-web --scope nirs4all
+
   python:
     name: Python green gate
     runs-on: ubuntu-latest
