@@ -124,6 +124,28 @@ def _source_axis(spectral_cols: list[str]) -> np.ndarray:
     return np.asarray(parsed, dtype="float64") if parsed else np.arange(len(spectral_cols), dtype="float64")
 
 
+def _dimensionality(pca: dict[str, Any] | None) -> dict[str, Any]:
+    """Compact PCA dimensionality summary derived from the explained-variance ratios.
+
+    ``effective_rank`` is the entropy-based participation ratio of the variance spectrum (≈ how many
+    components really matter); ``n_components_95/99`` are the components to reach that cumulative
+    variance; ``cumulative_top10`` is the variance captured by the first 10 components.
+    """
+    nulls = {"effective_rank": None, "n_components_95": None, "n_components_99": None, "cumulative_top10": None}
+    if not pca:
+        return nulls
+    evr = [float(v) for v in (pca.get("explained_variance_ratio") or []) if isinstance(v, (int, float)) and not isinstance(v, bool)]
+    if not evr:
+        return nulls
+    arr = np.asarray(evr, dtype="float64")
+    cum = np.cumsum(arr)
+    p = arr / arr.sum()
+    effective_rank = float(np.exp(-np.sum(p * np.log(p + 1e-12))))
+    n95 = int(np.searchsorted(cum, 0.95) + 1) if cum[-1] >= 0.95 else None
+    n99 = int(np.searchsorted(cum, 0.99) + 1) if cum[-1] >= 0.99 else None
+    return {"effective_rank": round(effective_rank, 2), "n_components_95": n95, "n_components_99": n99, "cumulative_top10": float(cum[min(9, len(cum) - 1)])}
+
+
 def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool, compute_curve: bool = False) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
     """Build one ``sources[]`` card entry from a source Parquet; return ``(section, frame, sample_ids)``.
 
@@ -144,6 +166,9 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
     n_outliers = _x_outliers(spectra, src_warnings)
     pca = _source_pca(spectra, src_warnings) if compute_pca else None
 
+    from nirs4all_datasets.qualify import metrics
+
+    axis = _source_axis(spectral_cols) if spectral_cols else np.empty(0, dtype="float64")
     spectral: dict[str, Any] = {
         "value_min": value_range["value_min"],
         "value_max": value_range["value_max"],
@@ -151,11 +176,12 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "mean_max": value_range["mean_max"],
         "n_outliers": n_outliers,
         "pca": pca,
+        "quality": metrics.spectral_quality(spectra),
+        "spacing": metrics.wavelength_spacing(axis),
+        "dimensionality": _dimensionality(pca),
     }
     if compute_curve and spectral_cols:
-        from nirs4all_datasets.qualify import metrics
-
-        curve = metrics.spectral_curve(spectra, _source_axis(spectral_cols))
+        curve = metrics.spectral_curve(spectra, axis)
         if curve is not None:
             spectral["curve"] = curve
     warnings.extend(f"source {source_id}: {w}" for w in src_warnings)
@@ -238,22 +264,28 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, 
 
     When ``compute_histogram`` and the effective type is numeric, a ``histogram`` block (``edges``/``counts``)
     is attached for the site's interactive distribution chart (categorical vars use ``stats.top_classes``)."""
+    from nirs4all_datasets.qualify import metrics
+
     variable_metrics = registry.metrics_for("variable")
     effective_type = var.type
     histogram: dict[str, Any] | None = None
+    shape: dict[str, Any] | None = None
+    balance: dict[str, Any] | None = None
     if var.type is VarType.NUMERIC:
         numeric = pd.to_numeric(values, errors="coerce")
         if values.notna().any() and numeric.notna().sum() == 0:
             effective_type = VarType.CATEGORICAL
             stats = variable_metrics["categorical_stats"](values)
+            balance = _class_balance(values)
         else:
-            stats = variable_metrics["numeric_stats"](numeric.to_numpy(dtype="float64"))
+            arr = numeric.to_numpy(dtype="float64")
+            stats = variable_metrics["numeric_stats"](arr)
+            shape = _distribution_shape(arr, stats)
             if compute_histogram:
-                from nirs4all_datasets.qualify import metrics
-
-                histogram = metrics.histogram_bins(numeric.to_numpy(dtype="float64"))
+                histogram = metrics.histogram_bins(arr)
     else:
         stats = variable_metrics["categorical_stats"](values)
+        balance = _class_balance(values)
     section: dict[str, Any] = {
         "name": var.name,
         "role": var.role.value,
@@ -264,7 +296,31 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, 
     }
     if histogram is not None:
         section["histogram"] = histogram
+    if shape is not None:
+        section["shape"] = shape
+    if balance is not None:
+        section["balance"] = balance
     return section
+
+
+def _distribution_shape(arr: np.ndarray, stats: dict[str, Any]) -> dict[str, Any]:
+    """Skewness / kurtosis / normality + coefficient of variation for a numeric variable."""
+    from nirs4all_datasets.qualify import metrics
+
+    sh = metrics.distribution_shape(arr)
+    mean, std = stats.get("mean"), stats.get("std")
+    cv = float(std / abs(mean)) if (isinstance(mean, (int, float)) and isinstance(std, (int, float)) and mean) else None
+    return {"skewness": sh.get("skewness"), "kurtosis": sh.get("kurtosis"), "normality_p": sh.get("normality_p"), "is_normal": sh.get("is_normal"), "cv": cv}
+
+
+def _class_balance(values: pd.Series) -> dict[str, Any] | None:
+    """Class-balance metrics (entropy / imbalance / gini) from a categorical column's full counts."""
+    from nirs4all_datasets.qualify import metrics
+
+    counts = pd.Series(values).dropna().astype(str).value_counts().to_numpy()
+    if counts.size == 0:
+        return None
+    return metrics.class_balance(counts)
 
 
 def _splits_sections(config: dict[str, Any], warnings: list[str]) -> list[dict[str, Any]]:

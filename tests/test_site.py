@@ -154,7 +154,7 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert ">320<" in index or "320" in index  # total samples KPI value
     # multiple inline SVG charts, each accessible
     assert index.count('role="img"') >= 5
-    for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by dataset"):
+    for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family"):
         assert f'aria-label="{label}"' in index
 
 
@@ -184,7 +184,7 @@ def test_public_full_with_downloads(tmp_path: Path) -> None:
     assert (out / "data" / "corn_oil.card.json").exists()
     assert (out / "data" / "corn_oil.croissant.json").exists()
     # visuals are inline interactive SVG (no PNG assets are copied anymore)
-    assert "viz-spectra" in page and "<svg" in page and "<polygon" in page  # spectra-with-quantiles chart
+    assert "chart-spectra" in page and "<svg" in page and "<polygon" in page  # spectra-with-quantiles chart
     assert "var-card" in page  # per-variable distribution cards
     assert not (out / "assets").exists()
 
@@ -198,7 +198,7 @@ def test_private_no_byte_download_but_full_metadata(tmp_path: Path) -> None:
     assert not (out / "data" / "wheat_protein.card.json").exists()
     assert not (out / "data" / "wheat_protein.croissant.json").exists()
     # but interactive charts + metrics are still shown (inline SVG)
-    assert "viz-spectra" in page and "<svg" in page
+    assert "chart-spectra" in page and "<svg" in page
     assert "Spectro 1" in page  # instrument metadata shown
 
 

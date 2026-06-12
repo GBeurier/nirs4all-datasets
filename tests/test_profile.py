@@ -31,7 +31,7 @@ _CARD_KEYS = {
 }
 
 # Per-source spectral keys.
-_SPECTRAL_KEYS = {"value_min", "value_max", "mean_min", "mean_max", "n_outliers", "pca"}
+_SPECTRAL_KEYS = {"value_min", "value_max", "mean_min", "mean_max", "n_outliers", "pca", "quality", "spacing", "dimensionality"}
 
 # Per-variable stats keys (by declared type).
 _NUMERIC_STATS_KEYS = {"n", "n_missing", "min", "max", "mean", "std", "median", "q1", "q3"}

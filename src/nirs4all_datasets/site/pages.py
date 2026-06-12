@@ -7,6 +7,7 @@ for an anonymized dataset.
 """
 from __future__ import annotations
 
+import math
 from typing import Any
 
 from . import charts
@@ -44,23 +45,33 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     samples = summary.get("samples") or {}
     features = summary.get("features") or {}
 
+    # Whole-bank panels: wide charts get the full row (≈1040px), the rest sit two-up (≈500px). Each
+    # chart's viewBox width matches that, so the type renders at a consistent ~12px everywhere.
+    HALF, WIDE = 500, 1040
     cards: list[str] = []
 
+    ranges = _axis_ranges(datasets)
+    if ranges:
+        cards.append(C.viz_card(
+            "Wavelength coverage", "The spectral span each spectroscopy family covers (solid = typical, faint = full extent)",
+            charts.coverage_by_family(ranges, title="Wavelength coverage by family", width=WIDE),
+            wide=True,
+        ))
     if by_domain:
         cards.append(C.viz_card(
-            "Datasets by domain", "How the bank spreads across application domains",
-            charts.bar_chart(list(by_domain.items()), title="Datasets by domain", top_n=12),
+            "Datasets by domain", "Application domains across the bank",
+            charts.bar_chart(list(by_domain.items()), title="Datasets by domain", top_n=14, width=WIDE),
             wide=True,
         ))
     if by_family:
         cards.append(C.viz_card(
             "Spectroscopy family", "Single-modality family per dataset (mixed when heterogeneous)",
-            charts.donut_chart(list(by_family.items()), title="Datasets by spectroscopy family"),
+            charts.donut_chart(list(by_family.items()), title="Datasets by spectroscopy family", width=HALF),
         ))
     if by_tier:
         cards.append(C.viz_card(
             "Access tier", "Governance tier: public / private / anonymized",
-            charts.donut_chart(list(by_tier.items()), title="Datasets by access tier"),
+            charts.donut_chart(list(by_tier.items()), title="Datasets by access tier", width=HALF),
         ))
 
     n_with = summary.get("n_with_targets") or 0
@@ -73,51 +84,32 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             charts.stacked_bars([
                 ("targets", [("with target", n_with), ("metadata-only", n_meta)]),
                 ("sources", [("multi-source", n_multi), ("single-source", max(0, n_single))]),
-            ], title="Structural mix"),
+            ], title="Structural mix", width=HALF),
         ))
 
     sample_vals = [v.entry.get("n_samples") for v in datasets if isinstance(v.entry.get("n_samples"), int)]
     if len([v for v in sample_vals if v]) >= 2:
         cards.append(C.viz_card(
             "Sample-size distribution", f"#samples per dataset (log-spaced bins) · median {num(samples.get('median'))}",
-            charts.histogram([float(v) for v in sample_vals if v], title="Distribution of dataset sample counts", log=True, x_label="samples"),
+            charts.histogram([float(v) for v in sample_vals if v], title="Distribution of dataset sample counts", log=True, x_label="samples per dataset", width=HALF),
         ))
     feature_vals = [v.entry.get("n_features_total") for v in datasets if isinstance(v.entry.get("n_features_total"), int)]
     if len([v for v in feature_vals if v]) >= 2:
         cards.append(C.viz_card(
             "Wavelength-count distribution", f"#wavelengths per dataset · median {num(features.get('median'))}",
-            charts.histogram([float(v) for v in feature_vals if v], title="Distribution of wavelength counts", log=True, x_label="wavelengths"),
-        ))
-
-    # wavelength-coverage range chart, from each dataset's first source axis range (from its card)
-    ranges = _axis_ranges(datasets)
-    if ranges:
-        cards.append(C.viz_card(
-            "Wavelength coverage", "Each dataset's spectral axis span, grouped by family",
-            charts.range_chart(ranges, title="Wavelength coverage by dataset"),
-            wide=True,
+            charts.histogram([float(v) for v in feature_vals if v], title="Distribution of wavelength counts", log=True, x_label="wavelengths per dataset", width=HALF),
         ))
 
     if license_mix:
         cards.append(C.viz_card(
             "License mix", "SPDX license per dataset across the bank",
-            charts.bar_chart(list(license_mix.items()), title="License mix", top_n=10),
+            charts.bar_chart(list(license_mix.items()), title="License mix", top_n=10, width=HALF),
         ))
     if origin_kinds:
         cards.append(C.viz_card(
-            "Origin kinds", "Where the bytes originate (zenodo / dataverse / url / ...)",
-            charts.donut_chart(list(origin_kinds.items()), title="Origin kinds"),
+            "Origin kinds", "Where the bytes originate (zenodo / dataverse / url / …)",
+            charts.donut_chart(list(origin_kinds.items()), title="Origin kinds", width=HALF),
         ))
-
-    n_total = summary.get("n_datasets") or len(datasets)
-    n_card = summary.get("n_with_card") or 0
-    n_degraded = summary.get("n_degraded") or 0
-    cards.append(C.viz_card(
-        "Cards & health", f"{num(n_card)}/{num(n_total)} datasets have a computed identity card · {num(n_degraded)} with a degraded origin",
-        charts.coverage_bar([("with card", n_card), ("card pending", max(0, n_total - n_card))], title="Card coverage", total=n_total)
-        + charts.coverage_bar([("alive origins", max(0, n_total - n_degraded)), ("degraded", n_degraded)], title="Origin health", total=n_total),
-        wide=True,
-    ))
     return f'<div class="viz-grid">{"".join(cards)}</div>'
 
 
@@ -277,12 +269,39 @@ def _kv(rows: list[tuple[str, Any]]) -> str:
     return table("", kv_rows(rows), css_class="kv").replace("<caption></caption>", "")
 
 
-def _chip(label: str, value: Any) -> str:
-    return f'<div class="chip"><span>{esc(label)}</span><b>{esc(value)}</b></div>'
+def _isnum(v: Any) -> bool:
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+
+
+def _f(v: Any, *, nd: int = 4, suffix: str = "") -> str | None:
+    """Format a metric value for a stat table, or None to omit the row. Bools -> yes/no."""
+    if isinstance(v, bool):
+        return "yes" if v else "no"
+    if _isnum(v):
+        return f"{num(v, nd=nd)}{suffix}"
+    if isinstance(v, str) and v.strip():
+        return esc(v)
+    return None
+
+
+def _pct(v: Any, nd: int = 0) -> str | None:
+    return f"{v * 100:.{nd}f}%" if _isnum(v) else None
+
+
+def _stat_table(title: str, pairs: list[tuple[str, str | None]]) -> str:
+    """A compact key→value stat panel; rows whose value is None are dropped."""
+    rows = "".join(f'<tr><th>{esc(label)}</th><td>{value}</td></tr>' for label, value in pairs if value is not None)
+    return f'<div class="stat-card"><h4>{esc(title)}</h4><table class="stat-table">{rows}</table></div>' if rows else ""
+
+
+def _zoom(svg: str, *, cls: str = "") -> str:
+    """Wrap a chart so a click opens it large in the page lightbox (theme.py JS)."""
+    return f'<div class="chart {cls}" tabindex="0" role="button" aria-label="enlarge chart">{svg}</div>'
 
 
 def _sources_panel(view: DatasetView, rel: str) -> str:
-    """One card per spectral source: the interactive spectra-with-quantiles chart + key facts + PCA scree."""
+    """Per spectral source: the spectra chart + a real scientific stat sheet (sampling / signal &
+    quality / dimensionality) + the PCA scree. The numbers are the qualification metrics."""
     card = view.card or {}
     sources = card.get("sources") or []
     if not sources:
@@ -291,70 +310,114 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
     for s in sources:
         spec = s.get("spectral") or {}
         unit = s.get("axis_unit") or ""
-        rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (s.get("axis_min") is not None and s.get("axis_max") is not None) else "full span"
-        chips = [
-            _chip("source", s.get("source_id") or "—"),
-            _chip("instrument", s.get("instrument_name") or "—"),
-            _chip("modality", s.get("modality") or "—"),
-            _chip("axis", rng),
-            _chip("observations", num(s.get("n_observations"))),
-            _chip("wavelengths", num(s.get("n_variables"))),
-        ]
-        if spec.get("n_outliers") is not None:
-            chips.append(_chip("outliers", num(spec.get("n_outliers"))))
+        qual = spec.get("quality") or {}
+        spacing = spec.get("spacing") or {}
+        dim = spec.get("dimensionality") or {}
+        pca = spec.get("pca") or {}
 
+        head = (
+            f'<div class="source-head"><h3>{esc(s.get("name") or s.get("source_id"))}</h3>'
+            f'<span class="src-meta">{esc(s.get("source_id"))} · {esc(s.get("modality") or "—")}'
+            f'{(" · " + esc(s.get("instrument_name"))) if s.get("instrument_name") else ""}</span></div>'
+        )
         curve = spec.get("curve")
         chart = ""
         if view.show_variable_plots and curve and curve.get("axis"):
-            src_title = f'{s.get("name") or s.get("source_id")} spectra'
-            chart = f'<div class="viz-spectra">{charts.spectra_quantile(curve, title=src_title, axis_label="wavelength", unit=unit)}</div>'
-        scree = ""
-        pca = spec.get("pca") or {}
-        evr = [v for v in (pca.get("explained_variance_ratio") or [])[:8] if isinstance(v, (int, float)) and not isinstance(v, bool)]
-        if view.show_variable_plots and evr:
-            bars = [(f"PC{i + 1}", round(float(v) * 100, 1)) for i, v in enumerate(evr)]
-            scree = f'<details class="viz-extra"><summary>PCA explained variance (top {len(bars)})</summary><div class="viz-scree">{charts.bar_chart(bars, title="PCA explained variance", unit="%")}</div></details>'
+            chart = _zoom(charts.spectra_quantile(curve, title=f'{s.get("name") or s.get("source_id")} spectra', unit=unit, width=860), cls="chart-spectra")
 
-        blocks.append(f'<div class="source-card"><div class="chips">{"".join(chips)}</div>{chart}{scree}</div>')
+        rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (_isnum(s.get("axis_min")) and _isnum(s.get("axis_max"))) else None
+        sampling = _stat_table("Sampling", [
+            ("Wavelengths", _f(s.get("n_variables"))),
+            ("Axis range", rng),
+            ("Mean spacing", _f(spacing.get("mean"), nd=3, suffix=f" {unit}") if spacing.get("mean") is not None else None),
+            ("Grid", "uniform" if spacing.get("is_uniform") else ("irregular" if spacing.get("is_uniform") is False else None)),
+            ("Observations", _f(s.get("n_observations"))),
+        ])
+        signal = _stat_table("Signal & quality", [
+            ("Value range", f'{_f(spec.get("value_min"), nd=3)} – {_f(spec.get("value_max"), nd=3)}' if _isnum(spec.get("value_min")) and view.show_value_stats else None),
+            ("Mean range", f'{_f(spec.get("mean_min"), nd=3)} – {_f(spec.get("mean_max"), nd=3)}' if _isnum(spec.get("mean_min")) and view.show_value_stats else None),
+            ("Noise SNR", _f(qual.get("noise_proxy_db"), nd=1, suffix=" dB")),
+            ("Dynamic range", _f(qual.get("dynamic_range"), nd=3)),
+            ("Smoothness", _f(qual.get("smoothness"), nd=4)),
+            ("Saturated", _pct(qual.get("saturation_fraction"), nd=1)),
+            ("X-outliers", _f(spec.get("n_outliers"))),
+        ])
+        dimensionality = _stat_table("Dimensionality (PCA)", [
+            ("Effective rank", _f(dim.get("effective_rank"), nd=2)),
+            ("PCs → 95% var", _f(dim.get("n_components_95"))),
+            ("PCs → 99% var", _f(dim.get("n_components_99"))),
+            ("Top-10 cum. var", _pct(dim.get("cumulative_top10"), nd=1)),
+        ])
+        scree = ""
+        evr = pca.get("explained_variance_ratio") or []
+        if view.show_variable_plots and evr:
+            scree = _zoom(charts.scree([float(x) for x in evr if _isnum(x)], width=440))
+
+        blocks.append(
+            f'<div class="source-card">{head}{chart}'
+            f'<div class="stat-grid">{sampling}{signal}{dimensionality}</div>{scree}</div>'
+        )
     return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{"".join(blocks)}</div></section>'
 
 
-def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
-    """One variable as a card: its own distribution chart + only the stats that apply (no `—` columns)."""
+def _var_has_data(v: dict[str, Any]) -> bool:
+    """Whether a variable carries any usable values (drops all-missing / no-class columns)."""
     stats = v.get("stats") or {}
+    n, missing = stats.get("n") or 0, stats.get("n_missing") or 0
+    all_missing = bool(n) and missing >= n
+    no_class = v.get("type") != "numeric" and (stats.get("n_classes") or 0) < 1
+    return not (all_missing or no_class)
+
+
+def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
+    """One variable: a distribution chart (only when there is spread) + its real statistics."""
+    stats = v.get("stats") or {}
+    shape = v.get("shape") or {}
+    balance = v.get("balance") or {}
     is_num = v.get("type") == "numeric"
     name = v.get("name") or "—"
     unit = v.get("unit")
-    tag = " · ".join(filter(None, [v.get("type"), unit]))
+    tag = " · ".join(filter(None, [v.get("role"), v.get("type"), unit]))
 
     chart = ""
     if view.show_variable_plots:
-        if is_num:
+        if is_num and view.show_value_stats:
             hist = v.get("histogram") or {}
-            if hist.get("counts") and hist.get("edges"):
-                chart = charts.histogram_bins(hist["edges"], hist["counts"], title=f"{name} distribution", unit=unit or "")
-            else:
-                chart = charts.boxplot(stats, title=f"{name} distribution", unit=unit or "")
-        else:
+            if hist.get("counts") and len([c for c in hist["counts"] if c]) >= 2:
+                chart = charts.histogram_bins(hist["edges"], hist["counts"], title=f"{name} distribution", unit=unit or "", width=440)
+            elif _isnum(stats.get("min")) and stats.get("min") != stats.get("max"):
+                chart = charts.boxplot(stats, title=f"{name} distribution", unit=unit or "", width=440)
+        elif not is_num and (stats.get("n_classes") or 0) >= 2:
             tc = stats.get("top_classes") or []
-            if tc:
-                chart = charts.bar_chart([(str(c.get("name")), float(c.get("count") or 0)) for c in tc], title=f"{name} classes", top_n=10)
+            chart = charts.bar_chart([(str(c.get("name")), float(c.get("count") or 0)) for c in tc], title=f"{name} classes", top_n=10, width=440)
 
-    chips = [_chip("n", num(stats.get("n"))), _chip("missing", num(stats.get("n_missing")))]
     if is_num and view.show_value_stats:
-        if stats.get("mean") is not None:
-            chips.append(_chip("mean", num(stats.get("mean"), nd=3)))
-        if stats.get("median") is not None:
-            chips.append(_chip("median", num(stats.get("median"), nd=3)))
-        if stats.get("min") is not None and stats.get("max") is not None:
-            chips.append(_chip("range", f'{num(stats.get("min"), nd=3)}–{num(stats.get("max"), nd=3)}'))
-    elif not is_num and stats.get("n_classes") is not None:
-        chips.append(_chip("classes", num(stats.get("n_classes"))))
+        rows = [
+            ("n / missing", f'{num(stats.get("n"))} / {num(stats.get("n_missing"))}'),
+            ("Mean ± SD", f'{_f(stats.get("mean"), nd=4)} ± {_f(stats.get("std"), nd=3)}' if _isnum(stats.get("mean")) else None),
+            ("Median", _f(stats.get("median"), nd=4)),
+            ("Range", f'{_f(stats.get("min"), nd=4)} – {_f(stats.get("max"), nd=4)}' if _isnum(stats.get("min")) else None),
+            ("CV", _f(shape.get("cv"), nd=3)),
+            ("Skew / kurtosis", f'{_f(shape.get("skewness"), nd=2)} / {_f(shape.get("kurtosis"), nd=2)}' if _isnum(shape.get("skewness")) else None),
+            ("Normal?", _f(shape.get("is_normal")) if shape.get("is_normal") is not None else None),
+        ]
+    elif is_num:
+        rows = [("n / missing", f'{num(stats.get("n"))} / {num(stats.get("n_missing"))}'), ("Values", "hidden (token-gated)")]
+    else:
+        top = (stats.get("top_classes") or [{}])[0]
+        rows = [
+            ("n / missing", f'{num(stats.get("n"))} / {num(stats.get("n_missing"))}'),
+            ("Classes", _f(stats.get("n_classes"))),
+            ("Balance (entropy)", _f(balance.get("normalized_entropy"), nd=2)),
+            ("Imbalance ratio", _f(balance.get("imbalance_ratio"), nd=1)),
+            ("Top class", f'{esc(top.get("name"))} ({num(top.get("count"))})' if top.get("name") is not None else None),
+        ]
 
-    chart_html = f'<div class="var-chart">{chart}</div>' if chart else ""
+    body = "".join(f'<tr><th>{esc(label)}</th><td>{value}</td></tr>' for label, value in rows if value is not None)
+    chart_html = _zoom(chart, cls="var-chart") if chart else ""
     return (
         f'<div class="var-card"><div class="var-card-head"><h4>{esc(name)}</h4>'
-        f'<span class="var-tag">{esc(tag)}</span></div>{chart_html}<div class="chips">{"".join(chips)}</div></div>'
+        f'<span class="var-tag">{esc(tag)}</span></div>{chart_html}<table class="stat-table">{body}</table></div>'
     )
 
 
@@ -365,15 +428,21 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
         note = "This dataset is metadata-only (no declared prediction targets)." if view.has_card else ""
         return f'<section class="panel"><h2>Variables</h2><div class="panel-body"><p class="dl-note">{esc(note or "No variables present.")}</p></div></section>' if note else ""
 
-    targets = [v for v in variables if v.get("role") == "target"]
-    meta = [v for v in variables if v.get("role") != "target"]
+    usable = [v for v in variables if _var_has_data(v)]
+    omitted = len(variables) - len(usable)
+    targets = [v for v in usable if v.get("role") == "target"]
+    meta = [v for v in usable if v.get("role") != "target"]
     blocks: list[str] = []
     if targets:
-        blocks.append(f'<h3 class="var-group">Targets ({len(targets)})</h3>')
+        blocks.append(f'<h3 class="var-group">Targets <span>{len(targets)}</span></h3>')
         blocks.append(f'<div class="var-grid">{"".join(_variable_card(view, v) for v in targets)}</div>')
     if meta:
-        blocks.append(f'<h3 class="var-group">Metadata ({len(meta)})</h3>')
+        blocks.append(f'<h3 class="var-group">Metadata <span>{len(meta)}</span></h3>')
         blocks.append(f'<div class="var-grid">{"".join(_variable_card(view, v) for v in meta)}</div>')
+    if omitted:
+        blocks.append(f'<p class="dl-note">{omitted} variable(s) omitted (no recorded values).</p>')
+    if not targets and not meta:
+        blocks.append('<p class="dl-note">No variable carries recorded values.</p>')
     return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{"".join(blocks)}</div></section>'
 
 
