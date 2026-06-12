@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: MIT -->
-# @nirs4all/datasets-wasm
+# @nirs4all/nirs4all-datasets-wasm
 
 WASM binding over the `nirs4all-datasets` acquisition core. **Scoped to metadata +
 small public datasets**: it resolves the download contract from the distributable
@@ -9,7 +9,7 @@ dataset size is bounded (see `migration_ABI_C.md` §4). The native bindings (Pyt
 / Octave-MATLAB) do the byte download + caching.
 
 ```js
-const wasm = require("@nirs4all/datasets-wasm");          // or `import` for the web target
+const wasm = require("@nirs4all/nirs4all-datasets-wasm"); // or `import` for the web target
 const index = await (await fetch(INDEX_URL)).text();       // catalog/index.json
 const contract = JSON.parse(wasm.resolve(index, "corn_eigenvector_nir"));
 // contract.files[i].sha256  -> verify a blob you fetched yourself:
