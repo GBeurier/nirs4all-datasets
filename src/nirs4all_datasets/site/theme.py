@@ -233,7 +233,8 @@ code, pre { font-family: var(--mono); }
 .kpi-l { font-size: .72rem; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; font-weight: 600; }
 
 /* ── Dataviz grid ──────────────────────────────────────────────── */
-.viz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 20px; }
+.viz-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .viz-grid { grid-template-columns: 1fr; } }
 .viz-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 22px 22px 18px; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
@@ -243,11 +244,11 @@ code, pre { font-family: var(--mono); }
 .viz-h { font-family: var(--display); font-size: 1.02rem; font-weight: 600; margin-bottom: 4px; }
 .viz-sub { font-size: .8rem; color: var(--text-3); margin-bottom: 16px; }
 .viz-card svg { width: 100%; height: auto; display: block; }
-.viz-card svg text { font-family: var(--font); fill: var(--text-2); }
-.viz-card svg .axis { stroke: var(--border); stroke-width: 1; }
-.viz-card svg .barlabel { fill: var(--text); font-weight: 600; }
-.bar-row rect, .viz-card svg .seg, .viz-card svg .arc { transition: opacity .15s; }
-.bar-row:hover rect, .viz-card svg .seg:hover, .viz-card svg .arc:hover { opacity: .82; }
+/* charts size their own viewBox to the display width; numbers are tabular monospace */
+svg text { font-family: var(--font); }
+svg text.numt { font-family: var(--mono); }
+svg .barm, svg .seg { transition: opacity .15s; }
+svg .barm:hover, svg .seg:hover { opacity: .82; }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; font-size: .78rem; color: var(--text-2); }
 .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
@@ -358,37 +359,49 @@ table.data td.num, table.data th.num { text-align: right; font-variant-numeric: 
 table.data td { overflow-wrap: anywhere; }
 .table-scroll { overflow-x: auto; }
 
-/* ── Dataset-page: per-source + per-variable cards with inline interactive charts ── */
-.source-card, .var-card {
-  background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 16px 18px; margin-bottom: 16px;
+/* ── Charts: enlarge on click ── */
+.chart { cursor: zoom-in; position: relative; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart::after {
+  content: "⤢"; position: absolute; top: 8px; right: 8px; width: 22px; height: 22px;
+  display: grid; place-items: center; border-radius: 6px; background: rgba(255,255,255,.9);
+  border: 1px solid var(--border); color: var(--text-3); font-size: .82rem; opacity: 0; transition: opacity .15s;
 }
-.var-group { font-family: var(--display); font-size: .95rem; margin: 22px 0 12px; color: var(--text-2); }
-.var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-.var-card { margin-bottom: 0; display: flex; flex-direction: column; gap: 10px; }
+.chart:hover::after, .chart:focus::after { opacity: 1; }
+
+/* ── Dataset-page: spectral source cards + per-variable cards ── */
+.source-card {
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 18px;
+}
+.source-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.source-head h3 { font-family: var(--display); font-size: 1.05rem; margin: 0; }
+.src-meta { font-size: .76rem; color: var(--text-3); font-family: var(--mono); }
+.chart-spectra { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-bottom: 14px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px 15px; }
+.stat-card h4 { font-family: var(--display); font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin: 0 0 8px; }
+table.stat-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+table.stat-table th { text-align: left; font-weight: 500; color: var(--text-2); padding: 3px 0; white-space: nowrap; vertical-align: top; }
+table.stat-table td { text-align: right; font-family: var(--mono); color: var(--text); padding: 3px 0 3px 12px; font-variant-numeric: tabular-nums; word-break: break-word; }
+
+.var-group { font-family: var(--display); font-size: 1rem; margin: 24px 0 12px; display: flex; align-items: center; gap: 10px; }
+.var-group span { font-size: .7rem; font-family: var(--mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; color: var(--text-2); }
+.var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+.var-card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
 .var-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .var-card-head h4 { margin: 0; font-family: var(--display); font-size: .92rem; word-break: break-word; }
-.var-tag { font-size: .7rem; color: var(--text-3); text-transform: lowercase; white-space: nowrap; }
-.var-chart svg, .viz-spectra svg, .viz-scree svg { width: 100%; height: auto; display: block; }
-.var-chart svg text, .viz-spectra svg text, .viz-scree svg text { font-family: var(--font); fill: var(--text-2); }
-.var-chart svg .axis, .viz-spectra svg .axis { stroke: var(--border); stroke-width: 1; }
-.viz-spectra { margin: 4px 0 2px; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  display: inline-flex; flex-direction: column; gap: 1px; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; min-width: 0;
-}
-.chip span { font-size: .64rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); }
-.chip b { font-size: .82rem; font-variant-numeric: tabular-nums; color: var(--text); word-break: break-word; }
-.viz-extra { margin-top: 10px; }
-.viz-extra summary { cursor: pointer; font-size: .78rem; color: var(--text-2); }
-.viz-extra[open] summary { margin-bottom: 8px; }
-.viz-scree { max-width: 480px; }
+.var-tag { font-size: .66rem; color: var(--text-3); font-family: var(--mono); white-space: nowrap; }
+.var-chart { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; }
+.var-card .stat-table { font-size: .8rem; }
 
-figure.plot { margin: 0; }
-figure.plot img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); background: #fff; }
-figure.plot figcaption { font-size: .78rem; color: var(--text-3); text-align: center; margin-top: 8px; }
-.plot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+/* ── Lightbox (chart zoom popup) ── */
+.lightbox { position: fixed; inset: 0; z-index: 999; display: none; place-items: center; background: rgba(8,15,26,.72); backdrop-filter: blur(3px); padding: 5vh 5vw; }
+.lightbox.open { display: grid; }
+.lightbox .lb-panel { background: #fff; border-radius: 18px; padding: 26px 28px; max-width: 1120px; width: 100%; max-height: 90vh; overflow: auto; box-shadow: var(--shadow-lg); }
+.lightbox .lb-panel svg { width: 100%; height: auto; }
+.lightbox .lb-close { position: absolute; top: 18px; right: 26px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; }
 
 .dl-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .dl-btn {
@@ -435,6 +448,17 @@ def page(*, title: str, rel: str, body: str, scripts: str = "", active: str = ""
 <body>
 {body}
 {scripts}
+{LIGHTBOX}
 </body>
 </html>
 """
+
+
+# Chart zoom: clicking any `.chart` clones its SVG into a centred lightbox (Esc / backdrop to close).
+LIGHTBOX = """<div id="lb" class="lightbox" aria-hidden="true"><span class="lb-close" aria-label="close">×</span><div class="lb-panel"></div></div>
+<script>(function(){var lb=document.getElementById('lb'),p=lb.querySelector('.lb-panel');
+function close(){lb.classList.remove('open');p.innerHTML='';}
+document.addEventListener('click',function(e){var c=e.target.closest('.chart');
+  if(c){var s=c.querySelector('svg');if(s){p.innerHTML=s.outerHTML;lb.classList.add('open');}return;}
+  if(e.target===lb||e.target.closest('.lb-close'))close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>"""

@@ -14,7 +14,7 @@
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-11T23:12:58.830584+00:00",
+  "generated_at": "2026-06-12T00:05:18.338745+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "PDDL-1.0",
@@ -40,7 +40,7 @@
     "metadata_hash": "d5678147ffb1be4ee5d638b93b509e30ef6602ca52923afb4aeaa8ba45d7744e",
     "processing_hash": "f9819df85fe47ef75464e3ba15c57bcc8def6c228f060231bb9689b51c707a90"
   },
-  "protocol_version": "2",
+  "protocol_version": "3",
   "provenance": {
     "contributor": "Tabletop leaf drydowns to relate leaf spectra and leaf water (Santa Barbara, CA)",
     "conversion_status": null,
@@ -1080,43 +1080,63 @@
             0.06386624239385127
           ]
         },
+        "dimensionality": {
+          "cumulative_top10": 0.9990017722244369,
+          "effective_rank": 2.27,
+          "n_components_95": 3,
+          "n_components_99": 5
+        },
         "mean_max": 0.5178134529357641,
         "mean_min": 0.04004879048957708,
         "n_outliers": 510,
         "pca": {
           "explained_variance_ratio": [
-            0.7184218712558977,
-            0.21939743843259235,
-            0.03944645426908992,
-            0.011175298663301204,
-            0.004880192840664451,
+            0.7184218712558957,
+            0.21939743843259246,
+            0.039446454269089964,
+            0.011175298663301199,
+            0.004880192840664452,
             0.0024649458778593365,
-            0.0011251886415812094,
-            0.0010920639530539338,
-            0.000610323982484672,
-            0.00038799430791407706,
-            0.00029179171219934405,
+            0.0011251886415812075,
+            0.001092063953053934,
+            0.0006103239824846724,
+            0.00038799430791407755,
+            0.0002917917121993445,
             0.00024605300086237043,
-            0.0001327806850099857,
-            7.910547980609757e-05,
-            3.88798754983943e-05,
-            3.729516837162445e-05,
-            2.6869414408705756e-05,
-            2.3606637508483155e-05,
-            1.7498699946229565e-05,
-            1.320036778783952e-05,
-            1.1799774256252317e-05,
-            8.419599110116621e-06,
-            8.01912649540065e-06,
-            5.779315094432741e-06,
-            4.62410514560768e-06,
-            4.073613740345121e-06,
-            3.6314101574425916e-06,
-            3.5174629554531446e-06,
-            3.336364075533363e-06,
-            3.040200995759466e-06
+            0.00013278068500998552,
+            7.91054798060976e-05,
+            3.8879875498394144e-05,
+            3.729516837162456e-05,
+            2.6869414408705678e-05,
+            2.3606637508483124e-05,
+            1.749869994622958e-05,
+            1.3200367787839513e-05,
+            1.1799774256252353e-05,
+            8.419599110116933e-06,
+            8.019126495398812e-06,
+            5.77931509441083e-06,
+            4.624105196999671e-06,
+            4.07361373865705e-06,
+            3.6314101975659477e-06,
+            3.517464185801181e-06,
+            3.336363977501029e-06,
+            3.0402009481208883e-06
           ],
           "n_components": 30
+        },
+        "quality": {
+          "dynamic_range": 0.477764662446187,
+          "noise_proxy_db": 83.93733287980152,
+          "saturation_fraction": 4.832640815904414e-07,
+          "smoothness": 0.0003728223793273987
+        },
+        "spacing": {
+          "is_uniform": true,
+          "max": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "std": 0.0
         },
         "value_max": 0.6272996068000793,
         "value_min": 0.02203882299363613
@@ -1128,6 +1148,13 @@
   "variables": [
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.9791666666666666,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.020833333333333332,
+        "n_classes": 48,
+        "normalized_entropy": 0.9999999999999999
+      },
       "name": "spec_id",
       "role": "target",
       "stats": {
@@ -1222,6 +1249,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.9140625,
+        "imbalance_ratio": 3.0,
+        "minority_fraction": 0.041666666666666664,
+        "n_classes": 13,
+        "normalized_entropy": 0.9777811629007371
+      },
       "name": "species_binom",
       "role": "target",
       "stats": {
@@ -1345,6 +1379,13 @@
       },
       "name": "lwp_MPa",
       "role": "target",
+      "shape": {
+        "cv": 0.8099481317589096,
+        "is_normal": false,
+        "kurtosis": 2.5981072250938704,
+        "normality_p": 1.0118753872385287e-05,
+        "skewness": 1.7339314004919966
+      },
       "stats": {
         "max": 1.35,
         "mean": 0.36172916666666666,
@@ -1418,6 +1459,13 @@
       },
       "name": "lwa_g/cm2",
       "role": "target",
+      "shape": {
+        "cv": 0.2946392099905863,
+        "is_normal": true,
+        "kurtosis": -0.8162664323611208,
+        "normality_p": 0.2278097005701819,
+        "skewness": 0.16601142436732264
+      },
       "stats": {
         "max": 0.0291388468184048,
         "mean": 0.018439004855068015,
@@ -1491,6 +1539,13 @@
       },
       "name": "lma_g/cm2",
       "role": "target",
+      "shape": {
+        "cv": 0.3912274762212017,
+        "is_normal": false,
+        "kurtosis": 0.5815773562329705,
+        "normality_p": 0.03934954524156135,
+        "skewness": 0.8344118450115122
+      },
       "stats": {
         "max": 0.0314292467696186,
         "mean": 0.014503660546291208,
@@ -1564,6 +1619,13 @@
       },
       "name": "tlp_MPa",
       "role": "target",
+      "shape": {
+        "cv": 0.25688065713530217,
+        "is_normal": false,
+        "kurtosis": 0.5962828970060778,
+        "normality_p": 0.005254272608972732,
+        "skewness": -1.1686091400259198
+      },
       "stats": {
         "max": -1.8267861735258064,
         "mean": -2.6145581384584182,
@@ -1637,6 +1699,13 @@
       },
       "name": "capacitance_g/cm2/MPa",
       "role": "target",
+      "shape": {
+        "cv": 0.4218494609482261,
+        "is_normal": true,
+        "kurtosis": -0.8298832532935738,
+        "normality_p": 0.09808006658035752,
+        "skewness": 0.4494999245762568
+      },
       "stats": {
         "max": 0.0037407379683705,
         "mean": 0.001979200345616504,
@@ -1653,6 +1722,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.8680555555555556,
+        "imbalance_ratio": 6.0,
+        "minority_fraction": 0.041666666666666664,
+        "n_classes": 10,
+        "normalized_entropy": 0.9417522541821718
+      },
       "name": "genus",
       "role": "target",
       "stats": {
@@ -1707,6 +1783,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.9140625,
+        "imbalance_ratio": 3.0,
+        "minority_fraction": 0.041666666666666664,
+        "n_classes": 13,
+        "normalized_entropy": 0.9777811629007371
+      },
       "name": "species",
       "role": "target",
       "stats": {
@@ -1773,6 +1856,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "ecosis_resource_id",
       "role": "metadata",
       "stats": {
@@ -1804,6 +1894,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "location",
       "role": "metadata",
       "stats": {
@@ -1861,6 +1958,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "coordinate_precision_notes",
       "role": "metadata",
       "stats": {
@@ -1881,6 +1985,13 @@
       "assets": [],
       "name": "year",
       "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
       "stats": {
         "max": 2025.0,
         "mean": 2025.0,
@@ -1923,6 +2034,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "plant_part",
       "role": "metadata",
       "stats": {
@@ -1941,6 +2059,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "canopy_or_leaf",
       "role": "metadata",
       "stats": {
@@ -1959,6 +2084,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "instrument",
       "role": "metadata",
       "stats": {
@@ -1977,6 +2109,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "acquisition_mode",
       "role": "metadata",
       "stats": {
@@ -1995,6 +2134,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "signal_type",
       "role": "metadata",
       "stats": {
@@ -2013,6 +2159,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "axis_unit",
       "role": "metadata",
       "stats": {
@@ -2033,6 +2186,13 @@
       "assets": [],
       "name": "axis_min",
       "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
       "stats": {
         "max": 350.0,
         "mean": 350.0,
@@ -2051,6 +2211,13 @@
       "assets": [],
       "name": "axis_max",
       "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
       "stats": {
         "max": 2500.0,
         "mean": 2500.0,
@@ -2069,6 +2236,13 @@
       "assets": [],
       "name": "n_points_original",
       "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
       "stats": {
         "max": 2151.0,
         "mean": 2151.0,
@@ -2085,6 +2259,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "publication_doi",
       "role": "metadata",
       "stats": {
@@ -2103,6 +2284,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "citation",
       "role": "metadata",
       "stats": {
@@ -2121,6 +2309,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "license",
       "role": "metadata",
       "stats": {
@@ -2139,6 +2334,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "rights_status",
       "role": "metadata",
       "stats": {
@@ -2157,6 +2359,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "usage_scope",
       "role": "metadata",
       "stats": {
@@ -2175,6 +2384,13 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "notes",
       "role": "metadata",
       "stats": {
