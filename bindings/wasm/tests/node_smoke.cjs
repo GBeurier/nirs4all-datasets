@@ -2,9 +2,13 @@
 // Node smoke test for the WASM binding. Run after `wasm-pack build bindings/wasm
 // --target nodejs --out-dir pkg-node`:  `node bindings/wasm/tests/node_smoke.cjs`.
 const assert = require("node:assert");
+const { execFileSync } = require("node:child_process");
+const { mkdtempSync, rmSync, writeFileSync } = require("node:fs");
+const { tmpdir } = require("node:os");
+const path = require("node:path");
 const wasm = require("../pkg-node/nirs4all_datasets_wasm.js");
 
-const index = JSON.stringify({
+const indexObject = {
   schema: "1.0",
   n_datasets: 1,
   datasets: {
@@ -16,7 +20,8 @@ const index = JSON.stringify({
       descriptor: { id: "demo" },
     },
   },
-});
+};
+const index = JSON.stringify(indexObject);
 
 const resolved = JSON.parse(wasm.resolve(index, "demo"));
 assert.strictEqual(resolved.id, "demo");
@@ -30,6 +35,21 @@ assert.strictEqual(
 );
 
 assert.throws(() => wasm.resolve(index, "nope"));
+
+const repoRoot = path.resolve(__dirname, "../../..");
+const tmp = mkdtempSync(path.join(tmpdir(), "n4ds-wasm-"));
+try {
+  const indexPath = path.join(tmp, "index.json");
+  writeFileSync(indexPath, JSON.stringify(indexObject, null, 2) + "\n");
+  const cliOut = execFileSync(
+    "cargo",
+    ["run", "--quiet", "-p", "nirs4all-datasets-cli", "--", "resolve", "--index", indexPath, "demo"],
+    { cwd: repoRoot, encoding: "utf8" },
+  );
+  assert.deepStrictEqual(JSON.parse(cliOut), resolved);
+} finally {
+  rmSync(tmp, { recursive: true, force: true });
+}
 
 assert.match(wasm.abiVersion(), /^\d/);
 console.log("wasm node smoke OK");

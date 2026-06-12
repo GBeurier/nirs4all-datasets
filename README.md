@@ -62,7 +62,7 @@ qualify, site, health) stays in pure Python. The cross-language contract is one 
 |---|---|---|
 | Python | embedded in `nirs4all-datasets` (`nirs4all_datasets._n4ds`, pyo3) | built + tested |
 | Rust | `nirs4all-datasets-core` / `-capi` (crates.io) | built + tested |
-| WASM/JS | `@nirs4all/datasets-wasm` (npm) — metadata + small public datasets | built |
+| WASM/JS | `@nirs4all/datasets-wasm` (npm) — metadata + small public datasets | built + tested |
 | R | `nirs4alldatasets` (C shim, r-universe / Release) | built + tested |
 | Octave/MATLAB | MEX (GitHub Release zip) | built + tested |
 

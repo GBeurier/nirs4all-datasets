@@ -208,11 +208,14 @@ origin with no token.
 - **Python ≡ Rust JSON parity:** the Python `index.py` writer and the Rust core
   emit **byte-identical** canonical JSON for the same input (the index, and the
   resolved-contract round-trip).
-- **Cross-binding behavioral parity:** the `n4ds` CLI is the **oracle** — every
-  binding (Python / R / Octave-MATLAB / WASM) MUST `resolve` / `verify_cached`
-  identically to `n4ds` on the golden vectors; network `fetch` parity runs against
-  the RDG/CIRAD **sandbox** under the `network` gate, with the injected-session
-  fakes for the offline default (mirroring the Python tests' no-network policy).
+- **Cross-binding behavioral parity:** the `n4ds` CLI is the **oracle** — native
+  bindings (Python / R / Octave-MATLAB) MUST `resolve` / `verify_cached`
+  identically to `n4ds` on the golden vectors. The WASM binding MUST match
+  `n4ds resolve` and the shared SHA-256 vectors; it has no `verify_cached`
+  surface because the browser target has no portable filesystem contract.
+  Network `fetch` parity runs against the RDG/CIRAD **sandbox** under the
+  `network` gate, with the injected-session fakes for the offline default
+  (mirroring the Python tests' no-network policy).
 - **ABI:** the symbol-snapshot diff + version script + forbidden-dep audit + the
   `n4ds_check_abi_compatibility` probe on load; an MSVC/Windows leg.
 - **Import-boundary (load-bearing):** importing the Python acquisition path
