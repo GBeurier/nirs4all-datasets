@@ -396,6 +396,15 @@ table.stat-table td { text-align: right; font-family: var(--mono); color: var(--
 .var-chart { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; }
 .var-card .stat-table { font-size: .8rem; }
 
+.const-meta { margin-top: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-alt); padding: 2px 16px; }
+.const-meta summary { cursor: pointer; font-family: var(--display); font-size: .9rem; padding: 10px 0; display: flex; align-items: center; gap: 10px; }
+.const-meta summary span { font-size: .7rem; font-family: var(--mono); background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; color: var(--text-2); }
+.const-meta ul { list-style: none; padding: 2px 0 14px; columns: 2; column-gap: 30px; }
+@media (max-width: 640px) { .const-meta ul { columns: 1; } }
+.const-meta li { display: flex; justify-content: space-between; gap: 14px; padding: 5px 0; border-bottom: 1px dotted var(--border); break-inside: avoid; font-size: .84rem; }
+.const-meta li span { color: var(--text-2); word-break: break-word; }
+.const-meta li b { font-family: var(--mono); font-weight: 500; color: var(--text); text-align: right; }
+
 /* ── Lightbox (chart zoom popup) ── */
 .lightbox { position: fixed; inset: 0; z-index: 999; display: none; place-items: center; background: rgba(8,15,26,.72); backdrop-filter: blur(3px); padding: 5vh 5vw; }
 .lightbox.open { display: grid; }

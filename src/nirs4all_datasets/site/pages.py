@@ -52,9 +52,17 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
 
     ranges = _axis_ranges(datasets)
     if ranges:
+        # one shared axis is only meaningful within one unit (nm vs cm⁻¹ vs index) — show the dominant
+        units: dict[str, int] = {}
+        for r in ranges:
+            units[r["unit"]] = units.get(r["unit"], 0) + 1
+        unit = max(units, key=lambda u: units[u]) if units else "nm"
+        same_unit = [r for r in ranges if r["unit"] == unit]
+        other = len(ranges) - len(same_unit)
+        sub = f"Spectral range each family covers, in {esc(unit)}" + (f" ({other} dataset(s) on another axis unit not shown)" if other else "")
         cards.append(C.viz_card(
-            "Wavelength coverage", "The spectral span each spectroscopy family covers (solid = typical, faint = full extent)",
-            charts.coverage_by_family(ranges, title="Wavelength coverage by family", width=WIDE),
+            "Wavelength coverage", sub,
+            charts.coverage_by_family(same_unit, title="Wavelength coverage by family", unit_label=unit, width=WIDE),
             wide=True,
         ))
     if by_domain:
@@ -74,30 +82,25 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             charts.donut_chart(list(by_tier.items()), title="Datasets by access tier", width=HALF),
         ))
 
-    n_with = summary.get("n_with_targets") or 0
-    n_meta = summary.get("n_metadata_only") or 0
-    n_multi = summary.get("n_multi_source") or 0
-    n_single = (summary.get("n_datasets") or 0) - n_multi
-    if (n_with + n_meta) > 0 or (n_multi + n_single) > 0:
+    # targets-per-dataset distribution (datasets range from 0 to many tens of targets)
+    target_vals: list[int] = [int(v.entry["n_targets"]) for v in datasets if isinstance(v.entry.get("n_targets"), int)]
+    if len(target_vals) >= 2 and max(target_vals, default=0) > 1:
         cards.append(C.viz_card(
-            "Structural mix", "With-target vs metadata-only; multi- vs single-source",
-            charts.stacked_bars([
-                ("targets", [("with target", n_with), ("metadata-only", n_meta)]),
-                ("sources", [("multi-source", n_multi), ("single-source", max(0, n_single))]),
-            ], title="Structural mix", width=HALF),
+            "Targets per dataset", "How many prediction targets each dataset declares (0 = metadata-only)",
+            charts.histogram([float(t) for t in target_vals], title="Distribution of target counts", n_bins=12, x_label="targets per dataset", width=HALF, int_x=True),
         ))
 
     sample_vals = [v.entry.get("n_samples") for v in datasets if isinstance(v.entry.get("n_samples"), int)]
     if len([v for v in sample_vals if v]) >= 2:
         cards.append(C.viz_card(
             "Sample-size distribution", f"#samples per dataset (log-spaced bins) · median {num(samples.get('median'))}",
-            charts.histogram([float(v) for v in sample_vals if v], title="Distribution of dataset sample counts", log=True, x_label="samples per dataset", width=HALF),
+            charts.histogram([float(v) for v in sample_vals if v], title="Distribution of dataset sample counts", log=True, x_label="samples per dataset", width=HALF, int_x=True),
         ))
     feature_vals = [v.entry.get("n_features_total") for v in datasets if isinstance(v.entry.get("n_features_total"), int)]
     if len([v for v in feature_vals if v]) >= 2:
         cards.append(C.viz_card(
             "Wavelength-count distribution", f"#wavelengths per dataset · median {num(features.get('median'))}",
-            charts.histogram([float(v) for v in feature_vals if v], title="Distribution of wavelength counts", log=True, x_label="wavelengths per dataset", width=HALF),
+            charts.histogram([float(v) for v in feature_vals if v], title="Distribution of wavelength counts", log=True, x_label="wavelengths per dataset", width=HALF, int_x=True),
         ))
 
     if license_mix:
@@ -129,7 +132,7 @@ def _axis_ranges(datasets: list[DatasetView]) -> list[dict[str, Any]]:
             lo_f, hi_f = float(lo), float(hi)
         except (TypeError, ValueError):
             continue
-        out.append({"label": v.name, "family": v.entry.get("spectro_family") or "other", "lo": lo_f, "hi": hi_f})
+        out.append({"label": v.name, "family": v.entry.get("spectro_family") or "other", "unit": src.get("axis_unit") or "?", "lo": lo_f, "hi": hi_f})
     return out
 
 
@@ -137,7 +140,7 @@ def render_index(catalog: Catalog) -> str:
     summary = catalog.summary
     datasets = catalog.datasets
     sample_id = datasets[0].id if datasets else "corn_oil"
-    get_title = '<em>get</em>("&lt;id&gt;")'
+    get_title = 'One <em>call</em>, fully reproducible'
     body = f"""
 {C.nav("", "index")}
 {C.HERO_MARKUP}
@@ -294,9 +297,11 @@ def _stat_table(title: str, pairs: list[tuple[str, str | None]]) -> str:
     return f'<div class="stat-card"><h4>{esc(title)}</h4><table class="stat-table">{rows}</table></div>' if rows else ""
 
 
-def _zoom(svg: str, *, cls: str = "") -> str:
-    """Wrap a chart so a click opens it large in the page lightbox (theme.py JS)."""
-    return f'<div class="chart {cls}" tabindex="0" role="button" aria-label="enlarge chart">{svg}</div>'
+def _zoom(svg: str, *, cls: str = "", max_w: int | None = None) -> str:
+    """Wrap a chart so a click opens it large in the lightbox; cap its width so it never upscales
+    (a small viewBox stretched to a full-width panel is what made the scree/scrolls render giant)."""
+    style = f' style="max-width:{max_w}px"' if max_w else ""
+    return f'<div class="chart {cls}"{style} tabindex="0" role="button" aria-label="enlarge chart">{svg}</div>'
 
 
 def _sources_panel(view: DatasetView, rel: str) -> str:
@@ -323,7 +328,7 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         curve = spec.get("curve")
         chart = ""
         if view.show_variable_plots and curve and curve.get("axis"):
-            chart = _zoom(charts.spectra_quantile(curve, title=f'{s.get("name") or s.get("source_id")} spectra', unit=unit, width=860), cls="chart-spectra")
+            chart = _zoom(charts.spectra_quantile(curve, title=f'{s.get("name") or s.get("source_id")} spectra', unit=unit, width=860), cls="chart-spectra", max_w=860)
 
         rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (_isnum(s.get("axis_min")) and _isnum(s.get("axis_max"))) else None
         sampling = _stat_table("Sampling", [
@@ -351,7 +356,7 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         scree = ""
         evr = pca.get("explained_variance_ratio") or []
         if view.show_variable_plots and evr:
-            scree = _zoom(charts.scree([float(x) for x in evr if _isnum(x)], width=440))
+            scree = _zoom(charts.scree([float(x) for x in evr if _isnum(x)], width=420), max_w=420)
 
         blocks.append(
             f'<div class="source-card">{head}{chart}'
@@ -414,7 +419,7 @@ def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
         ]
 
     body = "".join(f'<tr><th>{esc(label)}</th><td>{value}</td></tr>' for label, value in rows if value is not None)
-    chart_html = _zoom(chart, cls="var-chart") if chart else ""
+    chart_html = _zoom(chart, cls="var-chart", max_w=440) if chart else ""
     return (
         f'<div class="var-card"><div class="var-card-head"><h4>{esc(name)}</h4>'
         f'<span class="var-tag">{esc(tag)}</span></div>{chart_html}<table class="stat-table">{body}</table></div>'
@@ -431,7 +436,11 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
     usable = [v for v in variables if _var_has_data(v)]
     omitted = len(variables) - len(usable)
     targets = [v for v in usable if v.get("role") == "target"]
-    meta = [v for v in usable if v.get("role") != "target"]
+    meta_all = [v for v in usable if v.get("role") != "target"]
+    # a single-valued metadata column (e.g. unit = "nanometer") is not a distribution — list it
+    # compactly as key = value rather than a dataviz card with a pointless 1-bar chart.
+    meta = [v for v in meta_all if not _is_constant(v)]
+    constant = [v for v in meta_all if _is_constant(v)]
     blocks: list[str] = []
     if targets:
         blocks.append(f'<h3 class="var-group">Targets <span>{len(targets)}</span></h3>')
@@ -439,11 +448,33 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
     if meta:
         blocks.append(f'<h3 class="var-group">Metadata <span>{len(meta)}</span></h3>')
         blocks.append(f'<div class="var-grid">{"".join(_variable_card(view, v) for v in meta)}</div>')
+    if constant:
+        items = "".join(f'<li><span>{esc(v.get("name"))}</span><b>{_constant_value(view, v)}</b></li>' for v in constant)
+        blocks.append(f'<details class="const-meta"><summary>Constant metadata <span>{len(constant)}</span></summary><ul>{items}</ul></details>')
     if omitted:
         blocks.append(f'<p class="dl-note">{omitted} variable(s) omitted (no recorded values).</p>')
-    if not targets and not meta:
+    if not targets and not meta and not constant:
         blocks.append('<p class="dl-note">No variable carries recorded values.</p>')
     return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{"".join(blocks)}</div></section>'
+
+
+def _is_constant(v: dict[str, Any]) -> bool:
+    """A variable with a single distinct value (a constant column — no distribution to plot)."""
+    stats = v.get("stats") or {}
+    if v.get("type") == "numeric":
+        return _isnum(stats.get("min")) and stats.get("min") == stats.get("max")
+    return (stats.get("n_classes") or 0) <= 1
+
+
+def _constant_value(view: DatasetView, v: dict[str, Any]) -> str:
+    """The single value of a constant column (or a token-gated placeholder)."""
+    if not view.show_value_stats:
+        return "—"
+    stats = v.get("stats") or {}
+    if v.get("type") == "numeric":
+        return f'<span class="numt">{num(stats.get("min"))}{(" " + esc(v.get("unit"))) if v.get("unit") else ""}</span>'
+    top = (stats.get("top_classes") or [{}])[0]
+    return esc(top.get("name")) if top.get("name") is not None else "—"
 
 
 def _alignment_panel(view: DatasetView) -> str:
