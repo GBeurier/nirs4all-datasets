@@ -41,16 +41,18 @@ def get(
     instance: str | None = None,
     cache_dir: str | Path | None = None,
     concat: bool = True,
+    reproduce: bool = False,
 ) -> NirsDataset:
     """Resolve a catalog dataset and return it as a :class:`NirsDataset` (local-first, else fetch).
 
     Resolution order: local canonical -> the personal Dataverse DOI (public via its origin, private/
-    anonymized via token) -> an OPEN origin source. Public datasets need no token. See
-    :func:`nirs4all_datasets.access.get`.
+    anonymized via token) -> an OPEN origin source. Public datasets need no token. With
+    ``reproduce=True``, an un-fetchable dataset is re-ingested from an OPEN origin via nirs4all-io (a
+    reproduction; needs the ``[io]`` extra). See :func:`nirs4all_datasets.access.get`.
     """
     from nirs4all_datasets.access import get as _get
 
-    return _get(name, root=root, source=source, split=split, token=token, instance=instance, cache_dir=cache_dir, concat=concat)
+    return _get(name, root=root, source=source, split=split, token=token, instance=instance, cache_dir=cache_dir, concat=concat, reproduce=reproduce)
 
 
 def list(root: str | Path = ".", **filters: Any) -> Sequence[dict[str, Any]]:

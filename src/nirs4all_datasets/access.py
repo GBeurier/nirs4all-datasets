@@ -99,6 +99,7 @@ def get(
     instance: str | None = None,
     cache_dir: str | Path | None = None,
     concat: bool = True,
+    reproduce: bool = False,
 ) -> NirsDataset:
     """Resolve a catalog dataset by ``name`` and return it as a :class:`NirsDataset`.
 
@@ -118,6 +119,9 @@ def get(
         instance: Dataverse instance override (else the descriptor's instance).
         cache_dir: Download cache (defaults to the native core's OS cache).
         concat: Default ``x()`` concat behaviour recorded on the returned dataset (informational).
+        reproduce: When nothing is canonically fetchable, re-ingest from an OPEN origin's RAW bytes by
+            delegating to nirs4all-io (a *reproduction*, not byte-pinned; needs the ``[io]`` extra).
+            Returns a nirs4all ``SpectroDataset`` instead of a cached :class:`NirsDataset`.
 
     Returns:
         A :class:`NirsDataset` bound to the resolved local/cached canonical directory.
@@ -142,6 +146,12 @@ def get(
     contract = _resolved_contract(root, descriptor)
     fetchable = bool(contract["doi"]) or _has_fetchable_origin(descriptor)
     if not fetchable:
+        if reproduce:
+            from nirs4all_datasets.reproduce import reproduce_from_origin
+
+            ds = reproduce_from_origin(descriptor, cache_dir=cache_dir)
+            if ds is not None:
+                return ds  # type: ignore[no-any-return]  # a nirs4all SpectroDataset (reproduction, not byte-pinned)
         raise ValueError(_origin_message(name, descriptor))
 
     # 2. Token gate (private/anonymized): resolve a token, and refuse before any network without one.
