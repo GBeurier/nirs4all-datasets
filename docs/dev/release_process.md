@@ -36,7 +36,7 @@ spelling each ecosystem requires:
 |---|---|---|
 | Cargo SemVer (verbatim) | `0.2.0-alpha.1` | root `Cargo.toml` `[workspace.package]` + the `[workspace.dependencies]` internal-crate `version`, `bindings/python/Cargo.toml`, `bindings/wasm/Cargo.toml` |
 | PEP 440 | `0.2.0a1` (`alpha.N→aN`, `beta.N→bN`, `rc.N→rcN`; plain `X.Y.Z`→itself) | root `pyproject.toml` `[project] version` |
-| R | `0.2.0.9000` (plain `X.Y.Z` for a final; `X.Y.Z.9000` "in development toward X.Y.Z" for ANY pre-release, since CRAN rejects SemVer pre-release suffixes) | `bindings/r/DESCRIPTION` |
+| R | `0.2.0.9000` (plain `X.Y.Z` for a final; `X.Y.Z.9000` "in development toward X.Y.Z" for ANY pre-release, since CRAN rejects SemVer pre-release suffixes) | `bindings/r/nirs4alldatasets/DESCRIPTION` |
 
 > The npm `bindings/wasm/pkg/package.json` is a **gitignored wasm-pack build
 > artifact** (not in version control), so it is **not** a sync target —
@@ -61,7 +61,7 @@ Rust semver, and the `n4ds_` exported-symbol surface is diffed by
 |---------|---------|----------|------------|---------|
 | Python (analysis + embedded native core) | `nirs4all-datasets` | PyPI | **Automated** — `release-python.yml` (maturin abi3 wheels all-3-OS + sdist) publishes via Trusted Publishing | push tag `v*` (non-pre-release) → PyPI |
 | Rust crates | `nirs4all-datasets-core`, `nirs4all-datasets-capi`, `nirs4all-datasets-cli` | crates.io | **Automated** — `release-crates.yml` publishes leaf-first | push tag `v*` (non-pre-release) + `CARGO_REGISTRY_TOKEN` |
-| R | `nirs4alldatasets` | **R-universe / GitHub Release** (CRAN deferred) | **Build CI-automated** — `release-r.yml` installs + smokes across the matrix, `R CMD build` attaches the tarball. R-universe is a one-time registry entry; CRAN is a deferred follow-up (the binding links a prebuilt cdylib; see *R → CRAN*). | tag push attaches the tarball |
+| R | `nirs4alldatasets` | **CRAN + R-universe / GitHub Release** | **Build CI-automated** — `release-r.yml` runs `R CMD check --as-cran` across the matrix and attaches the self-contained tarball. R-universe is a one-time registry entry; CRAN submission is the manual web form (see *R → CRAN*). The binding vendors + compiles the Rust core offline (no prebuilt cdylib). | tag push attaches the tarball |
 | Octave / MATLAB | `nirs4all-datasets-matlab-octave-<version>.zip` | GitHub Release | **Automated** — `release-matlab.yml` (`git archive HEAD:bindings/matlab`) | push tag `v*` (non-pre-release) |
 | JS / WASM | `@nirs4all/datasets-wasm` | npm | **Automated** — `release-npm.yml` (wasm-pack nodejs build, scoped name + provenance, node smoke) publishes via `npm publish` | push tag `v*` (non-pre-release) + `NPM_TOKEN` |
 | Source + provenance | — | GitHub Release | **Automated** — `release-source.yml` (reproducible git-archive tar.gz + zip, CycloneDX SBOM, `SHA256SUMS`, keyless Sigstore provenance) | push tag `v*` (non-pre-release) |
@@ -78,7 +78,7 @@ reads.
 |---|---|---|---|
 | Python `nirs4all-datasets` | PyPI | `nirs4all_datasets-<version>-*.whl` (maturin abi3 wheels: Linux + macOS + Windows, the embedded `_n4ds` core + the bundled `catalog/index.json`) + `nirs4all_datasets-<version>.tar.gz` (maturin sdist) | **Automated** — Trusted Publishing, *no manual upload* |
 | Rust crates | crates.io | the 3 workspace crates (`nirs4all-datasets-core` / `nirs4all-datasets-capi` / `nirs4all-datasets-cli`) | **Automated** — `cargo publish`, leaf-first |
-| R `nirs4alldatasets` | R-universe / Release | **`nirs4alldatasets_<version>.tar.gz`** (source tarball) | **Automated to the Release** (R-universe builds from Git). **NOT CRAN-self-contained** — see *R → CRAN* |
+| R `nirs4alldatasets` | CRAN / R-universe / Release | **`nirs4alldatasets_<version>.tar.gz`** (self-contained source tarball) | **Automated to the Release** (R-universe builds from Git via `.prepare`); **CRAN** is the manual web form — see *R → CRAN* |
 | Octave / MATLAB | GitHub Release | `nirs4all-datasets-matlab-octave-<version>.zip` (the `bindings/matlab` subtree) | **Automated** — `release-matlab.yml` |
 | JS / WASM `@nirs4all/datasets-wasm` | npm | the staged `pkg-node/` package (via `npm publish`) | **Automated** — `release-npm.yml` (needs `NPM_TOKEN` + the `@nirs4all` scope) |
 | C-ABI archive | GitHub Release | `nirs4all-datasets-capi-<os>.tar.gz` (lib + `nirs4all_datasets.h` + LICENSE), Linux/macOS/Windows | **Automated** — `release-python.yml` |
@@ -212,7 +212,7 @@ submission. Users then
 - **Registry repo**: public `GBeurier/GBeurier.r-universe.dev` with a
   `packages.json` entry:
   ```json
-  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "subdir": "bindings/r" }
+  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "subdir": "bindings/r/nirs4alldatasets" }
   ```
   No `branch` field → it tracks the default branch.
 - **GitHub App** (one manual browser step): install
@@ -220,41 +220,41 @@ submission. Users then
 - **Verify**: watch <https://gbeurier.r-universe.dev> (it *shows* the
   `R CMD check` result but, unlike CRAN, does not block on a NOTE/WARNING).
 
-> **Caveat:** the R binding links the **prebuilt** `nirs4all-datasets-capi`
-> cdylib, so R-universe's from-Git build needs the cdylib available on its
-> builders. R-universe is the lower-friction target; if its build cannot locate
-> the prebuilt library, the binding must be reworked (see *R → CRAN*).
+> **R-universe runs the same self-contained build.** The package's `.prepare`
+> hook runs `N4DS_R_VENDOR=1 ./configure` before `R CMD build`, so R-universe's
+> from-Git build vendors + compiles the Rust core offline exactly like CRAN — it
+> needs **no** prebuilt cdylib on its builders. The `subdir` in `packages.json`
+> is `bindings/r/nirs4alldatasets` (the package root).
 
-### R → CRAN (submission) — deferred follow-up
+### R → CRAN (submission)
 
-> **The R binding is NOT CRAN-submittable in its current form.** It is a C shim
-> that links the **prebuilt** `libnirs4all_datasets_capi`. CRAN's build farm has
-> no such prebuilt library and the package does not vendor or compile the Rust
-> core at install time, so a plain `R CMD build bindings/r` tarball **cannot
-> install on CRAN**. The `nirs4alldatasets_<version>.tar.gz` produced by
-> `release-r.yml` is an **R-universe / GitHub-Release asset only**.
->
-> **CRAN self-containment is a tracked follow-up.** A CRAN-submittable R package
-> requires **reworking the binding** to bundle and compile the Rust core offline
-> at install time (extendr-static, or a vendored cdylib mirroring
-> `nirs4all-formats`' `./configure` vendor mode: copy the workspace core crate
-> into `src/rust/vendored/`, `cargo vendor` the crates.io closure into
-> `vendor.tar.xz`, and build offline from `src/Makevars(.win)`). Until that lands,
-> ship the R binding via **R-universe + the GitHub Release**.
+> **The R binding is CRAN-self-contained.** It is a C shim (`src/n4ds.c`) that
+> **vendors and compiles** the `nirs4all-datasets` Rust core into a static library
+> at install time and links it into `nirs4alldatasets.{so,dll}` — no prebuilt
+> `libnirs4all_datasets_capi`, no `N4DS_CAPI_DIR`, no network. `./configure`
+> (`N4DS_R_VENDOR=1`) copies the workspace crates into `src/rust/vendored/`,
+> `cargo vendor`s the crates.io closure into `src/rust/vendor.tar.xz` (pruning the
+> never-linked Windows import-lib blobs), and `src/Makevars(.win)` build it offline
+> (`cargo build -p nirs4all-datasets-capi --release --offline`). The source tarball
+> is ~9.4 MB (under CRAN's 10 MB soft cap) and `R CMD check --as-cran` is clean
+> (0 ERRORs / 0 WARNINGs; only the first-submission + conda `-march=nocona` NOTEs).
+> `release-r.yml` runs the full `R CMD check --as-cran` matrix and attaches the
+> tarball to the Release.
 
-When the CRAN-ready variant exists, CRAN submission is a **manual web form** with
-human review. Get the self-contained source tarball, then upload **only**
+CRAN submission is a **manual web form** with human review. Get the self-contained
+source tarball (from the Release, or `N4DS_R_VENDOR=1 ./configure` then
+`R CMD build bindings/r/nirs4alldatasets`), then upload **only**
 `nirs4alldatasets_<version>.tar.gz` at <https://cran.r-project.org/submit.html>:
 
 | Field | Value |
 |---|---|
 | Your name | `Gregory Beurier` |
-| Your email | **`gregory.beurier@cirad.fr`** — must match the `Maintainer` (`cre`) in `DESCRIPTION` **exactly** |
+| Your email | **`beurier@cirad.fr`** — must match the `Maintainer` (`cre`) in `DESCRIPTION` **exactly** |
 | Upload | `nirs4alldatasets_<version>.tar.gz` (the R source tarball only — never a binary, the repo zip, or the Python sdist) |
 | Optional comment to CRAN | **paste the block below** |
 
 **Paste-ready CRAN submission comment** (kept in sync with
-`bindings/r/cran-comments.md`):
+`bindings/r/nirs4alldatasets/cran-comments.md`):
 
 ```text
 This is a new submission.
@@ -278,21 +278,23 @@ installs, loads, native path active); CI matrix (release-r.yml) on Ubuntu 22.04
 (R release + devel), macOS 14 (R release, arm64), Windows Server 2022 (R release);
 win-builder + R-hub v2 run manually before submission.
 
-R CMD check --as-cran: 0 ERRORs. Any WARNING/NOTE comes from the bundled
-third-party Rust sources or the local toolchain, not from the package's own R or
-build logic. The package does no network access during install/examples/tests
-(downloads happen only on an explicit user fetch call) and imports only base R +
-jsonlite.
+R CMD check --as-cran: 0 ERRORs, 0 WARNINGs. The NOTEs are the first-submission
+note (with a title-case sub-note on the product name "nirs4all-datasets",
+intentionally lower-case) and, on a conda-forge build, the local toolchain's
+-march=nocona compile flag from R's own Makeconf — neither occurs on CRAN's
+toolchain. The package does no network access during install/examples/tests
+(downloads happen only on an explicit user fetch call) and has no R package
+dependencies (a leaf in the CRAN graph).
 
-Maintainer: Grégory Beurier (CIRAD), gregory.beurier@cirad.fr.
+Maintainer: Gregory Beurier (CIRAD), beurier@cirad.fr.
 ```
 
 > **CRAN version note:** CRAN rejects SemVer pre-release suffixes
 > (`0.2.0-alpha.1`). While the project is pre-final the R spelling is the
 > development version `0.2.0.9000`, which is **R-universe / dev only and is NOT
 > submitted to CRAN**. The first CRAN-eligible R version is the plain `0.2.0` cut
-> by `scripts/bump_version.sh --bump 0.2.0` — and only after the self-containment
-> rework above.
+> by `scripts/bump_version.sh --bump 0.2.0` (the binding is already
+> CRAN-self-contained — vendored + offline-compiled).
 
 ---
 

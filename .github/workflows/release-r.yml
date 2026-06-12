@@ -1,25 +1,30 @@
 # SPDX-License-Identifier: MIT
-# Build, install, smoke-test, and (on a release tag) attach the nirs4alldatasets
+# Build, R CMD check --as-cran, and (on a release tag) attach the nirs4alldatasets
 # R package source tarball.
 #
-# IMPORTANT — this is the methods-style / R-universe path. The R binding is a C
-# SHIM over the PREBUILT nirs4all-datasets-capi cdylib: bindings/r/src links
-# `-lnirs4all_datasets_capi` via N4DS_INCLUDE / N4DS_CAPI_DIR (see the package
-# Makevars). There is no extendr, no src/rust/, no relative crate path deps.
+# The nirs4alldatasets R binding is a thin C SHIM (bindings/r/nirs4alldatasets/src/
+# n4ds.c) over the stable n4ds_* C ABI, now built SELF-CONTAINED:
+# bindings/r/nirs4alldatasets/configure (N4DS_R_VENDOR=1) vendors the workspace Rust
+# core (nirs4all-datasets{-core,-capi}) into src/rust/vendored/, emits a
+# self-contained src/rust/Cargo.toml, copies the committed C ABI header, and
+# `cargo vendor`s every crates.io transitive dep into src/rust/vendor.tar.xz (with
+# the never-linked Windows import-lib blobs pruned) plus an offline source-
+# replacement config. src/Makevars(.win) then extracts that and builds the capi
+# STATICLIB OFFLINE (`cargo build -p nirs4all-datasets-capi --release --offline`),
+# linking it into nirs4alldatasets.{so,dll}. No prebuilt libnirs4all_datasets_capi,
+# no N4DS_CAPI_DIR, no network at install — so the tarball is CRAN-submittable.
 #
-# Because the package links a separately-built cdylib, the
-# `nirs4alldatasets_<version>.tar.gz` produced here is an R-UNIVERSE / GitHub-
-# RELEASE ASSET, NOT a CRAN-self-contained tarball: it cannot build on CRAN's
-# farm without the prebuilt libnirs4all_datasets_capi on the system. A
-# CRAN-submittable R package requires REWORKING the binding to vendor + compile
-# the Rust core at install time — tracked as a follow-up.
+# CRAN submission itself is the irreducible manual web-form step at
+# https://cran.r-project.org/submit.html — this workflow produces + validates the
+# self-contained tarball; the maintainer downloads it from the Release and submits.
+# R-universe builds straight from Git via the .prepare hook (which runs the same
+# N4DS_R_VENDOR=1 ./configure before R CMD build).
 #
 # Triggers
 # --------
-# - workflow_dispatch        -> on-demand install + smoke + tarball build.
-# - push tag v[0-9]*.[0-9]*.[0-9]* -> install+smoke matrix -> build tarball ->
-#   attach nirs4alldatasets_<version>.tar.gz to the matching Release (gated on a
-#   non-pre-release tag).
+# - workflow_dispatch        -> on-demand R CMD check + tarball build.
+# - push tag v[0-9]*.[0-9]*.[0-9]* -> check -> build-tarball -> attach the CRAN
+#   tarball to the matching Release (publish-release-asset, gated on a non-rc tag).
 
 name: release-r
 
@@ -37,11 +42,11 @@ permissions:
 
 jobs:
   # =========================================================================
-  # Build the cdylib, install the R package against it, and run the smoke test
-  # across the same OS/R matrix CRAN-class consumers use.
+  # R CMD check --as-cran across the same OS/R matrix CRAN itself uses, against
+  # the self-contained vendored tarball (no prebuilt cdylib).
   # =========================================================================
-  install-smoke:
-    name: install + smoke / ${{ matrix.cfg.label }}
+  check:
+    name: R CMD check / ${{ matrix.cfg.label }}
     runs-on: ${{ matrix.cfg.runs_on }}
     strategy:
       fail-fast: false
@@ -61,6 +66,15 @@ jobs:
             r_version: "release"
     env:
       R_KEEP_PKG_SOURCE: yes
+      # NB: N4DS_R_VENDOR is intentionally NOT a job-wide env. It must be set ONLY
+      # for the pre-vendor step below (which runs in the checkout, where crates/
+      # exists). Setting it job-wide would make ./configure re-vendor during the
+      # tarball INSTALL too — but the unpacked tarball has no crates/, so it would
+      # fail. The bundled src/rust/vendored/ + vendor.tar.xz are used at check time
+      # instead (the real CRAN scenario).
+      #
+      # The build is offline; disable the incoming-feasibility URL check.
+      _R_CHECK_CRAN_INCOMING_REMOTE_: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -73,39 +87,70 @@ jobs:
           r-version: ${{ matrix.cfg.r_version }}
           use-public-rspm: true
 
-      # bindings/r/build_and_test.sh: builds nirs4all-datasets-capi (release),
-      # exports N4DS_INCLUDE / N4DS_CAPI_DIR / N4DS_CORPUS, R CMD INSTALLs the
-      # package against the prebuilt cdylib, and runs the smoke. Rtools provides
-      # bash on Windows; the build dir is on PATH there so the DLL resolves at
-      # runtime (Windows has no rpath, which the Makevars -Wl,-rpath sets on
-      # ELF/Mach-O hosts).
-      - name: Build cdylib, install R package, run smoke
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: bindings/r/nirs4alldatasets
+          extra-packages: |
+            any::rcmdcheck
+
+      # Populate src/rust/vendored/ + vendor.tar.xz from the in-repo crates/
+      # (gitignored, absent at checkout). N4DS_R_VENDOR=1 is scoped to THIS step,
+      # where crates/ is reachable; the build then bundles the vendored tree into
+      # the tarball and the check installs from that bundled copy (no re-vendor at
+      # install time). shell: bash so it runs on the Windows runner (Rtools provides
+      # bash + tar/xz; the package ships src/Makevars.win for the actual Windows
+      # compile).
+      - name: Vendor the Rust core into the R package
         shell: bash
-        run: |
-          set -euo pipefail
-          # Windows DLL resolution at smoke time. build_and_test.sh builds the
-          # capi with the x86_64-pc-windows-gnu toolchain on Windows (to match
-          # Rtools' mingw ABI), so put that target dir on PATH there too. Keep
-          # both dirs on PATH defensively in case ld resolves the cdylib import lib.
-          export PATH="$PWD/target/x86_64-pc-windows-gnu/release:$PWD/target/release:$PATH"
-          bash bindings/r/build_and_test.sh
+        run: cd bindings/r/nirs4alldatasets && N4DS_R_VENDOR=1 ./configure
+
+      - name: R CMD check --as-cran
+        uses: r-lib/actions/check-r-package@v2
+        env:
+          CARGO_NET_OFFLINE: "true"   # the INSTALL build is offline from the bundle
+        with:
+          working-directory: bindings/r/nirs4alldatasets
+          # check-r-package interpolates these into rcmdcheck::rcmdcheck(args = ...,
+          # error_on = ...) as literal R code, so they must be valid R syntax.
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
+          upload-snapshots: true
+
+      - name: Upload check artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcheck-${{ matrix.cfg.label }}
+          path: bindings/r/nirs4alldatasets.Rcheck/
 
   # =========================================================================
-  # Build the source tarball (R-universe / Release asset).
+  # Build the self-contained source tarball that the maintainer uploads to CRAN
+  # (and that is attached to the GitHub Release).
   # =========================================================================
   build-tarball:
     name: Build R source tarball
-    needs: install-smoke
+    needs: check
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - uses: dtolnay/rust-toolchain@stable
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: "release"
           use-public-rspm: true
+
+      # ./configure (N4DS_R_VENDOR=1) vendors the workspace core crates +
+      # cargo-vendors every crates.io dep into src/rust/, so the source tarball is
+      # self-contained (no external crates/; CRAN's farm compiles offline).
+      - name: Vendor the Rust core into the R package (self-contained tarball)
+        working-directory: bindings/r/nirs4alldatasets
+        env:
+          N4DS_R_VENDOR: "1"
+        run: ./configure
 
       - name: R CMD build (produces nirs4alldatasets_<version>.tar.gz)
         run: |
@@ -117,15 +162,15 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: nirs4alldatasets-r-tarball
+          name: nirs4alldatasets-cran-tarball
           path: dist-r/nirs4alldatasets_*.tar.gz
           if-no-files-found: error
           retention-days: 90
 
   # =========================================================================
-  # Attach the tarball to the GitHub Release on non-pre-release tags.
-  # NOTE: this tarball is R-universe / Release-asset ONLY — it is NOT
-  # CRAN-self-contained (it needs the prebuilt libnirs4all_datasets_capi).
+  # Attach the tarball to the GitHub Release on non-pre-release tags. The
+  # maintainer then downloads from the Release and submits via the CRAN web
+  # form at https://cran.r-project.org/submit.html.
   # =========================================================================
   publish-release-asset:
     name: Attach R tarball to GitHub Release
@@ -137,7 +182,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: nirs4alldatasets-r-tarball
+          name: nirs4alldatasets-cran-tarball
           path: dist-r/
 
       - name: Upload to the matching Release
