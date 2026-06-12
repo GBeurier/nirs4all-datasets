@@ -71,6 +71,10 @@ def _ok(v: Any) -> bool:
     return v is not None and isinstance(v, bool) is False and isinstance(v, (int, float)) and math.isfinite(v)
 
 
+def _finite_float(v: Any) -> float | None:
+    return float(v) if _ok(v) else None
+
+
 def _nice_step(raw: float) -> float:
     """Return a human-friendly step using the 1/2/2.5/5/10 progression."""
     if raw <= 0 or not math.isfinite(raw):
@@ -87,7 +91,7 @@ def _nice_step(raw: float) -> float:
         nice = 5.0
     else:
         nice = 10.0
-    return nice * power
+    return float(nice * power)
 
 
 def _linear_scale(lo: float, hi: float, *, target_ticks: int = 5, include_zero: bool = False) -> tuple[float, float, list[float], float]:
@@ -161,6 +165,12 @@ def _tick_label(value: float, *, step: float | None = None, integer: bool = Fals
     step_s = f"{abs(step):.12f}".rstrip("0").rstrip(".")
     decimals = len(step_s.split(".", 1)[1]) if "." in step_s else 0
     return f"{value:,.{decimals}f}"
+
+
+def _x_tick_text(x: float, y: float, label: str, *, width: float, edge: float = 34.0) -> str:
+    """Axis tick label that stays inside the SVG viewBox at the left/right edges."""
+    anchor = "start" if x <= edge else "end" if x >= width - edge else "middle"
+    return f'<text x="{x:.0f}" y="{y:.0f}" text-anchor="{anchor}" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{label}</text>'
 
 
 def _legend_panel(entries: list[tuple[str, str, str]], *, right: float, top: float, opacity: float = 0.92) -> str:
@@ -331,8 +341,9 @@ def histogram_bins(edges: list[float], counts: list[int], *, title: str, x_label
     for tick in x_ticks:
         if x0 <= tick <= x1:
             lbl = _tick_label(tick, step=x_step, integer=int_x)
-            parts.append(f'<line x1="{x_for(tick):.0f}" y1="{pad_t + ph:.0f}" x2="{x_for(tick):.0f}" y2="{pad_t + ph + 4:.0f}" stroke="{GRID}"></line>')
-            parts.append(f'<text x="{x_for(tick):.0f}" y="{pad_t + ph + 18:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{lbl}</text>')
+            x = x_for(tick)
+            parts.append(f'<line x1="{x:.0f}" y1="{pad_t + ph:.0f}" x2="{x:.0f}" y2="{pad_t + ph + 4:.0f}" stroke="{GRID}"></line>')
+            parts.append(_x_tick_text(x, pad_t + ph + 18, lbl, width=width))
     if x_label:
         parts.append(f'<text x="{pad_l + pw / 2:.0f}" y="{height - 4:.0f}" text-anchor="middle" font-size="{FS_AXIS}" fill="{FAINT}">{esc(x_label)}</text>')
     return _svg(width, height, "".join(parts), title=title)
@@ -369,7 +380,7 @@ def boxplot(stats: dict[str, Any], *, title: str, unit: str = "", width: float =
         parts.append(f'<circle cx="{mx:.1f}" cy="{cy}" r="3.4" fill="#fff" stroke="#b7791f" stroke-width="2.2"><title>mean {num(float(mean), nd=4)}</title></circle>')
     for tick in ticks:
         parts.append(f'<line x1="{x(tick):.1f}" y1="{cy + 18}" x2="{x(tick):.1f}" y2="{cy + 22}" stroke="{GRID}"></line>')
-        parts.append(f'<text x="{x(tick):.1f}" y="{cy + 34}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(tick, step=step)}{esc(unit)}</text>')
+        parts.append(_x_tick_text(x(tick), cy + 34, f"{_tick_label(tick, step=step)}{esc(unit)}", width=width))
     return _svg(width, height, "".join(parts), title=title)
 
 
@@ -416,7 +427,7 @@ def spectra_quantile(curve: dict[str, list[float]], *, title: str, axis_label: s
         parts.append(f'<text x="{pad_l - 7}" y="{y + 3:.1f}" text-anchor="end" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(v, step=y_step)}</text>')
     for a in x_ticks:
         parts.append(f'<line x1="{px(a):.0f}" y1="{pad_t}" x2="{px(a):.0f}" y2="{pad_t + ph:.0f}" stroke="{GRID_SOFT}"></line>')
-        parts.append(f'<text x="{px(a):.0f}" y="{height - 14:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(a, step=x_step)}</text>')
+        parts.append(_x_tick_text(px(a), height - 14, _tick_label(a, step=x_step), width=width))
     parts.extend([
         f'<polygon points="{band(q05, q95)}" fill="{ACCENT}" fill-opacity="0.12"><title>q05-q95 envelope</title></polygon>',
         f'<polygon points="{band(q25, q75)}" fill="{ACCENT}" fill-opacity="0.24"><title>q25-q75 envelope</title></polygon>',
@@ -546,7 +557,7 @@ def coverage_by_family(spans: list[dict[str, Any]], *, title: str, unit_label: s
     for val in ticks:
         x = label_w + (val - gmin) / (gmax - gmin) * pw
         parts.append(f'<line x1="{x:.0f}" y1="{pad_t}" x2="{x:.0f}" y2="{axis_y:.0f}" stroke="{GRID_SOFT}"></line>')
-        parts.append(f'<text x="{x:.0f}" y="{axis_y + 18:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(val, step=step)}</text>')
+        parts.append(_x_tick_text(x, axis_y + 18, _tick_label(val, step=step), width=width))
     parts.append(f'<text x="{label_w + pw / 2:.0f}" y="{height - 2:.0f}" text-anchor="middle" font-size="{FS_AXIS}" fill="{FAINT}">wavelength / {esc(unit_label)} · band = min–max coverage, then range · dataset count</text>')
     return _svg(width, height, "".join(parts), title=title)
 
@@ -562,9 +573,10 @@ def samples_features_scatter(points: list[dict[str, Any]], *, title: str = "Samp
     """
     rows = []
     for p in points:
-        samples, features = p.get("samples"), p.get("features")
-        if _ok(samples) and _ok(features) and float(samples) > 0 and float(features) > 0:
-            rows.append(p | {"samples": float(samples), "features": float(features)})
+        samples = _finite_float(p.get("samples"))
+        features = _finite_float(p.get("features"))
+        if samples is not None and features is not None and samples > 0 and features > 0:
+            rows.append(p | {"samples": samples, "features": features})
     if len(rows) < 2:
         return _empty(width, 260, title, "not enough datasets")
     height = round(width * 0.46)
@@ -604,16 +616,16 @@ def samples_features_scatter(points: list[dict[str, Any]], *, title: str = "Samp
     for tick in x_ticks:
         x = px(tick)
         parts.append(f'<line x1="{x:.0f}" y1="{pad_t}" x2="{x:.0f}" y2="{pad_t + ph:.0f}" stroke="{GRID_SOFT}"></line>')
-        parts.append(f'<text x="{x:.0f}" y="{height - 22:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(tick, step=x_step, integer=True)}</text>')
+        parts.append(_x_tick_text(x, height - 22, _tick_label(tick, step=x_step, integer=True), width=width))
     for tick in y_ticks:
         y = py(tick)
         parts.append(f'<line x1="{pad_l}" y1="{y:.0f}" x2="{pad_l + pw:.0f}" y2="{y:.0f}" stroke="{GRID_SOFT}"></line>')
         parts.append(f'<text x="{pad_l - 8}" y="{y + 4:.0f}" text-anchor="end" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(tick, step=y_step, integer=True)}</text>')
     draw_rows = sorted(rows, key=lambda r: float(r.get("targets") or 0), reverse=True)
     for i, r in enumerate(draw_rows):
-        risk = r.get("risk")
-        color = _risk_color(float(risk)) if _ok(risk) else _ramp(i)
-        targets = r.get("targets") if _ok(r.get("targets")) else 0
+        risk = _finite_float(r.get("risk"))
+        color = _risk_color(risk) if risk is not None else _ramp(i)
+        targets = _finite_float(r.get("targets")) or 0.0
         radius = 3.3 + min(6.0, float(targets) ** 0.5 * 1.7)
         label = str(r.get("label") or r.get("id") or "dataset")
         family = str(r.get("family") or "unknown")
@@ -751,7 +763,14 @@ def diagnostic_bars(diagnostics: list[dict[str, Any]], *, title: str = "Diagnost
 def pca_score_scatter(score_plot: dict[str, Any], *, title: str = "PCA score plot", width: float = 520) -> str:
     """PC1/PC2 scatter from precomputed card points."""
     pts = score_plot.get("points") or []
-    rows = [(float(p.get("x")), float(p.get("y"))) for p in pts if isinstance(p, dict) and _ok(p.get("x")) and _ok(p.get("y"))]
+    rows: list[tuple[float, float]] = []
+    for p in pts:
+        if not isinstance(p, dict):
+            continue
+        x = _finite_float(p.get("x"))
+        y = _finite_float(p.get("y"))
+        if x is not None and y is not None:
+            rows.append((x, y))
     if len(rows) < 3:
         return _empty(width, 240, title, "PCA scores unavailable")
     height = round(width * 0.62)
@@ -771,7 +790,7 @@ def pca_score_scatter(score_plot: dict[str, Any], *, title: str = "PCA score plo
     for tick in x_ticks:
         x = px(tick)
         parts.append(f'<line x1="{x:.0f}" y1="{pad_t}" x2="{x:.0f}" y2="{pad_t + ph:.0f}" stroke="{GRID_SOFT}"></line>')
-        parts.append(f'<text x="{x:.0f}" y="{height - 18:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(tick, step=x_step)}</text>')
+        parts.append(_x_tick_text(x, height - 18, _tick_label(tick, step=x_step), width=width))
     for tick in y_ticks:
         y = py(tick)
         parts.append(f'<line x1="{pad_l}" y1="{y:.0f}" x2="{pad_l + pw:.0f}" y2="{y:.0f}" stroke="{GRID_SOFT}"></line>')
@@ -839,7 +858,7 @@ def xy_correlation_curve(xy: dict[str, Any], *, title: str = "X-Y spectral corre
     ])
     for a in x_ticks:
         parts.append(f'<line x1="{px(a):.0f}" y1="{pad_t + ph:.0f}" x2="{px(a):.0f}" y2="{pad_t + ph + 4:.0f}" stroke="{GRID}"></line>')
-        parts.append(f'<text x="{px(a):.0f}" y="{height - 13:.0f}" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{_tick_label(a, step=x_step)}</text>')
+        parts.append(_x_tick_text(px(a), height - 13, _tick_label(a, step=x_step), width=width))
     parts.append(_legend_panel([("line", ACCENT, "|r|"), ("dash", FAINT, "signed r")], right=width - pad_r - 6, top=pad_t + 6))
     parts.append(f'<text x="{pad_l + pw / 2:.0f}" y="{height - 1:.0f}" text-anchor="middle" font-size="{FS_AXIS}" fill="{FAINT}">axis · Pearson correlation scale</text>')
     return _svg(width, height, "".join(parts), title=title)

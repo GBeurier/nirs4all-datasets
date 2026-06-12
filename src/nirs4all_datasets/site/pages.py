@@ -350,6 +350,10 @@ def _isnum(v: Any) -> bool:
     return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
 
 
+def _finite_float(v: Any) -> float | None:
+    return float(v) if _isnum(v) else None
+
+
 def _f(v: Any, *, nd: int = 4, suffix: str = "") -> str | None:
     """Format a metric value for a stat table, or None to omit the row. Bools -> yes/no."""
     if isinstance(v, bool):
@@ -496,7 +500,7 @@ def _xy_panel(source: dict[str, Any], view: DatasetView) -> str:
     if not xy:
         return ""
     rows = []
-    charts_html = []
+    charts_html: list[str] = []
     for item in xy[:20]:
         if not isinstance(item, dict):
             continue
@@ -558,7 +562,7 @@ def _metric_scores_panel(profile: dict[str, Any]) -> str:
     if not rows:
         return ""
     html_rows = []
-    numeric_scores = [float(row.get("score")) for row in rows if _isnum(row.get("score"))]
+    numeric_scores = [score for row in rows if (score := _finite_float(row.get("score"))) is not None]
     worst = max(numeric_scores) if numeric_scores else None
     for row in rows:
         formula = esc(row.get("formula"))
@@ -727,8 +731,10 @@ def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
             elif _isnum(stats.get("min")) and stats.get("min") != stats.get("max"):
                 chart = charts.boxplot(stats, title=f"{name} distribution", unit=unit or "", width=440)
         elif not is_num and (stats.get("n_classes") or 0) >= 2:
-            tc = stats.get("top_classes") or []
-            chart = charts.bar_chart([(str(c.get("name")), float(c.get("count") or 0)) for c in tc], title=f"{name} classes", top_n=10, width=440)
+            tc = [c for c in (stats.get("top_classes") or []) if isinstance(c, dict)]
+            cat_rows = [(str(c.get("name")), count) for c in tc if (count := _finite_float(c.get("count"))) is not None and count > 0]
+            if any(count > 1 for _label, count in cat_rows):
+                chart = charts.bar_chart(cat_rows, title=f"{name} classes", top_n=10, width=440)
 
     if is_num and view.show_value_stats:
         rows = [
