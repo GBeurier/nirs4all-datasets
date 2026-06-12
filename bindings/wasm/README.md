@@ -16,5 +16,15 @@ const contract = JSON.parse(wasm.resolve(index, "corn_eigenvector_nir"));
 const ok = wasm.sha256(new Uint8Array(buf)) === contract.files[0].sha256;
 ```
 
-Build: `wasm-pack build bindings/wasm --release --target nodejs --out-dir pkg-node --scope nirs4all`,
-then `node bindings/wasm/tests/node_smoke.cjs`.
+Build the browser package used by `nirs4all-web`:
+
+```bash
+wasm-pack build bindings/wasm --release --target web --out-dir pkg --scope nirs4all
+```
+
+Build and test the Node package:
+
+```bash
+wasm-pack build bindings/wasm --release --target nodejs --out-dir pkg-node --scope nirs4all
+node bindings/wasm/tests/node_smoke.cjs
+```
