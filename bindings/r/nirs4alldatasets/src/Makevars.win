@@ -39,16 +39,17 @@ PKG_CPPFLAGS = -I$(CURDIR)
 # and fail with "couldn't extract file stem from specified linker".
 #
 # R's gcc driver — not rustc — drives the C-shim link of nirs4alldatasets.dll, so
-# it does NOT auto-append the Rust-std + ureq/rustls/ring native system libs. Add
-# the exact `rustc --print native-static-libs` superset those crates need for
-# x86_64-pc-windows-gnu (kernel32 advapi32 ntdll userenv ws2_32 bcrypt crypt32
-# secur32 ncrypt dbghelp) plus -lgcc for the panic_unwind EH/personality + __chkstk
-# refs. Rtools45's mingw ships NO separate libgcc_eh.a — the unwinder (_Unwind_*),
-# __gcc_personality_seh0, and __chkstk are all merged into libgcc.a, so -lgcc (not
-# -lgcc_eh) resolves them. System libs MUST come AFTER the archive (mingw ld is
-# order-sensitive).
+# it does NOT auto-append the Rust-std + ureq/rustls/ring/directories native system
+# libs. Add the exact `rustc --print native-static-libs` superset those crates need
+# for x86_64-pc-windows-gnu (kernel32 advapi32 ntdll userenv ws2_32 bcrypt crypt32
+# secur32 ncrypt dbghelp + ole32/shell32 for the `directories`/dirs-sys cache-dir
+# lookup, which calls SHGetKnownFolderPath + CoTaskMemFree) plus -lgcc for the
+# panic_unwind EH/personality + __chkstk refs. Rtools45's mingw ships NO separate
+# libgcc_eh.a — the unwinder (_Unwind_*), __gcc_personality_seh0, and __chkstk are
+# all merged into libgcc.a, so -lgcc (not -lgcc_eh) resolves them. System libs MUST
+# come AFTER the archive (mingw ld is order-sensitive).
 PKG_LIBS = $(STATLIB) \
-  -lkernel32 -ladvapi32 -lntdll -luserenv -lws2_32 -lbcrypt -lcrypt32 -lsecur32 -lncrypt -ldbghelp -lgcc
+  -lkernel32 -ladvapi32 -lntdll -luserenv -lws2_32 -lbcrypt -lcrypt32 -lsecur32 -lncrypt -ldbghelp -lole32 -lshell32 -lgcc
 
 all: $(SHLIB) rust_clean
 
