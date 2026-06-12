@@ -18,7 +18,7 @@ import numpy as np
 
 from nirs4all_datasets.qualify import metrics
 
-PROTOCOL_VERSION = "3"  # 3: cards carry full scientific stats — spectral quality/spacing/dimensionality per source, distribution shape per numeric var, class balance per categorical var (+ the v2 quantile curves + histogram bins)
+PROTOCOL_VERSION = "4"  # 4: + detected signal type per source (absorbance/reflectance/…); 3: full scientific stats (spectral quality/spacing/dimensionality, distribution shape, class balance); 2: quantile curves + histogram bins
 
 Scope = Literal["source", "variable", "dataset"]
 MetricFn = Callable[..., Any]

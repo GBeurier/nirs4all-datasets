@@ -183,6 +183,17 @@ def _filter_options(datasets: list[DatasetView], key: str) -> list[str]:
     return sorted({str(v.entry.get(key)) for v in datasets if v.entry.get(key)})
 
 
+def _icon_legend() -> str:
+    """The task-type + signal-type icon key shown above the catalog grid."""
+    from .icons import ICON_LABELS, ICONS
+
+    items = "".join(
+        f'<span class="leg-item"><span class="leg-ic {"task" if k in ("regression", "classification") else "signal"}">{ICONS[k]}</span>{esc(lbl)}</span>'
+        for k, lbl in ICON_LABELS.items()
+    )
+    return f'<div class="icon-legend"><span class="leg-title">Task</span>{items}</div>'
+
+
 def render_catalog(catalog: Catalog) -> str:
     datasets = catalog.datasets
     cards = "".join(C.dataset_card(v) for v in datasets)
@@ -213,6 +224,7 @@ def render_catalog(catalog: Catalog) -> str:
       <button class="btn-reset" id="reset">reset</button>
       <span class="count" id="count"></span>
     </div>
+    {_icon_legend()}
     <div class="cards" id="cards">{cards}</div>
     <div class="empty hidden" id="empty">No dataset matches these filters.</div>
   </div>

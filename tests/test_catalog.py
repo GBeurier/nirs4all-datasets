@@ -36,7 +36,7 @@ from nirs4all_datasets.schema import DatasetDescriptor
 _ENTRY_KEYS = {
     "id", "name", "domain", "tier", "license", "content_version", "schema_protocol",
     "spectro_family", "modalities", "n_sources", "source_ids", "n_features_total",
-    "alignment_level", "n_targets", "targets", "n_metadata", "has_split", "splits",
+    "alignment_level", "n_targets", "targets", "task", "signal_types", "n_metadata", "has_split", "splits",
     "n_samples", "doi", "origin_kinds", "origin_access", "n_publications",
     "card_protocol", "content_hash", "processing_hash", "has_card", "has_manifest",
     "is_stale", "publishable",
@@ -102,6 +102,8 @@ def test_catalog_entry_documented_keys_and_values(fleet: tuple[Path, dict[str, D
     assert entry["modalities"] == ["NIR"]
     assert entry["n_targets"] == 1
     assert entry["targets"] == ["protein"]
+    assert entry["task"] == "regression"  # numeric target -> regression
+    assert entry["signal_types"] == []  # no fresh card in this fixture
     assert entry["content_version"] == "1.0.0"
     assert entry["alignment_level"] == "sample"
     assert entry["has_split"] is True

@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 from .escape import esc, num
+from .icons import icon, signal_icon_key
 from .model import DatasetView
 
 _TIERS = ("public", "private", "anonymized")
@@ -205,6 +206,15 @@ def dataset_card(view: DatasetView) -> str:
     family = e.get("spectro_family") or "—"
     domain = e.get("domain") or "—"
 
+    # task-type + detected signal-type glyphs (legend on the catalog page)
+    glyphs: list[str] = []
+    for kind in (e.get("task") or "").split("+"):
+        if kind:
+            glyphs.append(f'<span class="ds-ic task" title="{esc(kind)}">{icon(kind)}<i>{esc(kind)}</i></span>')
+    for st in e.get("signal_types") or []:
+        glyphs.append(f'<span class="ds-ic signal" title="signal type: {esc(st)}">{icon(signal_icon_key(st))}<i>{esc(st)}</i></span>')
+    icons_html = f'<div class="ds-icons">{"".join(glyphs)}</div>' if glyphs else ""
+
     badges = [tier_badge(tier)]
     if n_sources > 1:
         badges.append(badge(f"{n_sources} sources", "info"))
@@ -230,6 +240,7 @@ def dataset_card(view: DatasetView) -> str:
 <article class="ds-card" style="--tier:{tier_var}" {data_attrs}>
   <h3><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a></h3>
   <div class="ds-domain">{esc(domain)} &middot; {esc(family)}</div>
+  {icons_html}
   <div class="ds-meta">
     <div>Samples <b>{num(n_samples) if n_samples is not None else "—"}</b></div>
     <div>Wavelengths <b>{num(n_features) if n_features is not None else "—"}</b></div>

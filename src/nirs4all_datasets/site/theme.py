@@ -299,6 +299,23 @@ svg .barm:hover, svg .seg:hover { opacity: .82; }
 .ds-meta b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
 .ds-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
 
+/* ── Task / signal-type glyphs on cards + the catalog legend ── */
+.ds-icons { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 12px; }
+.ds-ic { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; padding: 3px 9px 3px 7px;
+  border-radius: 999px; border: 1px solid var(--border); background: var(--bg-alt); white-space: nowrap; }
+.ds-ic svg { width: 15px; height: 15px; }
+.ds-ic i { font-style: normal; }
+.ds-ic.task { color: var(--teal-d); border-color: rgba(15,118,110,.28); background: rgba(15,118,110,.07); }
+.ds-ic.signal { color: #9c5b6a; border-color: rgba(156,91,106,.28); background: rgba(156,91,106,.07); }
+.icon-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 22px;
+  padding: 12px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-alt); font-size: .8rem; color: var(--text-2); }
+.icon-legend .leg-title { font-family: var(--display); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; font-size: .7rem; }
+.leg-item { display: inline-flex; align-items: center; gap: 6px; }
+.leg-ic { display: inline-flex; }
+.leg-ic svg { width: 16px; height: 16px; }
+.leg-ic.task { color: var(--teal-d); }
+.leg-ic.signal { color: #9c5b6a; }
+
 /* ── Tier / status badges ──────────────────────────────────────── */
 .badge {
   display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 3px 11px;
