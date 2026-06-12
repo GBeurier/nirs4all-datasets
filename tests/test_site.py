@@ -13,7 +13,8 @@ from typing import Any
 
 import yaml
 
-from nirs4all_datasets.site import build_site, charts
+from nirs4all_datasets.site import build_site, charts, pages
+from nirs4all_datasets.site.model import DatasetView
 
 
 # =============================================================================
@@ -210,6 +211,38 @@ def test_chart_axes_use_nice_ticks_not_raw_bounds() -> None:
     })
     assert "0.15" in svg and "0.20" in svg and "0.25" in svg
     assert "0.1434751235423145" not in svg
+
+
+def test_singleton_categorical_variables_skip_useless_barplot() -> None:
+    view = DatasetView(
+        entry={"id": "d"},
+        tier="public",
+        card={},
+        has_card=True,
+        show_value_stats=True,
+        show_variable_plots=True,
+        show_byte_download=False,
+        show_metadata_downloads=True,
+        asset_dataset_id="d",
+    )
+    html = pages._variable_card(  # noqa: SLF001 - focused rendering regression
+        view,
+        {
+            "name": "sample_code",
+            "role": "metadata",
+            "type": "categorical",
+            "unit": None,
+            "stats": {
+                "n": 3,
+                "n_missing": 0,
+                "n_classes": 3,
+                "top_classes": [{"name": "a", "count": 1}, {"name": "b", "count": 1}, {"name": "c", "count": 1}],
+            },
+            "balance": {"normalized_entropy": 1.0, "imbalance_ratio": 1.0},
+        },
+    )
+    assert "sample_code" in html
+    assert "var-chart" not in html
 
 
 def test_public_full_with_downloads(tmp_path: Path) -> None:

@@ -20,7 +20,7 @@ import math
 import warnings
 from collections.abc import Iterable
 from copy import deepcopy
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from scipy import stats
@@ -262,23 +262,30 @@ def _axis(axis: object, n_features: int) -> np.ndarray:
 def _safe_nanmean(arr: np.ndarray, axis: int | None = None) -> np.ndarray | float:
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
-        return np.nanmean(arr, axis=axis)
+        return cast(np.ndarray | float, np.nanmean(arr, axis=axis))
 
 
 def _safe_nanstd(arr: np.ndarray, axis: int | None = None) -> np.ndarray | float:
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
-        return np.nanstd(arr, axis=axis)
+        return cast(np.ndarray | float, np.nanstd(arr, axis=axis))
 
 
 def _safe_nanpercentile(arr: np.ndarray, q: float, axis: int | None = None) -> np.ndarray | float:
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
-        return np.nanpercentile(arr, q, axis=axis)
+        return cast(np.ndarray | float, np.nanpercentile(arr, q, axis=axis))
 
 
 def _finite_values(arr: np.ndarray) -> np.ndarray:
-    return arr[np.isfinite(arr)]
+    return cast(np.ndarray, arr[np.isfinite(arr)])
+
+
+def _finite_float(value: Any) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    value_f = float(value)
+    return value_f if math.isfinite(value_f) else None
 
 
 def _ratio(value: Any, denominator: Any, *, scale: float = 1.0) -> float | None:
@@ -754,7 +761,7 @@ def dataset_structure_metrics(x: object, *, pca: dict[str, Any] | None = None) -
     lof = finite_knn / float(np.median(finite_knn)) if finite_knn.size and float(np.median(finite_knn)) > 0 else np.empty(0)
     isolation_p95 = None
     try:
-        from sklearn.ensemble import IsolationForest  # type: ignore[import-not-found]
+        from sklearn.ensemble import IsolationForest
 
         model = IsolationForest(n_estimators=100, random_state=0, contamination="auto")
         raw = -model.fit(scores).score_samples(scores)
@@ -800,10 +807,12 @@ def _profile_scores(profile: dict[str, Any]) -> dict[str, float]:
     repeatability = profile.get("repeatability") or {}
     structure = profile.get("structure") or {}
     ptp = amp.get("peak_to_peak")
-    mean_abs = abs(float(amp.get("mean_reflectance"))) if isinstance(amp.get("mean_reflectance"), (int, float)) and not isinstance(amp.get("mean_reflectance"), bool) else 0.0
-    signal_scale = max(mean_abs, abs(float(ptp)) if isinstance(ptp, (int, float)) and not isinstance(ptp, bool) else 0.0, 1e-12)
-    snr_db = noise.get("snr_db")
-    noise_from_snr = 0.0 if isinstance(snr_db, (int, float)) and not isinstance(snr_db, bool) and math.isfinite(float(snr_db)) and float(snr_db) >= 40 else (1.0 - max(0.0, float(snr_db)) / 40.0 if isinstance(snr_db, (int, float)) and not isinstance(snr_db, bool) and math.isfinite(float(snr_db)) else 0.5)
+    mean_reflectance = _finite_float(amp.get("mean_reflectance"))
+    mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
+    ptp_value = _finite_float(ptp)
+    signal_scale = max(mean_abs, abs(ptp_value) if ptp_value is not None else 0.0, 1e-12)
+    snr_db = _finite_float(noise.get("snr_db"))
+    noise_from_snr = 0.0 if snr_db is not None and snr_db >= 40 else (1.0 - max(0.0, snr_db) / 40.0 if snr_db is not None else 0.5)
     return {
         "integrity_risk": max(_saturate(integrity.get("nan_ratio"), 0.05), _saturate(integrity.get("zero_column_ratio"), 0.02), _saturate(integrity.get("inf_count"), 1.0)),
         "noise_risk": max(noise_from_snr, _saturate(_ratio(noise.get("noise_rms"), signal_scale), 0.05)),
@@ -858,8 +867,10 @@ def _metric_value(profile: dict[str, Any], key: str) -> Any:
 
 def _signal_scale(profile: dict[str, Any]) -> float:
     amp = profile.get("amplitude") or {}
-    mean_abs = abs(float(amp.get("mean_reflectance"))) if isinstance(amp.get("mean_reflectance"), (int, float)) and not isinstance(amp.get("mean_reflectance"), bool) and math.isfinite(float(amp.get("mean_reflectance"))) else 0.0
-    ptp = abs(float(amp.get("peak_to_peak"))) if isinstance(amp.get("peak_to_peak"), (int, float)) and not isinstance(amp.get("peak_to_peak"), bool) and math.isfinite(float(amp.get("peak_to_peak"))) else 0.0
+    mean_reflectance = _finite_float(amp.get("mean_reflectance"))
+    peak_to_peak = _finite_float(amp.get("peak_to_peak"))
+    mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
+    ptp = abs(peak_to_peak) if peak_to_peak is not None else 0.0
     return max(mean_abs, ptp, 1e-12)
 
 
@@ -993,11 +1004,13 @@ def _diagnostic_signals(profile: dict[str, Any]) -> dict[str, float]:
     shape = profile.get("shape") or {}
     ref = profile.get("reference") or {}
     rep = profile.get("repeatability") or {}
-    snr_db = noise.get("snr_db")
-    snr_low = 1.0 - max(0.0, min(1.0, float(snr_db) / 40.0)) if isinstance(snr_db, (int, float)) and not isinstance(snr_db, bool) and math.isfinite(float(snr_db)) else float(scores.get("noise_risk") or 0.0)
-    snr_high = max(0.0, min(1.0, (float(snr_db) - 25.0) / 25.0)) if isinstance(snr_db, (int, float)) and not isinstance(snr_db, bool) and math.isfinite(float(snr_db)) else 0.0
-    mean_abs = abs(float(amp.get("mean_reflectance"))) if isinstance(amp.get("mean_reflectance"), (int, float)) and not isinstance(amp.get("mean_reflectance"), bool) else 0.0
-    ptp = abs(float(amp.get("peak_to_peak"))) if isinstance(amp.get("peak_to_peak"), (int, float)) and not isinstance(amp.get("peak_to_peak"), bool) else 0.0
+    snr_db = _finite_float(noise.get("snr_db"))
+    snr_low = 1.0 - max(0.0, min(1.0, snr_db / 40.0)) if snr_db is not None else float(scores.get("noise_risk") or 0.0)
+    snr_high = max(0.0, min(1.0, (snr_db - 25.0) / 25.0)) if snr_db is not None else 0.0
+    mean_reflectance = _finite_float(amp.get("mean_reflectance"))
+    peak_to_peak = _finite_float(amp.get("peak_to_peak"))
+    mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
+    ptp = abs(peak_to_peak) if peak_to_peak is not None else 0.0
     dynamic_ratio = ptp / max(mean_abs, 1e-12)
     flat = 1.0 - max(0.0, min(1.0, dynamic_ratio / 0.08))
     return {
