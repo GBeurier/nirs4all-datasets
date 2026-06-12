@@ -228,7 +228,19 @@ PY
 #    crate's own [lib] crate-type (reduced to ["staticlib"] in step 2b) —
 #    src/Makevars builds `-p nirs4all-datasets-capi` and links
 #    libnirs4all_datasets_capi.a.
-WS_VERSION=$(sed -nE '/^\[workspace\.package\]/,/^\[/{s/^version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/p}' "$REPO/Cargo.toml" | head -n1)
+# Read the [workspace.package] version with python3 (already required for this
+# vendor path) — portable across GNU and BSD/macOS, unlike a `sed` address-range
+# substitute.
+WS_VERSION=$(python3 - "$REPO/Cargo.toml" <<'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+# Find the [workspace.package] table and the first `version = "..."` inside it.
+m = re.search(r'(?ms)^\[workspace\.package\]\s*$(.*?)(^\[|\Z)', text)
+section = m.group(1) if m else ""
+v = re.search(r'(?m)^\s*version\s*=\s*"([^"]+)"', section)
+sys.stdout.write(v.group(1) if v else "")
+PY
+)
 [ -n "$WS_VERSION" ] || { echo "nirs4alldatasets configure(vendor): ERROR — could not read workspace version from $REPO/Cargo.toml" >&2; exit 1; }
 cat > "$RUST/Cargo.toml" <<TOML
 # SPDX-License-Identifier: MIT
