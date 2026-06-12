@@ -62,12 +62,20 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
     # Display fields come from the PUBLIC descriptor (masked name/targets/domain for the anonymized tier);
     # the integrity hashes above stay keyed to the real descriptor (the card/manifest were hashed from it).
     from nirs4all_datasets.qualify.anonymize import public_descriptor  # lazy: keeps `import catalog` light
+    from nirs4all_datasets.schema import VarType
 
     pub = public_descriptor(descriptor)
     alignment = card.get("alignment", {}) if card_fresh else {}
     targets = pub.targets
     metadata_vars = pub.metadata_variables
     n_features_total = sum(s.n_variables for s in pub.sources if s.n_variables is not None) or None
+
+    # task type from the target dtypes (categorical/text -> classification, else regression)
+    _class_types = {VarType.CATEGORICAL, VarType.TEXT, VarType.IDENTIFIER}
+    task_kinds = sorted({("classification" if t.type in _class_types else "regression") for t in targets})
+    task = "+".join(task_kinds) if task_kinds else None
+    # detected spectral signal type(s) (absorbance/reflectance/…), from a fresh card, kept only when confident
+    signal_types = sorted({s["signal_type"] for s in (card.get("sources") or []) if card_fresh and s.get("signal_type") and (s.get("signal_type_confidence") or 0) >= 0.5}) if card_fresh else []
 
     entry: dict[str, Any] = {
         "id": pub.id,
@@ -85,6 +93,8 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
         "alignment_level": pub.alignment_level.value,
         "n_targets": len(targets),
         "targets": [t.name for t in targets],
+        "task": task,
+        "signal_types": signal_types,
         "n_metadata": len(metadata_vars),
         "has_split": bool(pub.splits),
         "splits": [s.name for s in pub.splits],

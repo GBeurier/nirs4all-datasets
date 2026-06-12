@@ -184,12 +184,15 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         curve = metrics.spectral_curve(spectra, axis)
         if curve is not None:
             spectral["curve"] = curve
+    signal_type, signal_conf = _detect_signal_type(spectral_cols, spectra, src_warnings)
     warnings.extend(f"source {source_id}: {w}" for w in src_warnings)
     section = {
         "source_id": source_id,
         "name": declared.name if declared else None,
         "instrument_name": declared.instrument_name if declared else None,
         "modality": declared.modality.value if declared else None,
+        "signal_type": signal_type,
+        "signal_type_confidence": signal_conf,
         "axis_unit": entry.get("axis_unit"),
         "axis_min": entry.get("axis_min"),
         "axis_max": entry.get("axis_max"),
@@ -250,6 +253,22 @@ def _source_pca(spectra: np.ndarray, warnings: list[str]) -> dict[str, Any] | No
         return None
     evr = [float(v) for v in proj["explained_variance_ratio"]]
     return {"n_components": int(proj["n_components"]), "explained_variance_ratio": evr}
+
+
+def _detect_signal_type(spectral_cols: list[str], spectra: np.ndarray, warnings: list[str]) -> tuple[str | None, float]:
+    """Detect the spectral signal type (absorbance / reflectance / transmittance / …) from the data,
+    via nirs4all. The descriptors all carry ``auto`` (undeclared), so this is the only honest source.
+    Returns ``(type|None, confidence)``; ``None`` when undeterminable or nirs4all is absent."""
+    if spectra.ndim != 2 or spectra.shape[0] < 1 or spectra.shape[1] < 3:
+        return None, 0.0
+    try:
+        from nirs4all.data.detection.detector import detect_signal_type
+
+        st, conf = detect_signal_type(header=[str(c) for c in spectral_cols], data=spectra)
+        return (str(st) if st else None), float(conf)
+    except Exception as exc:  # noqa: BLE001 - detection is best-effort
+        warnings.append(f"signal-type detection failed: {type(exc).__name__}")
+        return None, 0.0
 
 
 def _variable_type(var: Variable) -> bool:
