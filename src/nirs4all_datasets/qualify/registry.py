@@ -18,7 +18,7 @@ import numpy as np
 
 from nirs4all_datasets.qualify import metrics
 
-PROTOCOL_VERSION = "4"  # 4: + detected signal type per source (absorbance/reflectance/…); 3: full scientific stats (spectral quality/spacing/dimensionality, distribution shape, class balance); 2: quantile curves + histogram bins
+PROTOCOL_VERSION = "5"  # 5: dataset-property explorer profile + diagnostic hypotheses; 4: detected signal type; 3: scientific stats; 2: quantile curves + histogram bins
 
 Scope = Literal["source", "variable", "dataset"]
 MetricFn = Callable[..., Any]
@@ -62,6 +62,12 @@ def metrics_for(scope: Scope) -> dict[str, MetricFn]:
 def _source_spectral_quality(spectra: np.ndarray) -> dict[str, Any]:
     """Smoothness/noise/range proxies for a source's spectra (delegates to :func:`metrics.spectral_quality`)."""
     return metrics.spectral_quality(spectra)
+
+
+@register("spectral_profile", "source")
+def _source_spectral_profile(spectra: np.ndarray, axis: np.ndarray | None = None, *, sample_ids: list[str] | None = None) -> dict[str, Any]:
+    """Full dataset-property profile for a source's spectra."""
+    return metrics.spectral_profile(spectra, axis, sample_ids=sample_ids)
 
 
 @register("value_range", "source")

@@ -13,7 +13,7 @@ from typing import Any
 
 import yaml
 
-from nirs4all_datasets.site import build_site
+from nirs4all_datasets.site import build_site, charts
 
 
 # =============================================================================
@@ -59,6 +59,24 @@ def _card(dataset_id: str, *, name: str, description: str, target_name: str, fam
             "spectral": {
                 "value_min": 0.0, "value_max": 1.2, "mean_min": 0.1, "mean_max": 0.9, "n_outliers": 3,
                 "pca": {"n_components": 3, "explained_variance_ratio": [0.8, 0.15, 0.05]},
+                "quality": {"noise_proxy_db": 35.0, "smoothness": 0.01, "dynamic_range": 0.8, "saturation_fraction": 0.0},
+                "spacing": {"mean": 2.0, "std": 0.0, "min": 2.0, "max": 2.0, "median": 2.0, "is_uniform": True},
+                "dimensionality": {"effective_rank": 1.5, "n_components_95": 2, "n_components_99": 3, "cumulative_top10": 1.0},
+                "profile": {
+                    "integrity": {"nan_ratio": 0.0, "inf_count": 0, "finite_ratio": 1.0, "zero_ratio": 0.0, "zero_column_ratio": 0.0},
+                    "amplitude": {"mean_reflectance": 0.4, "area_under_curve": 560.0, "peak_to_peak": 0.8, "variance": 0.04},
+                    "noise": {"noise_rms": 0.002, "snr": 200.0, "snr_db": 46.0, "bandwise_snr_min": 80.0, "bandwise_snr_median": 150.0, "worst_band_index": 2, "worst_band_axis": 1500.0},
+                    "artefacts": {"spike_count": 2, "spike_rate": 0.001, "jump_count": 1, "jump_rate": 0.0005, "clip_fraction": 0.0},
+                    "shape": {"baseline_slope": 0.02, "curvature_rms": 0.001, "d1_rms": 0.01, "edge_noise_ratio": 1.2},
+                    "outliers": {"pca_q_median": 0.1, "pca_q_p95": 0.7, "pca_q_max": 1.0, "pca_q_ratio": 7.0, "hotelling_t2_median": 1.0, "hotelling_t2_p95": 4.0, "hotelling_t2_max": 5.0, "hotelling_t2_ratio": 4.0, "mahalanobis_h_median": 1.0, "mahalanobis_h_p95": 2.0, "mahalanobis_h_max": 2.5, "mahalanobis_h_ratio": 2.0},
+                    "reference": {"rms_to_mean_spectrum": 0.02, "rms_to_mean_spectrum_p95": 0.09, "sam_to_mean_spectrum": 0.01, "sam_to_mean_spectrum_p95": 0.06, "affine_offset_median": 0.0, "affine_offset_p95_abs": 0.02, "affine_gain_median": 1.0, "affine_gain_p95_abs_delta": 0.05, "affine_residual_rms_median": 0.01, "affine_residual_rms_p95": 0.03, "peak_position_std": 1.0, "xcorr_lag_p95_features": 2.0, "xcorr_lag_p95_axis": 4.0},
+                    "repeatability": {"n_repeat_groups": 5, "rms_intra_id": 0.01, "sam_intra_id": 0.02, "cv_intra_id": 0.03, "distance_to_centroid_p95": 0.03},
+                    "structure": {"pca_score_density": 4.0, "local_outlier_factor_p95": 1.4, "isolation_forest_score_p95": None, "density_cv": 0.2},
+                    "profile_scores": {"integrity_risk": 0.0, "noise_risk": 0.1, "local_artefact_risk": 0.2, "shape_drift": 0.15, "outlier_pressure": 0.7, "reference_spread": 0.25, "repeatability_risk": 0.2, "structure_complexity": 0.25},
+                    "diagnostics": [{"key": "splice", "label": "Splice / raccord détecteurs", "score": 0.62, "strength": "moyenne", "evidence": [{"signal": "PCA Q", "level": 0.7}], "interpretation": "Rupture aux jonctions de détecteurs."}],
+                },
+                "score_plot": {"explained_variance_ratio": [0.8, 0.15], "points": [{"x": -1.0, "y": 0.2}, {"x": 0.0, "y": -0.1}, {"x": 1.0, "y": 0.3}]},
+                "xy": [{"target": target_name, "n": 80, "max_abs_corr": 0.82, "argmax_axis": 1300.0, "mean_abs_corr": 0.31, "frac_abs_corr_gt_0_5": 0.2, "curve": {"axis": [1100.0, 1300.0, 1500.0], "corr": [0.1, 0.82, -0.2], "abs_corr": [0.1, 0.82, 0.2]}}],
                 "curve": {"axis": [1100.0, 1300.0, 1500.0], "q05": [0.1, 0.2, 0.15], "q25": [0.2, 0.3, 0.25], "median": [0.3, 0.4, 0.35], "q75": [0.4, 0.5, 0.45], "q95": [0.5, 0.6, 0.55], "mean": [0.3, 0.4, 0.35]},
             },
             "assets": [],
@@ -69,7 +87,7 @@ def _card(dataset_id: str, *, name: str, description: str, target_name: str, fam
         "schema_version": "2.0", "protocol_version": "1.0",
         "identity": {"id": dataset_id, "name": name, "domain": "corn", "tier": "public", "description": description, "keywords": ["corn", "nir-secret-keyword"]},
         "versions": {"content": "1.0.0", "schema_protocol": "2.0"},
-        "alignment": {"level": "sample", "sample_id_available": True, "n_samples": 80, "n_observations_total": 160, "reps_per_sample": {"min": 2, "max": 2, "mean": 2.0}},
+        "alignment": {"level": "sample", "sample_id_available": True, "n_samples": 80, "n_observations_total": 160, "reps_per_sample": {"min": 2, "max": 2, "mean": 2.0}, "profile_scores": {"integrity_risk": 0.0, "noise_risk": 0.1, "local_artefact_risk": 0.2, "shape_drift": 0.15, "outlier_pressure": 0.7, "reference_spread": 0.25, "repeatability_risk": 0.2, "structure_complexity": 0.25}},
         "sources": sources,
         "variables": [
             {"name": target_name, "role": "target", "type": "numeric", "unit": "%", "stats": {"n": 80, "n_missing": 0, "min": 3.0, "max": 9.0, "mean": 6.1, "std": 1.2, "median": 6.0, "q1": 5.0, "q3": 7.0}, "histogram": {"edges": [3.0, 5.0, 7.0, 9.0], "counts": [20, 40, 20]}, "assets": []},
@@ -154,7 +172,7 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert ">320<" in index or "320" in index  # total samples KPI value
     # multiple inline SVG charts, each accessible
     assert index.count('role="img"') >= 5
-    for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family"):
+    for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family", "Samples versus features"):
         assert f'aria-label="{label}"' in index
 
 
@@ -173,8 +191,25 @@ def test_dataset_page_per_dataset(tmp_path: Path) -> None:
         assert (out / "dataset" / f"{did}.html").exists()
     public = (out / "dataset" / "corn_oil.html").read_text(encoding="utf-8")
     assert "Corn — oil" in public
-    assert "Spectral sources" in public and "Provenance" in public
+    assert "Dataset property explorer" in public and "Spectral sources" in public and "Provenance" in public
+    assert "Metric interpretation reference" in public and "PCA Q (SPE)" in public
+    assert "Computed metric scores" in public and "Interprétation dataset" in public
+    assert "count(isnan(X)) / X.size" in public
+    assert "Bug-hunting / supervised audits" in public and "Label bugs" in public
+    assert "X-Y spectral correlation" in public and "PCA score plot" in public
     assert "get(&quot;corn_oil&quot;)" in public  # load snippet (HTML-escaped quotes)
+
+
+def test_chart_axes_use_nice_ticks_not_raw_bounds() -> None:
+    svg = charts.xy_correlation_curve({
+        "curve": {
+            "axis": [0.1434751235423145, 0.171, 0.206, 0.25788421234],
+            "corr": [0.1, 0.2, -0.1, 0.3],
+            "abs_corr": [0.1, 0.2, 0.1, 0.3],
+        }
+    })
+    assert "0.15" in svg and "0.20" in svg and "0.25" in svg
+    assert "0.1434751235423145" not in svg
 
 
 def test_public_full_with_downloads(tmp_path: Path) -> None:

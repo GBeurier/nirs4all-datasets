@@ -26,7 +26,7 @@ def test_metrics_for_returns_registered_metrics() -> None:
     variable = r.metrics_for("variable")
     dataset = r.metrics_for("dataset")
 
-    assert {"value_range", "spectral_quality"} <= set(source)
+    assert {"value_range", "spectral_quality", "spectral_profile"} <= set(source)
     assert {"numeric_stats", "categorical_stats"} <= set(variable)
     assert {"reps_per_sample"} <= set(dataset)
     assert all(callable(fn) for fn in (*source.values(), *variable.values(), *dataset.values()))

@@ -185,9 +185,12 @@ def section_head(eyebrow: str, title_html: str, sub: str = "", *, centered: bool
 
 
 def viz_card(title: str, sub: str, svg: str, *, wide: bool = False) -> str:
+    """A titled dataviz card. The SVG sits in a ``.viz-canvas`` so wide charts can scroll horizontally
+    on small screens (keeping their labels legible) instead of being squashed to an unreadable size."""
     return (
         f'<div class="viz-card{" wide" if wide else ""}">'
-        f'<div class="viz-h">{esc(title)}</div><div class="viz-sub">{esc(sub)}</div>{svg}</div>'
+        f'<div class="viz-h">{esc(title)}</div><div class="viz-sub">{esc(sub)}</div>'
+        f'<div class="viz-canvas">{svg}</div></div>'
     )
 
 

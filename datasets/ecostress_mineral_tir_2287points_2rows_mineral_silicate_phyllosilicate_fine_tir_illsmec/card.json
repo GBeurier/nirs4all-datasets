@@ -3,6 +3,16 @@
     "level": "observation",
     "n_observations_total": 2,
     "n_samples": 2,
+    "profile_scores": {
+      "integrity_risk": 0.0,
+      "local_artefact_risk": 1.0,
+      "noise_risk": 0.005787308248797636,
+      "outlier_pressure": 0.0,
+      "reference_spread": 0.3812433823897114,
+      "repeatability_risk": 0.0,
+      "shape_drift": 1.0,
+      "structure_complexity": 0.0
+    },
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -14,7 +24,7 @@
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-12T00:48:15.279287+00:00",
+  "generated_at": "2026-06-12T13:57:02.120499+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -40,7 +50,7 @@
     "metadata_hash": "9a24ad414346f3c7f0d0ed6baaa86eea9bfb03df68c7cb35959410813ff38579",
     "processing_hash": "ec4db3fd04b1700f1746d79d19f60f4c70d23f8f7ebbb705fbf6f886d680cb7e"
   },
-  "protocol_version": "4",
+  "protocol_version": "5",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
     "conversion_status": null,
@@ -1109,6 +1119,257 @@
           ],
           "n_components": 1
         },
+        "profile": {
+          "amplitude": {
+            "area_under_curve": 1533.0173559958462,
+            "mean_reflectance": 89.52713496121038,
+            "peak_to_peak": 82.38664817810059,
+            "variance": 376.7207892281013
+          },
+          "artefacts": {
+            "clip_fraction": 0.00043725404459991256,
+            "jump_count": 389,
+            "jump_rate": 0.08508311461067367,
+            "spike_count": 27,
+            "spike_rate": 0.005908096280087528
+          },
+          "diagnostics": [
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "SNR non d\u00e9grad\u00e9"
+                },
+                {
+                  "level": 0.5908096280087528,
+                  "signal": "Spike rate"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "key": "splice",
+              "label": "Splice / raccord d\u00e9tecteurs",
+              "score": 0.5340633635847649,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "artefacts locaux"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "key": "white_calibration",
+              "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "score": 0.4885405637316185,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "SNR normal/\u00e9lev\u00e9"
+                },
+                {
+                  "level": 0.9942126917512024,
+                  "signal": "Noise RMS faible"
+                },
+                {
+                  "level": 0.5908096280087528,
+                  "signal": "Spike rate"
+                }
+              ],
+              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
+              "key": "resampling_error",
+              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
+              "score": 0.43390532043706775,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "key": "background_shift",
+              "label": "Fond diff\u00e9rent",
+              "score": 0.3968738970649519,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
+              "key": "probe_geometry",
+              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
+              "score": 0.34732048319853026,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
+                },
+                {
+                  "level": 0.5908096280087528,
+                  "signal": "Spike rate"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
+              "key": "vera25_like",
+              "label": "Signature VERA25-like",
+              "score": 0.34098555454018065,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
+                }
+              ],
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "score": 0.33749016178399655,
+              "strength": "faible"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 0.3812433823897114,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
+              "key": "partial_coverage",
+              "label": "M\u00e9lange feuille + fond",
+              "score": 0.23020723039828525,
+              "strength": "faible"
+            }
+          ],
+          "integrity": {
+            "finite_ratio": 1.0,
+            "inf_count": 0,
+            "nan_ratio": 0.0,
+            "zero_column_ratio": 0.0,
+            "zero_ratio": 0.0
+          },
+          "noise": {
+            "bandwise_snr_median": 4901.286432396126,
+            "bandwise_snr_min": 133.57801902097285,
+            "noise_rms": 0.0259060563326116,
+            "snr": 3455.8380407947297,
+            "snr_db": 70.77106761805074,
+            "worst_band_axis": 24.6864,
+            "worst_band_index": 3
+          },
+          "outliers": {
+            "hotelling_t2_max": null,
+            "hotelling_t2_median": null,
+            "hotelling_t2_p95": null,
+            "hotelling_t2_ratio": null,
+            "mahalanobis_h_max": null,
+            "mahalanobis_h_median": null,
+            "mahalanobis_h_p95": null,
+            "mahalanobis_h_ratio": null,
+            "pca_q_max": null,
+            "pca_q_median": null,
+            "pca_q_p95": null,
+            "pca_q_ratio": null
+          },
+          "profile_scores": {
+            "integrity_risk": 0.0,
+            "local_artefact_risk": 1.0,
+            "noise_risk": 0.005787308248797636,
+            "outlier_pressure": 0.0,
+            "reference_spread": 0.3812433823897114,
+            "repeatability_risk": 0.0,
+            "shape_drift": 1.0,
+            "structure_complexity": 0.0
+          },
+          "reference": {
+            "affine_gain_median": 1.0000000000000002,
+            "affine_gain_p95_abs_delta": 0.06131799486250887,
+            "affine_offset_median": -7.105427357601002e-15,
+            "affine_offset_p95_abs": 8.603503180899096,
+            "affine_residual_rms_median": 4.095795329792643,
+            "affine_residual_rms_p95": 4.095795329792643,
+            "peak_position_std": 4.5,
+            "rms_to_mean_spectrum": 5.2710290831228885,
+            "rms_to_mean_spectrum_p95": 5.2710290831228885,
+            "sam_to_mean_spectrum": 0.048740146170004335,
+            "sam_to_mean_spectrum_p95": 0.050087871179252855,
+            "xcorr_lag_p95_axis": 0.0,
+            "xcorr_lag_p95_features": 0.0
+          },
+          "repeatability": {
+            "cv_intra_id": null,
+            "distance_to_centroid_p95": null,
+            "n_repeat_groups": 0,
+            "rms_intra_id": null,
+            "sam_intra_id": null
+          },
+          "shape": {
+            "baseline_slope": -73.75441269147406,
+            "curvature_rms": 0.10950831397443772,
+            "d1_rms": 0.33429530845224337,
+            "edge_noise_ratio": 1.2307703994051975
+          },
+          "structure": {
+            "density_cv": null,
+            "isolation_forest_score_p95": null,
+            "local_outlier_factor_p95": null,
+            "pca_score_density": null
+          }
+        },
         "quality": {
           "dynamic_range": 82.38664817810059,
           "noise_proxy_db": 70.77106761805074,
@@ -1124,7 +1385,8 @@
           "std": 0.018456669298508477
         },
         "value_max": 110.28800201416016,
-        "value_min": 19.101499557495117
+        "value_min": 19.101499557495117,
+        "xy": []
       },
       "warnings": []
     }

@@ -95,6 +95,7 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
         "targets": [t.name for t in targets],
         "task": task,
         "signal_types": signal_types,
+        "profile_scores": alignment.get("profile_scores") if card_fresh else None,
         "n_metadata": len(metadata_vars),
         "has_split": bool(pub.splits),
         "splits": [s.name for s in pub.splits],

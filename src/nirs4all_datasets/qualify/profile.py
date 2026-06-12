@@ -101,15 +101,18 @@ def _provenance(descriptor: DatasetDescriptor) -> dict[str, Any]:
     }
 
 
-def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor) -> dict[str, Any]:
+def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor, source_profiles: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     n_observations_total = int(sum(int(s.get("n_observations") or 0) for s in config.get("sources", [])))
     reps = registry.metrics_for("dataset")["reps_per_sample"](np.asarray(reps_counts, dtype="float64")) if reps_counts else None
+    from nirs4all_datasets.qualify import metrics
+
     return {
         "level": config.get("alignment_level"),
         "sample_id_available": bool(descriptor.ids.sample_id_available),
         "n_samples": len(sample_ids),
         "n_observations_total": n_observations_total,
         "reps_per_sample": reps,
+        "profile_scores": metrics.aggregate_profile_scores(source_profiles or []),
     }
 
 
@@ -160,6 +163,7 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
     spectral_cols = [c for c in df.columns if c not in (_OBS_KEY, _SAMPLE_KEY)]
     spectra = df[spectral_cols].to_numpy(dtype="float64") if spectral_cols else np.empty((len(df), 0))
     sample_ids = set(df[_SAMPLE_KEY].astype(str)) if _SAMPLE_KEY in df.columns else set()
+    sample_id_rows = df[_SAMPLE_KEY].astype(str).tolist() if _SAMPLE_KEY in df.columns else None
 
     source_metrics = registry.metrics_for("source")
     value_range = source_metrics["value_range"](spectra)
@@ -179,11 +183,16 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "quality": metrics.spectral_quality(spectra),
         "spacing": metrics.wavelength_spacing(axis),
         "dimensionality": _dimensionality(pca),
+        "profile": source_metrics["spectral_profile"](spectra, axis, sample_ids=sample_id_rows),
+        "xy": [],
     }
     if compute_curve and spectral_cols:
         curve = metrics.spectral_curve(spectra, axis)
         if curve is not None:
             spectral["curve"] = curve
+        score_plot = metrics.pca_score_plot(spectra)
+        if score_plot is not None:
+            spectral["score_plot"] = score_plot
     signal_type, signal_conf = _detect_signal_type(spectral_cols, spectra, src_warnings)
     warnings.extend(f"source {source_id}: {w}" for w in src_warnings)
     section = {
@@ -203,6 +212,43 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "warnings": src_warnings,
     }
     return section, df, sample_ids
+
+
+def _attach_xy_metrics(source_sections: list[dict[str, Any]], source_frames: list[pd.DataFrame], variable_sections: list[dict[str, Any]], variables_df: pd.DataFrame | None) -> None:
+    """Attach lightweight X-Y metrics to each source: per-target spectral correlation curves."""
+    if variables_df is None or _SAMPLE_KEY not in variables_df.columns:
+        return
+    from nirs4all_datasets.qualify import metrics
+
+    numeric_targets = [v for v in variable_sections if v.get("role") == VariableRole.TARGET.value and v.get("type") == VarType.NUMERIC.value and v.get("name") in variables_df.columns]
+    if not numeric_targets:
+        return
+    y_frame = variables_df[[_SAMPLE_KEY, *[str(v["name"]) for v in numeric_targets]]].copy()
+    y_frame[_SAMPLE_KEY] = y_frame[_SAMPLE_KEY].astype(str)
+    y_frame = y_frame.drop_duplicates(subset=[_SAMPLE_KEY], keep="first").set_index(_SAMPLE_KEY)
+    for section, df in zip(source_sections, source_frames, strict=False):
+        if _SAMPLE_KEY not in df.columns:
+            continue
+        spectral_cols = [c for c in df.columns if c not in (_OBS_KEY, _SAMPLE_KEY)]
+        if not spectral_cols:
+            continue
+        grouped = df[[_SAMPLE_KEY, *spectral_cols]].copy()
+        grouped[_SAMPLE_KEY] = grouped[_SAMPLE_KEY].astype(str)
+        x_by_sample = grouped.groupby(_SAMPLE_KEY, sort=True)[spectral_cols].mean()
+        common = x_by_sample.index.intersection(y_frame.index)
+        if len(common) < 3:
+            continue
+        axis = _source_axis(spectral_cols)
+        xy: list[dict[str, Any]] = []
+        x_arr = x_by_sample.loc[common].to_numpy(dtype="float64")
+        for target in numeric_targets:
+            name = str(target["name"])
+            y = pd.to_numeric(y_frame.loc[common, name], errors="coerce").to_numpy(dtype="float64")
+            corr = metrics.spectral_target_correlation(x_arr, y, axis)
+            if corr is not None:
+                xy.append({"target": name, **corr})
+        if xy:
+            section.setdefault("spectral", {})["xy"] = xy
 
 
 def _x_outliers(spectra: np.ndarray, warnings: list[str]) -> int | None:
@@ -429,11 +475,17 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
 
     # --- sources (per spectral block) ---
     source_sections: list[dict[str, Any]] = []
+    source_frames: list[pd.DataFrame] = []
+    source_profiles: list[dict[str, Any]] = []
     all_sample_ids: set[str] = set()
     reps_counts: list[int] = []
     for entry in config.get("sources", []):
         section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca, compute_curve=compute_assets)
         source_sections.append(section)
+        source_frames.append(df)
+        profile = (section.get("spectral") or {}).get("profile")
+        if isinstance(profile, dict):
+            source_profiles.append(profile)
         all_sample_ids |= src_samples
         if _SAMPLE_KEY in df.columns:
             reps_counts.extend(int(c) for c in df[_SAMPLE_KEY].astype(str).value_counts().to_numpy())
@@ -451,6 +503,8 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
             continue
         variable_sections.append(_variable_section(var, variables_df[var.name], warnings, compute_histogram=compute_assets))  # type: ignore[index]
 
+    _attach_xy_metrics(source_sections, source_frames, variable_sections, variables_df)
+
     # Visuals are inline SVG on the site, rendered from the card's own data (per-source spectral
     # quantile curves + per-variable histogram bins) — no matplotlib PNG assets. The ``assets`` block
     # is retained (empty) for schema stability.
@@ -462,7 +516,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         "generated_at": datetime.now(UTC).isoformat(),
         "identity": _identity(descriptor),
         "versions": _versions(descriptor),
-        "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor),
+        "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor, source_profiles),
         "sources": source_sections,
         "variables": variable_sections,
         "splits": _splits_sections(config, warnings),

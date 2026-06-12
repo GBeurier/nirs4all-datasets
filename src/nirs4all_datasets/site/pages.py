@@ -10,6 +10,8 @@ from __future__ import annotations
 import math
 from typing import Any
 
+from nirs4all_datasets.qualify import metrics as QMETRICS
+
 from . import charts
 from . import components as C
 from .escape import esc, locator_link, num
@@ -64,6 +66,19 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             "Wavelength coverage", sub,
             charts.coverage_by_family(same_unit, title="Wavelength coverage by family", unit_label=unit, width=WIDE),
             wide=True,
+        ))
+    scatter_points = _dataset_scatter_points(datasets)
+    if len(scatter_points) >= 2:
+        cards.append(C.viz_card(
+            "Samples × features", "Every dataset positioned by sample count and wavelength/feature count",
+            charts.samples_features_scatter(scatter_points, title="Samples versus features", width=WIDE),
+            wide=True,
+        ))
+    radar_profiles = _bank_profile_radar(datasets)
+    if radar_profiles:
+        cards.append(C.viz_card(
+            "Property profiles", "Highest anomaly/heterogeneity profiles in the bank (0 center, 1 outer ring)",
+            charts.radar_profiles(radar_profiles, title="Dataset property profiles", width=HALF),
         ))
     if by_domain:
         cards.append(C.viz_card(
@@ -134,6 +149,53 @@ def _axis_ranges(datasets: list[DatasetView]) -> list[dict[str, Any]]:
             continue
         out.append({"label": v.name, "family": v.entry.get("spectro_family") or "other", "unit": src.get("axis_unit") or "?", "lo": lo_f, "hi": hi_f})
     return out
+
+
+def _dataset_profile_scores(view: DatasetView) -> dict[str, float]:
+    """Dataset-level profile scores from the fresh card (or entry), normalized 0..1."""
+    raw = None
+    if view.card:
+        raw = (view.card.get("alignment") or {}).get("profile_scores")
+    if raw is None:
+        raw = view.entry.get("profile_scores")
+    if not isinstance(raw, dict):
+        return {}
+    return {str(k): float(v) for k, v in raw.items() if _isnum(v)}
+
+
+def _profile_risk(scores: dict[str, float]) -> float | None:
+    vals = [float(v) for v in scores.values() if _isnum(v)]
+    return sum(vals) / len(vals) if vals else None
+
+
+def _dataset_scatter_points(datasets: list[DatasetView]) -> list[dict[str, Any]]:
+    points: list[dict[str, Any]] = []
+    for v in datasets:
+        scores = _dataset_profile_scores(v)
+        risk = _profile_risk(scores)
+        points.append({
+            "id": v.id,
+            "label": v.name,
+            "samples": v.entry.get("n_samples"),
+            "features": v.entry.get("n_features_total"),
+            "targets": v.entry.get("n_targets") or 0,
+            "family": v.entry.get("spectro_family") or "unknown",
+            "tier": v.tier,
+            "risk": risk,
+            "href": f"dataset/{v.id}.html",
+        })
+    return points
+
+
+def _bank_profile_radar(datasets: list[DatasetView]) -> list[dict[str, Any]]:
+    rows: list[tuple[float, DatasetView, dict[str, float]]] = []
+    for v in datasets:
+        scores = _dataset_profile_scores(v)
+        risk = _profile_risk(scores)
+        if risk is not None:
+            rows.append((risk, v, scores))
+    rows.sort(key=lambda x: -x[0])
+    return [{"label": v.name, "scores": scores} for _risk, v, scores in rows[:6]]
 
 
 def render_index(catalog: Catalog) -> str:
@@ -331,6 +393,15 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         spacing = spec.get("spacing") or {}
         dim = spec.get("dimensionality") or {}
         pca = spec.get("pca") or {}
+        profile = spec.get("profile") or {}
+        p_integrity = profile.get("integrity") or {}
+        p_amp = profile.get("amplitude") or {}
+        p_noise = profile.get("noise") or {}
+        p_art = profile.get("artefacts") or {}
+        p_shape = profile.get("shape") or {}
+        p_out = profile.get("outliers") or {}
+        p_ref = profile.get("reference") or {}
+        p_rep = profile.get("repeatability") or {}
 
         head = (
             f'<div class="source-head"><h3>{esc(s.get("name") or s.get("source_id"))}</h3>'
@@ -341,6 +412,9 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         chart = ""
         if view.show_variable_plots and curve and curve.get("axis"):
             chart = _zoom(charts.spectra_quantile(curve, title=f'{s.get("name") or s.get("source_id")} spectra', unit=unit, width=860), cls="chart-spectra", max_w=860)
+        score_plot = ""
+        if view.show_variable_plots and spec.get("score_plot"):
+            score_plot = _zoom(charts.pca_score_scatter(spec["score_plot"], title=f'{s.get("source_id")} PCA score plot', width=520), cls="pca-score-chart", max_w=520)
 
         rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (_isnum(s.get("axis_min")) and _isnum(s.get("axis_max"))) else None
         sampling = _stat_table("Sampling", [
@@ -353,11 +427,48 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         signal = _stat_table("Signal & quality", [
             ("Value range", f'{_f(spec.get("value_min"), nd=3)} – {_f(spec.get("value_max"), nd=3)}' if _isnum(spec.get("value_min")) and view.show_value_stats else None),
             ("Mean range", f'{_f(spec.get("mean_min"), nd=3)} – {_f(spec.get("mean_max"), nd=3)}' if _isnum(spec.get("mean_min")) and view.show_value_stats else None),
-            ("Noise SNR", _f(qual.get("noise_proxy_db"), nd=1, suffix=" dB")),
+            ("Mean level", _f(p_amp.get("mean_reflectance"), nd=4)),
+            ("Area", _f(p_amp.get("area_under_curve"), nd=4)),
+            ("PTP", _f(p_amp.get("peak_to_peak"), nd=4)),
+            ("Noise RMS", _f(p_noise.get("noise_rms"), nd=5)),
+            ("SNR", _f(p_noise.get("snr"), nd=2)),
+            ("SNR dB", _f(p_noise.get("snr_db") if p_noise else qual.get("noise_proxy_db"), nd=1, suffix=" dB")),
             ("Dynamic range", _f(qual.get("dynamic_range"), nd=3)),
             ("Smoothness", _f(qual.get("smoothness"), nd=4)),
             ("Saturated", _pct(qual.get("saturation_fraction"), nd=1)),
             ("X-outliers", _f(spec.get("n_outliers"))),
+        ])
+        integrity = _stat_table("Integrity & artefacts", [
+            ("NaN ratio", _pct(p_integrity.get("nan_ratio"), nd=2)),
+            ("Inf count", _f(p_integrity.get("inf_count"))),
+            ("Zero ratio", _pct(p_integrity.get("zero_ratio"), nd=2)),
+            ("Spike count", _f(p_art.get("spike_count"))),
+            ("Spike rate", _pct(p_art.get("spike_rate"), nd=2)),
+            ("Jump count", _f(p_art.get("jump_count"))),
+            ("Jump rate", _pct(p_art.get("jump_rate"), nd=2)),
+            ("Clip fraction", _pct(p_art.get("clip_fraction"), nd=2)),
+        ])
+        shape_ref = _stat_table("Shape & reference", [
+            ("Baseline slope", _f(p_shape.get("baseline_slope"), nd=5)),
+            ("Curvature RMS", _f(p_shape.get("curvature_rms"), nd=5)),
+            ("D1 RMS", _f(p_shape.get("d1_rms"), nd=5)),
+            ("RMS to mean", _f(p_ref.get("rms_to_mean_spectrum"), nd=5)),
+            ("RMS p95", _f(p_ref.get("rms_to_mean_spectrum_p95"), nd=5)),
+            ("SAM to mean", _f(p_ref.get("sam_to_mean_spectrum"), nd=5)),
+            ("SAM p95", _f(p_ref.get("sam_to_mean_spectrum_p95"), nd=5)),
+            ("Affine offset p95", _f(p_ref.get("affine_offset_p95_abs"), nd=5)),
+            ("Affine gain p95 Δ", _f(p_ref.get("affine_gain_p95_abs_delta"), nd=5)),
+            ("Affine residual p95", _f(p_ref.get("affine_residual_rms_p95"), nd=5)),
+            ("Xcorr lag p95", _f(p_ref.get("xcorr_lag_p95_features"), nd=2)),
+        ])
+        outlier_table = _stat_table("Outliers & repeatability", [
+            ("PCA Q p95/median", _f(p_out.get("pca_q_ratio"), nd=2)),
+            ("Hotelling T2 p95/median", _f(p_out.get("hotelling_t2_ratio"), nd=2)),
+            ("Mahalanobis H p95/median", _f(p_out.get("mahalanobis_h_ratio"), nd=2)),
+            ("Repeat groups", _f(p_rep.get("n_repeat_groups"))),
+            ("RMS intra-ID", _f(p_rep.get("rms_intra_id"), nd=5)),
+            ("SAM intra-ID", _f(p_rep.get("sam_intra_id"), nd=5)),
+            ("CV intra-ID", _f(p_rep.get("cv_intra_id"), nd=5)),
         ])
         dimensionality = _stat_table("Dimensionality (PCA)", [
             ("Effective rank", _f(dim.get("effective_rank"), nd=2)),
@@ -369,12 +480,223 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         evr = pca.get("explained_variance_ratio") or []
         if view.show_variable_plots and evr:
             scree = _zoom(charts.scree([float(x) for x in evr if _isnum(x)], width=420), max_w=420)
+        xy_panel = _xy_panel(s, view)
+        metric_scores = _metric_scores_panel(profile)
+        secondary_charts = f'<div class="source-viz-grid">{score_plot}{scree}</div>' if (score_plot or scree) else ""
 
         blocks.append(
             f'<div class="source-card">{head}{chart}'
-            f'<div class="stat-grid">{sampling}{signal}{dimensionality}</div>{scree}</div>'
+            f'<div class="stat-grid">{sampling}{signal}{integrity}{shape_ref}{outlier_table}{dimensionality}</div>{metric_scores}{secondary_charts}{xy_panel}</div>'
         )
     return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{"".join(blocks)}</div></section>'
+
+
+def _xy_panel(source: dict[str, Any], view: DatasetView) -> str:
+    xy = ((source.get("spectral") or {}).get("xy")) if isinstance(source, dict) else None
+    if not xy:
+        return ""
+    rows = []
+    charts_html = []
+    for item in xy[:20]:
+        if not isinstance(item, dict):
+            continue
+        target = item.get("target") or "target"
+        rows.append(
+            f'<tr><th>{esc(target)}</th><td>{_f(item.get("max_abs_corr"), nd=3)}</td><td>{_f(item.get("argmax_axis"), nd=3)}</td><td>{_f(item.get("mean_abs_corr"), nd=3)}</td><td>{_pct(item.get("frac_abs_corr_gt_0_5"), nd=1)}</td></tr>'
+        )
+        if view.show_variable_plots and len(charts_html) < 3 and item.get("curve"):
+            charts_html.append(_zoom(charts.xy_correlation_curve(item, title=f'{source.get("source_id")} · {target} spectral correlation', width=420), cls="xy-corr-chart", max_w=420))
+    if not rows:
+        return ""
+    table = (
+        '<div class="table-scroll xy-table"><table class="data"><thead><tr><th>Target</th><th class="num">max |r|</th><th class="num">axis @ max</th><th class="num">mean |r|</th><th class="num">|r| ≥ .5</th></tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></div>'
+    )
+    return f'<details class="xy-panel" open><summary>X-Y spectral correlation <span>{len(rows)}</span></summary><div class="xy-charts">{"".join(charts_html)}</div>{table}</details>'
+
+
+_PERCENT_METRIC_KEYS = {
+    "integrity.nan_ratio",
+    "integrity.zero_ratio",
+    "integrity.zero_column_ratio",
+    "artefacts.spike_rate",
+    "artefacts.jump_rate",
+    "artefacts.clip_fraction",
+}
+
+
+def _metric_value_cell(row: dict[str, Any]) -> str:
+    value = row.get("value")
+    key = str(row.get("key") or "")
+    if value is None:
+        return "—"
+    if key in _PERCENT_METRIC_KEYS and _isnum(value):
+        return f"{float(value) * 100:.3g}%"
+    if _isnum(value):
+        return num(value, nd=5)
+    return esc(value)
+
+
+def _score_bucket(score: Any) -> str:
+    if not _isnum(score):
+        return "na"
+    score_f = float(score)
+    return "high" if score_f >= 0.72 else "mid" if score_f >= 0.42 else "low"
+
+
+def _score_cell(score: Any) -> str:
+    bucket = _score_bucket(score)
+    if bucket == "na":
+        return '<span class="score-pill score-na">—</span>'
+    score_f = float(score)
+    cls = f"score-{bucket}"
+    return f'<span class="score-pill {cls}">{score_f:.2f}</span>'
+
+
+def _metric_scores_panel(profile: dict[str, Any]) -> str:
+    rows = QMETRICS.metric_score_rows(profile)
+    if not rows:
+        return ""
+    html_rows = []
+    numeric_scores = [float(row.get("score")) for row in rows if _isnum(row.get("score"))]
+    worst = max(numeric_scores) if numeric_scores else None
+    for row in rows:
+        formula = esc(row.get("formula"))
+        note = esc(row.get("score_note"))
+        calc = f'<span>{formula}</span><small>{note}</small>' if note else f'<span>{formula}</span>'
+        bucket = _score_bucket(row.get("score"))
+        html_rows.append(
+            f'<tr class="score-row-{bucket}"><td>{esc(row.get("family"))}</td>'
+            f'<td><code>{esc(row.get("metric"))}</code><small>{esc(row.get("key"))}</small></td>'
+            f'<td class="numt">{_metric_value_cell(row)}</td>'
+            f'<td class="score-col">{_score_cell(row.get("score"))}</td>'
+            f'<td>{esc(row.get("level"))}</td>'
+            f'<td>{esc(row.get("interpretation"))}</td>'
+            f'<td>{esc(row.get("causes"))}</td>'
+            f'<td class="formula-cell">{calc}</td></tr>'
+        )
+    table = (
+        '<div class="table-scroll metric-score-table"><table class="data"><thead><tr>'
+        '<th>Famille</th><th>Métrique calculée</th><th class="num">Valeur</th><th class="num">Score</th><th>Niveau</th><th>Interprétation dataset</th><th>Causes typiques</th><th>Calcul / scoring</th>'
+        f'</tr></thead><tbody>{"".join(html_rows)}</tbody></table></div>'
+    )
+    summary_meta = f'<em>worst {worst:.2f}</em>' if worst is not None else ""
+    return f'<details class="metric-scores" open><summary>Computed metric scores <span>{len(rows)}</span>{summary_meta}</summary>{table}</details>'
+
+
+def _source_profiles(view: DatasetView) -> list[tuple[str, dict[str, Any]]]:
+    out: list[tuple[str, dict[str, Any]]] = []
+    for source in (view.card or {}).get("sources") or []:
+        profile = ((source.get("spectral") or {}).get("profile")) if isinstance(source, dict) else None
+        if isinstance(profile, dict):
+            out.append((str(source.get("source_id") or source.get("name") or "source"), profile))
+    return out
+
+
+def _combined_diagnostics(profiles: list[tuple[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+    by_key: dict[str, dict[str, Any]] = {}
+    for source_id, profile in profiles:
+        for diag in profile.get("diagnostics") or []:
+            if not isinstance(diag, dict) or not _isnum(diag.get("score")):
+                continue
+            key = str(diag.get("key") or diag.get("label"))
+            current = by_key.get(key)
+            if current is None or float(diag["score"]) > float(current.get("score") or 0.0):
+                item = dict(diag)
+                item["source_id"] = source_id
+                by_key[key] = item
+    rows = list(by_key.values())
+    rows.sort(key=lambda d: -float(d.get("score") or 0.0))
+    return rows[:10]
+
+
+def _profile_panel(view: DatasetView) -> str:
+    profiles = _source_profiles(view)
+    scores = _dataset_profile_scores(view)
+    if not profiles and not scores:
+        return ""
+    radar = ""
+    if scores:
+        radar = _zoom(charts.radar_profiles([{"label": view.name, "scores": scores}], title=f"{view.name} property profile", width=520), cls="profile-radar", max_w=520)
+    diagnostics = _combined_diagnostics(profiles)
+    diag_chart = _zoom(charts.diagnostic_bars(diagnostics, width=520), cls="diag-chart", max_w=520) if diagnostics else ""
+    diag_rows = []
+    for d in diagnostics[:8]:
+        evidence = ", ".join(f'{esc(e.get("signal"))} {float(e.get("level") or 0):.2f}' for e in (d.get("evidence") or [])[:3] if isinstance(e, dict))
+        source = f'<small>{esc(d.get("source_id"))}</small>' if d.get("source_id") else ""
+        diag_rows.append(
+            f'<tr><th>{esc(d.get("label"))}{source}</th><td class="score-col">{_score_cell(d.get("score"))}</td>'
+            f'<td>{esc(d.get("strength"))}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td></tr>'
+        )
+    diag_table = (
+        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force</th><th>Signaux</th><th>Interprétation probable</th></tr></thead>'
+        f'<tbody>{"".join(diag_rows)}</tbody></table></div>'
+        if diag_rows else '<p class="dl-note">No diagnostic hypothesis available for this card.</p>'
+    )
+    score_rows = "".join(
+        f'<tr><th>{esc(QMETRICS.profile_score_labels().get(k, k))}</th><td>{float(v):.2f}</td></tr>'
+        for k, v in scores.items()
+    )
+    score_table = f'<div class="stat-card"><h4>Profile axes</h4><table class="stat-table">{score_rows}</table></div>' if score_rows else ""
+    score_vals = [(k, float(v)) for k, v in scores.items() if _isnum(v)]
+    summary = ""
+    if score_vals:
+        mean_score = sum(v for _k, v in score_vals) / len(score_vals)
+        worst_key, worst_score = max(score_vals, key=lambda kv: kv[1])
+        worst_label = QMETRICS.profile_score_labels().get(worst_key, worst_key)
+        summary = (
+            '<div class="profile-summary">'
+            f'<div><span>Mean profile risk</span><b>{mean_score:.2f}</b></div>'
+            f'<div><span>Highest axis</span><b>{esc(worst_label)} · {worst_score:.2f}</b></div>'
+            f'<div><span>Diagnostics</span><b>{len(diagnostics)}</b></div>'
+            f'<div><span>Sources profiled</span><b>{len(profiles)}</b></div>'
+            '</div>'
+        )
+    body = (
+        f'{summary}'
+        '<div class="explorer-grid">'
+        f'<div>{radar}{score_table}</div>'
+        f'<div>{diag_chart}</div>'
+        '</div>'
+        f'{diag_table}'
+    )
+    return f'<section class="panel wide"><h2>Dataset property explorer</h2><div class="panel-body">{body}</div></section>'
+
+
+def _metric_reference_panel() -> str:
+    rows = []
+    for item in QMETRICS.metric_catalog():
+        rows.append(
+            f'<tr><td>{esc(item["family"])}</td><td><code>{esc(item["metric"])}</code></td><td>{esc(item["detects"])}</td>'
+            f'<td>{esc(item["high"])}</td><td>{esc(item["low"])}</td><td>{esc(item["causes"])}</td>'
+            f'<td class="formula-cell"><span>{esc(item.get("formula"))}</span><small>{esc(item.get("score_note"))}</small></td></tr>'
+        )
+    tech_rows = []
+    for item in QMETRICS.technology_guidance():
+        tech_rows.append(
+            f'<tr><td>{esc(item["technology"])}</td><td>{esc(item["adaptations"])}</td><td>{esc(item["anomalies"])}</td><td>{esc(item["comment"])}</td></tr>'
+        )
+    bug_rows = []
+    for item in QMETRICS.bug_method_catalog():
+        bug_rows.append(
+            f'<tr><td>{esc(item["family"])}</td><td>{esc(item["methods"])}</td><td>{esc(item["detects"])}</td><td>{esc(item["status"])}</td></tr>'
+        )
+    table = (
+        '<div class="table-scroll"><table class="data metric-ref"><thead><tr><th>Famille</th><th>Métrique</th><th>Ce qu’elle détecte</th><th>Forte valeur =</th><th>Faible valeur =</th><th>Causes typiques</th><th>Calcul / score</th></tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></div>'
+    )
+    catalog = f'<details class="reference-guidance"><summary>Metric catalog <span>{len(rows)}</span></summary>{table}</details>'
+    tech = (
+        '<details class="tech-guidance"><summary>Technology-specific extensions</summary>'
+        '<div class="table-scroll"><table class="data"><thead><tr><th>Technologie</th><th>Adaptations / métriques</th><th>Anomalies ciblées</th><th>Commentaire pratique</th></tr></thead>'
+        f'<tbody>{"".join(tech_rows)}</tbody></table></div></details>'
+    )
+    bug = (
+        '<details class="tech-guidance"><summary>Bug-hunting / supervised audits</summary>'
+        '<div class="table-scroll"><table class="data"><thead><tr><th>Famille de bug potentiel</th><th>Méthodes à ajouter</th><th>Ce que ça détecte</th><th>État dans l’explorateur</th></tr></thead>'
+        f'<tbody>{"".join(bug_rows)}</tbody></table></div></details>'
+    )
+    return f'<section class="panel wide"><h2>Metric interpretation reference</h2><div class="panel-body">{catalog}{tech}{bug}</div></section>'
 
 
 def _var_has_data(v: dict[str, Any]) -> bool:
@@ -633,7 +955,9 @@ def render_dataset(view: DatasetView) -> str:
             (esc(family or "—"), "family"),
         ])
         panels = "".join([
+            _profile_panel(view),
             _sources_panel(view, rel),
+            _metric_reference_panel(),
             _variables_panel(view, rel),
             _alignment_panel(view),
             _splits_panel(view),

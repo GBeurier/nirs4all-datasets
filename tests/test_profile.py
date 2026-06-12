@@ -31,7 +31,7 @@ _CARD_KEYS = {
 }
 
 # Per-source spectral keys.
-_SPECTRAL_KEYS = {"value_min", "value_max", "mean_min", "mean_max", "n_outliers", "pca", "quality", "spacing", "dimensionality"}
+_SPECTRAL_KEYS = {"value_min", "value_max", "mean_min", "mean_max", "n_outliers", "pca", "quality", "spacing", "dimensionality", "profile", "xy"}
 
 # Per-variable stats keys (by declared type).
 _NUMERIC_STATS_KEYS = {"n", "n_missing", "min", "max", "mean", "std", "median", "q1", "q3"}
@@ -86,6 +86,8 @@ def test_build_card_multi_source_targets_and_metadata(canonical_dataset: Any) ->
         spectral = source["spectral"]
         assert set(spectral) == _SPECTRAL_KEYS
         assert spectral["pca"] is None or isinstance(spectral["pca"], dict)
+        assert {"integrity", "amplitude", "noise", "artefacts", "shape", "outliers", "reference", "repeatability", "structure", "profile_scores", "diagnostics"} <= set(spectral["profile"])
+    assert "profile_scores" in card["alignment"]
 
     # --- no NaN/Inf reaches JSON (recursively + via json.dumps allow_nan=False) ---
     assert not list(_no_nonfinite_floats(card))
