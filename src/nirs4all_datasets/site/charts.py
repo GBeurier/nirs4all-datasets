@@ -14,15 +14,15 @@ from typing import Any
 
 from .escape import esc, num
 
-# One accent (spectral teal) for quantitative marks; a restrained ramp (teal → slate) only for
-# categorical identity (donuts). No rainbow.
+# Spectral teal is the single-series accent (histograms / spectra / box / scree). A curated, MUTED
+# multi-hue palette distinguishes categories (domains / families / donut slices) — varied + elegant,
+# never a saturated rainbow.
 ACCENT = "#0f766e"
-ACCENT_SOFT = "#0d9488"
 INK = "#0f172a"
 MUTED = "#64748b"
 FAINT = "#94a3b8"
 GRID = "#e6ebf1"
-RAMP = ["#0f766e", "#0d9488", "#2c9d92", "#5b9aa0", "#7c8aa0", "#94a3b8", "#475569", "#b08968"]
+RAMP = ["#0f766e", "#3f6f9f", "#b7791f", "#9c5b6a", "#5b6abf", "#6e8b5a", "#8a5a83", "#2f8f8a", "#a4713e", "#566b8c"]
 
 
 def _ramp(i: int) -> str:
@@ -75,10 +75,10 @@ def bar_chart(items: list[tuple[str, float]], *, title: str, top_n: int | None =
     parts: list[str] = []
     for i, (label, value) in enumerate(rows):
         y = pad_t + i * (row_h + gap)
-        w = max(2.0, (value / vmax) * bar_w)
+        w = max(3.0, (value / vmax) * bar_w)
         parts.append(
             f'<text x="{label_w - 10:.0f}" y="{y + row_h / 2 + 4:.0f}" text-anchor="end" font-size="12.5" fill="{INK}" class="lbl">{esc(_clip(label, 30))}</text>'
-            f'<rect class="barm" x="{label_w:.0f}" y="{y:.0f}" width="{w:.1f}" height="{row_h}" rx="3" fill="{ACCENT}"></rect>'
+            f'<rect class="barm" x="{label_w:.0f}" y="{y:.0f}" width="{w:.1f}" height="{row_h}" rx="3" fill="{_ramp(i)}"></rect>'
             f'<text x="{label_w + w + 7:.1f}" y="{y + row_h / 2 + 4:.0f}" font-size="12" fill="{MUTED}" class="numt">{num(value)}{esc(unit)}</text>'
         )
     return _svg(width, height, "".join(parts), title=title)
@@ -134,8 +134,11 @@ def donut_chart(items: list[tuple[str, float]], *, title: str, width: float = 50
 # =============================================================================
 # Histogram from precomputed bins (per-variable distribution)
 # =============================================================================
-def histogram_bins(edges: list[float], counts: list[int], *, title: str, x_label: str = "", unit: str = "", width: float = 440) -> str:
-    """Bar histogram from precomputed ``edges`` (n+1) + ``counts`` (n); per-bar range on hover."""
+def histogram_bins(edges: list[float], counts: list[int], *, title: str, x_label: str = "", unit: str = "", width: float = 440, int_x: bool = False) -> str:
+    """Bar histogram from precomputed ``edges`` (n+1) + ``counts`` (n); per-bar range on hover.
+
+    ``int_x`` rounds the x-axis tick labels to integers (for count distributions like samples /
+    wavelengths, whose log-spaced bin edges are otherwise fractional)."""
     nb = len(counts)
     if nb < 1 or len(edges) != nb + 1:
         return _empty(width, 180, title, "not enough data")
@@ -154,7 +157,8 @@ def histogram_bins(edges: list[float], counts: list[int], *, title: str, x_label
         )
     for t in range(5):
         idx = round(t * nb / 4)
-        parts.append(f'<text x="{pad_l + idx * bw:.0f}" y="{pad_t + ph + 18:.0f}" text-anchor="middle" font-size="11" fill="{MUTED}" class="numt">{num(edges[idx], nd=4)}</text>')
+        lbl = num(int(round(edges[idx]))) if int_x else num(edges[idx], nd=4)
+        parts.append(f'<text x="{pad_l + idx * bw:.0f}" y="{pad_t + ph + 18:.0f}" text-anchor="middle" font-size="11" fill="{MUTED}" class="numt">{lbl}</text>')
     parts.append(f'<text x="{pad_l - 6}" y="{pad_t + 10:.0f}" text-anchor="end" font-size="11" fill="{MUTED}" class="numt">{cmax}</text>')
     parts.append(f'<text x="{pad_l - 6}" y="{pad_t + ph:.0f}" text-anchor="end" font-size="11" fill="{MUTED}" class="numt">0</text>')
     if x_label:
@@ -291,7 +295,7 @@ def scree(evr: list[float], *, title: str = "PCA explained variance", width: flo
 # =============================================================================
 # Histogram of raw values (whole-bank distributions on the index)
 # =============================================================================
-def histogram(values: list[float], *, title: str, n_bins: int = 16, log: bool = False, x_label: str = "", width: float = 520) -> str:
+def histogram(values: list[float], *, title: str, n_bins: int = 16, log: bool = False, x_label: str = "", width: float = 520, int_x: bool = False) -> str:
     """Histogram of ``values`` into ``n_bins`` (optionally log-spaced) — whole-bank index charts."""
     xs = _finite(values)
     xs = [v for v in xs if v > 0] if log else xs
@@ -305,17 +309,18 @@ def histogram(values: list[float], *, title: str, n_bins: int = 16, log: bool = 
     for v in xs:
         j = min(n_bins - 1, next((b for b in range(n_bins) if v <= edges[b + 1]), n_bins - 1))
         counts[j] += 1
-    return histogram_bins([float(e) for e in edges], counts, title=title, x_label=x_label, width=width)
+    return histogram_bins([float(e) for e in edges], counts, title=title, x_label=x_label, width=width, int_x=int_x)
 
 
 # =============================================================================
 # Wavelength coverage — one band per spectroscopy family (legible, with a legend)
 # =============================================================================
 def coverage_by_family(spans: list[dict[str, Any]], *, title: str, unit_label: str = "nm", width: float = 1040) -> str:
-    """Per spectroscopy *family*, the wavelength span it covers (min–max across its datasets) + count.
+    """One band per spectroscopy *family*: the wavelength range it covers (min–max) + dataset count.
 
-    Aggregating by family (≈6 rows) instead of one row per dataset keeps the labels legible and adds a
-    real legend — vs. an unreadable 160-row chart with overflowing dataset names.
+    ``spans`` must already be a single axis unit (the caller filters), so the shared x-axis is
+    meaningful. Aggregating by family (≈6 rows) keeps every label legible — vs. one unreadable row per
+    dataset. Bands have a visible minimum width.
     """
     from collections import defaultdict
 
@@ -323,33 +328,28 @@ def coverage_by_family(spans: list[dict[str, Any]], *, title: str, unit_label: s
     for s in spans:
         if _ok(s.get("lo")) and _ok(s.get("hi")) and s["hi"] > s["lo"]:
             by_fam[str(s.get("family") or "other")].append((float(s["lo"]), float(s["hi"])))
-    fams = sorted(by_fam.items(), key=lambda kv: min(lo for lo, _ in kv[1]))
+    fams = sorted(by_fam.items(), key=lambda kv: -len(kv[1]))
     if not fams:
-        return _empty(width, 120, title, "no axis ranges")
+        return _empty(width, 120, title, "no wavelength axes")
     gmin = min(lo for _, sp in fams for lo, _ in sp)
     gmax = max(hi for _, sp in fams for _, hi in sp)
     span = (gmax - gmin) or 1.0
-    label_w, row_h, gap, pad_t, pad_b = 150, 26, 16, 8, 30
-    pw = width - label_w - 16
+    label_w, row_h, gap, pad_t, pad_b = 160, 28, 16, 8, 34
+    pw = width - label_w - 18
     height = pad_t + len(fams) * (row_h + gap) + pad_b
     parts: list[str] = []
     for i, (fam, sp) in enumerate(fams):
         lo = min(a for a, _ in sp)
         hi = max(b for _, b in sp)
-        # median span band (where most datasets overlap) drawn darker over the full range
-        los = sorted(a for a, _ in sp)
-        his = sorted(b for _, b in sp)
-        mlo, mhi = los[len(los) // 2], his[len(his) // 2]
         y = pad_t + i * (row_h + gap)
         x0 = label_w + (lo - gmin) / span * pw
         x1 = label_w + (hi - gmin) / span * pw
-        mx0 = label_w + (mlo - gmin) / span * pw
-        mx1 = label_w + (mhi - gmin) / span * pw
+        w = max(6.0, x1 - x0)
         parts.append(
-            f'<text x="{label_w - 10}" y="{y + row_h / 2 + 4:.0f}" text-anchor="end" font-size="12.5" fill="{INK}" class="lbl">{esc(_clip(fam, 16))} · {len(sp)}</text>'
-            f'<rect x="{x0:.1f}" y="{y + 6:.0f}" width="{max(2.0, x1 - x0):.1f}" height="{row_h - 12}" rx="3" fill="{_ramp(i)}" opacity="0.28"></rect>'
-            f'<rect x="{mx0:.1f}" y="{y:.0f}" width="{max(2.0, mx1 - mx0):.1f}" height="{row_h}" rx="3" fill="{_ramp(i)}" opacity="0.92">'
-            f'<title>{esc(fam)}: full {num(lo)}–{num(hi)} {esc(unit_label)}, typical {num(mlo)}–{num(mhi)} ({len(sp)} datasets)</title></rect>'
+            f'<text x="{label_w - 12}" y="{y + row_h / 2 + 4:.0f}" text-anchor="end" font-size="13" fill="{INK}" class="lbl">{esc(_clip(fam, 18))}</text>'
+            f'<rect class="barm" x="{x0:.1f}" y="{y:.0f}" width="{w:.1f}" height="{row_h}" rx="4" fill="{_ramp(i)}" opacity="0.88">'
+            f'<title>{esc(fam)}: {num(lo)}–{num(hi)} {esc(unit_label)} across {len(sp)} dataset(s)</title></rect>'
+            f'<text x="{label_w + x1 - x0 + 10 if (x1 - x0) > 6 else x0 + w + 10:.1f}" y="{y + row_h / 2 + 4:.0f}" font-size="11.5" fill="{MUTED}" class="numt">{num(lo)}–{num(hi)} · {len(sp)}</text>'
         )
     axis_y = pad_t + len(fams) * (row_h + gap)
     parts.append(f'<line x1="{label_w}" y1="{axis_y:.0f}" x2="{label_w + pw:.0f}" y2="{axis_y:.0f}" stroke="{GRID}"></line>')
@@ -357,7 +357,7 @@ def coverage_by_family(spans: list[dict[str, Any]], *, title: str, unit_label: s
         val = gmin + span * t / 4
         x = label_w + pw * t / 4
         parts.append(f'<text x="{x:.0f}" y="{axis_y + 18:.0f}" text-anchor="middle" font-size="11.5" fill="{MUTED}" class="numt">{num(val)}</text>')
-    parts.append(f'<text x="{label_w + pw / 2:.0f}" y="{height - 2:.0f}" text-anchor="middle" font-size="11" fill="{FAINT}">{esc(unit_label)} · solid = typical span, faint = full extent</text>')
+    parts.append(f'<text x="{label_w + pw / 2:.0f}" y="{height - 2:.0f}" text-anchor="middle" font-size="11.5" fill="{FAINT}">wavelength / {esc(unit_label)} · band = min–max coverage, then range · dataset count</text>')
     return _svg(width, height, "".join(parts), title=title)
 
 
