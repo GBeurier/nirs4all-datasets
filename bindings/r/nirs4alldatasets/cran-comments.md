@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: MIT -->
 # cran-comments.md — nirs4alldatasets
 
-Maintainer: Gregory Beurier (CIRAD) <beurier@cirad.fr>
+Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
 
 ## Submission summary
 
@@ -160,6 +160,6 @@ artefacts, no non-standard files in the check directory, and no temp-dir detritu
   test-only / `cbindgen` dependency tables removed). The vendoring is automated by
   `bindings/r/nirs4alldatasets/configure` (`N4DS_R_VENDOR=1`) and is the same step
   the `release-r.yml` CI and the R-universe `.prepare` hook run before `R CMD build`.
-* Maintainer is Gregory Beurier (CIRAD, `beurier@cirad.fr`).
+* Maintainer is Gregory Beurier (CIRAD, `gregory.beurier@cirad.fr`).
 
 Thank you for the review!
