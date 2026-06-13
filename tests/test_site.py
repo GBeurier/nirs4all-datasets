@@ -175,6 +175,7 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert index.count('role="img"') >= 5
     for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family", "Samples versus features"):
         assert f'aria-label="{label}"' in index
+    assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
 
 
 def test_catalog_lists_all_datasets_with_tier_badges(tmp_path: Path) -> None:

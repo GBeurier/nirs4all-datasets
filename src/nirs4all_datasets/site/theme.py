@@ -544,9 +544,14 @@ def page(*, title: str, rel: str, body: str, scripts: str = "", active: str = ""
 {body}
 {scripts}
 {LIGHTBOX}
+{GOATCOUNTER}
 </body>
 </html>
 """
+
+
+# GoatCounter privacy-friendly analytics (no cookies), aggregated as one ecosystem page.
+GOATCOUNTER = """<script data-goatcounter="https://nirs4all.goatcounter.com/count" data-goatcounter-settings='{"path": "/datasets"}' async src="//gc.zgo.at/count.js"></script>"""
 
 
 # Chart zoom: clicking any `.chart` clones its SVG into a centred lightbox (Esc / backdrop to close).
