@@ -153,4 +153,17 @@ jobs:
         working-directory: bindings/wasm/pkg-node
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
+          PKG_NAME: ${{ env.NPM_PKG_NAME }}
+          PKG_VER: ${{ steps.ver.outputs.version }}
+        # Idempotent publish: npm has no --skip-existing, and republishing an
+        # already-published version is a hard "403 cannot publish over the
+        # previously published versions". A re-run / re-tag of an already-released
+        # version must be a no-op, so probe the registry first and only publish a
+        # genuinely new version.
+        run: |
+          set -euo pipefail
+          if npm view "${PKG_NAME}@${PKG_VER}" version >/dev/null 2>&1; then
+            echo "${PKG_NAME}@${PKG_VER} already published; skipping."
+          else
+            npm publish --access public
+          fi

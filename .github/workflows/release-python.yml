@@ -175,6 +175,11 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist
+          # Idempotent publish: a re-run / re-tag of an already-released version
+          # skips files already on PyPI instead of failing the job with a
+          # "400 File already exists" (PyPI forbids filename reuse). New files in
+          # the same upload are still published.
+          skip-existing: true
 
   github-release:
     name: Attach assets to the GitHub release
