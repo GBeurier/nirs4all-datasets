@@ -141,5 +141,11 @@ pytest -q
 
 ## License
 
-Code: MIT (see [`LICENSE`](LICENSE)). Each dataset carries its **own** SPDX license in its descriptor, and
-is only ever linked to its origin — open data is never re-hosted under a different license.
+**Code** is dual-licensed open-source — **`CeCILL-2.1 OR AGPL-3.0-or-later`** (your choice) — with an
+optional **commercial license** for closed-source / SaaS use; for any commercial use, contact
+<nirs4all-admin@cirad.fr>. See [`LICENSING.md`](LICENSING.md), [`LICENSES/`](LICENSES/) and
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+**Catalog content** (cards, datasheets, metadata) is licensed **CC-BY-4.0**. Each **dataset** carries
+its **own** SPDX license in its descriptor and is only ever linked to its origin — open data is never
+re-hosted under a different license.
