@@ -1,166 +1,164 @@
-# Design — banque de datasets NIRS de référence
+# Design — reference NIRS dataset bank
 
-*v1 — reformulé d'après tes annotations. Document de référence pour repenser le projet, avant l'analyse
-et l'implémentation complètes. Annote / corrige librement.*
+*v1 — rephrased from your annotations. Reference document for rethinking the project before the full
+analysis and implementation. Annotate / correct freely.*
 
 ---
 
 ## 1. Vision
 
-Une **base de données versionnée et qualifiée de datasets NIRS bruts**, **cataloguée et liée à ses
-sources** (on ne republie jamais l'open data des autres — on pointe vers l'origine). Trois livrables :
+A **versioned and qualified database of raw NIRS datasets**, **cataloged and linked to its sources**
+(we never republish other people's open data; we point to the origin). Three deliverables:
 
-- un **catalogue** (descripteurs + cartes d'identité + index) — dans git, léger ;
-- une **page web** — navigation, cartes d'identité, dataviz ;
-- un **plugin Python** — `import …` / `….get("nom")` pour récupérer un dataset (ou ses métadonnées) en
-  local.
+- a **catalog** (descriptors + identity cards + index) — lightweight and tracked in git;
+- a **website** — navigation, identity cards, dataviz;
+- a **Python plugin** — `import …` / `….get("name")` to retrieve a dataset (or its metadata) locally.
 
-Les **octets vivent à leur source** ; git ne porte que métadonnées + cartes + index. Tout est **hashé et
-versionné**. Un **pipeline d'ajout/qualification** fait croître et évoluer la base.
+The **bytes live at their source**; git only carries metadata + cards + index. Everything is **hashed
+and versioned**. An **add/qualification pipeline** grows and evolves the bank.
 
-But ultime : pouvoir **citer, benchmarker, comparer, explorer** sur une base sérieuse et reproductible —
-des datasets allant de **X seul** à **X + Y** à **X + Y + métadonnées**.
+Ultimate goal: make it possible to **cite, benchmark, compare, and explore** on a serious,
+reproducible base, with datasets ranging from **X only** to **X + Y** to **X + Y + metadata**.
 
 ---
 
-## 2. Un dataset = la réalité mesurée (brut, first-class)
+## 2. A dataset = measured reality (raw, first-class)
 
-Un **dataset** n'est **pas** une tâche de benchmark (un choix Y+split). C'est la donnée brute, gardée
-**le plus brute possible**. Il contient :
+A **dataset** is **not** a benchmark task (a Y+split choice). It is raw data, kept **as raw as
+possible**. It contains:
 
-| Élément | Règle |
+| Element | Rule |
 |---|---|
-| **X** — 1..n **sources** | une source = un instrument / une acquisition, **gardée séparée** (jamais fusionnée ni ré-échantillonnée), axe natif propre (nm / cm⁻¹ / µm / …). Un dataset peut être **multi-sources** (plusieurs X), et les sources peuvent être de **tailles différentes** — voir la note ci-dessous. (nirs4all-formats / io ajoutés *au besoin* pour lire les formats vendeurs et lancer les métriques.) |
-| **Variables (Y + métadonnées)** | **aucune différence intrinsèque.** Si la source déclare des cibles → on les marque. Sinon **toute colonne est un Y potentiel**. Multi-cible, types mixtes, **jamais séparés**. Si aucun Y déclaré, on en désigne un (colonne de métadonnée) et **on le renseigne**. |
-| **id d'échantillon** | `observation_id`, etc. — index, jamais un Y. |
-| **métadonnées** | **toutes conservées**, sans a priori ni traitement pour l'instant. |
-| **splits / folds** | **aucun par défaut.** Gardés *uniquement si la source les définit* (train/test, folds, voire plusieurs versions) et alors **renseignés**. |
+| **X** — 1..n **sources** | One source = one instrument / acquisition, **kept separate** (never merged or resampled), with its own native axis (nm / cm^-1 / um / ...). A dataset can be **multi-source** (several X blocks), and sources can have **different sizes** — see the note below. (`nirs4all-formats` / `nirs4all-io` added *as needed* to read vendor formats and run metrics.) |
+| **Variables (Y + metadata)** | **No intrinsic difference.** If the source declares targets, mark them. Otherwise **any column is a potential Y**. Multi-target, mixed types, **never split apart**. If no Y is declared, do not invent one; document metadata and metrics. |
+| **Sample ID** | `observation_id`, etc. — index, never a Y. |
+| **Metadata** | **All preserved**, with no prior filtering or processing for now. |
+| **Splits / folds** | **None by default.** Kept *only if the source defines them* (train/test, folds, even several versions), and then **documented**. |
 
-Couverture : **X seul** · X + Y · X + Y + métadonnées. Le plugin sait restituer **avec ou sans split**
-(concaténé par défaut).
+Coverage: **X only** · X + Y · X + Y + metadata. The plugin can return data **with or without a
+split** (concatenated by default).
 
-**Multi-sources & répétitions (structurant).** Comme les Y, les **X peuvent être multiples** (dataset
-multi-sources : plusieurs instruments / acquisitions). Chaque source est gérée **indépendamment** — pas
-de fusion, pas de ré-échantillonnage, pas de grille commune imposée. Surtout : à cause de **répétitions
-spectrales asymétriques** (un échantillon scanné un nombre variable de fois selon la source), **les
-sources peuvent avoir des nombres de spectres différents** — elles ne sont **pas alignées ligne à
-ligne**. Implications :
+**Multi-sources & repetitions (structural).** Like Y, **X can be multiple** (multi-source dataset:
+several instruments / acquisitions). Each source is managed **independently**: no fusion, no
+resampling, no imposed common grid. Most importantly, because of **asymmetric spectral repetitions**
+(a sample scanned a variable number of times depending on the source), **sources can have different
+numbers of spectra**; they are **not row-aligned**. Implications:
 
-- chaque source porte sa propre dimension `(n_spectres × n_longueurs d'onde)` et son propre indexage de
-  répétitions ;
-- l'**alignement** entre sources, et avec les Y / métadonnées, se fait **par identité d'échantillon
-  (id), jamais par position de ligne** ;
-- pipeline, carte (stats **par source**) et plugin **préservent** cette structure (jamais aplatir ni
-  aligner de force) ; le plugin restitue les sources séparément et peut, sur demande, concaténer les
-  répétitions ou ne renvoyer qu'une source.
+- each source carries its own `(n_spectra x n_wavelengths)` dimension and its own repetition indexing;
+- **alignment** between sources, and with Y / metadata, is done **by sample identity (ID), never by row
+  position**;
+- the pipeline, card (stats **per source**), and plugin **preserve** this structure (never flatten or
+  force alignment); the plugin returns sources separately and can, on request, concatenate repetitions
+  or return only one source.
 
 ---
 
-## 3. Gouvernance & visibilité — 3 tiers
+## 3. Governance & visibility — 3 tiers
 
-On **catalogue tout**. Ce qui varie : ce qu'on **montre** et ce qu'on **exporte**. Le **bon token**
-(dans le plugin) débloque l'accès complet.
+We **catalog everything**. What varies is what we **show** and what we **export**. The **right token**
+(in the plugin) unlocks full access.
 
-| Tier | Page web — métadonnées & métriques | Export des octets (plugin) |
+| Tier | Website — metadata & metrics | Byte export (plugin) |
 |---|---|---|
-| **public** | tout, nommé | **oui, pour tous** (depuis l'origine) |
-| **privé** | tout, nommé | **token requis** (Dataverse privé) |
-| **anonymisé** | métadonnées **non nommées** + **Y normalisés** (métriques sur données anonymisées) | **token requis** |
+| **public** | everything, named | **yes, for everyone** (from the origin) |
+| **private** | everything, named | **token required** (private Dataverse) |
+| **anonymized** | **unnamed** metadata + **normalized Y** (metrics on anonymized data) | **token required** |
 
-- Datasets dont la **source n'est pas automatisable** → déposés dans un **Dataverse privé**,
-  récupérables au token (pas de publication ouverte de notre part).
-- L'anonymisation (tier le plus protégé) masque les noms de variables et normalise les Y : on publie des
-  métriques **sans révéler** les valeurs/identités réelles.
+- Datasets whose **source cannot be automated** go into a **private Dataverse**, retrievable with a
+  token (no open publication from us).
+- Anonymization (the most protected tier) masks variable names and normalizes Y: metrics are published
+  **without revealing** real values/identities.
 
 ---
 
 ## 4. Architecture
 
-```
-  sources d'origine (DOI / URL / Dataverse privé)
-                    │  (testées régulièrement ; si une origine tombe → bascule Dataverse privé)
-                    ▼
-  ┌─────────────────────────────────────────────────────────────┐
-  │  PIPELINE d'ajout / qualification  (script ré-exécutable)     │
-  │  ingest brut (nirs4all-formats/io)  →  métriques  →  carte    │
-  └─────────────────────────────────────────────────────────────┘
-                    │ écrit / met à jour
-                    ▼
-        git :  descripteurs + cartes d'identité + index        (octets jamais dans git)
-                    │
-        ┌───────────┴───────────────────────────┐
-        ▼                                        ▼
-   page web  (cartes + dataviz, par tier)   plugin Python  ….get("nom")
-                                            (DL local ; token = accès complet ; avec/sans split)
+```text
+  origin sources (DOI / URL / private Dataverse)
+                    |  (tested regularly; if an origin goes down -> switch to private Dataverse)
+                    v
+  +-------------------------------------------------------------+
+  |  add / qualification PIPELINE (re-runnable script)           |
+  |  raw ingest (nirs4all-formats/io)  ->  metrics  ->  card     |
+  +-------------------------------------------------------------+
+                    | writes / updates
+                    v
+        git: descriptors + identity cards + index        (bytes never in git)
+                    |
+        +-----------+---------------------------+
+        v                                       v
+   website (cards + dataviz, by tier)      Python plugin  ....get("name")
+                                           (local download; token = full access; with/without split)
 ```
 
-- **Catalogue (git)** — un descripteur + une carte par dataset, + index. Source de vérité légère.
-- **Pipeline d'ajout/qualification** (un script) — (1) enregistre un nouveau dataset brut, (2) calcule
-  les métriques → carte d'identité, (3) **met à jour la page web + les fichiers du plugin**.
-  **Ré-exécutable** : quand le protocole de métriques évolue, on relance pour **mettre à jour les
-  anciennes cartes** sans toucher aux données.
-- **Page web** — catalogue navigable, cartes, **dataviz sur X, Y et métadonnées**, en respectant les
-  tiers.
-- **Plugin Python** (ce package) — `….get("nom")` télécharge le dataset en local (origine → cache ;
-  token → privé/anonymisé) ; donne aussi accès aux **métadonnées / infos de carte** ; lit les bruts via
-  **nirs4all-formats** ; restitue avec ou sans split.
+- **Catalog (git)** — one descriptor + one card per dataset, plus the index. Lightweight source of truth.
+- **Add/qualification pipeline** (a script) — (1) records a new raw dataset, (2) computes metrics ->
+  identity card, (3) **updates the website + plugin files**. **Re-runnable**: when the metric protocol
+  evolves, run it again to **update old cards** without touching the data.
+- **Website** — navigable catalog, cards, **dataviz on X, Y, and metadata**, respecting tiers.
+- **Python plugin** (this package) — `….get("name")` downloads the dataset locally (origin -> cache;
+  token -> private/anonymized); also provides access to **metadata / card information**; reads raw data
+  through **nirs4all-formats**; returns with or without splits.
 
 ---
 
-## 5. Provenance, intégrité, versions, évolution
+## 5. Provenance, integrity, versions, evolution
 
-- **Provenance** — source(s) d'origine (DOI/URL + mode : open / token / manuel / script) ;
-  **publications** liées (papiers) référencées, mais distinctes des sources de **données**.
-- **Intégrité** — chaîne de hashes **origine → raw → canonique → carte**.
-- **Versions (2 axes proposés)** — (a) **version de contenu** du dataset : bump si les octets changent ;
-  (b) **version du protocole de métriques** : bump quand on enrichit les métriques → re-qualification
-  sans changer le contenu. *(à valider)*
-- **Résilience des origines** — origines **testées régulièrement** ; si une origine tombe → le dataset
-  bascule sur le **Dataverse privé**.
-- **Évolution** — les datasets viennent d'un **OneDrive** ; le pull évoluera, `chantiers/` + `unusable/`
-  **migreront** dans l'existant, des **itérations de versions** sont attendues. ⇒ le pipeline (§4) doit
-  fournir un **mécanisme d'ajout** robuste + hash/versions, conçu pour cette évolution.
+- **Provenance** — origin source(s) (DOI/URL + mode: open / token / manual / script); related
+  **publications** (papers) referenced but kept distinct from **data** sources.
+- **Integrity** — hash chain **origin -> raw -> canonical -> card**.
+- **Versions (2 proposed axes)** — (a) dataset **content version**: bump when bytes change; (b)
+  **metric protocol version**: bump when metrics are enriched -> re-qualification without content
+  changes. *(to validate)*
+- **Origin resilience** — origins **tested regularly**; if an origin goes down, the dataset switches to
+  the **private Dataverse**.
+- **Evolution** — datasets come from a **OneDrive**; pulls will evolve, `chantiers/` + `unusable/` will
+  **migrate** into the existing structure later, and **version iterations** are expected. Therefore the
+  pipeline (§4) must provide a robust **add mechanism** + hashes/versions designed for that evolution.
 
 ---
 
-## 6. Carte d'identité (diagnostics)
+## 6. Identity card (diagnostics)
 
-Par dataset, **le plus complet possible**, et **extensible** (un protocole + une liste de métriques
-définitive arriveront ; il faut pouvoir les ajouter et **re-qualifier l'existant**) :
+Per dataset, **as complete as possible**, and **extensible** (a final protocol + metric list will
+arrive; we must be able to add them and **re-qualify existing datasets**):
 
-- spectral + PCA / dimensionnalité + **qualité par bloc X** ;
-- **stats par variable Y** (distribution / balance de classes) — multi-cible ;
-- **dataviz sur X, Y et métadonnées** ;
-- shift train↔test *si* un split existe ;
+- spectral + PCA / dimensionality + **quality by X block**;
+- **stats by Y variable** (distribution / class balance) — multi-target;
+- **dataviz on X, Y, and metadata**;
+- train<->test shift *if* a split exists;
 - hashes + citation + provenance.
 
 ---
 
-## 7. Migration depuis l'état actuel (`NIRS DB/`, 19 Go)
+## 7. Migration from the current state (`NIRS DB/`, 19 GB)
 
-| Source | Décision |
+| Source | Decision |
 |---|---|
-| **`v2.0/` (164)** — cartes `dataset_card.json` machine-readable | **canonique** : la base devient ces datasets. |
-| **`regression/ classification/ multimachines/` (484 feuilles v1)** | **supprimées** (c'étaient des tâches, pas des datasets). |
-| **`Publications/`** | garder + organiser **celles référencées** par un dataset ; ignorer le reste. |
-| **`chantiers/`, `unusableDB/`** | ignorés **pour l'instant** — migreront dans l'existant plus tard (à anticiper). |
+| **`v2.0/` (164)** — machine-readable `dataset_card.json` cards | **canonical**: the bank becomes these datasets. |
+| **`regression/ classification/ multimachines/` (484 v1 sheets)** | **deleted** (they were tasks, not datasets). |
+| **`Publications/`** | keep + organize **those referenced** by a dataset; ignore the rest. |
+| **`chantiers/`, `unusableDB/`** | ignored **for now** — they will migrate into the existing structure later (anticipate this). |
 
-Conséquences code : retirer le chemin v1 (`discover.find_leaves` / `build_descriptor`) — devient mort ;
-la carte passe en **multi-Y** ; ajouter les 3 tiers + le plugin `get()` + le pipeline d'ajout + le
-health-check des origines. Garde-fou : **lister** les éventuels datasets v1 sans équivalent v2.0 avant
-suppression (aucune perte silencieuse).
+Code consequences: remove the v1 path (`discover.find_leaves` / `build_descriptor`) because it becomes
+dead; the card becomes **multi-Y**; add the 3 tiers + `get()` plugin + add pipeline + origin
+health-check. Guardrail: **list** any v1 datasets with no v2.0 equivalent before deletion (no silent
+loss).
 
 ---
 
-## 8. Points encore ouverts (prochaine itération)
+## 8. Still-open points (next iteration)
 
-1. **API plugin** — `get()` par défaut concaténé (sans split) ou partitionné ? gestion des splits
-   multiples ? noms des accesseurs métadonnées / carte. > Si des splits sont dispo, ils doivent pouvoir être téléchargés splittés, donc c'est des options à mettre. Je te laisse trouver le nom des fonctions pour les metadonnées et métriques.
-2. **Anonymisation** — définir « Y normalisés » (z-score ? min-max ? rang ?) et « métadonnées non
-   nommées » (drop des noms → `col_0…` ?). > comme ca te parait naturel en ML ou spectroscopie
-3. **Token** — un token unique = tout le privé, ou par dataset ? (réutilise le token Dataverse.)
-> Je pense qu'on va partir sur l'existant quand le dataverse sera up, ce sera un token dataverse.
-
-4. **Versions** — valider les 2 axes contenu / protocole-métriques (§5). > Le protocole et le schema de métriques/metadata va évoluer. Donc on part sur ca mais il va y avoir les répétitions, les aggrégations, etc. etc.
-5. **Désignation du Y par défaut** — quand aucun Y n'est déclaré, quelle règle pour choisir la colonne
-   de métadonnée (et comment la renseigner) ? > Aucune règle, on ne met pas de y. On montre les métadonnées et on doit avoir des dataviz metadonnées comme pour y (histogrammes, etc.)
+1. **Plugin API** — should `get()` default to concatenated (no split) or partitioned data? How should
+   multiple splits be handled? What should metadata / card accessors be named? Maintainer note: if
+   splits are available, users must be able to download split data, so these should be options; choose
+   natural names for metadata and metric functions.
+2. **Anonymization** — define "normalized Y" (z-score? min-max? rank?) and "unnamed metadata" (drop
+   names -> `col_0...`?). Maintainer note: choose what feels natural in ML or spectroscopy.
+3. **Token** — one token for all private data, or per dataset? Reuse the Dataverse token. Maintainer
+   note: start from the existing Dataverse behavior once Dataverse is up; use a Dataverse token.
+4. **Versions** — validate the 2 axes content / metric protocol (§5). Maintainer note: the protocol and
+   metric/metadata schema will evolve, including repetitions, aggregations, etc.; start with these axes.
+5. **Default Y designation** — when no Y is declared, what rule chooses the metadata column (and how is
+   it documented)? Maintainer note: no rule; do not set Y. Show metadata and provide metadata dataviz
+   like Y dataviz (histograms, etc.).

@@ -1,7 +1,8 @@
 # Architecture
 
-The detailed reference. For the high‑level picture read [`../ONBOARDING.md`](../ONBOARDING.md); for the
-rationale, [`DESIGN.md`](DESIGN.md).
+The detailed reference. For the high‑level picture read
+[`ONBOARDING.md`](https://github.com/GBeurier/nirs4all-datasets/blob/main/ONBOARDING.md); for the
+rationale, see {doc}`DESIGN`.
 
 ## 1. The lifecycle pipeline
 

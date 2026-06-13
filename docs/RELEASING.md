@@ -5,9 +5,10 @@ and the **human validation** sign‑off.
 
 ## 1. The package → PyPI
 
-The package builds cleanly and passes `twine check` (sdist + `py3-none-any` wheel). It depends only on
-published packages — `nirs4all` is an **optional** `[nirs4all]` extra, so `pip install nirs4all-datasets`
-resolves without the unpublished siblings.
+The package builds cleanly and passes `twine check` (sdist + platform-specific wheels — maturin bundles
+the native `nirs4all_datasets._n4ds` pyo3 extension, so wheels are per-platform, not `py3-none-any`). It
+depends only on published packages — `nirs4all` is an **optional** `[nirs4all]` extra, so
+`pip install nirs4all-datasets` resolves without the unpublished siblings.
 
 ### One‑time setup (no API token — Trusted Publishing / OIDC)
 
@@ -35,7 +36,7 @@ git tag v0.2.0
 git push origin main --tags
 ```
 
-The tag triggers [`.github/workflows/release.yml`](../.github/workflows/release.yml): it builds, runs
+The tag triggers [`.github/workflows/release.yml`](https://github.com/GBeurier/nirs4all-datasets/blob/main/.github/workflows/release.yml): it builds, runs
 `twine check`, and publishes to PyPI via OIDC (gated on the `pypi` environment). Verify with
 `pip install nirs4all-datasets` in a clean venv.
 
@@ -48,7 +49,8 @@ The tag triggers [`.github/workflows/release.yml`](../.github/workflows/release.
 
 **Public datasets are not published here** — they are linked to their origin. **Private / anonymized**
 datasets can later be uploaded to a *personal* Dataverse so consumers can `get(token=…)` them. The list of
-datasets awaiting upload is generated in [`PRIVATE_DATASETS.md`](PRIVATE_DATASETS.md) (`n4a-datasets status`).
+datasets awaiting upload is generated locally by `n4a-datasets status` (a maintainer-only worklist, not
+published here).
 
 - **Token:** `NIRS4ALL_DATAVERSE_TOKEN` env var, or `~/.config/nirs4all-datasets/config.toml` (chmod 600),
   or a project `.env`. The token travels only in `X-Dataverse-key`, is never logged, and is never sent on
