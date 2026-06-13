@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Coffee (×56) |
 | product | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top cafe_instantane (×56) |
 | trait_header | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top espece_cafe (×56) |
-| trait_description | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Espece de cafe (Arabica vs Robusta, codes bruts du dataset). (×56) |
+| trait_description | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Coffee species (Arabica vs Robusta, raw dataset codes). (×56) |
 | split | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top train (×28) |
 | spectro | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top MIR / FTIR (×56) |
 | raw_label | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top 0 (×29) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top 0 (×29) |
 | dimensions | metadata | numeric | *Not specified.* | n=56, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=56, missing=0, range 286–286, mean 286 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Publication source: spectres DRIFT tronques sur 800-1900 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1900->800 sur 286 variables. (×56) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Publication source: DRIFT spectra truncated to 800-1900 cm^-1; linear axis reconstructed here in decreasing order 1900->800 over 286 variables. (×56) |
 
 ## Statistics — splits
 

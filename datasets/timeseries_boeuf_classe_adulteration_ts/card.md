@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Beef (×60) |
 | product | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top boeuf (×60) |
 | trait_header | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top classe_adulteration (×60) |
-| trait_description | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Classe d'adulteration du boeuf (codes bruts du dataset). (×60) |
+| trait_description | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Beef adulteration class (raw dataset codes). (×60) |
 | split | metadata | categorical | *Not specified.* | n=60, missing=0, classes=2, top train (×30) |
 | spectro | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top MIR / FTIR (×60) |
 | raw_label | metadata | categorical | *Not specified.* | n=60, missing=0, classes=5, top 1 (×12) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=60, missing=0, classes=5, top 0 (×12) |
 | dimensions | metadata | numeric | *Not specified.* | n=60, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=60, missing=0, range 470–470, mean 470 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: tous les spectres d'absorbance ont ete tronques sur 990-1895 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1895->990 sur 470 variables. (×60) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: all absorbance spectra were truncated to 990-1895 cm^-1; linear axis reconstructed here in decreasing order 1895->990 over 470 variables. (×60) |
 
 ## Statistics — splits
 

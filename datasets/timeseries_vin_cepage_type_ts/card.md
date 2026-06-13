@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Wine (×111) |
 | product | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top vin (×111) |
 | trait_header | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top cepage_type (×111) |
-| trait_description | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Type de vin (Cabernet Sauvignon vs Shiraz, codes bruts du dataset). (×111) |
+| trait_description | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Wine type (Cabernet Sauvignon vs Shiraz, raw dataset codes). (×111) |
 | split | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top train (×57) |
 | spectro | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top FTIR-ATR (×111) |
 | raw_label | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 1 (×57) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 0 (×57) |
 | dimensions | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=111, missing=0, range 234–234, mean 234 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Hypothese utilisateur: meme convention spectrale que Strawberry, axe lineaire interpole applique ici en ordre decroissant 4000->400 sur 234 variables. (×111) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top User hypothesis: same spectral convention as Strawberry; interpolated linear axis applied here in decreasing order 4000->400 over 234 variables. (×111) |
 
 ## Statistics — splits
 

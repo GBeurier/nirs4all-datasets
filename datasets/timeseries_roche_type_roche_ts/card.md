@@ -30,15 +30,15 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top Rock (×70) |
 | product | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top roche (×70) |
 | trait_header | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top type_roche (×70) |
-| trait_description | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top Type de roche. (×70) |
+| trait_description | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top Rock type. (×70) |
 | split | metadata | categorical | *Not specified.* | n=70, missing=0, classes=2, top test (×50) |
-| spectro | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top reflectance spectrale (×70) |
+| spectro | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top spectral reflectance (×70) |
 | raw_label | metadata | categorical | *Not specified.* | n=70, missing=0, classes=4, top 1 (×26) |
 | reference_value | metadata | categorical | *Not specified.* | n=70, missing=0, classes=4, top mafic (×26) |
 | class_index | metadata | categorical | *Not specified.* | n=70, missing=0, classes=4, top 0 (×26) |
 | dimensions | metadata | numeric | *Not specified.* | n=70, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=70, missing=0, range 2844–2844, mean 2844 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top Sources ASTER/ECOSTRESS: les spectres All de la bibliotheque ASTER ont 2844 valeurs de X, de 14.0110 a 0.4000 um. La partie VSWIR Beckman est documentee sur 0.4-2.5 um avec un pas de 0.001 um de 0.4 a 0.8 puis 0.004 um de 0.8 a 2.5, mais le vecteur bande-a-bande fusionne n'est pas fourni dans l'archive Rock, axe lineaire interpole applique ici en ordre decroissant 14.0110->0.4000 sur 2844 variables. (×70) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top ASTER/ECOSTRESS sources: the All spectra from the ASTER library have 2844 X values, from 14.0110 to 0.4000 um. The Beckman VSWIR section is documented over 0.4–2.5 um with a step of 0.001 um from 0.4 to 0.8 then 0.004 um from 0.8 to 2.5, but the merged band-by-band vector is not provided in the Rock archive; a linear axis interpolated here in decreasing order 14.0110->0.4000 over 2844 variables. (×70) |
 
 ## Statistics — splits
 

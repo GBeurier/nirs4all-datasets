@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top Strawberry (×983) |
 | product | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top puree_fraise (×983) |
 | trait_header | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top authenticite (×983) |
-| trait_description | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top Authentique vs non-fraise/adultere (codes bruts du dataset). (×983) |
+| trait_description | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top Authentic vs non-strawberry/adulterated (raw dataset codes). (×983) |
 | split | metadata | categorical | *Not specified.* | n=983, missing=0, classes=2, top train (×613) |
 | spectro | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top FTIR-ATR (×983) |
 | raw_label | metadata | categorical | *Not specified.* | n=983, missing=0, classes=2, top 2 (×632) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=983, missing=0, classes=2, top 1 (×632) |
 | dimensions | metadata | numeric | *Not specified.* | n=983, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=983, missing=0, range 235–235, mean 235 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top Publication source: spectres enregistres sur 400-4000 cm^-1, le dataset exporte contient 235 variables, donc un axe lineaire interpole est applique ici en ordre decroissant 4000->400. (×983) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=983, missing=0, classes=1, top Publication source: spectra recorded over 400-4000 cm^-1; the exported dataset contains 235 variables, so an interpolated linear axis is applied here in decreasing order 4000->400. (×983) |
 
 ## Statistics — splits
 
