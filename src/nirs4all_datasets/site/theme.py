@@ -182,7 +182,7 @@ code, pre { font-family: var(--mono); }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.25  0 0 0 0 0.15  0 0 0 .35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size: 220px 220px;
 }
-.hero-spectra { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 1200px; height: 80%; z-index: 1; pointer-events: none; }
+.hero-spectra { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 1200px; height: 40%; z-index: 1; pointer-events: none; }
 .spectrum-line { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .wave-dot { fill: currentColor; filter: drop-shadow(0 0 6px currentColor); }
 .wave-connector { fill: none; stroke-dasharray: 1.5 4; stroke-linecap: round; mix-blend-mode: multiply; }
