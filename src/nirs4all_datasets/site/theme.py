@@ -224,7 +224,9 @@ code, pre { font-family: var(--mono); }
   background: rgba(255,255,255,0.78); border: 1px solid var(--border-warm); border-radius: 14px;
   padding: 18px 20px; text-align: center; backdrop-filter: blur(8px);
   box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
 }
+.kpi::after { content: ''; position: absolute; right: -18px; top: -18px; width: 70px; height: 70px; border-radius: 50%; background: var(--accent, var(--teal)); opacity: .07; }
 .kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .kpi-v {
   font-family: var(--display); font-size: 1.85rem; font-weight: 700; line-height: 1;
@@ -454,7 +456,8 @@ table.data td { overflow-wrap: anywhere; }
 .xy-table { margin-top: 6px; }
 
 .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-.stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px 15px; }
+.stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px 15px; position: relative; overflow: hidden; }
+.stat-card::after { content: ''; position: absolute; right: -18px; top: -18px; width: 70px; height: 70px; border-radius: 50%; background: var(--accent, var(--teal)); opacity: .06; }
 .stat-card h4 { font-family: var(--display); font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin: 0 0 8px; }
 table.stat-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
 table.stat-table th { text-align: left; font-weight: 500; color: var(--text-2); padding: 3px 0; white-space: nowrap; vertical-align: top; }

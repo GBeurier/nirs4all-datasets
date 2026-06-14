@@ -161,12 +161,15 @@ HERO_SCRIPT = """
 # =============================================================================
 # Small chips / KPIs / section heads
 # =============================================================================
-def kpi(value: str, label: str) -> str:
-    return f'<div class="kpi"><div class="kpi-v">{value}</div><div class="kpi-l">{esc(label)}</div></div>'
+_KPI_ACCENTS = ["var(--teal)", "var(--cyan)", "var(--indigo)", "var(--amber)", "var(--green)", "var(--teal-d)"]
+
+
+def kpi(value: str, label: str, accent: str = "var(--teal)") -> str:
+    return f'<div class="kpi" style="--accent:{accent}"><div class="kpi-v">{value}</div><div class="kpi-l">{esc(label)}</div></div>'
 
 
 def kpi_strip(kpis: list[tuple[str, str]]) -> str:
-    return f'<div class="kpis">{"".join(kpi(value, label) for value, label in kpis)}</div>'
+    return f'<div class="kpis">{"".join(kpi(value, label, _KPI_ACCENTS[i % len(_KPI_ACCENTS)]) for i, (value, label) in enumerate(kpis))}</div>'
 
 
 def tier_badge(tier: str) -> str:
