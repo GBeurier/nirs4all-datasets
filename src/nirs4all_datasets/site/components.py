@@ -67,9 +67,9 @@ HERO_MARKUP = """
   <div class="hero-grain"></div>
   <svg class="hero-spectra" viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.28"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0"/></linearGradient>
-      <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.22"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/></linearGradient>
-      <linearGradient id="sg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.15"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient>
+      <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.42"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0"/></linearGradient>
+      <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.34"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/></linearGradient>
+      <linearGradient id="sg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.24"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient>
     </defs>
     <path class="spectrum-area" id="area0" fill="url(#sg1)" opacity="0.7"/>
     <path class="spectrum-area" id="area1" fill="url(#sg2)" opacity="0.55"/>
