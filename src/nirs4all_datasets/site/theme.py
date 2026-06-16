@@ -540,6 +540,18 @@ def page(*, title: str, rel: str, body: str, scripts: str = "", active: str = ""
 <title>{title}</title>
 <meta name="description" content="A citable, reproducible bank of raw NIRS reference datasets.">
 <meta name="theme-color" content="#0d9488">
+<link rel="icon" type="image/x-icon" href="{rel}brand/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="{rel}brand/icon.svg">
+<link rel="apple-touch-icon" href="{rel}brand/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://datasets.nirs4all.org/">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="A citable, reproducible bank of raw NIRS reference datasets.">
+<meta property="og:image" content="https://datasets.nirs4all.org/brand/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://datasets.nirs4all.org/brand/og.png">
 {FONTS_LINK}
 <style>{CSS}</style>
 </head>

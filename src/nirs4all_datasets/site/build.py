@@ -48,4 +48,18 @@ def build_site(root: str | Path, out: str | Path) -> Path:
         (out / "dataset" / f"{view.id}.html").write_text(pages.render_dataset(view), encoding="utf-8")
         _copy_metadata(view, root, out)
 
+    _copy_brand(root, out)
     return out
+
+
+def _copy_brand(root: Path, out: Path) -> None:
+    """Ship the site chrome (favicon, app icon, social card) under ``out/brand/``."""
+    brand_src = root / "assets" / "brand"
+    if not brand_src.is_dir():
+        return
+    brand_out = out / "brand"
+    brand_out.mkdir(parents=True, exist_ok=True)
+    for name in ("favicon.ico", "icon.svg", "icon-180.png", "og.png"):
+        src = brand_src / name
+        if src.exists():
+            shutil.copy2(src, brand_out / name)
