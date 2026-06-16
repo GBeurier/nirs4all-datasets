@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/horizontal-dark.svg">
+    <img alt="nirs4all-datasets" src="assets/brand/horizontal.svg" width="440">
+  </picture>
+</p>
+
 # nirs4all-datasets
 
 A **citable, reproducible bank of raw NIRS** (Near-Infrared Spectroscopy) **reference datasets** — for
