@@ -5,6 +5,43 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.2.3] - 2026-06-23
+
+### Fixed
+
+- **R binding (`nirs4alldatasets`) — macOS CRAN install failure.** The published
+  `0.2.0` failed `R CMD check` with *"Installation failed"* on all four macOS
+  flavors (r-release / r-oldrel × macOS-arm64 / x86_64) while Linux and Windows
+  were OK. Cause: CRAN's macOS builders run `R CMD INSTALL` with a `PATH` that
+  excludes the rustup `~/.cargo/bin`, so the `command -v cargo` guard in
+  `src/Makevars` failed and aborted the install before any compilation (the
+  Linux/Windows farms — and the GitHub Actions runners — have cargo on `PATH`, so
+  the regression was invisible to CI). `src/Makevars` now appends
+  `$(HOME)/.cargo/bin` to `PATH`, the pattern the sibling `dag-ml-data` R binding
+  already uses. Resubmitted to CRAN as `0.2.3` to clear the 0.2.0 check ERRORs
+  before their 2026-07-03 fix-by deadline.
+
+## [0.2.2] - 2026-06-16
+
+### Fixed
+
+- **Packaging (PEP 639).** Declare `license-files` so the sdist bundles `LICENSE`.
+
+## [0.2.1] - 2026-06-16
+
+### Added
+
+- Interactive dataset **property explorer** on the static site (fixed chart axes,
+  Pages build).
+- **ReadTheDocs / Sphinx** documentation set (getting-started, catalog,
+  installation, ecosystem cross-links).
+
+### Changed
+
+- Adopt the new **nirs4all brand kit** (icon, logo, favicon, social/OG card).
+- **R binding:** correct the CRAN maintainer email to `gregory.beurier@cirad.fr`
+  and apply the Windows CRAN install fix (empty `CARGO_LINKER`).
+
 ## [0.2.0] - 2026-06-12
 
 First release cut (from the `0.2.0-alpha.1` line). Version synced across every

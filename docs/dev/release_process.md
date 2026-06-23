@@ -20,10 +20,19 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 > analysis layer **and** the native acquisition core together (root
 > [`pyproject.toml`](../../pyproject.toml) `[tool.maturin]`).
 
-> **No macOS deferral.** The acquisition core is **pure-Rust** (`serde`/
-> `serde_json`/`sha2`/`hex`/`ureq`/`directories`/`tempfile` — no C system
-> library), so it ships **macOS binary wheels** and macOS C-ABI archives
-> alongside Linux + Windows with no special handling.
+> **No macOS deferral (Python / C-ABI).** The acquisition core is **pure-Rust**
+> (`serde`/`serde_json`/`sha2`/`hex`/`ureq`/`directories`/`tempfile` — no C system
+> library), so it ships **macOS binary wheels** and macOS C-ABI archives alongside
+> Linux + Windows with no special handling: their CI build environment
+> (cibuildwheel / maturin) has cargo on `PATH`.
+>
+> **R / CRAN macOS exception.** CRAN's macOS *check* farm runs `R CMD INSTALL`
+> with a `PATH` that does **not** include the rustup `~/.cargo/bin`, so the R
+> binding's `src/Makevars` **must** add it (it does, since 0.2.3) or the install
+> ERRORs with *"Installation failed"* on every macOS flavor while Linux/Windows
+> pass — the cause of the 0.2.0 check failure. This farm-PATH gap is invisible to
+> CI (the GitHub Actions macOS runner has cargo on `PATH`); validate the R macOS
+> build on `mac-builder.r-project.org` before submitting. See *R → CRAN* below.
 
 ## Single source of truth
 
@@ -249,7 +258,7 @@ source tarball (from the Release, or `N4DS_R_VENDOR=1 ./configure` then
 | Field | Value |
 |---|---|
 | Your name | `Gregory Beurier` |
-| Your email | **`beurier@cirad.fr`** — must match the `Maintainer` (`cre`) in `DESCRIPTION` **exactly** |
+| Your email | **`gregory.beurier@cirad.fr`** — must match the `Maintainer` (`cre`) in `DESCRIPTION` **exactly** |
 | Upload | `nirs4alldatasets_<version>.tar.gz` (the R source tarball only — never a binary, the repo zip, or the Python sdist) |
 | Optional comment to CRAN | **paste the block below** |
 
@@ -257,7 +266,15 @@ source tarball (from the Release, or `N4DS_R_VENDOR=1 ./configure` then
 `bindings/r/nirs4alldatasets/cran-comments.md`):
 
 ```text
-This is a new submission.
+This is an update of the existing CRAN package nirs4alldatasets (0.2.0 -> 0.2.3)
+that fixes the macOS "Installation failed" check ERRORs on the 0.2.0 page
+(r-release/r-oldrel x macOS arm64/x86_64; Linux and Windows were OK). Cause: CRAN's
+macOS builders run R CMD INSTALL with a PATH that excludes the rustup ~/.cargo/bin,
+so the `command -v cargo` guard in src/Makevars failed and aborted the install
+before any compilation. Fix: src/Makevars now appends $(HOME)/.cargo/bin to PATH so
+cargo is found on the macOS farm; no other change to the build, sources, or API.
+The short interval since 0.2.0 (2026-06-19) is deliberate, to clear the check ERRORs
+before their 2026-07-03 deadline.
 
 nirs4alldatasets is a thin R binding for the Rust-first nirs4all-datasets
 dataset-acquisition core for the nirs4all NIRS / spectroscopy ecosystem. It
@@ -276,17 +293,20 @@ time via src/Makevars(.win) (no network, no external monorepo crates/). The Carg
 Test environments: local Ubuntu/WSL2 R release (offline standalone install ->
 installs, loads, native path active); CI matrix (release-r.yml) on Ubuntu 22.04
 (R release + devel), macOS 14 (R release, arm64), Windows Server 2022 (R release);
-win-builder + R-hub v2 run manually before submission.
+win-builder, R-hub v2, and the CRAN macOS builder (mac-builder.r-project.org) run
+manually before submission. The macOS builder is the gate for this fix: the GitHub
+Actions macOS runner has cargo on PATH and so could not surface CRAN's missing-PATH
+failure.
 
-R CMD check --as-cran: 0 ERRORs, 0 WARNINGs. The NOTEs are the first-submission
-note (with a title-case sub-note on the product name "nirs4all-datasets",
-intentionally lower-case) and, on a conda-forge build, the local toolchain's
--march=nocona compile flag from R's own Makeconf — neither occurs on CRAN's
-toolchain. The package does no network access during install/examples/tests
-(downloads happen only on an explicit user fetch call) and has no R package
-dependencies (a leaf in the CRAN graph).
+R CMD check --as-cran: 0 ERRORs, 0 WARNINGs. NOTEs: the title-case product name
+"nirs4all-datasets" (intentionally lower-case) and, on this update, the short
+interval since 0.2.0; on a conda-forge build only, the local toolchain's
+-march=nocona flag from R's own Makeconf (absent on CRAN's toolchain). The package
+does no network access during install/examples/tests (downloads happen only on an
+explicit user fetch call) and has no R package dependencies (a leaf in the CRAN
+graph).
 
-Maintainer: Gregory Beurier (CIRAD), beurier@cirad.fr.
+Maintainer: Gregory Beurier (CIRAD), gregory.beurier@cirad.fr.
 ```
 
 > **CRAN version note:** CRAN rejects SemVer pre-release suffixes
