@@ -301,9 +301,23 @@ pub mod zenodo {
     /// The Zenodo record id from a `10.5281/zenodo.<id>` DOI (or a bare locator).
     pub fn record_id(locator: &str) -> Option<String> {
         let l = locator.trim();
-        l.rfind("zenodo.")
+        if let Some(id) = l
+            .rfind("zenodo.")
             .map(|i| l[i + "zenodo.".len()..].trim_matches('/').to_string())
-            .filter(|s| !s.is_empty())
+            .filter(|s| !s.is_empty() && s.chars().all(|c| c.is_ascii_digit()))
+        {
+            return Some(id);
+        }
+        for marker in ["/records/", "/api/records/"] {
+            if let Some(i) = l.find(marker) {
+                let tail = &l[i + marker.len()..];
+                let id = tail.split(['/', '?', '#']).next()?.trim();
+                if !id.is_empty() && id.chars().all(|c| c.is_ascii_digit()) {
+                    return Some(id.to_string());
+                }
+            }
+        }
+        None
     }
 
     /// Resolve a Zenodo DOI to `{filename -> download url}`.
@@ -352,6 +366,13 @@ pub mod figshare {
     use crate::error::{Error, Result};
     use crate::http::HttpClient;
 
+    /// One figshare article file.
+    pub struct FigshareFile {
+        pub id: i64,
+        pub name: String,
+        pub url: String,
+    }
+
     /// The figshare article id from a `10.6084/m9.figshare.<id>[.v<n>]` DOI/locator.
     pub fn article_id(locator: &str) -> Option<String> {
         let l = locator.trim();
@@ -367,6 +388,14 @@ pub mod figshare {
 
     /// Resolve a figshare DOI to `{filename -> download url}`.
     pub fn list_files(http: &dyn HttpClient, locator: &str) -> Result<HashMap<String, String>> {
+        Ok(list_file_records(http, locator)?
+            .into_iter()
+            .map(|f| (f.name, f.url))
+            .collect())
+    }
+
+    /// Resolve a figshare DOI to detailed article files.
+    pub fn list_file_records(http: &dyn HttpClient, locator: &str) -> Result<Vec<FigshareFile>> {
         let id = article_id(locator)
             .ok_or_else(|| Error::NotFetchable(format!("not a figshare DOI: {locator:?}")))?;
         let resp = http.get(
@@ -384,19 +413,121 @@ pub mod figshare {
         parse_files(&resp.text()?)
     }
 
-    fn parse_files(text: &str) -> Result<HashMap<String, String>> {
+    fn parse_files(text: &str) -> Result<Vec<FigshareFile>> {
         let v: serde_json::Value = serde_json::from_str(text)?;
         let files = v
             .get("files")
             .and_then(serde_json::Value::as_array)
             .ok_or_else(|| Error::Http("figshare: no files[]".into()))?;
-        let mut out = HashMap::new();
+        let mut out = Vec::new();
         for f in files {
+            let id = f.get("id").and_then(serde_json::Value::as_i64);
             let name = f.get("name").and_then(serde_json::Value::as_str);
             let url = f.get("download_url").and_then(serde_json::Value::as_str);
-            if let (Some(n), Some(u)) = (name, url) {
-                out.insert(n.to_string(), u.to_string());
+            if let (Some(id), Some(n), Some(u)) = (id, name, url) {
+                out.push(FigshareFile {
+                    id,
+                    name: n.to_string(),
+                    url: u.to_string(),
+                });
             }
+        }
+        Ok(out)
+    }
+}
+
+// ---------------------------------------------------------------------------
+// CKAN (EcoSIS and other CKAN open-data portals)
+// ---------------------------------------------------------------------------
+pub mod ckan {
+    use std::collections::HashMap;
+
+    use super::scheme_host;
+    use crate::error::{Error, Result};
+    use crate::http::HttpClient;
+
+    /// Build the CKAN `package_show` API URL from a landing / API / slug locator.
+    ///
+    /// Accepts either form a descriptor may carry:
+    /// * a landing page `https://<host>/dataset/<slug>` ->
+    ///   `https://<host>/api/3/action/package_show?id=<slug>`;
+    /// * an already-built `…/api/3/action/package_show?id=<slug>` (returned verbatim).
+    ///
+    /// A direct resource URL (`…/dataset/<uuid>/resource/<uuid>/download/<file>`) is NOT a
+    /// package landing page, so it returns `None` (such URLs are fetched directly, not via the API).
+    pub fn package_show_url(locator: &str) -> Option<String> {
+        let l = locator.trim();
+        if l.contains("/api/3/action/package_show") {
+            return Some(l.to_string());
+        }
+        let host = scheme_host(l)?;
+        let marker = "/dataset/";
+        let i = l.find(marker)?;
+        let tail = &l[i + marker.len()..];
+        let mut segments = tail.split(['/', '?', '#']);
+        let slug = segments.next()?.trim();
+        // A landing page is exactly `/dataset/<slug>`; anything deeper (e.g. `/resource/…`) is a
+        // direct file, not a package, so refuse it here.
+        if slug.is_empty() || segments.next().is_some_and(|s| !s.is_empty()) {
+            return None;
+        }
+        Some(format!("{host}/api/3/action/package_show?id={slug}"))
+    }
+
+    /// Resolve a CKAN landing/API locator to `{resource name -> download url}` via `package_show`.
+    pub fn list_files(http: &dyn HttpClient, locator: &str) -> Result<HashMap<String, String>> {
+        let url = package_show_url(locator).ok_or_else(|| {
+            Error::NotFetchable(format!("not a CKAN dataset locator: {locator:?}"))
+        })?;
+        let resp = http.get(&url, &[], true, None)?;
+        if !resp.is_success() {
+            return Err(Error::Http(format!(
+                "CKAN package_show: HTTP {}",
+                resp.status
+            )));
+        }
+        parse_files(&resp.text()?)
+    }
+
+    fn parse_files(text: &str) -> Result<HashMap<String, String>> {
+        let v: serde_json::Value = serde_json::from_str(text)?;
+        if v.get("success").and_then(serde_json::Value::as_bool) == Some(false) {
+            return Err(Error::Http(
+                "CKAN package_show returned success=false".into(),
+            ));
+        }
+        let resources = v
+            .get("result")
+            .and_then(|r| r.get("resources"))
+            .and_then(serde_json::Value::as_array)
+            .ok_or_else(|| Error::Http("CKAN: no result.resources[]".into()))?;
+        let mut out = HashMap::new();
+        for (i, r) in resources.iter().enumerate() {
+            let url = match r.get("url").and_then(serde_json::Value::as_str) {
+                Some(u) if !u.trim().is_empty() => u.trim(),
+                _ => continue,
+            };
+            // Prefer the resource `name`; fall back to the URL basename; then a positional key.
+            let key = r
+                .get("name")
+                .and_then(serde_json::Value::as_str)
+                .map(str::trim)
+                .filter(|s| !s.is_empty())
+                .map(str::to_string)
+                .or_else(|| {
+                    url.split(['?', '#'])
+                        .next()
+                        .and_then(|clean| clean.rsplit('/').next())
+                        .map(str::to_string)
+                        .filter(|s| !s.is_empty())
+                })
+                .unwrap_or_else(|| format!("resource_{:03}", i + 1));
+            out.entry(key).or_insert_with(|| url.to_string());
+        }
+        if out.is_empty() {
+            return Err(Error::Http(
+                "CKAN package_show exposed no downloadable resources".into(),
+            ));
         }
         Ok(out)
     }
@@ -411,6 +542,14 @@ mod tests {
         assert_eq!(
             zenodo::record_id("10.5281/zenodo.123456").as_deref(),
             Some("123456")
+        );
+        assert_eq!(
+            zenodo::record_id("https://zenodo.org/records/15838136").as_deref(),
+            Some("15838136")
+        );
+        assert_eq!(
+            zenodo::record_id("https://zenodo.org/api/records/15838136/files/x/content").as_deref(),
+            Some("15838136")
         );
         assert_eq!(
             figshare::article_id("10.6084/m9.figshare.987654.v3").as_deref(),
@@ -438,5 +577,64 @@ mod tests {
             scheme_host("https://entrepot.recherche.data.gouv.fr/dataset.xhtml?x=1").as_deref(),
             Some("https://entrepot.recherche.data.gouv.fr")
         );
+    }
+
+    #[test]
+    fn ckan_package_show_url_from_landing_and_api() {
+        // A landing page becomes the package_show API URL on the same host.
+        assert_eq!(
+            ckan::package_show_url("https://data.ecosis.org/dataset/3d-lma-leaf-level-spectra")
+                .as_deref(),
+            Some("https://data.ecosis.org/api/3/action/package_show?id=3d-lma-leaf-level-spectra")
+        );
+        // An already-built API URL is kept verbatim.
+        let api = "https://data.ecosis.org/api/3/action/package_show?id=some-slug";
+        assert_eq!(ckan::package_show_url(api).as_deref(), Some(api));
+        // A direct resource URL is NOT a package landing page.
+        assert_eq!(
+            ckan::package_show_url(
+                "https://data.ecosis.org/dataset/<uuid>/resource/<uuid>/download/x.csv"
+            ),
+            None
+        );
+        assert_eq!(ckan::package_show_url("not-a-url"), None);
+    }
+
+    #[test]
+    fn ckan_list_files_parses_package_show() {
+        let body = br#"{
+            "success": true,
+            "result": {
+                "resources": [
+                    {"name": "spectra.csv", "url": "https://data.ecosis.org/dataset/p/resource/a/download/spectra.csv"},
+                    {"name": "", "url": "https://data.ecosis.org/dataset/p/resource/b/download/meta.csv"},
+                    {"name": "skip", "url": ""}
+                ]
+            }
+        }"#;
+        let http = crate::http::testing::MockHttp::new(move |_| {
+            crate::http::testing::MockResponse::ok(body.to_vec())
+        });
+        let files = ckan::list_files(
+            &http,
+            "https://data.ecosis.org/dataset/3d-lma-leaf-level-spectra",
+        )
+        .unwrap();
+        assert_eq!(
+            files.get("spectra.csv").map(String::as_str),
+            Some("https://data.ecosis.org/dataset/p/resource/a/download/spectra.csv")
+        );
+        // A missing/blank name falls back to the URL basename.
+        assert_eq!(
+            files.get("meta.csv").map(String::as_str),
+            Some("https://data.ecosis.org/dataset/p/resource/b/download/meta.csv")
+        );
+        // A resource with no URL is skipped.
+        assert!(!files.contains_key("skip"));
+        assert_eq!(files.len(), 2);
+        // It called the derived package_show endpoint.
+        assert!(http.calls.lock().unwrap()[0]
+            .url
+            .contains("/api/3/action/package_show?id=3d-lma-leaf-level-spectra"));
     }
 }

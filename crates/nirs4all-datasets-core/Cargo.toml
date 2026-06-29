@@ -10,12 +10,16 @@ repository.workspace = true
 homepage.workspace = true
 
 [features]
-default = ["net"]
+default = ["net", "prepare"]
 # `net` is the full native build: filesystem cache + the blocking ureq HTTP client
 # (rustls; no system OpenSSL) + downloading/verify. Build with `--no-default-features`
 # for targets without std networking/fs (wasm32-unknown-unknown), which keep only the
 # pure resolve/model/hash surface and supply their own transport.
-net = ["dep:ureq", "dep:directories"]
+net = ["dep:ureq", "dep:directories", "dep:zip"]
+# `prepare` stages downloaded raw resources through the Rust nirs4all readers so
+# every language binding sees the same decoded payloads. It is separate from `net`
+# so metadata-only targets can still build a pure resolve core.
+prepare = ["net", "dep:nirs4all-formats", "dep:nirs4all-io"]
 
 [dependencies]
 serde = { workspace = true }
@@ -25,6 +29,9 @@ sha2 = { workspace = true }
 hex = { workspace = true }
 directories = { workspace = true, optional = true }
 ureq = { workspace = true, optional = true }
+zip = { workspace = true, optional = true }
+nirs4all-formats = { workspace = true, optional = true }
+nirs4all-io = { workspace = true, optional = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }

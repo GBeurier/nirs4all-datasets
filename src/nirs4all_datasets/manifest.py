@@ -26,18 +26,19 @@ _CHUNK = 1 << 20
 # The PROCESSING hash includes only fields that determine the canonical BYTES (the X source structure,
 # the id keying, the alignment level, native splits, and the content version). Everything else is
 # descriptive/displayed and is excluded -- so editing a name, a tier, a variable's role, the origin
-# sources, or bumping the metric protocol never triggers a canonical rebuild.
+# sources, changing retrieval routes, or bumping the metric protocol never triggers a canonical rebuild.
 _PROCESSING_EXCLUDE: dict = {
     "name": True, "description": True, "domain": True, "keywords": True, "citation": True,
     "variables": True, "tier": True, "governance": True, "provenance": True,
     "origin_sources": True, "publications": True, "datacite": True, "reproducibility": True,
-    "dataverse": True, "generation": True,
+    "dataverse": True, "retrieval": True, "generation": True,
     "versions": {"schema_protocol"},  # keep versions.content (a byte change), drop the metric-protocol axis
 }
 # The METADATA hash includes everything a human authored and the card displays (variables, tier,
-# governance, origin sources, citations, ...); only the volatile publish/bootstrap ids are excluded.
+# governance, origin sources, citations, ...); only the volatile publish/bootstrap ids and retrieval
+# routes are excluded. Retrieval is shown by the catalog/site directly and is not part of card content.
 # It drives card/site re-render without rebuilding canonical bytes.
-_METADATA_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "generation": True}
+_METADATA_EXCLUDE: dict = {"dataverse": {"doi", "dataset_version"}, "retrieval": True, "generation": True}
 
 
 def sha256_file(path: str | Path, chunk: int = _CHUNK) -> str:
@@ -58,8 +59,9 @@ def processing_hash(descriptor: DatasetDescriptor) -> str:
     """Stable hash of the descriptor fields that determine the canonical BYTES (drives rebuild).
 
     Independent of YAML formatting, of publish-assigned Dataverse identifiers, of all descriptive
-    metadata (name/variables/tier/governance/origin sources/...), and of the metric-protocol version
-    (``versions.schema_protocol``). Editing those must not rebuild canonical Parquet.
+    metadata (name/variables/tier/governance/origin sources/retrieval routes/...), and of the
+    metric-protocol version (``versions.schema_protocol``). Editing those must not rebuild canonical
+    Parquet.
     """
     data = descriptor.model_dump(mode="json", exclude=_PROCESSING_EXCLUDE)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
@@ -69,8 +71,9 @@ def metadata_hash(descriptor: DatasetDescriptor) -> str:
     """Stable hash of the descriptor's human-authored, *displayed* content (drives card/site re-render).
 
     Includes ``variables``, ``tier``, ``governance``, ``origin_sources``, ``publications``, citations;
-    excludes only the volatile publish/bootstrap identifiers. Editing those bumps this (the card
-    refreshes) without changing :func:`processing_hash` (canonical Parquet is not rebuilt).
+    excludes volatile publish/bootstrap identifiers and retrieval routes. Editing card-displayed
+    metadata bumps this (the card refreshes) without changing :func:`processing_hash` (canonical Parquet
+    is not rebuilt).
     """
     data = descriptor.model_dump(mode="json", exclude=_METADATA_EXCLUDE)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))

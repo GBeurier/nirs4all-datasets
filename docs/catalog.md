@@ -28,6 +28,8 @@ Each generated card bundles descriptive statistics, per-source / per-variable da
 
 The current, generated overview of every catalogued dataset — its state, whether it is materialized,
 its origin, distribution, and human-validation status — lives in the **{doc}`DATASET_STATUS`** page.
+The **{doc}`DATAVERSE_PENDING`** page lists the small subset that cannot be retrieved from an open
+origin and must be uploaded to the private Dataverse before users can fetch bytes with a token.
 
 From your own checkout you can list and inspect the catalog directly:
 

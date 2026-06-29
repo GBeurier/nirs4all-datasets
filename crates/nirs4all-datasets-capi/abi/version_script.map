@@ -1,13 +1,31 @@
 # SPDX-License-Identifier: MIT
 # GNU ld version script for libnirs4all_datasets_capi. Exports only the public
-# `n4ds_*` C ABI under the versioned node N4DS_1; everything else is local.
+# `n4ds_*` C ABI under versioned nodes; everything else is local.
 # Wired by build.rs as `-Wl,--version-script=...` on Linux cdylib builds.
 # macOS/Windows rely on Rust's default `#[no_mangle]`-only export, asserted in CI
-# (.github/workflows/abi-check.yml). Bump the node (N4DS_2, ...) only on an additive
-# ABI change; never repurpose an existing symbol.
+# (.github/workflows/abi-check.yml). Add a node (N4DS_2, ...) on an additive ABI
+# change; never repurpose an existing symbol.
 N4DS_1 {
   global:
-    n4ds_*;
+    n4ds_abi_version;
+    n4ds_check_abi_compatibility;
+    n4ds_context_create;
+    n4ds_context_destroy;
+    n4ds_context_last_error;
+    n4ds_string_free;
+    n4ds_resolve;
+    n4ds_fetch;
+    n4ds_verify_cached;
   local:
     *;
 };
+
+N4DS_2 {
+  global:
+    n4ds_retrieve_raw;
+} N4DS_1;
+
+N4DS_3 {
+  global:
+    n4ds_prepare_raw;
+} N4DS_2;

@@ -19,6 +19,11 @@ _INDEX = {
             "dataverse": {"instance": "https://dv.example", "doi": None, "dataset_version": None},
             "files": [{"name": "X.parquet", "relpath": "canonical/sources/X.parquet", "directory_label": "canonical/sources", "sha256": "ab" * 32, "size": 5, "file_id": None}],
             "origins": [{"kind": "url", "mode": "raw", "locator": "https://vendor/", "access": "manual"}],
+            "retrieval": {
+                "schema_version": "1.0",
+                "status": "raw_reproducible",
+                "routes": [{"id": "official", "method": "raw_retrieve", "provider": "url", "locator": "https://vendor/raw.csv", "resources": [{"id": "raw", "selector": {"kind": "direct_url", "value": "https://vendor/raw.csv"}}]}],
+            },
             "descriptor": {"id": "pub"},
         },
         "priv": {
@@ -26,6 +31,7 @@ _INDEX = {
             "dataverse": {"instance": "https://dv.example", "doi": "10.70112/PRIV", "dataset_version": "1.0"},
             "files": [{"name": "X.parquet", "relpath": "canonical/sources/X.parquet", "directory_label": "canonical/sources", "sha256": "cd" * 32, "size": 9, "file_id": 7}],
             "origins": [],
+            "retrieval": {"schema_version": "1.0", "status": "token_required", "routes": []},
             "descriptor": {"id": "priv"},
         },
     },
@@ -41,6 +47,8 @@ def test_resolve_returns_contract() -> None:
     assert r["id"] == "pub"
     assert r["tier"] == "public"
     assert r["files"][0]["relpath"] == "canonical/sources/X.parquet"
+    assert r["retrieval"]["status"] == "raw_reproducible"
+    assert r["retrieval"]["routes"][0]["resources"][0]["selector"]["kind"] == "direct_url"
 
 
 def test_resolve_unknown_raises_keyerror() -> None:
@@ -58,6 +66,12 @@ def test_not_fetchable_raises_valueerror(tmp_path) -> None:
     resolved = core.resolve(_INDEX, "pub")  # public, no DOI, only a manual origin
     with pytest.raises(ValueError):
         core.fetch(resolved, {"cache_dir": str(tmp_path)})
+
+
+def test_retrieve_raw_manual_route_raises_valueerror_no_network(tmp_path) -> None:
+    request = {"dataset_id": "demo", "route": {"id": "manual", "method": "manual", "provider": "manual", "access": "manual", "locator": "https://example.org"}}
+    with pytest.raises(ValueError):
+        core.retrieve_raw(request, {"cache_dir": str(tmp_path)})
 
 
 def test_verify_cached_missing_then_ok(tmp_path) -> None:

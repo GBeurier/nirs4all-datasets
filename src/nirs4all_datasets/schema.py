@@ -204,6 +204,108 @@ class SourceAccess(StrEnum):
     MANUAL = "manual"  # human must fetch it (click-through licence, registration...)
 
 
+class RetrievalStatus(StrEnum):
+    """Machine-readable state of user-side data retrieval."""
+
+    CANONICAL_VERIFIED = "canonical_verified"
+    RAW_REPRODUCIBLE = "raw_reproducible"
+    VERIFIER_ONLY = "verifier_only"
+    DOCUMENTED_ONLY = "documented_only"
+    MANUAL_ONLY = "manual_only"
+    TOKEN_REQUIRED = "token_required"
+    BLOCKED_PARSER = "blocked_parser"
+    MISSING_DELEGATE = "missing_delegate"
+
+
+class RetrievalMethod(StrEnum):
+    """How a retrieval route is executed."""
+
+    CANONICAL_FETCH = "canonical_fetch"
+    RAW_RETRIEVE = "raw_retrieve"
+    DELEGATE = "delegate"
+    MANUAL = "manual"
+
+
+class RetrievalProvider(StrEnum):
+    """Provider/resolver used to locate remote resources."""
+
+    URL = "url"
+    DATAVERSE = "dataverse"
+    ZENODO = "zenodo"
+    FIGSHARE = "figshare"
+    CKAN = "ckan"
+    GOOGLE_STORAGE = "google_storage"
+    GITHUB = "github"
+    TIMESERIES_CLASSIFICATION = "timeseriesclassification"
+    JPL_ECOSTRESS = "jpl_ecostress"
+    LOCAL_PATH = "local_path"
+    MANUAL = "manual"
+    SCRIPT = "script"
+    UNKNOWN = "unknown"
+
+
+class RetrievalResourceRole(StrEnum):
+    """Role of a retrieved raw/canonical resource."""
+
+    SPECTRA = "spectra"
+    TARGETS = "targets"
+    METADATA = "metadata"
+    ARCHIVE = "archive"
+    SPLIT = "split"
+    LICENSE = "license"
+    README = "readme"
+    RAW = "raw"
+    CANONICAL = "canonical"
+    OTHER = "other"
+
+
+class RetrievalSelectorKind(StrEnum):
+    """How to identify one resource at a provider."""
+
+    DIRECT_URL = "direct_url"
+    API_FILE_NAME = "api_file_name"
+    DATAVERSE_FILE_ID = "dataverse_file_id"
+    ZENODO_KEY = "zenodo_key"
+    FIGSHARE_FILE_ID = "figshare_file_id"
+    ARCHIVE_MEMBER = "archive_member"
+    LOCAL_PATH = "local_path"
+    DOI = "doi"
+    MANUAL = "manual"
+
+
+class RetrievalFormat(StrEnum):
+    """File format expected after locating/downloading a resource."""
+
+    CSV = "csv"
+    CSV_GZ = "csv_gz"
+    XLSX = "xlsx"
+    ZIP = "zip"
+    MAT = "mat"
+    RDA = "rda"
+    RDS = "rds"
+    OPENSPECY_RDS = "openspecy_rds"
+    JCAMP_DX = "jcamp_dx"
+    SQLITE = "sqlite"
+    SPC = "spc"
+    PARQUET = "parquet"
+    JSON = "json"
+    TXT = "txt"
+    ECOSTRESS_SPECTRUM_TXT = "ecostress_spectrum_txt"
+    UNKNOWN = "unknown"
+
+
+class CanonicalizationEngine(StrEnum):
+    """Engine that can turn retrieved resources into the local dataset layout."""
+
+    RUST_RECIPE = "rust_recipe"
+    NIRS4ALL_IO = "nirs4all_io"
+    NIRS4ALL_FORMATS = "nirs4all_formats"
+    PYTHON_COMPAT = "python_compat"
+    RSCRIPT_COMPAT = "rscript_compat"
+    DELEGATE = "delegate"
+    MANUAL = "manual"
+
+
 def _validate_schema_version(value: str) -> str:
     if value != SCHEMA_VERSION:
         raise ValueError(f"unsupported schema_version {value!r} (expected {SCHEMA_VERSION!r}).")
@@ -435,6 +537,169 @@ class OriginSource(BaseModel):
         return self
 
 
+class RetrievalSelector(BaseModel):
+    """Stable provider-specific selector for one retrievable resource."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    kind: RetrievalSelectorKind = RetrievalSelectorKind.DIRECT_URL
+    value: str
+
+    @field_validator("value")
+    @classmethod
+    def _check_value(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("RetrievalSelector.value must be non-empty.")
+        return value.strip()
+
+
+class RetrievalUnpack(BaseModel):
+    """Archive extraction instruction for a retrieved resource."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    archive: bool = False
+    members: list[str] = Field(default_factory=list)
+
+
+class RetrievalResource(BaseModel):
+    """One raw/canonical resource that can be downloaded or located locally."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    role: RetrievalResourceRole = RetrievalResourceRole.RAW
+    required: bool = True
+    selector: RetrievalSelector
+    file_name: str | None = None
+    format: RetrievalFormat = RetrievalFormat.UNKNOWN
+    compression: str | None = None
+    sha256: str | None = None
+    size: int | None = Field(default=None, ge=0)
+    unpack: RetrievalUnpack = Field(default_factory=RetrievalUnpack)
+    notes: str | None = None
+
+    @field_validator("id")
+    @classmethod
+    def _check_id(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("RetrievalResource.id must be non-empty.")
+        return value.strip()
+
+    @field_validator("sha256")
+    @classmethod
+    def _check_sha256(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        lowered = value.strip().lower()
+        if not _SHA256_RE.match(lowered):
+            raise ValueError("retrieval resource sha256 must be 64 lowercase/uppercase hex characters.")
+        return lowered
+
+
+class Canonicalization(BaseModel):
+    """How retrieved raw resources become v2-standard or canonical dataset files."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    engine: CanonicalizationEngine = CanonicalizationEngine.MANUAL
+    recipe_id: str | None = None
+    recipe_version: str | None = None
+    parameters: dict[str, str | int | float | bool | None] = Field(default_factory=dict)
+    expected_layout: str | None = None
+    expected_files: list[str] = Field(default_factory=list)
+    delegate: str | None = None
+    delegate_sha256: str | None = None
+    notes: str | None = None
+
+    @field_validator("delegate_sha256")
+    @classmethod
+    def _check_delegate_sha256(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        lowered = value.strip().lower()
+        if not _SHA256_RE.match(lowered):
+            raise ValueError("canonicalization.delegate_sha256 must be 64 lowercase/uppercase hex characters.")
+        return lowered
+
+
+class RetrievalHealth(BaseModel):
+    """How a route should be probed during maintenance checks."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    probe: bool = True
+    expected_status: list[int] = Field(default_factory=lambda: [200, 302])
+
+
+class RetrievalRoute(BaseModel):
+    """One retrieval route, tried by priority by future resolvers."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    priority: int = 100
+    access: SourceAccess = SourceAccess.OPEN
+    method: RetrievalMethod = RetrievalMethod.RAW_RETRIEVE
+    provider: RetrievalProvider = RetrievalProvider.URL
+    locator: str
+    landing_url: str | None = None
+    api_url: str | None = None
+    automated_download_allowed: bool = True
+    redistribution_allowed: bool | None = None
+    terms_url: str | None = None
+    citation: str | None = None
+    max_total_bytes: int | None = Field(default=None, ge=0)
+    resources: list[RetrievalResource] = Field(default_factory=list)
+    canonicalization: Canonicalization | None = None
+    health: RetrievalHealth = Field(default_factory=RetrievalHealth)
+    notes: str | None = None
+
+    @field_validator("id")
+    @classmethod
+    def _check_id(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("RetrievalRoute.id must be non-empty.")
+        return value.strip()
+
+    @field_validator("locator")
+    @classmethod
+    def _check_locator(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("RetrievalRoute.locator must be non-empty.")
+        return value.strip()
+
+    @model_validator(mode="after")
+    def _check_method(self) -> RetrievalRoute:
+        if self.method is RetrievalMethod.MANUAL and self.automated_download_allowed:
+            raise ValueError("manual retrieval routes must set automated_download_allowed=false.")
+        if self.method in {RetrievalMethod.CANONICAL_FETCH, RetrievalMethod.RAW_RETRIEVE} and self.access is SourceAccess.MANUAL:
+            raise ValueError(f"{self.method.value} routes cannot use manual access; use method='manual'.")
+        return self
+
+
+class Retrieval(BaseModel):
+    """User-side retrieval plan, distinct from publication/redistribution rights."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    schema_version: str = "1.0"
+    status: RetrievalStatus = RetrievalStatus.DOCUMENTED_ONLY
+    public_retrievable: bool | None = None
+    public_redistributable: bool | None = None
+    canonical_hosted: bool = False
+    routes: list[RetrievalRoute] = Field(default_factory=list)
+    blockers: list[str] = Field(default_factory=list)
+    notes: str | None = None
+
+    @field_validator("schema_version")
+    @classmethod
+    def _check_retrieval_schema_version(cls, value: str) -> str:
+        if value != "1.0":
+            raise ValueError("retrieval.schema_version must be '1.0'.")
+        return value
+
+
 class Generation(BaseModel):
     """Provenance for a machine-generated descriptor (bulk bootstrap). Present only on auto-generated
     descriptors; excluded from the processing hash so refreshing it never triggers a rebuild."""
@@ -479,6 +744,7 @@ class DatasetDescriptor(BaseModel):
     publications: list[PublicationRef] = Field(default_factory=list)
     datacite: DataCite | None = None
     dataverse: DataverseRef = Field(default_factory=DataverseRef)
+    retrieval: Retrieval = Field(default_factory=Retrieval)
     reproducibility: dict[str, str] = Field(default_factory=dict)
     generation: Generation | None = None  # set on auto-generated descriptors; excluded from processing hash
 

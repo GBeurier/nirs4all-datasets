@@ -34,6 +34,10 @@ pub struct IndexEntry {
     /// Where open bytes can be fetched from.
     #[serde(default)]
     pub origins: Vec<Origin>,
+    /// Explicit user-side retrieval plan. The core preserves it across resolve;
+    /// canonical fetch ignores it, while raw retrieval consumes individual routes.
+    #[serde(default)]
+    pub retrieval: serde_json::Value,
     /// The tier-sanitized public descriptor (opaque pass-through; never inspected
     /// here — bindings hand it back to the host's analysis layer).
     #[serde(default)]
@@ -138,6 +142,9 @@ pub struct Resolved {
     /// Open origins to try when there is no personal DOI.
     #[serde(default)]
     pub origins: Vec<Origin>,
+    /// Explicit user-side retrieval plan, preserved from the index.
+    #[serde(default)]
+    pub retrieval: serde_json::Value,
 }
 
 impl Resolved {
@@ -151,6 +158,7 @@ impl Resolved {
             dataset_version: entry.dataverse.dataset_version.clone(),
             files: entry.files.clone(),
             origins: entry.origins.clone(),
+            retrieval: entry.retrieval.clone(),
         }
     }
 

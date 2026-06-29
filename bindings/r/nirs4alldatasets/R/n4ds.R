@@ -23,6 +23,29 @@ n4ds_fetch <- function(resolved_json, opts_json = "") {
   .Call("r_n4ds_fetch", resolved_json, opts_json)
 }
 
+#' Retrieve raw origin resources into the cache (JSON status string).
+#'
+#' @param request_json A retrieval request as JSON: \code{{dataset_id, route}}.
+#' @param opts_json Options as JSON: \code{{cache_dir?, timeout_secs?, max_total_bytes?}};
+#'   \code{""} for the defaults.
+#' @return The raw retrieval status as a JSON string
+#'   (\code{dir, ok, verified, route_id, resources}).
+#' @export
+n4ds_retrieve_raw <- function(request_json, opts_json = "") {
+  .Call("r_n4ds_retrieve_raw", request_json, opts_json)
+}
+
+#' Prepare already-retrieved raw resources with the Rust reader stack (JSON status string).
+#'
+#' @param request_json A retrieval request as JSON: \code{{dataset_id, route}}.
+#' @param opts_json Options as JSON: \code{{cache_dir?}}; \code{""} for the defaults.
+#' @return The raw preparation status as a JSON string
+#'   (\code{dir, ok, route_id, resources}).
+#' @export
+n4ds_prepare_raw <- function(request_json, opts_json = "") {
+  .Call("r_n4ds_prepare_raw", request_json, opts_json)
+}
+
 #' Re-verify a cached dataset directory against the contract's SHA-256s (JSON report).
 #'
 #' @param resolved_json A resolved contract as JSON.

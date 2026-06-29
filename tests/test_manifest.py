@@ -73,7 +73,14 @@ def test_processing_hash_excludes_publish_and_protocol() -> None:
     plain = processing_hash(_descriptor())
     published = processing_hash(_descriptor(dataverse={"doi": "10.70112/abc", "dataset_version": "2.0"}))
     protocol = processing_hash(_descriptor(versions={"content": "1.0.0", "schema_protocol": "9.9"}))
-    assert plain == published == protocol  # neither publishing nor a metric-protocol bump rebuilds canonical
+    retrieval = processing_hash(_descriptor(retrieval={"status": "token_required", "blockers": ["upload pending"]}))
+    assert plain == published == protocol == retrieval  # none of these distribution/protocol edits rebuilds canonical
+
+
+def test_metadata_hash_excludes_retrieval_routes() -> None:
+    base = _descriptor()
+    edited = _descriptor(retrieval={"status": "token_required", "blockers": ["upload pending"]})
+    assert metadata_hash(base) == metadata_hash(edited)
 
 
 def test_descriptive_edits_skip_rebuild_but_refresh_card() -> None:

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 //! Stable C ABI for `nirs4all-datasets` (symbol prefix `n4ds_`).
 //!
-//! JSON-string in / JSON-string out — `resolve` / `fetch` / `verify_cached`. No
+//! JSON-string in / JSON-string out — `resolve` / `fetch` / `retrieve_raw` /
+//! `prepare_raw` / `verify_cached`. No
 //! arrays or scientific handles cross the boundary (the host reads the verified
 //! Parquet natively). Memory: the caller frees strings returned by the library with
 //! [`n4ds_string_free`] and contexts with [`n4ds_context_destroy`]; never free a
@@ -15,12 +16,14 @@ use std::path::Path;
 
 use nirs4all_datasets_core::fetch::FetchOptions;
 use nirs4all_datasets_core::model::Resolved;
-use nirs4all_datasets_core::{fetch, resolve_json, verify_cached, Error, UreqClient};
+use nirs4all_datasets_core::prepare::{prepare_raw, PrepareOptions};
+use nirs4all_datasets_core::retrieve::{RetrieveOptions, RetrieveRequest};
+use nirs4all_datasets_core::{fetch, resolve_json, retrieve_raw, verify_cached, Error, UreqClient};
 
 /// ABI version string. Independent of crate semver; bump on an ABI change.
-pub const N4DS_ABI_VERSION: &str = "0.1.0";
+pub const N4DS_ABI_VERSION: &str = "0.3.0";
 const ABI_MAJOR: u32 = 0;
-const ABI_MINOR: u32 = 1;
+const ABI_MINOR: u32 = 3;
 
 /// Status code returned by every fallible call. `N4DS_OK == 0`.
 #[repr(C)]
@@ -248,6 +251,75 @@ pub unsafe extern "C" fn n4ds_fetch(
         let opts = FetchOptions::from_json(opts_json)?;
         let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
         let res = fetch(&resolved, &opts, &client)?;
+        Ok(serde_json::to_string(&res)?)
+    })();
+    finish(ctx, out, result)
+}
+
+/// Retrieve raw origin resources into the cache. `request_json` =
+/// `{dataset_id, route}` where `route` is one retrieval route from the index.
+/// `opts_json` = `{cache_dir?, timeout_secs?, max_total_bytes?}`.
+/// Writes the retrieval status (JSON, owned) — `{dir, ok, verified, route_id, resources:[...]}`.
+///
+/// # Safety
+/// All pointers must be valid for the call; `out` writable.
+#[no_mangle]
+pub unsafe extern "C" fn n4ds_retrieve_raw(
+    ctx: *mut n4ds_context_t,
+    request_json: *const c_char,
+    opts_json: *const c_char,
+    out: *mut *mut c_char,
+) -> n4ds_status_t {
+    clear_error(ctx);
+    if out.is_null() {
+        set_error(ctx, "out pointer is null");
+        return n4ds_status_t::N4DS_ERR_INVALID_ARGUMENT;
+    }
+    *out = std::ptr::null_mut();
+    let Some(request_json) = cstr(request_json) else {
+        set_error(ctx, "request_json is null or not UTF-8");
+        return n4ds_status_t::N4DS_ERR_INVALID_ARGUMENT;
+    };
+    let opts_json = cstr(opts_json).unwrap_or("");
+    let result = (|| -> Result<String, Error> {
+        let request: RetrieveRequest = serde_json::from_str(request_json)?;
+        let opts = RetrieveOptions::from_json(opts_json)?;
+        let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
+        let res = retrieve_raw(&request, &opts, &client)?;
+        Ok(serde_json::to_string(&res)?)
+    })();
+    finish(ctx, out, result)
+}
+
+/// Prepare already-retrieved raw resources through the Rust nirs4all reader stack.
+/// `request_json` = `{dataset_id, route}` where `route` is one raw retrieval route
+/// from the index. `opts_json` = `{cache_dir?}`. Writes the preparation status
+/// (JSON, owned) — `{dir, ok, route_id, resources:[...]}`.
+///
+/// # Safety
+/// All pointers must be valid for the call; `out` writable.
+#[no_mangle]
+pub unsafe extern "C" fn n4ds_prepare_raw(
+    ctx: *mut n4ds_context_t,
+    request_json: *const c_char,
+    opts_json: *const c_char,
+    out: *mut *mut c_char,
+) -> n4ds_status_t {
+    clear_error(ctx);
+    if out.is_null() {
+        set_error(ctx, "out pointer is null");
+        return n4ds_status_t::N4DS_ERR_INVALID_ARGUMENT;
+    }
+    *out = std::ptr::null_mut();
+    let Some(request_json) = cstr(request_json) else {
+        set_error(ctx, "request_json is null or not UTF-8");
+        return n4ds_status_t::N4DS_ERR_INVALID_ARGUMENT;
+    };
+    let opts_json = cstr(opts_json).unwrap_or("");
+    let result = (|| -> Result<String, Error> {
+        let request: RetrieveRequest = serde_json::from_str(request_json)?;
+        let opts = PrepareOptions::from_json(opts_json)?;
+        let res = prepare_raw(&request, &opts)?;
         Ok(serde_json::to_string(&res)?)
     })();
     finish(ctx, out, result)

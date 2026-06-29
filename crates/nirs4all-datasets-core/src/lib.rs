@@ -43,6 +43,10 @@ pub mod cache;
 pub mod fetch;
 #[cfg(feature = "net")]
 pub mod origins;
+#[cfg(feature = "prepare")]
+pub mod prepare;
+#[cfg(feature = "net")]
+pub mod retrieve;
 #[cfg(feature = "net")]
 pub mod verify;
 
@@ -58,5 +62,12 @@ pub const INDEX_SCHEMA: &str = "1.0";
 pub use fetch::{fetch, FetchOptions, FetchResult, FileStatus};
 #[cfg(feature = "net")]
 pub use http::UreqClient;
+#[cfg(feature = "prepare")]
+pub use prepare::{prepare_raw, PrepareOptions, PrepareResult, PreparedDataset, PreparedResource};
+#[cfg(feature = "net")]
+pub use retrieve::{
+    retrieve_raw, ResourceStatus, RetrievalResource, RetrievalRoute, RetrievalSelector,
+    RetrievalUnpack, RetrieveOptions, RetrieveRequest, RetrieveResult,
+};
 #[cfg(feature = "net")]
 pub use verify::{verify_cached, VerifyEntry, VerifyResult};

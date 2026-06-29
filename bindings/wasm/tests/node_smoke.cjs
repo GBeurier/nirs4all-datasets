@@ -17,6 +17,11 @@ const indexObject = {
       dataverse: { instance: "https://dv.example", doi: "10.70112/ABC", dataset_version: "1.0" },
       files: [{ name: "X.parquet", relpath: "canonical/sources/X.parquet", directory_label: "canonical/sources", sha256: "aa", size: 9, file_id: 42 }],
       origins: [{ kind: "zenodo", mode: "canonical", locator: "10.5281/zenodo.5", access: "open" }],
+      retrieval: {
+        schema_version: "1.0",
+        status: "raw_reproducible",
+        routes: [{ id: "official", method: "raw_retrieve", provider: "url", locator: "https://example.test/raw.csv", resources: [{ id: "raw", selector: { kind: "direct_url", value: "https://example.test/raw.csv" } }] }],
+      },
       descriptor: { id: "demo" },
     },
   },
@@ -27,6 +32,8 @@ const resolved = JSON.parse(wasm.resolve(index, "demo"));
 assert.strictEqual(resolved.id, "demo");
 assert.strictEqual(resolved.tier, "public");
 assert.strictEqual(resolved.files[0].file_id, 42);
+assert.strictEqual(resolved.retrieval.status, "raw_reproducible");
+assert.strictEqual(resolved.retrieval.routes[0].resources[0].selector.kind, "direct_url");
 
 // SHA-256("abc")
 assert.strictEqual(

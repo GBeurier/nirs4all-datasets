@@ -19,7 +19,9 @@
 #
 #   N4DS_R_VENDOR=1  -> in-repo vendoring (forced). Copy the workspace crates the
 #                       C ABI needs (nirs4all-datasets-core, nirs4all-datasets-capi)
-#                       from the checkout into src/rust/vendored/, emit a
+#                       plus their Rust reader dependencies (nirs4all-formats,
+#                       nirs4all-io) from the checkout into src/rust/vendored/,
+#                       emit a
 #                       self-contained src/rust/Cargo.toml whose paths point INSIDE
 #                       the tarball, `cargo vendor` every crates.io transitive dep
 #                       into src/rust/vendor.tar.xz, and write
@@ -49,6 +51,9 @@ set -e
 
 PKG_ROOT=$(cd "$(dirname "$0")" && pwd)
 REPO=$(cd "$PKG_ROOT/../../.." && pwd)      # bindings/r/nirs4alldatasets -> repo root
+MONOREPO=$(cd "$REPO/.." && pwd)
+FORMATS_REPO="$MONOREPO/nirs4all-formats"
+IO_REPO="$MONOREPO/nirs4all-io"
 RUST="$PKG_ROOT/src/rust"
 VENDORED="$RUST/vendored"                   # copied workspace crates (plain dirs)
 VENDOR_ARCHIVE="$RUST/vendor.tar.xz"        # compressed cargo-vendored crates.io deps
@@ -58,8 +63,13 @@ HEADER_DST="$PKG_ROOT/src/nirs4all_datasets.h"
 # The workspace crates the C ABI staticlib needs. Inspecting [dependencies]
 # `path = ...` (.workspace = true resolves to these in the root manifest):
 #   nirs4all-datasets-capi -> nirs4all-datasets-core
-# is the full intra-workspace path closure; both are copied below.
+#   nirs4all-datasets-core prepare -> nirs4all-formats + nirs4all-io
+#   nirs4all-formats -> nirs4all-formats-core
+#   nirs4all-io -> nirs4all-io-core
+# is the full in-tree/path dependency closure; all are copied below.
 CORE_CRATES="nirs4all-datasets-core nirs4all-datasets-capi"
+FORMATS_CRATES="nirs4all-formats-core nirs4all-formats"
+IO_CRATES="nirs4all-io-core nirs4all-io"
 
 VENDORED_PRESENT=0
 [ -f "$VENDORED/nirs4all-datasets-capi/Cargo.toml" ] && [ -f "$VENDOR_ARCHIVE" ] && [ -f "$HEADER_DST" ] && VENDORED_PRESENT=1
@@ -110,19 +120,32 @@ cp "$HEADER_SRC" "$HEADER_DST"
 #    ship in the tarball as-is.
 rm -rf "$VENDORED" "$VENDOR_ARCHIVE" "$RUST/vendor" "$RUST/.cargo" "$RUST/Cargo.lock"
 mkdir -p "$VENDORED"
-for c in $CORE_CRATES; do
-    [ -d "$REPO/crates/$c" ] || {
-        echo "nirs4alldatasets configure(vendor): ERROR — $REPO/crates/$c not found" >&2
+
+copy_crate() {
+    src="$1"
+    name="$2"
+    [ -d "$src" ] || {
+        echo "nirs4alldatasets configure(vendor): ERROR — $src not found" >&2
         exit 1
     }
-    mkdir -p "$VENDORED/$c"
-    for entry in "$REPO/crates/$c"/*; do
+    mkdir -p "$VENDORED/$name"
+    for entry in "$src"/*; do
         name=$(basename "$entry")
         case "$name" in
             tests|target|build.rs) continue ;;
         esac
-        cp -R "$entry" "$VENDORED/$c/$name"
+        cp -R "$entry" "$VENDORED/$2/$name"
     done
+}
+
+for c in $CORE_CRATES; do
+    copy_crate "$REPO/crates/$c" "$c"
+done
+for c in $FORMATS_CRATES; do
+    copy_crate "$FORMATS_REPO/crates/$c" "$c"
+done
+for c in $IO_CRATES; do
+    copy_crate "$IO_REPO/crates/$c" "$c"
 done
 
 # 1a. The capi crate ships a build.rs whose only jobs are (a) regenerate the
@@ -242,11 +265,94 @@ sys.stdout.write(v.group(1) if v else "")
 PY
 )
 [ -n "$WS_VERSION" ] || { echo "nirs4alldatasets configure(vendor): ERROR — could not read workspace version from $REPO/Cargo.toml" >&2; exit 1; }
+FORMATS_VERSION=$(python3 - "$FORMATS_REPO/Cargo.toml" <<'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+m = re.search(r'(?ms)^\[workspace\.package\]\s*$(.*?)(^\[|\Z)', text)
+section = m.group(1) if m else ""
+v = re.search(r'(?m)^\s*version\s*=\s*"([^"]+)"', section)
+sys.stdout.write(v.group(1) if v else "")
+PY
+)
+[ -n "$FORMATS_VERSION" ] || { echo "nirs4alldatasets configure(vendor): ERROR — could not read workspace version from $FORMATS_REPO/Cargo.toml" >&2; exit 1; }
+IO_VERSION=$(python3 - "$IO_REPO/Cargo.toml" <<'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+m = re.search(r'(?ms)^\[workspace\.package\]\s*$(.*?)(^\[|\Z)', text)
+section = m.group(1) if m else ""
+v = re.search(r'(?m)^\s*version\s*=\s*"([^"]+)"', section)
+sys.stdout.write(v.group(1) if v else "")
+PY
+)
+[ -n "$IO_VERSION" ] || { echo "nirs4alldatasets configure(vendor): ERROR — could not read workspace version from $IO_REPO/Cargo.toml" >&2; exit 1; }
+
+# The reader crates come from sibling workspaces with their own versions. Their
+# source manifests use `version.workspace = true`, but this vendored workspace's
+# package version is nirs4all-datasets' version. Pin the copied package metadata
+# explicitly so dependency requirements such as nirs4all-formats = 0.2.1 keep
+# matching the vendored package.
+python3 - "$VENDORED" "$FORMATS_VERSION" "$IO_VERSION" <<'PY'
+import sys
+from pathlib import Path
+
+vendored = Path(sys.argv[1])
+formats_version = sys.argv[2]
+io_version = sys.argv[3]
+
+
+def pin_package(crate: str, version: str, license_: str, repository: str, homepage: str | None = None, readme: str | None = None) -> None:
+    path = vendored / crate / "Cargo.toml"
+    lines = path.read_text(encoding="utf-8").splitlines()
+    out: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped == "version.workspace = true":
+            out.append(f'version = "{version}"')
+        elif stripped == "edition.workspace = true":
+            out.append('edition = "2021"')
+        elif stripped == "license.workspace = true":
+            out.append(f'license = "{license_}"')
+        elif stripped == "authors.workspace = true":
+            out.append('authors = ["Gregory Beurier <gregory.beurier@cirad.fr>"]')
+        elif stripped == "repository.workspace = true":
+            out.append(f'repository = "{repository}"')
+        elif stripped == "homepage.workspace = true":
+            if homepage is not None:
+                out.append(f'homepage = "{homepage}"')
+        elif stripped == "readme.workspace = true":
+            if readme is not None:
+                out.append(f'readme = "{readme}"')
+        else:
+            out.append(line)
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
+
+
+for crate in ("nirs4all-formats-core", "nirs4all-formats"):
+    pin_package(
+        crate,
+        formats_version,
+        "CECILL-2.1 OR AGPL-3.0-or-later",
+        "https://github.com/GBeurier/nirs4all-formats",
+        "https://github.com/GBeurier/nirs4all-formats",
+        "README.md",
+    )
+
+for crate in ("nirs4all-io-core", "nirs4all-io"):
+    pin_package(
+        crate,
+        io_version,
+        "CECILL-2.1 OR AGPL-3.0-or-later",
+        "https://github.com/GBeurier/nirs4all-io",
+        "https://github.com/GBeurier/nirs4all-io",
+        "README.md",
+    )
+PY
+
 cat > "$RUST/Cargo.toml" <<TOML
 # SPDX-License-Identifier: MIT
 # GENERATED by ./configure (N4DS_R_VENDOR=1) — self-contained vendored workspace.
 #
-# This is the workspace ROOT for the two vendored datasets crates. They inherit
+# This is the workspace ROOT for the vendored datasets + reader crates. They inherit
 # version/edition/license/deps from [workspace.package] / [workspace.dependencies]
 # below, which MIRROR the monorepo root Cargo.toml (the source tarball has no
 # monorepo). src/Makevars builds \`-p nirs4all-datasets-capi --offline\` to produce
@@ -256,6 +362,10 @@ resolver = "2"
 members = [
     "vendored/nirs4all-datasets-core",
     "vendored/nirs4all-datasets-capi",
+    "vendored/nirs4all-formats-core",
+    "vendored/nirs4all-formats",
+    "vendored/nirs4all-io-core",
+    "vendored/nirs4all-io",
 ]
 
 [workspace.package]
@@ -265,9 +375,14 @@ license = "MIT"
 authors = ["Gregory Beurier <gregory.beurier@cirad.fr>"]
 repository = "https://github.com/GBeurier/nirs4all-datasets"
 homepage = "https://github.com/GBeurier/nirs4all-datasets"
+readme = "README.md"
 
 [workspace.dependencies]
 nirs4all-datasets-core = { path = "vendored/nirs4all-datasets-core", version = "${WS_VERSION}" }
+nirs4all-formats-core = { path = "vendored/nirs4all-formats-core", version = "${FORMATS_VERSION}" }
+nirs4all-formats = { path = "vendored/nirs4all-formats", version = "${FORMATS_VERSION}" }
+nirs4all-io-core = { path = "vendored/nirs4all-io-core", version = "${IO_VERSION}" }
+nirs4all-io = { path = "vendored/nirs4all-io", version = "${IO_VERSION}" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order", "float_roundtrip"] }
 thiserror = "2.0"
@@ -275,6 +390,11 @@ sha2 = "0.10"
 hex = "0.4"
 directories = "5"
 ureq = "2"
+zip = "2"
+regex = "1.10"
+toml = "0.8"
+indexmap = { version = "2.2", features = ["serde"] }
+csv = "1.3"
 
 # Bound Cargo's release profile to a modest, reproducible setting (mirrors the
 # monorepo root: opt-level 2 + strip debuginfo).

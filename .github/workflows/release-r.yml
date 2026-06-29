@@ -79,6 +79,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Checkout sibling Rust deps
+        shell: bash
+        run: scripts/ensure_rust_deps.sh
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -135,6 +138,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Checkout sibling Rust deps
+        run: scripts/ensure_rust_deps.sh
 
       - uses: dtolnay/rust-toolchain@stable
 

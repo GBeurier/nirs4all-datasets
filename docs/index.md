@@ -70,6 +70,7 @@ getting_started
 
 catalog
 DATASET_STATUS
+DATAVERSE_PENDING
 ```
 
 ```{toctree}

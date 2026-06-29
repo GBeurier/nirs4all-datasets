@@ -61,10 +61,12 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
 
     # Display fields come from the PUBLIC descriptor (masked name/targets/domain for the anonymized tier);
     # the integrity hashes above stay keyed to the real descriptor (the card/manifest were hashed from it).
+    from nirs4all_datasets.index import _retrieval  # lazy: share the cross-language acquisition planner
     from nirs4all_datasets.qualify.anonymize import public_descriptor  # lazy: keeps `import catalog` light
     from nirs4all_datasets.schema import VarType
 
     pub = public_descriptor(descriptor)
+    retrieval = _retrieval(root, pub)
     alignment = card.get("alignment", {}) if card_fresh else {}
     targets = pub.targets
     metadata_vars = pub.metadata_variables
@@ -101,6 +103,9 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
         "splits": [s.name for s in pub.splits],
         "n_samples": alignment.get("n_samples"),
         "doi": pub.dataverse.doi,
+        "retrieval_status": retrieval.get("status"),
+        "retrieval_canonical_hosted": bool(retrieval.get("canonical_hosted")),
+        "retrieval_route_count": len(retrieval.get("routes") or []),
         "origin_kinds": sorted({s.kind.value for s in pub.origin_sources}),
         "origin_access": sorted({s.access.value for s in pub.origin_sources}),
         "n_publications": len(pub.publications),
@@ -153,6 +158,7 @@ def bank_summary(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "by_tier": _counter(e["tier"] for e in entries),
         "by_spectro_family": _counter(e["spectro_family"] for e in entries),
         "by_domain": _counter((e.get("domain") or "unknown") for e in entries),
+        "by_retrieval_status": _counter(e.get("retrieval_status") or "unknown" for e in entries),
         "license_mix": _counter(e["license"] for e in entries),
         "origin_kinds": _counter(k for e in entries for k in e.get("origin_kinds", [])),
         "samples": _distribution([e["n_samples"] for e in entries if e.get("n_samples")]),

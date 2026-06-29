@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
 - **Content hash:** `1e5c7b13dc08e38632f58a1e628fe48091812afd7e416fa56755fce03d575f70`
-- **Processing hash:** `251daa78f5e9a2ce12e60f3f54b2fc68dbf4ca45671e4daf2d5786eac31b9e11` | **metadata hash:** `34d6448239e4316b54517e5bdbf700f73e80c9dc03410ef859021adc1e817ffd`
+- **Processing hash:** `251daa78f5e9a2ce12e60f3f54b2fc68dbf4ca45671e4daf2d5786eac31b9e11` | **metadata hash:** `4c6b5f44470187a849e0a4298943a6f4c2dc7a034221ad237198c443366eebb7`

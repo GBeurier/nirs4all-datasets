@@ -47,6 +47,9 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        shell: bash
+        run: scripts/ensure_rust_deps.sh
       # No `-m`: build from the repo-root pyproject so the wheel is the main
       # `nirs4all-datasets` package (src/ analysis layer + embedded _n4ds ext).
       - uses: PyO3/maturin-action@v1
@@ -64,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        run: scripts/ensure_rust_deps.sh
       - uses: PyO3/maturin-action@v1
         with:
           command: sdist
@@ -83,6 +88,9 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        shell: bash
+        run: scripts/ensure_rust_deps.sh
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build -p nirs4all-datasets-capi --release
       - name: Assemble archive

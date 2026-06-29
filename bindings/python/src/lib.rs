@@ -11,7 +11,9 @@ use pyo3::prelude::*;
 
 use nirs4all_datasets_core::fetch::FetchOptions;
 use nirs4all_datasets_core::model::Resolved;
-use nirs4all_datasets_core::{fetch as core_fetch, resolve_json, verify_cached as core_verify, Error, UreqClient};
+use nirs4all_datasets_core::prepare::{prepare_raw as core_prepare_raw, PrepareOptions};
+use nirs4all_datasets_core::retrieve::{RetrieveOptions, RetrieveRequest};
+use nirs4all_datasets_core::{fetch as core_fetch, resolve_json, retrieve_raw as core_retrieve_raw, verify_cached as core_verify, Error, UreqClient};
 
 fn to_pyerr(err: Error) -> PyErr {
     match err {
@@ -47,6 +49,30 @@ fn fetch(py: Python<'_>, resolved_json: &str, opts_json: &str) -> PyResult<Strin
     })
 }
 
+/// Retrieve raw origin resources; return retrieval-status JSON. Releases the GIL for
+/// the blocking network/filesystem work.
+#[pyfunction]
+fn retrieve_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
+    let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let opts = RetrieveOptions::from_json(opts_json).map_err(to_pyerr)?;
+    py.allow_threads(|| {
+        let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
+        let result = core_retrieve_raw(&request, &opts, &client).map_err(to_pyerr)?;
+        serde_json::to_string(&result).map_err(|e| PyRuntimeError::new_err(e.to_string()))
+    })
+}
+
+/// Prepare already-retrieved raw resources with the Rust reader stack.
+#[pyfunction]
+fn prepare_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
+    let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let opts = PrepareOptions::from_json(opts_json).map_err(to_pyerr)?;
+    py.allow_threads(|| {
+        let result = core_prepare_raw(&request, &opts).map_err(to_pyerr)?;
+        serde_json::to_string(&result).map_err(|e| PyRuntimeError::new_err(e.to_string()))
+    })
+}
+
 /// Offline re-verify of a cached dataset directory; return the report JSON.
 #[pyfunction]
 fn verify_cached(resolved_json: &str, dir: &str) -> PyResult<String> {
@@ -60,6 +86,8 @@ fn _n4ds(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(abi_version, m)?)?;
     m.add_function(wrap_pyfunction!(resolve, m)?)?;
     m.add_function(wrap_pyfunction!(fetch, m)?)?;
+    m.add_function(wrap_pyfunction!(retrieve_raw, m)?)?;
+    m.add_function(wrap_pyfunction!(prepare_raw, m)?)?;
     m.add_function(wrap_pyfunction!(verify_cached, m)?)?;
     Ok(())
 }

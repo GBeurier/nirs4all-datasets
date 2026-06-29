@@ -244,6 +244,7 @@ mod tests {
             dataset_version: Some("1.0".into()),
             files,
             origins,
+            retrieval: serde_json::Value::Null,
         }
     }
 

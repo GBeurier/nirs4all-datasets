@@ -14,7 +14,9 @@ const EXPECTED: &[&str] = &[
     "n4ds_context_destroy",
     "n4ds_context_last_error",
     "n4ds_fetch",
+    "n4ds_prepare_raw",
     "n4ds_resolve",
+    "n4ds_retrieve_raw",
     "n4ds_string_free",
     "n4ds_verify_cached",
 ];

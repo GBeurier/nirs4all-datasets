@@ -176,6 +176,24 @@ def index(root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
     typer.echo(f"index: {result['n_datasets']} dataset(s) -> {root / 'catalog' / 'index.json'}")
 
 
+@app.command("retrieval-audit")
+def retrieval_audit_cmd(
+    root: Path = typer.Option(Path("."), help="Registry root."),
+    source_tree: Path | None = typer.Option(None, help="Optional NIRS DB root containing v2.0/<id>/source_to_standard.py."),
+    out: Path | None = typer.Option(None, help="Output JSON path (default: catalog/retrieval_audit.json)."),
+) -> None:
+    """Write the static retrieval worklist for converting scripts into declarative routes."""
+    from nirs4all_datasets.retrieval_audit import build_retrieval_audit
+
+    result = build_retrieval_audit(root, source_tree=source_tree, out=out)
+    target = out or root / "catalog" / "retrieval_audit.json"
+    extra = "" if out is not None else f" (+ {root / 'docs' / 'DATAVERSE_PENDING.md'})"
+    typer.echo(
+        f"retrieval-audit: {result['n_datasets']} dataset(s), "
+        f"{result['summary']['n_with_script']} with scripts -> {target}{extra}"
+    )
+
+
 @app.command()
 def status(root: Path = typer.Option(Path("."), help="Registry root.")) -> None:
     """Refresh the validation registry + write the status reports (DATASET_STATUS.md, PRIVATE_DATASETS.md)."""
@@ -242,6 +260,52 @@ def get(
 
     ds = get_dataset(dataset_id, root=root, source=source, token=token, instance=instance)
     typer.echo(f"loaded {dataset_id}: {len(ds.sources())} source(s) {ds.sources()}, {len(ds.sample_ids())} samples, {len(ds.variables())} variable(s), tier={ds.tier.value}")
+
+
+@app.command("retrieve")
+def retrieve_cmd(
+    dataset_id: str,
+    root: Path = typer.Option(Path("."), help="Registry root or directory containing catalog/index.json."),
+    route_id: str | None = typer.Option(None, help="Specific retrieval route id. Defaults to the first open raw route."),
+    cache_dir: Path | None = typer.Option(None, help="Download cache root."),
+    token: str | None = typer.Option(None, help="Dataverse token for token-gated canonical fetches."),
+    instance: str | None = typer.Option(None, help="Dataverse instance URL override."),
+    timeout_secs: int | None = typer.Option(None, help="Per-request timeout in seconds."),
+    max_total_bytes: int | None = typer.Option(None, help="Maximum total bytes for raw retrieval."),
+    prepare: bool = typer.Option(True, "--prepare/--no-prepare", help="Prepare supported raw resources with the Rust reader stack after download."),
+) -> None:
+    """Retrieve raw/canonical bytes by id and print the cache/preparation status."""
+    from nirs4all_datasets.retrieval import retrieve
+
+    try:
+        result = retrieve(
+            dataset_id,
+            root=root,
+            route_id=route_id,
+            cache_dir=cache_dir,
+            token=token,
+            instance=instance,
+            timeout_secs=timeout_secs,
+            max_total_bytes=max_total_bytes,
+            prepare=prepare,
+        )
+    except (KeyError, RuntimeError, ValueError) as exc:
+        typer.echo(str(exc), err=True)
+        raise typer.Exit(1) from exc
+    typer.echo(json.dumps(result, indent=2, sort_keys=True))
+
+
+@app.command("dataverse-pending")
+def dataverse_pending_cmd(
+    root: Path = typer.Option(Path("."), help="Registry root or directory containing catalog/index.json."),
+    out: Path | None = typer.Option(None, help="Output path (default: docs/DATAVERSE_PENDING.md)."),
+) -> None:
+    """Write docs/DATAVERSE_PENDING.md — the token_required datasets pending a private Dataverse upload."""
+    from nirs4all_datasets.retrieval import build_dataverse_pending_report
+
+    report = build_dataverse_pending_report(root, out=out)
+    target = out or root / "docs" / "DATAVERSE_PENDING.md"
+    typer.echo(f"dataverse-pending: {report['n_pending']} dataset(s) pending a private Dataverse upload -> {target}")
 
 
 # =============================================================================

@@ -60,6 +60,14 @@ SEXP r_n4ds_fetch(SEXP resolved_json, SEXP opts_json) {
     return call_json(n4ds_fetch, resolved_json, opts_json, "resolved_json", "opts_json");
 }
 
+SEXP r_n4ds_retrieve_raw(SEXP request_json, SEXP opts_json) {
+    return call_json(n4ds_retrieve_raw, request_json, opts_json, "request_json", "opts_json");
+}
+
+SEXP r_n4ds_prepare_raw(SEXP request_json, SEXP opts_json) {
+    return call_json(n4ds_prepare_raw, request_json, opts_json, "request_json", "opts_json");
+}
+
 SEXP r_n4ds_verify_cached(SEXP resolved_json, SEXP dir) {
     return call_json(n4ds_verify_cached, resolved_json, dir, "resolved_json", "dir");
 }
@@ -75,6 +83,8 @@ SEXP r_n4ds_abi_version(void) {
 static const R_CallMethodDef call_methods[] = {
     {"r_n4ds_resolve", (DL_FUNC)&r_n4ds_resolve, 2},
     {"r_n4ds_fetch", (DL_FUNC)&r_n4ds_fetch, 2},
+    {"r_n4ds_retrieve_raw", (DL_FUNC)&r_n4ds_retrieve_raw, 2},
+    {"r_n4ds_prepare_raw", (DL_FUNC)&r_n4ds_prepare_raw, 2},
     {"r_n4ds_verify_cached", (DL_FUNC)&r_n4ds_verify_cached, 2},
     {"r_n4ds_abi_version", (DL_FUNC)&r_n4ds_abi_version, 0},
     {NULL, NULL, 0}};

@@ -121,6 +121,44 @@ origin_sources:
   access: manual
   title: standardization script (maintainer-only)
   expected_files: []
+retrieval:
+  schema_version: '1.0'
+  status: raw_reproducible
+  public_retrievable: true
+  public_redistributable: false
+  canonical_hosted: false
+  routes:
+  - id: openspecy_nobaseline_rds
+    priority: 100
+    access: open
+    method: raw_retrieve
+    provider: url
+    locator: https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.rds
+    landing_url: https://www.openanalysis.org/openspecy/
+    automated_download_allowed: true
+    redistribution_allowed: false
+    resources:
+    - id: nobaseline_rds
+      role: raw
+      required: true
+      selector:
+        kind: direct_url
+        value: https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.rds
+      file_name: nobaseline.rds
+      format: openspecy_rds
+      sha256: aa6d66a3cf2a977a5349ed5398d8025df80003fb1d7356ff4aca9f7ebc529cdf
+      size: 25865439
+    canonicalization:
+      engine: nirs4all_formats
+      delegate: source_to_standard.py
+      expected_layout: v2_standard
+      expected_files:
+      - X.csv
+      - Y.csv
+      - M.csv
+      notes: Rust reads the shared OpenSpecy RDS source through nirs4all-formats; canonical assembly keeps the RAMAN subset.
+  blockers: []
+  notes: Retrieves the shared OpenSpecy nobaseline RDS source; nirs4all-formats decodes the OpenSpecy object and canonicalization keeps the Raman subset.
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
@@ -128,7 +166,7 @@ reproducibility:
   source_accessibility: verified_download_url
   license_status: manual_review_needed
   reproducibility_status: probably_reproducible_with_R
-  notes: Requires R readRDS; OpenSpecy package not required for basic extraction.
+  notes: Rust nirs4all-formats decodes the OpenSpecy RDS container; no R runtime is required for raw preparation.
 generation:
   managed: true
   generator: bootstrap-v2

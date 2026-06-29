@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        run: scripts/ensure_rust_deps.sh
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build -p nirs4all-datasets-capi --release
       - name: Extract exported symbols
@@ -49,6 +51,8 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        run: scripts/ensure_rust_deps.sh
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build -p nirs4all-datasets-capi --release
       - name: Extract exported symbols
@@ -71,6 +75,9 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        shell: bash
+        run: scripts/ensure_rust_deps.sh
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build -p nirs4all-datasets-capi --release
       - name: Extract exported symbols

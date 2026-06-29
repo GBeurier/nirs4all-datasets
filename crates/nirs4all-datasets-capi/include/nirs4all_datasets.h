@@ -111,6 +111,30 @@ enum n4ds_status_t n4ds_fetch(struct n4ds_context_t *ctx,
                               const char *opts_json,
                               char **out);
 
+// Retrieve raw origin resources into the cache. `request_json` =
+// `{dataset_id, route}` where `route` is one retrieval route from the index.
+// `opts_json` = `{cache_dir?, timeout_secs?, max_total_bytes?}`.
+// Writes the retrieval status (JSON, owned) — `{dir, ok, verified, route_id, resources:[...]}`.
+//
+// # Safety
+// All pointers must be valid for the call; `out` writable.
+enum n4ds_status_t n4ds_retrieve_raw(struct n4ds_context_t *ctx,
+                                     const char *request_json,
+                                     const char *opts_json,
+                                     char **out);
+
+// Prepare already-retrieved raw resources through the Rust nirs4all reader stack.
+// `request_json` = `{dataset_id, route}` where `route` is one raw retrieval route
+// from the index. `opts_json` = `{cache_dir?}`. Writes the preparation status
+// (JSON, owned) — `{dir, ok, route_id, resources:[...]}`.
+//
+// # Safety
+// All pointers must be valid for the call; `out` writable.
+enum n4ds_status_t n4ds_prepare_raw(struct n4ds_context_t *ctx,
+                                    const char *request_json,
+                                    const char *opts_json,
+                                    char **out);
+
 // Offline re-verify of an already-cached dataset directory. Writes the verification
 // report (JSON, owned) — `{dir, ok, files:[{name,relpath,status}]}`.
 //

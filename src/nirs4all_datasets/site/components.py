@@ -181,6 +181,18 @@ def badge(text: str, kind: str = "neutral") -> str:
     return f'<span class="badge {esc(kind)}">{esc(text)}</span>'
 
 
+def retrieval_badge(status: str | None) -> str:
+    labels = {
+        "canonical_verified": ("canonical verified", "info"),
+        "raw_reproducible": ("raw reproducible", "info"),
+        "token_required": ("token required", "warn"),
+        "manual": ("manual retrieval", "warn"),
+        "delegate": ("delegate", "neutral"),
+    }
+    label, kind = labels.get(str(status or ""), ("", "neutral"))
+    return badge(label, kind) if label else ""
+
+
 def section_head(eyebrow: str, title_html: str, sub: str = "", *, centered: bool = True) -> str:
     wrap = ' class="eyebrow-wrap"' if centered else ""
     sub_html = f'<p class="section-sub">{esc(sub)}</p>' if sub else ""
@@ -222,6 +234,9 @@ def dataset_card(view: DatasetView) -> str:
     icons_html = f'<div class="ds-icons">{"".join(glyphs)}</div>' if glyphs else ""
 
     badges = [tier_badge(tier)]
+    rb = retrieval_badge(e.get("retrieval_status"))
+    if rb:
+        badges.append(rb)
     if n_sources > 1:
         badges.append(badge(f"{n_sources} sources", "info"))
     if n_targets == 0:

@@ -37,7 +37,7 @@ _ENTRY_KEYS = {
     "id", "name", "domain", "tier", "license", "content_version", "schema_protocol",
     "spectro_family", "modalities", "n_sources", "source_ids", "n_features_total",
     "alignment_level", "n_targets", "targets", "task", "signal_types", "profile_scores", "n_metadata", "has_split", "splits",
-    "n_samples", "doi", "origin_kinds", "origin_access", "n_publications",
+    "n_samples", "doi", "retrieval_status", "retrieval_canonical_hosted", "retrieval_route_count", "origin_kinds", "origin_access", "n_publications",
     "card_protocol", "content_hash", "processing_hash", "has_card", "has_manifest",
     "is_stale", "publishable",
 }
@@ -192,6 +192,7 @@ def test_bank_summary_aggregates(fleet: tuple[Path, dict[str, DatasetDescriptor]
 
     assert summary["n_datasets"] == 3
     assert summary["by_tier"] == {"private": 2, "public": 1}
+    assert summary["by_retrieval_status"] == {"raw_reproducible": 3}
     assert summary["n_multi_source"] == 1  # only wheat (X1+X2)
     assert summary["n_with_targets"] == 2  # wheat + barley
     assert summary["n_metadata_only"] == 1  # soil

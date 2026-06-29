@@ -27,12 +27,14 @@ def _index_kpis(summary: dict[str, Any], datasets: list[DatasetView]) -> list[tu
     samples = (summary.get("samples") or {}).get("total")
     domains = len(summary.get("by_domain") or {})
     n_public = (summary.get("by_tier") or {}).get("public", 0)
+    retrieval = summary.get("by_retrieval_status") or {}
+    n_retrievable = (retrieval.get("raw_reproducible") or 0) + (retrieval.get("canonical_verified") or 0)
     return [
         (num(n), "datasets"),
         (num(samples) if samples else "—", "total samples"),
         (num(summary.get("total_sources") or 0), "spectral sources"),
         (num(domains), "domains"),
-        (num(summary.get("n_multi_source") or 0), "multi-source"),
+        (num(n_retrievable), "retrievable"),
         (num(n_public), "public-tier"),
     ]
 
@@ -42,6 +44,7 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     by_domain = summary.get("by_domain") or {}
     by_family = summary.get("by_spectro_family") or {}
     by_tier = summary.get("by_tier") or {}
+    by_retrieval = summary.get("by_retrieval_status") or {}
     license_mix = summary.get("license_mix") or {}
     origin_kinds = summary.get("origin_kinds") or {}
     samples = summary.get("samples") or {}
@@ -95,6 +98,11 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
         cards.append(C.viz_card(
             "Access tier", "Governance tier: public / private / anonymized",
             charts.donut_chart(list(by_tier.items()), title="Datasets by access tier", width=HALF),
+        ))
+    if by_retrieval:
+        cards.append(C.viz_card(
+            "Retrieval status", "Open origin routes versus token-gated private uploads",
+            charts.donut_chart(list(by_retrieval.items()), title="Datasets by retrieval status", width=HALF),
         ))
 
     # targets-per-dataset distribution (datasets range from 0 to many tens of targets)
@@ -936,6 +944,9 @@ def render_dataset(view: DatasetView) -> str:
     family = e.get("spectro_family") or ""
 
     badges = [C.tier_badge(view.tier)]
+    rb = C.retrieval_badge(e.get("retrieval_status"))
+    if rb:
+        badges.append(rb)
     if (e.get("n_sources") or 0) > 1:
         badges.append(C.badge(f'{e.get("n_sources")} sources', "info"))
     if (e.get("n_targets") or 0) == 0:
@@ -978,6 +989,7 @@ def render_dataset(view: DatasetView) -> str:
             ("Family", family),
             ("License", e.get("license")),
             ("Tier", view.tier),
+            ("Retrieval", e.get("retrieval_status")),
             ("Sources", num(e.get("n_sources") or 0)),
             ("Targets", num(e.get("n_targets") or 0)),
             ("DOI", locator_link(e.get("doi")) if e.get("doi") else None),

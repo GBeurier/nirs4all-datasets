@@ -83,6 +83,7 @@ mod tests {
                 file_id: None,
             }],
             origins: vec![],
+            retrieval: serde_json::Value::Null,
         }
     }
 

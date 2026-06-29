@@ -69,6 +69,34 @@ def card(name: str, root: str | Path = ".") -> dict[str, Any] | None:
     return get_card(root, name)
 
 
+def retrieve(
+    name: str,
+    *,
+    root: str | Path = ".",
+    route_id: str | None = None,
+    cache_dir: str | Path | None = None,
+    token: str | None = None,
+    instance: str | None = None,
+    timeout_secs: int | None = None,
+    max_total_bytes: int | None = None,
+    prepare: bool = True,
+) -> dict[str, Any]:
+    """Retrieve available raw/canonical bytes by dataset id and return a status dict."""
+    from nirs4all_datasets.retrieval import retrieve as _retrieve
+
+    return _retrieve(
+        name,
+        root=root,
+        route_id=route_id,
+        cache_dir=cache_dir,
+        token=token,
+        instance=instance,
+        timeout_secs=timeout_secs,
+        max_total_bytes=max_total_bytes,
+        prepare=prepare,
+    )
+
+
 def __getattr__(name: str) -> Any:
     """Lazily expose ``NirsDataset`` and the ``metrics`` namespace without importing them eagerly."""
     if name == "NirsDataset":
@@ -78,4 +106,4 @@ def __getattr__(name: str) -> Any:
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
-__all__ = ["Settings", "get_settings", "get", "NirsDataset", "list", "card", "metrics", "__version__"]
+__all__ = ["Settings", "get_settings", "get", "retrieve", "NirsDataset", "list", "card", "metrics", "__version__"]

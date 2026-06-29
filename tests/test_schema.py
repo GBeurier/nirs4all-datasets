@@ -46,6 +46,8 @@ def test_valid_descriptor() -> None:
     assert [v.name for v in d.targets] == ["Moisture"]
     assert d.metadata_variables == []
     assert d.tier is s.Tier.PRIVATE
+    assert d.retrieval.status is s.RetrievalStatus.DOCUMENTED_ONLY
+    assert d.retrieval.routes == []
     assert d.publication_blockers() == []  # private tier is always publishable-valid (token-gated)
 
 
@@ -125,6 +127,66 @@ def test_origin_source_token_guard() -> None:
     s.OriginSource(kind="figshare", locator="10.6084/x", access="token", credential_ref="figshare_pat")
     with pytest.raises(ValidationError):
         s.OriginSource(kind="url", locator="http://x/y", access="token")  # non-Dataverse token needs credential_ref
+
+
+def test_retrieval_route_and_resource_validation() -> None:
+    d = s.DatasetDescriptor(**_desc(
+        retrieval={
+            "status": "raw_reproducible",
+            "public_retrievable": True,
+            "public_redistributable": False,
+            "routes": [
+                {
+                    "id": "official_raw",
+                    "method": "raw_retrieve",
+                    "provider": "figshare",
+                    "locator": "10.6084/m9.figshare.1",
+                    "resources": [
+                        {
+                            "id": "spectra",
+                            "role": "spectra",
+                            "selector": {"kind": "api_file_name", "value": "spectra.csv"},
+                            "file_name": "spectra.csv",
+                            "format": "csv",
+                            "sha256": _HASH.upper(),
+                        }
+                    ],
+                    "canonicalization": {
+                        "engine": "nirs4all_io",
+                        "recipe_id": "demo_v1",
+                        "recipe_version": "1.0.0",
+                        "expected_layout": "v2_standard",
+                        "expected_files": ["X.csv", "Y.csv", "M.csv"],
+                    },
+                }
+            ],
+        },
+    ))
+    route = d.retrieval.routes[0]
+    assert d.retrieval.status is s.RetrievalStatus.RAW_REPRODUCIBLE
+    assert route.resources[0].sha256 == _HASH
+    assert route.canonicalization and route.canonicalization.engine is s.CanonicalizationEngine.NIRS4ALL_IO
+
+
+def test_manual_retrieval_route_cannot_claim_automatic_download() -> None:
+    with pytest.raises(ValidationError):
+        s.RetrievalRoute(id="manual", method="manual", provider="manual", locator="https://example.org")
+    with pytest.raises(ValidationError):
+        s.RetrievalRoute(
+            id="raw_manual_access",
+            method="raw_retrieve",
+            provider="url",
+            access="manual",
+            locator="https://example.org/raw.csv",
+        )
+    with pytest.raises(ValidationError):
+        s.RetrievalRoute(
+            id="canonical_manual_access",
+            method="canonical_fetch",
+            provider="dataverse",
+            access="manual",
+            locator="10.70112/ABC",
+        )
 
 
 @pytest.mark.parametrize(

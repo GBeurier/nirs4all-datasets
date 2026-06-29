@@ -34,6 +34,7 @@ mod tests {
           "dataverse": {"instance": "https://dv.example", "doi": "10.70112/ABC", "dataset_version": "1.0"},
           "files": [{"name":"X.parquet","relpath":"canonical/sources/X.parquet","directory_label":"canonical/sources","sha256":"aa","size":9,"file_id":42}],
           "origins": [{"kind":"zenodo","mode":"canonical","locator":"10.5281/zenodo.5","access":"open"}],
+          "retrieval": {"schema_version":"1.0","status":"raw_reproducible","routes":[{"id":"official","method":"raw_retrieve","provider":"url","locator":"https://example.test/raw.csv","resources":[{"id":"raw","selector":{"kind":"direct_url","value":"https://example.test/raw.csv"}}]}]},
           "descriptor": {"id":"demo"}
         }
       }
@@ -48,6 +49,11 @@ mod tests {
         assert_eq!(v["instance"], "https://dv.example");
         assert_eq!(v["doi"], "10.70112/ABC");
         assert_eq!(v["files"][0]["file_id"], 42);
+        assert_eq!(v["retrieval"]["status"], "raw_reproducible");
+        assert_eq!(
+            v["retrieval"]["routes"][0]["resources"][0]["selector"]["kind"],
+            "direct_url"
+        );
     }
 
     #[test]

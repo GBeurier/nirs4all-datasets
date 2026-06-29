@@ -16,7 +16,7 @@ from typing import Any
 
 from nirs4all_datasets import _n4ds  # the compiled pyo3 extension (built by maturin)
 
-__all__ = ["abi_version", "resolve", "fetch", "verify_cached"]
+__all__ = ["abi_version", "resolve", "fetch", "retrieve_raw", "prepare_raw", "verify_cached"]
 
 
 def abi_version() -> str:
@@ -54,6 +54,33 @@ def fetch(resolved: dict[str, Any] | str, opts: dict[str, Any] | None = None) ->
         ValueError: Nothing in the contract is auto-fetchable.
     """
     result: dict[str, Any] = json.loads(_n4ds.fetch(_as_json(resolved), json.dumps(opts or {})))
+    return result
+
+
+def retrieve_raw(request: dict[str, Any] | str, opts: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Retrieve raw origin resources into the native cache.
+
+    ``request`` is ``{dataset_id, route}``, where ``route`` is one item from
+    ``descriptor.retrieval.routes``. ``opts`` accepts ``{cache_dir?, timeout_secs?,
+    max_total_bytes?}``. Returns ``{dir, ok, verified, route_id, resources:[...]}``.
+
+    This is raw repatriation, not canonical verification. ``verified`` is true only
+    when every retrieved resource had a SHA-256 pin and matched it.
+    """
+    result: dict[str, Any] = json.loads(_n4ds.retrieve_raw(_as_json(request), json.dumps(opts or {})))
+    return result
+
+
+def prepare_raw(request: dict[str, Any] | str, opts: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Prepare already-retrieved raw resources through the Rust reader stack.
+
+    ``request`` is the same ``{dataset_id, route}`` payload as :func:`retrieve_raw`.
+    ``opts`` accepts ``{cache_dir?}``. Returns
+    ``{dir, ok, route_id, resources:[...]}``, where supported native resources
+    have been decoded by ``nirs4all-formats`` and tabular resources summarized by
+    ``nirs4all-io``.
+    """
+    result: dict[str, Any] = json.loads(_n4ds.prepare_raw(_as_json(request), json.dumps(opts or {})))
     return result
 
 

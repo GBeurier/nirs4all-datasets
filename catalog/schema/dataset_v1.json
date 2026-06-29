@@ -1,5 +1,14 @@
 {
   "$defs": {
+    "AlignmentLevel": {
+      "description": "How a source's spectra align to samples / to other sources.",
+      "enum": [
+        "observation",
+        "sample"
+      ],
+      "title": "AlignmentLevel",
+      "type": "string"
+    },
     "Author": {
       "additionalProperties": false,
       "description": "A dataset author for DataCite/Dataverse metadata.",
@@ -63,14 +72,132 @@
       "title": "AxisUnit",
       "type": "string"
     },
-    "ConfidentialityClass": {
-      "description": "Data confidentiality classification.",
+    "Canonicalization": {
+      "additionalProperties": false,
+      "description": "How retrieved raw resources become v2-standard or canonical dataset files.",
+      "properties": {
+        "delegate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delegate"
+        },
+        "delegate_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delegate Sha256"
+        },
+        "engine": {
+          "$ref": "#/$defs/CanonicalizationEngine",
+          "default": "manual"
+        },
+        "expected_files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Files",
+          "type": "array"
+        },
+        "expected_layout": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Layout"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "recipe_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recipe Id"
+        },
+        "recipe_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recipe Version"
+        }
+      },
+      "title": "Canonicalization",
+      "type": "object"
+    },
+    "CanonicalizationEngine": {
+      "description": "Engine that can turn retrieved resources into the local dataset layout.",
       "enum": [
-        "public",
-        "internal",
-        "confidential"
+        "rust_recipe",
+        "nirs4all_io",
+        "nirs4all_formats",
+        "python_compat",
+        "rscript_compat",
+        "delegate",
+        "manual"
       ],
-      "title": "ConfidentialityClass",
+      "title": "CanonicalizationEngine",
       "type": "string"
     },
     "ConversionStatus": {
@@ -103,7 +230,7 @@
         },
         "related_publications": {
           "items": {
-            "type": "string"
+            "$ref": "#/$defs/PublicationRef"
           },
           "title": "Related Publications",
           "type": "array"
@@ -121,7 +248,7 @@
     },
     "DataverseRef": {
       "additionalProperties": false,
-      "description": "Pointer to the dataset's Dataverse location and pinned version.",
+      "description": "Pointer to the dataset's (future) personal Dataverse location and pinned version \u2014 the\ntoken-gated fallback for private/anonymized data and for origins that have rotted.",
       "properties": {
         "dataset_version": {
           "anyOf": [
@@ -195,9 +322,70 @@
       "title": "Funding",
       "type": "object"
     },
+    "Generation": {
+      "additionalProperties": false,
+      "description": "Provenance for a machine-generated descriptor (bulk bootstrap). Present only on auto-generated\ndescriptors; excluded from the processing hash so refreshing it never triggers a rebuild.",
+      "properties": {
+        "generator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generator"
+        },
+        "generator_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generator Version"
+        },
+        "managed": {
+          "default": false,
+          "title": "Managed",
+          "type": "boolean"
+        },
+        "source_fingerprint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Fingerprint"
+        },
+        "source_relpath": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Relpath"
+        }
+      },
+      "title": "Generation",
+      "type": "object"
+    },
     "Governance": {
       "additionalProperties": false,
-      "description": "Legal/ethical metadata. Publication is gated on these fields (see publication_blockers).",
+      "description": "Legal/ethical metadata. Public release is gated on these fields (see publication_blockers).",
       "properties": {
         "access_policy": {
           "anyOf": [
@@ -223,10 +411,6 @@
           "default": null,
           "title": "Anonymization Status"
         },
-        "confidentiality_class": {
-          "$ref": "#/$defs/ConfidentialityClass",
-          "default": "internal"
-        },
         "consent_ethics_status": {
           "anyOf": [
             {
@@ -238,19 +422,6 @@
           ],
           "default": null,
           "title": "Consent Ethics Status"
-        },
-        "embargo_until": {
-          "anyOf": [
-            {
-              "format": "date",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Embargo Until"
         },
         "license": {
           "title": "License",
@@ -291,10 +462,6 @@
           ],
           "default": null,
           "title": "Redistribution Rights"
-        },
-        "visibility": {
-          "$ref": "#/$defs/Visibility",
-          "default": "restricted"
         }
       },
       "required": [
@@ -303,101 +470,27 @@
       "title": "Governance",
       "type": "object"
     },
-    "Instrument": {
+    "IdentitySpec": {
       "additionalProperties": false,
-      "description": "Acquisition instrument and signal description (NIRS FAIR fields).",
+      "description": "The id columns that link spectra <-> samples <-> Y/metadata. ``observation_id`` is per-spectrum;\n``sample_id`` is the physical sample (groups repetitions). When ``sample_id`` is unavailable, each\nobservation is its own sample group.",
       "properties": {
-        "acquisition_settings": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Acquisition Settings",
-          "type": "object"
+        "observation_id": {
+          "default": "observation_id",
+          "title": "Observation Id",
+          "type": "string"
         },
-        "axis_range": {
-          "anyOf": [
-            {
-              "maxItems": 2,
-              "minItems": 2,
-              "prefixItems": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "number"
-                }
-              ],
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Axis Range"
+        "sample_id": {
+          "default": "sample_id",
+          "title": "Sample Id",
+          "type": "string"
         },
-        "axis_unit": {
-          "$ref": "#/$defs/AxisUnit",
-          "default": "nm"
-        },
-        "firmware": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Firmware"
-        },
-        "modality": {
-          "$ref": "#/$defs/Modality",
-          "default": "NIR"
-        },
-        "model": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Model"
-        },
-        "serial": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Serial"
-        },
-        "signal_type": {
-          "$ref": "#/$defs/SignalType",
-          "default": "auto"
-        },
-        "vendor": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Vendor"
+        "sample_id_available": {
+          "default": true,
+          "title": "Sample Id Available",
+          "type": "boolean"
         }
       },
-      "title": "Instrument",
+      "title": "IdentitySpec",
       "type": "object"
     },
     "Modality": {
@@ -407,11 +500,119 @@
         "MIR",
         "Raman",
         "UV-Vis",
+        "VSWIR",
+        "TIR",
         "hyperspectral",
         "other"
       ],
       "title": "Modality",
       "type": "string"
+    },
+    "OriginSource": {
+      "additionalProperties": false,
+      "description": "An original (authoritative) home of a dataset's bytes \u2014 where to fetch from, never checksums\n(the manifest is the single byte-identity authority). Excluded from the processing hash.",
+      "properties": {
+        "access": {
+          "$ref": "#/$defs/SourceAccess",
+          "default": "open"
+        },
+        "alive": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alive"
+        },
+        "credential_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credential Ref"
+        },
+        "expected_files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Files",
+          "type": "array"
+        },
+        "kind": {
+          "$ref": "#/$defs/SourceKind"
+        },
+        "last_checked": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Checked"
+        },
+        "license": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License"
+        },
+        "locator": {
+          "title": "Locator",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/SourceMode",
+          "default": "raw"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        }
+      },
+      "required": [
+        "kind",
+        "locator"
+      ],
+      "title": "OriginSource",
+      "type": "object"
     },
     "Provenance": {
       "additionalProperties": false,
@@ -525,6 +726,558 @@
       "title": "Provenance",
       "type": "object"
     },
+    "PublicationRef": {
+      "additionalProperties": false,
+      "description": "A related publication (the *paper*), for citation. ``doi`` is a journal/publisher DOI \u2014 distinct\nfrom a data-repository DOI, which is an :class:`OriginSource` (where the *bytes* live).",
+      "properties": {
+        "authors": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "bibtex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bibtex"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "doi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Doi"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        }
+      },
+      "title": "PublicationRef",
+      "type": "object"
+    },
+    "Retrieval": {
+      "additionalProperties": false,
+      "description": "User-side retrieval plan, distinct from publication/redistribution rights.",
+      "properties": {
+        "blockers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Blockers",
+          "type": "array"
+        },
+        "canonical_hosted": {
+          "default": false,
+          "title": "Canonical Hosted",
+          "type": "boolean"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "public_redistributable": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Public Redistributable"
+        },
+        "public_retrievable": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Public Retrievable"
+        },
+        "routes": {
+          "items": {
+            "$ref": "#/$defs/RetrievalRoute"
+          },
+          "title": "Routes",
+          "type": "array"
+        },
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RetrievalStatus",
+          "default": "documented_only"
+        }
+      },
+      "title": "Retrieval",
+      "type": "object"
+    },
+    "RetrievalFormat": {
+      "description": "File format expected after locating/downloading a resource.",
+      "enum": [
+        "csv",
+        "csv_gz",
+        "xlsx",
+        "zip",
+        "mat",
+        "rda",
+        "rds",
+        "openspecy_rds",
+        "jcamp_dx",
+        "sqlite",
+        "spc",
+        "parquet",
+        "json",
+        "txt",
+        "ecostress_spectrum_txt",
+        "unknown"
+      ],
+      "title": "RetrievalFormat",
+      "type": "string"
+    },
+    "RetrievalHealth": {
+      "additionalProperties": false,
+      "description": "How a route should be probed during maintenance checks.",
+      "properties": {
+        "expected_status": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Expected Status",
+          "type": "array"
+        },
+        "probe": {
+          "default": true,
+          "title": "Probe",
+          "type": "boolean"
+        }
+      },
+      "title": "RetrievalHealth",
+      "type": "object"
+    },
+    "RetrievalMethod": {
+      "description": "How a retrieval route is executed.",
+      "enum": [
+        "canonical_fetch",
+        "raw_retrieve",
+        "delegate",
+        "manual"
+      ],
+      "title": "RetrievalMethod",
+      "type": "string"
+    },
+    "RetrievalProvider": {
+      "description": "Provider/resolver used to locate remote resources.",
+      "enum": [
+        "url",
+        "dataverse",
+        "zenodo",
+        "figshare",
+        "ckan",
+        "google_storage",
+        "github",
+        "timeseriesclassification",
+        "jpl_ecostress",
+        "local_path",
+        "manual",
+        "script",
+        "unknown"
+      ],
+      "title": "RetrievalProvider",
+      "type": "string"
+    },
+    "RetrievalResource": {
+      "additionalProperties": false,
+      "description": "One raw/canonical resource that can be downloaded or located locally.",
+      "properties": {
+        "compression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compression"
+        },
+        "file_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Name"
+        },
+        "format": {
+          "$ref": "#/$defs/RetrievalFormat",
+          "default": "unknown"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "role": {
+          "$ref": "#/$defs/RetrievalResourceRole",
+          "default": "raw"
+        },
+        "selector": {
+          "$ref": "#/$defs/RetrievalSelector"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        },
+        "size": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size"
+        },
+        "unpack": {
+          "$ref": "#/$defs/RetrievalUnpack"
+        }
+      },
+      "required": [
+        "id",
+        "selector"
+      ],
+      "title": "RetrievalResource",
+      "type": "object"
+    },
+    "RetrievalResourceRole": {
+      "description": "Role of a retrieved raw/canonical resource.",
+      "enum": [
+        "spectra",
+        "targets",
+        "metadata",
+        "archive",
+        "split",
+        "license",
+        "readme",
+        "raw",
+        "canonical",
+        "other"
+      ],
+      "title": "RetrievalResourceRole",
+      "type": "string"
+    },
+    "RetrievalRoute": {
+      "additionalProperties": false,
+      "description": "One retrieval route, tried by priority by future resolvers.",
+      "properties": {
+        "access": {
+          "$ref": "#/$defs/SourceAccess",
+          "default": "open"
+        },
+        "api_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Url"
+        },
+        "automated_download_allowed": {
+          "default": true,
+          "title": "Automated Download Allowed",
+          "type": "boolean"
+        },
+        "canonicalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Canonicalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "health": {
+          "$ref": "#/$defs/RetrievalHealth"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "landing_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Landing Url"
+        },
+        "locator": {
+          "title": "Locator",
+          "type": "string"
+        },
+        "max_total_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Total Bytes"
+        },
+        "method": {
+          "$ref": "#/$defs/RetrievalMethod",
+          "default": "raw_retrieve"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "priority": {
+          "default": 100,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "provider": {
+          "$ref": "#/$defs/RetrievalProvider",
+          "default": "url"
+        },
+        "redistribution_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Redistribution Allowed"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/RetrievalResource"
+          },
+          "title": "Resources",
+          "type": "array"
+        },
+        "terms_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Terms Url"
+        }
+      },
+      "required": [
+        "id",
+        "locator"
+      ],
+      "title": "RetrievalRoute",
+      "type": "object"
+    },
+    "RetrievalSelector": {
+      "additionalProperties": false,
+      "description": "Stable provider-specific selector for one retrievable resource.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/RetrievalSelectorKind",
+          "default": "direct_url"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "RetrievalSelector",
+      "type": "object"
+    },
+    "RetrievalSelectorKind": {
+      "description": "How to identify one resource at a provider.",
+      "enum": [
+        "direct_url",
+        "api_file_name",
+        "dataverse_file_id",
+        "zenodo_key",
+        "figshare_file_id",
+        "archive_member",
+        "local_path",
+        "doi",
+        "manual"
+      ],
+      "title": "RetrievalSelectorKind",
+      "type": "string"
+    },
+    "RetrievalStatus": {
+      "description": "Machine-readable state of user-side data retrieval.",
+      "enum": [
+        "canonical_verified",
+        "raw_reproducible",
+        "verifier_only",
+        "documented_only",
+        "manual_only",
+        "token_required",
+        "blocked_parser",
+        "missing_delegate"
+      ],
+      "title": "RetrievalStatus",
+      "type": "string"
+    },
+    "RetrievalUnpack": {
+      "additionalProperties": false,
+      "description": "Archive extraction instruction for a retrieved resource.",
+      "properties": {
+        "archive": {
+          "default": false,
+          "title": "Archive",
+          "type": "boolean"
+        },
+        "members": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Members",
+          "type": "array"
+        }
+      },
+      "title": "RetrievalUnpack",
+      "type": "object"
+    },
     "SignalType": {
       "description": "Signal type (mirrors ``nirs4all`` ``SignalTypeEnum``).",
       "enum": [
@@ -540,9 +1293,250 @@
       "title": "SignalType",
       "type": "string"
     },
-    "Target": {
+    "Source": {
       "additionalProperties": false,
-      "description": "A prediction target carried by the dataset.",
+      "description": "One X source = one instrument / acquisition, kept separate. Sources may differ in size\n(asymmetric repetitions); they are linked by sample identity, never by row position.",
+      "properties": {
+        "axis_max": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Axis Max"
+        },
+        "axis_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Axis Min"
+        },
+        "axis_resolution": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Axis Resolution"
+        },
+        "axis_unit": {
+          "$ref": "#/$defs/AxisUnit",
+          "default": "none"
+        },
+        "instrument_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instrument Name"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality",
+          "default": "NIR"
+        },
+        "n_observations": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Observations"
+        },
+        "n_variables": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Variables"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "signal_type": {
+          "$ref": "#/$defs/SignalType",
+          "default": "auto"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "vendor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vendor"
+        }
+      },
+      "required": [
+        "source_id"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "SourceAccess": {
+      "description": "How an origin source is reached.",
+      "enum": [
+        "open",
+        "token",
+        "manual"
+      ],
+      "title": "SourceAccess",
+      "type": "string"
+    },
+    "SourceKind": {
+      "description": "Where a dataset's original (authoritative) bytes live.",
+      "enum": [
+        "dataverse",
+        "zenodo",
+        "figshare",
+        "url",
+        "script",
+        "manual"
+      ],
+      "title": "SourceKind",
+      "type": "string"
+    },
+    "SourceMode": {
+      "description": "What an origin source yields.\n\n``canonical`` = the full canonical set, verifiable byte-for-byte against the manifest. ``raw`` =\noriginal vendor files re-ingested locally (the re-ingested canonical is a *reproduction*).",
+      "enum": [
+        "canonical",
+        "raw"
+      ],
+      "title": "SourceMode",
+      "type": "string"
+    },
+    "SplitRef": {
+      "additionalProperties": false,
+      "description": "A native split/fold, *documented but never auto-applied*. ``applied`` is always False here.",
+      "properties": {
+        "applied": {
+          "default": false,
+          "title": "Applied",
+          "type": "boolean"
+        },
+        "documented_origin": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Documented Origin"
+        },
+        "kind": {
+          "default": "train_test",
+          "title": "Kind",
+          "type": "string"
+        },
+        "n_folds": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Folds"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "SplitRef",
+      "type": "object"
+    },
+    "Tier": {
+      "description": "Visibility / access tier (replaces the prior visibility + confidentiality split).",
+      "enum": [
+        "public",
+        "private",
+        "anonymized"
+      ],
+      "title": "Tier",
+      "type": "string"
+    },
+    "VarType": {
+      "description": "Statistical type of a variable (drives the card's per-variable dataviz).",
+      "enum": [
+        "numeric",
+        "categorical",
+        "text",
+        "identifier",
+        "datetime"
+      ],
+      "title": "VarType",
+      "type": "string"
+    },
+    "Variable": {
+      "additionalProperties": false,
+      "description": "A non-spectral column (a target OR a metadata column \u2014 the same kind of thing). Carries no\ntask_type: the supervised task is a *consumer* choice (pick a variable + a split), not a property\nof the dataset.",
       "properties": {
         "classes": {
           "anyOf": [
@@ -563,30 +1557,13 @@
           "title": "Name",
           "type": "string"
         },
-        "range": {
-          "anyOf": [
-            {
-              "maxItems": 2,
-              "minItems": 2,
-              "prefixItems": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "number"
-                }
-              ],
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Range"
+        "role": {
+          "$ref": "#/$defs/VariableRole",
+          "default": "metadata"
         },
-        "task_type": {
-          "$ref": "#/$defs/TaskType"
+        "type": {
+          "$ref": "#/$defs/VarType",
+          "default": "numeric"
         },
         "unit": {
           "anyOf": [
@@ -602,37 +1579,46 @@
         }
       },
       "required": [
-        "name",
-        "task_type"
+        "name"
       ],
-      "title": "Target",
+      "title": "Variable",
       "type": "object"
     },
-    "TaskType": {
-      "description": "Supervised task type (mirrors ``nirs4all`` ``TaskType``).",
+    "VariableRole": {
+      "description": "Role of a non-spectral column. There is no intrinsic Y/metadata distinction; a metadata\ncolumn is a *potential* target. ``target`` is set only when the source explicitly declares it.",
       "enum": [
-        "auto",
-        "regression",
-        "binary_classification",
-        "multiclass_classification"
+        "target",
+        "metadata"
       ],
-      "title": "TaskType",
+      "title": "VariableRole",
       "type": "string"
     },
-    "Visibility": {
-      "description": "Publication visibility on the Dataverse instance.",
-      "enum": [
-        "public",
-        "restricted",
-        "embargo"
-      ],
-      "title": "Visibility",
-      "type": "string"
+    "Versions": {
+      "additionalProperties": false,
+      "description": "Two independent version axes (see DESIGN \u00a75).",
+      "properties": {
+        "content": {
+          "default": "1.0.0",
+          "title": "Content",
+          "type": "string"
+        },
+        "schema_protocol": {
+          "default": "2.0",
+          "title": "Schema Protocol",
+          "type": "string"
+        }
+      },
+      "title": "Versions",
+      "type": "object"
     }
   },
   "additionalProperties": false,
-  "description": "Hand-authored descriptor for one NIRS dataset (``catalog/datasets/<id>.yaml``).",
+  "description": "Descriptor for one RAW NIRS dataset (``catalog/datasets/<id>.yaml``).",
   "properties": {
+    "alignment_level": {
+      "$ref": "#/$defs/AlignmentLevel",
+      "default": "observation"
+    },
     "citation": {
       "anyOf": [
         {
@@ -675,6 +1661,17 @@
       "default": null,
       "title": "Domain"
     },
+    "generation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Generation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "governance": {
       "$ref": "#/$defs/Governance"
     },
@@ -682,8 +1679,8 @@
       "title": "Id",
       "type": "string"
     },
-    "instrument": {
-      "$ref": "#/$defs/Instrument"
+    "ids": {
+      "$ref": "#/$defs/IdentitySpec"
     },
     "keywords": {
       "items": {
@@ -692,87 +1689,77 @@
       "title": "Keywords",
       "type": "array"
     },
-    "n_features": {
-      "anyOf": [
-        {
-          "minimum": 1,
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "N Features"
-    },
-    "n_samples": {
-      "anyOf": [
-        {
-          "minimum": 1,
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "N Samples"
-    },
-    "n_sources": {
-      "default": 1,
-      "minimum": 1,
-      "title": "N Sources",
-      "type": "integer"
-    },
     "name": {
       "title": "Name",
       "type": "string"
     },
-    "predefined_split": {
-      "default": false,
-      "title": "Predefined Split",
-      "type": "boolean"
+    "origin_sources": {
+      "items": {
+        "$ref": "#/$defs/OriginSource"
+      },
+      "title": "Origin Sources",
+      "type": "array"
     },
     "provenance": {
       "$ref": "#/$defs/Provenance"
     },
-    "repetition_column": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Repetition Column"
+    "publications": {
+      "items": {
+        "$ref": "#/$defs/PublicationRef"
+      },
+      "title": "Publications",
+      "type": "array"
+    },
+    "reproducibility": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Reproducibility",
+      "type": "object"
+    },
+    "retrieval": {
+      "$ref": "#/$defs/Retrieval"
     },
     "schema_version": {
-      "default": "1.0",
+      "default": "2.0",
       "title": "Schema Version",
       "type": "string"
     },
-    "targets": {
+    "sources": {
       "items": {
-        "$ref": "#/$defs/Target"
+        "$ref": "#/$defs/Source"
       },
       "minItems": 1,
-      "title": "Targets",
+      "title": "Sources",
       "type": "array"
     },
-    "version": {
-      "default": "0.1.0",
-      "title": "Version",
-      "type": "string"
+    "splits": {
+      "items": {
+        "$ref": "#/$defs/SplitRef"
+      },
+      "title": "Splits",
+      "type": "array"
+    },
+    "tier": {
+      "$ref": "#/$defs/Tier",
+      "default": "private"
+    },
+    "variables": {
+      "items": {
+        "$ref": "#/$defs/Variable"
+      },
+      "title": "Variables",
+      "type": "array"
+    },
+    "versions": {
+      "$ref": "#/$defs/Versions"
     }
   },
   "required": [
     "id",
     "name",
     "description",
-    "instrument",
-    "targets",
+    "sources",
     "provenance",
     "governance"
   ],

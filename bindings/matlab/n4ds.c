@@ -3,8 +3,10 @@
  *
  *   n4ds('resolve',       index_json, dataset_id)   -> char  (download contract)
  *   n4ds('fetch',         resolved_json[, opts_json]) -> char (fetch status)
- *   n4ds('verify_cached', resolved_json, dir)       -> char  (verify report)
- *   n4ds('abi_version')                             -> char
+ *   n4ds('retrieve_raw',  request_json[, opts_json]) -> char (raw retrieval status)
+ *   n4ds('prepare_raw',   request_json[, opts_json]) -> char (raw preparation status)
+ *   n4ds('verify_cached', resolved_json, dir)        -> char (verify report)
+ *   n4ds('abi_version')                              -> char
  *
  * Mirrors the verified R glue (bindings/r/nirs4alldatasets/src/n4ds.c) against the
  * same frozen header: a per-call context carries the error buffer; a non-OK status
@@ -70,6 +72,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
             mexErrMsgIdAndTxt("n4ds:arg", "fetch requires resolved_json");
         }
         st = n4ds_fetch(ctx, a1, a2 ? a2 : "", &out);
+    } else if (strcmp(cmd, "retrieve_raw") == 0) {
+        if (a1 == NULL) {
+            n4ds_context_destroy(ctx);
+            mexErrMsgIdAndTxt("n4ds:arg", "retrieve_raw requires request_json");
+        }
+        st = n4ds_retrieve_raw(ctx, a1, a2 ? a2 : "", &out);
+    } else if (strcmp(cmd, "prepare_raw") == 0) {
+        if (a1 == NULL) {
+            n4ds_context_destroy(ctx);
+            mexErrMsgIdAndTxt("n4ds:arg", "prepare_raw requires request_json");
+        }
+        st = n4ds_prepare_raw(ctx, a1, a2 ? a2 : "", &out);
     } else if (strcmp(cmd, "verify_cached") == 0) {
         if (a1 == NULL || a2 == NULL) {
             n4ds_context_destroy(ctx);

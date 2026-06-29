@@ -47,6 +47,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout sibling Rust deps
+        run: scripts/ensure_rust_deps.sh
 
       - uses: dtolnay/rust-toolchain@stable
         with:
