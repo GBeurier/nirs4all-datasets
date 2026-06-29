@@ -301,7 +301,10 @@ def _raw_manifest_routes(root: str | Path, descriptor: DatasetDescriptor) -> lis
         for origin in descriptor.origin_sources
     ):
         return []
-    path = Path(root) / "NIRS DB" / "v2.0" / descriptor.id / "raw_manifest.csv"
+    root_path = Path(root)
+    path = root_path / "datasets" / descriptor.id / "raw" / "raw_manifest.csv"
+    if not path.exists():
+        path = root_path / "NIRS DB" / "v2.0" / descriptor.id / "raw_manifest.csv"
     if not path.exists():
         return []
     resources: list[dict[str, Any]] = []

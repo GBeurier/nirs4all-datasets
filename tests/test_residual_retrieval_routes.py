@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 
+from nirs4all_datasets.index import _retrieval
 from nirs4all_datasets.schema import DatasetDescriptor, RetrievalMethod, RetrievalProvider, RetrievalStatus
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,3 +65,18 @@ def test_pnnl_quant_ir_declares_the_selected_jcamp_sources() -> None:
     assert resources[-1].selector.value == "https://webbook.nist.gov/cgi/cbook.cgi?JCAMP=C7446095&Index=2&Type=IR"
     assert resources[-1].sha256 == "b6bb057031fd45549c3912ade1c36a42fc703d6271bb6d08883549efd8c298b6"
     assert resources[-1].size == 30600
+
+
+def test_embedded_raw_manifest_routes_do_not_require_nirs_db(tmp_path: Path) -> None:
+    dataset_id = "ecosis_spectral_characterization_of_multiple_corn_varieties_we_reflectance_nirs"
+    descriptor = _descriptor(dataset_id)
+    source_manifest = ROOT / "datasets" / dataset_id / "raw" / "raw_manifest.csv"
+    target_manifest = tmp_path / "datasets" / dataset_id / "raw" / "raw_manifest.csv"
+    target_manifest.parent.mkdir(parents=True)
+    target_manifest.write_bytes(source_manifest.read_bytes())
+
+    retrieval = _retrieval(tmp_path, descriptor)
+
+    assert retrieval["status"] == "raw_reproducible"
+    assert retrieval["routes"][0]["id"] == "nirs_db_raw_manifest"
+    assert retrieval["routes"][0]["resources"]

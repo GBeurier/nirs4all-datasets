@@ -3,8 +3,8 @@
 //!
 //! Re-runs whenever the crate source or the workspace-level `cbindgen.toml` changes.
 //! The generated header is committed alongside the crate so downstream packagers
-//! (R / MATLAB / C consumers) can pin a stable copy without invoking cargo. On Linux
-//! a GNU ld version script restricts the cdylib's exported symbols to `n4ds_*`.
+//! (R / MATLAB / C consumers) can pin a stable copy without invoking cargo.
+//! Platform linker export controls restrict the cdylib to the `n4ds_*` ABI.
 
 use std::path::PathBuf;
 
@@ -20,12 +20,21 @@ fn main() {
     println!("cargo:rerun-if-changed=src/lib.rs");
     println!("cargo:rerun-if-changed={}", config_path.display());
 
-    let version_script = crate_dir.join("abi").join("version_script.map");
-    println!("cargo:rerun-if-changed={}", version_script.display());
-    if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("linux") {
+    let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
+    if target_os == "linux" {
+        let version_script = crate_dir.join("abi").join("version_script.map");
+        println!("cargo:rerun-if-changed={}", version_script.display());
         println!(
             "cargo:rustc-cdylib-link-arg=-Wl,--version-script={}",
             version_script.display()
+        );
+        println!("cargo:rustc-cdylib-link-arg=-Wl,--exclude-libs,ALL");
+    } else if target_os == "macos" {
+        let exports = crate_dir.join("abi").join("exported_symbols_macos.txt");
+        println!("cargo:rerun-if-changed={}", exports.display());
+        println!(
+            "cargo:rustc-cdylib-link-arg=-Wl,-exported_symbols_list,{}",
+            exports.display()
         );
     }
 
