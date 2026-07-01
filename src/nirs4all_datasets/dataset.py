@@ -375,7 +375,14 @@ class NirsDataset:
             import nirs4all_io as nio
         except ImportError as exc:  # pragma: no cover - exercised only without the optional extra
             raise RuntimeError("to_dataset_package() needs the 'nirs4all-datasets[io]' extra (nirs4all-io).") from exc
-        return nio.to_dataset_package(self.to_io_spec(source=source, split=split), name=self.id)
+        to_dataset_package = getattr(nio, "to_dataset_package", None)
+        if not callable(to_dataset_package):
+            raise RuntimeError(
+                "to_dataset_package() needs a nirs4all_io build exposing DatasetPackage support. "
+                "The installed nirs4all_io appears to expose only the pyo3 load/to_spec surface; "
+                "install the Python MVP nirs4all-io build for DatasetPackage/canonical Parquet support."
+            )
+        return to_dataset_package(self.to_io_spec(source=source, split=split), name=self.id)
 
     def _bridge_source_ids(self, source: str | None) -> list[str]:
         ids = self.sources()

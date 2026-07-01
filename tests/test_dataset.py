@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import sys
+import types
 from typing import Any
 
 import numpy as np
@@ -9,6 +11,13 @@ import pytest
 
 from nirs4all_datasets.dataset import NirsDataset
 from nirs4all_datasets.schema import Tier, Variable, VariableRole
+
+
+def _require_io_with_dataset_package() -> Any:
+    nirs4all_io = pytest.importorskip("nirs4all_io")
+    if not callable(getattr(nirs4all_io, "to_dataset_package", None)):
+        pytest.skip("installed nirs4all_io does not expose DatasetPackage support")
+    return nirs4all_io
 
 
 def test_sources_lists_block_ids_in_order(canonical_dataset: Any) -> None:
@@ -167,7 +176,7 @@ def test_to_io_spec_exposes_canonical_parquet_bridge(canonical_dataset: Any) -> 
 
 
 def test_to_dataset_package_delegates_to_nirs4all_io(canonical_dataset: Any) -> None:
-    pytest.importorskip("nirs4all_io")
+    _require_io_with_dataset_package()
     dataset_dir, desc = canonical_dataset(
         "bridge_pkg",
         blocks=("X",),
@@ -186,8 +195,17 @@ def test_to_dataset_package_delegates_to_nirs4all_io(canonical_dataset: Any) -> 
     assert "site" in block.metadata.columns
 
 
+def test_to_dataset_package_rejects_io_without_package_helper(canonical_dataset: Any, monkeypatch: Any) -> None:
+    dataset_dir, desc = canonical_dataset("bridge_pkg_guard", blocks=("X",), sample_of={"o1": "s1", "o2": "s2"})
+    ds = NirsDataset(dataset_dir, desc)
+    monkeypatch.setitem(sys.modules, "nirs4all_io", types.SimpleNamespace(load=lambda *args, **kwargs: None, to_spec=lambda *args, **kwargs: None))
+
+    with pytest.raises(RuntimeError, match="DatasetPackage support"):
+        ds.to_dataset_package()
+
+
 def test_nirs4all_io_load_accepts_real_reference_dataset(canonical_dataset: Any) -> None:
-    nirs4all_io = pytest.importorskip("nirs4all_io")
+    nirs4all_io = _require_io_with_dataset_package()
     dataset_dir, desc = canonical_dataset(
         "bridge_load",
         blocks=("X",),
