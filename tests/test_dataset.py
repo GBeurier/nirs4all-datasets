@@ -1,4 +1,5 @@
 """Tests for :class:`nirs4all_datasets.dataset.NirsDataset` (schema 2.0, real canonical data)."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -62,9 +63,7 @@ def test_x_single_observation_aligned_source_returns_2d_array(canonical_dataset:
 
 
 def test_y_returns_targets_keyed_by_sample(canonical_dataset: Any) -> None:
-    dataset_dir, desc = canonical_dataset(
-        "corn", blocks=("X1",), sample_of={"o1": "s1", "o2": "s2"}, targets={"Moisture": "numeric", "variety": "categorical"}
-    )
+    dataset_dir, desc = canonical_dataset("corn", blocks=("X1",), sample_of={"o1": "s1", "o2": "s2"}, targets={"Moisture": "numeric", "variety": "categorical"})
     ds = NirsDataset(dataset_dir, desc)
     y = ds.y()
     assert y is not None
@@ -78,9 +77,7 @@ def test_y_returns_targets_keyed_by_sample(canonical_dataset: Any) -> None:
 
 
 def test_metadata_returns_only_metadata_role_columns(canonical_dataset: Any) -> None:
-    dataset_dir, desc = canonical_dataset(
-        "corn", blocks=("X1",), sample_of={"o1": "s1", "o2": "s2"}, extra_meta=("site",)
-    )
+    dataset_dir, desc = canonical_dataset("corn", blocks=("X1",), sample_of={"o1": "s1", "o2": "s2"}, extra_meta=("site",))
     ds = NirsDataset(dataset_dir, desc)
     meta_names = {v.name for v in desc.variables if v.role is VariableRole.METADATA}
     assert "site" in meta_names
@@ -139,3 +136,67 @@ def test_to_nirs4all_builds_a_spectrodataset(canonical_dataset: Any) -> None:
     spectro = ds.to_nirs4all()
     assert spectro is not None
     assert spectro.num_samples == 2
+
+
+def test_to_io_spec_exposes_canonical_parquet_bridge(canonical_dataset: Any) -> None:
+    dataset_dir, desc = canonical_dataset(
+        "bridge",
+        blocks=("X",),
+        sample_of={"o1": "s1", "o2": "s2"},
+        targets={"Moisture": "numeric"},
+        extra_meta=("site",),
+        split={"o1": "cal", "o2": "val"},
+    )
+    ds = NirsDataset(dataset_dir, desc)
+
+    spec = ds.to_io_spec()
+
+    assert spec["name"] == "bridge"
+    assert spec["sample_index"] == {"by": "id", "key": "sample_id", "observation_id": "observation_id"}
+    by_id = {source["id"]: source for source in spec["sources"]}
+    assert set(by_id) == {"X", "variables", "split_original"}
+    assert by_id["X"]["input"].endswith("canonical/sources/X.parquet")
+    assert by_id["X"]["columns"] == [
+        {"role": "ignore", "select": ["observation_id", "sample_id"]},
+        {"role": "features", "select": ["1100", "1102"]},
+    ]
+    assert by_id["variables"]["join"] == {"to": "X", "on": "sample_id", "how": "m:1", "coverage": "warn"}
+    assert {"role": "targets", "select": ["Moisture"]} in by_id["variables"]["columns"]
+    assert {"role": "metadata", "select": ["site"]} in by_id["variables"]["columns"]
+    assert by_id["split_original"]["columns"] == [{"role": "metadata", "select": ["partition"]}]
+
+
+def test_to_dataset_package_delegates_to_nirs4all_io(canonical_dataset: Any) -> None:
+    pytest.importorskip("nirs4all_io")
+    dataset_dir, desc = canonical_dataset(
+        "bridge_pkg",
+        blocks=("X",),
+        sample_of={"o1": "s1", "o2": "s2"},
+        targets={"Moisture": "numeric"},
+        extra_meta=("site",),
+    )
+    ds = NirsDataset(dataset_dir, desc)
+
+    package = ds.to_dataset_package()
+
+    assert package.name == "bridge_pkg"
+    block = package.to_assembled().blocks["train"]
+    np.testing.assert_allclose(block.X[0], [[0.1, 0.2], [0.1, 0.2]], rtol=1e-6)
+    np.testing.assert_allclose(block.y, [[1.0], [1.5]], rtol=1e-6)
+    assert "site" in block.metadata.columns
+
+
+def test_to_io_spec_refuses_ambiguous_multisource_repetitions(canonical_dataset: Any) -> None:
+    dataset_dir, desc = canonical_dataset(
+        "asym",
+        blocks=("X1", "X2"),
+        block_obs={"X1": ["o1", "o2", "o3"], "X2": ["p1", "p2"]},
+        sample_of={"o1": "s1", "o2": "s1", "o3": "s2", "p1": "s1", "p2": "s2"},
+    )
+    ds = NirsDataset(dataset_dir, desc)
+
+    with pytest.raises(ValueError, match="many-to-many join"):
+        ds.to_io_spec()
+
+    one = ds.to_io_spec(source="X1")
+    assert [source["id"] for source in one["sources"] if source["id"].startswith("X")] == ["X1"]

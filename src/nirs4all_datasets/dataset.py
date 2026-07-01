@@ -14,13 +14,15 @@ columns. It joins X sources to variables/splits **by sample identity** (``sample
 position — sources may differ in size (asymmetric repetitions), so a cross-source row-position merge
 would be a correctness hazard and is refused.
 
-The class never re-implements NIRS or IO logic: :meth:`to_nirs4all` assembles a nirs4all
-``SpectroDataset`` from the already-materialized arrays (one ``add_samples`` block per source), so the
-nirs4all data model — not this package — owns the resulting object.
+The class never re-implements NIRS or IO logic: :meth:`to_io_spec` exposes the canonical files as a
+``nirs4all-io`` ``DatasetSpec``, and :meth:`to_dataset_package` delegates assembly back to
+``nirs4all-io``. :meth:`to_nirs4all` remains the direct core bridge for callers that want a
+``SpectroDataset``.
 
 The descriptor's tier governs what is exposed: an ``anonymized`` dataset masks metadata names and
 normalizes targets on read (delegated to :mod:`nirs4all_datasets.qualify.anonymize`).
 """
+
 from __future__ import annotations
 
 import json
@@ -40,6 +42,20 @@ if TYPE_CHECKING:  # heavy / optional imports kept out of the runtime import pat
 _OBS_KEY = "observation_id"
 _SAMPLE_KEY = "sample_id"
 _ID_COLS = (_OBS_KEY, _SAMPLE_KEY)
+
+
+def _parquet_columns(path: str | Path) -> list[str]:
+    """Read a Parquet schema without loading the payload bytes."""
+    import pyarrow.parquet as pq
+
+    return [str(name) for name in pq.read_schema(path).names]
+
+
+def _unique_same_values(left: np.ndarray, right: np.ndarray) -> bool:
+    """Whether two arrays are unique-key sets with the same values."""
+    left_values = [str(v) for v in left.tolist()]
+    right_values = [str(v) for v in right.tolist()]
+    return len(left_values) == len(set(left_values)) and len(right_values) == len(set(right_values)) and set(left_values) == set(right_values)
 
 
 class NirsDataset:
@@ -232,10 +248,7 @@ class NirsDataset:
         try:
             from nirs4all_datasets.qualify.anonymize import anonymize_variables
         except ImportError as exc:  # the qualify.anonymize step may not be installed/built yet
-            raise RuntimeError(
-                f"{self.id!r} is tier 'anonymized' but nirs4all_datasets.qualify.anonymize is unavailable; "
-                "cannot serve anonymized variables."
-            ) from exc
+            raise RuntimeError(f"{self.id!r} is tier 'anonymized' but nirs4all_datasets.qualify.anonymize is unavailable; cannot serve anonymized variables.") from exc
         masked, name_map = anonymize_variables(variables, self._descriptor)
         return masked, name_map
 
@@ -299,6 +312,166 @@ class NirsDataset:
         for split in self._config.get("splits", []):
             if str(split["name"]) == name and split.get("path"):
                 return pd.read_parquet(split["path"])
+        return None
+
+    # -- nirs4all-io bridge ------------------------------------------------------------------------
+    def to_io_spec(self, *, source: str | None = None, split: str | None = "original") -> dict[str, Any]:
+        """Return a ``nirs4all-io`` ``DatasetSpec`` over this dataset's canonical Parquet files.
+
+        Datasets stays the catalog/access layer here: it only publishes paths, roles, units and join
+        keys from the verified local canonical layout. ``nirs4all-io`` still owns loading, joins,
+        partitioning and package materialization; ``nirs4all-formats`` remains behind IO for raw/vendor
+        reads.
+
+        Args:
+            source: Optional single source id. When omitted, every source is included if they can be
+                aligned without a many-to-many join. Asymmetric repeated sources raise a clear error;
+                pass ``source=...`` to bridge one source.
+            split: Native split name to expose as a metadata column. Splits are documented, not applied;
+                IO receives the labels as metadata and does not create train/test partitions.
+
+        Returns:
+            A JSON-serializable spec dict accepted by ``nirs4all_io.load`` / ``to_dataset_package``.
+
+        Raises:
+            KeyError: If ``source`` is not known.
+            ValueError: If multiple sources cannot be safely aligned for one IO package.
+            RuntimeError: If an anonymized dataset has variables; writing a masked temporary copy would
+                be a separate, explicit export step.
+        """
+        source_ids = self._bridge_source_ids(source)
+        if self.tier is Tier.ANONYMIZED and self._config.get("variables"):
+            raise RuntimeError(f"{self.id!r} is anonymized and has variables; refusing to expose the unmasked canonical variables.parquet through an IO spec.")
+
+        primary = source_ids[0]
+        sources: list[dict[str, Any]] = [self._io_source_spec(primary)]
+        for sid in source_ids[1:]:
+            spec = self._io_source_spec(sid)
+            spec["join"] = self._io_feature_join(primary, sid)
+            sources.append(spec)
+
+        variables = self._io_variables_spec(primary)
+        if variables is not None:
+            sources.append(variables)
+
+        split_spec = self._io_split_spec(primary, split)
+        if split_spec is not None:
+            sources.append(split_spec)
+
+        return {
+            "name": self.id,
+            "sample_index": {"by": "id", "key": _SAMPLE_KEY, "observation_id": _OBS_KEY},
+            "sources": sources,
+        }
+
+    def to_dataset_package(self, *, source: str | None = None, split: str | None = "original") -> Any:
+        """Materialize this reference dataset as a ``nirs4all-io`` ``DatasetPackage``.
+
+        This is the consumer-friendly bridge for pipelines that want IO's target-agnostic package.
+        It delegates to ``nirs4all_io.to_dataset_package``; no parsing, joining or packaging is
+        implemented in ``nirs4all-datasets``.
+        """
+        try:
+            import nirs4all_io as nio
+        except ImportError as exc:  # pragma: no cover - exercised only without the optional extra
+            raise RuntimeError("to_dataset_package() needs the 'nirs4all-datasets[io]' extra (nirs4all-io).") from exc
+        return nio.to_dataset_package(self.to_io_spec(source=source, split=split), name=self.id)
+
+    def _bridge_source_ids(self, source: str | None) -> list[str]:
+        ids = self.sources()
+        if source is None:
+            return ids
+        if source not in ids:
+            raise KeyError(f"unknown source {source!r} for {self.id!r}; available: {ids}")
+        return [source]
+
+    def _io_source_spec(self, source_id: str) -> dict[str, Any]:
+        entry = self._source_entry(source_id)
+        columns = _parquet_columns(entry["path"])
+        feature_cols = [c for c in columns if c not in _ID_COLS]
+        ignore_cols = [c for c in _ID_COLS if c in columns]
+        column_roles: list[dict[str, Any]] = []
+        if ignore_cols:
+            column_roles.append({"role": "ignore", "select": ignore_cols})
+        column_roles.append({"role": "features", "select": feature_cols})
+        params: dict[str, Any] = {}
+        if entry.get("axis_unit"):
+            params["header_unit"] = entry["axis_unit"]
+        source_model = next((s for s in self._descriptor.sources if s.source_id == source_id), None)
+        if source_model is not None and source_model.signal_type.value != "auto":
+            params["signal_type"] = source_model.signal_type.value
+        return {
+            "id": source_id,
+            "role": "mixed",
+            "modality": "spectroscopy",
+            "input": entry["path"],
+            "key": _SAMPLE_KEY,
+            "columns": column_roles,
+            **({"params": params} if params else {}),
+        }
+
+    def _io_feature_join(self, primary: str, source_id: str) -> dict[str, Any]:
+        primary_obs = self.observation_ids(primary).astype(str)
+        other_obs = self.observation_ids(source_id).astype(str)
+        if len(primary_obs) == len(other_obs) and np.array_equal(primary_obs, other_obs):
+            return {"to": primary, "how": "1:1"}
+        if _unique_same_values(primary_obs, other_obs):
+            return {"to": primary, "on": _OBS_KEY, "how": "1:1", "coverage": "complete"}
+        primary_samples = self.sample_ids(primary).astype(str)
+        other_samples = self.sample_ids(source_id).astype(str)
+        if _unique_same_values(primary_samples, other_samples):
+            return {"to": primary, "on": _SAMPLE_KEY, "how": "1:1", "coverage": "complete"}
+        raise ValueError(
+            f"cannot bridge sources {primary!r} and {source_id!r} of {self.id!r} into one IO package: "
+            "their observations/samples are not uniquely alignable without a many-to-many join. "
+            "Pass source='<id>' to bridge one source, or use x(concat=False) for source-separated arrays."
+        )
+
+    def _io_variables_spec(self, primary: str) -> dict[str, Any] | None:
+        variables_entry = self._config.get("variables")
+        if not variables_entry or not variables_entry.get("path"):
+            return None
+        framed = self._variables_frame()
+        if framed is None:
+            return None
+        variables, name_map = framed
+        target_cols = [name_map[n] for n in self._names_for(VariableRole.TARGET) if name_map.get(n) in variables.columns]
+        metadata_cols = [name_map[n] for n in self._names_for(VariableRole.METADATA) if name_map.get(n) in variables.columns]
+        selected = {_SAMPLE_KEY, *target_cols, *metadata_cols}
+        ignored = [c for c in variables.columns if c not in selected]
+        column_roles: list[dict[str, Any]] = []
+        if ignored:
+            column_roles.append({"role": "ignore", "select": ignored})
+        if target_cols:
+            column_roles.append({"role": "targets", "select": target_cols})
+        if metadata_cols:
+            column_roles.append({"role": "metadata", "select": metadata_cols})
+        if not column_roles:
+            return None
+        return {
+            "id": "variables",
+            "role": "mixed",
+            "input": variables_entry["path"],
+            "key": _SAMPLE_KEY,
+            "columns": column_roles,
+            "join": {"to": primary, "on": _SAMPLE_KEY, "how": "m:1", "coverage": "warn"},
+        }
+
+    def _io_split_spec(self, primary: str, split: str | None) -> dict[str, Any] | None:
+        if split is None:
+            return None
+        for split_entry in self._config.get("splits", []):
+            if str(split_entry["name"]) != split or not split_entry.get("path"):
+                continue
+            split_id = "split_" + "".join(ch if ch.isalnum() else "_" for ch in split).strip("_")
+            return {
+                "id": split_id or "split",
+                "role": "mixed",
+                "input": split_entry["path"],
+                "key": _SAMPLE_KEY,
+                "columns": [{"role": "metadata", "select": ["partition"]}],
+                "join": {"to": primary, "on": _SAMPLE_KEY, "how": "m:1", "coverage": "warn"},
+            }
         return None
 
     # -- nirs4all bridge ---------------------------------------------------------------------------
