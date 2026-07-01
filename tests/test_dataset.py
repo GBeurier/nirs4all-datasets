@@ -186,6 +186,26 @@ def test_to_dataset_package_delegates_to_nirs4all_io(canonical_dataset: Any) -> 
     assert "site" in block.metadata.columns
 
 
+def test_nirs4all_io_load_accepts_real_reference_dataset(canonical_dataset: Any) -> None:
+    nirs4all_io = pytest.importorskip("nirs4all_io")
+    dataset_dir, desc = canonical_dataset(
+        "bridge_load",
+        blocks=("X",),
+        sample_of={"o1": "s1", "o2": "s2"},
+        targets={"Moisture": "numeric"},
+        extra_meta=("site",),
+    )
+    ds = NirsDataset(dataset_dir, desc)
+
+    package = nirs4all_io.load(ds, target="dataset_package")
+
+    assert package.name == "bridge_load"
+    block = package.to_assembled().blocks["train"]
+    np.testing.assert_allclose(block.X[0], [[0.1, 0.2], [0.1, 0.2]], rtol=1e-6)
+    np.testing.assert_allclose(block.y, [[1.0], [1.5]], rtol=1e-6)
+    assert block.metadata["site"].tolist() == ["meta", "meta"]
+
+
 def test_to_io_spec_refuses_ambiguous_multisource_repetitions(canonical_dataset: Any) -> None:
     dataset_dir, desc = canonical_dataset(
         "asym",
