@@ -12,6 +12,7 @@ from pathlib import Path
 
 from . import pages
 from .model import Catalog, DatasetView, load_catalog
+from .theme import SITE_URL
 
 
 def _copy_metadata(view: DatasetView, root: Path, out: Path) -> None:
@@ -48,8 +49,39 @@ def build_site(root: str | Path, out: str | Path) -> Path:
         (out / "dataset" / f"{view.id}.html").write_text(pages.render_dataset(view), encoding="utf-8")
         _copy_metadata(view, root, out)
 
+    _write_seo(catalog, out)
     _copy_brand(root, out)
     return out
+
+
+def _write_seo(catalog: Catalog, out: Path) -> None:
+    """Emit crawl-discovery files for the public catalog."""
+    paths = ["", "catalog.html"] + [f"dataset/{view.id}.html" for view in catalog.datasets]
+    urls = "\n".join(
+        "  <url>\n"
+        f"    <loc>{SITE_URL}/{path}</loc>\n"
+        "    <lastmod>2026-07-01</lastmod>\n"
+        "  </url>"
+        if path
+        else "  <url>\n"
+        f"    <loc>{SITE_URL}/</loc>\n"
+        "    <lastmod>2026-07-01</lastmod>\n"
+        "  </url>"
+        for path in paths
+    )
+    (out / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}\n"
+        "</urlset>\n",
+        encoding="utf-8",
+    )
+    (out / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n",
+        encoding="utf-8",
+    )
+    (out / "CNAME").write_text("datasets.nirs4all.org\n", encoding="utf-8")
+    (out / ".nojekyll").write_text("", encoding="utf-8")
 
 
 def _copy_brand(root: Path, out: Path) -> None:

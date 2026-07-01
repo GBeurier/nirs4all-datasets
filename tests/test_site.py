@@ -176,6 +176,8 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family", "Samples versus features"):
         assert f'aria-label="{label}"' in index
     assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
+    assert '<link rel="canonical" href="https://datasets.nirs4all.org/">' in index
+    assert '"@type":"DataCatalog"' in index
 
 
 def test_catalog_lists_all_datasets_with_tier_badges(tmp_path: Path) -> None:
@@ -185,6 +187,7 @@ def test_catalog_lists_all_datasets_with_tier_badges(tmp_path: Path) -> None:
         assert f"dataset/{did}.html" in page
     assert "tier-public" in page and "tier-private" in page and "tier-anonymized" in page
     assert 'id="cards"' in page and 'data-tier=' in page  # filter UI present
+    assert '<link rel="canonical" href="https://datasets.nirs4all.org/catalog.html">' in page
 
 
 def test_dataset_page_per_dataset(tmp_path: Path) -> None:
@@ -200,6 +203,21 @@ def test_dataset_page_per_dataset(tmp_path: Path) -> None:
     assert "Bug-hunting / supervised audits" in public and "Label bugs" in public
     assert "X-Y spectral correlation" in public and "PCA score plot" in public
     assert "get(&quot;corn_oil&quot;)" in public  # load snippet (HTML-escaped quotes)
+    assert '<link rel="canonical" href="https://datasets.nirs4all.org/dataset/corn_oil.html">' in public
+    assert '<meta property="og:url" content="https://datasets.nirs4all.org/dataset/corn_oil.html">' in public
+    assert '"@type":"Dataset"' in public
+
+
+def test_site_emits_crawl_discovery_files(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    robots = (out / "robots.txt").read_text(encoding="utf-8")
+    sitemap = (out / "sitemap.xml").read_text(encoding="utf-8")
+    assert "Sitemap: https://datasets.nirs4all.org/sitemap.xml" in robots
+    assert "<loc>https://datasets.nirs4all.org/</loc>" in sitemap
+    assert "<loc>https://datasets.nirs4all.org/catalog.html</loc>" in sitemap
+    assert "<loc>https://datasets.nirs4all.org/dataset/corn_oil.html</loc>" in sitemap
+    assert (out / "CNAME").read_text(encoding="utf-8").strip() == "datasets.nirs4all.org"
+    assert (out / ".nojekyll").exists()
 
 
 def test_chart_axes_use_nice_ticks_not_raw_bounds() -> None:
