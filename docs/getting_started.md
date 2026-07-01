@@ -60,6 +60,17 @@ Hand a dataset to nirs4all for modelling (needs the `[nirs4all]` extra — see {
 sd = ds.to_nirs4all()         # -> a nirs4all SpectroDataset (assembled, not re-implemented)
 ```
 
+Hand the same reference dataset to nirs4all-io for pipeline-ready assembly (needs the `[io]` extra):
+
+```python
+spec = ds.to_io_spec()        # -> a nirs4all-io DatasetSpec dict over canonical Parquet files
+pkg = ds.to_dataset_package() # -> nirs4all_io.DatasetPackage
+```
+
+`to_io_spec()` keeps native split labels as metadata; it does not apply train/test partitions. For
+multi-source datasets with asymmetric repetitions, bridge one source at a time (`source="X1"`) unless
+the sources are uniquely alignable by observation or sample id.
+
 ### Tokens for protected datasets
 
 Public datasets need no token. Private / anonymized datasets need a Dataverse token, passed inline or
