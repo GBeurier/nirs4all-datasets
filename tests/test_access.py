@@ -6,6 +6,8 @@ that a resolved contract with a token is handed to the core.
 """
 from __future__ import annotations
 
+import sys
+import types
 from pathlib import Path
 from typing import Any
 
@@ -48,6 +50,17 @@ def _pin_doi(root: Path, name: str, doi: str = "10.70112/ABC") -> None:
     path.write_text(yaml.safe_dump(raw), encoding="utf-8")
 
 
+def _fake_acquire(monkeypatch: Any, fetch: Any) -> None:
+    """Install a fake acquisition module for access-policy tests.
+
+    The native `_n4ds` extension is tested separately; these tests should not
+    need it just to assert local-first and token-gate policy.
+    """
+    module = types.ModuleType("nirs4all_datasets._acquire")
+    module.fetch = fetch
+    monkeypatch.setitem(sys.modules, "nirs4all_datasets._acquire", module)
+
+
 # =============================================================================
 # Contract building + fetchable-origin policy (no network)
 # =============================================================================
@@ -82,10 +95,38 @@ def test_get_local_first_returns_nirsdataset(tmp_path: Path, v2_leaf: Any, monke
     root = tmp_path / "root"
     _build_local(root, v2_leaf, tmp_path, "corn", blocks=("X1", "X2"), sample_of={"o1": "s1", "o2": "s2"}, public=True)
     # any fetch attempt is a test failure: a present canonical dir must load with no network.
-    monkeypatch.setattr("nirs4all_datasets._acquire.fetch", lambda *a, **k: pytest.fail("must not fetch when local present"))
+    _fake_acquire(monkeypatch, lambda *a, **k: pytest.fail("must not fetch when local present"))
     ds = get("corn", root=root)
     assert ds.id == "corn"
     assert ds.sources() == ["X1", "X2"]
+
+
+def test_get_local_reference_dataset_loads_through_io_package_bridge(tmp_path: Path, v2_leaf: Any) -> None:
+    nirs4all_io = pytest.importorskip("nirs4all_io")
+    if not callable(getattr(nirs4all_io, "to_dataset_package", None)):
+        pytest.skip("installed nirs4all_io does not expose DatasetPackage support")
+
+    root = tmp_path / "root"
+    _build_local(
+        root,
+        v2_leaf,
+        tmp_path,
+        "bridge",
+        blocks=("X1", "X2"),
+        block_obs={"X1": ["o1", "o2"], "X2": ["p1", "p2"]},
+        sample_of={"o1": "s1", "o2": "s2", "p1": "s1", "p2": "s2"},
+        targets={"Moisture": "numeric"},
+        extra_meta=("site",),
+        public=True,
+    )
+
+    package = nirs4all_io.load(get("bridge", root=root), target="dataset_package")
+    block = package.to_assembled().blocks["train"]
+
+    assert len(block.X) == 2
+    assert block.feature_headers == [["1100", "1102"], ["1100", "1102"]]
+    assert block.y_headers == ["Moisture"]
+    assert block.metadata["site"].tolist() == ["meta", "meta"]
 
 
 def test_get_forwards_source_and_split(tmp_path: Path, v2_leaf: Any) -> None:
@@ -107,7 +148,7 @@ def test_get_private_without_token_raises_before_any_fetch(tmp_path: Path, v2_le
 
     monkeypatch.delenv("NIRS4ALL_DATAVERSE_TOKEN", raising=False)
     monkeypatch.setattr("nirs4all_datasets.config.get_settings", lambda **k: Settings(instance="https://dv.example", token=None))
-    monkeypatch.setattr("nirs4all_datasets._acquire.fetch", lambda *a, **k: pytest.fail("must not fetch without a token"))
+    _fake_acquire(monkeypatch, lambda *a, **k: pytest.fail("must not fetch without a token"))
 
     with pytest.raises(RuntimeError, match="token is required"):
         get("priv", root=root)
@@ -124,7 +165,7 @@ def test_get_private_with_token_hands_contract_to_core(tmp_path: Path, v2_leaf: 
         rec.update(doi=contract["doi"], token=opts.get("token"), instance=opts.get("instance"))
         return {"dir": str(root / "datasets" / "priv"), "files": []}
 
-    monkeypatch.setattr("nirs4all_datasets._acquire.fetch", _fake_fetch)
+    _fake_acquire(monkeypatch, _fake_fetch)
     monkeypatch.setattr("nirs4all_datasets.access._wrap", lambda d, desc, **k: f"WRAPPED:{Path(d).name}")
 
     out = get("priv", root=root, token="EXPLICIT", instance="https://dv.example")
