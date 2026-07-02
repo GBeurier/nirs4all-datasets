@@ -16,20 +16,24 @@ nothing is thrown away), the native splits if the source defined them, and full 
 **origin** that published the data. The *task* — which Y, which split, which metric — is a choice the
 consumer makes; it is never baked into the dataset.
 
-Three deliverables:
+This repository is split into one native acquisition layer and optional consumer-facing layers:
 
 1. a git-tracked **catalog** — one hand-checkable descriptor + a machine-generated *identity card* (stats,
    per-source/per-variable dataviz, MLCommons Croissant, a Datasheet) per dataset. The heavy bytes never
    enter git.
-2. a Python **plugin** — `get("name")` downloads a dataset on demand from its **origin**, verifies its
-   SHA-256, caches it, and returns a `NirsDataset`.
-3. a **static site** — a browsable, qualified catalog with whole-bank dataviz and per-dataset id-cards.
+2. a native **acquisition core** — Rust crates + stable `n4ds_` C ABI + CLI/bindings that resolve dataset
+   ids, fetch canonical bytes from their origin, verify SHA-256, and manage the platform cache. This
+   surface does **not** require Python.
+3. an optional Python **package/binding** — `nirs4all-datasets` embeds that acquisition core for
+   `get()/retrieve()/NirsDataset`, plus the catalog, cards, and site tooling.
+4. optional **ecosystem bridges** — the `[nirs4all]` extra for modelling/qualification and the `[io]`
+   extra for raw-origin reproduction through `nirs4all-io` / `nirs4all-formats`.
 
-It reuses [`nirs4all`](../nirs4all) for qualification and [`nirs4all-io`](../nirs4all-io) /
-[`nirs4all-formats`](../nirs4all-formats) for reading instrument files (OPUS, JCAMP-DX, SPC, ASD, …).
-**It never re-implements NIRS/IO logic.**
+It reuses [`nirs4all`](../nirs4all) only through the optional `[nirs4all]` bridge for qualification and
+`to_nirs4all()`, and [`nirs4all-io`](../nirs4all-io) / [`nirs4all-formats`](../nirs4all-formats) only
+through the optional `[io]` bridge for raw-origin reproduction. **It never re-implements NIRS/IO logic.**
 
-> Status: **alpha (0.x), pre-1.0** — the on-disk and API contracts may still change.
+> Status: **0.3.x, pre-1.0** — the on-disk and API contracts may still change.
 
 ## The dataset model
 
@@ -52,22 +56,21 @@ It reuses [`nirs4all`](../nirs4all) for qualification and [`nirs4all-io`](../nir
 ## Install (development)
 
 ```bash
-uv venv && uv pip install -e ".[dev]"   # maturin: builds the native acquisition core into the package
-# (uses local editable nirs4all via [tool.uv.sources]; needs a Rust toolchain)
+uv venv && uv pip install -e ".[dev]"   # builds the optional Python package + embedded native core
+# (uses local editable sibling bridges via [tool.uv.sources]; needs a Rust toolchain)
 ```
 
-## Native acquisition core & language bindings
+## Native acquisition core, bindings, and optional bridges
 
-The **download** of a dataset — version-pinned DOI resolution, redirect-safe Dataverse / Zenodo /
-figshare fetch, streaming SHA-256 verification and the pooch-style cache — lives in a small **Rust
-core** (`crates/nirs4all-datasets-core`) behind a stable **C ABI** (`n4ds_`), and is published like the
-rest of the ecosystem (`nirs4all-io` is the template). The scientific **analysis** layer (cards,
-qualify, site, health) stays in pure Python. The cross-language contract is one distributable
-`catalog/index.json`; the `n4ds` CLI is the parity oracle. Bindings (all over the same C ABI):
+The **download/acquisition** path of a dataset — version-pinned DOI resolution, redirect-safe Dataverse /
+Zenodo / figshare fetch, streaming SHA-256 verification, and platform-cache management — lives in a small
+**Rust core** (`crates/nirs4all-datasets-core`) behind a stable **C ABI** (`n4ds_`). The scientific
+**analysis** layer (cards, qualify, site, health) stays in Python. The cross-language contract is one
+distributable `catalog/index.json`; the `n4ds` CLI is the parity oracle. Surfaces over that core:
 
 | Binding | Package | Status |
 |---|---|---|
-| Python | embedded in `nirs4all-datasets` (`nirs4all_datasets._n4ds`, pyo3) | built + tested |
+| Python | optional `nirs4all-datasets` package, embedding `nirs4all_datasets._n4ds` (pyo3) | built + tested |
 | Rust | `nirs4all-datasets-core` / `-capi` (crates.io) | built + tested |
 | WASM/JS | `@nirs4all/datasets-wasm` (npm) — metadata + small public datasets | built + tested |
 | R | `nirs4alldatasets` (C shim, r-universe / Release) | built + tested |
@@ -75,6 +78,10 @@ qualify, site, health) stays in pure Python. The cross-language contract is one 
 
 See [`bindings/SPEC.md`](bindings/SPEC.md) (the binding contract) and
 [`docs/dev/release_process.md`](docs/dev/release_process.md).
+
+For the high-level Python API, `get()/list()/card()` still operate against a registry root checkout
+(`catalog/` + `datasets/`). For non-Python consumers, the native acquisition core consumes the bundled
+or committed `catalog/index.json` contract directly.
 
 ## Quickstart
 
@@ -116,7 +123,8 @@ publish | grant | revoke | restrict   personal-Dataverse governance for protecte
   whole-bank summary), and per-dataset `card.json` / `card.md` / `croissant.json` / `manifest.json`.
 - **the origin** (Zenodo, a data Dataverse, a vendor archive, …): the raw + canonical **bytes**, fetched
   on demand and never re-hosted by this project.
-- **local cache** (downloaded on demand): the verified canonical Parquet under `pooch.os_cache`.
+- **local cache** (downloaded on demand): the verified canonical Parquet under the native acquisition
+  core's platform cache root.
 
 ## API token — where to put it
 

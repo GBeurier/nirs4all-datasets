@@ -2,7 +2,7 @@
 # Development — Release Process
 
 How each binding of `nirs4all-datasets` is versioned, gated, and published. The
-Python wheels + sdist (the analysis package **with** the embedded native
+Python wheels + sdist (the optional Python package **with** the embedded native
 acquisition core), the Rust crates, the npm WASM package, the Octave/MATLAB zip,
 and the source/provenance bundle publish from CI; the R (CRAN / R-universe) leg
 attaches a tarball and its registry steps are documented below.
@@ -13,11 +13,11 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 `release-matlab.yml`, `release-npm.yml`, and `release-source.yml`. The gates are
 `ci.yml`, `version-sync.yml`, and `abi-check.yml`.
 
-> **The Python package is the acquisition core's home.** Unlike the other repos
-> there is **no separate Python distribution** for the binding — the pyo3
-> extension (`nirs4all_datasets._n4ds`) is built by maturin **into** the
-> `nirs4all-datasets` wheel. `pip install nirs4all-datasets` gets the pure-Python
-> analysis layer **and** the native acquisition core together (root
+> **The Rust workspace is the acquisition core's source of truth.** The Python
+> package is one binding surface over it: the pyo3 extension
+> (`nirs4all_datasets._n4ds`) is built by maturin **into** the
+> `nirs4all-datasets` wheel, while the same core also ships as Rust crates, a C
+> ABI, a CLI, and other bindings (root [`Cargo.toml`](../../Cargo.toml) +
 > [`pyproject.toml`](../../pyproject.toml) `[tool.maturin]`).
 
 > **No macOS deferral (Python / C-ABI).** The acquisition core is **pure-Rust**
@@ -37,15 +37,15 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 ## Single source of truth
 
 The canonical version is the **`[workspace.package] version` in the root
-[`Cargo.toml`](../../Cargo.toml)** (Cargo SemVer, currently `0.2.0-alpha.1`).
+[`Cargo.toml`](../../Cargo.toml)** (Cargo SemVer, currently `0.3.0`).
 `scripts/bump_version.sh` propagates it to every binding manifest, translating the
 spelling each ecosystem requires:
 
-| Spelling | Example (`0.2.0-alpha.1`) | Manifests |
+| Spelling | Example (`0.3.0`) | Manifests |
 |---|---|---|
-| Cargo SemVer (verbatim) | `0.2.0-alpha.1` | root `Cargo.toml` `[workspace.package]` + the `[workspace.dependencies]` internal-crate `version`, `bindings/python/Cargo.toml`, `bindings/wasm/Cargo.toml` |
-| PEP 440 | `0.2.0a1` (`alpha.N→aN`, `beta.N→bN`, `rc.N→rcN`; plain `X.Y.Z`→itself) | root `pyproject.toml` `[project] version` |
-| R | `0.2.0.9000` (plain `X.Y.Z` for a final; `X.Y.Z.9000` "in development toward X.Y.Z" for ANY pre-release, since CRAN rejects SemVer pre-release suffixes) | `bindings/r/nirs4alldatasets/DESCRIPTION` |
+| Cargo SemVer (verbatim) | `0.3.0` | root `Cargo.toml` `[workspace.package]` + the `[workspace.dependencies]` internal-crate `version`, `bindings/python/Cargo.toml`, `bindings/wasm/Cargo.toml` |
+| PEP 440 | `0.3.0` (`alpha.N→aN`, `beta.N→bN`, `rc.N→rcN`; plain `X.Y.Z`→itself) | root `pyproject.toml` `[project] version` |
+| R | `0.3.0` (or `X.Y.Z.9000` while developing toward a future release, since CRAN rejects SemVer pre-release suffixes) | `bindings/r/nirs4alldatasets/DESCRIPTION` |
 
 > The npm `bindings/wasm/pkg/package.json` is a **gitignored wasm-pack build
 > artifact** (not in version control), so it is **not** a sync target —
@@ -60,7 +60,7 @@ scripts/bump_version.sh                   # sync every manifest to the SoT
 
 The C ABI version (`N4DS_ABI_VERSION` in
 [`crates/nirs4all-datasets-capi/src/lib.rs`](../../crates/nirs4all-datasets-capi/src/lib.rs),
-runtime `n4ds_abi_version()`, currently `0.1.0`) bumps **independently** from the
+runtime `n4ds_abi_version()`, currently `0.3.0`) bumps **independently** from the
 Rust semver, and the `n4ds_` exported-symbol surface is diffed by
 `.github/workflows/abi-check.yml`.
 
@@ -133,11 +133,11 @@ Run these before tagging or publishing anything:
    Octave/MATLAB zip + source/SBOM bundle, then — **for a non-pre-release tag** —
    publishes to PyPI / crates.io / npm and cuts the GitHub Release.
 
-**Pre-release tags** (anything containing `-`, e.g. `v0.2.0-alpha.1`) are
+**Pre-release tags** (anything containing `-`, e.g. `vX.Y.Z-alpha.N`) are
 **excluded from publishing**: every publish job gates on
 `!contains(github.ref_name, '-')`, so a pre-release never reaches a registry or
-cuts a public Release. To publish the current alpha to PyPI, tag it with the PEP
-440 spelling (`v0.2.0a1`) — `publish-pypi` validates that the tag minus `v` equals
+cuts a public Release. To publish a pre-release to PyPI, tag it with the PEP
+440 spelling (`vX.Y.ZaN`) — `publish-pypi` validates that the tag minus `v` equals
 the built wheel/sdist version, but the production-only auto-publish check
 additionally requires a plain `vX.Y.Z`.
 

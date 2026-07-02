@@ -140,10 +140,12 @@ canonical` + `<root>/catalog/datasets/<id>.yaml`), else fetches by the descripto
 for private/anonymized) or an open origin, verifies SHA‑256, and caches. The token travels only in the
 `X-Dataverse-key` header and is never sent on an S3 redirect.
 
-> **PyPI note.** The wheel ships the *code*; the *catalog* (descriptors + index + cards) lives in git. A
-> pip‑installed consumer therefore points `get(root=<checkout>)` at a clone of this repo. Bundling the
-> catalog index into the wheel (or fetching it from GitHub on demand, pooch‑style) for fully standalone
-> `get()` is the planned next packaging step — see [`RELEASING.md`](RELEASING.md).
+> **PyPI note.** The wheel ships the code **and** the bundled cross-language
+> `catalog/index.json`, but the assembled catalog, descriptors, cards, and
+> manifests still live in git. A pip‑installed Python consumer therefore still
+> points `get(root=<checkout>)` at a clone of this repo for the high-level
+> `get()/list()/card()` surface; non-Python bindings can consume the bundled or
+> committed `catalog/index.json` directly. See [`RELEASING.md`](RELEASING.md).
 
 ## 9. Conventions
 

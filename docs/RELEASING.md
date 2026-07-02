@@ -40,10 +40,13 @@ The tag triggers [`.github/workflows/release.yml`](https://github.com/GBeurier/n
 `twine check`, and publishes to PyPI via OIDC (gated on the `pypi` environment). Verify with
 `pip install nirs4all-datasets` in a clean venv.
 
-> **Caveat — runtime catalog.** The wheel ships the *code*, not the *catalog* (descriptors/index/cards
-> live in git). Until the catalog index is bundled into the wheel (or fetched from GitHub on demand,
-> pooch‑style — the planned next step), a pip‑installed consumer must point `get(root=<checkout>)` at a
-> clone of this repo. The package is publishable today; this only affects fully standalone `get()`.
+> **Caveat — runtime catalog.** The wheel ships the code **and** the bundled
+> cross-language `catalog/index.json`, but the assembled catalog
+> (`catalog/datasets.yaml`), descriptors, cards, and manifests still live in the
+> registry checkout. A pip-installed Python consumer therefore still points
+> `get(root=<checkout>)` at a clone of this repo for the high-level
+> `get()/list()/card()` surface. Non-Python bindings can consume the bundled or
+> committed `catalog/index.json` directly.
 
 ## 2. The datasets → Dataverse (protected data)
 

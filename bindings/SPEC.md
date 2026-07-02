@@ -15,7 +15,7 @@ Given the distributable catalog index, it: resolves a dataset id → its pinned
 origin / DOI / `dataset_version` + per-file SHA-256 + Dataverse file-ids; fetches
 the canonical Parquet (Dataverse / Zenodo / figshare / URL), redirect-safe;
 retrieves declared raw origin resources when the catalog exposes an open route;
-SHA-256-verifies pinned bytes; and caches them pooch-style. The scientific
+SHA-256-verifies pinned bytes; and caches them in the native platform cache. The scientific
 *analysis* layer (`qualify`/card/site/`health`/`anonymize`/the catalog assembler)
 stays in **pure Python** and is **never** ported across the ABI — it depends on
 nirs4all + numpy/scipy/sklearn/matplotlib and runs once on the maintainer's

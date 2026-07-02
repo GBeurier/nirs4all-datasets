@@ -5,7 +5,7 @@
 
 ```{admonition} Status
 :class: note
-**Alpha (0.x), pre-1.0.** Requires **Python 3.11+**.
+**0.3.x, pre-1.0.** Requires **Python 3.11+**.
 ```
 
 ## Install with pip
@@ -14,10 +14,10 @@
 pip install nirs4all-datasets
 ```
 
-This installs the pure-Python analysis layer **and** the native acquisition extension
+This installs the optional Python surface **and** the embedded native acquisition extension
 (`nirs4all_datasets._n4ds`) — the small Rust core that resolves a DOI, performs the redirect-safe
-download, streams the SHA-256 verification, and manages the cache. There is no separate Python
-distribution: one wheel gives you both.
+download, streams the SHA-256 verification, and manages the cache. The Rust acquisition core also exists
+outside Python (crates / C ABI / CLI / other bindings); this wheel is the Python binding over it.
 
 The catalog index, `get()` / `NirsDataset` readers, and the static site all work with the base
 install — the `nirs4all` imports are lazy and degrade gracefully.

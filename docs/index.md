@@ -12,7 +12,8 @@ the dataset.
 The heavy bytes **never enter git and are never re-hosted**. The catalog links to each dataset's
 **origin** (Zenodo / a data Dataverse / a vendor archive) and downloads on demand: `get("name")`
 resolves a dataset **local-first** (from the registry checkout), otherwise fetches it by its
-Dataverse / open-canonical DOI, **SHA-256-verifies** it, caches it (pooch-style), and returns a
+Dataverse / open-canonical DOI, **SHA-256-verifies** it, caches it through the native acquisition core,
+and returns a
 `NirsDataset`.
 
 ```{admonition} You need the catalog checkout
@@ -37,7 +38,7 @@ site.
 
 ```{admonition} Status
 :class: note
-**Alpha (0.x), pre-1.0** — the on-disk and API contracts may still change.
+**0.3.x, pre-1.0** — the on-disk and API contracts may still change.
 ```
 
 ## What you get
@@ -47,8 +48,8 @@ Three deliverables sit behind one catalog:
 - a git-tracked **catalog** — one hand-checkable descriptor plus a machine-generated **identity card**
   (stats, per-source / per-variable dataviz, an MLCommons **Croissant** record, and a Datasheet) per
   dataset. The heavy bytes never enter git.
-- a Python **plugin** — `nirs4all_datasets.get("name")` downloads a dataset on demand from its origin,
-  verifies its SHA-256, caches it, and returns a `NirsDataset`.
+- an optional Python **package/binding** — `nirs4all_datasets.get("name")` wraps the native acquisition
+  core and returns a `NirsDataset` from a registry checkout;
 - a static **site** — a browsable, qualified catalog with whole-bank dataviz and per-dataset
   identity cards.
 

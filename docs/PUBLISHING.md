@@ -113,7 +113,7 @@ or from the shell: `n4a-datasets get <id> [--token ...]`. If the canonical data 
 granted access to (next section); without access, Dataverse refuses the restricted files.
 
 > A `public` dataset never reaches this path — `get("<public-id>")` fetches its bytes from the origin
-> DOI/URL via pooch, no token, no personal Dataverse.
+> DOI/URL through the native acquisition core, with no token and no personal Dataverse.
 
 ## 6. Manage access (protected datasets)
 

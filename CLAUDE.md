@@ -4,32 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`nirs4all-datasets` is the **dataset catalog** of the nirs4all ecosystem: a Python package + a
-git-tracked descriptor catalog that **stores, qualifies, and serves curated RAW NIRS reference
-datasets**. A dataset here is *raw measured reality, not a benchmark task* — `1..n` spectral sources,
-`0..n` variables (every target *and* metadata column), the native splits if the origin defined them,
-and full provenance back to the **origin** that published the data. The heavy bytes never enter git
-and are **never re-hosted**: the catalog links to the origin (Zenodo / a data Dataverse / a vendor
-archive) and fetches on demand. Access is **pooch-style**: `get("name")` resolves a dataset
-local-first, else fetches it from its origin DOI/URL, SHA-256-verifies it, caches it, and returns a
-`NirsDataset`.
+`nirs4all-datasets` is the **dataset catalog + acquisition stack** of the nirs4all ecosystem: a
+git-tracked descriptor catalog, a Rust acquisition core, and optional consumer bindings/packages on top.
+A dataset here is *raw measured reality, not a benchmark task* — `1..n` spectral sources, `0..n`
+variables (every target *and* metadata column), the native splits if the origin defined them, and full
+provenance back to the **origin** that published the data. The heavy bytes never enter git and are
+**never re-hosted**: the catalog links to the origin (Zenodo / a data Dataverse / a vendor archive), and
+the native acquisition core resolves, fetches, verifies, and caches canonical bytes. The optional Python
+package wraps that core as `get()/retrieve()/NirsDataset`.
 
-Status: **alpha** (version `0.1.0.dev0`). CLI entry point: `n4a-datasets`. Schema version: **2.0**.
+Status: **0.3.x, pre-1.0**. CLI entry point: `n4a-datasets`. Schema version: **2.0**.
 
 ### The boundary rule (load-bearing)
 
-This package **never re-implements NIRS or IO logic**. It reuses `nirs4all` for qualification
-(`XOutlierFilter`, `compute_pca_projection`, `SpectroDataset` in `to_nirs4all()`) and `nirs4all-io` /
-`nirs4all-formats` for instrument-file reads. If a NIRS/data/ML capability seems missing, it almost
-certainly exists in `nirs4all` — find it there rather than building it here. This package owns only:
-descriptors, the canonical Parquet writer, manifests/incrementality, card/datasheet/Croissant
-rendering, the catalog index + whole-bank summary, origin health, the static site, the (future)
-personal-Dataverse publish/fetch path, and config/secrets.
+This repo **never re-implements NIRS or IO logic**. The optional `[nirs4all]` extra reuses `nirs4all`
+for qualification (`XOutlierFilter`, `compute_pca_projection`, `SpectroDataset` in `to_nirs4all()`),
+and the optional `[io]` extra reuses `nirs4all-io` / `nirs4all-formats` for raw-origin reproduction and
+instrument-file reads. If a NIRS/data/ML capability seems missing, it almost certainly exists in
+`nirs4all` or `nirs4all-io` — find it there rather than building it here. This repo owns only:
+descriptors, the canonical Parquet writer, the Rust acquisition core + bindings, manifests/incrementality,
+card/datasheet/Croissant rendering, the catalog index + whole-bank summary, origin health, the static
+site, the (future) personal-Dataverse publish/fetch path, and config/secrets.
 
 ## Commands
 
 ```bash
-# Dev install (uses editable local nirs4all + nirs4all-io via [tool.uv.sources])
+# Dev install (builds the optional Python package + embedded native core; uses editable sibling bridges via [tool.uv.sources])
 uv venv && uv pip install -e ".[dev]"
 
 # Green gate (mirror of CI, run before reporting work complete)
@@ -138,8 +138,8 @@ the Datasheets-for-Datasets `card.md`, and `anonymize.py` produces the anonymize
   on demand and **never re-hosted** by this project; a personal Dataverse is only a *future* fallback
   for protected data and rotted origins.
 - **gitignored, local working bytes**: `datasets/<id>/raw/` and `datasets/<id>/canonical/`.
-- **local cache** (downloaded on demand): the verified canonical Parquet under
-  `pooch.os_cache("nirs4all-datasets")/<id>/canonical/`.
+- **local cache** (downloaded on demand): the verified canonical Parquet under the native acquisition
+  core's platform cache root.
 
 ## The dataset model (schema 2.0, `schema.py`)
 

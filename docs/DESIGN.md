@@ -12,7 +12,10 @@ A **versioned and qualified database of raw NIRS datasets**, **cataloged and lin
 
 - a **catalog** (descriptors + identity cards + index) — lightweight and tracked in git;
 - a **website** — navigation, identity cards, dataviz;
-- a **Python plugin** — `import …` / `….get("name")` to retrieve a dataset (or its metadata) locally.
+- a native **acquisition core** — Rust crates + C ABI + bindings that retrieve verified dataset bytes
+  without requiring Python;
+- an optional Python **package/binding** — `import …` / `….get("name")` to retrieve a dataset (or its
+  metadata) locally, plus bridges into the rest of the ecosystem.
 
 The **bytes live at their source**; git only carries metadata + cards + index. Everything is **hashed
 and versioned**. An **add/qualification pipeline** grows and evolves the bank.
@@ -35,7 +38,7 @@ possible**. It contains:
 | **Metadata** | **All preserved**, with no prior filtering or processing for now. |
 | **Splits / folds** | **None by default.** Kept *only if the source defines them* (train/test, folds, even several versions), and then **documented**. |
 
-Coverage: **X only** · X + Y · X + Y + metadata. The plugin can return data **with or without a
+Coverage: **X only** · X + Y · X + Y + metadata. The Python package can return data **with or without a
 split** (concatenated by default).
 
 **Multi-sources & repetitions (structural).** Like Y, **X can be multiple** (multi-source dataset:
@@ -47,8 +50,8 @@ numbers of spectra**; they are **not row-aligned**. Implications:
 - each source carries its own `(n_spectra x n_wavelengths)` dimension and its own repetition indexing;
 - **alignment** between sources, and with Y / metadata, is done **by sample identity (ID), never by row
   position**;
-- the pipeline, card (stats **per source**), and plugin **preserve** this structure (never flatten or
-  force alignment); the plugin returns sources separately and can, on request, concatenate repetitions
+- the pipeline, card (stats **per source**), and Python package **preserve** this structure (never flatten or
+  force alignment); the package returns sources separately and can, on request, concatenate repetitions
   or return only one source.
 
 ---
@@ -56,9 +59,9 @@ numbers of spectra**; they are **not row-aligned**. Implications:
 ## 3. Governance & visibility — 3 tiers
 
 We **catalog everything**. What varies is what we **show** and what we **export**. The **right token**
-(in the plugin) unlocks full access.
+(in the consumer binding/package) unlocks full access.
 
-| Tier | Website — metadata & metrics | Byte export (plugin) |
+| Tier | Website — metadata & metrics | Byte export (consumer binding/package) |
 |---|---|---|
 | **public** | everything, named | **yes, for everyone** (from the origin) |
 | **private** | everything, named | **token required** (private Dataverse) |
@@ -87,18 +90,18 @@ We **catalog everything**. What varies is what we **show** and what we **export*
                     |
         +-----------+---------------------------+
         v                                       v
-   website (cards + dataviz, by tier)      Python plugin  ....get("name")
+   website (cards + dataviz, by tier)      optional Python package  ....get("name")
                                            (local download; token = full access; with/without split)
 ```
 
 - **Catalog (git)** — one descriptor + one card per dataset, plus the index. Lightweight source of truth.
 - **Add/qualification pipeline** (a script) — (1) records a new raw dataset, (2) computes metrics ->
-  identity card, (3) **updates the website + plugin files**. **Re-runnable**: when the metric protocol
+  identity card, (3) **updates the website + acquisition/catalog files**. **Re-runnable**: when the metric protocol
   evolves, run it again to **update old cards** without touching the data.
 - **Website** — navigable catalog, cards, **dataviz on X, Y, and metadata**, respecting tiers.
-- **Python plugin** (this package) — `….get("name")` downloads the dataset locally (origin -> cache;
-  token -> private/anonymized); also provides access to **metadata / card information**; reads raw data
-  through **nirs4all-formats**; returns with or without splits.
+- **Acquisition core + bindings** (this repo) — the Rust core resolves/fetches/verifies bytes; the
+  optional Python package adds `get()/NirsDataset`, metadata/card access, and the bridges to
+  `nirs4all` / `nirs4all-io`.
 
 ---
 
@@ -141,7 +144,7 @@ arrive; we must be able to add them and **re-qualify existing datasets**):
 | **`chantiers/`, `unusableDB/`** | ignored **for now** — they will migrate into the existing structure later (anticipate this). |
 
 Code consequences: remove the v1 path (`discover.find_leaves` / `build_descriptor`) because it becomes
-dead; the card becomes **multi-Y**; add the 3 tiers + `get()` plugin + add pipeline + origin
+dead; the card becomes **multi-Y**; add the 3 tiers + `get()` package/binding + add pipeline + origin
 health-check. Guardrail: **list** any v1 datasets with no v2.0 equivalent before deletion (no silent
 loss).
 
@@ -149,7 +152,7 @@ loss).
 
 ## 8. Still-open points (next iteration)
 
-1. **Plugin API** — should `get()` default to concatenated (no split) or partitioned data? How should
+1. **Consumer API** — should `get()` default to concatenated (no split) or partitioned data? How should
    multiple splits be handled? What should metadata / card accessors be named? Maintainer note: if
    splits are available, users must be able to download split data, so these should be options; choose
    natural names for metadata and metric functions.
