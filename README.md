@@ -10,6 +10,10 @@
 A **citable, reproducible bank of raw NIRS** (Near-Infrared Spectroscopy) **reference datasets** — for
 benchmarking, exploring, and comparing models on a common, version-pinned, provenance-rich footing.
 
+Part of the [open-source NIRS tools](https://nirs4all.org/open-source-nirs-tools.html)
+ecosystem: file readers, datasets, methods, browser modelling, reproducible pipelines,
+papers, benchmarks, and release dashboards for near-infrared spectroscopy.
+
 A dataset here is **raw measured reality, not a benchmark task**: one or more spectral **sources**
 (instruments), any number of **variables** (every target *and* metadata column — nothing is invented, and
 nothing is thrown away), the native splits if the source defined them, and full provenance back to the
