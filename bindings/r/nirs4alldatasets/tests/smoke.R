@@ -10,13 +10,14 @@ index <- paste0(
   '"files":[{"name":"X.parquet","relpath":"canonical/sources/X.parquet","directory_label":"canonical/sources","sha256":"aa","size":9,"file_id":42}],',
   '"origins":[{"kind":"zenodo","mode":"canonical","locator":"10.5281/zenodo.5","access":"open"}],',
   '"retrieval":{"schema_version":"1.0","status":"raw_reproducible","routes":[{"id":"raw","method":"raw_retrieve","provider":"url","locator":"https://example.test/raw.csv","resources":[{"id":"raw","selector":{"kind":"direct_url","value":"https://example.test/raw.csv"}}]}]},',
-  '"descriptor":{"id":"demo","retrieval":{"schema_version":"1.0","status":"raw_reproducible","routes":[]}}}}}'
+  '"descriptor":{"id":"demo","sources":[{"source_id":"X","modality":"NIR"}],"variables":[{"name":"target","role":"target","type":"numeric"}],"ids":{"sample_id":"sample_id"},"retrieval":{"schema_version":"1.0","status":"raw_reproducible","routes":[]}}}}}'
 )
 
 # resolve -> a contract that mentions the tier + file id; trailing newline-free JSON.
 contract <- n4ds_resolve(index, "demo")
 stopifnot(is.character(contract), grepl('"tier"', contract, fixed = TRUE), grepl('"file_id":42', contract, fixed = TRUE))
 stopifnot(grepl('"retrieval"', contract, fixed = TRUE), grepl('"raw_reproducible"', contract, fixed = TRUE))
+stopifnot(grepl('"descriptor"', contract, fixed = TRUE), grepl('"source_id":"X"', contract, fixed = TRUE), grepl('"role":"target"', contract, fixed = TRUE))
 
 # an unknown id is an error.
 err <- tryCatch({ n4ds_resolve(index, "nope"); FALSE }, error = function(e) TRUE)
@@ -73,7 +74,11 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
       files = manifest$files,
       origins = list(),
       retrieval = list(schema_version = "1.0", status = "canonical_verified", routes = list()),
-      descriptor = list(id = card$identity$id)
+      descriptor = list(
+        id = card$identity$id,
+        sources = list(list(source_id = card$sources[[1]]$source_id)),
+        variables = card$variables
+      )
     ))
   )
   index_json <- jsonlite::toJSON(index, auto_unbox = TRUE, null = "null")

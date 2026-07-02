@@ -5,7 +5,7 @@
 #' @param index_json The distributable catalog index as a JSON string.
 #' @param dataset_id The dataset id to resolve.
 #' @return The resolved download contract as a JSON string
-#'   (\code{id, tier, instance, doi, dataset_version, files, origins}).
+#'   (\code{id, tier, instance, doi, dataset_version, files, origins, retrieval, descriptor}).
 #' @export
 n4ds_resolve <- function(index_json, dataset_id) {
   .Call("r_n4ds_resolve", index_json, dataset_id)

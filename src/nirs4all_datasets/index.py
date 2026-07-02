@@ -1,15 +1,16 @@
 """The distributable, cross-language download contract: ``catalog/index.json`` (index schema 1.0).
 
 One JSON file, derived from the git-tracked descriptors + manifests, that carries **everything a
-resolver in any language needs** to turn a dataset id into a complete, version-pinned download
-contract:
+resolver in any language needs** to turn a dataset id into a complete, version-pinned descriptor +
+download contract:
 
 * ``tier`` and the Dataverse ``instance`` / ``doi`` / ``dataset_version`` pin;
 * the per-file download list (``name``, ``relpath``, ``sha256``, ``size``, Dataverse ``file_id``,
   ``directory_label``) — the frozen integrity contract;
 * the ``origins`` (where open bytes can be fetched: Dataverse / Zenodo / figshare / url / script);
-* the **tier-sanitized public descriptor** (``public_descriptor``), so the bundled index can never
-  leak an anonymized identity.
+* the **tier-sanitized public descriptor** (``public_descriptor``), copied into native ``resolve``
+  outputs so R/WASM/Rust clients can inspect sources/variables without a Python provider dependency
+  while the bundled index still never leaks an anonymized identity.
 
 This is the single contract the Rust acquisition core (``nirs4all-datasets-core``) and every language
 binding read; the Python :func:`nirs4all_datasets.get` path consumes it too, which is what lets a

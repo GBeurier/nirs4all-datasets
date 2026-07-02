@@ -16,12 +16,13 @@ Dataverse / open-canonical DOI, **SHA-256-verifies** it, caches it through the n
 and returns a
 `NirsDataset`.
 
-```{admonition} You need the catalog checkout
+```{admonition} Python high-level API uses the catalog checkout
 :class: important
 `get()` / `list()` read the git-tracked catalog under a **registry root** (`root=`, default `.`):
 `list()` reads `catalog/datasets.yaml`, and `get()` needs the dataset's local descriptor + manifest
-before it can fetch. Until the catalog index is bundled into the wheel, a pip-installed consumer points
-`get(root=<checkout>)` at a clone of this repository. See {doc}`getting_started`.
+before it can fetch. Non-Python clients use the bundled or committed `catalog/index.json` instead:
+`n4ds_resolve` returns the byte contract and tier-sanitized descriptor, then R/WASM/Rust read the
+verified Parquet with their host-native readers. See {doc}`getting_started`.
 ```
 
 ```{admonition} Boundary rule
@@ -48,6 +49,8 @@ Three deliverables sit behind one catalog:
 - a git-tracked **catalog** — one hand-checkable descriptor plus a machine-generated **identity card**
   (stats, per-source / per-variable dataviz, an MLCommons **Croissant** record, and a Datasheet) per
   dataset. The heavy bytes never enter git.
+- a native **acquisition contract** — `catalog/index.json` plus the Rust/C/WASM/R bindings that resolve a
+  dataset id to descriptor + SHA-256-pinned files without importing Python providers.
 - an optional Python **package/binding** — `nirs4all_datasets.get("name")` wraps the native acquisition
   core and returns a `NirsDataset` from a registry checkout;
 - a static **site** — a browsable, qualified catalog with whole-bank dataviz and per-dataset

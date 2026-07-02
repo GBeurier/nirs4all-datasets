@@ -35,7 +35,7 @@ mod tests {
           "files": [{"name":"X.parquet","relpath":"canonical/sources/X.parquet","directory_label":"canonical/sources","sha256":"aa","size":9,"file_id":42}],
           "origins": [{"kind":"zenodo","mode":"canonical","locator":"10.5281/zenodo.5","access":"open"}],
           "retrieval": {"schema_version":"1.0","status":"raw_reproducible","routes":[{"id":"official","method":"raw_retrieve","provider":"url","locator":"https://example.test/raw.csv","resources":[{"id":"raw","selector":{"kind":"direct_url","value":"https://example.test/raw.csv"}}]}]},
-          "descriptor": {"id":"demo"}
+          "descriptor": {"id":"demo","sources":[{"source_id":"X","modality":"NIR"}],"variables":[{"name":"target","role":"target","type":"numeric"}],"ids":{"sample_id":"sample_id"}}
         }
       }
     }"#;
@@ -54,6 +54,9 @@ mod tests {
             v["retrieval"]["routes"][0]["resources"][0]["selector"]["kind"],
             "direct_url"
         );
+        assert_eq!(v["descriptor"]["id"], "demo");
+        assert_eq!(v["descriptor"]["sources"][0]["source_id"], "X");
+        assert_eq!(v["descriptor"]["variables"][0]["role"], "target");
     }
 
     #[test]

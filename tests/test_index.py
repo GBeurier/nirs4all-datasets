@@ -106,6 +106,9 @@ def test_index_carries_download_contract(tmp_path):
     assert entry["retrieval"]["status"] == "raw_reproducible"
     assert entry["retrieval"]["routes"][0]["resources"][0]["selector"] == {"kind": "zenodo_key", "value": "demo.zip"}
     assert entry["descriptor"]["retrieval"] == entry["retrieval"]
+    assert entry["descriptor"]["id"] == "demo"
+    assert entry["descriptor"]["sources"][0]["source_id"] == "X"
+    assert entry["descriptor"]["variables"][0]["role"] == "target"
 
 
 def test_index_synthesizes_raw_retrieval_from_open_direct_url(tmp_path):

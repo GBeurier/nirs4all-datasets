@@ -141,11 +141,13 @@ for private/anonymized) or an open origin, verifies SHA‑256, and caches. The t
 `X-Dataverse-key` header and is never sent on an S3 redirect.
 
 > **PyPI note.** The wheel ships the code **and** the bundled cross-language
-> `catalog/index.json`, but the assembled catalog, descriptors, cards, and
-> manifests still live in git. A pip‑installed Python consumer therefore still
-> points `get(root=<checkout>)` at a clone of this repo for the high-level
-> `get()/list()/card()` surface; non-Python bindings can consume the bundled or
-> committed `catalog/index.json` directly. See [`RELEASING.md`](RELEASING.md).
+> `catalog/index.json`. A pip‑installed Python consumer still points
+> `get(root=<checkout>)` at a clone of this repo for the high-level
+> `get()/list()/card()` surface, because that layer reads descriptors/cards and
+> returns `NirsDataset`. Non-Python bindings consume `catalog/index.json`
+> directly: `n4ds_resolve` returns the byte contract plus the tier-sanitized
+> descriptor, so R/WASM/Rust can inspect sources/variables and read verified
+> Parquet without the Python provider package. See [`RELEASING.md`](RELEASING.md).
 
 ## 9. Conventions
 

@@ -11,8 +11,8 @@ PRs that violate a **MUST** here are rejected.
 ## 1. Scope and layers
 
 This core does **only dataset *acquisition*** — it is not the analysis package.
-Given the distributable catalog index, it: resolves a dataset id → its pinned
-origin / DOI / `dataset_version` + per-file SHA-256 + Dataverse file-ids; fetches
+Given the distributable catalog index, it: resolves a dataset id → its tier-sanitized
+descriptor + pinned origin / DOI / `dataset_version` + per-file SHA-256 + Dataverse file-ids; fetches
 the canonical Parquet (Dataverse / Zenodo / figshare / URL), redirect-safe;
 retrieves declared raw origin resources when the catalog exposes an open route;
 SHA-256-verifies pinned bytes; and caches them in the native platform cache. The scientific
@@ -39,9 +39,11 @@ scientific handles cross the C ABI** (`migration_ABI_C.md` §5, the nirs4all-io
 (`pyarrow` / R `arrow` / MATLAB `parquetread` / `parquet-wasm`). Raw preparation
 may write portable JSON artifacts decoded by Rust `nirs4all-formats` or summarized
 by Rust `nirs4all-io`; dataset-specific canonical assembly remains recipe-owned. The returned
-paths are **relative canonical paths** (including `canonical/dataset.json`) so the
-host can `load()` the dataset without re-deriving them. This keeps the ABI tiny,
-stable, and binding-cheap.
+paths are **relative canonical paths** (including `canonical/dataset.json`) and the
+returned `descriptor` is the neutral schema-2.0 metadata view (`sources`,
+`variables`, `ids`, `splits`, `retrieval`) so the host can present and load the
+dataset without importing `nirs4all_providers` or the Python `nirs4all_datasets`
+analysis layer. This keeps the ABI tiny, stable, and binding-cheap.
 
 ## 2. Canonical-JSON contract (the wire format)
 
@@ -79,7 +81,10 @@ resolver in any language needs: `tier`; the Dataverse `instance` / `doi` /
 + name, never bare basename, which would collide across `raw/` and
 `canonical/sources/`); the `origins` a resolver may try
 (`kind`/`mode`/`locator`/`access`); the first-class `retrieval` plan for open
-raw repatriation or token/manual fallbacks; and the sanitized `descriptor`.
+raw repatriation or token/manual fallbacks; and the sanitized `descriptor`. `resolve`
+MUST copy that descriptor into the resolved JSON unchanged. This is the non-Python
+provider contract: R/WASM/Rust clients consume `catalog/index.json` directly rather
+than linking to the Python provider package.
 
 ## 3. Status and error model (C ABI)
 
@@ -185,11 +190,13 @@ The bindings mirror the feasibility report's per-binding rating
   for a not-fetchable contract).
 - **R = C-ABI-first** (`extendr`/C shim over the C ABI; CRAN target — see
   `docs/dev/release_process.md`). v0 scope: the C-ABI JSON surface
-  (`resolve`/`fetch`/`retrieve_raw`/`prepare_raw`/`verify_cached`); rated *medium* (native-lib packaging,
+  (`resolve`/`fetch`/`retrieve_raw`/`prepare_raw`/`verify_cached`); `resolve` returns
+  the descriptor JSON so R code can inspect `sources`/`variables` before reading
+  verified Parquet with R-native tooling. Rated *medium* (native-lib packaging,
   TLS/cert store, CRAN policy).
 - **Octave / MATLAB = C-ABI-first** (MEX/oct over the C ABI; GitHub-Release zip).
   Rated *medium* (per-platform binary distribution).
-- **WASM / JS = wasm-bindgen-native** over the core's `resolve` surface, plus
+- **WASM / JS = wasm-bindgen-native** over the core's `resolve` descriptor+download surface, plus
   fetch of **metadata + small public datasets only** (npm
   `@nirs4all/datasets-wasm`). **Caveat (`migration_ABI_C.md` §4):** Dataverse
   emits CORS only when the instance is configured to, the S3/CDN that serves the

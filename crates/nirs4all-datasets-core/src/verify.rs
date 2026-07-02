@@ -84,6 +84,7 @@ mod tests {
             }],
             origins: vec![],
             retrieval: serde_json::Value::Null,
+            descriptor: serde_json::Value::Null,
         }
     }
 

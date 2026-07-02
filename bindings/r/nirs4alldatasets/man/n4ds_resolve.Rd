@@ -13,7 +13,7 @@ n4ds_resolve(index_json, dataset_id)
 }
 \value{
 The resolved download contract as a JSON string
-(\code{id, tier, instance, doi, dataset_version, files, origins}).
+(\code{id, tier, instance, doi, dataset_version, files, origins, retrieval, descriptor}).
 }
 \description{
 Resolve a dataset id against an index JSON into its download contract (JSON string).

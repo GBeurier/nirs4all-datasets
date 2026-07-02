@@ -19,7 +19,7 @@ Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
 * `nirs4alldatasets` is a thin R binding for the Rust-first `nirs4all-datasets`
   dataset-**acquisition** core of the nirs4all NIRS / spectroscopy ecosystem. It
   exposes the stable `n4ds_*` C ABI to R: resolve a dataset id from the
-  distributable catalog index into a version-pinned download contract
+  distributable catalog index into a neutral descriptor plus version-pinned download contract
   (`n4ds_resolve`), download the canonical Parquet (Dataverse / Zenodo / figshare)
   with SHA-256 verification into a local cache (`n4ds_fetch`), re-verify a cached
   directory offline (`n4ds_verify_cached`), and report the ABI version

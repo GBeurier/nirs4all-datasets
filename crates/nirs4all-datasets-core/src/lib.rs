@@ -12,7 +12,8 @@
 //!    download contract) and returns a [`Resolved`] dataset — tier, the Dataverse
 //!    instance / DOI / pinned `dataset_version`, the per-file list
 //!    (`name`, `relpath`, `sha256`, `size`, `file_id`, `directory_label`), and the
-//!    origin sources.
+//!    origin sources, plus the tier-sanitized descriptor that non-Python hosts use
+//!    to inspect sources, variables, ids, splits, and retrieval policy.
 //! 2. [`fetch`] downloads each canonical file from its pinned origin (the personal
 //!    Dataverse by `file_id`, else an OPEN canonical origin on Zenodo / figshare /
 //!    Dataverse), streaming with an **incremental SHA-256** and an atomic write into

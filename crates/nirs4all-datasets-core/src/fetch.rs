@@ -245,6 +245,7 @@ mod tests {
             files,
             origins,
             retrieval: serde_json::Value::Null,
+            descriptor: serde_json::Value::Null,
         }
     }
 

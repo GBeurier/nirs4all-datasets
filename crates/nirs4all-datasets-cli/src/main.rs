@@ -26,7 +26,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    /// Print a dataset's resolved download contract (JSON).
+    /// Print a dataset's resolved descriptor+download contract (JSON).
     Resolve {
         /// Path to catalog/index.json.
         #[arg(long)]

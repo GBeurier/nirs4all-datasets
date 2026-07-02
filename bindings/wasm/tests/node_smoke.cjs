@@ -22,7 +22,12 @@ const indexObject = {
         status: "raw_reproducible",
         routes: [{ id: "official", method: "raw_retrieve", provider: "url", locator: "https://example.test/raw.csv", resources: [{ id: "raw", selector: { kind: "direct_url", value: "https://example.test/raw.csv" } }] }],
       },
-      descriptor: { id: "demo" },
+      descriptor: {
+        id: "demo",
+        sources: [{ source_id: "X", modality: "NIR" }],
+        variables: [{ name: "target", role: "target", type: "numeric" }],
+        ids: { sample_id: "sample_id" },
+      },
     },
   },
 };
@@ -34,6 +39,9 @@ assert.strictEqual(resolved.tier, "public");
 assert.strictEqual(resolved.files[0].file_id, 42);
 assert.strictEqual(resolved.retrieval.status, "raw_reproducible");
 assert.strictEqual(resolved.retrieval.routes[0].resources[0].selector.kind, "direct_url");
+assert.strictEqual(resolved.descriptor.id, "demo");
+assert.strictEqual(resolved.descriptor.sources[0].source_id, "X");
+assert.strictEqual(resolved.descriptor.variables[0].role, "target");
 
 // SHA-256("abc")
 assert.strictEqual(

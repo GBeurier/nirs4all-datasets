@@ -24,7 +24,12 @@ _INDEX = {
                 "status": "raw_reproducible",
                 "routes": [{"id": "official", "method": "raw_retrieve", "provider": "url", "locator": "https://vendor/raw.csv", "resources": [{"id": "raw", "selector": {"kind": "direct_url", "value": "https://vendor/raw.csv"}}]}],
             },
-            "descriptor": {"id": "pub"},
+            "descriptor": {
+                "id": "pub",
+                "sources": [{"source_id": "X", "modality": "NIR"}],
+                "variables": [{"name": "target", "role": "target", "type": "numeric"}],
+                "ids": {"sample_id": "sample_id"},
+            },
         },
         "priv": {
             "tier": "private",
@@ -32,7 +37,7 @@ _INDEX = {
             "files": [{"name": "X.parquet", "relpath": "canonical/sources/X.parquet", "directory_label": "canonical/sources", "sha256": "cd" * 32, "size": 9, "file_id": 7}],
             "origins": [],
             "retrieval": {"schema_version": "1.0", "status": "token_required", "routes": []},
-            "descriptor": {"id": "priv"},
+            "descriptor": {"id": "priv", "sources": [{"source_id": "X"}], "variables": []},
         },
     },
 }
@@ -49,6 +54,9 @@ def test_resolve_returns_contract() -> None:
     assert r["files"][0]["relpath"] == "canonical/sources/X.parquet"
     assert r["retrieval"]["status"] == "raw_reproducible"
     assert r["retrieval"]["routes"][0]["resources"][0]["selector"]["kind"] == "direct_url"
+    assert r["descriptor"]["id"] == "pub"
+    assert r["descriptor"]["sources"][0]["source_id"] == "X"
+    assert r["descriptor"]["variables"][0]["role"] == "target"
 
 
 def test_resolve_unknown_raises_keyerror() -> None:

@@ -31,7 +31,10 @@ def _as_json(value: dict[str, Any] | str) -> str:
 def resolve(index: dict[str, Any] | str, dataset_id: str) -> dict[str, Any]:
     """Resolve ``dataset_id`` against a loaded index (dict or JSON) to its download contract.
 
-    Returns ``{id, tier, instance, doi, dataset_version, files:[...], origins:[...]}``.
+    Returns ``{id, tier, instance, doi, dataset_version, files:[...], origins:[...],
+    retrieval:{...}, descriptor:{...}}``. ``descriptor`` is the tier-sanitized schema-2.0
+    descriptor pass-through that non-Python hosts use to inspect sources, variables,
+    ids, and splits after resolving the byte contract.
 
     Raises:
         KeyError: If the dataset id is not in the index.

@@ -66,7 +66,9 @@ The **download/acquisition** path of a dataset — version-pinned DOI resolution
 Zenodo / figshare fetch, streaming SHA-256 verification, and platform-cache management — lives in a small
 **Rust core** (`crates/nirs4all-datasets-core`) behind a stable **C ABI** (`n4ds_`). The scientific
 **analysis** layer (cards, qualify, site, health) stays in Python. The cross-language contract is one
-distributable `catalog/index.json`; the `n4ds` CLI is the parity oracle. Surfaces over that core:
+distributable `catalog/index.json`; `n4ds resolve` returns both the byte contract and the tier-sanitized
+schema-2.0 descriptor (`sources`, `variables`, `ids`, `splits`, `retrieval`). The `n4ds` CLI is the
+parity oracle. Surfaces over that core:
 
 | Binding | Package | Status |
 |---|---|---|
@@ -81,7 +83,9 @@ See [`bindings/SPEC.md`](bindings/SPEC.md) (the binding contract) and
 
 For the high-level Python API, `get()/list()/card()` still operate against a registry root checkout
 (`catalog/` + `datasets/`). For non-Python consumers, the native acquisition core consumes the bundled
-or committed `catalog/index.json` contract directly.
+or committed `catalog/index.json` contract directly. R/WASM/Rust clients do not need the Python provider
+package: they resolve the index, inspect the returned descriptor, fetch/verify the listed files, then read
+the canonical Parquet with host-native tooling.
 
 ## Quickstart
 

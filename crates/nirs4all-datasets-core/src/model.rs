@@ -145,6 +145,12 @@ pub struct Resolved {
     /// Explicit user-side retrieval plan, preserved from the index.
     #[serde(default)]
     pub retrieval: serde_json::Value,
+    /// The tier-sanitized public descriptor. The acquisition core does not
+    /// interpret it; bindings return it so R/WASM/Rust hosts can inspect
+    /// sources, variables, ids, splits, and retrieval policy without importing
+    /// the Python provider package.
+    #[serde(default)]
+    pub descriptor: serde_json::Value,
 }
 
 impl Resolved {
@@ -159,6 +165,7 @@ impl Resolved {
             files: entry.files.clone(),
             origins: entry.origins.clone(),
             retrieval: entry.retrieval.clone(),
+            descriptor: entry.descriptor.clone(),
         }
     }
 

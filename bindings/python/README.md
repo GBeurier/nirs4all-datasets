@@ -10,15 +10,16 @@ pure Python in the `nirs4all-datasets` package.
 ```python
 import json, nirs4all_datasets_core as core
 
-index = json.load(open("catalog/index.json"))     # the distributable download contract
+index = json.load(open("catalog/index.json"))     # the distributable descriptor+download contract
 resolved = core.resolve(index, "corn_eigenvector_nir")
+print(resolved["descriptor"]["sources"])          # neutral metadata; no provider Python needed
 status = core.fetch(resolved, {"token": "…"})       # download + SHA-256 verify + cache
 print(status["dir"])                                # <cache>/<id> (has canonical/dataset.json)
 core.verify_cached(resolved, status["dir"])          # offline re-check
 ```
 
 * `resolve(index, id) -> dict` — the version-pinned contract (tier, Dataverse pin,
-  per-file SHA-256, origins).
+  per-file SHA-256, origins, retrieval, and the tier-sanitized descriptor).
 * `fetch(resolved, opts={cache_dir?, token?, instance?, timeout_secs?}) -> dict` —
   downloads from the personal Dataverse (Access API by `file_id`, redirect-safe so the
   `X-Dataverse-key` never reaches signed storage) or an OPEN Zenodo / figshare /

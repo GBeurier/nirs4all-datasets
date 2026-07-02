@@ -2,7 +2,7 @@
 //! WASM binding (wasm-bindgen) over the pure, offline surface of the acquisition
 //! core. Per `migration_ABI_C.md` §4 the browser is the sharp constraint (per-instance
 //! Dataverse CORS, no real filesystem, dataset size), so the WASM surface is scoped to
-//! what works there: **resolving the download contract** from the distributable
+//! what works there: **resolving the descriptor+download contract** from the distributable
 //! `catalog/index.json`, and a streaming-free **SHA-256** a JS host can use to verify a
 //! blob it fetched itself. The actual byte download + caching stays on the native
 //! bindings (a `--no-default-features` core has no networking/filesystem).
@@ -18,7 +18,7 @@ pub fn abi_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }
 
-/// Resolve a dataset id against an index JSON string; return the download-contract JSON.
+/// Resolve a dataset id against an index JSON string; return the descriptor+download-contract JSON.
 ///
 /// Throws (a JS `Error`) if the id is absent or the index is malformed.
 #[wasm_bindgen]

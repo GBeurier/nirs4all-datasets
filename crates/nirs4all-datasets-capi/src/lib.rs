@@ -197,8 +197,8 @@ unsafe fn finish(
     }
 }
 
-/// Resolve a dataset id against an index JSON. Writes the resolved download contract
-/// (JSON, owned) to `*out`.
+/// Resolve a dataset id against an index JSON. Writes the resolved descriptor+download
+/// contract (JSON, owned) to `*out`.
 ///
 /// # Safety
 /// All pointers must be valid for the call; `out` writable.
