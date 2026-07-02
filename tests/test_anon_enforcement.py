@@ -72,6 +72,18 @@ def test_nirsdataset_public_surface_no_leak(tmp_path: Path, canonical_dataset: A
     assert y is not None and all(c == "sample_id" or c.startswith("var_") for c in y.columns)
 
 
+def test_to_io_spec_refuses_unmasked_anonymized_variables(canonical_dataset: Any) -> None:
+    pq = pytest.importorskip("pyarrow.parquet")
+    from nirs4all_datasets.dataset import NirsDataset
+
+    dataset_dir, anon = _anon_dataset(canonical_dataset)
+    columns = pq.read_schema(dataset_dir / "canonical" / "variables.parquet").names
+    assert _T in columns and _M in columns  # canonical bytes are still the real, unmasked source of truth
+
+    with pytest.raises(RuntimeError, match="unmasked canonical variables\\.parquet"):
+        NirsDataset(dataset_dir, anon).to_io_spec()
+
+
 def test_public_tier_is_unchanged(tmp_path: Path, canonical_dataset: Any) -> None:
     """The enforcement is anonymized-only: a public dataset keeps its real names everywhere."""
     pytest.importorskip("pyarrow")
