@@ -38,4 +38,82 @@ stopifnot(err)
 # ABI version looks like semver.
 stopifnot(grepl("^[0-9]+\\.[0-9]+\\.[0-9]+", n4ds_abi_version()))
 
+if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite", quietly = TRUE)) {
+  gate_root <- file.path(tempdir(), "n4ds_r_io_gate")
+  cache_dir <- file.path(gate_root, "cache")
+  dataset_dir <- file.path(cache_dir, "demo")
+  x_rel <- "canonical/sources/X.csv"
+  y_rel <- "canonical/variables.csv"
+  x_path <- file.path(dataset_dir, x_rel)
+  y_path <- file.path(dataset_dir, y_rel)
+  dir.create(dirname(x_path), recursive = TRUE, showWarnings = FALSE)
+  dir.create(dirname(y_path), recursive = TRUE, showWarnings = FALSE)
+
+  x_body <- "sample_id,w1,w2\ns1,1,2\ns2,3,4\n"
+  y_body <- "sample_id,target\ns1,10\ns2,20\n"
+  writeBin(charToRaw(x_body), x_path)
+  writeBin(charToRaw(y_body), y_path)
+
+  manifest <- list(files = list(
+    list(name = "X.csv", relpath = x_rel, directory_label = "canonical/sources", sha256 = "8cb4ae7faf3d5b91287a9b24a6a8cc5f05e0056aaf81a682341f5b1962514b8d", size = nchar(x_body, type = "bytes"), file_id = NULL),
+    list(name = "variables.csv", relpath = y_rel, directory_label = "canonical", sha256 = "29206e3a4c4aef9d106214dede0aed2a0f3485fd948ba02c353ff3d23e82a193", size = nchar(y_body, type = "bytes"), file_id = NULL)
+  ))
+  card <- list(
+    identity = list(id = "demo"),
+    sources = list(list(source_id = "X")),
+    variables = list(list(name = "target", role = "target"))
+  )
+
+  index <- list(
+    schema = "1.0",
+    n_datasets = 1L,
+    datasets = list(demo = list(
+      tier = "public",
+      dataverse = list(instance = "https://dv.example", doi = NULL, dataset_version = NULL),
+      files = manifest$files,
+      origins = list(),
+      retrieval = list(schema_version = "1.0", status = "canonical_verified", routes = list()),
+      descriptor = list(id = card$identity$id)
+    ))
+  )
+  index_json <- jsonlite::toJSON(index, auto_unbox = TRUE, null = "null")
+  contract <- n4ds_resolve(index_json, "demo")
+  fetch_status <- n4ds_fetch(contract, jsonlite::toJSON(list(cache_dir = cache_dir), auto_unbox = TRUE))
+  stopifnot(grepl('"cached"', fetch_status, fixed = TRUE))
+  verify_status <- n4ds_verify_cached(contract, dataset_dir)
+  stopifnot(grepl('"ok":true', gsub("[[:space:]]+", "", verify_status)))
+
+  spec <- list(
+    name = card$identity$id,
+    sample_index = list(by = "id", key = "sample_id"),
+    sources = list(
+      list(
+        id = card$sources[[1]]$source_id,
+        role = "mixed",
+        input = x_path,
+        key = "sample_id",
+        columns = list(
+          list(role = "ignore", select = "sample_id"),
+          list(role = "features", select = c("w1", "w2"))
+        )
+      ),
+      list(
+        id = "variables",
+        role = "mixed",
+        input = y_path,
+        key = "sample_id",
+        columns = list(
+          list(role = "ignore", select = "sample_id"),
+          list(role = "targets", select = "target")
+        ),
+        join = list(to = card$sources[[1]]$source_id, on = "sample_id", how = "1:1", coverage = "complete")
+      )
+    )
+  )
+  summary <- nirs4allio::nio_load(spec)
+  stopifnot(is.list(summary), length(summary$blocks) >= 1L, summary$n_sources == 1L)
+} else {
+  message("R datasets -> io micro-gate skipped: install nirs4allio to enable it")
+}
+
 cat("R binding smoke OK\n")
