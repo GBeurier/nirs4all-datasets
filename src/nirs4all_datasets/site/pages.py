@@ -16,7 +16,7 @@ from . import charts
 from . import components as C
 from .escape import esc, locator_link, num
 from .model import Catalog, DatasetView
-from .theme import page
+from .theme import SITE_URL, page
 
 
 # =============================================================================
@@ -243,7 +243,27 @@ def render_index(catalog: Catalog) -> str:
 </section>
 {C.footer("")}
 """
-    return page(title="nirs4all-datasets — a citable, reproducible bank of raw NIRS reference datasets", rel="", body=body, scripts=C.HERO_SCRIPT, active="index")
+    description = "A citable, reproducible catalog of raw NIRS reference datasets with provenance, DOI links, and byte-free identity cards."
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "DataCatalog",
+        "name": "nirs4all-datasets",
+        "url": f"{SITE_URL}/",
+        "description": description,
+        "dataset": [
+            {"@type": "Dataset", "name": v.name, "identifier": v.id, "url": f"{SITE_URL}/dataset/{v.id}.html"}
+            for v in datasets
+        ],
+    }
+    return page(
+        title="nirs4all-datasets - a citable, reproducible bank of raw NIRS reference datasets",
+        rel="",
+        body=body,
+        scripts=C.HERO_SCRIPT,
+        active="index",
+        description=description,
+        schema=schema,
+    )
 
 
 # =============================================================================
@@ -301,7 +321,22 @@ def render_catalog(catalog: Catalog) -> str:
 </section>
 {C.footer("")}
 """
-    return page(title="Catalog — nirs4all-datasets", rel="", body=body, scripts=_CATALOG_JS, active="catalog")
+    return page(
+        title="Catalog - nirs4all-datasets",
+        rel="",
+        body=body,
+        scripts=_CATALOG_JS,
+        active="catalog",
+        path="catalog.html",
+        description="Search and filter the nirs4all catalog of public, private, and anonymized NIRS reference datasets.",
+        schema={
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "nirs4all-datasets catalog",
+            "url": f"{SITE_URL}/catalog.html",
+            "isPartOf": {"@type": "DataCatalog", "name": "nirs4all-datasets", "url": f"{SITE_URL}/"},
+        },
+    )
 
 
 # Small vanilla-JS filter/sort over the rendered cards (UI only, not a chart lib).
@@ -1001,6 +1036,24 @@ def render_dataset(view: DatasetView) -> str:
             f'below is authoritative.</p>{rows}</div></section></div>'
         )
 
+    meta_description = _dataset_meta_description(view, domain, family)
+    dataset_schema: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": view.name,
+        "identifier": view.id,
+        "url": f"{SITE_URL}/dataset/{view.id}.html",
+        "description": meta_description,
+        "isPartOf": {"@type": "DataCatalog", "name": "nirs4all-datasets", "url": f"{SITE_URL}/"},
+    }
+    if view.keywords:
+        dataset_schema["keywords"] = view.keywords
+    if e.get("license"):
+        dataset_schema["license"] = e.get("license")
+    if e.get("doi"):
+        doi = str(e.get("doi"))
+        dataset_schema["sameAs"] = doi if doi.startswith("http") else f"https://doi.org/{doi.removeprefix('doi:')}"
+
     body = f"""
 {C.nav(rel, "catalog")}
 <section class="ds-hero section-paper">
@@ -1023,4 +1076,31 @@ def render_dataset(view: DatasetView) -> str:
 </section>
 {C.footer(rel)}
 """
-    return page(title=f"{esc(view.name)} — nirs4all-datasets", rel=rel, body=body, active="catalog")
+    return page(
+        title=f"{view.name} - nirs4all-datasets",
+        rel=rel,
+        body=body,
+        active="catalog",
+        path=f"dataset/{view.id}.html",
+        description=meta_description,
+        schema=dataset_schema,
+    )
+
+
+def _dataset_meta_description(view: DatasetView, domain: str, family: str) -> str:
+    e = view.entry
+    parts = [view.description.strip()] if view.description else []
+    facts = []
+    if e.get("n_samples") is not None:
+        facts.append(f"{num(e.get('n_samples'))} samples")
+    if e.get("n_features_total") is not None:
+        facts.append(f"{num(e.get('n_features_total'))} spectral features")
+    if domain:
+        facts.append(str(domain))
+    if family:
+        facts.append(str(family))
+    if facts:
+        parts.append(", ".join(facts) + ".")
+    if not parts:
+        parts.append(f"Dataset identity card for {view.name} in the nirs4all NIRS reference dataset catalog.")
+    return " ".join(parts)

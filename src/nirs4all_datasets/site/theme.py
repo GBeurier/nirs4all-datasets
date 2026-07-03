@@ -9,6 +9,14 @@ inline ``<style>`` + the Google Fonts link; everything works from ``file://``.
 """
 from __future__ import annotations
 
+import json
+from typing import Any
+
+from .escape import esc
+
+SITE_URL = "https://datasets.nirs4all.org"
+DEFAULT_DESCRIPTION = "A citable, reproducible bank of raw NIRS reference datasets."
+
 FONTS_LINK = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -526,32 +534,64 @@ footer .f-note { width: 100%; border-top: 1px solid rgba(255,255,255,.08); margi
 """
 
 
-def page(*, title: str, rel: str, body: str, scripts: str = "", active: str = "") -> str:
+def _url_for(path: str) -> str:
+    clean = path.strip("/")
+    return f"{SITE_URL}/{clean}" if clean else f"{SITE_URL}/"
+
+
+def _schema_tag(schema: dict[str, Any] | None) -> str:
+    if not schema:
+        return ""
+    return (
+        '<script type="application/ld+json">'
+        + json.dumps(schema, ensure_ascii=True, separators=(",", ":"))
+        + "</script>"
+    )
+
+
+def page(
+    *,
+    title: str,
+    rel: str,
+    body: str,
+    scripts: str = "",
+    active: str = "",
+    path: str = "",
+    description: str = DEFAULT_DESCRIPTION,
+    schema: dict[str, Any] | None = None,
+) -> str:
     """The base HTML shell: ``<head>`` (fonts + inline CSS) + ``<body>`` with ``body`` and ``scripts``.
 
     ``rel`` is the relative prefix to the site root (``""`` for top-level pages, ``"../"`` for
     ``dataset/<id>.html``); it is interpolated into nav/footer links so the page works from ``file://``.
     """
+    canonical = _url_for(path)
+    meta_description = description.strip() or DEFAULT_DESCRIPTION
+    schema_tag = _schema_tag(schema)
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title}</title>
-<meta name="description" content="A citable, reproducible bank of raw NIRS reference datasets.">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(meta_description)}">
 <meta name="theme-color" content="#0d9488">
+<link rel="canonical" href="{canonical}">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{SITE_URL}/sitemap.xml">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="icon" type="image/x-icon" href="{rel}brand/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="{rel}brand/icon.svg">
 <link rel="apple-touch-icon" href="{rel}brand/icon-180.png">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://datasets.nirs4all.org/">
-<meta property="og:title" content="{title}">
-<meta property="og:description" content="A citable, reproducible bank of raw NIRS reference datasets.">
-<meta property="og:image" content="https://datasets.nirs4all.org/brand/og.png">
+<meta property="og:url" content="{canonical}">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(meta_description)}">
+<meta property="og:image" content="{SITE_URL}/brand/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://datasets.nirs4all.org/brand/og.png">
+<meta name="twitter:image" content="{SITE_URL}/brand/og.png">
+{schema_tag}
 {FONTS_LINK}
 <style>{CSS}</style>
 </head>
