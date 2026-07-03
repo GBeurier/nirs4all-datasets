@@ -102,6 +102,7 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
         id = source_id,
         role = "mixed",
         input = file.path(dataset_dir, relpath("X.csv")),
+        params = list(delimiter = ","),
         key = "sample_id",
         columns = list(
           list(role = "ignore", select = "sample_id"),
@@ -112,6 +113,7 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
         id = "variables",
         role = "mixed",
         input = file.path(dataset_dir, relpath("variables.csv")),
+        params = list(delimiter = ","),
         key = "sample_id",
         columns = list(
           list(role = "ignore", select = "sample_id"),
