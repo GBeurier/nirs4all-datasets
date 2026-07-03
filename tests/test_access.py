@@ -56,9 +56,12 @@ def _fake_acquire(monkeypatch: Any, fetch: Any) -> None:
     The native `_n4ds` extension is tested separately; these tests should not
     need it just to assert local-first and token-gate policy.
     """
+    import nirs4all_datasets
+
     module = types.ModuleType("nirs4all_datasets._acquire")
     module.fetch = fetch
     monkeypatch.setitem(sys.modules, "nirs4all_datasets._acquire", module)
+    monkeypatch.setattr(nirs4all_datasets, "_acquire", module, raising=False)
 
 
 # =============================================================================
