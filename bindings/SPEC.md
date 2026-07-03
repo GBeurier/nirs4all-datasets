@@ -86,6 +86,31 @@ MUST copy that descriptor into the resolved JSON unchanged. This is the non-Pyth
 provider contract: R/WASM/Rust clients consume `catalog/index.json` directly rather
 than linking to the Python provider package.
 
+### Descriptor → IO package bridge
+
+The resolved contract is also the neutral hand-off to `nirs4all-io` for hosts that
+want an assembled `DatasetPackage` without importing the Python provider:
+
+1. Call `resolve(index_json, dataset_id)` and `fetch(...)` / `verify_cached(...)`.
+2. Treat the fetch result's dataset directory as the IO `base_dir`; every payload
+   path comes from `files[].relpath`, not from hard-coded absolute paths.
+3. Use `descriptor.ids`, `descriptor.sources`, `descriptor.variables`, and
+   `descriptor.splits` for sample identity, source ids, target/metadata roles, and
+   native split labels.
+4. Read exact feature column labels from the verified Parquet schemas with the
+   host's native Parquet reader (`arrow`, `parquet-wasm`, `parquet2`, MATLAB
+   `parquetread`, etc.). The descriptor intentionally records source identity and
+   roles, while the payload schema records the spectral axis labels.
+5. Build a normal `nirs4all-io` `DatasetSpec` and materialize through that binding
+   (`n4io_load_summary`, `assembleDataset`, Rust `nirs4all-io`, or pyo3
+   `to_dataset_package`). Datasets does not own joins or package assembly.
+
+The bounded fixture in
+[`tests/goldens/nonpython_bridge`](../tests/goldens/nonpython_bridge) pins this:
+Rust and WASM resolve the same descriptor-rich contract, and the Python contract
+test derives the expected IO `DatasetSpec` from only the resolved JSON plus
+host-read Parquet schemas.
+
 ## 3. Status and error model (C ABI)
 
 - Every fallible C ABI call returns an `n4ds_status_t` (a `#[repr(C)]` enum;

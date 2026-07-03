@@ -90,8 +90,8 @@ void n4ds_context_destroy(struct n4ds_context_t *ctx);
 // `ctx` must be a valid context pointer or null.
 const char *n4ds_context_last_error(const struct n4ds_context_t *ctx);
 
-// Resolve a dataset id against an index JSON. Writes the resolved download contract
-// (JSON, owned) to `*out`.
+// Resolve a dataset id against an index JSON. Writes the resolved descriptor+download
+// contract (JSON, owned) to `*out`.
 //
 // # Safety
 // All pointers must be valid for the call; `out` writable.

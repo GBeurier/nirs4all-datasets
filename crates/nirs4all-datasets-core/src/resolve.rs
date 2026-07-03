@@ -39,6 +39,9 @@ mod tests {
         }
       }
     }"#;
+    const BRIDGE_INDEX: &str = include_str!("../../../tests/goldens/nonpython_bridge/index.json");
+    const BRIDGE_RESOLVED: &str =
+        include_str!("../../../tests/goldens/nonpython_bridge/resolved_contract.json");
 
     #[test]
     fn resolves_known_dataset() {
@@ -63,5 +66,27 @@ mod tests {
     fn unknown_dataset_errors() {
         let err = resolve_json(INDEX, "nope").unwrap_err();
         assert!(matches!(err, Error::UnknownDataset(_)));
+    }
+
+    #[test]
+    fn bridge_golden_preserves_descriptor_materialization_contract() {
+        let r = resolve_json(BRIDGE_INDEX, "bridge_native").unwrap();
+        let produced: serde_json::Value = serde_json::from_str(&r).unwrap();
+        let expected: serde_json::Value = serde_json::from_str(BRIDGE_RESOLVED).unwrap();
+        assert_eq!(produced, expected);
+        assert_eq!(produced["descriptor"]["retrieval"], produced["retrieval"]);
+        assert_eq!(produced["descriptor"]["sources"][0]["source_id"], "X1");
+        assert_eq!(produced["descriptor"]["sources"][1]["source_id"], "X2");
+        assert_eq!(produced["descriptor"]["variables"][0]["role"], "target");
+        assert!(produced["files"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|file| file["relpath"] == "canonical/dataset.json"));
+        assert!(produced["files"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|file| file["relpath"] == "canonical/splits/original.parquet"));
     }
 }

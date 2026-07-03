@@ -59,12 +59,6 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
     list(name = "X.csv", relpath = x_rel, directory_label = "canonical/sources", sha256 = "8cb4ae7faf3d5b91287a9b24a6a8cc5f05e0056aaf81a682341f5b1962514b8d", size = nchar(x_body, type = "bytes"), file_id = NULL),
     list(name = "variables.csv", relpath = y_rel, directory_label = "canonical", sha256 = "29206e3a4c4aef9d106214dede0aed2a0f3485fd948ba02c353ff3d23e82a193", size = nchar(y_body, type = "bytes"), file_id = NULL)
   ))
-  card <- list(
-    identity = list(id = "demo"),
-    sources = list(list(source_id = "X")),
-    variables = list(list(name = "target", role = "target"))
-  )
-
   index <- list(
     schema = "1.0",
     n_datasets = 1L,
@@ -75,27 +69,39 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
       origins = list(),
       retrieval = list(schema_version = "1.0", status = "canonical_verified", routes = list()),
       descriptor = list(
-        id = card$identity$id,
-        sources = list(list(source_id = card$sources[[1]]$source_id)),
-        variables = card$variables
+        id = "demo",
+        sources = list(list(source_id = "X")),
+        variables = list(list(name = "target", role = "target"))
       )
     ))
   )
   index_json <- jsonlite::toJSON(index, auto_unbox = TRUE, null = "null")
   contract <- n4ds_resolve(index_json, "demo")
+  resolved <- jsonlite::fromJSON(contract, simplifyVector = FALSE)
   fetch_status <- n4ds_fetch(contract, jsonlite::toJSON(list(cache_dir = cache_dir), auto_unbox = TRUE))
   stopifnot(grepl('"cached"', fetch_status, fixed = TRUE))
   verify_status <- n4ds_verify_cached(contract, dataset_dir)
   stopifnot(grepl('"ok":true', gsub("[[:space:]]+", "", verify_status)))
 
+  relpath <- function(name) {
+    matches <- Filter(function(file) identical(file$name, name), resolved$files)
+    stopifnot(length(matches) == 1L)
+    matches[[1]]$relpath
+  }
+  source_id <- resolved$descriptor$sources[[1]]$source_id
+  target_names <- vapply(
+    Filter(function(variable) identical(variable$role, "target"), resolved$descriptor$variables),
+    function(variable) variable$name,
+    character(1)
+  )
   spec <- list(
-    name = card$identity$id,
+    name = resolved$descriptor$id,
     sample_index = list(by = "id", key = "sample_id"),
     sources = list(
       list(
-        id = card$sources[[1]]$source_id,
+        id = source_id,
         role = "mixed",
-        input = x_path,
+        input = file.path(dataset_dir, relpath("X.csv")),
         key = "sample_id",
         columns = list(
           list(role = "ignore", select = "sample_id"),
@@ -105,13 +111,13 @@ if (requireNamespace("nirs4allio", quietly = TRUE) && requireNamespace("jsonlite
       list(
         id = "variables",
         role = "mixed",
-        input = y_path,
+        input = file.path(dataset_dir, relpath("variables.csv")),
         key = "sample_id",
         columns = list(
           list(role = "ignore", select = "sample_id"),
-          list(role = "targets", select = "target")
+          list(role = "targets", select = target_names)
         ),
-        join = list(to = card$sources[[1]]$source_id, on = "sample_id", how = "1:1", coverage = "complete")
+        join = list(to = source_id, on = "sample_id", how = "1:1", coverage = "complete")
       )
     )
   )

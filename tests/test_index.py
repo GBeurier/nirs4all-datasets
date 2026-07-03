@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path, PurePosixPath
 
 import pytest
 import yaml
 
 from nirs4all_datasets.index import INDEX_SCHEMA, build_index, load_index, resolve
 from nirs4all_datasets.schema import DatasetDescriptor, Tier
+
+_GOLDEN_DIR = Path(__file__).parent / "goldens" / "nonpython_bridge"
 
 
 def _write_dataset(root, descriptor: DatasetDescriptor, manifest: dict | None) -> None:
@@ -84,6 +87,111 @@ def _manifest(dataset_id: str, *, file_id: int | None = None) -> dict:
     }
 
 
+def _nonpython_io_spec_from_resolved(contract: dict, *, cache_dir: str, parquet_columns: dict[str, list[str]]) -> dict:
+    """Test-only projection a non-Python host can implement from resolved JSON.
+
+    It deliberately avoids ``NirsDataset``/``to_io_spec``: descriptor roles come
+    from ``n4ds_resolve``, payload paths come from ``files[].relpath``, and exact
+    feature headers come from the host's own Parquet schema reader.
+    """
+    descriptor = contract["descriptor"]
+    ids = descriptor.get("ids") or {}
+    observation_key = ids.get("observation_id") or "observation_id"
+    sample_key = ids.get("sample_id") or "sample_id"
+    files = {f["relpath"]: f for f in contract["files"]}
+
+    def _input(relpath: str) -> str:
+        assert relpath in files, f"missing canonical file contract for {relpath}"
+        return str(PurePosixPath(cache_dir) / relpath)
+
+    def _features(relpath: str) -> list[str]:
+        columns = parquet_columns[relpath]
+        return [column for column in columns if column not in {observation_key, sample_key}]
+
+    primary = descriptor["sources"][0]["source_id"]
+    sources: list[dict] = []
+    for source in descriptor["sources"]:
+        source_id = source["source_id"]
+        relpath = f"canonical/sources/{source_id}.parquet"
+        spec = {
+            "id": source_id,
+            "role": "mixed",
+            "modality": "spectroscopy",
+            "input": _input(relpath),
+            "key": sample_key,
+            "columns": [
+                {"role": "ignore", "select": [observation_key, sample_key]},
+                {"role": "features", "select": _features(relpath)},
+            ],
+        }
+        params = {}
+        if source.get("axis_unit") and source["axis_unit"] != "none":
+            params["header_unit"] = source["axis_unit"]
+        if source.get("signal_type") and source["signal_type"] != "auto":
+            params["signal_type"] = source["signal_type"]
+        if params:
+            spec["params"] = params
+        if source_id != primary:
+            spec["join"] = {"to": primary, "on": sample_key, "how": "1:1", "coverage": "complete"}
+        sources.append(spec)
+
+    variables_relpath = "canonical/variables.parquet"
+    if variables_relpath in files:
+        target_cols = [v["name"] for v in descriptor.get("variables", []) if v.get("role") == "target"]
+        metadata_cols = [v["name"] for v in descriptor.get("variables", []) if v.get("role") == "metadata"]
+        columns = []
+        if target_cols:
+            columns.append({"role": "targets", "select": target_cols})
+        if metadata_cols:
+            columns.append({"role": "metadata", "select": metadata_cols})
+        sources.append(
+            {
+                "id": "variables",
+                "role": "mixed",
+                "input": _input(variables_relpath),
+                "key": sample_key,
+                "columns": columns,
+                "join": {"to": primary, "on": sample_key, "how": "m:1", "coverage": "warn"},
+            }
+        )
+
+    for split in descriptor.get("splits", []):
+        relpath = split.get("path") or f"canonical/splits/{split['name']}.parquet"
+        split_id = "split_" + "".join(ch if ch.isalnum() else "_" for ch in split["name"]).strip("_")
+        sources.append(
+            {
+                "id": split_id or "split",
+                "role": "mixed",
+                "input": _input(relpath),
+                "key": sample_key,
+                "columns": [{"role": "metadata", "select": ["partition"]}],
+                "join": {"to": primary, "on": sample_key, "how": "m:1", "coverage": "warn"},
+            }
+        )
+
+    return {
+        "name": descriptor["id"],
+        "sample_index": {"by": "id", "key": sample_key, "observation_id": observation_key},
+        "sources": sources,
+    }
+
+
+def _native_resolved_view(dataset_id: str, entry: dict) -> dict:
+    """Mirror the Rust ``Resolved::from_entry`` JSON shape for Python-side goldens."""
+    dataverse = entry["dataverse"]
+    return {
+        "id": dataset_id,
+        "tier": entry["tier"],
+        "instance": dataverse["instance"],
+        "doi": dataverse.get("doi"),
+        "dataset_version": dataverse.get("dataset_version"),
+        "files": entry.get("files", []),
+        "origins": entry.get("origins", []),
+        "retrieval": entry.get("retrieval", {}),
+        "descriptor": entry.get("descriptor", {}),
+    }
+
+
 def test_index_carries_download_contract(tmp_path):
     desc = _descriptor()
     _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
@@ -109,6 +217,37 @@ def test_index_carries_download_contract(tmp_path):
     assert entry["descriptor"]["id"] == "demo"
     assert entry["descriptor"]["sources"][0]["source_id"] == "X"
     assert entry["descriptor"]["variables"][0]["role"] == "target"
+
+
+def test_nonpython_bridge_golden_resolves_to_io_dataset_spec_without_provider() -> None:
+    index = json.loads((_GOLDEN_DIR / "index.json").read_text(encoding="utf-8"))
+    entry = resolve(index, "bridge_native")
+    resolved = _native_resolved_view("bridge_native", entry)
+    expected_resolved = json.loads((_GOLDEN_DIR / "resolved_contract.json").read_text(encoding="utf-8"))
+
+    assert resolved == expected_resolved
+    assert resolved["descriptor"]["retrieval"] == resolved["retrieval"]
+    assert {f["relpath"] for f in resolved["files"]} == {
+        "canonical/dataset.json",
+        "canonical/sources/X1.parquet",
+        "canonical/sources/X2.parquet",
+        "canonical/variables.parquet",
+        "canonical/splits/original.parquet",
+    }
+
+    produced_spec = _nonpython_io_spec_from_resolved(
+        resolved,
+        cache_dir="/cache/bridge_native",
+        parquet_columns={
+            "canonical/sources/X1.parquet": ["observation_id", "sample_id", "1100", "1102"],
+            "canonical/sources/X2.parquet": ["observation_id", "sample_id", "1450", "1452"],
+            "canonical/variables.parquet": ["sample_id", "Moisture", "site"],
+            "canonical/splits/original.parquet": ["sample_id", "partition"],
+        },
+    )
+    expected_spec = json.loads((_GOLDEN_DIR / "io_dataset_spec.json").read_text(encoding="utf-8"))
+
+    assert produced_spec == expected_spec
 
 
 def test_index_synthesizes_raw_retrieval_from_open_direct_url(tmp_path):

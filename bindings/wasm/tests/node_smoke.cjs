@@ -3,10 +3,11 @@
 // --target nodejs --out-dir pkg-node`:  `node bindings/wasm/tests/node_smoke.cjs`.
 const assert = require("node:assert");
 const { execFileSync } = require("node:child_process");
-const { mkdtempSync, rmSync, writeFileSync } = require("node:fs");
+const { mkdtempSync, readFileSync, rmSync, writeFileSync } = require("node:fs");
 const { tmpdir } = require("node:os");
 const path = require("node:path");
 const wasm = require("../pkg-node/nirs4all_datasets_wasm.js");
+const repoRoot = path.resolve(__dirname, "../../..");
 
 const indexObject = {
   schema: "1.0",
@@ -51,7 +52,14 @@ assert.strictEqual(
 
 assert.throws(() => wasm.resolve(index, "nope"));
 
-const repoRoot = path.resolve(__dirname, "../../..");
+const bridgeIndex = readFileSync(path.join(repoRoot, "tests/goldens/nonpython_bridge/index.json"), "utf8");
+const bridgeExpected = JSON.parse(readFileSync(path.join(repoRoot, "tests/goldens/nonpython_bridge/resolved_contract.json"), "utf8"));
+const bridgeResolved = JSON.parse(wasm.resolve(bridgeIndex, "bridge_native"));
+assert.deepStrictEqual(bridgeResolved, bridgeExpected);
+assert.strictEqual(bridgeResolved.descriptor.retrieval.status, bridgeResolved.retrieval.status);
+assert.strictEqual(bridgeResolved.descriptor.sources.length, 2);
+assert.strictEqual(bridgeResolved.descriptor.splits[0].path, "canonical/splits/original.parquet");
+
 const tmp = mkdtempSync(path.join(tmpdir(), "n4ds-wasm-"));
 try {
   const indexPath = path.join(tmp, "index.json");

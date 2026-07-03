@@ -1,0 +1,116 @@
+{
+  "name": "bridge_native",
+  "sample_index": {
+    "by": "id",
+    "key": "sample_id",
+    "observation_id": "observation_id"
+  },
+  "sources": [
+    {
+      "columns": [
+        {
+          "role": "ignore",
+          "select": [
+            "observation_id",
+            "sample_id"
+          ]
+        },
+        {
+          "role": "features",
+          "select": [
+            "1100",
+            "1102"
+          ]
+        }
+      ],
+      "id": "X1",
+      "input": "/cache/bridge_native/canonical/sources/X1.parquet",
+      "key": "sample_id",
+      "modality": "spectroscopy",
+      "params": {
+        "header_unit": "nm",
+        "signal_type": "absorbance"
+      },
+      "role": "mixed"
+    },
+    {
+      "columns": [
+        {
+          "role": "ignore",
+          "select": [
+            "observation_id",
+            "sample_id"
+          ]
+        },
+        {
+          "role": "features",
+          "select": [
+            "1450",
+            "1452"
+          ]
+        }
+      ],
+      "id": "X2",
+      "input": "/cache/bridge_native/canonical/sources/X2.parquet",
+      "join": {
+        "coverage": "complete",
+        "how": "1:1",
+        "on": "sample_id",
+        "to": "X1"
+      },
+      "key": "sample_id",
+      "modality": "spectroscopy",
+      "params": {
+        "header_unit": "nm",
+        "signal_type": "reflectance"
+      },
+      "role": "mixed"
+    },
+    {
+      "columns": [
+        {
+          "role": "targets",
+          "select": [
+            "Moisture"
+          ]
+        },
+        {
+          "role": "metadata",
+          "select": [
+            "site"
+          ]
+        }
+      ],
+      "id": "variables",
+      "input": "/cache/bridge_native/canonical/variables.parquet",
+      "join": {
+        "coverage": "warn",
+        "how": "m:1",
+        "on": "sample_id",
+        "to": "X1"
+      },
+      "key": "sample_id",
+      "role": "mixed"
+    },
+    {
+      "columns": [
+        {
+          "role": "metadata",
+          "select": [
+            "partition"
+          ]
+        }
+      ],
+      "id": "split_original",
+      "input": "/cache/bridge_native/canonical/splits/original.parquet",
+      "join": {
+        "coverage": "warn",
+        "how": "m:1",
+        "on": "sample_id",
+        "to": "X1"
+      },
+      "key": "sample_id",
+      "role": "mixed"
+    }
+  ]
+}
