@@ -46,7 +46,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Checkout sibling Rust deps
         run: scripts/ensure_rust_deps.sh
 
@@ -54,10 +54,10 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
 
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.4.0
+        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
         with:
           # PIN the version. `version: latest` is non-deterministic with this
           # action and can resolve to an ancient wasm-pack whose bundled wasm-opt
@@ -65,7 +65,7 @@ jobs:
           # ships a wasm-opt that handles it.
           version: 'v0.15.0'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"

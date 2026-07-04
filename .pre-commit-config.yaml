@@ -1,0 +1,20 @@
+# Local dev hooks mirroring the CI green gate (ruff check + hygiene).
+# Install: uvx pre-commit install    Run all: uvx pre-commit run --all-files
+# mypy is run in CI (needs the full dev environment); not duplicated here.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.17
+    hooks:
+      - id: ruff
+        name: ruff (lint)

@@ -5,6 +5,23 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.2] - 2026-07-03
+
+Consolidates the 0.3.0 (2026-06-29) → 0.3.2 (2026-07-03) releases. Headline: reference datasets
+now flow through `nirs4all-io` instead of being re-read here.
+
+### Added
+- Bridge reference datasets to `nirs4all-io`; expose a neutral descriptor in native `resolve`.
+- Cross-language raw acquisition with CI-reproducible raw manifests.
+
+### Fixed
+- Drop native bzip2 from the C ABI surface.
+- Guard the dataset package bridge; add canonical dataset SEO metadata on the site.
+
+### Tests
+- Cover IO loading of reference datasets; anonymized IO spec guard; non-python IO bridge contract;
+  R-binding datasets↔io smoke + delimiter coverage; hermetic acquire stub.
+
 ## [0.2.3] - 2026-06-23
 
 ### Fixed

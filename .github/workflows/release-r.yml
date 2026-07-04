@@ -76,7 +76,7 @@ jobs:
       # The build is offline; disable the incoming-feasibility URL check.
       _R_CHECK_CRAN_INCOMING_REMOTE_: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Checkout sibling Rust deps
@@ -85,12 +85,12 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
 
-      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@d3c5be51b12e724e68f33216ca3c148b66d5f0b6 # v2
         with:
           r-version: ${{ matrix.cfg.r_version }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-r-dependencies@d3c5be51b12e724e68f33216ca3c148b66d5f0b6 # v2
         with:
           working-directory: bindings/r/nirs4alldatasets
           extra-packages: |
@@ -108,7 +108,7 @@ jobs:
         run: cd bindings/r/nirs4alldatasets && N4DS_R_VENDOR=1 ./configure
 
       - name: R CMD check --as-cran
-        uses: r-lib/actions/check-r-package@v2
+        uses: r-lib/actions/check-r-package@d3c5be51b12e724e68f33216ca3c148b66d5f0b6 # v2
         env:
           CARGO_NET_OFFLINE: "true"   # the INSTALL build is offline from the bundle
         with:
@@ -121,7 +121,7 @@ jobs:
 
       - name: Upload check artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: rcheck-${{ matrix.cfg.label }}
           path: bindings/r/nirs4alldatasets.Rcheck/
@@ -135,7 +135,7 @@ jobs:
     needs: check
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Checkout sibling Rust deps
@@ -143,7 +143,7 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
 
-      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@d3c5be51b12e724e68f33216ca3c148b66d5f0b6 # v2
         with:
           r-version: "release"
           use-public-rspm: true
@@ -165,7 +165,7 @@ jobs:
           mv nirs4alldatasets_*.tar.gz dist-r/
           ls -la dist-r/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: nirs4alldatasets-cran-tarball
           path: dist-r/nirs4alldatasets_*.tar.gz
@@ -185,13 +185,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: nirs4alldatasets-cran-tarball
           path: dist-r/
 
       - name: Upload to the matching Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           files: dist-r/*.tar.gz
           fail_on_unmatched_files: true
