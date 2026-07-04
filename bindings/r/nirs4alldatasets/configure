@@ -151,10 +151,12 @@ ensure_workspace_repo() {
     tag="v$version"
 
     echo "nirs4alldatasets configure: $label workspace not found at $current; fetching $tag from $url" >&2
+    rm -rf "$dest"
     if git clone --quiet --depth 1 --branch "$tag" "$url" "$dest" 2>/dev/null; then
         :
     else
         echo "nirs4alldatasets configure: $label tag $tag unavailable; fetching the default branch and validating its workspace version" >&2
+        rm -rf "$dest"
         git clone --quiet --depth 1 "$url" "$dest" || {
             echo "nirs4alldatasets configure(vendor): ERROR — failed to fetch $label from $url" >&2
             exit 1
