@@ -60,13 +60,15 @@ VENDOR_ARCHIVE="$RUST/vendor.tar.xz"        # compressed cargo-vendored crates.i
 HEADER_SRC="$REPO/crates/nirs4all-datasets-capi/include/nirs4all_datasets.h"
 HEADER_DST="$PKG_ROOT/src/nirs4all_datasets.h"
 EXTERNAL_FETCH_ROOT=""
+RESOLVED_REPO=""
 
 cleanup_external_fetch() {
     if [ -n "$EXTERNAL_FETCH_ROOT" ] && [ -d "$EXTERNAL_FETCH_ROOT" ]; then
         rm -rf "$EXTERNAL_FETCH_ROOT"
     fi
 }
-trap cleanup_external_fetch EXIT HUP INT TERM
+trap cleanup_external_fetch EXIT
+trap 'cleanup_external_fetch; exit 1' HUP INT TERM
 
 # The workspace crates the C ABI staticlib needs. Inspecting [dependencies]
 # `path = ...` (.workspace = true resolves to these in the root manifest):
@@ -135,7 +137,7 @@ ensure_workspace_repo() {
     version="$4"
 
     if [ -d "$current/crates" ]; then
-        printf '%s\n' "$current"
+        RESOLVED_REPO="$current"
         return 0
     fi
 
@@ -167,7 +169,7 @@ ensure_workspace_repo() {
         echo "nirs4alldatasets configure(vendor): ERROR — fetched $label repository has no crates/ directory" >&2
         exit 1
     }
-    printf '%s\n' "$dest"
+    RESOLVED_REPO="$dest"
 }
 
 # 0. Copy the committed C ABI header next to the C shim (src/n4ds.c #includes
@@ -182,8 +184,10 @@ cp "$HEADER_SRC" "$HEADER_DST"
 
 FORMATS_PIN=$(read_dependency_version nirs4all-formats)
 IO_PIN=$(read_dependency_version nirs4all-io)
-FORMATS_REPO=$(ensure_workspace_repo "nirs4all-formats" "$FORMATS_REPO" "https://github.com/GBeurier/nirs4all-formats.git" "$FORMATS_PIN")
-IO_REPO=$(ensure_workspace_repo "nirs4all-io" "$IO_REPO" "https://github.com/GBeurier/nirs4all-io.git" "$IO_PIN")
+ensure_workspace_repo "nirs4all-formats" "$FORMATS_REPO" "https://github.com/GBeurier/nirs4all-formats.git" "$FORMATS_PIN"
+FORMATS_REPO="$RESOLVED_REPO"
+ensure_workspace_repo "nirs4all-io" "$IO_REPO" "https://github.com/GBeurier/nirs4all-io.git" "$IO_PIN"
+IO_REPO="$RESOLVED_REPO"
 
 # 1. Copy the workspace crates into src/rust/vendored/ (always fresh). Copy every
 #    top-level entry EXCEPT tests/ (the [dev-dependencies] surface), target/ (build
