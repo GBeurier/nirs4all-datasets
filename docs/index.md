@@ -116,9 +116,9 @@ Rust readers for ~58 NIRS/spectroscopy file formats.
 :link: https://nirs4all-methods.readthedocs.io/en/latest/
 Portable C-ABI PLS/NIRS engine (libn4m) + bindings.
 :::
-:::{grid-item-card} nirs4all-lite
-:link: https://nirs4all-lite.readthedocs.io/en/latest/
-Portable aggregate distribution (Rust + bindings).
+:::{grid-item-card} nirs4all-core
+:link: https://nirs4all-core.readthedocs.io/en/latest/
+Canonical portable aggregate distribution (Rust, Python, R, WASM, MATLAB/Octave).
 :::
 :::{grid-item-card} dag-ml
 :link: https://dag-ml.readthedocs.io/en/latest/
