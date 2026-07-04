@@ -2,11 +2,12 @@
 # SPDX-License-Identifier: MIT
 # R-universe pre-build hook.
 #
-# R-universe's build backend clones the WHOLE repo and runs this script from the
-# package directory BEFORE `R CMD build`, while the full tree — including the
-# top-level `crates/` core at ../../../crates — is still on disk. That is the only
-# window in which the out-of-tree nirs4all-datasets{-core,-capi} crates are
-# reachable, so we vendor them here (exactly the step the CRAN CI runs).
+# R-universe's build backend clones this repository and runs this script from the
+# package directory BEFORE `R CMD build`, while the top-level
+# nirs4all-datasets{-core,-capi} crates at ../../../crates are still on disk.
+# If the sibling reader workspaces (nirs4all-formats and nirs4all-io) are not
+# present next to this checkout, ./configure fetches the exact tagged versions
+# declared in the root Cargo.toml before vendoring.
 #
 # `N4DS_R_VENDOR=1 ./configure` copies the core crates into src/rust/vendored/,
 # emits a self-contained src/rust/Cargo.toml, copies the committed C ABI header,
