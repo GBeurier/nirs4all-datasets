@@ -5,6 +5,12 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.4] - 2026-07-06
+
+### Fixed
+- Harden R-universe source builds by vendoring the dataset reader workspaces and making fallback
+  clone/fetch cleanup deterministic.
+
 ## [0.3.2] - 2026-07-03
 
 Consolidates the 0.3.0 (2026-06-29) → 0.3.2 (2026-07-03) releases. Headline: reference datasets
