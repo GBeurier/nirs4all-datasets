@@ -20,6 +20,29 @@ def _require_io_with_dataset_package() -> Any:
     return nirs4all_io
 
 
+def _require_io_load() -> Any:
+    nirs4all_io = pytest.importorskip("nirs4all_io")
+    if not callable(getattr(nirs4all_io, "load", None)):
+        pytest.skip("installed nirs4all_io does not expose load()")
+    return nirs4all_io
+
+
+def _assert_loaded_as_assembled_contract(assembled: Any) -> None:
+    if isinstance(assembled, dict):
+        block = assembled["blocks"]["train"]
+        assert block["x_shapes"] == [[2, 2]]
+        assert block["x"][0] == [[0.1, 0.2], [0.1, 0.2]]
+        assert block["y_shape"] == [2, 1]
+        assert block["y"] == [[1.0], [1.5]]
+        assert {"site", "partition"} <= set(block["metadata_columns"])
+        return
+
+    block = assembled.blocks["train"]
+    np.testing.assert_allclose(block.X[0], [[0.1, 0.2], [0.1, 0.2]], rtol=1e-6)
+    np.testing.assert_allclose(block.y, [[1.0], [1.5]], rtol=1e-6)
+    assert {"site", "partition"} <= set(block.metadata.columns)
+
+
 def test_sources_lists_block_ids_in_order(canonical_dataset: Any) -> None:
     dataset_dir, desc = canonical_dataset("corn", blocks=("X1", "X2", "X3"), sample_of={"o1": "s1", "o2": "s2"})
     ds = NirsDataset(dataset_dir, desc)
@@ -222,6 +245,22 @@ def test_nirs4all_io_load_accepts_real_reference_dataset(canonical_dataset: Any)
     np.testing.assert_allclose(block.X[0], [[0.1, 0.2], [0.1, 0.2]], rtol=1e-6)
     np.testing.assert_allclose(block.y, [[1.0], [1.5]], rtol=1e-6)
     assert block.metadata["site"].tolist() == ["meta", "meta"]
+
+
+def test_nirs4all_io_load_accepts_to_io_spec_as_assembled(canonical_dataset: Any) -> None:
+    nirs4all_io = _require_io_load()
+    dataset_dir, desc = canonical_dataset(
+        "bridge_assembled",
+        blocks=("X",),
+        sample_of={"o1": "s1", "o2": "s2"},
+        targets={"Moisture": "numeric"},
+        extra_meta=("site",),
+        split={"o1": "cal", "o2": "val"},
+    )
+    ds = NirsDataset(dataset_dir, desc)
+
+    _assert_loaded_as_assembled_contract(nirs4all_io.load(ds.to_io_spec(), target="assembled"))
+    _assert_loaded_as_assembled_contract(nirs4all_io.load(ds, target="assembled"))
 
 
 def test_to_io_spec_refuses_ambiguous_multisource_repetitions(canonical_dataset: Any) -> None:
