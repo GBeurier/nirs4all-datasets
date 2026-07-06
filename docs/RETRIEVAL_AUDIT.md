@@ -1,6 +1,7 @@
 # Retrieval Audit and Schema Proposal
 
 Date: 2026-06-29
+Catalog status refreshed: 2026-07-06
 
 ## Scope
 
@@ -31,24 +32,30 @@ This audit has been partially implemented in the Rust acquisition layer:
   `nirs4all-io`; ECOSTRESS spectrum text files are parsed and assembled into a
   dataset-level canonical payload by the Rust recipe
   `jpl_ecostress_spectrum_txt_v1`.
-- As of this pass, the distributable index status is: 157 `raw_reproducible`
-  and 7 `token_required` Dataverse uploads. ECOSTRESS moved from
-  `missing_delegate` to direct public raw retrieval via
-  `https://speclib.jpl.nasa.gov/ecospeclibdata/<file>.spectrum.txt`.
+- As of the 2026-07-06 catalog status, all 164 datasets have descriptors,
+  generated cards, and local canonical artifacts. The distributable index
+  status is 157 `raw_reproducible`, 7 `token_required` private Dataverse
+  uploads, and 0 `missing_delegate`. ECOSTRESS uses direct public raw retrieval
+  via `https://speclib.jpl.nasa.gov/ecospeclibdata/<file>.spectrum.txt`.
 
 ## Current Repository State
 
-`catalog/datasets` contains 164 descriptors:
+`catalog/datasets` contains 164 descriptors, with matching generated cards and
+local canonical artifacts for all 164 datasets:
 
 | Metric | Count |
 |---|---:|
 | Public datasets | 42 |
 | Private datasets | 122 |
 | Anonymized datasets | 0 |
+| Generated dataset cards | 164 |
+| Materialized local canonical datasets | 164 |
 | Datasets with raw-only origins | 164 |
 | Datasets with canonical origins | 0 |
 | Datasets with open origins | 157 |
-| Manual-only datasets | 7 |
+| Retrieval status `raw_reproducible` | 157 |
+| Retrieval status `token_required` | 7 |
+| Retrieval status `missing_delegate` | 0 |
 
 Origin entries total 460:
 
@@ -68,11 +75,15 @@ Manifest/index state:
 | Canonical files with Dataverse `file_id` | 0 / 537 |
 | Descriptor Dataverse DOIs | 0 |
 | Manifest DOIs / dataset versions | 0 |
-| Committed `datasets/*/canonical/dataset.json` | 0 |
+| Local `datasets/*/canonical/dataset.json` | 164 |
 
-The consequence is that `get()` is blocked for normal remote use from this
-checkout: there is no local canonical directory, no published canonical DOI, no
-Dataverse file IDs, and no open canonical DOI origin.
+Local `get()` can resolve the materialized canonical artifacts in this
+workspace. Remote canonical fetch is still pending where local bytes are absent:
+there is no published canonical DOI, no Dataverse file IDs, and no open
+canonical DOI origin. The only datasets actually blocked for remote retrieval
+are the seven private `token_required` Dataverse uploads listed in
+[DATAVERSE_PENDING.md](DATAVERSE_PENDING.md); their local canonical artifacts
+exist, but DOI/version/file IDs must be minted by a private Dataverse upload.
 
 ## Current Acquisition Behavior
 
@@ -106,7 +117,7 @@ are not standalone retrieval scripts. The real diversity is much lower than 164.
 | OSSL / NeoSpectra CSV.gz | 16 | `ossl_jovic_visnir_soil_all_y`, `ossl_lucas_mir_soil_all_y` | Downloads Google Storage `.csv.gz` resources or uses cache. |
 | Time-series ZIP verifier | 9 | `timeseries_boeuf_classe_adulteration_ts`, `timeseries_vin_cepage_type_ts` | Downloads public ZIPs, verifies raw availability, intentionally does not regenerate X/Y/M. |
 | OpenSpecy RDS wrappers | 2 | `openspecy_ftir`, `openspecy_raman` | Raw retrieval is direct; Rust preparation now delegates the OpenSpecy `.rds` object to `nirs4all-formats`. Exact FTIR/RAMAN X/Y/M assembly remains a dataset recipe. |
-| Thin wrappers to missing project converters | 7 | `rruff_raman`, `perten_cereals_nir`, `cgl_nir_grain_eigenvector` | `runpy` or `subprocess` with selector env vars; target `convert_*.py` files are absent. |
+| Private Dataverse pending uploads | 7 | `cgl_nir_grain_eigenvector`, `corn_eigenvector_nir`, `grapevine_leaftraits_multisensor_nir` | Local canonical bytes and cards exist. Retrieval status is `token_required`, not a missing delegate; remote fetch waits for Dataverse DOI/version/file IDs (see [DATAVERSE_PENDING.md](DATAVERSE_PENDING.md)). |
 | Repository API downloads | 4 | `flanagan_api_compounds_raman`, `plastic_polymer_name_grouped_flopp_ftir` | Figshare or EcoSIS/CKAN API, select files by name, download CSV/XLSX/ZIP. |
 | R/RDA route | 3 | `ohpl_beer_nir`, `ohpl_soil_nir`, `ohpl_wheat_nir` | Downloads GitHub `.rda`, writes temporary R script, calls `Rscript`. |
 | Local/manual extracted bundles | 4 | `grapevine_leaftraits_multisensor_nir`, `manure21_nir_all_y`, `ucph_tablet_nir` | Requires pre-staged local raw files or extracted archives. |
@@ -138,7 +149,8 @@ The strongest consolidation opportunities are:
 - one OSSL parameterized recipe instead of 16 copied scripts;
 - one TimeSeries archive recipe plus a missing parser/assembler stage;
 - explicit API selectors for Figshare, CKAN/EcoSIS, Dataverse, and Zenodo;
-- explicit wrapper/delegate records for the remaining missing `convert_*.py` targets.
+- private Dataverse upload metadata for the remaining `token_required` datasets
+  (DOI, dataset version, and per-file IDs).
 
 ## Main Findings
 
@@ -175,7 +187,7 @@ retrieval:
   status: raw_reproducible        # canonical_verified | raw_reproducible |
                                   # verifier_only | documented_only |
                                   # manual_only | token_required |
-                                  # blocked_parser | missing_delegate
+                                  # blocked_parser
   routes:
     - id: official_raw
       priority: 10
@@ -240,6 +252,10 @@ retrieval:
 
 ### Status Semantics
 
+The 2026-07-06 catalog uses `raw_reproducible` for 157 datasets and
+`token_required` for the 7 private Dataverse uploads. Historical
+`missing_delegate` cases have been resolved; the current count is 0.
+
 | Status | Meaning |
 |---|---|
 | `canonical_verified` | `get()` can return byte-verified canonical data. |
@@ -249,7 +265,6 @@ retrieval:
 | `manual_only` | Requires click-through, local bundle, or human action. |
 | `token_required` | Needs a credential or token for retrieval. |
 | `blocked_parser` | Retrieval is possible, parser route is not available yet. |
-| `missing_delegate` | Leaf wrapper points to a missing shared converter. |
 
 ## Family-Specific Schema Mapping
 
@@ -258,12 +273,11 @@ retrieval:
 | ECOSTRESS | `raw_retrieve` via direct JPL `ecospeclibdata/*.spectrum.txt` resources plus Rust recipe `jpl_ecostress_spectrum_txt_v1`; `prepare_raw` writes a dataset-level canonical JSON with the shared axis, X matrix, and per-observation headers. Exact historical Y/M parity depends on manifest/card metadata that is not present in the public spectrum text files. |
 | EcoSIS | `raw_retrieve` via CKAN/EcoSIS package/resource IDs; one group recipe with dataset-specific selectors. |
 | OSSL | `raw_retrieve` with three Google Storage `.csv.gz` resources and OSSL parameters such as `dataset_code`, `spectral_kind`, and join keys. |
-| TimeSeries | `raw_retrieve` ZIP resources, currently `verifier_only` until parser/assembler is implemented. |
+| TimeSeries | `raw_retrieve` ZIP resources; current catalog entries are `raw_reproducible`. |
 | Figshare datasets | `raw_retrieve` with `api_file_name` or file-id selectors, not positional assumptions. |
 | OHPL | `raw_retrieve` GitHub `.rda`; canonicalization is `rscript_compat` initially, later replace with native RDA support if needed. |
-| Malaria | `raw_retrieve` Dataverse SPC/DTA; `blocked_parser` until SPC/DTA route is provided through `nirs4all-formats` or a compatible reader. |
-| Corn Eigenvector | `raw_retrieve` ZIP/MAT; parser route is MATLAB `.mat`, not plain CSV. |
-| Manual/local bundles | `manual` or `local_path` resources with required filenames and source-root env var. |
+| Malaria | `raw_retrieve` Dataverse SPC/DTA with native preparation support; current catalog entries are `raw_reproducible`. |
+| Private Dataverse pending uploads | `token_required` until the canonical files are uploaded and Dataverse DOI/version/file IDs are recorded; local canonical artifacts already exist for the 7 listed in [DATAVERSE_PENDING.md](DATAVERSE_PENDING.md). |
 
 ## Rust / C ABI Feasibility
 
