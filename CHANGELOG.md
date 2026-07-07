@@ -5,6 +5,16 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.5] - 2026-07-07
+
+### Added
+- Cover the dataset assembled bridge to `nirs4all-io` with a focused regression test.
+
+### Changed
+- Require `nirs4all-io >=0.1.7` for the optional IO bridge so published builds follow the current IO release train.
+- Align WASM binding lock metadata with the current release train.
+- Refresh the Dataverse retrieval audit while the seven pending datasets remain intentionally absent.
+
 ## [0.3.4] - 2026-07-06
 
 ### Fixed
