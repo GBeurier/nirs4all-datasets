@@ -6,16 +6,10 @@ Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
 ## Submission summary
 
 * **This is an update of the existing CRAN package** `nirs4alldatasets`
-  (**0.2.0 → 0.2.3**) that **fixes the macOS "Installation failed" check ERRORs** on
-  the 0.2.0 page (r-release / r-oldrel × macOS-arm64 / x86_64; Linux and Windows were
-  OK). **Cause:** CRAN's macOS builders run `R CMD INSTALL` with a `PATH` that
-  excludes the rustup `~/.cargo/bin`, so the `command -v cargo` guard in
-  `src/Makevars` failed and aborted the install before any compilation. **Fix:**
-  `src/Makevars` now appends `$(HOME)/.cargo/bin` to `PATH` (the pattern the sibling
-  `dag-ml-data` R binding already uses); no other change to the build, sources, or
-  API. The short interval since 0.2.0 (published 2026-06-19) is deliberate — it
-  clears the check ERRORs before their 2026-07-03 fix-by deadline; please excuse the
-  "days since last update" NOTE.
+  (**0.2.0 -> 0.3.5**). The release carries the current nirs4all-datasets
+  acquisition ABI, the refreshed catalog contract, and the self-contained
+  offline Rust build used by the project's R-universe and GitHub Release
+  packages.
 * `nirs4alldatasets` is a thin R binding for the Rust-first `nirs4all-datasets`
   dataset-**acquisition** core of the nirs4all NIRS / spectroscopy ecosystem. It
   exposes the stable `n4ds_*` C ABI to R: resolve a dataset id from the
@@ -31,13 +25,18 @@ Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
   no prebuilt shared library and no `N4DS_CAPI_DIR` env var (the previous,
   non-CRAN-submittable form linked a separately built `libnirs4all_datasets_capi`
   cdylib).
-* **Source tarball: ~9.4 MB** — under CRAN's 10 MB soft cap. The crates.io
-  dependency closure is shipped compressed (`vendor.tar.xz`); the test-only
-  `[dev-dependencies]` and the header-generation `[build-dependencies]`
-  (`cbindgen`) are stripped from the vendored manifests, and the prebuilt Windows
-  import-library blobs (`windows_<arch>_<env>/lib/*.a|*.lib`, ~76 MB uncompressed)
-  for the arch/env variants the package never links are pruned from the vendored
-  tree, keeping it lean.
+* **Source tarball: 24,666,282 bytes** (`nirs4alldatasets_0.3.5.tar.gz` on the
+  matching GitHub Release). This is above CRAN's usual soft limit, so this
+  submission requests a size exception. The size is driven by the offline Rust
+  dependency vendor archive plus the embedded, version-pinned catalog metadata
+  that lets the package resolve datasets without contacting GitHub at install or
+  check time. The crates.io dependency closure is shipped compressed
+  (`vendor.tar.xz`); test-only `[dev-dependencies]` and the header-generation
+  `[build-dependencies]` (`cbindgen`) are stripped from the vendored manifests,
+  and the prebuilt Windows import-library blobs
+  (`windows_<arch>_<env>/lib/*.a|*.lib`, ~76 MB uncompressed) for the arch/env
+  variants the package never links are pruned from the vendored tree. The
+  remaining bytes are required for an offline, self-contained CRAN build.
 * `R CMD check --as-cran`: **0 ERRORs, 0 WARNINGs**; only environment- /
   toolchain-specific NOTEs (detailed below).
 * License: `MIT` (with the CRAN-required `LICENSE` file giving the copyright year
@@ -126,25 +125,21 @@ cc-rs `ar` step).
   - Ubuntu 22.04 (R release + devel)
   - macOS 14 (R release, arm64)
   - Windows Server 2022 (R release)
-* win-builder, R-hub v2, **and the CRAN macOS builder (`mac-builder.r-project.org`)**
-  are run manually before each CRAN submission. The macOS builder is the gate for
-  the 0.2.3 fix: the GitHub Actions macOS runner has cargo on `PATH` (so it
-  installed 0.2.0 cleanly and could **not** surface the CRAN farm's missing-`PATH`
-  failure), whereas `mac-builder` reproduces CRAN's macOS environment and confirms
-  the `~/.cargo/bin` `PATH` fix.
+* win-builder, R-hub v2, and the CRAN macOS builder
+  (`mac-builder.r-project.org`) are run manually before each CRAN submission.
 
 ## R CMD check --as-cran status
 
 `R CMD check --as-cran` (R 4.6.0 conda-forge) finishes with **0 ERRORs and
 0 WARNINGs**. The NOTEs are:
 
-1. **CRAN incoming feasibility — Title case (+ "days since last update").** The
-   title-case sub-note flags `nirs4all-datasets` in the Title; that is the product /
+1. **CRAN incoming feasibility — Title case and package size.** The title-case
+   sub-note flags `nirs4all-datasets` in the Title; that is the product /
    project name, intentionally lower-case (the GitHub organisation, the PyPI
-   package, and the Rust crates all spell it `nirs4all-datasets`), so it is left as
-   written. On this update CRAN also NOTEs the short interval since 0.2.0
-   (2026-06-19) — intentional, to clear the macOS check ERRORs before the
-   2026-07-03 deadline.
+   package, and the Rust crates all spell it `nirs4all-datasets`), so it is left
+   as written. The source tarball size is acknowledged above and this submission
+   explicitly requests a size exception for the offline Rust vendor archive and
+   embedded catalog metadata.
 2. **Compilation flag `-march=nocona`.** Comes from conda-forge R's own `Makeconf`
    (`CFLAGS`), not from the package. The package's `src/Makevars` sets only
    `PKG_CPPFLAGS = -I.` (the committed-header include dir); the Cargo release profile
