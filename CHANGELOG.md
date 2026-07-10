@@ -5,6 +5,17 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.8] - 2026-07-10
+
+### Fixed
+- Allow the R-universe `rwasm` Cargo/rustc wrappers during R WebAssembly builds
+  when they cannot report `--version`; native CRAN/source installs still require
+  readable Cargo/rustc versions meeting the declared Rust floor.
+
+### Tests
+- Add configure/Makevars regression coverage for R-universe WebAssembly wrapper
+  detection while preserving native rejection of unversioned tools.
+
 ## [0.3.5] - 2026-07-07
 
 ### Added

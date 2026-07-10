@@ -20,6 +20,7 @@
 # rustc >= 1.88.0 (zip 8.6.0 directly, and time 0.3.53).
 CARGO_MIN_VERSION = 1.85.0
 RUSTC_MIN_VERSION = 1.88.0
+-include n4ds-rust-toolchain.mk
 
 TMP_ROOT = $(if $(TMPDIR),$(TMPDIR),$(if $(TEMP),$(TEMP),$(if $(TMP),$(TMP),/tmp)))
 TARGET_DIR = $(TMP_ROOT)/n4ds-r-target
@@ -85,6 +86,11 @@ $(STATLIB):
 	find_suitable_rust_tool () { \
 		rust_tool_name=$$1; \
 		rust_tool_minimum=$$2; \
+		rust_configured_candidate=; \
+		case "$$rust_tool_name" in \
+			cargo) rust_configured_candidate="$(N4DS_CARGO)" ;; \
+			rustc) rust_configured_candidate="$(N4DS_RUSTC)" ;; \
+		esac; \
 		rust_path_candidate=`command -v "$$rust_tool_name" 2>/dev/null` || rust_path_candidate=; \
 		rust_home_candidate=; \
 		rust_home_exe_candidate=; \
@@ -93,12 +99,21 @@ $(STATLIB):
 			rust_home_exe_candidate="$$rust_home_candidate.exe"; \
 		fi; \
 		rust_previous_candidate=; \
-		for rust_candidate in "$$rust_path_candidate" "$$rust_home_candidate" "$$rust_home_exe_candidate"; do \
+		for rust_candidate in "$$rust_configured_candidate" "$$rust_path_candidate" "$$rust_home_candidate" "$$rust_home_exe_candidate"; do \
 			[ -n "$$rust_candidate" ] || continue; \
 			[ "$$rust_candidate" != "$$rust_previous_candidate" ] || continue; \
 			rust_previous_candidate=$$rust_candidate; \
 			if [ "$$rust_candidate" != "$$rust_path_candidate" ] && [ ! -x "$$rust_candidate" ]; then continue; fi; \
 			rust_candidate_version=`rust_tool_version "$$rust_candidate"` || { \
+				if [ "$(N4DS_R_WASM)" = "1" ]; then \
+					case "$$rust_candidate" in \
+						*/rwasm/bin/cargo|*/rwasm/bin/rustc) \
+							echo "nirs4alldatasets: accepting R-universe/rwasm $$rust_tool_name wrapper at $$rust_candidate; native version check is not available in the wasm tool wrapper" >&2; \
+							printf '%s\n' "$$rust_candidate"; \
+							return 0; \
+							;; \
+					esac; \
+				fi; \
 				echo "nirs4alldatasets: found $$rust_tool_name at $$rust_candidate but could not read its version" >&2; \
 				continue; \
 			}; \
@@ -121,8 +136,8 @@ $(STATLIB):
 		echo "Install or update Cargo and rustc using system packages or rustup: https://rustup.rs" >&2; \
 		exit 1; \
 	}; \
-	"$$rustc" --version >&2; \
-	"$$cargo" --version >&2; \
+	"$$rustc" --version >&2 || { [ "$(N4DS_R_WASM)" = "1" ] && echo "rustc rwasm-wrapper ($$rustc)" >&2; }; \
+	"$$cargo" --version >&2 || { [ "$(N4DS_R_WASM)" = "1" ] && echo "cargo rwasm-wrapper ($$cargo)" >&2; }; \
 	if [ -z "$(TMP_ROOT)" ]; then \
 		echo "nirs4alldatasets: ERROR - no usable temporary directory was found for build-local Cargo directories" >&2; \
 		exit 1; \
