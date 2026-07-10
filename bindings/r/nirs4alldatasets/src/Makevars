@@ -21,7 +21,8 @@
 CARGO_MIN_VERSION = 1.85.0
 RUSTC_MIN_VERSION = 1.88.0
 
-TARGET_DIR = $(CURDIR)/rust/target
+TMP_ROOT = $(TMPDIR)
+TARGET_DIR = $(TMP_ROOT)/n4ds-r-target
 LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/libnirs4all_datasets_capi.a
 # Reference the staticlib by EXACT PATH, not `-L$(LIBDIR) -lnirs4all_datasets_capi`:
@@ -38,7 +39,9 @@ PKG_CPPFLAGS = -I$(CURDIR)
 # the registry index + git db; pointing it here keeps cargo off ~/.cargo. The
 # rust/vendor tree is extracted from vendor.tar.xz so the build is fully OFFLINE
 # and never reaches the network either.
-CARGOTMP = $(CURDIR)/.cargo
+CARGOTMP = $(TMP_ROOT)/n4ds-r-cargo
+VENDOR_ROOT = $(TMP_ROOT)/n4ds-r-vendor
+VENDOR_DIR = $(VENDOR_ROOT)/vendor
 
 # `all` links the SHLIB, THEN runs rust_clean (which depends on $(SHLIB), so it
 # is sequenced last). rust_clean removes the whole target/ + CARGOTMP + the
@@ -120,14 +123,25 @@ $(STATLIB):
 	}; \
 	"$$rustc" --version >&2; \
 	"$$cargo" --version >&2; \
+	if [ -z "$(TMP_ROOT)" ]; then \
+		echo "nirs4alldatasets: ERROR - TMPDIR is not set by R; cannot create build-local Cargo directories" >&2; \
+		exit 1; \
+	fi; \
 	export RUSTC="$$rustc" && \
 	export CARGO_HOME="$(CARGOTMP)" && \
 	export CARGO_TARGET_DIR="$(TARGET_DIR)" && \
+	case `uname -s 2>/dev/null || echo unknown` in \
+		Darwin) export MACOSX_DEPLOYMENT_TARGET="$${MACOSX_DEPLOYMENT_TARGET:-14.0}" ;; \
+	esac && \
 	if [ -f rust/vendor.tar.xz ]; then \
-		[ -d rust/vendor ] || ( echo "extracting rust/vendor.tar.xz"; cd rust && tar xJf vendor.tar.xz ); \
+		[ -d "$(VENDOR_DIR)" ] || ( \
+			echo "extracting rust/vendor.tar.xz"; \
+			rm -Rf "$(VENDOR_ROOT)" && mkdir -p "$(VENDOR_ROOT)" && \
+			cd "$(VENDOR_ROOT)" && tar xJf "$(CURDIR)/rust/vendor.tar.xz" \
+		); \
 		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2 --offline \
 			--config 'source.crates-io.replace-with="vendored-sources"' \
-			--config 'source.vendored-sources.directory="vendor"'; \
+			--config 'source.vendored-sources.directory="$(VENDOR_DIR)"'; \
 	else \
 		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2; \
 	fi
@@ -141,10 +155,10 @@ $(STATLIB):
 # when NOT_CRAN=true (dev inner loop keeps the cache for incremental rebuilds).
 rust_clean: $(SHLIB)
 	@if [ "$(NOT_CRAN)" != "true" ]; then \
-		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
+		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(VENDOR_ROOT)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
 	fi
 
 C_clean:
-	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
+	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(VENDOR_ROOT) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
 
 clean: C_clean

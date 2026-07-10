@@ -22,6 +22,8 @@ TARGET ?= $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 SHORTTMP = $(if $(TMPDIR),$(TMPDIR),$(if $(TEMP),$(TEMP),$(if $(TMP),$(TMP),/tmp)))
 TARGET_DIR = $(SHORTTMP)/n4ds
 CARGOTMP = $(SHORTTMP)/n4ds-ch
+VENDOR_ROOT = $(SHORTTMP)/n4ds-vendor
+VENDOR_DIR = $(VENDOR_ROOT)/vendor
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
 STATLIB = $(LIBDIR)/libnirs4all_datasets_capi.a
 -include n4ds-rust-toolchain.mk
@@ -92,10 +94,14 @@ $(STATLIB):
 	$(if $(strip $(CARGO_LINKER)),export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="$(CARGO_LINKER)" && )\
 	export LIBRARY_PATH="$${LIBRARY_PATH};$(TARGET_DIR)/libgcc_mock" && \
 	if [ -f rust/vendor.tar.xz ]; then \
-		[ -d rust/vendor ] || ( echo "extracting rust/vendor.tar.xz"; cd rust && tar xJf vendor.tar.xz ); \
+		[ -d "$(VENDOR_DIR)" ] || ( \
+			echo "extracting rust/vendor.tar.xz"; \
+			rm -Rf "$(VENDOR_ROOT)" && mkdir -p "$(VENDOR_ROOT)" && \
+			cd "$(VENDOR_ROOT)" && tar xJf "$(CURDIR)/rust/vendor.tar.xz" \
+		); \
 		cd rust && "$(N4DS_CARGO)" build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET) --offline \
 			--config 'source.crates-io.replace-with="vendored-sources"' \
-			--config 'source.vendored-sources.directory="vendor"'; \
+			--config 'source.vendored-sources.directory="$(VENDOR_DIR)"'; \
 	else \
 		cd rust && "$(N4DS_CARGO)" build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET); \
 	fi
@@ -106,10 +112,10 @@ $(STATLIB):
 # Skipped when NOT_CRAN=true.
 rust_clean: $(SHLIB)
 	@if [ "$(NOT_CRAN)" != "true" ]; then \
-		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
+		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(VENDOR_ROOT)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
 	fi
 
 C_clean:
-	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
+	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(VENDOR_ROOT) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
 
 clean: C_clean
