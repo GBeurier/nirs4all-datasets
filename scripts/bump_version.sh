@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 #
 # bump_version.sh — nirs4all-datasets version source-of-truth syncer.
 #
@@ -284,6 +284,13 @@ update_with_sed \
     "${PEP440_VERSION}" \
     "^version[[:space:]]*=[[:space:]]*\"([0-9A-Za-z.+!-]+)\"" \
     "s/^(version[[:space:]]*=[[:space:]]*\")[0-9A-Za-z.+!-]+(\")/\1${PEP440_VERSION}\2/"
+
+# Citation metadata uses the plain final PEP 440 spelling for release artifacts.
+update_with_sed \
+    "CITATION.cff" \
+    "${PEP440_VERSION}" \
+    "^version:[[:space:]]*\"([0-9A-Za-z.+!-]+)\"" \
+    "s/^(version:[[:space:]]*\")[0-9A-Za-z.+!-]+(\")/\1${PEP440_VERSION}\2/"
 
 # Optional runtime version string, if the package grows one.
 update_with_sed \

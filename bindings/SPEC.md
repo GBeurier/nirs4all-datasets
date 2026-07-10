@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # nirs4all-datasets binding specification (normative)
 
 This is the binding contract for the Rust **dataset-acquisition core** of

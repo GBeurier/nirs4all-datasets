@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! The HTTP seam. All network I/O goes through [`HttpClient`] so the resolvers and
 //! the fetch orchestration are unit-tested against an injected fake — exactly as the
 //! Python suite injects a fake `requests.Session`. The real implementation

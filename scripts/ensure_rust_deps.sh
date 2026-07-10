@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 #
 # Ensure sibling Rust reader repos are present for local/CI builds.
 # nirs4all-datasets keeps path+version dependencies so local development uses

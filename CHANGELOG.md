@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # Changelog
 
 All notable changes to **nirs4all-datasets** are documented here. The format

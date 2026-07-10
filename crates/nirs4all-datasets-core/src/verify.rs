@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Offline integrity re-check of an already-cached dataset directory (no network) —
 //! the C ABI's `n4ds_verify_cached`.
 

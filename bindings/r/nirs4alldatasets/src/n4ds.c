@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 // R <-> nirs4all-datasets C ABI glue. Each .Call entry drives the stable n4ds_ JSON
 // surface: a per-call context carries the error buffer; on a non-OK status the message
 // is raised as an R error; owned result strings are copied into an R string and freed

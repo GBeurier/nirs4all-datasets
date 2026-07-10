@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 
 #' Resolve a dataset id against an index JSON into its download contract (JSON string).
 #'

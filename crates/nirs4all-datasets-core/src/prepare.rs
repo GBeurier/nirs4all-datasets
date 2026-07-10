@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Rust-side preparation of retrieved raw resources.
 //!
 //! `retrieve_raw` only acquires bytes. This module performs the next portable

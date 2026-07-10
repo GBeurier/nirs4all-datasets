@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Drift guard: the committed ABI snapshots and the generated header must list
 //! exactly the public `n4ds_*` surface. The `abi-check` CI additionally diffs the
 //! *built* cdylib's exported symbols against these snapshots on each platform.

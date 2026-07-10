@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 """Type stub for the compiled pyo3 acquisition extension (``nirs4all_datasets._n4ds``).
 
 JSON-string in / JSON-string out, mirroring the C ABI (``n4ds_``); the idiomatic dict

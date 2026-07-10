@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Serde models for the distributable download contract (`catalog/index.json`,
 //! index schema 1.0) and the [`Resolved`] view a binding gets back.
 //!

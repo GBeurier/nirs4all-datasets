@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Build, R CMD check --as-cran, and (on a release tag) attach the nirs4alldatasets
 # R package source tarball.
 #
@@ -116,7 +116,9 @@ jobs:
           # check-r-package interpolates these into rcmdcheck::rcmdcheck(args = ...,
           # error_on = ...) as literal R code, so they must be valid R syntax.
           args: 'c("--no-manual", "--as-cran")'
-          error-on: '"error"'
+          # A source package advertised as CRAN-ready must not hide warnings.
+          # Notes remain reviewable, but ERRORs and WARNINGs fail every matrix job.
+          error-on: '"warning"'
           upload-snapshots: true
 
       - name: Upload check artifacts on failure

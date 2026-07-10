@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # Development — Release Process
 
 How each binding of `nirs4all-datasets` is versioned, gated, and published. The
@@ -28,8 +28,8 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 >
 > **R / CRAN macOS exception.** CRAN's macOS *check* farm runs `R CMD INSTALL`
 > with a `PATH` that does **not** include the rustup `~/.cargo/bin`, so the R
-> binding's `src/Makevars` **must** add it (it does, since 0.2.3) or the install
-> ERRORs with *"Installation failed"* on every macOS flavor while Linux/Windows
+> binding's configure / Makevars path **must** search it explicitly or the install
+> fails with *"Installation failed"* on every macOS flavor while Linux/Windows
 > pass — the cause of the 0.2.0 check failure. This farm-PATH gap is invisible to
 > CI (the GitHub Actions macOS runner has cargo on `PATH`); validate the R macOS
 > build on `mac-builder.r-project.org` before submitting. See *R → CRAN* below.
@@ -37,7 +37,7 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 ## Single source of truth
 
 The canonical version is the **`[workspace.package] version` in the root
-[`Cargo.toml`](../../Cargo.toml)** (Cargo SemVer, currently `0.3.0`).
+[`Cargo.toml`](../../Cargo.toml)** (Cargo SemVer).
 `scripts/bump_version.sh` propagates it to every binding manifest, translating the
 spelling each ecosystem requires:
 
@@ -245,8 +245,10 @@ submission. Users then
 > `cargo vendor`s the crates.io closure into `src/rust/vendor.tar.xz` (pruning the
 > never-linked Windows import-lib blobs), and `src/Makevars(.win)` build it offline
 > (`cargo build -p nirs4all-datasets-capi --release --offline`). The source tarball
-> is ~9.4 MB (under CRAN's 10 MB soft cap) and `R CMD check --as-cran` is clean
-> (0 ERRORs / 0 WARNINGs; only the first-submission + conda `-march=nocona` NOTEs).
+> is currently about 24.7 MB and requires an explicit CRAN size exception. A
+> release candidate is CRAN-ready only after the exact generated tarball passes
+> `R CMD check --as-cran` with 0 ERRORs and 0 WARNINGs, including the macOS
+> toolchain-discovery path.
 > `release-r.yml` runs the full `R CMD check --as-cran` matrix and attaches the
 > tarball to the Release.
 
@@ -262,59 +264,14 @@ source tarball (from the Release, or `N4DS_R_VENDOR=1 ./configure` then
 | Upload | `nirs4alldatasets_<version>.tar.gz` (the R source tarball only — never a binary, the repo zip, or the Python sdist) |
 | Optional comment to CRAN | **paste the block below** |
 
-**Paste-ready CRAN submission comment** (kept in sync with
-`bindings/r/nirs4alldatasets/cran-comments.md`):
+**Paste-ready CRAN submission comment:** use
+`bindings/r/nirs4alldatasets/cran-comments.md` from the exact release commit.
+That file is the single reviewer-facing source of truth for the archived-package
+update, source-tarball size exception, bundled Rust notices, tested toolchains,
+and manual mac-builder / win-builder / R-hub gates.
 
-```text
-This is an update of the existing CRAN package nirs4alldatasets (0.2.0 -> 0.2.3)
-that fixes the macOS "Installation failed" check ERRORs on the 0.2.0 page
-(r-release/r-oldrel x macOS arm64/x86_64; Linux and Windows were OK). Cause: CRAN's
-macOS builders run R CMD INSTALL with a PATH that excludes the rustup ~/.cargo/bin,
-so the `command -v cargo` guard in src/Makevars failed and aborted the install
-before any compilation. Fix: src/Makevars now appends $(HOME)/.cargo/bin to PATH so
-cargo is found on the macOS farm; no other change to the build, sources, or API.
-The short interval since 0.2.0 (2026-06-19) is deliberate, to clear the check ERRORs
-before their 2026-07-03 deadline.
-
-nirs4alldatasets is a thin R binding for the Rust-first nirs4all-datasets
-dataset-acquisition core for the nirs4all NIRS / spectroscopy ecosystem. It
-exposes the stable n4ds_* C ABI to R: resolve a dataset id from the distributable
-catalog index, download the pinned canonical Parquet from its origin (Dataverse /
-Zenodo / figshare), SHA-256-verify against the index, and cache it. The JSON
-surface crosses the C ABI and results are canonical JSON strings; no scientific
-arrays cross the boundary (R reads the verified Parquet with the arrow package).
-License: MIT.
-
-Self-contained source tarball: the package vendors the nirs4all-datasets Rust core
-and its crates.io transitive dependencies and compiles them OFFLINE at install
-time via src/Makevars(.win) (no network, no external monorepo crates/). The Cargo
-/ rustc toolchain is declared in SystemRequirements.
-
-Test environments: local Ubuntu/WSL2 R release (offline standalone install ->
-installs, loads, native path active); CI matrix (release-r.yml) on Ubuntu 22.04
-(R release + devel), macOS 14 (R release, arm64), Windows Server 2022 (R release);
-win-builder, R-hub v2, and the CRAN macOS builder (mac-builder.r-project.org) run
-manually before submission. The macOS builder is the gate for this fix: the GitHub
-Actions macOS runner has cargo on PATH and so could not surface CRAN's missing-PATH
-failure.
-
-R CMD check --as-cran: 0 ERRORs, 0 WARNINGs. NOTEs: the title-case product name
-"nirs4all-datasets" (intentionally lower-case) and, on this update, the short
-interval since 0.2.0; on a conda-forge build only, the local toolchain's
--march=nocona flag from R's own Makeconf (absent on CRAN's toolchain). The package
-does no network access during install/examples/tests (downloads happen only on an
-explicit user fetch call) and has no R package dependencies (a leaf in the CRAN
-graph).
-
-Maintainer: Gregory Beurier (CIRAD), gregory.beurier@cirad.fr.
-```
-
-> **CRAN version note:** CRAN rejects SemVer pre-release suffixes
-> (`0.2.0-alpha.1`). While the project is pre-final the R spelling is the
-> development version `0.2.0.9000`, which is **R-universe / dev only and is NOT
-> submitted to CRAN**. The first CRAN-eligible R version is the plain `0.2.0` cut
-> by `scripts/bump_version.sh --bump 0.2.0` (the binding is already
-> CRAN-self-contained — vendored + offline-compiled).
+> **CRAN version note:** CRAN rejects SemVer pre-release suffixes. Submit only a
+> plain `X.Y.Z` R package built from the matching `vX.Y.Z` release commit.
 
 ---
 
@@ -334,9 +291,10 @@ without breaking existing pins. For npm, `npm deprecate`. For the GitHub Release
 
 ## Operational notes
 
-- **crates.io requires a valid SPDX license id.** This repo is **`MIT`**
-  (`[workspace.package].license`), which crates.io accepts verbatim — no all-caps
-  remap (unlike the CeCILL repos).
+- **crates.io requires a valid SPDX expression.** This repo uses
+  **`CECILL-2.1 OR AGPL-3.0-or-later`** in `[workspace.package].license`, which
+  crates.io accepts verbatim. The R distribution selects `AGPL-3` from that
+  compatible dual licence for its statically linked source package.
 - **crates.io rate-limits NEW crates** (burst ~5, then throttled). Publishing the
   three new names at once can fail with `429 — too many new crates`; wait for the
   stated reset and re-run `release-crates` (already-uploaded crates skip; only the
@@ -344,9 +302,9 @@ without breaking existing pins. For npm, `npm deprecate`. For the GitHub Release
 - **Verify crates.io with a `User-Agent` header** — the API returns nothing without
   one, so a *successful* publish can look "absent". The `cargo publish` log line
   `Published <crate> at registry crates-io` is the source of truth.
-- **Pre-release versions don't auto-publish.** `0.2.0-alpha.1` (a `-` tag) is gated
-  out of every publish job — bump to a plain `vX.Y.Z` (`bump_version.sh --bump
-  0.2.0`, then refresh `Cargo.lock`) to release.
+- **Pre-release versions don't auto-publish.** Tags containing a SemVer
+  pre-release suffix are gated out of every publish job. Bump to a plain
+  `vX.Y.Z` and refresh the lockfiles before releasing.
 - **Network tests are gated.** The conformance/parity `fetch` jobs hit the
   RDG/CIRAD sandbox under the `network` pytest marker / a `network`-gated CI leg;
   the default suite injects a fake `HttpSession` and touches no network.

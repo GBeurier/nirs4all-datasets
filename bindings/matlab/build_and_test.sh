@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Build the n4ds MEX and smoke-test it with Octave. MATLAB users run build.m + smoke.m
 # the same way. SKIPs (exit 0) if octave is absent, so this is a no-op off-CI; the
 # release-matlab / octave CI leg provides octave.

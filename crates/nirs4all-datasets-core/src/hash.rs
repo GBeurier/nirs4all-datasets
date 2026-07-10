@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Streaming SHA-256: the authoritative byte-identity check (mirrors the Python
 //! `sha256_file`). [`HashingWriter`] lets a download be hashed *as it streams* to
 //! disk (incremental SHA-256), so a large file is never buffered whole in memory.

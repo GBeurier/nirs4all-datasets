@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # nirs4all-datasets — MATLAB / Octave binding
 
 A thin MEX shim (`n4ds.c`) over the `nirs4all-datasets` C ABI (`n4ds_`). Resolve a

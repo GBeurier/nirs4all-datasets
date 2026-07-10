@@ -1,12 +1,12 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # cran-comments.md — nirs4alldatasets
 
 Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
 
 ## Submission summary
 
-* **This is an update of the existing CRAN package** `nirs4alldatasets`
-  (**0.2.0 -> 0.3.5**). The release carries the current nirs4all-datasets
+* **This is an update of the archived CRAN package** `nirs4alldatasets`
+  (**0.2.0 -> 0.3.6**). The release carries the current nirs4all-datasets
   acquisition ABI, the refreshed catalog contract, and the self-contained
   offline Rust build used by the project's R-universe and GitHub Release
   packages.
@@ -25,22 +25,23 @@ Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
   no prebuilt shared library and no `N4DS_CAPI_DIR` env var (the previous,
   non-CRAN-submittable form linked a separately built `libnirs4all_datasets_capi`
   cdylib).
-* **Source tarball: 24,666,282 bytes** (`nirs4alldatasets_0.3.5.tar.gz` on the
-  matching GitHub Release). This is above CRAN's usual soft limit, so this
-  submission requests a size exception. The size is driven by the offline Rust
-  dependency vendor archive plus the embedded, version-pinned catalog metadata
-  that lets the package resolve datasets without contacting GitHub at install or
-  check time. The crates.io dependency closure is shipped compressed
+* **Source tarball: approximately 25 MB** on the matching GitHub Release. The
+  exact byte count is taken from the generated `nirs4alldatasets_0.3.6.tar.gz`
+  submitted to CRAN. This is above CRAN's usual soft limit, so this submission
+  requests a size exception. The size is driven by the offline Rust dependency
+  vendor archive plus the embedded, version-pinned catalog metadata that lets the
+  package resolve datasets without contacting GitHub at install or check time.
+  The crates.io dependency closure is shipped compressed
   (`vendor.tar.xz`); test-only `[dev-dependencies]` and the header-generation
   `[build-dependencies]` (`cbindgen`) are stripped from the vendored manifests,
   and the prebuilt Windows import-library blobs
   (`windows_<arch>_<env>/lib/*.a|*.lib`, ~76 MB uncompressed) for the arch/env
   variants the package never links are pruned from the vendored tree. The
   remaining bytes are required for an offline, self-contained CRAN build.
-* `R CMD check --as-cran`: **0 ERRORs, 0 WARNINGs**; only environment- /
-  toolchain-specific NOTEs (detailed below).
-* License: `MIT` (with the CRAN-required `LICENSE` file giving the copyright year
-  and holder).
+* The release is submitted only after the exact source tarball has **0 ERRORs and
+  0 WARNINGs** under `R CMD check --as-cran`, including the CRAN macOS builder.
+* License: `AGPL-3`; `inst/COPYRIGHTS` is generated from the exact vendored Cargo
+  dependency closure and records the bundled Rust licence/authorship inventory.
 * The same Rust core powers the project's Python (PyPI), JavaScript / WebAssembly
   (npm), and C-ABI consumers.
 
@@ -80,7 +81,9 @@ build-local `CARGO_HOME` and `CARGO_TARGET_DIR` (never the user's `~/.cargo`), a
 post-link `rust_clean` rule wipes all Rust build scratch out of the package source
 so `R CMD check` never scans third-party build artefacts.
 
-The `Cargo` / `rustc` toolchain is declared in `SystemRequirements`.
+The `Cargo` / `rustc` toolchain is declared in `SystemRequirements` with the
+tested minimum Rust 1.88, and `configure`/`configure.win` search both `PATH` and
+`~/.cargo/bin` before an offline build starts.
 
 ## Networking core
 
@@ -113,7 +116,7 @@ cc-rs `ar` step).
 
 ## Test environments
 
-* Local development (Ubuntu 22.04 / WSL2, R 4.6.0 conda-forge, rustc 1.95):
+* Local development (Ubuntu / WSL2, current R, current rustc):
   standalone offline install of the built source tarball with
   `CARGO_NET_OFFLINE=true` (no network, no access to the repository `crates/`) ->
   installs and loads cleanly; the native C-ABI path is active (the smoke test drives
@@ -130,8 +133,9 @@ cc-rs `ar` step).
 
 ## R CMD check --as-cran status
 
-`R CMD check --as-cran` (R 4.6.0 conda-forge) finishes with **0 ERRORs and
-0 WARNINGs**. The NOTEs are:
+The submission gate requires `R CMD check --as-cran` on the **exact generated
+source tarball** to finish with **0 ERRORs and 0 WARNINGs**. The remaining
+reviewable NOTEs are:
 
 1. **CRAN incoming feasibility — Title case and package size.** The title-case
    sub-note flags `nirs4all-datasets` in the Title; that is the product /

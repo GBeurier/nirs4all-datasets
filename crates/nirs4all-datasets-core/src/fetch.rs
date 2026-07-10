@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! The fetch orchestrator: download every canonical file of a [`Resolved`] dataset
 //! into the cache, streaming with an incremental SHA-256 and an atomic rename, and
 //! return a per-file status. Mirrors the Python `fetch_by_doi` / `fetch_private` it

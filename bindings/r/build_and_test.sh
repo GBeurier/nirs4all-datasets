@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Local dev helper: vendor the Rust core into the R package, install it from the
 # self-contained tree (offline staticlib build), and run the smoke test. This is
 # the SAME path CRAN / R-universe use — there is no prebuilt cdylib and no

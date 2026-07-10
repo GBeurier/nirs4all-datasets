@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Stable C ABI for `nirs4all-datasets` (symbol prefix `n4ds_`).
 //!
 //! JSON-string in / JSON-string out — `resolve` / `fetch` / `retrieve_raw` /

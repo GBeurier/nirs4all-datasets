@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Dataset-acquisition core for the **nirs4all-datasets** reference bank.
 //!
 //! This crate owns exactly the surface the feasibility study (`migration_ABI_C.md`)

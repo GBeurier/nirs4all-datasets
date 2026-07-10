@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Self-contained OFFLINE build of the nirs4all-datasets Rust core into a STATICLIB,
 # then compile the C shim (n4ds.c) and link the staticlib by exact path. No
 # prebuilt nirs4all-datasets-capi cdylib, no N4DS_CAPI_DIR — the package vendors and
@@ -12,15 +12,14 @@
 # rule wipes all Rust build scratch out of the package source so R CMD check
 # --as-cran never scans third-party build artefacts.
 #
-# macOS CRAN farm PATH: cargo lives in ~/.cargo/bin but the macOS check builders
-# run R CMD INSTALL with a PATH that EXCLUDES it (the Linux/Windows farms have
-# cargo on PATH; the macOS ones do not), so the `command -v cargo` guard below
-# fails there and the install errors with "Installation failed" on every macOS
-# flavor while Linux/Windows stay OK. Append the standard rustup bin dir so cargo
-# is found on the macOS farm too; CRAN's "Using Rust" guidance notes the personal
-# ~/.cargo/bin is "often not on the path" and scripts must look for it. Exported so
-# every recipe shell (the guard AND the cargo build) sees it.
-export PATH := $(PATH):$(HOME)/.cargo/bin
+# CRAN requires configure/build discovery for both separately packaged Rust tools,
+# first on PATH and then in ~/.cargo/bin. Keep that search inside the recipe: a
+# Make-level exported immediate assignment uses two GNU extensions and triggers the
+# non-portable Makevars check. Cargo.lock is format 4 and the bundled manifests use
+# Edition 2024, hence Cargo >= 1.85. The current resolved vendor closure requires
+# rustc >= 1.88.0 (zip 8.6.0 directly, and time 0.3.53).
+CARGO_MIN_VERSION = 1.85.0
+RUSTC_MIN_VERSION = 1.88.0
 
 TARGET_DIR = $(CURDIR)/rust/target
 LIBDIR = $(TARGET_DIR)/release
@@ -51,38 +50,86 @@ all: $(SHLIB) rust_clean
 
 $(SHLIB): $(STATLIB)
 
+# Report both selected versions before Cargo can print its first "Compiling" line;
+# R CMD check --as-cran uses that ordering for its Rust compilation check. The
+# selected rustc is passed explicitly to Cargo, so a personal fallback works even
+# when ~/.cargo/bin was absent from the installer's PATH. CARGO_HOME and target/
+# remain build-local, the vendor archive remains offline, and `-j 2` bounds Cargo.
 $(STATLIB):
-	@if ! command -v cargo >/dev/null; then \
-		echo "Cargo is required to build nirs4alldatasets. Install Rust from https://rustup.rs."; \
+	@rust_tool_version () { \
+		rust_tool_output=`"$$1" --version 2>/dev/null` || return 1; \
+		set -- $$rust_tool_output; \
+		[ "$$#" -ge 2 ] || return 1; \
+		rust_tool_version=$$2; \
+		rust_tool_version=$${rust_tool_version%%-*}; \
+		case "$$rust_tool_version" in ""|*[!0-9.]*) return 1 ;; esac; \
+		printf '%s\n' "$$rust_tool_version"; \
+	}; \
+	rust_version_at_least () { \
+		awk -v have="$$1" -v need="$$2" 'BEGIN { \
+			have_count = split(have, have_parts, "."); \
+			need_count = split(need, need_parts, "."); \
+			count = have_count > need_count ? have_count : need_count; \
+			for (i = 1; i <= count; i++) { \
+				have_part = (i <= have_count ? have_parts[i] : 0) + 0; \
+				need_part = (i <= need_count ? need_parts[i] : 0) + 0; \
+				if (have_part > need_part) exit 0; \
+				if (have_part < need_part) exit 1; \
+			} \
+			exit 0; \
+		}'; \
+	}; \
+	find_suitable_rust_tool () { \
+		rust_tool_name=$$1; \
+		rust_tool_minimum=$$2; \
+		rust_path_candidate=`command -v "$$rust_tool_name" 2>/dev/null` || rust_path_candidate=; \
+		rust_home_candidate=; \
+		rust_home_exe_candidate=; \
+		if [ -n "$${HOME:-}" ]; then \
+			rust_home_candidate="$$HOME/.cargo/bin/$$rust_tool_name"; \
+			rust_home_exe_candidate="$$rust_home_candidate.exe"; \
+		fi; \
+		rust_previous_candidate=; \
+		for rust_candidate in "$$rust_path_candidate" "$$rust_home_candidate" "$$rust_home_exe_candidate"; do \
+			[ -n "$$rust_candidate" ] || continue; \
+			[ "$$rust_candidate" != "$$rust_previous_candidate" ] || continue; \
+			rust_previous_candidate=$$rust_candidate; \
+			if [ "$$rust_candidate" != "$$rust_path_candidate" ] && [ ! -x "$$rust_candidate" ]; then continue; fi; \
+			rust_candidate_version=`rust_tool_version "$$rust_candidate"` || { \
+				echo "nirs4alldatasets: found $$rust_tool_name at $$rust_candidate but could not read its version" >&2; \
+				continue; \
+			}; \
+			if rust_version_at_least "$$rust_candidate_version" "$$rust_tool_minimum"; then \
+				printf '%s\n' "$$rust_candidate"; \
+				return 0; \
+			fi; \
+			echo "nirs4alldatasets: found $$rust_tool_name $$rust_candidate_version at $$rust_candidate, but >= $$rust_tool_minimum is required" >&2; \
+		done; \
+		return 1; \
+	}; \
+	cargo=`find_suitable_rust_tool cargo "$(CARGO_MIN_VERSION)"` || { \
+		echo "nirs4alldatasets: ERROR - Cargo >= $(CARGO_MIN_VERSION) was not found on PATH or in ~/.cargo/bin" >&2; \
+		echo "Install or update Cargo and rustc using system packages or rustup: https://rustup.rs" >&2; \
 		exit 1; \
-	fi
-	# Report the toolchain version to the install log (stderr) BEFORE compiling.
-	# R CMD check --as-cran scans the lines preceding the first "Compiling" for a
-	# `rustc <ver>` / `cargo <ver>` line; without it the "Rust compilation" check
-	# emits the "No rustc version reported prior to compilation" WARNING.
-	@rustc --version >&2 || true
-	@cargo --version >&2 || true
-	# Self-contained vendored build: extract the cargo-vendored crates.io deps
-	# (shipped compressed to dodge R's tarball dotfile stripping), then build the
-	# capi STATICLIB OFFLINE against them. The crates.io source replacement is
-	# passed INLINE via --config (resolves `vendor` against rust/, and ships NO
-	# hidden .cargo/ dir that would trip R CMD check). If vendor.tar.xz is absent
-	# (raw in-repo dev), fall back to an ONLINE build.
-	#
-	# CARGO_HOME=$(CARGOTMP) keeps cargo's registry/cache out of ~/.cargo (CRAN
-	# Policy). CARGO_TARGET_DIR is the in-package target/ that rust_clean wipes.
-	# `-j 2` bounds Cargo's parallelism as required by CRAN's "Using Rust" policy
-	# (https://cran.r-project.org/web/packages/using_rust.html); without it Cargo
-	# defaults to every logical CPU on the build machine.
+	}; \
+	rustc=`find_suitable_rust_tool rustc "$(RUSTC_MIN_VERSION)"` || { \
+		echo "nirs4alldatasets: ERROR - rustc >= $(RUSTC_MIN_VERSION) was not found on PATH or in ~/.cargo/bin" >&2; \
+		echo "Rust $(RUSTC_MIN_VERSION) is required by the bundled dependency closure (including zip 8.6.0)." >&2; \
+		echo "Install or update Cargo and rustc using system packages or rustup: https://rustup.rs" >&2; \
+		exit 1; \
+	}; \
+	"$$rustc" --version >&2; \
+	"$$cargo" --version >&2; \
+	export RUSTC="$$rustc" && \
 	export CARGO_HOME="$(CARGOTMP)" && \
 	export CARGO_TARGET_DIR="$(TARGET_DIR)" && \
 	if [ -f rust/vendor.tar.xz ]; then \
 		[ -d rust/vendor ] || ( echo "extracting rust/vendor.tar.xz"; cd rust && tar xJf vendor.tar.xz ); \
-		cd rust && cargo build -p nirs4all-datasets-capi --release -j 2 --offline \
+		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2 --offline \
 			--config 'source.crates-io.replace-with="vendored-sources"' \
 			--config 'source.vendored-sources.directory="vendor"'; \
 	else \
-		cd rust && cargo build -p nirs4all-datasets-capi --release -j 2; \
+		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2; \
 	fi
 
 # Post-link cleanup. Runs AFTER $(SHLIB) has linked $(STATLIB) into the package
@@ -94,10 +141,10 @@ $(STATLIB):
 # when NOT_CRAN=true (dev inner loop keeps the cache for incremental rebuilds).
 rust_clean: $(SHLIB)
 	@if [ "$(NOT_CRAN)" != "true" ]; then \
-		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor"; \
+		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
 	fi
 
 C_clean:
-	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor
+	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
 
 clean: C_clean

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! WASM binding (wasm-bindgen) over the pure, offline surface of the acquisition
 //! core. Per `migration_ABI_C.md` §4 the browser is the sharp constraint (per-instance
 //! Dataverse CORS, no real filesystem, dataset size), so the WASM surface is scoped to

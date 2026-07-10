@@ -1,0 +1,6 @@
+#!/bin/sh
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
+# Rtools invokes configure.win for Windows source installs. Reuse the exact
+# bundled-toolchain discovery and provenance checks used on Unix/macOS.
+script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
+exec "$script_dir/configure" "$@"

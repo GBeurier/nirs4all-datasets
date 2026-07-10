@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 #
 # The dataset-acquisition core of nirs4all-datasets: resolve a dataset id (from the
 # distributable catalog/index.json) to its pinned origin, download the canonical
@@ -20,19 +20,20 @@ exclude = [
 ]
 
 [workspace.package]
-version = "0.3.5"
+version = "0.3.6"
 edition = "2021"
+rust-version = "1.88"
 license = "CECILL-2.1 OR AGPL-3.0-or-later"
-authors = ["Gregory Beurier <beurier@cirad.fr>"]
+authors = ["Gregory Beurier <gregory.beurier@cirad.fr>"]
 repository = "https://github.com/GBeurier/nirs4all-datasets"
 homepage = "https://github.com/GBeurier/nirs4all-datasets"
 
 [workspace.dependencies]
 # Internal crates (path deps; a `version` is REQUIRED for crates.io publishing and
 # is kept in lock-step with [workspace.package] by scripts/bump_version.sh).
-nirs4all-datasets-core = { path = "crates/nirs4all-datasets-core", version = "0.3.5" }
-nirs4all-formats = { path = "../nirs4all-formats/crates/nirs4all-formats", version = "0.2.2" }
-nirs4all-io = { path = "../nirs4all-io/crates/nirs4all-io", version = "0.1.7" }
+nirs4all-datasets-core = { path = "crates/nirs4all-datasets-core", version = "0.3.6" }
+nirs4all-formats = { path = "../nirs4all-formats/crates/nirs4all-formats", version = "0.2.7" }
+nirs4all-io = { path = "../nirs4all-io/crates/nirs4all-io", version = "0.1.11" }
 # Third-party.
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order", "float_roundtrip"] }

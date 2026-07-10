@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! pyo3 native module (`nirs4all_datasets_core._n4ds`) over the acquisition core.
 //!
 //! JSON-string in / JSON-string out — the idiomatic Python layer

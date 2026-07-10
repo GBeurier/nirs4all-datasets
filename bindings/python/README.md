@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later -->
 # nirs4all-datasets-core (Python)
 
 The native (Rust) dataset-**acquisition** core of

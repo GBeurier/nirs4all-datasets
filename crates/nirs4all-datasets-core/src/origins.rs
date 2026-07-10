@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Per-repository file resolution: turn a [`Resolved`] dataset into a map of
 //! `relpath -> FileLocation` (the download URL + any token to attach).
 //!

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Windows (Rtools45 / mingw-w64, UCRT) self-contained OFFLINE build. Compile the
 # nirs4all-datasets Rust core into a STATICLIB with the x86_64-pc-windows-gnu
 # toolchain (so its ABI matches Rtools' mingw gcc, which performs the final link of
@@ -24,6 +24,7 @@ TARGET_DIR = $(SHORTTMP)/n4ds
 CARGOTMP = $(SHORTTMP)/n4ds-ch
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
 STATLIB = $(LIBDIR)/libnirs4all_datasets_capi.a
+-include n4ds-rust-toolchain.mk
 PKG_CPPFLAGS = -I$(CURDIR)
 # Reference the staticlib by EXACT PATH (not -lnirs4all_datasets_capi): the
 # configure-generated vendored capi crate emits the STATICLIB only (its [lib]
@@ -58,8 +59,9 @@ all: $(SHLIB) rust_clean
 $(SHLIB): $(STATLIB)
 
 $(STATLIB):
-	@if ! command -v cargo >/dev/null; then \
-		echo "Cargo is required to build nirs4alldatasets. Install Rust from https://rustup.rs."; \
+	@if [ -z "$(N4DS_CARGO)" ] || [ -z "$(N4DS_RUSTC)" ]; then \
+		echo "nirs4alldatasets: ERROR - configure.win did not record a suitable Cargo/rustc toolchain" >&2; \
+		echo "Run R CMD INSTALL from a source tarball with configure.win intact." >&2; \
 		exit 1; \
 	fi
 	# `rustc` links the x86_64-pc-windows-gnu CDYLIB against `-lgcc_eh`, but
@@ -73,8 +75,8 @@ $(STATLIB):
 	# Report the toolchain version to the install log (stderr) BEFORE compiling, so
 	# the R CMD check --as-cran "Rust compilation" check finds a `rustc <ver>` line
 	# (otherwise it WARNs "No rustc version reported prior to compilation").
-	@rustc --version >&2 || true
-	@cargo --version >&2 || true
+	@"$(N4DS_RUSTC)" --version >&2
+	@"$(N4DS_CARGO)" --version >&2
 	# Self-contained vendored OFFLINE build of the staticlib for the gnu target.
 	# Source replacement passed INLINE via --config (no hidden .cargo/ dir).
 	# Rtools provides tar/xz. CARGO_HOME=$(CARGOTMP) keeps cargo off
@@ -91,11 +93,11 @@ $(STATLIB):
 	export LIBRARY_PATH="$${LIBRARY_PATH};$(TARGET_DIR)/libgcc_mock" && \
 	if [ -f rust/vendor.tar.xz ]; then \
 		[ -d rust/vendor ] || ( echo "extracting rust/vendor.tar.xz"; cd rust && tar xJf vendor.tar.xz ); \
-		cd rust && cargo build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET) --offline \
+		cd rust && "$(N4DS_CARGO)" build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET) --offline \
 			--config 'source.crates-io.replace-with="vendored-sources"' \
 			--config 'source.vendored-sources.directory="vendor"'; \
 	else \
-		cd rust && cargo build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET); \
+		cd rust && "$(N4DS_CARGO)" build -p nirs4all-datasets-capi --release -j 2 --target $(TARGET); \
 	fi
 
 # Post-link cleanup — see src/Makevars. Runs after $(SHLIB) links $(STATLIB),
@@ -104,10 +106,10 @@ $(STATLIB):
 # Skipped when NOT_CRAN=true.
 rust_clean: $(SHLIB)
 	@if [ "$(NOT_CRAN)" != "true" ]; then \
-		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor"; \
+		rm -Rf "$(TARGET_DIR)" "$(CARGOTMP)" "$(CURDIR)/rust/vendor" "$(CURDIR)/n4ds-rust-toolchain.mk"; \
 	fi
 
 C_clean:
-	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor
+	rm -Rf $(SHLIB) $(OBJECTS) $(STATLIB) $(TARGET_DIR) $(CARGOTMP) $(CURDIR)/rust/vendor $(CURDIR)/n4ds-rust-toolchain.mk
 
 clean: C_clean

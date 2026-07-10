@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! The crate's error type. Messages are token-free (a Dataverse key is never
 //! interpolated into an error) so they are safe to surface across the C ABI.
 

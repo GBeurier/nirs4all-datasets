@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! The pooch-style local cache layout + atomic writes.
 //!
 //! The default cache root matches `pooch.os_cache("nirs4all-datasets")`

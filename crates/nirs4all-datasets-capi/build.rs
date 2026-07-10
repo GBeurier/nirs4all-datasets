@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! Build script: regenerate the C ABI header into `include/nirs4all_datasets.h`.
 //!
 //! Re-runs whenever the crate source or the workspace-level `cbindgen.toml` changes.

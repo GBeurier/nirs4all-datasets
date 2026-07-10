@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 //! `n4ds` — a thin CLI over the acquisition core. It reads the distributable
 //! `catalog/index.json` and resolves / fetches / verifies a dataset, printing JSON.
 //! It doubles as the cross-binding parity oracle (every binding must agree with it).

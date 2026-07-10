@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 // Node smoke test for the WASM binding. Run after `wasm-pack build bindings/wasm
 // --target nodejs --out-dir pkg-node`:  `node bindings/wasm/tests/node_smoke.cjs`.
 const assert = require("node:assert");
