@@ -21,7 +21,7 @@
 CARGO_MIN_VERSION = 1.85.0
 RUSTC_MIN_VERSION = 1.88.0
 
-TMP_ROOT = $(TMPDIR)
+TMP_ROOT = $(if $(TMPDIR),$(TMPDIR),$(if $(TEMP),$(TEMP),$(if $(TMP),$(TMP),/tmp)))
 TARGET_DIR = $(TMP_ROOT)/n4ds-r-target
 LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/libnirs4all_datasets_capi.a
@@ -124,7 +124,7 @@ $(STATLIB):
 	"$$rustc" --version >&2; \
 	"$$cargo" --version >&2; \
 	if [ -z "$(TMP_ROOT)" ]; then \
-		echo "nirs4alldatasets: ERROR - TMPDIR is not set by R; cannot create build-local Cargo directories" >&2; \
+		echo "nirs4alldatasets: ERROR - no usable temporary directory was found for build-local Cargo directories" >&2; \
 		exit 1; \
 	fi; \
 	export RUSTC="$$rustc" && \
