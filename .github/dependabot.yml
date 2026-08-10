@@ -30,12 +30,7 @@ updates:
     commit-message:
       prefix: "docs"
 
-  - package-ecosystem: "cargo"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      rust:
-        patterns: ["*"]
-    commit-message:
-      prefix: "chore"
+  # Cargo resolution uses sibling path dependencies to nirs4all-formats and
+  # nirs4all-io. Dependabot checks out only this repository, so its updater
+  # cannot resolve those paths and produces a permanently failing job. Rust
+  # dependency upgrades are coordinated manually with the sibling releases.
