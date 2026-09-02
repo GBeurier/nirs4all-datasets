@@ -30,7 +30,8 @@ def test_result_reports_drift_without_short_circuiting() -> None:
 
 
 def test_v1_contract_declares_final_dependency_train() -> None:
-    _, contract, _ = release_train.check_tree(ROOT, enforce_contract=False)
+    result, contract, _ = release_train.check_tree(ROOT, enforce_contract=False)
+    assert "release/train-v1.toml release_version = 0.3.9" in result.checked
     assert contract["release_version"] == "0.3.9"
     assert contract["dependencies"] == {"nirs4all-formats": "0.2.8", "nirs4all-io": "0.1.12"}
     assert contract["prerequisites"] == {"dag-ml-data": "0.2.10"}

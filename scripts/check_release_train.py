@@ -86,6 +86,7 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
     }
 
     result.expect("pyproject.toml project.version", pyproject["project"]["version"], workspace_version)
+    result.expect("release/train-v1.toml release_version", contract.get("release_version"), workspace_version)
     result.expect(
         "Cargo.toml nirs4all-datasets-core dependency",
         _dependency_version(dependencies["nirs4all-datasets-core"], label="Cargo.toml nirs4all-datasets-core"),
@@ -141,7 +142,6 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
 
     if enforce_contract:
         result.expect("release/train-v1.toml schema_version", contract.get("schema_version"), 1)
-        result.expect("Cargo workspace release version", workspace_version, contract.get("release_version"))
         contract_dependencies = contract.get("dependencies", {})
         for name, version in upstream.items():
             result.expect(f"V1 train dependency {name}", version, contract_dependencies.get(name))
