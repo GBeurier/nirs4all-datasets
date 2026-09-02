@@ -150,6 +150,10 @@ jobs:
             echo "Dry-run only (no publish)."
           fi
 
+      - name: Require the exact published V1 dependency train
+        if: steps.gate.outputs.do == 'true'
+        run: python3 scripts/check_release_train.py --release --check-registry
+
       - name: Publish to npm (provenance)
         if: steps.gate.outputs.do == 'true'
         working-directory: bindings/wasm/pkg-node

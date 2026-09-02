@@ -127,8 +127,12 @@ jobs:
       name: pypi
       url: https://pypi.org/p/nirs4all-datasets
     permissions:
+      contents: read
       id-token: write
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
+      - name: Require the exact published V1 dependency train
+        run: python3 scripts/check_release_train.py --release --check-registry
       # Pull ONLY the Python wheels + sdist into dist/. A bare download-artifact
       # with no `pattern:`/`name:` grabs EVERY run artifact, which would drag the
       # C-ABI archives (nirs4all-datasets-capi-*.tar.gz) into dist/; the publish
@@ -191,7 +195,7 @@ jobs:
 
   github-release:
     name: Attach assets to the GitHub release
-    needs: [python-wheels, python-sdist, c-abi-archive]
+    needs: [python-wheels, python-sdist, c-abi-archive, publish-pypi]
     runs-on: ubuntu-latest
     # Same gate as publish-pypi: production tags only, pre-release tags ('-')
     # excluded so a pre-release never cuts a public GitHub Release.

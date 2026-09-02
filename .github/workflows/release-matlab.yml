@@ -51,6 +51,10 @@ jobs:
             -o "dist/${{ steps.meta.outputs.prefix }}.zip"
           unzip -l "dist/${{ steps.meta.outputs.prefix }}.zip" | tail -3
 
+      - name: Require the exact published V1 dependency train
+        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref_name, '-')
+        run: python3 scripts/check_release_train.py --release --check-registry
+
       - name: Upload to the matching Release
         if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref_name, '-')
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
