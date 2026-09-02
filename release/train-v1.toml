@@ -1,0 +1,15 @@
+schema_version = 1
+release_version = "0.3.9"
+
+[dependencies]
+nirs4all-formats = "0.2.8"
+nirs4all-io = "0.1.12"
+
+[prerequisites]
+dag-ml-data = "0.2.10"
+
+[registries]
+# These are the exact crates consumed by nirs4all-datasets.  nirs4all-io's own
+# release also depends on dag-ml-data 0.2.10, so verify that prerequisite
+# explicitly rather than accepting a local/path-only IO tree.
+crates_io = ["dag-ml-data", "nirs4all-formats", "nirs4all-io"]

@@ -97,6 +97,22 @@ reads.
 
 Run these before tagging or publishing anything:
 
+0. **Exact V1 dependency train** — the machine-readable contract is
+   [`release/train-v1.toml`](../../release/train-v1.toml). The offline check
+   `python scripts/check_release_train.py` proves that the root Cargo manifest,
+   Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
+   manifest all agree. The publishing check is stricter:
+   `python scripts/check_release_train.py --release --check-registry` requires
+   Datasets 0.3.9, Formats 0.2.8, and IO 0.1.12, then verifies those exact crates
+   plus IO's DMD 0.2.10 prerequisite on crates.io. It deliberately remains
+   **HOLD** until the upstream
+   release order has completed; a sibling checkout or path dependency is not
+   evidence that a downstream registry artifact can resolve. Every automated
+   public-publish/upload path runs this fail-closed gate, while ordinary dry-run
+   artifact builds remain usable during staging. On a Datasets release tag,
+   `scripts/ensure_rust_deps.sh` also checks out each sibling's exact dependency
+   tag from the root manifest and rejects a tag/version mismatch; moving sibling
+   default branches are never release inputs.
 1. **Version sync** — `scripts/bump_version.sh --check`. The canonical version
    lives in the root `Cargo.toml` `[workspace.package] version`; the script syncs
    it into every tracked binding manifest (the `[workspace.dependencies]`
