@@ -5,6 +5,12 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.9] - 2026-09-02
+
+### Changed
+- Align the Python, Rust, PyO3, WASM/npm, R, and citation package identities
+  with the Datasets 0.3.9 V1 release train.
+
 ## [0.3.8] - 2026-07-10
 
 ### Fixed
