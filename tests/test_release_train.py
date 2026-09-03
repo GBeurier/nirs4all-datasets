@@ -13,14 +13,14 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_tracked_dependency_surfaces_are_consistent() -> None:
     result, _, upstream = release_train.check_tree(ROOT, enforce_contract=False)
     assert result.errors == []
-    assert upstream == {"nirs4all-formats": "0.2.8", "nirs4all-io": "0.1.12"}
+    assert upstream == {"nirs4all-formats": "0.2.9", "nirs4all-io": "0.1.12"}
     assert "pyproject.toml project.license = CECILL-2.1 OR AGPL-3.0-or-later" in result.checked
     assert "pyproject.toml commercial license packaging = True" in result.checked
 
 
 def test_python_extra_parser_requires_explicit_minimums() -> None:
-    pyproject = {"project": {"optional-dependencies": {"io": ["nirs4all-io>=0.1.12", "nirs4all-formats>=0.2.8", "other~=1.0"]}}}
-    assert release_train._python_extra_versions(pyproject) == {"nirs4all-io": "0.1.12", "nirs4all-formats": "0.2.8"}
+    pyproject = {"project": {"optional-dependencies": {"io": ["nirs4all-io>=0.1.12", "nirs4all-formats>=0.2.9", "other~=1.0"]}}}
+    assert release_train._python_extra_versions(pyproject) == {"nirs4all-io": "0.1.12", "nirs4all-formats": "0.2.9"}
 
 
 def test_result_reports_drift_without_short_circuiting() -> None:
@@ -33,9 +33,9 @@ def test_result_reports_drift_without_short_circuiting() -> None:
 
 def test_v1_contract_declares_final_dependency_train() -> None:
     result, contract, _ = release_train.check_tree(ROOT, enforce_contract=False)
-    assert "release/train-v1.toml release_version = 0.3.9" in result.checked
-    assert contract["release_version"] == "0.3.9"
-    assert contract["dependencies"] == {"nirs4all-formats": "0.2.8", "nirs4all-io": "0.1.12"}
+    assert "release/train-v1.toml release_version = 0.3.10" in result.checked
+    assert contract["release_version"] == "0.3.10"
+    assert contract["dependencies"] == {"nirs4all-formats": "0.2.9", "nirs4all-io": "0.1.12"}
     assert contract["prerequisites"] == {"dag-ml-data": "0.2.10"}
 
 
