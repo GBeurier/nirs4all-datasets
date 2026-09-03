@@ -24,6 +24,10 @@ on:
         description: 'Publish to npm (true) or dry-run only (false)'
         type: boolean
         default: false
+      release_ref:
+        description: 'Optional immutable tag to rebuild'
+        required: false
+        default: ''
   push:
     # GitHub tag filters are globs, not regex; '-rc'/pre-release tags still
     # match here and are filtered out of the publish step below.
@@ -47,6 +51,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
+        with:
+          ref: ${{ inputs.release_ref || github.ref }}
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.11"

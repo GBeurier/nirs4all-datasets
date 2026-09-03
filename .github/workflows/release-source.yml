@@ -13,7 +13,12 @@
 name: release-source
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      release_ref:
+        description: "Optional immutable tag to rebuild"
+        required: false
+        default: ""
   push:
     tags: ['v[0-9]*.[0-9]*.[0-9]*']
 
@@ -33,6 +38,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
         with:
           fetch-depth: 0   # need the tag object for git archive
+          ref: ${{ inputs.release_ref || github.ref }}
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.11"
