@@ -222,7 +222,10 @@ def main(argv: list[str] | None = None) -> int:
         for error in result.errors:
             print(f"  - {error}", file=sys.stderr)
         return 1
-    print("GO: release train is internally consistent" + (" and publishable" if args.release else ""))
+    suffix = " for the declared release contract" if args.release else ""
+    if args.check_registry:
+        suffix += " with registry prerequisites available"
+    print("GO: release train is internally consistent" + suffix)
     return 0
 
 
