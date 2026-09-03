@@ -10,6 +10,12 @@ surface is stable in shape but may still change before `1.0`.
 ### Changed
 - Align the Python, Rust, PyO3, WASM/npm, R, and citation package identities
   with the Datasets 0.3.9 V1 release train.
+- Pin the executable release train to nirs4all-formats 0.2.8 and
+  nirs4all-io 0.1.12 on every Python, Rust, lockfile, and R vendor surface.
+
+### Fixed
+- Use the canonical SPDX `CECILL-2.1` identifier and include both commercial
+  license notices in Python source and wheel artifacts.
 
 ## [0.3.8] - 2026-07-10
 

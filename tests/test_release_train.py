@@ -13,7 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_tracked_dependency_surfaces_are_consistent() -> None:
     result, _, upstream = release_train.check_tree(ROOT, enforce_contract=False)
     assert result.errors == []
-    assert upstream == {"nirs4all-formats": "0.2.7", "nirs4all-io": "0.1.11"}
+    assert upstream == {"nirs4all-formats": "0.2.8", "nirs4all-io": "0.1.12"}
+    assert "pyproject.toml project.license = CECILL-2.1 OR AGPL-3.0-or-later" in result.checked
+    assert "pyproject.toml commercial license packaging = True" in result.checked
 
 
 def test_python_extra_parser_requires_explicit_minimums() -> None:

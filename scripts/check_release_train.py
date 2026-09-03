@@ -23,6 +23,14 @@ from pathlib import Path
 from typing import Any
 
 _REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<version>[0-9A-Za-z.+-]+)$")
+_PROJECT_LICENSE = "CECILL-2.1 OR AGPL-3.0-or-later"
+_REQUIRED_LICENSE_FILES = (
+    "LICENSE",
+    "LICENSES/AGPL-3.0-or-later.txt",
+    "LICENSES/CeCILL-2.1.txt",
+    "LICENSES/COMMERCIAL-LICENSE.md",
+    "LICENSES/COMMERCIAL-LICENSE_FR.md",
+)
 
 
 @dataclass
@@ -87,6 +95,16 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
 
     result.expect("pyproject.toml project.version", pyproject["project"]["version"], workspace_version)
     result.expect("release/train-v1.toml release_version", contract.get("release_version"), workspace_version)
+    result.expect("pyproject.toml project.license", pyproject["project"].get("license"), _PROJECT_LICENSE)
+    result.expect("Cargo.toml workspace.package.license", cargo["workspace"]["package"].get("license"), _PROJECT_LICENSE)
+    license_patterns = pyproject["project"].get("license-files", [])
+    result.expect(
+        "pyproject.toml commercial license packaging",
+        "LICENSES/COMMERCIAL-LICENSE*.md" in license_patterns,
+        True,
+    )
+    for relative in _REQUIRED_LICENSE_FILES:
+        result.expect(f"license file {relative}", (root / relative).is_file(), True)
     result.expect(
         "Cargo.toml nirs4all-datasets-core dependency",
         _dependency_version(dependencies["nirs4all-datasets-core"], label="Cargo.toml nirs4all-datasets-core"),
