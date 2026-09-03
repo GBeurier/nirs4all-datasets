@@ -13,8 +13,8 @@ this page only summarizes
 the catalog-specific flows.
 
 For the V1 train, public release is fail-closed on the exact contract in
-[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.9 consumes
-Formats 0.2.8 and IO 0.1.12. Run the offline consistency check at any time:
+[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.10 consumes
+Formats 0.2.9 and IO 0.1.12. Run the offline consistency check at any time:
 
 ```bash
 python scripts/check_release_train.py
@@ -27,7 +27,7 @@ python scripts/check_release_train.py --release --check-registry
 ```
 
 This second command must stay **HOLD** until the upstream crates are published
-in order (DMD 0.2.10, Formats 0.2.8, then IO 0.1.12). Local sibling/path builds
+in order (DMD 0.2.10, Formats 0.2.9, then IO 0.1.12). Local sibling/path builds
 are useful qualification evidence but cannot
 prove that a released wheel, crate, or source package resolves from public
 registries.
@@ -50,11 +50,11 @@ registries.
 ### Cut a release
 
 ```bash
-scripts/bump_version.sh --bump 0.3.9
+scripts/bump_version.sh --bump 0.3.10
 scripts/bump_version.sh --check
 python scripts/check_release_train.py --release --check-registry
-git commit -am "chore(release): bump datasets to 0.3.9"
-git tag v0.3.9
+git commit -am "chore(release): bump datasets to 0.3.10"
+git tag v0.3.10
 git push origin main --tags
 ```
 

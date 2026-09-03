@@ -5,6 +5,20 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.10] - 2026-09-03
+
+### Security
+
+- Repin the optional raw-origin preparation path to nirs4all-formats 0.2.9,
+  eliminating the vulnerable `quick-xml` dependency lines reported by
+  `RUSTSEC-2026-0194` and `RUSTSEC-2026-0195` without changing runtime
+  behavior or the IO 0.1.12 release-train pin.
+- Synchronize the Python extra, Rust lockfiles, release contract, and R source
+  package metadata with the secured Formats release.
+- Upgrade the embedded Python binding to PyO3 0.29.2 and require maturin 1.14.1
+  or newer, resolving `RUSTSEC-2025-0020` and `RUSTSEC-2026-0177` while
+  preserving its JSON-string API and stable `abi3-py311` wheel contract.
+
 ## [0.3.9] - 2026-09-02
 
 ### Changed
