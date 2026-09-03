@@ -41,8 +41,17 @@ read_dependency_version() {
 
 read_workspace_version() {
     local dest="$1"
-    sed -nE '/^\[workspace\.package\]/,/^\[/{s/^version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/p}' \
-        "${dest}/Cargo.toml" | head -n1
+    awk '
+        /^\[workspace\.package\]$/ { in_package = 1; next }
+        in_package && /^\[/ { exit }
+        in_package && /^version[[:space:]]*=/ {
+            value = $0
+            sub(/^[^=]*=[[:space:]]*"/, "", value)
+            sub(/".*/, "", value)
+            print value
+            exit
+        }
+    ' "${dest}/Cargo.toml"
 }
 
 checkout_ref_if_needed() {

@@ -42,6 +42,9 @@ permissions:
   id-token: write   # npm provenance (OIDC)
 
 env:
+  NIRS4ALL_SIBLING_REF: ${{ inputs.release_ref || github.ref_name }}
+
+env:
   # npm package name (scoped, public). The crate is nirs4all-datasets-wasm; the
   # published package is the short scoped name to match the docs / ecosystem.
   NPM_PKG_NAME: "@nirs4all/datasets-wasm"

@@ -42,6 +42,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NIRS4ALL_SIBLING_REF: ${{ inputs.release_ref || github.ref_name }}
+
 permissions:
   contents: read
 
