@@ -100,4 +100,4 @@ jobs:
           uv run --no-sync python -m nirs4all_datasets.cli catalog --root .
           git diff --exit-code catalog/datasets.yaml
       - name: Pytest (no network)
-        run: uv run --no-sync pytest -m "not network"
+        run: uv run --no-sync python -m pytest -m "not network"

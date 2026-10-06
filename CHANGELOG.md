@@ -5,6 +5,17 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.11] - 2026-10-06
+
+- Integrate the published 0.3.10 release history with main maintenance fixes.
+- Align source builds with the published IO 0.2.6 / Formats 0.2.11 train and
+  Data 0.2.13 prerequisite, preserving the IO 0.2 compatibility update.
+- Seed self-contained R vendoring from the reviewed Cargo lock, retain the
+  strict Rust 1.88 MSRV guard, and mirror deflate-only ZIP features.
+- Run CI pytest as a Python module so source release-contract tests are collected.
+- Preserve dataset content/catalogue versions and the C ABI 0.3.0. Existing
+  0.3.10 tags and artifacts remain immutable.
+
 ## [0.3.10] - 2026-09-03
 
 ### Security
