@@ -120,9 +120,16 @@ jobs:
           cp -r bindings/wasm/pkg-node bindings/wasm/pkg
           node bindings/wasm/tests/node_smoke.cjs
 
-      - name: npm pack --dry-run (confirm wasm + js + d.ts ship)
+      - name: Pack the reviewed npm distribution (wasm + js + d.ts)
         working-directory: bindings/wasm/pkg-node
-        run: npm pack --dry-run
+        run: npm pack
+
+      - name: Preserve the npm package for prepublication review
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: datasets-npm-${{ steps.ver.outputs.version }}
+          path: bindings/wasm/pkg-node/*.tgz
+          if-no-files-found: error
 
       - name: Validate tag matches package.json version
         if: startsWith(github.ref, 'refs/tags/v')
