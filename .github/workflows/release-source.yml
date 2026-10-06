@@ -34,6 +34,10 @@ jobs:
         with:
           fetch-depth: 0   # need the tag object for git archive
 
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+
       - name: Resolve version + reproducible epoch
         id: meta
         run: |
@@ -81,6 +85,10 @@ jobs:
             dist/${{ steps.meta.outputs.prefix }}-src.tar.gz
             dist/${{ steps.meta.outputs.prefix }}-src.zip
             dist/${{ steps.meta.outputs.prefix }}.cdx.json
+
+      - name: Require the exact published V1 dependency train
+        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref_name, '-')
+        run: python3 scripts/check_release_train.py --release --check-registry
 
       - name: Upload assets to the matching Release
         if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref_name, '-')

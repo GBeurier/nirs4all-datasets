@@ -18,7 +18,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.3.8"
+version = "0.3.10"
 edition = "2021"
 rust-version = "1.88"
 license = "CECILL-2.1 OR AGPL-3.0-or-later"
@@ -28,11 +28,11 @@ homepage = "https://github.com/GBeurier/nirs4all-datasets"
 readme = "README.md"
 
 [workspace.dependencies]
-nirs4all-datasets-core = { path = "vendored/nirs4all-datasets-core", version = "0.3.8" }
-nirs4all-formats-core = { path = "vendored/nirs4all-formats-core", version = "0.2.7" }
-nirs4all-formats = { path = "vendored/nirs4all-formats", version = "0.2.7" }
-nirs4all-io-core = { path = "vendored/nirs4all-io-core", version = "0.1.11" }
-nirs4all-io = { path = "vendored/nirs4all-io", version = "0.1.11" }
+nirs4all-datasets-core = { path = "vendored/nirs4all-datasets-core", version = "0.3.10" }
+nirs4all-formats-core = { path = "vendored/nirs4all-formats-core", version = "0.2.11" }
+nirs4all-formats = { path = "vendored/nirs4all-formats", version = "0.2.11" }
+nirs4all-io-core = { path = "vendored/nirs4all-io-core", version = "0.2.6" }
+nirs4all-io = { path = "vendored/nirs4all-io", version = "0.2.6" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order", "float_roundtrip"] }
 thiserror = "2.0"
@@ -40,7 +40,7 @@ sha2 = "0.10"
 hex = "0.4"
 directories = "5"
 ureq = "2"
-zip = "2"
+zip = { version = "2", default-features = false, features = ["deflate"] }
 regex = "1.10"
 toml = "0.8"
 indexmap = { version = "2.2", features = ["serde"] }
