@@ -117,8 +117,8 @@ Run these before tagging or publishing anything:
    Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
    manifest all agree. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   Datasets 0.3.10, Formats 0.2.9, and IO 0.1.12, then verifies those exact crates
-   plus IO's DMD 0.2.10 prerequisite on crates.io. It deliberately remains
+   the current source train: Datasets 0.3.10, Formats 0.2.11, and IO 0.2.6,
+   then verifies those exact crates plus IO's DMD 0.2.13 prerequisite on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not
    evidence that a downstream registry artifact can resolve. Every automated
@@ -126,7 +126,10 @@ Run these before tagging or publishing anything:
    artifact builds remain usable during staging. On a Datasets release tag,
    `scripts/ensure_rust_deps.sh` also checks out each sibling's exact dependency
    tag from the root manifest and rejects a tag/version mismatch; moving sibling
-   default branches are never release inputs.
+   default branches are never release inputs. The immutable `v0.3.10` artifacts
+   retain their original IO 0.1.12 / Formats 0.2.9 train. A future publication of
+   the current dependency train must bump the package version and update the
+   contract before these gates; existing registry versions are not replaced.
 1. **Version sync** — `scripts/bump_version.sh --check`. The canonical version
    lives in the root `Cargo.toml` `[workspace.package] version`; the script syncs
    it into every tracked binding manifest (the `[workspace.dependencies]`
