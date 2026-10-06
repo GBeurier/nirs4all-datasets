@@ -13,7 +13,7 @@ this page only summarizes
 the catalog-specific flows.
 
 For the current source train, public release is fail-closed on the exact contract in
-[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.10 consumes
+[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.11 consumes
 Formats 0.2.11 and IO 0.2.6. This integrated main train differs from the immutable
 `v0.3.10` tag at `007d7aaf`, whose existing artifacts retain Formats 0.2.9 / IO 0.1.12.
 Publishing the refreshed dependency train requires a new package version and an
@@ -54,11 +54,11 @@ registries.
 ### Cut a release
 
 ```bash
-scripts/bump_version.sh --bump 0.3.10
+scripts/bump_version.sh --bump 0.3.11
 scripts/bump_version.sh --check
 python scripts/check_release_train.py --release --check-registry
-git commit -am "chore(release): bump datasets to 0.3.10"
-git tag v0.3.10
+git commit -am "chore(release): bump datasets to 0.3.11"
+git tag v0.3.11
 git push origin main --tags
 ```
 

@@ -117,7 +117,7 @@ Run these before tagging or publishing anything:
    Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
    manifest all agree. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.10, Formats 0.2.11, and IO 0.2.6,
+   the current source train: Datasets 0.3.11, Formats 0.2.11, and IO 0.2.6,
    then verifies those exact crates plus IO's DMD 0.2.13 prerequisite on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not
