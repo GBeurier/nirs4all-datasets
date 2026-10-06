@@ -606,7 +606,7 @@ sha2 = "0.10"
 hex = "0.4"
 directories = "5"
 ureq = "2"
-zip = "2"
+zip = { version = "2", default-features = false, features = ["deflate"] }
 regex = "1.10"
 toml = "0.8"
 indexmap = { version = "2.2", features = ["serde"] }
@@ -629,7 +629,17 @@ echo "nirs4alldatasets configure: cargo vendor (crates.io transitive deps)"
 # reachable crates.io dep for the default net/prepare features. The reader stack
 # is pure Rust, so no --target restriction is needed (and this cargo's `vendor`
 # has no --target flag anyway).
-( cd "$RUST" && "$CARGO" vendor --versioned-dirs vendor ) >/dev/null
+# Start from the reviewed workspace lockfile rather than resolving a fresh
+# registry closure on every R-universe rebuild. The vendored workspace omits
+# CLI/dev/build dependencies; reconcile that reduced graph while preserving
+# compatible locked versions, then require the resulting lock at vendoring.
+[ -f "$REPO/Cargo.lock" ] || {
+    echo "nirs4alldatasets configure(vendor): ERROR — committed workspace Cargo.lock is missing" >&2
+    exit 1
+}
+cp "$REPO/Cargo.lock" "$RUST/Cargo.lock"
+( cd "$RUST" && "$CARGO" metadata --format-version 1 >/dev/null )
+( cd "$RUST" && "$CARGO" vendor --locked --versioned-dirs vendor ) >/dev/null
 
 # Compute the resolved closure's declared MSRV from Cargo's structured metadata.
 # Keep the install-time constant explicit (so configure needs no Python on CRAN),

@@ -42,7 +42,7 @@ fn resolve(index_json: &str, dataset_id: &str) -> PyResult<String> {
 fn fetch(py: Python<'_>, resolved_json: &str, opts_json: &str) -> PyResult<String> {
     let resolved: Resolved = serde_json::from_str(resolved_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = FetchOptions::from_json(opts_json).map_err(to_pyerr)?;
-    py.allow_threads(|| {
+    py.detach(|| {
         let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
         let result = core_fetch(&resolved, &opts, &client).map_err(to_pyerr)?;
         serde_json::to_string(&result).map_err(|e| PyRuntimeError::new_err(e.to_string()))
@@ -55,7 +55,7 @@ fn fetch(py: Python<'_>, resolved_json: &str, opts_json: &str) -> PyResult<Strin
 fn retrieve_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
     let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = RetrieveOptions::from_json(opts_json).map_err(to_pyerr)?;
-    py.allow_threads(|| {
+    py.detach(|| {
         let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
         let result = core_retrieve_raw(&request, &opts, &client).map_err(to_pyerr)?;
         serde_json::to_string(&result).map_err(|e| PyRuntimeError::new_err(e.to_string()))
@@ -67,7 +67,7 @@ fn retrieve_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult
 fn prepare_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
     let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = PrepareOptions::from_json(opts_json).map_err(to_pyerr)?;
-    py.allow_threads(|| {
+    py.detach(|| {
         let result = core_prepare_raw(&request, &opts).map_err(to_pyerr)?;
         serde_json::to_string(&result).map_err(|e| PyRuntimeError::new_err(e.to_string()))
     })

@@ -34,6 +34,20 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 > CI (the GitHub Actions macOS runner has cargo on `PATH`); validate the R macOS
 > build on `mac-builder.r-project.org` before submitting. See *R → CRAN* below.
 
+## Release integration checkpoint — 6 October 2026
+
+The published `v0.3.10` tag remains at `007d7aaf`, with its original
+IO 0.1.12 / Formats 0.2.9 dependency train and source archives. Its R package
+already reports 0.3.10; R-universe now follows this immutable tag.
+
+The release commits are integrated into main together with the subsequent
+maintenance commits. Main retains the IO 0.2 compatibility update and aligns its
+manifests and lockfiles with the published IO 0.2.6 / Formats 0.2.11 train.
+`release/train-v1.toml` describes this current source tree. These dependency
+updates do not replace the existing tag or public archives. A future publication
+of the updated dependency train requires a new version and the normal gates.
+Dataset content versions and the C ABI version are unchanged.
+
 ## Single source of truth
 
 The canonical version is the **`[workspace.package] version` in the root
@@ -97,6 +111,22 @@ reads.
 
 Run these before tagging or publishing anything:
 
+0. **Exact V1 dependency train** — the machine-readable contract is
+   [`release/train-v1.toml`](../../release/train-v1.toml). The offline check
+   `python scripts/check_release_train.py` proves that the root Cargo manifest,
+   Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
+   manifest all agree. The publishing check is stricter:
+   `python scripts/check_release_train.py --release --check-registry` requires
+   Datasets 0.3.10, Formats 0.2.9, and IO 0.1.12, then verifies those exact crates
+   plus IO's DMD 0.2.10 prerequisite on crates.io. It deliberately remains
+   **HOLD** until the upstream
+   release order has completed; a sibling checkout or path dependency is not
+   evidence that a downstream registry artifact can resolve. Every automated
+   public-publish/upload path runs this fail-closed gate, while ordinary dry-run
+   artifact builds remain usable during staging. On a Datasets release tag,
+   `scripts/ensure_rust_deps.sh` also checks out each sibling's exact dependency
+   tag from the root manifest and rejects a tag/version mismatch; moving sibling
+   default branches are never release inputs.
 1. **Version sync** — `scripts/bump_version.sh --check`. The canonical version
    lives in the root `Cargo.toml` `[workspace.package] version`; the script syncs
    it into every tracked binding manifest (the `[workspace.dependencies]`
