@@ -78,9 +78,12 @@ jobs:
           node <<'JS'
           const { execFileSync } = require('node:child_process');
           const version = execFileSync('npm', ['--version'], { encoding: 'utf8' }).trim();
-          const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
+          const match = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(version);
           if (!match) throw new Error(`Unexpected npm version: ${version}`);
-          const [, major, minor, patch] = match.map(Number);
+          const [major, minor, patch] = match.slice(1).map(Number);
+          if (![major, minor, patch].every(Number.isSafeInteger)) {
+            throw new Error(`Unexpected npm version: ${version}`);
+          }
           if (major < 11 || (major === 11 && (minor < 5 || (minor === 5 && patch < 1)))) {
             throw new Error('Trusted publishing requires npm >= 11.5.1');
           }
