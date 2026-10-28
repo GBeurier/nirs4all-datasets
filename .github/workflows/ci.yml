@@ -42,9 +42,17 @@ jobs:
         with:
           node-version: "22"
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
-        with:
-          version: 'v0.15.0'
+        # install copies across filesystems; the upstream action's rename fails with EXDEV
+        # when /tmp and ~/.cargo are mounted on different devices.
+        run: |
+          set -euo pipefail
+          tmp_dir="$(mktemp -d)"
+          trap 'rm -rf "$tmp_dir"' EXIT
+          curl -fsSL --retry 3 https://github.com/rustwasm/wasm-pack/releases/download/v0.15.0/wasm-pack-v0.15.0-x86_64-unknown-linux-musl.tar.gz -o "$tmp_dir/wasm-pack.tar.gz"
+          tar -xzf "$tmp_dir/wasm-pack.tar.gz" -C "$tmp_dir"
+          install -m 755 "$tmp_dir/wasm-pack-v0.15.0-x86_64-unknown-linux-musl/wasm-pack" "$HOME/.cargo/bin/wasm-pack"
+          wasm-pack --version
+
       - name: Build Node WASM package
         run: wasm-pack build bindings/wasm --release --target nodejs --out-dir pkg-node --scope nirs4all
       - name: Pin package name used for npm
