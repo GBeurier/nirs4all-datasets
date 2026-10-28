@@ -1,0 +1,489 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "UCPH marzipan multi-instrument spectroscopy. v2.0 standardized NIRS package: 6 spectral source(s), 2 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X1.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Infratec 1255 NIT",
+      "sha256": "1c563ccbaf4f4321afc10aefc18ddcc0ace92eebd81603679f9922fbb277c12f"
+    },
+    {
+      "@id": "file/X2.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "NIRSystems 6500 sample cup reflection",
+      "sha256": "4b1a58f03d45226a02f82c2c4acfc8d4a089a95285b50df22c9d9de869dfb4db"
+    },
+    {
+      "@id": "file/X3.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "NIRSystems 6500 fibre probe reflection",
+      "sha256": "a016b2c7ac1197dba47ef8b05b776b075e7154f5e4bcc10ff57b76522b999e50"
+    },
+    {
+      "@id": "file/X4.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Infraprover II FT-NIR",
+      "sha256": "19b8d41b0d264ea1d815ee9c96a398c7368bc5ea8413db50279f13bbda8185ff"
+    },
+    {
+      "@id": "file/X5.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Bomem MB160 Diffusir FT-NIR",
+      "sha256": "bff2f3bdad937600a3beab38cfae92834b76d36207abbc93058e5554bcca90b1"
+    },
+    {
+      "@id": "file/X6.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "IR spectroscopy",
+      "sha256": "86e77aac5e391ae63d53ca15bd921c6ab900acc5ac9bec1a2386b7a25ea65ceb"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "7175668c796baa61e4b4a35855fc5283009bd02c40250e01b5e149c5f9487338"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "ucph"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "ucph_marzipan_multi_instrument_spectroscopy",
+  "recordSet": [
+    {
+      "@id": "X1",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Infratec 1255 NIT' (32 observations x 100 wavelengths).",
+      "field": [
+        {
+          "@id": "X1/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X1/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X1/sample_id"
+      },
+      "name": "X1"
+    },
+    {
+      "@id": "X2",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'NIRSystems 6500 sample cup reflection' (32 observations x 1000 wavelengths).",
+      "field": [
+        {
+          "@id": "X2/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X2/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X2/sample_id"
+      },
+      "name": "X2"
+    },
+    {
+      "@id": "X3",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'NIRSystems 6500 fibre probe reflection' (32 observations x 600 wavelengths).",
+      "field": [
+        {
+          "@id": "X3/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X3.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X3/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X3.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X3/sample_id"
+      },
+      "name": "X3"
+    },
+    {
+      "@id": "X4",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Infraprover II FT-NIR' (32 observations x 406 wavelengths).",
+      "field": [
+        {
+          "@id": "X4/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X4.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X4/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X4.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X4/sample_id"
+      },
+      "name": "X4"
+    },
+    {
+      "@id": "X5",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Bomem MB160 Diffusir FT-NIR' (32 observations x 664 wavelengths).",
+      "field": [
+        {
+          "@id": "X5/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X5.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X5/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X5.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X5/sample_id"
+      },
+      "name": "X5"
+    },
+    {
+      "@id": "X6",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'IR spectroscopy' (32 observations x 950 wavelengths).",
+      "field": [
+        {
+          "@id": "X6/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X6.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X6/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the cm-1 axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X6.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X6/sample_id"
+      },
+      "name": "X6"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ref_sugar",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ref_sugar' (role target, type numeric).",
+          "name": "ref_sugar",
+          "source": {
+            "extract": {
+              "column": "ref_sugar"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ref_moisture",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ref_moisture' (role target, type numeric).",
+          "name": "ref_moisture",
+          "source": {
+            "extract": {
+              "column": "ref_moisture"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://sid.erda.dk/share_redirect/AY8wS3D8Kn/Marzipan.zip",
+    "https://ucphchemometrics.com/datasets/",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

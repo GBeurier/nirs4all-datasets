@@ -61,8 +61,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Leaf_ID | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2079, top 4005_20/07/21 (×1) |
 | Experiment | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top Greenhouse (×1543) |
 | Phenotyping_type | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top HT (×1972) |
-| li600_present | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top True (×2078) |
+| li600_present | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top true (×2078) |
 | instruments | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=1, top MicroNIR \| NeoSpectra \| MicroNIR_NeoSpectra \| ASD (×2079) |
+| IDVar | metadata | categorical | *Not specified.* | n=2079, missing=536, classes=246, top V1576 (×13) |
+| Water_treatment | metadata | categorical | *Not specified.* | n=2079, missing=536, classes=3, top WW (×518) |
 
 ## Statistics — splits
 
@@ -102,5 +104,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `2b36cd90db0658aec00a485eac10b03ad70e34018e530bc51dd3e6e1628065e8`
-- **Processing hash:** `22f21b9ac57b6f69247aae6f79f94a14da7d999a7e8e5491e11d9b690e0f6077` | **metadata hash:** `bda8a3d59ea36308dbc93f190365aaf3188879af90dd047f5d471b78f53052c1`
+- **Content hash:** `2e98e52887940b5389d4a71556a9667c19717de44da71915d5e4b038a8157026`
+- **Processing hash:** `22f21b9ac57b6f69247aae6f79f94a14da7d999a7e8e5491e11d9b690e0f6077` | **metadata hash:** `7bb4a83f04337630ea05d73bc79ed8f56feffc281ef954d5842f2f8c17214d1f`

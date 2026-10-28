@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 10 sample(s), 14 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–2 (mean 1.4).
+- **Alignment:** observation level; 14 sample(s), 14 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,38 +24,39 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=10, missing=0, classes=10, top Hornblende Ca2(Fe2+,Mg)4Al(Si7,Al)O22(OH,F)2 (×1) |
-| class_label | target | categorical | *Not specified.* | n=10, missing=0, classes=2, top Silicate (×9) |
-| subclass | target | categorical | *Not specified.* | n=10, missing=1, classes=4, top Inosilicate (×4) |
-| particle_size | target | categorical | *Not specified.* | n=10, missing=0, classes=2, top Coarse (×7) |
-| measurement | target | categorical | *Not specified.* | n=10, missing=0, classes=2, top Bidirectional reflectance (×9) |
-| ecostress_resource_id | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.spectrum (×1) |
-| category | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top mineral (×10) |
-| material_type | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Mineral (×10) |
-| site | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top Kragero, Norway via the Smithsonian (sample no. NMNH117329). (×1) |
-| country | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| year | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| sample_description | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top Sample was a fragment of a black crystal, contaminated on one end with a clay coating and surficial quartz crystals, this surficial contamination was scraped off. There appeared to be a small amount of internal contamination by a fibrous mineral. Very few grains showed mild alteration, there was about 1% contamination by a low refractive index mineral with low birefringence. Particle size was 74-250 micrometers.(Amphibole Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.coarse.hornbl2.spectrum.txt (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top jhu.nicolet (×10) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=10, missing=0, classes=2, top Bidirectional reflectance (×9) |
-| signal_type | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Reflectance (percent) (×10) |
-| axis_unit | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Wavelength (micrometers) (×10) |
-| axis_min | metadata | numeric | *Not specified.* | n=10, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=10, missing=0, range 25.04–25.04, mean 25.04 ± 3.745e-15 |
-| n_points_original | metadata | numeric | *Not specified.* | n=10, missing=0, range 2287–2287, mean 2287 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×10) |
-| citation | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×10) |
-| license | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×10) |
-| rights_status | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top manual_review_needed (×10) |
-| usage_scope | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top private_use_only (×10) |
-| notes | metadata | categorical | *Not specified.* | n=10, missing=1, classes=9, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.ancillary.txt (×1) |
+| material_name | target | categorical | *Not specified.* | n=14, missing=0, classes=10, top Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2 (×2) |
+| class_label | target | categorical | *Not specified.* | n=14, missing=0, classes=2, top Silicate (×13) |
+| subclass | target | categorical | *Not specified.* | n=14, missing=1, classes=4, top Inosilicate (×5) |
+| particle_size | target | categorical | *Not specified.* | n=14, missing=0, classes=3, top Coarse (×7) |
+| measurement | target | categorical | *Not specified.* | n=14, missing=0, classes=2, top Bidirectional reflectance (×13) |
+| ecostress_resource_id | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.spectrum (×1) |
+| category | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top mineral (×14) |
+| material_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Mineral (×14) |
+| site | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top Calumet Island, Ottowa River, Canada via the Smithsaonian(sample no. NMNH 78662) (×2) |
+| country | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| year | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| sample_description | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top Sample was a fragment of a black crystal, contaminated on one end with a clay coating and surficial quartz crystals, this surficial contamination was scraped off. There appeared to be a small amount of internal contamination by a fibrous mineral. Very few grains showed mild alteration, there was about 1% contamination by a low refractive index mineral with low birefringence. Particle size was 74-250 micrometers.(Amphibole Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.coarse.hornbl2.spectrum.txt (×1) |
+| instrument | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top jhu.nicolet (×14) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=14, missing=0, classes=2, top Bidirectional reflectance (×13) |
+| signal_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Reflectance (percent) (×14) |
+| axis_unit | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Wavelength (micrometers) (×14) |
+| axis_min | metadata | numeric | *Not specified.* | n=14, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=14, missing=0, range 25.04–25.04, mean 25.04 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=14, missing=0, range 2287–2287, mean 2287 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×14) |
+| citation | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×14) |
+| license | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×14) |
+| rights_status | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manual_review_needed (×14) |
+| usage_scope | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top private_use_only (×14) |
+| notes | metadata | categorical | *Not specified.* | n=14, missing=2, classes=12, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.ancillary.txt (×1) |
+| original_sample_id | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top hornblen_3 (×2) |
 
 ## Statistics — splits
 
@@ -76,7 +77,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, sample_description, notes, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
 
 ## Uses
 
@@ -98,5 +99,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `15cb2b3e42d8f5dcef70d69f7b8cece7b7f6eebd6840f9006f67e417e5d8236c`
-- **Processing hash:** `fd91c764ae7fd9971d357435aceac3ea6f35b05e2716ffd5af3bae0ee7230a43` | **metadata hash:** `b8fa20fc5778170c11d78de60d27e32a78b675b72c68cf3c49588284c580f6d4`
+- **Content hash:** `0a0c8e99c7af69cb55675b923f9dd21795820d22dd1b4f3d4b962688e43c85c4`
+- **Processing hash:** `84aa182b7dd20fc2434125faddad8351147581a0e41c14e62cf85f14fd6ab6a9` | **metadata hash:** `b05ade5c8ef0701d9c1e5f163e821cecd8b96f499169bd95b7332164e87e6427`

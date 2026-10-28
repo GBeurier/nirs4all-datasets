@@ -20,7 +20,7 @@ from typing import Any
 
 import yaml
 
-from nirs4all_datasets.schema import DatasetDescriptor
+from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor
 
 
 def _load_descriptor(root: Path, dataset_id: str) -> DatasetDescriptor:
@@ -57,10 +57,18 @@ def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_as
 
     try:
         result = organize(source, descriptor, root / "datasets", force=force)
+        if result.conversion_status is ConversionStatus.FAILED:
+            return {"id": dataset_id, "status": "failed", "reason": "canonical conversion failed", "warnings": result.conversion_warnings}
         # organize.skipped means canonical bytes are unchanged (descriptor_hash). The card also *displays*
         # provenance, so a metadata-only edit (sources/citation) must still rebuild it -> check metadata_hash.
         card_path = result.dataset_dir / "card.json"
         if result.skipped and not force and not protocol_refresh and card_metadata_fresh(card_path, descriptor):
+            existing = json.loads(card_path.read_text(encoding="utf-8"))
+            warns = list(existing.get("warnings") or [])
+            if not warns:
+                warns = result.conversion_warnings
+            if warns or result.conversion_status is ConversionStatus.PARTIAL:
+                return {"id": dataset_id, "status": "partial", "reason": "unchanged; warnings remain", "warnings": warns}
             return {"id": dataset_id, "status": "skipped", "reason": "unchanged"}
         card = qualify(result.dataset_dir, descriptor, compute_assets=not skip_assets)
         warns = card.get("warnings") or []
@@ -68,11 +76,11 @@ def process_one(root_str: str, source_tree_str: str, dataset_id: str, *, skip_as
         n_features = sum((s.get("n_variables") or 0) for s in card.get("sources", [])) or None
         return {
             "id": dataset_id,
-            "status": "partial" if warns else "ok",
+            "status": "partial" if warns or result.conversion_status is ConversionStatus.PARTIAL else "ok",
             "n_samples": align.get("n_samples"),
             "n_features": n_features,
             "n_sources": len(card.get("sources", [])),
-            "warnings": warns[:6],
+            "warnings": warns if warns else result.conversion_warnings,
         }
     except Exception as exc:  # noqa: BLE001 - isolate per-dataset failures
         return {"id": dataset_id, "status": "failed", "reason": f"{type(exc).__name__}: {exc}"}

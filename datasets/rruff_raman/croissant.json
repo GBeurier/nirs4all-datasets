@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "RRUFF RAMAN",
-      "sha256": "ca01c3b6c9fe87b42b5866e5451a27266af6fabb8e7c5802dc930dd8a67c6e90"
+      "sha256": "21fe423776dcbc39692d7d5e92387490f293676a805ec1c1d132fb226803967b"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "0ba0591fcdc1107d0d58cfc23287e0bdd61aed533e176f94e98715ea1bea0f84"
+      "sha256": "0687ca686ac23345da5e01cdc6aff61e72fccd44e87df1fab8a39ef5811b31ea"
     }
   ],
   "keywords": [
@@ -87,7 +87,7 @@
           "@id": "X/spectrum",
           "@type": "cr:Field",
           "dataType": "sc:Float",
-          "description": "Spectral intensities across the none axis.",
+          "description": "Spectral intensities across the cm-1 axis.",
           "name": "spectrum",
           "repeated": true,
           "source": {
@@ -281,6 +281,21 @@
           "source": {
             "extract": {
               "column": "sample_description"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/metadata_chemistry",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'metadata_chemistry' (role metadata, type categorical).",
+          "name": "metadata_chemistry",
+          "source": {
+            "extract": {
+              "column": "metadata_chemistry"
             },
             "fileObject": {
               "@id": "file/variables.parquet"

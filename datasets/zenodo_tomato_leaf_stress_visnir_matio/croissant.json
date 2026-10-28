@@ -1,0 +1,516 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Zenodo tomato leaf stress Vis-NIR matio. v2.0 standardized NIRS package: 3 spectral source(s), 3 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X_absorbance.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "absorbance",
+      "sha256": "59d96b11a07a0d01adc63f3556c8f5d5c4b95aec4546299139d56423a204fc87"
+    },
+    {
+      "@id": "file/X_reflectance.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "reflectance",
+      "sha256": "008bcfa781a5d56f75fca7a332482337044c52a0d8cc7ec1c97336100054da91"
+    },
+    {
+      "@id": "file/X_transmittance.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "transmittance",
+      "sha256": "50800131828db69b98eaefdcc44d6ed9a00f4f84f38b13c2065899eab2c4033e"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "edb36d5790c5973b521ee3337e31333986fab284d1be6f668c245848f75b9ecf"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "zenodo"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "zenodo_tomato_leaf_stress_visnir_matio",
+  "recordSet": [
+    {
+      "@id": "X_absorbance",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'absorbance' (216 observations x 832 wavelengths).",
+      "field": [
+        {
+          "@id": "X_absorbance/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_absorbance/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_absorbance/sample_id"
+      },
+      "name": "X_absorbance"
+    },
+    {
+      "@id": "X_reflectance",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'reflectance' (216 observations x 832 wavelengths).",
+      "field": [
+        {
+          "@id": "X_reflectance/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_reflectance.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_reflectance/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_reflectance.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_reflectance/sample_id"
+      },
+      "name": "X_reflectance"
+    },
+    {
+      "@id": "X_transmittance",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'transmittance' (216 observations x 832 wavelengths).",
+      "field": [
+        {
+          "@id": "X_transmittance/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_transmittance.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_transmittance/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_transmittance.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_transmittance/sample_id"
+      },
+      "name": "X_transmittance"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/treatment",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'treatment' (role target, type categorical).",
+          "name": "treatment",
+          "source": {
+            "extract": {
+              "column": "treatment"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/par_condition",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'par_condition' (role target, type categorical).",
+          "name": "par_condition",
+          "source": {
+            "extract": {
+              "column": "par_condition"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/day_after_stress",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'day_after_stress' (role target, type categorical).",
+          "name": "day_after_stress",
+          "source": {
+            "extract": {
+              "column": "day_after_stress"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/replicate",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'replicate' (role metadata, type categorical).",
+          "name": "replicate",
+          "source": {
+            "extract": {
+              "column": "replicate"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/leaf_sample",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'leaf_sample' (role metadata, type categorical).",
+          "name": "leaf_sample",
+          "source": {
+            "extract": {
+              "column": "leaf_sample"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_dataset' (role metadata, type categorical).",
+          "name": "doi_dataset",
+          "source": {
+            "extract": {
+              "column": "doi_dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_id' (role metadata, type categorical).",
+          "name": "license_id",
+          "source": {
+            "extract": {
+              "column": "license_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/decoder",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'decoder' (role metadata, type categorical).",
+          "name": "decoder",
+          "source": {
+            "extract": {
+              "column": "decoder"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://zenodo.org/records/12800065",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

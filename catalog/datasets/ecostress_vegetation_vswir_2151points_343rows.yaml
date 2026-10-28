@@ -19,7 +19,7 @@ sources:
   axis_unit: none
   axis_min: 0.35
   axis_max: 2.5
-  signal_type: auto
+  signal_type: reflectance%
   n_observations: 343
   n_variables: 2151
 variables:
@@ -113,10 +113,13 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: original_sample_id
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
-  sample_id: sample_id
-  sample_id_available: true
+  sample_id: observation_id
+  sample_id_available: false
 alignment_level: observation
 splits: []
 tier: private
@@ -127,7 +130,14 @@ provenance:
   contributor: ECOSTRESS Spectral Library
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  warnings:
+  - 'X: native axis unit is ''Wavelength (micrometers)'' (micrometers), which is not
+    supported by the axis unit enum; axis values remain in micrometers. Multiply by
+    1000 to convert to nm.'
+  - Observation identity is used as the canonical join key because source sample_id
+    has differing per-observation values in ecostress_resource_id, species, notes,
+    material_name, class_label. The original physical-sample key is preserved as metadata
+    'original_sample_id'; sample grouping must use that field.
 governance:
   license: LicenseRef-not-cleared
   owner_steward: ECOSTRESS Spectral Library
@@ -166,6 +176,12 @@ publications:
   authors: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   reproducible_from_local_files: 'True'
   official_urls_checked: 'True'

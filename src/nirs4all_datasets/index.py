@@ -124,15 +124,25 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
         return data
 
     routes = _synthetic_raw_routes(root, descriptor)
+    missing_converters = _missing_shared_converters(root, descriptor)
     if routes:
+        incomplete = any("required manifest resources lack a direct download URL" in (route.get("notes") or "") for route in routes)
+        native_assembler = any(
+            (route.get("canonicalization") or {}).get("engine") == "rust_recipe"
+            and (route.get("canonicalization") or {}).get("recipe_id") == "jpl_ecostress_spectrum_txt_v1"
+            and all(resource.get("format") == "ecostress_spectrum_txt" for resource in route.get("resources", []) if resource.get("required", True))
+            for route in routes
+        )
+        missing_active_converters = [] if native_assembler else missing_converters
         return {
             **data,
-            "status": "raw_reproducible",
+            "status": "missing_delegate" if missing_active_converters or incomplete else "raw_reproducible",
             "public_retrievable": True,
             "public_redistributable": False,
             "canonical_hosted": False,
             "routes": routes,
-            "blockers": [],
+            "blockers": [f"missing shared conversion script: {name}" for name in missing_active_converters]
+            + (["required manifest resources lack a direct download URL; select or supply the original files"] if incomplete else []),
             "notes": data.get("notes") or "Generated from open raw origin_sources; retrieved bytes still need canonicalization.",
         }
 
@@ -155,7 +165,7 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
                 "blockers": [
                     f"JPL ECOSTRESS category bundle route identified (provider=jpl_ecostress, category={category}); blocked on "
                     "confirming the public bulk-order endpoint and adding the ECOSTRESS canonicalization recipe before automatic retrieval",
-                ],
+                ] + [f"missing shared conversion script: {name}" for name in missing_converters],
                 "notes": data.get("notes") or "ECOSTRESS spectra are publicly reachable per material category; redistribution rights are not cleared.",
             }
         return {
@@ -163,7 +173,8 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
             "status": "missing_delegate" if has_script else "blocked_parser",
             "public_retrievable": True,
             "public_redistributable": False,
-            "blockers": ["open raw origin exists, but it needs a curated adapter/delegate before automatic retrieval"],
+            "blockers": ["open raw origin exists, but it needs a curated adapter/delegate before automatic retrieval"]
+            + [f"missing shared conversion script: {name}" for name in missing_converters],
         }
 
     if descriptor.tier.value in {"private", "anonymized"}:
@@ -175,16 +186,39 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
             "blockers": ["no open machine-actionable raw route; use token-gated Dataverse fallback"],
         }
 
-    if any(origin.access.value == "manual" for origin in descriptor.origin_sources):
+    manual_origins = [origin for origin in descriptor.origin_sources if origin.access.value == "manual" and origin.kind.value != "script"]
+    if manual_origins:
+        manual_routes = [
+            {"id": f"manual_{i:03d}", "priority": 100 + i, "access": "manual", "method": "manual",
+             "provider": "manual", "locator": origin.locator, "automated_download_allowed": False, "resources": []}
+            for i, origin in enumerate(manual_origins, 1)
+            if urlparse(origin.locator).scheme in {"http", "https"}
+        ]
         return {
             **data,
             "status": "manual_only",
+            "routes": manual_routes,
             "public_retrievable": False,
             "public_redistributable": False,
-            "blockers": ["only manual/click-through origins are declared"],
+            "blockers": ["only manual/click-through origins are declared"]
+            + [f"missing shared conversion script: {name}" for name in missing_converters],
         }
 
+    if missing_converters:
+        return {**data, "status": "missing_delegate", "blockers": [f"missing shared conversion script: {name}" for name in missing_converters]}
     return data
+
+
+def _missing_shared_converters(root: str | Path, descriptor: DatasetDescriptor) -> list[str]:
+    """Report literal shared converter dependencies, without executing source scripts."""
+    source_relpath = descriptor.generation.source_relpath if descriptor.generation else None
+    leaf = Path(root) / "NIRS DB" / (source_relpath or f"v2.0/{descriptor.id}")
+    script = leaf / "source_to_standard.py"
+    if not script.is_file():
+        return []
+    text = script.read_text(encoding="utf-8", errors="replace")
+    names = sorted(set(re.findall(r"\bconvert_[A-Za-z0-9_]+\.py\b", text)))
+    return [name for name in names if not any((base / name).is_file() for base in (leaf, leaf.parent, leaf.parent.parent))]
 
 
 def _ecostress_category(descriptor: DatasetDescriptor) -> str | None:
@@ -305,32 +339,38 @@ def _raw_manifest_routes(root: str | Path, descriptor: DatasetDescriptor) -> lis
     root_path = Path(root)
     path = root_path / "datasets" / descriptor.id / "raw" / "raw_manifest.csv"
     if not path.exists():
-        path = root_path / "NIRS DB" / "v2.0" / descriptor.id / "raw_manifest.csv"
+        source_relpath = descriptor.generation.source_relpath if descriptor.generation else None
+        path = root_path / "NIRS DB" / (source_relpath or f"v2.0/{descriptor.id}") / "raw_manifest.csv"
     if not path.exists():
         return []
     resources: list[dict[str, Any]] = []
     seen: set[str] = set()
+    unresolved_required = False
     with path.open(newline="", encoding="utf-8", errors="replace") as handle:
         for row in csv.DictReader(handle, delimiter=";"):
-            raw_url = (row.get("source_path_or_url") or row.get("source_file") or "").strip()
-            name = (row.get("file_name") or "").strip() or unquote(PurePosixPath(urlparse(raw_url).path).name) or f"resource_{len(resources) + 1:03d}"
-            url = _raw_manifest_resource_url(descriptor, raw_url, name)
-            if url is None or url in seen:
+            raw_url = (row.get("file_url") or row.get("source_path_or_url") or row.get("source_url") or row.get("source_file") or "").strip()
+            name = (row.get("file_name") or row.get("raw_resource") or "").strip() or unquote(PurePosixPath(urlparse(raw_url).path).name) or f"resource_{len(resources) + 1:03d}"
+            url = _raw_manifest_resource_url(descriptor, raw_url, name, explicit_file_url=bool((row.get("file_url") or "").strip()))
+            if url is None:
+                if (row.get("used_for_conversion") or row.get("required_for_rebuild") or "").lower() not in {"no", "false", "0"}:
+                    unresolved_required = True
+                continue
+            if url in seen:
                 continue
             seen.add(url)
             fmt = _raw_manifest_format(descriptor, name) or "unknown"
             resource: dict[str, Any] = {
                 "id": _resource_id(name, len(resources) + 1),
                 "role": "spectra" if fmt == "ecostress_spectrum_txt" else _resource_role(row),
-                "required": (row.get("used_for_conversion") or "").lower() != "no",
+                "required": (row.get("used_for_conversion") or row.get("required_for_rebuild") or "").lower() not in {"no", "false", "0"},
                 "selector": {"kind": "direct_url", "value": url},
                 "file_name": name,
                 "format": fmt,
             }
-            size = _int_or_none(row.get("file_size_bytes"))
+            size = _int_or_none(row.get("file_size_bytes") or row.get("expected_size_bytes") or row.get("size_bytes"))
             if size is not None:
                 resource["size"] = size
-            sha = (row.get("sha256_or_partial_hash") or "").strip().lower()
+            sha = (row.get("sha256_or_partial_hash") or row.get("sha256") or (row.get("checksum") if (row.get("checksum_type") or "").lower() == "sha256" else "") or "").strip().lower().removeprefix("sha256:")
             if re.fullmatch(r"[0-9a-f]{64}", sha):
                 resource["sha256"] = sha
             resources.append(resource)
@@ -347,7 +387,8 @@ def _raw_manifest_routes(root: str | Path, descriptor: DatasetDescriptor) -> lis
         "automated_download_allowed": True,
         "redistribution_allowed": False,
         "resources": resources,
-        "notes": "Generated from NIRS DB raw_manifest.csv; scripts are not executed.",
+        "notes": "Generated from NIRS DB raw_manifest.csv; scripts are not executed."
+        + (" Some required manifest resources lack a direct download URL." if unresolved_required else ""),
     }
     canonicalization = _canonicalization_for_resources(resources, script)
     if canonicalization is not None:
@@ -355,10 +396,19 @@ def _raw_manifest_routes(root: str | Path, descriptor: DatasetDescriptor) -> lis
     return [route]
 
 
-def _raw_manifest_resource_url(descriptor: DatasetDescriptor, raw_url: str, file_name: str) -> str | None:
+def _raw_manifest_resource_url(descriptor: DatasetDescriptor, raw_url: str, file_name: str, *, explicit_file_url: bool = False) -> str | None:
     """Return a machine-downloadable URL for a raw_manifest row."""
     if raw_url.startswith(("http://", "https://")):
-        return raw_url
+        parsed = urlparse(raw_url)
+        # File endpoints without extensions (e.g. Figshare and Zenodo API content)
+        # must be distinguished from repository landing pages and API listings.
+        if (
+            explicit_file_url
+            or _format_from_name(unquote(PurePosixPath(parsed.path).name))
+            or re.search(r"/(?:files/\d+|files/[^/]+/content)$", parsed.path)
+            or (parsed.netloc == "webbook.nist.gov" and parsed.path == "/cgi/cbook.cgi" and "JCAMP=" in parsed.query)
+        ):
+            return raw_url
     if _ecostress_category(descriptor) is not None and file_name.endswith(".spectrum.txt"):
         return f"{_ECOSTRESS_DATA_URL}/{quote(file_name)}"
     return None
@@ -378,7 +428,7 @@ def _canonicalization_for_resources(resources: list[dict[str, Any]], script: str
     if "ecostress_spectrum_txt" in formats:
         notes = (
             "Rust preparation parses ECOSTRESS spectrum text headers and X/Y values "
-            "and assembles a dataset-level canonical payload."
+            "and assembles a dataset-level canonical payload; equivalence to the original standardized X/Y/M output has not been established."
         )
         engine = "rust_recipe"
         recipe_id = "jpl_ecostress_spectrum_txt_v1"

@@ -1,6 +1,6 @@
 # Private datasets to upload to Dataverse
 
-_122 private/anonymized dataset(s) are catalogued but **not yet uploaded** to a personal
+_162 private/anonymized dataset(s) are catalogued but **not yet uploaded** to a personal
 Dataverse (no DOI). Their metadata + metrics are public in the catalog/site, but a consumer cannot
 `get()` their bytes until they are uploaded and a token-gated DOI is minted. 0 already on Dataverse._
 
@@ -11,10 +11,12 @@ n4a-datasets publish <id> --collection <your-collection> --contact-email you@exa
 Needs a Dataverse token (see [PUBLISHING.md](PUBLISHING.md)); first publish mints the DOI, which is
 written back into `catalog/datasets/<id>.yaml` so this list shrinks automatically.
 
-## Pending uploads (122)
+## Pending uploads (162)
 | id | name | tier | license | origin(s) | samples | validation |
 |----|------|------|---------|-----------|--------:|------------|
 | `cgl_nir_grain_eigenvector` | CGL_NIR grain protein Eigenvector | private | LicenseRef-not-cleared | script, url | 231 | ⏳ pending |
+| `cirad_madagascar_organic_resources_asd_nonstd_visnir` | CIRAD Madagascar organic resources ASD non-standardized VIS-NIR | private | LicenseRef-not-cleared | dataverse, script, url | 1000 | ⏳ pending |
+| `cirad_madagascar_organic_resources_asd_std_xds_visnir` | CIRAD Madagascar organic resources ASD standardized on XDS VIS-NIR | private | LicenseRef-not-cleared | dataverse, script, url | 1000 | ⏳ pending |
 | `corn_eigenvector_nir` | CORN Eigenvector NIR | private | LicenseRef-not-cleared | script, url | 80 | ⏳ pending |
 | `diesel_fuels_nir_eigenvector` | Diesel fuels NIR Eigenvector | private | LicenseRef-not-cleared | script, url | 784 | ⏳ pending |
 | `ecosis_2014_cedar_creek_esr_grassland_biodiversity_experiment_reflectance_nirs` | EcoSIS 2014 Cedar Creek ESR Grassland Biodiversity Experiment: Leaf-level Contact Data: Trait Predictions (reflectance) | private | LicenseRef-not-cleared | script, url | 831 | ⏳ pending |
@@ -25,9 +27,11 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `ecosis_calcareous_grassland_species_over_growing_season_at_the_reflectance_nirs` | EcoSIS Calcareous grassland species over growing season at the leaf level (reflectance) | private | LicenseRef-not-cleared | script, url | 1100 | ⏳ pending |
 | `ecosis_common_milkweed_leaf_responses_to_water_stress_and_elev_reflectance_nirs` | EcoSIS Common Milkweed Leaf Responses to Water Stress and Elevated Temperature (reflectance) | private | LicenseRef-not-cleared | script, url | 735 | ⏳ pending |
 | `ecosis_fine_scale_vnir_hyperspectral_canopy_reflectances_from_reflectance_nirs` | EcoSIS Fine-scale VNIR hyperspectral canopy reflectances from Virginia successional forests (reflectance) | private | LicenseRef-not-cleared | script, url | 2850 | ⏳ pending |
-| `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | EcoSIS Fresh Leaf Spectra to Estimate Leaf Morphology and Biochemistry for Northern Temperate Forests (reflectance) | private | LicenseRef-not-cleared | script, url | 2363 | ⏳ pending |
+| `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | EcoSIS Fresh Leaf Spectra to Estimate Leaf Morphology and Biochemistry for Northern Temperate Forests (reflectance) | private | LicenseRef-not-cleared | script, url | 2379 | ⏳ pending |
+| `ecosis_fresh_leaf_vswir_spectra_leaf_traits_california_reflectance_nirs` | EcoSIS Fresh Leaf VSWIR Spectra to Estimate Leaf Traits for California Ecosystems (reflectance) | private | LicenseRef-not-cleared | script, url | 285 | ⏳ pending |
 | `ecosis_leaf_reflectance_and_traits_of_plants_sampled_along_a_w_reflectance_nirs` | EcoSIS Leaf reflectance and traits of plants sampled along a water affinity gradient (AQGRAD) (reflectance) | private | LicenseRef-not-cleared | script, url | 190 | ⏳ pending |
 | `ecosis_leaf_reflectance_and_tratis_of_floating_and_emergent_ma_reflectance_nirs` | EcoSIS Leaf reflectance and tratis of floating and emergent macrophytes (reflectance) | private | LicenseRef-not-cleared | script, url | 325 | ⏳ pending |
+| `ecosis_leaf_traits_compilation_reflectance_nirs` | EcoSIS Leaf Traits Compilation reflectance | private | LicenseRef-not-cleared | script, url | 47393 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_and_transmittance_reflectance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance and Transmittance Data 2014 to 2016 Utqiagvik (Barrow) Alaska (reflectance) | private | LicenseRef-not-cleared | script, url | 199 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_and_transmittance_transmittance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance and Transmittance Data 2014 to 2016 Utqiagvik (Barrow) Alaska (transmittance) | private | LicenseRef-not-cleared | script, url | 31 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_utqiagvik_barrow_reflectance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance Utqiagvik (Barrow) Alaska 2013 (reflectance) | private | LicenseRef-not-cleared | script, url | 69 | ⏳ pending |
@@ -44,23 +48,23 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `ecostress_manmade_all_561points` | ECOSTRESS manmade all axis 4a5262f7 | private | LicenseRef-not-cleared | script, url | 3 | ⏳ pending |
 | `ecostress_manmade_tir_2223points` | ECOSTRESS manmade tir axis 93ae36e3 | private | LicenseRef-not-cleared | script, url | 10 | ⏳ pending |
 | `ecostress_manmade_tir_2256points` | ECOSTRESS manmade tir axis 85fbc8f6 | private | LicenseRef-not-cleared | script, url | 16 | ⏳ pending |
-| `ecostress_meteorites_tir_2287points` | ECOSTRESS meteorites tir axis d3032c60 | private | LicenseRef-not-cleared | script, url | 55 | ⏳ pending |
+| `ecostress_meteorites_tir_2287points` | ECOSTRESS meteorites tir axis d3032c60 | private | LicenseRef-not-cleared | script, url | 57 | ⏳ pending |
 | `ecostress_mineral_all_2231points` | ECOSTRESS mineral all axis 20b176d4 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
 | `ecostress_mineral_all_2752points` | ECOSTRESS mineral all axis adc9f614 | private | LicenseRef-not-cleared | script, url | 17 | ⏳ pending |
-| `ecostress_mineral_tir_2256points` | ECOSTRESS mineral tir axis 85fbc8f6 | private | LicenseRef-not-cleared | script, url | 150 | ⏳ pending |
+| `ecostress_mineral_tir_2256points` | ECOSTRESS mineral tir axis 85fbc8f6 | private | LicenseRef-not-cleared | script, url | 402 | ⏳ pending |
 | `ecostress_mineral_tir_2287points_113rows` | ECOSTRESS mineral tir axis 02866850 | private | LicenseRef-not-cleared | script, url | 113 | ⏳ pending |
-| `ecostress_mineral_tir_2287points_14rows` | ECOSTRESS mineral tir axis d3032c60 | private | LicenseRef-not-cleared | script, url | 10 | ⏳ pending |
-| `ecostress_mineral_tir_2287points_207rows` | ECOSTRESS mineral tir axis 02866850 | private | LicenseRef-not-cleared | script, url | 125 | ⏳ pending |
+| `ecostress_mineral_tir_2287points_14rows` | ECOSTRESS mineral tir axis d3032c60 | private | LicenseRef-not-cleared | script, url | 14 | ⏳ pending |
+| `ecostress_mineral_tir_2287points_207rows` | ECOSTRESS mineral tir axis 02866850 | private | LicenseRef-not-cleared | script, url | 207 | ⏳ pending |
 | `ecostress_mineral_tir_2287points_2rows_mineral_oxide_none_fine_tir_chromite` | ECOSTRESS mineral tir axis cbf25a1b | private | LicenseRef-not-cleared | script, url | 2 | ⏳ pending |
 | `ecostress_mineral_tir_2287points_2rows_mineral_silicate_phyllosilicate_fine_tir_illsmec` | ECOSTRESS mineral tir axis 02866850 | private | LicenseRef-not-cleared | script, url | 2 | ⏳ pending |
 | `ecostress_mineral_tir_2287points_5rows` | ECOSTRESS mineral tir axis d3032c60 | private | LicenseRef-not-cleared | script, url | 5 | ⏳ pending |
-| `ecostress_mineral_vswir_2101points` | ECOSTRESS mineral vswir axis 61f98690 | private | LicenseRef-not-cleared | script, url | 148 | ⏳ pending |
-| `ecostress_mineral_vswir_826points` | ECOSTRESS mineral vswir axis 158dfad5 | private | LicenseRef-not-cleared | script, url | 160 | ⏳ pending |
+| `ecostress_mineral_vswir_2101points` | ECOSTRESS mineral vswir axis 61f98690 | private | LicenseRef-not-cleared | script, url | 406 | ⏳ pending |
+| `ecostress_mineral_vswir_826points` | ECOSTRESS mineral vswir axis 158dfad5 | private | LicenseRef-not-cleared | script, url | 430 | ⏳ pending |
 | `ecostress_nonphotosyntheticvegetation_tir_1736points_47rows` | ECOSTRESS nonphotosyntheticvegetation tir axis d3f7b526 | private | LicenseRef-not-cleared | script, url | 47 | ⏳ pending |
 | `ecostress_nonphotosyntheticvegetation_tir_1736points_4rows` | ECOSTRESS nonphotosyntheticvegetation tir axis d3f7b526 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
-| `ecostress_nonphotosyntheticvegetation_tir_1737points` | ECOSTRESS nonphotosyntheticvegetation tir axis 1389b1f1 | private | LicenseRef-not-cleared | script, url | 7 | ⏳ pending |
+| `ecostress_nonphotosyntheticvegetation_tir_1737points` | ECOSTRESS nonphotosyntheticvegetation tir axis 1389b1f1 | private | LicenseRef-not-cleared | script, url | 10 | ⏳ pending |
 | `ecostress_nonphotosyntheticvegetation_vswir_2151points_4rows` | ECOSTRESS nonphotosyntheticvegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
-| `ecostress_nonphotosyntheticvegetation_vswir_2151points_57rows` | ECOSTRESS nonphotosyntheticvegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 54 | ⏳ pending |
+| `ecostress_nonphotosyntheticvegetation_vswir_2151points_57rows` | ECOSTRESS nonphotosyntheticvegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 57 | ⏳ pending |
 | `ecostress_rock_all_2227points` | ECOSTRESS rock all axis d9555baa | private | LicenseRef-not-cleared | script, url | 9 | ⏳ pending |
 | `ecostress_rock_all_2231points` | ECOSTRESS rock all axis 20b176d4 | private | LicenseRef-not-cleared | script, url | 27 | ⏳ pending |
 | `ecostress_rock_all_2257points` | ECOSTRESS rock all axis 8a8a144c | private | LicenseRef-not-cleared | script, url | 83 | ⏳ pending |
@@ -74,7 +78,7 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `ecostress_rock_all_2868points_14rows` | ECOSTRESS rock all axis e7e7baa6 | private | LicenseRef-not-cleared | script, url | 14 | ⏳ pending |
 | `ecostress_rock_all_2868points_28rows` | ECOSTRESS rock all axis d24e4e1f | private | LicenseRef-not-cleared | script, url | 28 | ⏳ pending |
 | `ecostress_rock_all_2868points_2rows` | ECOSTRESS rock all axis 66af2adc | private | LicenseRef-not-cleared | script, url | 2 | ⏳ pending |
-| `ecostress_rock_all_2868points_41rows` | ECOSTRESS rock all axis be345a03 | private | LicenseRef-not-cleared | script, url | 39 | ⏳ pending |
+| `ecostress_rock_all_2868points_41rows` | ECOSTRESS rock all axis be345a03 | private | LicenseRef-not-cleared | script, url | 41 | ⏳ pending |
 | `ecostress_rock_all_2868points_4rows_rock_metamorphic_gneis_coarse_all_gneiss4` | ECOSTRESS rock all axis 8e148055 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
 | `ecostress_rock_all_2868points_4rows_rock_metamorphic_schist_fine_all_schist1` | ECOSTRESS rock all axis e2c8c295 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
 | `ecostress_rock_tir_2148points` | ECOSTRESS rock tir axis 16aa20e0 | private | LicenseRef-not-cleared | script, url | 5 | ⏳ pending |
@@ -91,13 +95,36 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `ecostress_vegetation_all_550points` | ECOSTRESS vegetation all axis 6fbcd0b0 | private | LicenseRef-not-cleared | script, url | 3 | ⏳ pending |
 | `ecostress_vegetation_tir_1736points` | ECOSTRESS vegetation tir axis d3f7b526 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
 | `ecostress_vegetation_tir_1737points_138rows` | ECOSTRESS vegetation tir axis 8b6bc3b9 | private | LicenseRef-not-cleared | script, url | 138 | ⏳ pending |
-| `ecostress_vegetation_tir_1737points_342rows` | ECOSTRESS vegetation tir axis 1389b1f1 | private | LicenseRef-not-cleared | script, url | 324 | ⏳ pending |
+| `ecostress_vegetation_tir_1737points_342rows` | ECOSTRESS vegetation tir axis 1389b1f1 | private | LicenseRef-not-cleared | script, url | 342 | ⏳ pending |
 | `ecostress_vegetation_vswir_2151points_210rows` | ECOSTRESS vegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 210 | ⏳ pending |
-| `ecostress_vegetation_vswir_2151points_343rows` | ECOSTRESS vegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 325 | ⏳ pending |
+| `ecostress_vegetation_vswir_2151points_343rows` | ECOSTRESS vegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | 343 | ⏳ pending |
 | `ecostress_water_all_965points` | ECOSTRESS water all axis 21cbe3b0 | private | LicenseRef-not-cleared | script, url | 4 | ⏳ pending |
 | `flanagan_api_compounds_raman` | Flanagan API compounds Raman | private | LicenseRef-not-cleared | figshare, script, url | 3510 | ⏳ pending |
+| `github_grapevine_chloride_nirsg1_nir` | GitHub grapevine chloride NIR-S-G1 NIR | private | LicenseRef-not-cleared | script | 259 | ⏳ pending |
+| `github_grapevine_chloride_svc_hr1024i_visnir` | GitHub grapevine chloride SVC HR-1024i VIS-NIR | private | LicenseRef-not-cleared | script | 556 | ⏳ pending |
+| `github_streptanthus_leaf_reflectance_visnir` | GitHub spectral-network Streptanthus leaf reflectance VIS-NIR | private | LicenseRef-not-cleared | script, url | 51 | ⏳ pending |
 | `grapevine_leaftraits_multisensor_nir` | Grapevine LeafTraits multisensor NIR | private | LicenseRef-not-cleared | script | 2079 | ⏳ pending |
+| `leaf_equivalent_water_thickness_g_cm2_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Equivalent_Water_Thickness_g_cm2) | private | LicenseRef-not-cleared | script, url | 330 | ⏳ pending |
+| `leaf_leaf_mass_per_area_g_cm2_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Leaf_mass_per_area_g_cm2) | private | LicenseRef-not-cleared | script, url | 330 | ⏳ pending |
+| `leaf_nitrogen_pct_dw_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Nitrogen_pct_DW) | private | LicenseRef-not-cleared | script, url | 330 | ⏳ pending |
+| `leaf_pvy_strain_time1_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | 80 | ⏳ pending |
+| `leaf_pvy_strain_time2_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | 80 | ⏳ pending |
+| `leaf_pvy_strain_time4_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | 80 | ⏳ pending |
+| `leaf_sample_category_fresh_dry_ecosis` | EcoSIS Fresh and Dry Spectra of Several Plant Tissues and Chemical and Phenological Constituents (Sample_category) | private | LicenseRef-not-cleared | script, url | 74 | ⏳ pending |
+| `leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis` | EcoSIS Purdue Leaf Spectral and Functional Trait Data used in PLSR modeling (W18_Nitrogen_Deficiency) | private | LicenseRef-not-cleared | script, url | 987 | ⏳ pending |
 | `manure21_nir_all_y` | MANURE21 NIR all chemistry targets | private | LicenseRef-not-cleared | script | 490 | ⏳ pending |
+| `nirpy_abs_plastic_frc_nir` | Nirpy Research ABS plastic FRC NIR | private | LicenseRef-not-cleared | script, url | 500 | ⏳ pending |
+| `nirpy_avocado_whittaker_nir` | Nirpy Research avocado Whittaker smoothing NIR | private | LicenseRef-not-cleared | script, url | 100 | ⏳ pending |
+| `nirpy_black_foam_entropy_nir` | Nirpy Research black foam entropy smoothing NIR | private | LicenseRef-not-cleared | script, url | 500 | ⏳ pending |
+| `nirpy_coffee_classification_nir` | Nirpy Research coffee classification NIR | private | LicenseRef-not-cleared | script, url | 70 | ⏳ pending |
+| `nirpy_honey_adulteration_nir_aquagram` | Nirpy Research honey adulteration NIR aquagram | private | LicenseRef-not-cleared | script, url | 165 | ⏳ pending |
+| `nirpy_incombustible_material_nir` | Nirpy Research incombustible material NIR | private | LicenseRef-not-cleared | script, url | 62 | ⏳ pending |
+| `nirpy_milk_nir` | Nirpy Research milk NIR classification | private | LicenseRef-not-cleared | script, url | 450 | ⏳ pending |
+| `nirpy_milk_powder_nir` | Nirpy Research milk powder NIR classification | private | LicenseRef-not-cleared | script, url | 220 | ⏳ pending |
+| `nirpy_mineral_mixture_raman` | Nirpy Research Raman spectra mixtures | private | LicenseRef-not-cleared | script, url | 303 | ⏳ pending |
+| `nirpy_peach_brix_nir` | Nirpy Research peach Brix NIR | private | LicenseRef-not-cleared | script, url | 50 | ⏳ pending |
+| `nirpy_plums_brix_firmness_nir` | Nirpy Research plums Brix and firmness NIR | private | LicenseRef-not-cleared | script, url | 40 | ⏳ pending |
+| `nirpy_plums_outlier_pca_nir` | Nirpy Research plums outlier PCA NIR | private | LicenseRef-not-cleared | script, url | 40 | ⏳ pending |
 | `ohpl_beer_nir` | Beer original extract OHPL NIR | private | LicenseRef-not-cleared | script, url | 60 | ⏳ pending |
 | `ohpl_soil_nir` | Soil organic matter OHPL NIR | private | LicenseRef-not-cleared | script, url | 108 | ⏳ pending |
 | `ohpl_wheat_nir` | Wheat protein OHPL NIR | private | LicenseRef-not-cleared | script, url | 100 | ⏳ pending |
@@ -124,6 +151,12 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `plastic_polymer_name_grouped_flopp_e_ftir` | FLOPP-e FTIR polymer classification | private | LicenseRef-not-cleared | figshare, script, url | 195 | ⏳ pending |
 | `plastic_polymer_name_grouped_flopp_ftir` | FLOPP FTIR polymer classification | private | LicenseRef-not-cleared | figshare, script, url | 186 | ⏳ pending |
 | `pnnl_quant_ir` | PNNL/NIST Quantitative Infrared Database private-use subset | private | LicenseRef-not-cleared | script, url | 20 | ⏳ pending |
+| `recherche_data_gouv_fresh_dried_manure_nir_jigo8r` | Recherche Data Gouv fresh dried poultry cattle manure NIR | private | LicenseRef-not-cleared | dataverse, script, url | 332 | ⏳ pending |
+| `recherche_data_gouv_grapevine_leaf_asd_wvapol` | Recherche Data Gouv grapevine leaf ASD | private | LicenseRef-not-cleared | dataverse, script, url | 2394 | ⏳ pending |
+| `recherche_data_gouv_grapevine_leaf_micronir_wvapol` | Recherche Data Gouv grapevine leaf MicroNIR | private | LicenseRef-not-cleared | dataverse, script, url | 2408 | ⏳ pending |
+| `recherche_data_gouv_grapevine_leaf_neospectra_wvapol` | Recherche Data Gouv grapevine leaf NeoSpectra | private | LicenseRef-not-cleared | dataverse, script, url | 2116 | ⏳ pending |
+| `recherche_data_gouv_oilseed_rape_tissue_ftnir_6vyuqn` | Recherche Data Gouv oilseed rape tissue FT-NIR nitrogen carbon | private | LicenseRef-not-cleared | dataverse, script, url | 2427 | ⏳ pending |
+| `recherche_data_gouv_raw_manure_nir_e1ji8u` | Recherche Data Gouv raw cattle poultry pig manure NIR | private | LicenseRef-not-cleared | dataverse, script, url | 490 | ⏳ pending |
 | `rruff_ir` | RRUFF IR mineral spectral library common-axis subset | private | LicenseRef-not-cleared | script, url | 347 | ⏳ pending |
 | `rruff_raman` | RRUFF RAMAN mineral spectral library common-axis subset | private | LicenseRef-not-cleared | script, url | 85 | ⏳ pending |
 | `timeseries_boeuf_classe_adulteration_ts` | boeuf_classe_adulteration_ts | private | LicenseRef-not-cleared | script, url | 60 | ⏳ pending |
@@ -135,4 +168,11 @@ written back into `catalog/datasets/<id>.yaml` so this list shrinks automaticall
 | `timeseries_spiritueux_whisky_bouteille_taux_ethanol_ts` | spiritueux_whisky_bouteille_taux_ethanol_ts | private | LicenseRef-not-cleared | script, url | 1004 | ⏳ pending |
 | `timeseries_viande_espece_viande_ts` | viande_espece_viande_ts | private | LicenseRef-not-cleared | script, url | 120 | ⏳ pending |
 | `timeseries_vin_cepage_type_ts` | vin_cepage_type_ts | private | LicenseRef-not-cleared | script, url | 111 | ⏳ pending |
+| `ucph_bread_staling_enzyme_nir` | UCPH bread staling enzyme NIR | private | LicenseRef-not-cleared | script, url | 324 | ⏳ pending |
+| `ucph_granules_ambient_moisture_api_nir` | UCPH granules ambient moisture API NIR | private | LicenseRef-not-cleared | script, url | 648 | ⏳ pending |
+| `ucph_granules_moisture_controlled_api_nir` | UCPH granules moisture-controlled API NIR | private | LicenseRef-not-cleared | script, url | 648 | ⏳ pending |
+| `ucph_marzipan_multi_instrument_spectroscopy` | UCPH marzipan multi-instrument spectroscopy | private | LicenseRef-not-cleared | script, url | 32 | ⏳ pending |
+| `ucph_soil_som_ergosterol_nir` | UCPH soil SOM ergosterol NIR | private | LicenseRef-not-cleared | script, url | 108 | ⏳ pending |
 | `ucph_tablet_nir` | UCPH tablet NIR | private | LicenseRef-not-cleared | script, url | 310 | ⏳ pending |
+| `ucph_wheat_kernel_nit` | UCPH wheat kernel NIT | private | LicenseRef-not-cleared | script, url | 523 | ⏳ pending |
+| `wiley_blueberry_phenomics_nir_manual` | Blueberry phenomics NIR spectra | private | LicenseRef-not-cleared | script, url | 351 | ⏳ pending |

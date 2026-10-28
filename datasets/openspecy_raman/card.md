@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | OpenSpecy RAMAN | mixed source instruments, metadata sparse | Raman | 102–1.199e+04 none | 5000 | 1983 |
+| X | OpenSpecy RAMAN | mixed source instruments, metadata sparse | Raman | 102–1.199e+04 cm-1 | 5000 | 1983 |
 
 ### Variables (Y / metadata)
 
@@ -84,5 +84,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c0f4b1f82817d446013fb288ade15a085dc54e3432003775d47844d30f24fa5e`
-- **Processing hash:** `b4e808369166fa5eb1508a09237f2e273d19a5666e697ca83766951156b16134` | **metadata hash:** `e8e3e77ceffefab9ebf9593c50be24cdd9c2b9caa1a000e75d165a1a44f88d61`
+- **Content hash:** `d2344ece64b66f84479b1e61c34baab526c8f3f511ec135c23e85d318caf7914`
+- **Processing hash:** `14d9cb2c52793c0c641d512a3afd932c008b62de024ac8e08d096065286ce2ce` | **metadata hash:** `661072271840715f6f9c32d4a38569205d78f4ae5957383279143f43c898d7f7`

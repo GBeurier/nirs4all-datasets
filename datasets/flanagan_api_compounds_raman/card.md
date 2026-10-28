@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | Flanagan Raman spectra | Raman instrument as documented by source article | Raman | 150–3425 none | 3510 | 3276 |
+| X | Flanagan Raman spectra | Raman instrument as documented by source article | Raman | 150–3425 cm-1 | 3510 | 3276 |
 
 ### Variables (Y / metadata)
 
@@ -85,5 +85,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9e76d5da963ccb1664f475c17ad50e887a3e0db52b5a612702409fb5cb035d9f`
-- **Processing hash:** `3a2d81775b84d0776e3a127e87eabbda48fc5e7e18f470722043a48879a4871b` | **metadata hash:** `68a01a323144322a2a535b90f57045f99beed00f4a8ab848186d559dcc695a96`
+- **Content hash:** `ad808caafb8eab438ef1d182f01deb16cc8091d9a2fb8278876774350b6f6c47`
+- **Processing hash:** `a6b40c0cea9f221368412e3c534a825cac522c3e49880483f12d0d1eeddc876e` | **metadata hash:** `29e309cc6734724daf0967cbeba41c96b38ce1b45c7b63a6b2621c6566378822`

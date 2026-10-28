@@ -1,0 +1,438 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Tobacco leaf NIR spectra and chemical components. v2.0 standardized NIRS package: 1 spectral source(s), 13 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X",
+      "sha256": "f98e08fc938b7bee9394a5d6507f858853574ee4d89113dc3ec6328118226b8f"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "d5048cb321c673996e919b9698114456d7d3545060c0531ad2cd1953f969cde0"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "mendeley"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "mendeley_tobacco_leaf_chemical_nir_manual",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X' (347 observations x 1557 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the cm-1 axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Total Alkaloids",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Total Alkaloids' (role target, type numeric).",
+          "name": "Total Alkaloids",
+          "source": {
+            "extract": {
+              "column": "Total Alkaloids"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Reducing Sugars",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Reducing Sugars' (role target, type numeric).",
+          "name": "Reducing Sugars",
+          "source": {
+            "extract": {
+              "column": "Reducing Sugars"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Total Sugars",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Total Sugars' (role target, type numeric).",
+          "name": "Total Sugars",
+          "source": {
+            "extract": {
+              "column": "Total Sugars"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Total Nitrogen",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Total Nitrogen' (role target, type numeric).",
+          "name": "Total Nitrogen",
+          "source": {
+            "extract": {
+              "column": "Total Nitrogen"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/K",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'K' (role target, type numeric).",
+          "name": "K",
+          "source": {
+            "extract": {
+              "column": "K"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/cl",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'cl' (role target, type numeric).",
+          "name": "cl",
+          "source": {
+            "extract": {
+              "column": "cl"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pH",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'pH' (role target, type numeric).",
+          "name": "pH",
+          "source": {
+            "extract": {
+              "column": "pH"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Starch",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Starch' (role target, type numeric).",
+          "name": "Starch",
+          "source": {
+            "extract": {
+              "column": "Starch"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Neochlorogenic Acid",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Neochlorogenic Acid' (role target, type numeric).",
+          "name": "Neochlorogenic Acid",
+          "source": {
+            "extract": {
+              "column": "Neochlorogenic Acid"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Chlorogenic Acid",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Chlorogenic Acid' (role target, type numeric).",
+          "name": "Chlorogenic Acid",
+          "source": {
+            "extract": {
+              "column": "Chlorogenic Acid"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cryptochlorogenic Acid",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cryptochlorogenic Acid' (role target, type numeric).",
+          "name": "Cryptochlorogenic Acid",
+          "source": {
+            "extract": {
+              "column": "Cryptochlorogenic Acid"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Scopoletin",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Scopoletin' (role target, type numeric).",
+          "name": "Scopoletin",
+          "source": {
+            "extract": {
+              "column": "Scopoletin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Rutin",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Rutin' (role target, type numeric).",
+          "name": "Rutin",
+          "source": {
+            "extract": {
+              "column": "Rutin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/year",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'year' (role metadata, type numeric).",
+          "name": "year",
+          "source": {
+            "extract": {
+              "column": "year"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/origin_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'origin_label' (role metadata, type categorical).",
+          "name": "origin_label",
+          "source": {
+            "extract": {
+              "column": "origin_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download' (role metadata, type categorical).",
+          "name": "manual_download",
+          "source": {
+            "extract": {
+              "column": "manual_download"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_source_dir",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_source_dir' (role metadata, type categorical).",
+          "name": "manual_download_source_dir",
+          "source": {
+            "extract": {
+              "column": "manual_download_source_dir"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_file",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_file' (role metadata, type categorical).",
+          "name": "manual_download_file",
+          "source": {
+            "extract": {
+              "column": "manual_download_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_source_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_source_url' (role metadata, type categorical).",
+          "name": "official_source_url",
+          "source": {
+            "extract": {
+              "column": "official_source_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/standardization_batch",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'standardization_batch' (role metadata, type categorical).",
+          "name": "standardization_batch",
+          "source": {
+            "extract": {
+              "column": "standardization_batch"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://data.mendeley.com/datasets/9z7dgdtggk/1",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

@@ -52,7 +52,7 @@ nirs4all-datasets/
 │   ├── site/                     the static-site generator (pure-render)
 │   └── cli.py publish.py …       the n4a-datasets CLI + Dataverse governance
 ├── catalog/                      GIT-TRACKED metadata (small)
-│   ├── datasets/<id>.yaml        one descriptor per dataset (164)
+│   ├── datasets/<id>.yaml        one descriptor per dataset (297)
 │   ├── datasets.yaml             the assembled index + whole-bank summary
 │   ├── health.json               origin liveness
 │   └── validation.yaml           the human-validation registry (hand-edited)

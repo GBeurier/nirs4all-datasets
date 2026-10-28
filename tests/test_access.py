@@ -109,10 +109,17 @@ def test_get_local_reference_dataset_loads_through_io_package_bridge(tmp_path: P
     if not callable(getattr(nirs4all_io, "to_dataset_package", None)):
         pytest.skip("installed nirs4all_io does not expose DatasetPackage support")
 
+    def aligned_leaf(*args: Any, **kwargs: Any) -> Path:
+        leaf = v2_leaf(*args, **kwargs)
+        # The instruments observe the same physical samples, so their reference values agree.
+        # The generic fixture varies Y by observation and would create conflicting sample targets.
+        (leaf / "Y.csv").write_text("observation_id;Moisture\no1;1.0\no2;1.5\np1;1.0\np2;1.5\n", encoding="utf-8")
+        return leaf
+
     root = tmp_path / "root"
     _build_local(
         root,
-        v2_leaf,
+        aligned_leaf,
         tmp_path,
         "bridge",
         blocks=("X1", "X2"),

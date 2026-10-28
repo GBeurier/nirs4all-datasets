@@ -1,0 +1,349 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Nirpy Research milk NIR classification. v2.0 standardized NIRS package: 1 spectral source(s), 1 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Nirpy Research milk NIR classification",
+      "sha256": "f8e73a743a3fd74b03099481a4aff8e83132b4bdf041eb2ab615c3bae395727b"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "46038740a9412aab9ac17d774fcd585a0d0392e867306531cfba48d62424802a"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "nirpy"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "nirpy_milk_nir",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Nirpy Research milk NIR classification' (450 observations x 601 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the index axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/labels",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'labels' (role target, type categorical).",
+          "name": "labels",
+          "source": {
+            "extract": {
+              "column": "labels"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/repository_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'repository_url' (role metadata, type categorical).",
+          "name": "repository_url",
+          "source": {
+            "extract": {
+              "column": "repository_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/original_sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'original_sample_id' (role metadata, type categorical).",
+          "name": "original_sample_id",
+          "source": {
+            "extract": {
+              "column": "original_sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://github.com/nevernervous78/nirpyresearch/blob/master/data/milk.csv",
+    "https://raw.githubusercontent.com/nevernervous78/nirpyresearch/master/LICENSE",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

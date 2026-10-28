@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
 
 ## Uses
 
@@ -81,5 +81,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7a7907afa3d915c8c93e7b6cb4e71657425fdb7cb70a9f99241247330a682671`
-- **Processing hash:** `c739ca03c965bf32a197442b29994cdd3b772b17b314de0cfac535e3b181d7eb` | **metadata hash:** `7381085925372cec6e546dee1c8ef186992cfcc7fe5af1e09dd64d3c87d8fa6f`
+- **Content hash:** `5d48e37dee25c70617b27ddc8cedfdf2001db627cfa95693902903dc4ff50238`
+- **Processing hash:** `8aaa875b0f34faa2c20b46eccd16bdd00f6614c7f8e351c7fd013d2efbb70ee0` | **metadata hash:** `f80c78a571d037127f73ef7e7aba79b98e288b3568cb1192244c4a16716132a8`

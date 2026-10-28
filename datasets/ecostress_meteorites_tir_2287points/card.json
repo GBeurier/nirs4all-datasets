@@ -2,29 +2,29 @@
   "alignment": {
     "level": "observation",
     "n_observations_total": 57,
-    "n_samples": 55,
+    "n_samples": 57,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.0020830611783424504,
       "outlier_pressure": 0.7791185561457754,
       "reference_spread": 1.0,
-      "repeatability_risk": 1.0,
+      "repeatability_risk": 0.0,
       "shape_drift": 1.0,
       "structure_complexity": 0.6970753158788092
     },
     "reps_per_sample": {
-      "max": 2,
-      "mean": 1.0363636363636364,
+      "max": 1,
+      "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": false
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-12T13:56:47.998962+00:00",
+  "generated_at": "2026-10-28T12:57:01.798510+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,10 +45,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "d26f11ac3d43f0726ecb5bfaae2fd3b0104a39d6110b254a7f5da2f07d8ab0be",
+    "content_hash": "6bc622b369fbde9539299ed485eddb0df6a83c0917c41505a4c138e65cee99be",
     "manifest": "manifest.json",
-    "metadata_hash": "89789c4453b3c02415d47dfed6345da0188ebbb5ad29b3ca96e456d1946d56ed",
-    "processing_hash": "018a8adc77bb54a54f543d21e5e03fdccbc2a27212e230888773ad43280626d8"
+    "metadata_hash": "118cb0e55035e1fd5beef06d58e2a133fd2c3abe8925f0924f2a33bdfb1ffbc8",
+    "processing_hash": "8b91473a7d203182754a38b1c08528eb5b005e59d6b5dbd580e1ec3bc243b615"
   },
   "protocol_version": "5",
   "provenance": {
@@ -90,7 +90,10 @@
       }
     ],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
+      "Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, material_name, class_label, subclass. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field."
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1116,35 +1119,35 @@
         "pca": {
           "explained_variance_ratio": [
             0.9668718071971173,
-            0.015044224950369545,
-            0.00814343828310164,
+            0.015044224950369554,
+            0.008143438283101607,
             0.004959997922718585,
-            0.0018874377785069543,
-            0.0008916613751641748,
-            0.0006303580813287988,
-            0.0004676995916952898,
-            0.0003105779185161507,
-            0.00023188702960223143,
-            0.00014823021651258727,
-            9.470239833188149e-05,
-            6.391154911439022e-05,
-            5.538426548455944e-05,
-            4.161339562571541e-05,
-            2.7847405160152454e-05,
-            1.7092938872455192e-05,
-            1.56256504293373e-05,
-            1.3874028476964992e-05,
-            1.1634028565003452e-05,
-            1.0140284083500909e-05,
-            8.78153061721962e-06,
-            6.583879188960944e-06,
-            6.3627653286053786e-06,
-            5.547483257781568e-06,
-            4.331942291098989e-06,
-            3.5924912254782057e-06,
-            3.1711896542384633e-06,
-            2.8757586525772953e-06,
-            2.4903407712231312e-06
+            0.0018874377785069532,
+            0.0008916613751641738,
+            0.0006303580813287991,
+            0.0004676995916952875,
+            0.0003105779185161501,
+            0.00023188702960223067,
+            0.00014823021651258706,
+            9.470239833188166e-05,
+            6.391154911439023e-05,
+            5.538426548455987e-05,
+            4.1613395625715466e-05,
+            2.784740516015252e-05,
+            1.7092938872468643e-05,
+            1.5625650429354423e-05,
+            1.3874028477044077e-05,
+            1.1634028564962967e-05,
+            1.0140284083725837e-05,
+            8.781530617936392e-06,
+            6.583879189965138e-06,
+            6.3627653414647744e-06,
+            5.547483304592832e-06,
+            4.331942460609186e-06,
+            3.5924909711692832e-06,
+            3.171198625361266e-06,
+            2.8757595056809827e-06,
+            2.490485184170945e-06
           ],
           "n_components": 30
         },
@@ -1196,23 +1199,6 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM intra-ID"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Bruit/artefacts variables"
-                }
-              ],
-              "interpretation": "Positionnement, op\u00e9rateur ou protocole instable; investiguer les r\u00e9p\u00e9titions intra-ID.",
-              "key": "poor_repeatability",
-              "label": "Mauvaise r\u00e9p\u00e9tabilit\u00e9 d'acquisition",
-              "score": 0.8333333333333334,
-              "strength": "forte"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
                   "signal": "Baseline/mean/area"
                 },
                 {
@@ -1249,10 +1235,6 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "R\u00e9p\u00e9tabilit\u00e9"
-                },
-                {
                   "level": 0.7791185561457754,
                   "signal": "PCA Q"
                 },
@@ -1261,11 +1243,40 @@
                   "signal": "Mahalanobis / T2"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.7548392636864277,
-              "strength": "forte"
+              "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "key": "background_shift",
+              "label": "Fond diff\u00e9rent",
+              "score": 0.7056458076341657,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Spike rate"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "SNR normal/\u00e9lev\u00e9"
+                },
+                {
+                  "level": 0.9979169388216576,
+                  "signal": "Noise RMS faible"
+                },
+                {
+                  "level": 0.8234716274500775,
+                  "signal": "Jump rate"
+                },
+                {
+                  "level": 0.7791185561457754,
+                  "signal": "PCA Q"
+                }
+              ],
+              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
+              "key": "resampling_error",
+              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
+              "score": 0.6900655575763748,
+              "strength": "moyenne"
             },
             {
               "evidence": [
@@ -1293,8 +1304,8 @@
               "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
               "key": "vera25_like",
               "label": "Signature VERA25-like",
-              "score": 0.7428132606391954,
-              "strength": "forte"
+              "score": 0.659479927305862,
+              "strength": "moyenne"
             },
             {
               "evidence": [
@@ -1315,10 +1326,35 @@
                   "signal": "Mahalanobis / T2"
                 }
               ],
-              "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
-              "key": "background_shift",
-              "label": "Fond diff\u00e9rent",
-              "score": 0.7056458076341657,
+              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
+              "key": "probe_geometry",
+              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
+              "score": 0.6119821208292847,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.7791185561457754,
+                  "signal": "PCA Q"
+                },
+                {
+                  "level": 0.4547562896592183,
+                  "signal": "Mahalanobis / T2"
+                }
+              ],
+              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
+              "key": "partial_coverage",
+              "label": "M\u00e9lange feuille + fond",
+              "score": 0.538979140967499,
               "strength": "moyenne"
             },
             {
@@ -1326,10 +1362,6 @@
                 {
                   "level": 1.0,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "R\u00e9p\u00e9tabilit\u00e9"
                 },
                 {
                   "level": 0.7791185561457754,
@@ -1347,36 +1379,7 @@
               "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.6568350385045608,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "R\u00e9p\u00e9tabilit\u00e9"
-                },
-                {
-                  "level": 0.7791185561457754,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.4547562896592183,
-                  "signal": "Mahalanobis / T2"
-                }
-              ],
-              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
-              "key": "partial_coverage",
-              "label": "M\u00e9lange feuille + fond",
-              "score": 0.6473124743008323,
+              "score": 0.5368350385045608,
               "strength": "moyenne"
             }
           ],
@@ -1416,7 +1419,7 @@
             "noise_risk": 0.0020830611783424504,
             "outlier_pressure": 0.7791185561457754,
             "reference_spread": 1.0,
-            "repeatability_risk": 1.0,
+            "repeatability_risk": 0.0,
             "shape_drift": 1.0,
             "structure_complexity": 0.6970753158788092
           },
@@ -1436,11 +1439,11 @@
             "xcorr_lag_p95_features": 14.199999999999996
           },
           "repeatability": {
-            "cv_intra_id": 0.7068221672088559,
-            "distance_to_centroid_p95": 2.7391462419884953,
-            "n_repeat_groups": 2,
-            "rms_intra_id": 2.4775029585863435,
-            "sam_intra_id": 0.06930004123409814
+            "cv_intra_id": null,
+            "distance_to_centroid_p95": null,
+            "n_repeat_groups": 0,
+            "rms_intra_id": null,
+            "sam_intra_id": null
           },
           "shape": {
             "baseline_slope": -6.335472234017881,
@@ -1477,11 +1480,11 @@
             },
             {
               "x": -163.91990338627093,
-              "y": -13.671038243062858
+              "y": -13.671038243062862
             },
             {
               "x": -132.8537803588581,
-              "y": -4.788561962597954
+              "y": -4.788561962597956
             },
             {
               "x": -153.77463151184125,
@@ -1497,7 +1500,7 @@
             },
             {
               "x": -144.4584695361302,
-              "y": -1.0420954064286345
+              "y": -1.0420954064286352
             },
             {
               "x": -52.81297933126258,
@@ -1509,19 +1512,19 @@
             },
             {
               "x": -240.20698962772875,
-              "y": -4.515873825569746
+              "y": -4.515873825569748
             },
             {
               "x": -153.44680288259696,
-              "y": -29.672276750733992
+              "y": -29.672276750733996
             },
             {
               "x": 91.32684345526799,
-              "y": 0.8619123981091179
+              "y": 0.8619123981091182
             },
             {
               "x": 98.44653733719598,
-              "y": -3.8744536160316265
+              "y": -3.874453616031626
             },
             {
               "x": 28.2333183839607,
@@ -1541,11 +1544,11 @@
             },
             {
               "x": 111.51687325997764,
-              "y": -10.191806783088676
+              "y": -10.191806783088674
             },
             {
               "x": 135.9350389401575,
-              "y": 5.255845402888554
+              "y": 5.255845402888555
             },
             {
               "x": 55.95998352719741,
@@ -1553,43 +1556,43 @@
             },
             {
               "x": 127.71698612750058,
-              "y": 2.6342361573055197
+              "y": 2.63423615730552
             },
             {
               "x": 130.18091241763796,
-              "y": 1.4257888436309403
+              "y": 1.4257888436309418
             },
             {
               "x": 112.19764018337769,
-              "y": 3.207014648258628
+              "y": 3.2070146482586304
             },
             {
               "x": 131.11146573951328,
-              "y": -2.4508862753511464
+              "y": -2.450886275351146
             },
             {
               "x": 120.3069282179895,
-              "y": -1.4910637026469618
+              "y": -1.4910637026469609
             },
             {
               "x": 137.61327750595683,
-              "y": -2.201913719593679
+              "y": -2.2019137195936773
             },
             {
               "x": 129.4525527822057,
-              "y": -4.799455355617301
+              "y": -4.7994553556173
             },
             {
               "x": 78.60296491397271,
-              "y": -3.495893299094505
+              "y": -3.4958932990945044
             },
             {
               "x": 87.02565189921589,
-              "y": -5.6095973228018545
+              "y": -5.609597322801853
             },
             {
               "x": 76.78578671092443,
-              "y": -7.952899943107898
+              "y": -7.952899943107897
             },
             {
               "x": 95.68636873279642,
@@ -1605,7 +1608,7 @@
             },
             {
               "x": 68.4935952747414,
-              "y": -3.183843137828691
+              "y": -3.1838431378286907
             },
             {
               "x": 115.92807250070612,
@@ -1613,19 +1616,19 @@
             },
             {
               "x": 124.57673627564361,
-              "y": -9.134813477532981
+              "y": -9.13481347753298
             },
             {
               "x": 11.229365727221372,
-              "y": 41.62293345726424
+              "y": 41.622933457264246
             },
             {
               "x": 42.44142959536063,
-              "y": 0.11962676826395642
+              "y": 0.11962676826395648
             },
             {
               "x": -67.2832436385284,
-              "y": 0.3662769979120146
+              "y": 0.3662769979120143
             },
             {
               "x": 10.194962715501589,
@@ -1633,11 +1636,11 @@
             },
             {
               "x": 21.22978681504159,
-              "y": 24.86198257428906
+              "y": 24.861982574289055
             },
             {
               "x": 64.85070579139855,
-              "y": -0.7128229071482483
+              "y": -0.7128229071482475
             },
             {
               "x": -23.536660207525156,
@@ -1645,7 +1648,7 @@
             },
             {
               "x": -33.84627214865839,
-              "y": 2.5080855927715855
+              "y": 2.508085592771585
             },
             {
               "x": -18.738620009950345,
@@ -1653,7 +1656,7 @@
             },
             {
               "x": -26.674076508719963,
-              "y": 12.191215755392367
+              "y": 12.191215755392365
             },
             {
               "x": 58.534928847909754,
@@ -1665,7 +1668,7 @@
             },
             {
               "x": -103.65919286920668,
-              "y": 17.331186697875456
+              "y": 17.331186697875452
             },
             {
               "x": -102.58641517072058,
@@ -1673,7 +1676,7 @@
             },
             {
               "x": -108.98144940743235,
-              "y": 19.85576647323558
+              "y": 19.855766473235576
             },
             {
               "x": -14.644872933396012,
@@ -1681,7 +1684,7 @@
             },
             {
               "x": -81.61289513388722,
-              "y": 4.334989484923637
+              "y": 4.334989484923636
             },
             {
               "x": -68.00658999359065,
@@ -1693,7 +1696,7 @@
             },
             {
               "x": -65.02580000656585,
-              "y": 5.364116712927104
+              "y": 5.364116712927103
             }
           ]
         },
@@ -1717,17 +1720,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9818181818181818,
+        "gini_simpson": 0.9824561403508771,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.01818181818181818,
-        "n_classes": 55,
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 57,
         "normalized_entropy": 1.0
       },
       "name": "material_name",
       "role": "target",
       "stats": {
-        "n": 55,
-        "n_classes": 55,
+        "n": 57,
+        "n_classes": 57,
         "n_missing": 0,
         "top_classes": [
           {
@@ -1818,21 +1821,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.7451239669421488,
-        "imbalance_ratio": 17.0,
-        "minority_fraction": 0.01818181818181818,
+        "gini_simpson": 0.7405355493998154,
+        "imbalance_ratio": 19.0,
+        "minority_fraction": 0.017543859649122806,
         "n_classes": 6,
-        "normalized_entropy": 0.8269879527990757
+        "normalized_entropy": 0.8202059915525503
       },
       "name": "class_label",
       "role": "target",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 6,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 17,
+            "count": 19,
             "name": "Ordinary Chondrite"
           },
           {
@@ -1863,17 +1866,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9377002491990032,
+        "gini_simpson": 0.9395041322314049,
         "imbalance_ratio": 5.0,
-        "minority_fraction": 0.018867924528301886,
-        "n_classes": 20,
-        "normalized_entropy": 0.9592648773300493
+        "minority_fraction": 0.01818181818181818,
+        "n_classes": 21,
+        "normalized_entropy": 0.955723278090037
       },
       "name": "subclass",
       "role": "target",
       "stats": {
-        "n": 55,
-        "n_classes": 20,
+        "n": 57,
+        "n_classes": 21,
         "n_missing": 2,
         "top_classes": [
           {
@@ -1897,16 +1900,16 @@
             "name": "CI"
           },
           {
+            "count": 4,
+            "name": "L6"
+          },
+          {
             "count": 3,
             "name": "Eucrite"
           },
           {
             "count": 3,
             "name": "C4"
-          },
-          {
-            "count": 3,
-            "name": "L6"
           },
           {
             "count": 3,
@@ -1954,7 +1957,7 @@
           },
           {
             "count": 1,
-            "name": "L5"
+            "name": "H6"
           }
         ]
       },
@@ -1964,17 +1967,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9818181818181818,
+        "gini_simpson": 0.9824561403508771,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.01818181818181818,
-        "n_classes": 55,
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 57,
         "normalized_entropy": 1.0
       },
       "name": "ecostress_resource_id",
       "role": "metadata",
       "stats": {
-        "n": 55,
-        "n_classes": 55,
+        "n": 57,
+        "n_classes": 57,
         "n_missing": 0,
         "top_classes": [
           {
@@ -2074,12 +2077,12 @@
       "name": "category",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "meteorites"
           }
         ]
@@ -2099,12 +2102,12 @@
       "name": "material_type",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Meteorites"
           }
         ]
@@ -2117,9 +2120,9 @@
       "name": "site",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2128,17 +2131,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9804958677685951,
+        "gini_simpson": 0.9812249923053247,
         "imbalance_ratio": 2.0,
-        "minority_fraction": 0.01818181818181818,
-        "n_classes": 53,
-        "normalized_entropy": 0.9966326323979506
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 55,
+        "normalized_entropy": 0.9967749562593744
       },
       "name": "location",
       "role": "metadata",
       "stats": {
-        "n": 55,
-        "n_classes": 53,
+        "n": 57,
+        "n_classes": 55,
         "n_missing": 0,
         "top_classes": [
           {
@@ -2231,9 +2234,9 @@
       "name": "country",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2244,9 +2247,9 @@
       "name": "latitude",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2257,9 +2260,9 @@
       "name": "longitude",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2270,9 +2273,9 @@
       "name": "year",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2283,9 +2286,9 @@
       "name": "date",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2296,9 +2299,9 @@
       "name": "species",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2309,9 +2312,9 @@
       "name": "genus",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2322,9 +2325,9 @@
       "name": "family",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 55,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2333,17 +2336,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9818181818181818,
+        "gini_simpson": 0.9824561403508771,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.01818181818181818,
-        "n_classes": 55,
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 57,
         "normalized_entropy": 1.0
       },
       "name": "sample_description",
       "role": "metadata",
       "stats": {
-        "n": 55,
-        "n_classes": 55,
+        "n": 57,
+        "n_classes": 57,
         "n_missing": 0,
         "top_classes": [
           {
@@ -2443,12 +2446,12 @@
       "name": "instrument",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "jhu.becknic"
           }
         ]
@@ -2468,12 +2471,12 @@
       "name": "acquisition_mode",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Bidirectional reflectance"
           }
         ]
@@ -2493,12 +2496,12 @@
       "name": "signal_type",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Reflectance (percent)"
           }
         ]
@@ -2518,12 +2521,12 @@
       "name": "axis_unit",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Wavelength (micrometers)"
           }
         ]
@@ -2536,7 +2539,7 @@
       "name": "axis_min",
       "role": "metadata",
       "shape": {
-        "cv": 2.1552406082446386e-16,
+        "cv": 2.1545407411671682e-16,
         "is_normal": null,
         "kurtosis": null,
         "normality_p": null,
@@ -2547,11 +2550,11 @@
         "mean": 2.0794999999999995,
         "median": 2.0795,
         "min": 2.0795,
-        "n": 55,
+        "n": 57,
         "n_missing": 0,
         "q1": 2.0795,
         "q3": 2.0795,
-        "std": 4.481822844844725e-16
+        "std": 4.480367471257125e-16
       },
       "type": "numeric",
       "unit": null
@@ -2561,7 +2564,7 @@
       "name": "axis_max",
       "role": "metadata",
       "shape": {
-        "cv": 5.726654329780831e-16,
+        "cv": 1.4311986811235024e-16,
         "is_normal": null,
         "kurtosis": null,
         "normality_p": null,
@@ -2569,14 +2572,14 @@
       },
       "stats": {
         "max": 25.044,
-        "mean": 25.044000000000015,
+        "mean": 25.044000000000004,
         "median": 25.044,
         "min": 25.044,
-        "n": 55,
+        "n": 57,
         "n_missing": 0,
         "q1": 25.044,
         "q3": 25.044,
-        "std": 1.434183310350312e-14
+        "std": 3.5842939770057e-15
       },
       "type": "numeric",
       "unit": null
@@ -2597,7 +2600,7 @@
         "mean": 2287.0,
         "median": 2287.0,
         "min": 2287.0,
-        "n": 55,
+        "n": 57,
         "n_missing": 0,
         "q1": 2287.0,
         "q3": 2287.0,
@@ -2618,12 +2621,12 @@
       "name": "publication_doi",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "10.1016/j.rse.2019.05.015"
           }
         ]
@@ -2643,12 +2646,12 @@
       "name": "citation",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Meerdink et al. 2019, Baldridge et al. 2009"
           }
         ]
@@ -2668,12 +2671,12 @@
       "name": "license",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "Copyright California Institute of Technology / JPL, all rights reserved"
           }
         ]
@@ -2693,12 +2696,12 @@
       "name": "rights_status",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "manual_review_needed"
           }
         ]
@@ -2718,12 +2721,12 @@
       "name": "usage_scope",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "private_use_only"
           }
         ]
@@ -2743,13 +2746,114 @@
       "name": "notes",
       "role": "metadata",
       "stats": {
-        "n": 55,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 55,
+            "count": 57,
             "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9812249923053247,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 55,
+        "normalized_entropy": 0.9967749562593744
+      },
+      "name": "original_sample_id",
+      "role": "metadata",
+      "stats": {
+        "n": 57,
+        "n_classes": 55,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "ALHA77256"
+          },
+          {
+            "count": 2,
+            "name": "Murray"
+          },
+          {
+            "count": 1,
+            "name": "ALH84007"
+          },
+          {
+            "count": 1,
+            "name": "Johnstown"
+          },
+          {
+            "count": 1,
+            "name": "Haraiya"
+          },
+          {
+            "count": 1,
+            "name": "Yamato791192"
+          },
+          {
+            "count": 1,
+            "name": "Yamato791195"
+          },
+          {
+            "count": 1,
+            "name": "Bholghati"
+          },
+          {
+            "count": 1,
+            "name": "Bialystok"
+          },
+          {
+            "count": 1,
+            "name": "Bununu"
+          },
+          {
+            "count": 1,
+            "name": "Petersburg"
+          },
+          {
+            "count": 1,
+            "name": "ALHA77005"
+          },
+          {
+            "count": 1,
+            "name": "EETA79001"
+          },
+          {
+            "count": 1,
+            "name": "DingoPupDonga"
+          },
+          {
+            "count": 1,
+            "name": "PCA82506"
+          },
+          {
+            "count": 1,
+            "name": "TierraBlanca"
+          },
+          {
+            "count": 1,
+            "name": "Winona"
+          },
+          {
+            "count": 1,
+            "name": "Karoonda1"
+          },
+          {
+            "count": 1,
+            "name": "Karoonda2"
+          },
+          {
+            "count": 1,
+            "name": "Karoonda3"
           }
         ]
       },

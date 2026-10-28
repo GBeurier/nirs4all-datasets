@@ -1,0 +1,590 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Zenodo milk composition NIR transmittance. v2.0 standardized NIRS package: 1 spectral source(s), 6 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "spectra",
+      "sha256": "cc3efb6317ef5a4f34b4e606e095b89b5239346babbbdad0cecf86ea3f1c7e48"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "af229386452c1b74a1e4b86395c7ef26c2dff3c94017e409eb4ddb3496264d9c"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "zenodo"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "zenodo_milk_composition_transmittance_nir",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'spectra' (1224 observations x 256 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fat' (role target, type numeric).",
+          "name": "Fat",
+          "source": {
+            "extract": {
+              "column": "Fat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Prot",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Prot' (role target, type numeric).",
+          "name": "Prot",
+          "source": {
+            "extract": {
+              "column": "Prot"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Lact",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Lact' (role target, type numeric).",
+          "name": "Lact",
+          "source": {
+            "extract": {
+              "column": "Lact"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/SCC",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'SCC' (role target, type numeric).",
+          "name": "SCC",
+          "source": {
+            "extract": {
+              "column": "SCC"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Urea",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Urea' (role target, type numeric).",
+          "name": "Urea",
+          "source": {
+            "extract": {
+              "column": "Urea"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Milk_yield",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Milk_yield' (role target, type numeric).",
+          "name": "Milk_yield",
+          "source": {
+            "extract": {
+              "column": "Milk_yield"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/file_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'file_url' (role metadata, type categorical).",
+          "name": "file_url",
+          "source": {
+            "extract": {
+              "column": "file_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/article_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'article_url' (role metadata, type categorical).",
+          "name": "article_url",
+          "source": {
+            "extract": {
+              "column": "article_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_dataset' (role metadata, type categorical).",
+          "name": "doi_dataset",
+          "source": {
+            "extract": {
+              "column": "doi_dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_publication",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_publication' (role metadata, type categorical).",
+          "name": "doi_publication",
+          "source": {
+            "extract": {
+              "column": "doi_publication"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_id' (role metadata, type categorical).",
+          "name": "license_id",
+          "source": {
+            "extract": {
+              "column": "license_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cow_ID",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Cow_ID' (role metadata, type categorical).",
+          "name": "Cow_ID",
+          "source": {
+            "extract": {
+              "column": "Cow_ID"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Milk_Interv",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Milk_Interv' (role metadata, type numeric).",
+          "name": "Milk_Interv",
+          "source": {
+            "extract": {
+              "column": "Milk_Interv"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/SET",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'SET' (role metadata, type numeric).",
+          "name": "SET",
+          "source": {
+            "extract": {
+              "column": "SET"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Time_Dark",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Time_Dark' (role metadata, type numeric).",
+          "name": "Time_Dark",
+          "source": {
+            "extract": {
+              "column": "Time_Dark"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Time_Milk",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Time_Milk' (role metadata, type numeric).",
+          "name": "Time_Milk",
+          "source": {
+            "extract": {
+              "column": "Time_Milk"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Time_PrevMilk",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Time_PrevMilk' (role metadata, type numeric).",
+          "name": "Time_PrevMilk",
+          "source": {
+            "extract": {
+              "column": "Time_PrevMilk"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Time_Sample",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Time_Sample' (role metadata, type numeric).",
+          "name": "Time_Sample",
+          "source": {
+            "extract": {
+              "column": "Time_Sample"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Time_White",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Time_White' (role metadata, type numeric).",
+          "name": "Time_White",
+          "source": {
+            "extract": {
+              "column": "Time_White"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://zenodo.org/records/8263430",
+    "https://zenodo.org/api/records/8263430/files/data_table.csv/content",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

@@ -19,7 +19,7 @@ sources:
   axis_unit: none
   axis_min: 2.501
   axis_max: 15.387
-  signal_type: auto
+  signal_type: reflectance%
   n_observations: 138
   n_variables: 1737
 variables:
@@ -124,7 +124,10 @@ provenance:
   contributor: ECOSTRESS Spectral Library
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  warnings:
+  - 'X: native axis unit is ''Wavelength (micrometer)'' (micrometers), which is not
+    supported by the axis unit enum; axis values remain in micrometers. Multiply by
+    1000 to convert to nm.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: ECOSTRESS Spectral Library
@@ -163,6 +166,12 @@ publications:
   authors: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   reproducible_from_local_files: 'True'
   official_urls_checked: 'True'

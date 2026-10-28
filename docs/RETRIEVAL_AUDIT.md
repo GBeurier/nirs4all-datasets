@@ -3,6 +3,12 @@
 Date: 2026-06-29
 Catalog status refreshed: 2026-07-06
 
+The numerical inventory below describes the July snapshot. The October 2026
+integration contains 297 standardized datasets (133 additions); see
+[SOURCE_INTEGRATION.md](SOURCE_INTEGRATION.md) and
+[`catalog/source_audit.json`](../catalog/source_audit.json) for its scope and
+the distinction between local use and reconstruction from original raw files.
+
 ## Scope
 
 This audit covers the current `nirs4all-datasets` acquisition path, the 164

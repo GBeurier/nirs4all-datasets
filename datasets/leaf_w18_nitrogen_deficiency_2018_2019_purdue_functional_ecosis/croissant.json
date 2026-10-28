@@ -1,0 +1,875 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "EcoSIS Purdue Leaf Spectral and Functional Trait Data used in PLSR modeling (W18_Nitrogen_Deficiency). v2.0 standardized NIRS package: 1 spectral source(s), 1 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "2018+2019_stress_six_leaf_traits_spec",
+      "sha256": "39a2ae553dd41d55b54eef611ba7218613d959f40634cf3eea0e3a7919a89998"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "b22f88b9f5f6889a5807aebb6273101aa1346acee75a747dce0d8ab906781b66"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "leaf"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source '2018+2019_stress_six_leaf_traits_spec' (987 observations x 2151 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/W18_Nitrogen_Deficiency",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'W18_Nitrogen_Deficiency' (role target, type numeric).",
+          "name": "W18_Nitrogen_Deficiency",
+          "source": {
+            "extract": {
+              "column": "W18_Nitrogen_Deficiency"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/SpectralRep",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'SpectralRep' (role metadata, type numeric).",
+          "name": "SpectralRep",
+          "source": {
+            "extract": {
+              "column": "SpectralRep"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Unique_ID",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Unique_ID' (role metadata, type categorical).",
+          "name": "Unique_ID",
+          "source": {
+            "extract": {
+              "column": "Unique_ID"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Experiment_ID",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Experiment_ID' (role metadata, type categorical).",
+          "name": "Experiment_ID",
+          "source": {
+            "extract": {
+              "column": "Experiment_ID"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Data_Collection_Date",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Data_Collection_Date' (role metadata, type categorical).",
+          "name": "Data_Collection_Date",
+          "source": {
+            "extract": {
+              "column": "Data_Collection_Date"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Site_Name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Site_Name' (role metadata, type categorical).",
+          "name": "Site_Name",
+          "source": {
+            "extract": {
+              "column": "Site_Name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Latitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Latitude' (role metadata, type numeric).",
+          "name": "Latitude",
+          "source": {
+            "extract": {
+              "column": "Latitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Longitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Longitude' (role metadata, type numeric).",
+          "name": "Longitude",
+          "source": {
+            "extract": {
+              "column": "Longitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Common_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Common_name' (role metadata, type categorical).",
+          "name": "Common_name",
+          "source": {
+            "extract": {
+              "column": "Common_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Genus",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Genus' (role metadata, type categorical).",
+          "name": "Genus",
+          "source": {
+            "extract": {
+              "column": "Genus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Species",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Species' (role metadata, type categorical).",
+          "name": "Species",
+          "source": {
+            "extract": {
+              "column": "Species"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Plant_ID",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Plant_ID' (role metadata, type categorical).",
+          "name": "Plant_ID",
+          "source": {
+            "extract": {
+              "column": "Plant_ID"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/E18_Fungal_Infection",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'E18_Fungal_Infection' (role metadata, type categorical).",
+          "name": "E18_Fungal_Infection",
+          "source": {
+            "extract": {
+              "column": "E18_Fungal_Infection"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/E18_SoilTypes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'E18_SoilTypes' (role metadata, type categorical).",
+          "name": "E18_SoilTypes",
+          "source": {
+            "extract": {
+              "column": "E18_SoilTypes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/metadata_W18_Nitrogen_Deficiency",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'metadata_W18_Nitrogen_Deficiency' (role metadata, type categorical).",
+          "name": "metadata_W18_Nitrogen_Deficiency",
+          "source": {
+            "extract": {
+              "column": "metadata_W18_Nitrogen_Deficiency"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/W18_Drought",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'W18_Drought' (role metadata, type categorical).",
+          "name": "W18_Drought",
+          "source": {
+            "extract": {
+              "column": "W18_Drought"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/E19_Fungal_Infection",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'E19_Fungal_Infection' (role metadata, type categorical).",
+          "name": "E19_Fungal_Infection",
+          "source": {
+            "extract": {
+              "column": "E19_Fungal_Infection"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/E19_Drought",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'E19_Drought' (role metadata, type categorical).",
+          "name": "E19_Drought",
+          "source": {
+            "extract": {
+              "column": "E19_Drought"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/W19_Nitrogen_Deficiency",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'W19_Nitrogen_Deficiency' (role metadata, type categorical).",
+          "name": "W19_Nitrogen_Deficiency",
+          "source": {
+            "extract": {
+              "column": "W19_Nitrogen_Deficiency"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/W19_Salt_Deposition",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'W19_Salt_Deposition' (role metadata, type categorical).",
+          "name": "W19_Salt_Deposition",
+          "source": {
+            "extract": {
+              "column": "W19_Salt_Deposition"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Foliar_Trait_Code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Foliar_Trait_Code' (role metadata, type categorical).",
+          "name": "Foliar_Trait_Code",
+          "source": {
+            "extract": {
+              "column": "Foliar_Trait_Code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/CO2_assimilation_rate",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'CO2_assimilation_rate' (role metadata, type categorical).",
+          "name": "CO2_assimilation_rate",
+          "source": {
+            "extract": {
+              "column": "CO2_assimilation_rate"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Specific_leaf_area",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Specific_leaf_area' (role metadata, type categorical).",
+          "name": "Specific_leaf_area",
+          "source": {
+            "extract": {
+              "column": "Specific_leaf_area"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Leaf_water_content",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Leaf_water_content' (role metadata, type categorical).",
+          "name": "Leaf_water_content",
+          "source": {
+            "extract": {
+              "column": "Leaf_water_content"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Nitrogen",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Nitrogen' (role metadata, type categorical).",
+          "name": "Nitrogen",
+          "source": {
+            "extract": {
+              "column": "Nitrogen"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Sugars",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Sugars' (role metadata, type categorical).",
+          "name": "Sugars",
+          "source": {
+            "extract": {
+              "column": "Sugars"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gallic_acid",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'Gallic_acid' (role metadata, type categorical).",
+          "name": "Gallic_acid",
+          "source": {
+            "extract": {
+              "column": "Gallic_acid"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset' (role metadata, type categorical).",
+          "name": "dataset",
+          "source": {
+            "extract": {
+              "column": "dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_slug",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_slug' (role metadata, type categorical).",
+          "name": "dataset_slug",
+          "source": {
+            "extract": {
+              "column": "dataset_slug"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/task_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'task_type' (role metadata, type categorical).",
+          "name": "task_type",
+          "source": {
+            "extract": {
+              "column": "task_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/trait_header",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'trait_header' (role metadata, type categorical).",
+          "name": "trait_header",
+          "source": {
+            "extract": {
+              "column": "trait_header"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/target_original_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'target_original_name' (role metadata, type categorical).",
+          "name": "target_original_name",
+          "source": {
+            "extract": {
+              "column": "target_original_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/measurement_hint",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'measurement_hint' (role metadata, type categorical).",
+          "name": "measurement_hint",
+          "source": {
+            "extract": {
+              "column": "measurement_hint"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raw_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raw_label' (role metadata, type categorical).",
+          "name": "raw_label",
+          "source": {
+            "extract": {
+              "column": "raw_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/reference_value",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'reference_value' (role metadata, type categorical).",
+          "name": "reference_value",
+          "source": {
+            "extract": {
+              "column": "reference_value"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/class_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'class_index' (role metadata, type categorical).",
+          "name": "class_index",
+          "source": {
+            "extract": {
+              "column": "class_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/class_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'class_label' (role metadata, type categorical).",
+          "name": "class_label",
+          "source": {
+            "extract": {
+              "column": "class_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dimensions",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dimensions' (role metadata, type categorical).",
+          "name": "dimensions",
+          "source": {
+            "extract": {
+              "column": "dimensions"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_note",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_note' (role metadata, type categorical).",
+          "name": "axis_note",
+          "source": {
+            "extract": {
+              "column": "axis_note"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_data_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_data_url' (role metadata, type categorical).",
+          "name": "official_data_url",
+          "source": {
+            "extract": {
+              "column": "official_data_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_package_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_package_url' (role metadata, type categorical).",
+          "name": "official_package_url",
+          "source": {
+            "extract": {
+              "column": "official_package_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/parent_standardized_dataset_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'parent_standardized_dataset_id' (role metadata, type categorical).",
+          "name": "parent_standardized_dataset_id",
+          "source": {
+            "extract": {
+              "column": "parent_standardized_dataset_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://data.ecosis.org/dataset/purdue-leaf-spectral-and-functional-trait-data-used-in-plsr-modeling",
+    "https://data.ecosis.org/api/3/action/package_show?id=purdue-leaf-spectral-and-functional-trait-data-used-in-plsr-modeling",
+    "https://ecosis.org/package/purdue-leaf-spectral-and-functional-trait-data-used-in-plsr-modeling",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

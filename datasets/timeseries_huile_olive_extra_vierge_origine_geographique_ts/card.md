@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top OliveOil (×60) |
 | product | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top huile_olive_extra_vierge (×60) |
 | trait_header | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top origine_geographique (×60) |
-| trait_description | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Geographic origin of the olive oil (raw dataset codes). (×60) |
+| trait_description | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Origine geographique de l'huile d'olive (codes bruts du dataset). (×60) |
 | split | metadata | categorical | *Not specified.* | n=60, missing=0, classes=2, top train (×30) |
 | spectro | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top FTIR (×60) |
 | raw_label | metadata | categorical | *Not specified.* | n=60, missing=0, classes=4, top 4 (×25) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=60, missing=0, classes=4, top 3 (×25) |
 | dimensions | metadata | numeric | *Not specified.* | n=60, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=60, missing=0, range 570–570, mean 570 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: all absorbance spectra were truncated to 799-1897 cm^-1; linear axis reconstructed here in decreasing order 1897->799 over 570 variables. (×60) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: tous les spectres d'absorbance ont ete tronques sur 799-1897 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1897->799 sur 570 variables. (×60) |
 
 ## Statistics — splits
 
@@ -80,5 +80,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e627483789fc0bd13328541e8b963d1520a5b96b76cad04186085c67ebfa5cf3`
+- **Content hash:** `7e227c94e0477e84dd23e5f0f73d6e196277237896956cda22365f09e0cf05e8`
 - **Processing hash:** `0e35c420e99a51a9c3343506dafc5e7ef8bf7015ee908c54595087bae773500b` | **metadata hash:** `778e711ac61f161441661026fc25783b6aa0d9b6b5b7a2ce07cf3b35dcc24706`

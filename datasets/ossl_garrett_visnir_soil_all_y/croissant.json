@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "recovered_spectra",
-      "sha256": "fdbdcdab7f3fb2d28d5943baf2d88de12a2be00d4a0c8808de9141c12850aae6"
+      "sha256": "ae9ee661c99f41e023e058efbcd0ad8916cfece99612e6aead7f65061c3c12e7"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "52a041332ff80b12a0c33f720895bc413d1ede46986a310dd07e1cce4f315ff0"
+      "sha256": "465b64dcffdb5bedf3dbb2a70995f1b4ebb695a5ef040bbd5a61d6723d881b08"
     }
   ],
   "keywords": [
@@ -1376,6 +1376,36 @@
           "source": {
             "extract": {
               "column": "wavelength_note"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/active_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'active_status' (role metadata, type categorical).",
+          "name": "active_status",
+          "source": {
+            "extract": {
+              "column": "active_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/replaces_dataset_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'replaces_dataset_id' (role metadata, type categorical).",
+          "name": "replaces_dataset_id",
+          "source": {
+            "extract": {
+              "column": "replaces_dataset_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"

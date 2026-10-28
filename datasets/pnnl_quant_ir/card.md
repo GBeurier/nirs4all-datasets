@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | PNNL/NIST Quant IR private-use subset | Bruker IFS66V where specified in JCAMP metadata | MIR | 574.7–3976 none | 20 | 3527 |
+| X | PNNL/NIST Quant IR private-use subset | Bruker IFS66V where specified in JCAMP metadata | MIR | 574.7–3976 cm-1 | 20 | 3527 |
 
 ### Variables (Y / metadata)
 
@@ -88,5 +88,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `252c9b3ddc5445e26571c5f80901cf2ddfae397d79a73618842913a1764cdd87`
-- **Processing hash:** `4f6e427a4952beff8c1e2157db461641f8e0eac31e2cecd2b01569c02d913ba7` | **metadata hash:** `09cefe8a298a653a328b1ac921bd4995e8f0dedd3bcd2b6e988ce7005f2ff188`
+- **Content hash:** `6a128705a3974c6db33f701b0e443e6ea3e0777d88129d9837ecc0924620efed`
+- **Processing hash:** `ca0496cbd8347004581b232ae9cfb4075577c0e21adebca752e1d4660ab86765` | **metadata hash:** `8fc3049cf0030ab084a570c500a0980b8f9421d8ad013882f4aa4e14c92ec191`

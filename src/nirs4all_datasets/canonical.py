@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -40,6 +41,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from nirs4all_datasets import __version__ as _PKG_VERSION
+from nirs4all_datasets.bootstrap import _metadata_aliases, _original_sample_alias
 from nirs4all_datasets.manifest import sha256_file
 from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
 
@@ -74,8 +76,13 @@ def _sniff_sep(path: Path) -> str:
         sample = fh.read(8192)
     if not sample:
         return ";"
+    # A one-column v2 header has no delimiter. Commas in its data are values, not evidence that
+    # the file is comma-delimited (e.g. chemical names such as 1,3-dimethyl...).
+    header = sample.splitlines()[0]
+    if not any(delimiter in header for delimiter in ";,\t"):
+        return ";"
     try:
-        return csv.Sniffer().sniff(sample, delimiters=";,\t").delimiter
+        return csv.Sniffer().sniff(header, delimiters=";,\t").delimiter
     except csv.Error:
         return ";"
 
@@ -96,12 +103,12 @@ def _x_files(leaf: Path) -> dict[str, Path]:
     blocks: dict[str, Path] = {}
     for path in sorted(leaf.glob("X*.csv")):
         stem = path.stem
-        if stem == "X" or (stem.startswith("X") and stem[1:].isdigit()):
+        if re.fullmatch(r"X(?:\d+|_[A-Za-z0-9_]+)?", stem):
             blocks[stem] = path
     return blocks
 
 
-def _read_obs_to_sample(leaf: Path, ids_sample: str) -> tuple[pd.DataFrame | None, bool, list[str]]:
+def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tuple[pd.DataFrame | None, bool, list[str]]:
     """Read ``M.csv`` and build the ``observation_id -> sample_id`` mapping.
 
     Returns ``(m_df, has_sample_id, warnings)`` where ``m_df`` is the full metadata table (or ``None``
@@ -112,13 +119,19 @@ def _read_obs_to_sample(leaf: Path, ids_sample: str) -> tuple[pd.DataFrame | Non
     m_path = leaf / "M.csv"
     if not m_path.exists():
         return None, False, warnings
-    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype={_OBS_KEY: str})
+    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY, ids_sample, JOIN_KEY}, str))
     if _OBS_KEY not in m.columns:
         warnings.append(f"M.csv has no {_OBS_KEY!r} column; ignoring metadata and using identity sample_id.")
         return None, False, warnings
+    if ids_sample == _OBS_KEY:
+        if JOIN_KEY in m.columns:
+            m = m.rename(columns={JOIN_KEY: _original_sample_alias(leaf)})
+        return m, False, warnings
     has_sample = ids_sample in m.columns
     if has_sample:
-        m[ids_sample] = m[ids_sample].astype(str)
+        conflicts = m.groupby(_OBS_KEY, dropna=False)[ids_sample].nunique(dropna=True)
+        if (conflicts > 1).any():
+            warnings.append("M.csv: some observation_id values map to multiple sample_id values; kept the first.")
     return m, has_sample, warnings
 
 
@@ -201,7 +214,7 @@ def _to_float(value: str) -> float | None:
         return None
 
 
-def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str]) -> tuple[pd.DataFrame | None, list[str]]:
+def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str], text_cols: set[str], aliases: dict[str, str]) -> tuple[pd.DataFrame | None, list[str]]:
     """Build the per-sample variables table (Y columns UNION extra M columns), one row per sample_id.
 
     Y.csv columns and non-structural M columns are merged on ``observation_id``, then collapsed to one
@@ -215,17 +228,29 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     y_path = leaf / "Y.csv"
     if y_path.exists():
-        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype={_OBS_KEY: str})
+        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str))
         if _OBS_KEY not in y.columns:
-            warnings.append(f"Y.csv has no {_OBS_KEY!r} column; skipping targets.")
-        elif y.shape[1] > 1:
+            # Some upstream packages export X/Y/M as paired rows, without a key in Y. Only attach
+            # M's keys when an X block independently confirms its complete observation order.
+            paired = False
+            if m is not None and len(y) == len(m) and m[_OBS_KEY].notna().all() and m[_OBS_KEY].is_unique:
+                for x_path in _x_files(leaf).values():
+                    x_ids = pd.read_csv(x_path, sep=_sniff_sep(x_path), usecols=[0], dtype=str).iloc[:, 0]
+                    if x_ids.name == _OBS_KEY and x_ids.equals(m[_OBS_KEY]):
+                        y.insert(0, _OBS_KEY, m[_OBS_KEY].to_numpy())
+                        warnings.append(f"Y.csv has no {_OBS_KEY!r}; assumed Y/M row pairing and attached M.csv IDs. M observation order matches {x_path.name}.")
+                        paired = True
+                        break
+            if not paired:
+                warnings.append(f"Y.csv has no {_OBS_KEY!r} and paired row order cannot be verified; skipping targets.")
+        if _OBS_KEY in y.columns and y.shape[1] > 1:
             frames.append(y)
 
     if m is not None:
         # Drop structural plumbing + the standardization script's `source_*` provenance-tracking columns
         # (file paths, repo refs, grouped-export notes): these are bookkeeping, not sample measurements.
         keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not str(c).startswith("source_")]
-        m_extra = m[keep]
+        m_extra = m[keep].rename(columns=aliases)
         if m_extra.shape[1] > 1:
             frames.append(m_extra)
 
@@ -259,7 +284,7 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
         if nonblank.empty:
             continue
         as_num = pd.to_numeric(nonblank.str.replace(",", ".", regex=False), errors="coerce")
-        if as_num.notna().mean() >= 0.9:
+        if as_num.notna().all():
             grouped[col] = pd.to_numeric(text.str.replace(",", ".", regex=False), errors="coerce")
     phantom = sorted(set(grouped[JOIN_KEY]) - spectral_samples)
     if phantom:
@@ -319,7 +344,10 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
 
     warnings: list[str] = []
     ids_sample = descriptor.ids.sample_id
-    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample)
+    aliases = _metadata_aliases(leaf)
+    text_cols = {v.name for v in descriptor.variables if v.type is not VarType.NUMERIC}
+    text_cols.update(name for name, alias in aliases.items() if alias in text_cols)
+    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols)
     warnings.extend(m_warnings)
     if descriptor.ids.sample_id_available and not has_sample:
         warnings.append(f"descriptor declares sample_id available but {ids_sample!r} is absent from M.csv; using identity sample_id.")
@@ -353,7 +381,7 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         return CanonicalResult(out, canonical, config, CONVERTER_NAME, CONVERTER_VERSION, ConversionStatus.FAILED, hashes, row_counts, warnings)
 
     numeric_cols = {v.name for v in descriptor.variables if v.type is VarType.NUMERIC}
-    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols)
+    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols, text_cols, aliases)
     warnings.extend(var_warnings)
     variables_path: str | None = None
     if variables is not None:

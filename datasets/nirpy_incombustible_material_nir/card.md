@@ -1,0 +1,82 @@
+# Datasheet — Nirpy Research incombustible material NIR
+
+_Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
+
+## Motivation
+
+- **Domain / purpose:** nirpy
+- **Description:** Nirpy Research incombustible material NIR. v2.0 standardized NIRS package: 1 spectral source(s), 1 declared target(s). Auto-generated from dataset_card.json (verify before publication).
+- **Keywords:** nir, v2, nirpy
+- **Contributor:** Nirpy Research GitHub data
+
+## Composition
+
+- **Alignment:** sample level; 62 sample(s), 62 observation(s) total; sample_id available: True.
+- **Repetitions per sample:** 1–1 (mean 1).
+
+### Sources (X)
+
+| ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
+| --- | --- | --- | --- | --- | --- | --- |
+| X | Nirpy Research incombustible material NIR | *Not specified.* | NIR | 868–1771 nm | 62 | 512 |
+
+### Variables (Y / metadata)
+
+| Name | Role | Type | Unit | Summary |
+| --- | --- | --- | --- | --- |
+| TIC Value | target | numeric | *Not specified.* | n=62, missing=0, range 60.24–97.59, mean 78.36 ± 7.984 |
+| repository_url | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top https://github.com/nevernervous78/nirpyresearch (×62) |
+| license | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top MIT License (×62) |
+| license_url | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top https://raw.githubusercontent.com/nevernervous78/nirpyresearch/master/LICENSE (×62) |
+| rights_status | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top explicit_open (×62) |
+| usage_scope | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top public_reuse_possible (×62) |
+| public_release_allowed | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top True (×62) |
+| spectroscopy_type | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top NIR (×62) |
+| axis_unit | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top nm (×62) |
+| axis_min | metadata | numeric | *Not specified.* | n=62, missing=0, range 868–868, mean 868 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=62, missing=0, range 1771–1771, mean 1771 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=62, missing=0, range 512–512, mean 512 ± 0 |
+| notes | metadata | categorical | *Not specified.* | n=62, missing=0, classes=1, top Converted from Nirpy Research GitHub raw data without interpolation or resampling. (×62) |
+
+## Statistics — splits
+
+Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
+
+- *No native split documented.*
+
+## Collection process
+
+- **Reference method:** *Not specified.*
+- **Conversion status:** *Not specified.*
+
+### Origin sources (where the bytes live)
+
+- GitHub — kind `url`, access `open`, license *Not specified.*: `https://github.com/nevernervous78/nirpyresearch/blob/master/data/Incombustible_Material_NIR.csv`
+- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://raw.githubusercontent.com/nevernervous78/nirpyresearch/master/LICENSE`
+- standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
+
+## Preprocessing / cleaning / labeling
+
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+
+## Uses
+
+- **Permitted use:** Research and benchmarking.
+- **Access policy:** Manual download / private-use-only per source.
+
+### Related publications
+
+- *No related publication.*
+
+## Distribution
+
+- **License:** LicenseRef-not-cleared
+- **Tier:** private — Private — export requires an access token (Dataverse); not openly redistributable.
+- **Redistribution rights:** MIT license permits use, copy, modification, publication, distribution, sublicensing and sale with copyright/license notice.
+- **DOI:** *Not specified.*
+
+## Maintenance
+
+- **Content version:** 1.0.0 | **schema/protocol:** 2.0
+- **Content hash:** `8c5e27f3060d68a3f43e4ae4c500f7f2b8c17c811a1358ad4a69263d158beeed`
+- **Processing hash:** `a39bd3e8838112721e901a95b3997860bb9e94c4ef8d3bef57e88867baf2ca41` | **metadata hash:** `a53e14d4489b4f85692f3c1c14829a30e41c4d4580b216b235d2cc0f99cc651f`

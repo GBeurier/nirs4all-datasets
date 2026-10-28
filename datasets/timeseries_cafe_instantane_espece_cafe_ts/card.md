@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Coffee (×56) |
 | product | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top cafe_instantane (×56) |
 | trait_header | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top espece_cafe (×56) |
-| trait_description | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Coffee species (Arabica vs Robusta, raw dataset codes). (×56) |
+| trait_description | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Espece de cafe (Arabica vs Robusta, codes bruts du dataset). (×56) |
 | split | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top train (×28) |
 | spectro | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top MIR / FTIR (×56) |
 | raw_label | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top 0 (×29) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=56, missing=0, classes=2, top 0 (×29) |
 | dimensions | metadata | numeric | *Not specified.* | n=56, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=56, missing=0, range 286–286, mean 286 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Publication source: DRIFT spectra truncated to 800-1900 cm^-1; linear axis reconstructed here in decreasing order 1900->800 over 286 variables. (×56) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=56, missing=0, classes=1, top Publication source: spectres DRIFT tronques sur 800-1900 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1900->800 sur 286 variables. (×56) |
 
 ## Statistics — splits
 
@@ -80,5 +80,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `18152563e0333bd4ffce8ace49c59bb06aaa0efa32eda9e6616fba285da876a4`
+- **Content hash:** `9b44b5063ecb79f0c449d9a951eaa662ce19680b966a7fdb3d4a0ff4c3af9877`
 - **Processing hash:** `6bfc1dbc71ff59fca606ccafdf4cee1d71ed54edf511cbe50e116b2dcb4a7ba2` | **metadata hash:** `cf4d45918ef3f1b3e908ca7592d14d412dddf03409d13d6650133be5f72d79c4`

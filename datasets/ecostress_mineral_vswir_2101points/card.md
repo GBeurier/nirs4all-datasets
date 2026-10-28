@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 148 sample(s), 406 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–3 (mean 2.743).
+- **Alignment:** observation level; 406 sample(s), 406 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,37 +24,38 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=148, missing=0, classes=130, top Quartz SiO_2 (×5) |
-| class_label | target | categorical | *Not specified.* | n=148, missing=0, classes=12, top Silicate (×76) |
-| subclass | target | categorical | *Not specified.* | n=148, missing=66, classes=7, top Phyllosilicate (×29) |
-| particle_size | target | categorical | *Not specified.* | n=148, missing=0, classes=2, top Coarse (×129) |
-| ecostress_resource_id | metadata | categorical | *Not specified.* | n=148, missing=0, classes=148, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.spectrum (×1) |
-| category | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top mineral (×148) |
-| material_type | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Mineral (×148) |
-| site | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=148, missing=0, classes=113, top Unknown. (×14) |
-| country | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| year | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=148, missing=148, classes=0, — |
-| sample_description | metadata | categorical | *Not specified.* | n=148, missing=0, classes=148, top Particle size was 125-500um.Collected by: JPL Original ASTER Spectral Library name was jpl.perkin.mineral.arsenate.none.coarse.a01a.spectrum.txt (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top jpl.perkin (×148) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Hemispherical reflectance (×148) |
-| signal_type | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Reflectance (percent) (×148) |
-| axis_unit | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Wavelength (micrometers) (×148) |
-| axis_min | metadata | numeric | *Not specified.* | n=148, missing=0, range 0.4–0.4, mean 0.4 ± 1.114e-16 |
-| axis_max | metadata | numeric | *Not specified.* | n=148, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=148, missing=0, range 2101–2101, mean 2101 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×148) |
-| citation | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×148) |
-| license | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×148) |
-| rights_status | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top manual_review_needed (×148) |
-| usage_scope | metadata | categorical | *Not specified.* | n=148, missing=0, classes=1, top private_use_only (×148) |
-| notes | metadata | categorical | *Not specified.* | n=148, missing=0, classes=148, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.ancillary.txt (×1) |
+| material_name | target | categorical | *Not specified.* | n=406, missing=0, classes=131, top Quartz SiO_2 (×15) |
+| class_label | target | categorical | *Not specified.* | n=406, missing=0, classes=12, top Silicate (×198) |
+| subclass | target | categorical | *Not specified.* | n=406, missing=202, classes=7, top Phyllosilicate (×67) |
+| particle_size | target | categorical | *Not specified.* | n=406, missing=1, classes=3, top Fine (×147) |
+| ecostress_resource_id | metadata | categorical | *Not specified.* | n=406, missing=0, classes=406, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.spectrum (×1) |
+| category | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top mineral (×406) |
+| material_type | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Mineral (×406) |
+| site | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=406, missing=0, classes=117, top Unknown. (×34) |
+| country | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| year | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| sample_description | metadata | categorical | *Not specified.* | n=406, missing=0, classes=406, top Particle size was 125-500um.Collected by: JPL Original ASTER Spectral Library name was jpl.perkin.mineral.arsenate.none.coarse.a01a.spectrum.txt (×1) |
+| instrument | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top jpl.perkin (×406) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Hemispherical reflectance (×406) |
+| signal_type | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Reflectance (percent) (×406) |
+| axis_unit | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Wavelength (micrometers) (×406) |
+| axis_min | metadata | numeric | *Not specified.* | n=406, missing=0, range 0.4–0.4, mean 0.4 ± 5.558e-17 |
+| axis_max | metadata | numeric | *Not specified.* | n=406, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=406, missing=0, range 2101–2101, mean 2101 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×406) |
+| citation | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×406) |
+| license | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×406) |
+| rights_status | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top manual_review_needed (×406) |
+| usage_scope | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top private_use_only (×406) |
+| notes | metadata | categorical | *Not specified.* | n=406, missing=5, classes=401, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.ancillary.txt (×1) |
+| original_sample_id | metadata | categorical | *Not specified.* | n=406, missing=0, classes=148, top A-1A (×3) |
 
 ## Statistics — splits
 
@@ -75,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, notes, material_name, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
 
 ## Uses
 
@@ -97,5 +98,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `b19bd74826c3bc1ff63ce2ea1ed34d1b54cd06c910a9ac0ba8c2fdc115224cf5`
-- **Processing hash:** `ca8751e24cb863656c1fccb42f68201efce69f4069ba0ecd815fb1048b0f88b0` | **metadata hash:** `dd4cc50dba2dd3baf2072cf481f3dd8a851dc03bd679430d1bfbce84581c0074`
+- **Content hash:** `e0daaaddcc0cbed0c4062838445a933a7834f137607f39090f795857a372cbd3`
+- **Processing hash:** `8498ac950267140992d504a6d675c189904a17ba7de38f184c773ea1cb4eb198` | **metadata hash:** `2124273624ae61289f000c06b3a9356f08a6a3d64f72390f371aff277a5aa03d`

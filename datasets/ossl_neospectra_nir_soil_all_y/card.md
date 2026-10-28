@@ -78,6 +78,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=8151, missing=0, range 601–601, mean 601 ± 0 |
 | dimensions | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top 1D (×8151) |
 | wavelength_note | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top neospectra_nir_1350_2550_nm_step_2 (×8151) |
+| active_status | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top active (×8151) |
+| replaces_dataset_id | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top ossl_regression_b031e1af \| ossl_soil_ph_h2o_usda_a268_index_neospectra_nirs_ossl (×8151) |
 
 ## Statistics — splits
 
@@ -120,5 +122,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `8238c194c27b95b8955abbf9070ea1043181500687f9e9be6bd2dbd152a4916e`
-- **Processing hash:** `8c86b608e46fa2dd770ca0a316a56569c803166018c1774c8d02ad6bc15e3da6` | **metadata hash:** `902df92da3f382b136a16f524b1f3544e9ab02ce2df633d601cd674fae79c29d`
+- **Content hash:** `0c53261dbdbd0bfb8477bd7278d7e58fc7df7ad046834d0257016874398db5b8`
+- **Processing hash:** `8c86b608e46fa2dd770ca0a316a56569c803166018c1774c8d02ad6bc15e3da6` | **metadata hash:** `3bffe97b182a8ed6ee584d62df985c47bab28d1ef3931cbacb6a835562b6c3f7`

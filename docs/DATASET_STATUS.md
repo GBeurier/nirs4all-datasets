@@ -5,11 +5,11 @@ automatically from the catalog + health probe; **validation** is the human revie
 `catalog/validation.yaml` (hand-edited, never overwritten by `bootstrap`)._
 
 ## Summary
-- **164 datasets** — 122 private, 42 public
-- **Processing:** 164 qualified (qualified = metrics computed)
-- **Origin:** 7 unverified, 157 verified
-- **Validation (human):** 164 pending
-- **Distribution:** 42 open, 122 upload_pending
+- **297 datasets** — 162 private, 135 public
+- **Processing:** 297 qualified (qualified = metrics computed)
+- **Origin:** 1 degraded, 10 unreachable, 9 unverified, 277 verified
+- **Validation (human):** 297 pending
+- **Distribution:** 135 open, 162 upload_pending
 
 ## Legend
 - **state** — `described` → `canonical` → **`qualified`** (per-source/per-variable metrics computed)
@@ -21,11 +21,51 @@ automatically from the catalog + health probe; **validation** is the human revie
 ## Datasets
 | id | tier | state | mat. | origin | validation | distribution | samples |
 |----|------|-------|:----:|:------:|------------|--------------|--------:|
+| `barley_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `barley_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `canopy_lignin_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 80 |
+| `canopy_lma_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 43 |
+| `canopy_lma_g_m2_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 80 |
+| `canopy_lwc_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 43 |
+| `canopy_narea_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 41 |
+| `canopy_nitrogen_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 80 |
+| `canopy_treatment_2009_2016_to_cedar_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 25414 |
 | `cartilage_spectroscopy_scientificdata_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 869 |
+| `cereals_all_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 450 |
+| `cereals_all_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 450 |
 | `cgl_nir_grain_eigenvector` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 231 |
 | `chembl_ir_raman_multiblock` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 50000 |
+| `cirad_madagascar_organic_resources_asd_nonstd_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 1000 |
+| `cirad_madagascar_organic_resources_asd_std_xds_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 1000 |
 | `corn_eigenvector_nir` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 80 |
+| `corn_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `corn_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `data_in_brief_rice_amylose_transflection_nir_matio` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 313 |
 | `diesel_fuels_nir_eigenvector` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 784 |
+| `drug_common_application_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3510 |
+| `drug_compound_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3510 |
+| `drug_solvent_reagent_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3510 |
+| `dryad_avocado_felix_handheld_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 1991 |
+| `dryad_avocado_oo_benchtop_snv_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 199 |
+| `dryad_beech_leaf_second_derivative_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 449 |
+| `dryad_beetle_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 56 |
+| `dryad_beetle_transmittance_top_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 56 |
+| `dryad_beetle_transmittance_ventral_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 56 |
+| `dryad_bird_nh_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 42 |
+| `dryad_bird_nn_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 45 |
+| `dryad_dragon_lizard_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 137 |
+| `dryad_drosophila_spc_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 266 |
+| `dryad_frogs_spectraldata_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 7 |
+| `dryad_gastropods_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 197 |
+| `dryad_grassland_hyspex_species_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 104 |
+| `dryad_guava_leaf_infestation_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 15 |
+| `dryad_herbarium_resurvey_nirs_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2718 |
+| `dryad_rice_leaf_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2700 |
+| `dryad_scarab_reflectance_firstbatch_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 236 |
+| `dryad_sea_cucumber_representative_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 61 |
+| `dryad_tree_leaf_girdling_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2731 |
+| `dryad_tree_tissue_nsc_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 180 |
+| `dryad_walnut_moisture_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 136 |
 | `ecosis_2008_university_of_wisconsin_biotron_fresh_leaf_spectra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 87 |
 | `ecosis_2014_cedar_creek_esr_grassland_biodiversity_experiment_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 831 |
 | `ecosis_2018_cedar_creek_pressed_leaves_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 332 |
@@ -48,7 +88,8 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 609 |
 | `ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 609 |
 | `ecosis_fresh_leaf_spectra_and_measured_traits_from_the_sierra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 35 |
-| `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2363 |
+| `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2379 |
+| `ecosis_fresh_leaf_vswir_spectra_leaf_traits_california_reflectance_nirs` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 285 |
 | `ecosis_greater_cape_floristic_region_leaf_spectral_library_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3205 |
 | `ecosis_ground_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 607 |
 | `ecosis_ground_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 607 |
@@ -59,6 +100,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2399 |
 | `ecosis_leaf_spectra_of_boreal_tree_species_from_alberta_potted_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3235 |
 | `ecosis_leaf_spectra_structural_and_biochemical_leaf_traits_of_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 184 |
+| `ecosis_leaf_traits_compilation_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 47393 |
 | `ecosis_nasa_fft_project_leaf_reflectance_morphology_and_bioche_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 1382 |
 | `ecosis_nasa_fft_project_leaf_transmittance_morphology_and_bioc_transmittance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 765 |
 | `ecosis_ngee_arctic_2017_canopy_spectral_reflectance_seward_pen_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 511 |
@@ -78,7 +120,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_seasonal_measurements_of_photosynthesis_and_leaf_traits_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 48 |
 | `ecosis_spectra_from_in_situ_deciduous_leaves_and_leaves_collec_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 1013 |
 | `ecosis_spectral_characterization_of_multiple_corn_varieties_we_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 288 |
-| `ecosis_tabletop_leaf_drydowns_to_relate_leaf_spectra_and_leaf_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 48 |
+| `ecosis_tabletop_leaf_drydowns_to_relate_leaf_spectra_and_leaf_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 962 |
 | `ecosis_urban_materials_spectral_library_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 60 |
 | `ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 1065 |
 | `ecosis_uw_bnl_nasa_hyspiri_airborne_campaign_leaf_and_canopy_s_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2415 |
@@ -91,23 +133,23 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecostress_manmade_all_561points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 3 |
 | `ecostress_manmade_tir_2223points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 10 |
 | `ecostress_manmade_tir_2256points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 16 |
-| `ecostress_meteorites_tir_2287points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 55 |
+| `ecostress_meteorites_tir_2287points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 57 |
 | `ecostress_mineral_all_2231points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
 | `ecostress_mineral_all_2752points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 17 |
-| `ecostress_mineral_tir_2256points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 150 |
+| `ecostress_mineral_tir_2256points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 402 |
 | `ecostress_mineral_tir_2287points_113rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 113 |
-| `ecostress_mineral_tir_2287points_14rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 10 |
-| `ecostress_mineral_tir_2287points_207rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 125 |
+| `ecostress_mineral_tir_2287points_14rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 14 |
+| `ecostress_mineral_tir_2287points_207rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 207 |
 | `ecostress_mineral_tir_2287points_2rows_mineral_oxide_none_fine_tir_chromite` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2 |
 | `ecostress_mineral_tir_2287points_2rows_mineral_silicate_phyllosilicate_fine_tir_illsmec` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2 |
 | `ecostress_mineral_tir_2287points_5rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 5 |
-| `ecostress_mineral_vswir_2101points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 148 |
-| `ecostress_mineral_vswir_826points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 160 |
+| `ecostress_mineral_vswir_2101points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 406 |
+| `ecostress_mineral_vswir_826points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 430 |
 | `ecostress_nonphotosyntheticvegetation_tir_1736points_47rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 47 |
 | `ecostress_nonphotosyntheticvegetation_tir_1736points_4rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
-| `ecostress_nonphotosyntheticvegetation_tir_1737points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 7 |
+| `ecostress_nonphotosyntheticvegetation_tir_1737points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 10 |
 | `ecostress_nonphotosyntheticvegetation_vswir_2151points_4rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
-| `ecostress_nonphotosyntheticvegetation_vswir_2151points_57rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 54 |
+| `ecostress_nonphotosyntheticvegetation_vswir_2151points_57rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 57 |
 | `ecostress_rock_all_2227points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 9 |
 | `ecostress_rock_all_2231points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 27 |
 | `ecostress_rock_all_2257points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 83 |
@@ -121,7 +163,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecostress_rock_all_2868points_14rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 14 |
 | `ecostress_rock_all_2868points_28rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 28 |
 | `ecostress_rock_all_2868points_2rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2 |
-| `ecostress_rock_all_2868points_41rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 39 |
+| `ecostress_rock_all_2868points_41rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 41 |
 | `ecostress_rock_all_2868points_4rows_rock_metamorphic_gneis_coarse_all_gneiss4` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
 | `ecostress_rock_all_2868points_4rows_rock_metamorphic_schist_fine_all_schist1` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
 | `ecostress_rock_tir_2148points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 5 |
@@ -138,15 +180,74 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecostress_vegetation_all_550points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 3 |
 | `ecostress_vegetation_tir_1736points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
 | `ecostress_vegetation_tir_1737points_138rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 138 |
-| `ecostress_vegetation_tir_1737points_342rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 324 |
+| `ecostress_vegetation_tir_1737points_342rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 342 |
 | `ecostress_vegetation_vswir_2151points_210rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 210 |
-| `ecostress_vegetation_vswir_2151points_343rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 325 |
+| `ecostress_vegetation_vswir_2151points_343rows` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 343 |
 | `ecostress_water_all_965points` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 4 |
+| `fairdata_bovine_knee_ligament_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 250 |
+| `figshare_uva_illicit_drugs_asd_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 390 |
+| `figshare_uva_illicit_drugs_micronir_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 424 |
+| `figshare_uva_illicit_drugs_neospectra_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 429 |
+| `figshare_uva_illicit_drugs_nirone_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 341 |
+| `figshare_uva_illicit_drugs_scio_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 419 |
 | `flanagan_api_compounds_raman` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 3510 |
+| `github_grapevine_chloride_nirsg1_nir` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 259 |
+| `github_grapevine_chloride_svc_hr1024i_visnir` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 556 |
+| `github_streptanthus_leaf_reflectance_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 51 |
 | `grapevine_leaftraits_multisensor_nir` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 2079 |
+| `harvard_dataverse_forage_quality_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 1112 |
+| `leaf_chlorophyll_mg_m2_2023_fresh_sierra_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 363 |
+| `leaf_equivalent_water_thickness_g_cm2_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 330 |
+| `leaf_ewt_mg_cm2_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2399 |
+| `leaf_initial_of_boreal_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 3235 |
+| `leaf_ldmc_mg_mg_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2399 |
+| `leaf_leaf_mass_per_area_g_cm2_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 330 |
+| `leaf_lma_gdw_cm2_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 74 |
+| `leaf_lma_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 665 |
+| `leaf_lma_mg_cm2_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2399 |
+| `leaf_lma_value_g_m2_2023_fresh_sierra_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 363 |
+| `leaf_n_mass_g_g_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 261 |
+| `leaf_narea_g_m2_2016_2016_ngee_tropics_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 186 |
+| `leaf_nitrogen_pct_dw_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 330 |
+| `leaf_protein_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 658 |
+| `leaf_pvy_strain_time1_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 80 |
+| `leaf_pvy_strain_time2_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 80 |
+| `leaf_pvy_strain_time4_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 80 |
+| `leaf_sample_category_fresh_dry_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 74 |
+| `leaf_sla_cm2_g_dw_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 74 |
+| `leaf_starch_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 654 |
+| `leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 987 |
 | `malaria_anopheles_gambiae_oocyst_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 333 |
 | `malaria_anopheles_gambiae_sporozoite_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 229 |
 | `manure21_nir_all_y` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 490 |
+| `mendeley_agricultural_soil_fertility_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 40 |
+| `mendeley_animal_feed_quality_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 25 |
+| `mendeley_black_pmma_transmissivity_uvvisnir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2 |
+| `mendeley_chicken_meat_authenticity_handheld_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 4053 |
+| `mendeley_cocoa_beans_moisture_fat_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 72 |
+| `mendeley_coffee_drying_ftnir_moisture` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 73 |
+| `mendeley_cucurbitaceae_fruits_visnir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 300 |
+| `mendeley_diesel_biodiesel_ftmir_opus` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 30 |
+| `mendeley_eliquid_alpha_mid_opus_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 26 |
+| `mendeley_eliquid_invenio_fir_mid_nir_opus_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 27 |
+| `mendeley_homemade_soil_om_tc_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 190 |
+| `mendeley_human_arm_muscle_vis_swir_reflectance` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2000 |
+| `mendeley_intact_mango_raw_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 186 |
+| `mendeley_intact_mango_ta_vitc_raw_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 58 |
+| `mendeley_specialty_coffee_green_roasted_ftnir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 192 |
+| `mendeley_tobacco_leaf_chemical_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 347 |
+| `nirpy_abs_plastic_frc_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 500 |
+| `nirpy_avocado_whittaker_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 100 |
+| `nirpy_black_foam_entropy_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 500 |
+| `nirpy_coffee_classification_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 70 |
+| `nirpy_honey_adulteration_nir_aquagram` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 165 |
+| `nirpy_incombustible_material_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 62 |
+| `nirpy_milk_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 450 |
+| `nirpy_milk_powder_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 220 |
+| `nirpy_mineral_mixture_raman` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 303 |
+| `nirpy_peach_brix_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 50 |
+| `nirpy_plums_brix_firmness_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 40 |
+| `nirpy_plums_outlier_pca_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 40 |
 | `ohpl_beer_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 60 |
 | `ohpl_soil_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 108 |
 | `ohpl_wheat_nir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 100 |
@@ -173,8 +274,25 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `plastic_polymer_name_grouped_flopp_e_ftir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 195 |
 | `plastic_polymer_name_grouped_flopp_ftir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 186 |
 | `pnnl_quant_ir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 20 |
-| `rruff_ir` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 347 |
-| `rruff_raman` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 85 |
+| `recherche_data_gouv_fresh_dried_manure_nir_jigo8r` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 332 |
+| `recherche_data_gouv_grapevine_leaf_asd_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2394 |
+| `recherche_data_gouv_grapevine_leaf_micronir_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2408 |
+| `recherche_data_gouv_grapevine_leaf_neospectra_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2116 |
+| `recherche_data_gouv_oilseed_rape_tissue_ftnir_6vyuqn` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 2427 |
+| `recherche_data_gouv_raw_manure_nir_e1ji8u` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 490 |
+| `rod_raman_native_axis_1925points_13194863` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 17 |
+| `rod_raman_native_axis_2023points` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 48 |
+| `rod_raman_native_axis_2478points_f5432ef0` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 11 |
+| `rod_raman_native_axis_2515points_4efbe55b` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 15 |
+| `rod_raman_native_axis_2542points_f4e30a51` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 27 |
+| `rod_raman_native_axis_3071points_8b265991` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 10 |
+| `rod_raman_native_axis_3528points_0d479baa` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 17 |
+| `rod_raman_native_axis_972points_5b53a6fe` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 30 |
+| `rod_raman_native_axis_972points_70adf657` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 13 |
+| `rod_raman_native_axis_977points_4244c525` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 31 |
+| `rruff_ir` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 347 |
+| `rruff_raman` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 85 |
+| `soil_elevation_2024_lake_fire_ecosis` | public | qualified | ✅ | ⚠️ | ⏳ pending | 🌍 open | 106 |
 | `timeseries_boeuf_classe_adulteration_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 60 |
 | `timeseries_cafe_instantane_espece_cafe_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 56 |
 | `timeseries_huile_olive_extra_vierge_origine_geographique_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 60 |
@@ -184,4 +302,19 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `timeseries_spiritueux_whisky_bouteille_taux_ethanol_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 1004 |
 | `timeseries_viande_espece_viande_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 120 |
 | `timeseries_vin_cepage_type_ts` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 111 |
+| `ucph_bread_staling_enzyme_nir` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 324 |
+| `ucph_granules_ambient_moisture_api_nir` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 648 |
+| `ucph_granules_moisture_controlled_api_nir` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 648 |
+| `ucph_marzipan_multi_instrument_spectroscopy` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 32 |
+| `ucph_soil_som_ergosterol_nir` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 108 |
 | `ucph_tablet_nir` | private | qualified | ✅ | — | ⏳ pending | ⬆️ upload-pending | 310 |
+| `ucph_wheat_kernel_nit` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 523 |
+| `wheat_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `wheat_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 150 |
+| `wiley_blueberry_phenomics_nir_manual` | private | qualified | ✅ | ❌ | ⏳ pending | ⬆️ upload-pending | 351 |
+| `zenodo_milk_composition_transmittance_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 1224 |
+| `zenodo_neospectra_soil_nir_ccby` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 7790 |
+| `zenodo_tomato_leaf_stress_visnir_matio` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 216 |
+| `zenodo_twinspectra_fieldspec_rdf_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 718 |
+| `zenodo_twinspectra_micronir_rdf_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 720 |
+| `zenodo_western_highveld_soil_nir_mir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 803 |

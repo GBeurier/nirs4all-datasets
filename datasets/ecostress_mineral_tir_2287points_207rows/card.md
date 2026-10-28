@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 125 sample(s), 207 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–4 (mean 1.656).
+- **Alignment:** observation level; 207 sample(s), 207 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,39 +24,40 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=125, missing=0, classes=100, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×4) |
-| class_label | target | categorical | *Not specified.* | n=125, missing=0, classes=7, top Silicate (×101) |
-| subclass | target | categorical | *Not specified.* | n=125, missing=24, classes=7, top Nesosilicate (×27) |
-| particle_size | target | categorical | *Not specified.* | n=125, missing=0, classes=2, top Coarse (×120) |
-| measurement | target | categorical | *Not specified.* | n=125, missing=0, classes=3, top Bidirectional reflectance (×119) |
-| owner | target | categorical | *Not specified.* | n=125, missing=0, classes=2, top JHU (×124) |
-| ecostress_resource_id | metadata | categorical | *Not specified.* | n=125, missing=0, classes=125, top mineral.carbonate.none.coarse.tir.aragonite_1.jhu.nicolet.spectrum (×1) |
-| category | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top mineral (×125) |
-| material_type | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top Mineral (×125) |
-| site | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=125, missing=0, classes=124, top Ilmen Mountains, Urals, USSR via the Smithsonian (sample no.NMNH 96189) (×2) |
-| country | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| year | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=125, missing=125, classes=0, — |
-| sample_description | metadata | categorical | *Not specified.* | n=125, missing=0, classes=125, top The sample was composed of two transparent, colorless pieces: one prismatic, 1.8 cm x 1.8 cm x 2 cm, and weighing about 2 g, the other a 5 mm x 5 mm x 5 mm cleavage fragment weighing 0.65 g. No impurities were detected in hand sample or microscopically. Particle size was 74-250 Micrometers. Original ASTER Spectral Library name was jhu.nicolet.mineral.carbonate.none.coarse.aragon1.spectrum.txt (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top jhu.nicolet (×125) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=125, missing=0, classes=3, top Bidirectional reflectance (×119) |
-| signal_type | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top Reflectance (percent) (×125) |
-| axis_unit | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top Wavelength (micrometers) (×125) |
-| axis_min | metadata | numeric | *Not specified.* | n=125, missing=0, range 2.079–2.079, mean 2.079 ± 4.459e-16 |
-| axis_max | metadata | numeric | *Not specified.* | n=125, missing=0, range 25.04–25.04, mean 25.04 ± 1.427e-14 |
-| n_points_original | metadata | numeric | *Not specified.* | n=125, missing=0, range 2287–2287, mean 2287 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×125) |
-| citation | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×125) |
-| license | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×125) |
-| rights_status | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top manual_review_needed (×125) |
-| usage_scope | metadata | categorical | *Not specified.* | n=125, missing=0, classes=1, top private_use_only (×125) |
-| notes | metadata | categorical | *Not specified.* | n=125, missing=21, classes=90, top none (×15) |
+| material_name | target | categorical | *Not specified.* | n=207, missing=0, classes=101, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×7) |
+| class_label | target | categorical | *Not specified.* | n=207, missing=0, classes=7, top Silicate (×165) |
+| subclass | target | categorical | *Not specified.* | n=207, missing=43, classes=7, top Nesosilicate (×43) |
+| particle_size | target | categorical | *Not specified.* | n=207, missing=0, classes=4, top Coarse (×121) |
+| measurement | target | categorical | *Not specified.* | n=207, missing=0, classes=3, top Bidirectional reflectance (×199) |
+| owner | target | categorical | *Not specified.* | n=207, missing=0, classes=2, top JHU (×205) |
+| ecostress_resource_id | metadata | categorical | *Not specified.* | n=207, missing=0, classes=207, top mineral.carbonate.none.coarse.tir.aragonite_1.jhu.nicolet.spectrum (×1) |
+| category | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top mineral (×207) |
+| material_type | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Mineral (×207) |
+| site | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=207, missing=0, classes=126, top Donated by Bruce Hemingway, Sample from Prince of WalesIsland, Alaska. (×3) |
+| country | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| year | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| sample_description | metadata | categorical | *Not specified.* | n=207, missing=0, classes=207, top The sample was composed of two transparent, colorless pieces: one prismatic, 1.8 cm x 1.8 cm x 2 cm, and weighing about 2 g, the other a 5 mm x 5 mm x 5 mm cleavage fragment weighing 0.65 g. No impurities were detected in hand sample or microscopically. Particle size was 74-250 Micrometers. Original ASTER Spectral Library name was jhu.nicolet.mineral.carbonate.none.coarse.aragon1.spectrum.txt (×1) |
+| instrument | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top jhu.nicolet (×207) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=207, missing=0, classes=3, top Bidirectional reflectance (×199) |
+| signal_type | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Reflectance (percent) (×207) |
+| axis_unit | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Wavelength (micrometers) (×207) |
+| axis_min | metadata | numeric | *Not specified.* | n=207, missing=0, range 2.079–2.079, mean 2.079 ± 4.452e-16 |
+| axis_max | metadata | numeric | *Not specified.* | n=207, missing=0, range 25.04–25.04, mean 25.04 ± 1.068e-14 |
+| n_points_original | metadata | numeric | *Not specified.* | n=207, missing=0, range 2287–2287, mean 2287 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×207) |
+| citation | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×207) |
+| license | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×207) |
+| rights_status | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top manual_review_needed (×207) |
+| usage_scope | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top private_use_only (×207) |
+| notes | metadata | categorical | *Not specified.* | n=207, missing=31, classes=159, top none (×18) |
+| original_sample_id | metadata | categorical | *Not specified.* | n=207, missing=0, classes=125, top pyroph_1 (×4) |
 
 ## Statistics — splits
 
@@ -77,7 +78,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, notes, material_name, class_label, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
 
 ## Uses
 
@@ -99,5 +100,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0cb52841daac1462707cfde8f17f90bb4694be66f41735f732069a2afbe449b6`
-- **Processing hash:** `1c77e388be66eba83251d0c1e7d3f8651b3b80805e3f8665eae164fa60e91fa1` | **metadata hash:** `1585d62466871de6a92d46cff2cfe77460d827db0c8d7b91b341a0ef4a9837ee`
+- **Content hash:** `7e2a7a13f9766247197e9cd33ff537de4d826a9a9637798ce57880ebae467a7d`
+- **Processing hash:** `213364fde60f3a6c95c811ffa021ae05d8e98aa1defa5449af9a3abf3c1fd1f4` | **metadata hash:** `7ccdd4bd8cb708753cfbcec9ba333e9ef26e5599e54a76ffac42f842e815e690`

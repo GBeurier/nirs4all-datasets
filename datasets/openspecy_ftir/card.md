@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | OpenSpecy FTIR | mixed source instruments, metadata sparse | MIR | 102–1.199e+04 none | 5000 | 1983 |
+| X | OpenSpecy FTIR | mixed source instruments, metadata sparse | MIR | 102–1.199e+04 cm-1 | 5000 | 1983 |
 
 ### Variables (Y / metadata)
 
@@ -84,5 +84,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `1e5c7b13dc08e38632f58a1e628fe48091812afd7e416fa56755fce03d575f70`
-- **Processing hash:** `251daa78f5e9a2ce12e60f3f54b2fc68dbf4ca45671e4daf2d5786eac31b9e11` | **metadata hash:** `4c6b5f44470187a849e0a4298943a6f4c2dc7a034221ad237198c443366eebb7`
+- **Content hash:** `8d591f84bc89098bd368d1b3e164b8797ecf71049d9a5c59da4e79cd2f4ec8bf`
+- **Processing hash:** `5bd50239d6601cdd2eea40e975a96976f3c20f0b68fe38d1f03a6bb431c16721` | **metadata hash:** `597e6266b3a1b0a36ab41ef49eae69d1cfa5e22912ec0bbe3faa54d13d1858fa`

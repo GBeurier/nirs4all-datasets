@@ -374,6 +374,7 @@ def test_index_synthesizes_ecostress_direct_urls_from_raw_manifest(tmp_path):
     _write_dataset(tmp_path, desc, _manifest("ecostress_lunar_tir_2124points", file_id=678))
     raw_dir = tmp_path / "NIRS DB" / "v2.0" / "ecostress_lunar_tir_2124points"
     raw_dir.mkdir(parents=True)
+    (raw_dir / "source_to_standard.py").write_text("# Run convert_ecostress.py\n", encoding="utf-8")
     (raw_dir / "raw_manifest.csv").write_text(
         "\n".join(
             [
@@ -390,6 +391,8 @@ def test_index_synthesizes_ecostress_direct_urls_from_raw_manifest(tmp_path):
     res = route["resources"][0]
 
     assert entry["retrieval"]["status"] == "raw_reproducible"
+    assert entry["retrieval"]["blockers"] == []
+    assert "equivalence" in route["canonicalization"]["notes"]
     assert route["provider"] == "url"
     assert route["automated_download_allowed"] is True
     assert res["role"] == "spectra"
@@ -463,3 +466,51 @@ def test_resolve_unknown_raises(tmp_path):
     _write_dataset(tmp_path, _descriptor(), _manifest("demo"))
     with pytest.raises(KeyError):
         resolve(build_index(tmp_path), "nope")
+
+
+def test_missing_shared_converter_blocks_synthetic_reproduction(tmp_path):
+    desc = _descriptor(
+        origin_sources=[
+            {"kind": "url", "mode": "raw", "locator": "https://example.test/input.csv", "access": "open"},
+            {"kind": "script", "mode": "raw", "locator": "source_to_standard.py", "access": "manual"},
+        ],
+        retrieval={},
+    )
+    leaf = tmp_path / "NIRS DB" / "v2.0" / "demo"
+    leaf.mkdir(parents=True)
+    (leaf / "source_to_standard.py").write_text('script = ROOT / "convert_example_v1.py"\n', encoding="utf-8")
+    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+
+    retrieval = resolve(build_index(tmp_path), "demo")["retrieval"]
+    assert retrieval["status"] == "missing_delegate"
+    assert retrieval["routes"][0]["resources"][0]["selector"]["value"] == "https://example.test/input.csv"
+    assert retrieval["blockers"] == ["missing shared conversion script: convert_example_v1.py"]
+
+
+def test_manifest_file_url_preferred_and_missing_required_file_is_reported(tmp_path):
+    desc = _descriptor(origin_sources=[{"kind": "url", "mode": "raw", "locator": "https://example.test/landing", "access": "open"}], retrieval={})
+    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    leaf = tmp_path / "NIRS DB" / "v2.0" / "demo"
+    leaf.mkdir(parents=True)
+    (leaf / "raw_manifest.csv").write_text(
+        "file_name;source_url;file_url;required_for_rebuild;expected_size_bytes;checksum_type;checksum\n"
+        "data.zip;https://example.test/dataset;https://ndownloader.figshare.com/files/123;true;12;sha256;" + "a" * 64 + "\n"
+        "other.csv;https://example.test/dataset;;true;;;;\n", encoding="utf-8"
+    )
+    retrieval = resolve(build_index(tmp_path), "demo")["retrieval"]
+    assert retrieval["status"] == "missing_delegate"
+    assert "required manifest resources" in retrieval["blockers"][0]
+    resources = retrieval["routes"][0]["resources"]
+    assert len(resources) == 1
+    assert resources[0]["selector"]["value"] == "https://ndownloader.figshare.com/files/123"
+    assert resources[0]["size"] == 12
+    assert resources[0]["sha256"] == "a" * 64
+
+
+def test_manual_origin_produces_explicit_manual_route(tmp_path):
+    desc = _descriptor(origin_sources=[{"kind": "manual", "mode": "raw", "locator": "https://example.test/request", "access": "manual"}], retrieval={})
+    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    retrieval = resolve(build_index(tmp_path), "demo")["retrieval"]
+    assert retrieval["status"] == "manual_only"
+    assert retrieval["routes"][0]["method"] == "manual"
+    assert retrieval["routes"][0]["automated_download_allowed"] is False

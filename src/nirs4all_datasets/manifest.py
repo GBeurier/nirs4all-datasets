@@ -20,7 +20,7 @@ from collections.abc import Iterable
 from datetime import UTC, datetime
 from pathlib import Path
 
-from nirs4all_datasets.schema import DatasetDescriptor, FileEntry, FileRole, Manifest
+from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor, FileEntry, FileRole, Manifest
 
 _CHUNK = 1 << 20
 # The PROCESSING hash includes only fields that determine the canonical BYTES (the X source structure,
@@ -101,6 +101,8 @@ def build_manifest(
     converter_config: dict[str, str],
     row_counts: dict[str, int],
     raw_files: Iterable[str | Path] = (),
+    conversion_status: ConversionStatus | None = None,
+    conversion_warnings: Iterable[str] = (),
 ) -> Manifest:
     """Build a :class:`Manifest` from a dataset's raw + canonical files and provenance.
 
@@ -124,6 +126,8 @@ def build_manifest(
         files=files,
         canonical_hashes=canonical_hashes,
         row_counts={k: int(v) for k, v in row_counts.items()},
+        conversion_status=conversion_status,
+        conversion_warnings=list(conversion_warnings),
         doi=descriptor.dataverse.doi,
         dataset_version=descriptor.dataverse.dataset_version,
         created_at=datetime.now(UTC).isoformat(),

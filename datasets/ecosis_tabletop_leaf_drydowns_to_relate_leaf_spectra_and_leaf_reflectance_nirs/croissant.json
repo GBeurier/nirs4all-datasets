@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "all_data.csv",
-      "sha256": "918fa26111e4b027104ebb7fd60f5c1db0c6369878f8b51c86e7ed3e28a78723"
+      "sha256": "623f52b6648aacadea9ea547ff63fe172250a6d3f91d27d63aed6cf4fb06d350"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "283923b79a89901c02c883798a4ef83d723a42177c8af2cf8ea373c33a52b15b"
+      "sha256": "53d0e5b874f98fa9eafb58ae5fb1e7366273853df14c16b7185a3ae9fdf6cec7"
     }
   ],
   "keywords": [
@@ -626,6 +626,21 @@
           "source": {
             "extract": {
               "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/original_sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'original_sample_id' (role metadata, type categorical).",
+          "name": "original_sample_id",
+          "source": {
+            "extract": {
+              "column": "original_sample_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"

@@ -2,29 +2,29 @@
   "alignment": {
     "level": "observation",
     "n_observations_total": 57,
-    "n_samples": 54,
+    "n_samples": 57,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.0010034548148462556,
       "outlier_pressure": 0.5881862101647668,
       "reference_spread": 1.0,
-      "repeatability_risk": 2.628317784333816e-07,
+      "repeatability_risk": 0.0,
       "shape_drift": 0.44433624026706414,
       "structure_complexity": 0.5890717946830533
     },
     "reps_per_sample": {
-      "max": 2,
-      "mean": 1.0555555555555556,
+      "max": 1,
+      "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": false
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-12T13:57:19.791499+00:00",
+  "generated_at": "2026-10-28T12:57:08.292011+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,10 +45,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "fc3c300017dd8d4b842c01c2b5f244652b818a8e030397c606366a50824c1668",
+    "content_hash": "8741289b976b74131e2c43d6240a26ef32cf96b6e9d3e75a78a62777ff5b840e",
     "manifest": "manifest.json",
-    "metadata_hash": "f19909c128554760fe0be7ef1540d8bb99300128099ec16b6db59840c5c07f79",
-    "processing_hash": "c9a49f9a51b37a85999973ad6d7bbe57fcf6b91b1058d1788893f44ca2e396a4"
+    "metadata_hash": "b7ef6aca59479a97f7f7b405e2e41e9de7e830d692deca54bbbc11f7cbffe3c3",
+    "processing_hash": "a968fb5dfa997000c892b2f9230cd4795175a3c67f654e6de3232c45393e87d9"
   },
   "protocol_version": "5",
   "provenance": {
@@ -90,7 +90,10 @@
       }
     ],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
+      "Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, material_type, species, notes, material_name, type, class_label. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field."
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1105,7 +1108,7 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9995719033608781,
+          "cumulative_top10": 0.9995719033608774,
           "effective_rank": 2.13,
           "n_components_95": 2,
           "n_components_99": 4
@@ -1115,36 +1118,36 @@
         "n_outliers": 18,
         "pca": {
           "explained_variance_ratio": [
-            0.7122052954549174,
-            0.25168413367168196,
-            0.023022164953077937,
-            0.005077480101355472,
-            0.0030436053910568774,
-            0.0021395603750155377,
-            0.0012436034850429637,
-            0.0005629165241992881,
+            0.7122052954549165,
+            0.25168413367168213,
+            0.023022164953077916,
+            0.005077480101355486,
+            0.003043605391056872,
+            0.002139560375015546,
+            0.0012436034850429579,
+            0.0005629165241992894,
             0.00038309173728388483,
-            0.00021005166724682634,
-            0.00013244730839641637,
-            9.049668854239894e-05,
-            6.0700864239535796e-05,
-            3.8078229043095075e-05,
-            2.0197848814499692e-05,
-            1.8507606211067094e-05,
-            1.7426959797368253e-05,
+            0.00021005166724682723,
+            0.00013244730839641602,
+            9.04966885423989e-05,
+            6.070086423953641e-05,
+            3.807822904309499e-05,
+            2.0197848814499767e-05,
+            1.8507606211066972e-05,
+            1.7426959797368087e-05,
             1.0368530546379663e-05,
-            8.028343206618717e-06,
-            6.824731782345544e-06,
-            4.797558085883719e-06,
-            3.9945719485051604e-06,
-            3.1464373182435793e-06,
-            2.571927837365628e-06,
-            1.7154770273938177e-06,
-            1.343140095943179e-06,
-            1.1535716566205767e-06,
-            9.892745627501638e-07,
-            9.257991006315096e-07,
-            8.115429008479143e-07
+            8.028343206618714e-06,
+            6.824731782345586e-06,
+            4.797558085883744e-06,
+            3.994571948505211e-06,
+            3.146437318243124e-06,
+            2.5719278373667153e-06,
+            1.7154770271462048e-06,
+            1.3431400955751294e-06,
+            1.1535716540489855e-06,
+            9.892745600851995e-07,
+            9.25799099187319e-07,
+            8.115429272809462e-07
           ],
           "n_components": 30
         },
@@ -1218,7 +1221,7 @@
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "key": "resampling_error",
               "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.6520232497585087,
+              "score": 0.6520232629000976,
               "strength": "moyenne"
             },
             {
@@ -1247,7 +1250,7 @@
               "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
               "key": "vera25_like",
               "label": "Signature VERA25-like",
-              "score": 0.6346711913709471,
+              "score": 0.6346711694682989,
               "strength": "moyenne"
             },
             {
@@ -1301,7 +1304,7 @@
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "key": "probe_geometry",
               "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5114786036338393,
+              "score": 0.5114785660864424,
               "strength": "moyenne"
             },
             {
@@ -1351,7 +1354,7 @@
               "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.49157658605050925,
+              "score": 0.4915765545106958,
               "strength": "moyenne"
             },
             {
@@ -1401,9 +1404,9 @@
             "mahalanobis_h_median": 1.1595545131864866,
             "mahalanobis_h_p95": 2.309032554115642,
             "mahalanobis_h_ratio": 1.9913100486930617,
-            "pca_q_max": 91609.82704973029,
+            "pca_q_max": 91609.82704973027,
             "pca_q_median": 11992.645971778937,
-            "pca_q_p95": 56431.27187190727,
+            "pca_q_p95": 56431.27187190728,
             "pca_q_ratio": 4.705489681318134
           },
           "profile_scores": {
@@ -1412,7 +1415,7 @@
             "noise_risk": 0.0010034548148462556,
             "outlier_pressure": 0.5881862101647668,
             "reference_spread": 1.0,
-            "repeatability_risk": 2.628317784333816e-07,
+            "repeatability_risk": 0.0,
             "shape_drift": 0.44433624026706414,
             "structure_complexity": 0.5890717946830533
           },
@@ -1432,11 +1435,11 @@
             "xcorr_lag_p95_features": 50.0
           },
           "repeatability": {
-            "cv_intra_id": 0.0,
-            "distance_to_centroid_p95": 0.0,
-            "n_repeat_groups": 3,
-            "rms_intra_id": 0.0,
-            "sam_intra_id": 3.942476676500724e-08
+            "cv_intra_id": null,
+            "distance_to_centroid_p95": null,
+            "n_repeat_groups": 0,
+            "rms_intra_id": null,
+            "sam_intra_id": null
           },
           "shape": {
             "baseline_slope": 10.735237636935418,
@@ -1448,7 +1451,7 @@
             "density_cv": 0.6855422176732262,
             "isolation_forest_score_p95": 0.5850250508734323,
             "local_outlier_factor_p95": 1.7672153840491598,
-            "pca_score_density": 0.004800092313158585
+            "pca_score_density": 0.004800092313158584
           }
         },
         "quality": {
@@ -1488,12 +1491,12 @@
               "y": 426.21116957927984
             },
             {
-              "x": -929.7864586873156,
-              "y": 205.8294273340477
+              "x": -929.7864586873158,
+              "y": 205.82942733404772
             },
             {
               "x": -972.1864773861654,
-              "y": 265.57964859046575
+              "y": 265.5796485904658
             },
             {
               "x": 271.18101687415907,
@@ -1504,7 +1507,7 @@
               "y": -586.9068323219615
             },
             {
-              "x": 6.627521653623073,
+              "x": 6.627521653623045,
               "y": -569.9180610826978
             },
             {
@@ -1528,7 +1531,7 @@
               "y": -144.6406131999055
             },
             {
-              "x": 503.94820531732273,
+              "x": 503.9482053173228,
               "y": -423.2698554994879
             },
             {
@@ -1537,18 +1540,18 @@
             },
             {
               "x": -227.21719163294551,
-              "y": -191.17417608719327
+              "y": -191.1741760871933
             },
             {
               "x": -296.9577510944848,
-              "y": -109.47389326569183
+              "y": -109.47389326569186
             },
             {
               "x": 353.22075395188756,
               "y": -517.7700586191298
             },
             {
-              "x": 220.37676894002507,
+              "x": 220.3767689400251,
               "y": -350.3273711317773
             },
             {
@@ -1564,12 +1567,12 @@
               "y": -443.988748381028
             },
             {
-              "x": 75.82606835053029,
+              "x": 75.8260683505303,
               "y": -399.51721029503346
             },
             {
               "x": -197.31234944873697,
-              "y": -435.1937336301445
+              "y": -435.19373363014455
             },
             {
               "x": 817.9706188309142,
@@ -1577,7 +1580,7 @@
             },
             {
               "x": 936.8280673332843,
-              "y": 229.04686168345887
+              "y": 229.04686168345884
             },
             {
               "x": 783.1911936474736,
@@ -1713,19 +1716,23 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9595336076817558,
-        "imbalance_ratio": 3.0,
-        "minority_fraction": 0.018518518518518517,
+        "gini_simpson": 0.9590643274853802,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.017543859649122806,
         "n_classes": 28,
-        "normalized_entropy": 0.9793427417787021
+        "normalized_entropy": 0.9778343120279503
       },
       "name": "material_name",
       "role": "target",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 28,
         "n_missing": 0,
         "top_classes": [
+          {
+            "count": 4,
+            "name": "Calocedrus decrruens"
+          },
           {
             "count": 3,
             "name": "Pinus coulteri bark"
@@ -1801,10 +1808,6 @@
           {
             "count": 2,
             "name": "Misc Grass Litter - Mostly decomposed"
-          },
-          {
-            "count": 2,
-            "name": "Misc Grass Litter"
           }
         ]
       },
@@ -1814,21 +1817,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.1049382716049383,
-        "imbalance_ratio": 17.0,
-        "minority_fraction": 0.05555555555555555,
+        "gini_simpson": 0.09972299168975085,
+        "imbalance_ratio": 18.0,
+        "minority_fraction": 0.05263157894736842,
         "n_classes": 2,
-        "normalized_entropy": 0.3095434291503252
+        "normalized_entropy": 0.2974722489192897
       },
       "name": "type",
       "role": "target",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 2,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 51,
+            "count": 54,
             "name": "non photosynthetic vegetation"
           },
           {
@@ -1843,16 +1846,16 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.766803840877915,
-        "imbalance_ratio": 18.0,
-        "minority_fraction": 0.018518518518518517,
+        "gini_simpson": 0.786088027085257,
+        "imbalance_ratio": 6.0,
+        "minority_fraction": 0.05263157894736842,
         "n_classes": 6,
-        "normalized_entropy": 0.8693282120340486
+        "normalized_entropy": 0.9166278442224606
       },
       "name": "class_label",
       "role": "target",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 6,
         "n_missing": 0,
         "top_classes": [
@@ -1873,12 +1876,12 @@
             "name": "branches"
           },
           {
-            "count": 3,
-            "name": "Shrub"
+            "count": 4,
+            "name": "flowers"
           },
           {
-            "count": 1,
-            "name": "flowers"
+            "count": 3,
+            "name": "Shrub"
           }
         ]
       },
@@ -1888,17 +1891,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9814814814814815,
+        "gini_simpson": 0.9824561403508771,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.018518518518518517,
-        "n_classes": 54,
-        "normalized_entropy": 1.0000000000000002
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 57,
+        "normalized_entropy": 1.0
       },
       "name": "ecostress_resource_id",
       "role": "metadata",
       "stats": {
-        "n": 54,
-        "n_classes": 54,
+        "n": 57,
+        "n_classes": 57,
         "n_missing": 0,
         "top_classes": [
           {
@@ -1998,12 +2001,12 @@
       "name": "category",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "nonphotosyntheticvegetation"
           }
         ]
@@ -2014,21 +2017,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.1049382716049383,
-        "imbalance_ratio": 17.0,
-        "minority_fraction": 0.05555555555555555,
+        "gini_simpson": 0.09972299168975085,
+        "imbalance_ratio": 18.0,
+        "minority_fraction": 0.05263157894736842,
         "n_classes": 2,
-        "normalized_entropy": 0.3095434291503252
+        "normalized_entropy": 0.2974722489192897
       },
       "name": "material_type",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 2,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 51,
+            "count": 54,
             "name": "non photosynthetic vegetation"
           },
           {
@@ -2045,9 +2048,9 @@
       "name": "site",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2056,16 +2059,16 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.7935528120713307,
+        "gini_simpson": 0.8045552477685441,
         "imbalance_ratio": 6.333333333333333,
-        "minority_fraction": 0.05555555555555555,
+        "minority_fraction": 0.05263157894736842,
         "n_classes": 7,
-        "normalized_entropy": 0.9008701329826796
+        "normalized_entropy": 0.9163191175932133
       },
       "name": "location",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 7,
         "n_missing": 0,
         "top_classes": [
@@ -2082,16 +2085,16 @@
             "name": "34.413836, -119.880173, WGS84"
           },
           {
+            "count": 7,
+            "name": "37.0443, -119.3026, WGS84"
+          },
+          {
             "count": 6,
             "name": "34.51457, -119.79877, WGS84"
           },
           {
             "count": 4,
             "name": "34.4925, -119.7904, WGS84"
-          },
-          {
-            "count": 4,
-            "name": "37.0443, -119.3026, WGS84"
           },
           {
             "count": 3,
@@ -2107,9 +2110,9 @@
       "name": "country",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2120,9 +2123,9 @@
       "name": "latitude",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2133,9 +2136,9 @@
       "name": "longitude",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2146,9 +2149,9 @@
       "name": "year",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2157,16 +2160,16 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.7139917695473251,
-        "imbalance_ratio": 2.7142857142857144,
-        "minority_fraction": 0.12962962962962962,
+        "gini_simpson": 0.7276084949215144,
+        "imbalance_ratio": 1.9,
+        "minority_fraction": 0.17543859649122806,
         "n_classes": 4,
-        "normalized_entropy": 0.9455915456681546
+        "normalized_entropy": 0.9672534748092393
       },
       "name": "date",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 4,
         "n_missing": 0,
         "top_classes": [
@@ -2183,7 +2186,7 @@
             "name": "7/8/2013"
           },
           {
-            "count": 7,
+            "count": 10,
             "name": "11/2/2013"
           }
         ]
@@ -2194,16 +2197,16 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.766803840877915,
-        "imbalance_ratio": 18.0,
-        "minority_fraction": 0.018518518518518517,
+        "gini_simpson": 0.786088027085257,
+        "imbalance_ratio": 6.0,
+        "minority_fraction": 0.05263157894736842,
         "n_classes": 6,
-        "normalized_entropy": 0.8693282120340486
+        "normalized_entropy": 0.9166278442224606
       },
       "name": "species",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 6,
         "n_missing": 0,
         "top_classes": [
@@ -2224,12 +2227,12 @@
             "name": "branches"
           },
           {
-            "count": 3,
-            "name": "Shrub"
+            "count": 4,
+            "name": "flowers"
           },
           {
-            "count": 1,
-            "name": "flowers"
+            "count": 3,
+            "name": "Shrub"
           }
         ]
       },
@@ -2241,9 +2244,9 @@
       "name": "genus",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2254,9 +2257,9 @@
       "name": "family",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 0,
-        "n_missing": 54,
+        "n_missing": 57,
         "top_classes": []
       },
       "type": "categorical",
@@ -2265,16 +2268,16 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.7373113854595337,
+        "gini_simpson": 0.7485380116959064,
         "imbalance_ratio": 25.0,
-        "minority_fraction": 0.018518518518518517,
+        "minority_fraction": 0.017543859649122806,
         "n_classes": 11,
-        "normalized_entropy": 0.7401191639509569
+        "normalized_entropy": 0.7424612700407919
       },
       "name": "sample_description",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 11,
         "n_missing": 0,
         "top_classes": [
@@ -2283,12 +2286,12 @@
             "name": "Samples were collected as part of the HyspIRI Airborne Campaign proposal titled: HyspIRI discrimination of plant species and functional types along a strong environmental temperature gradient. The same materials were processed in the Nicolet and then measured using the ASD."
           },
           {
-            "count": 8,
-            "name": "Sample is bark with lichen and moss. Samples were collected as part of NSF Macrosystem Biology proposal titled: Collaborative Research: Thermal controls on ecosystem metabolism and function: scaling from leaves to canopies to regions. Samples were collected and overnighted to JPL facilities for processing. The same leaves were processed in the Nicolet and then measured using the ASD."
+            "count": 10,
+            "name": "Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD."
           },
           {
-            "count": 7,
-            "name": "Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD."
+            "count": 8,
+            "name": "Sample is bark with lichen and moss. Samples were collected as part of NSF Macrosystem Biology proposal titled: Collaborative Research: Thermal controls on ecosystem metabolism and function: scaling from leaves to canopies to regions. Samples were collected and overnighted to JPL facilities for processing. The same leaves were processed in the Nicolet and then measured using the ASD."
           },
           {
             "count": 3,
@@ -2339,12 +2342,12 @@
       "name": "instrument",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "ucsb.asd"
           }
         ]
@@ -2364,12 +2367,12 @@
       "name": "acquisition_mode",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "Bidirectional reflectance"
           }
         ]
@@ -2389,12 +2392,12 @@
       "name": "signal_type",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "Reflectance (percentage)"
           }
         ]
@@ -2414,12 +2417,12 @@
       "name": "axis_unit",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "Wavelength (micrometers)"
           }
         ]
@@ -2432,7 +2435,7 @@
       "name": "axis_min",
       "role": "metadata",
       "shape": {
-        "cv": 4.802776640035458e-16,
+        "cv": 1.6001312397346873e-16,
         "is_normal": null,
         "kurtosis": null,
         "normality_p": null,
@@ -2440,14 +2443,14 @@
       },
       "stats": {
         "max": 0.35,
-        "mean": 0.35000000000000014,
+        "mean": 0.35000000000000003,
         "median": 0.35,
         "min": 0.35,
-        "n": 54,
+        "n": 57,
         "n_missing": 0,
         "q1": 0.35,
         "q3": 0.35,
-        "std": 1.680971824012411e-16
+        "std": 5.600459339071406e-17
       },
       "type": "numeric",
       "unit": null
@@ -2468,7 +2471,7 @@
         "mean": 2.5,
         "median": 2.5,
         "min": 2.5,
-        "n": 54,
+        "n": 57,
         "n_missing": 0,
         "q1": 2.5,
         "q3": 2.5,
@@ -2493,7 +2496,7 @@
         "mean": 2151.0,
         "median": 2151.0,
         "min": 2151.0,
-        "n": 54,
+        "n": 57,
         "n_missing": 0,
         "q1": 2151.0,
         "q3": 2151.0,
@@ -2514,12 +2517,12 @@
       "name": "publication_doi",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "10.1016/j.rse.2019.05.015"
           }
         ]
@@ -2539,12 +2542,12 @@
       "name": "citation",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "Meerdink et al. 2019, Baldridge et al. 2009"
           }
         ]
@@ -2564,12 +2567,12 @@
       "name": "license",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "Copyright California Institute of Technology / JPL, all rights reserved"
           }
         ]
@@ -2589,12 +2592,12 @@
       "name": "rights_status",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "manual_review_needed"
           }
         ]
@@ -2614,12 +2617,12 @@
       "name": "usage_scope",
       "role": "metadata",
       "stats": {
-        "n": 54,
+        "n": 57,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 54,
+            "count": 57,
             "name": "private_use_only"
           }
         ]
@@ -2630,17 +2633,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.9411764705882353,
+        "gini_simpson": 0.95,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.058823529411764705,
-        "n_classes": 17,
+        "minority_fraction": 0.05,
+        "n_classes": 20,
         "normalized_entropy": 1.0
       },
       "name": "notes",
       "role": "metadata",
       "stats": {
-        "n": 54,
-        "n_classes": 17,
+        "n": 57,
+        "n_classes": 20,
         "n_missing": 37,
         "top_classes": [
           {
@@ -2705,11 +2708,124 @@
           },
           {
             "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.vswir.vh266.ucsb.asd.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.vswir.vh267.ucsb.asd.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.vswir.vh268.ucsb.asd.ancillary.txt"
+          },
+          {
+            "count": 1,
             "name": "nonphotosyntheticvegetation.leaves.none.none.vswir.ll-1-87y.ucsb.asd.ancillary.txt"
           },
           {
             "count": 1,
             "name": "nonphotosyntheticvegetation.leaves.none.none.vswir.ll-2-89z.ucsb.asd.ancillary.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9806094182825484,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.017543859649122806,
+        "n_classes": 54,
+        "normalized_entropy": 0.9952630445194255
+      },
+      "name": "original_sample_id",
+      "role": "metadata",
+      "stats": {
+        "n": 57,
+        "n_classes": 54,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "VH266"
+          },
+          {
+            "count": 2,
+            "name": "VH267"
+          },
+          {
+            "count": 2,
+            "name": "VH268"
+          },
+          {
+            "count": 1,
+            "name": "VH311"
+          },
+          {
+            "count": 1,
+            "name": "VH315"
+          },
+          {
+            "count": 1,
+            "name": "ACRU-1-81"
+          },
+          {
+            "count": 1,
+            "name": "ACRU-2-82"
+          },
+          {
+            "count": 1,
+            "name": "BEPA-1-85"
+          },
+          {
+            "count": 1,
+            "name": "BEPA-2-86"
+          },
+          {
+            "count": 1,
+            "name": "VH312"
+          },
+          {
+            "count": 1,
+            "name": "VH316"
+          },
+          {
+            "count": 1,
+            "name": "VH342"
+          },
+          {
+            "count": 1,
+            "name": "VH343"
+          },
+          {
+            "count": 1,
+            "name": "VH344"
+          },
+          {
+            "count": 1,
+            "name": "VH317"
+          },
+          {
+            "count": 1,
+            "name": "VH313"
+          },
+          {
+            "count": 1,
+            "name": "VH314"
+          },
+          {
+            "count": 1,
+            "name": "PIST-1-83"
+          },
+          {
+            "count": 1,
+            "name": "PIST-2-84"
+          },
+          {
+            "count": 1,
+            "name": "QURU-1-79"
           }
         ]
       },

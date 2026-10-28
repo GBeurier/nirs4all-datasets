@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 324 sample(s), 342 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–2 (mean 1.056).
+- **Alignment:** observation level; 342 sample(s), 342 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,36 +24,37 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=324, missing=0, classes=53, top Arctostaphylos glandulosa 3 (×13) |
-| type | target | categorical | *Not specified.* | n=324, missing=0, classes=2, top vegetation (×286) |
-| class_label | target | categorical | *Not specified.* | n=324, missing=0, classes=2, top Shrub (×178) |
-| ecostress_resource_id | metadata | categorical | *Not specified.* | n=324, missing=0, classes=324, top vegetation.shrub.adenostoma.fasciculatum.tir.vh033.ucsb.nicolet.spectrum (×1) |
-| category | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top vegetation (×324) |
-| material_type | metadata | categorical | *Not specified.* | n=324, missing=0, classes=2, top vegetation (×286) |
-| site | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=324, missing=0, classes=41, top USA, Massachusetts, Harvard Forest (×38) |
-| country | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| year | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=324, missing=0, classes=9, top 4/1/2013 (×48) |
-| species | metadata | categorical | *Not specified.* | n=324, missing=0, classes=2, top Shrub (×178) |
-| genus | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=324, missing=324, classes=0, — |
-| sample_description | metadata | categorical | *Not specified.* | n=324, missing=0, classes=2, top Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD. (×286) |
-| instrument | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top ucsb.nicolet (×324) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top Hemispherical reflectance (×324) |
-| signal_type | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top Reflectance (percentage) (×324) |
-| axis_unit | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top Wavelength (micrometers) (×324) |
-| axis_min | metadata | numeric | *Not specified.* | n=324, missing=0, range 2.501–2.501, mean 2.501 ± 4.448e-16 |
-| axis_max | metadata | numeric | *Not specified.* | n=324, missing=0, range 15.39–15.39, mean 15.39 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=324, missing=0, range 1737–1737, mean 1737 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×324) |
-| citation | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×324) |
-| license | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×324) |
-| rights_status | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top manual_review_needed (×324) |
-| usage_scope | metadata | categorical | *Not specified.* | n=324, missing=0, classes=1, top private_use_only (×324) |
-| notes | metadata | categorical | *Not specified.* | n=324, missing=0, classes=324, top vegetation.shrub.adenostoma.fasciculatum.tir.vh033.ucsb.nicolet.ancillary.txt (×1) |
+| material_name | target | categorical | *Not specified.* | n=342, missing=0, classes=56, top Arctostaphylos glandulosa 3 (×13) |
+| type | target | categorical | *Not specified.* | n=342, missing=0, classes=2, top vegetation (×304) |
+| class_label | target | categorical | *Not specified.* | n=342, missing=0, classes=2, top Shrub (×178) |
+| ecostress_resource_id | metadata | categorical | *Not specified.* | n=342, missing=0, classes=342, top vegetation.shrub.adenostoma.fasciculatum.tir.vh033.ucsb.nicolet.spectrum (×1) |
+| category | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top vegetation (×342) |
+| material_type | metadata | categorical | *Not specified.* | n=342, missing=0, classes=2, top vegetation (×304) |
+| site | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=342, missing=0, classes=41, top USA, Massachusetts, Harvard Forest (×38) |
+| country | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| year | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=342, missing=0, classes=9, top 11/2/2013 (×52) |
+| species | metadata | categorical | *Not specified.* | n=342, missing=0, classes=2, top Shrub (×178) |
+| genus | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=342, missing=342, classes=0, — |
+| sample_description | metadata | categorical | *Not specified.* | n=342, missing=0, classes=2, top Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD. (×304) |
+| instrument | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top ucsb.nicolet (×342) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top Hemispherical reflectance (×342) |
+| signal_type | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top Reflectance (percentage) (×342) |
+| axis_unit | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top Wavelength (micrometers) (×342) |
+| axis_min | metadata | numeric | *Not specified.* | n=342, missing=0, range 2.501–2.501, mean 2.501 ± 4.447e-16 |
+| axis_max | metadata | numeric | *Not specified.* | n=342, missing=0, range 15.39–15.39, mean 15.39 ± 1.779e-15 |
+| n_points_original | metadata | numeric | *Not specified.* | n=342, missing=0, range 1737–1737, mean 1737 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×342) |
+| citation | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×342) |
+| license | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×342) |
+| rights_status | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top manual_review_needed (×342) |
+| usage_scope | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top private_use_only (×342) |
+| notes | metadata | categorical | *Not specified.* | n=342, missing=0, classes=342, top vegetation.shrub.adenostoma.fasciculatum.tir.vh033.ucsb.nicolet.ancillary.txt (×1) |
+| original_sample_id | metadata | categorical | *Not specified.* | n=342, missing=0, classes=324, top VH049 (×2) |
 
 ## Statistics — splits
 
@@ -74,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, species, notes, material_name, class_label. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
 
 ## Uses
 
@@ -96,5 +97,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `8a69b7d531a7b3b546329148832ef4dae0ae8e677a3ff5e079e3d99b8be4ea93`
-- **Processing hash:** `cdb6e8cfd3aa2a85692a1e4277600ec9c46b6f257d30b953d65e8d25eb76056d` | **metadata hash:** `79fcae0ad963e74307ef0ff8494d8a7cf10938eaa575b7226dce4d334a6bbf1d`
+- **Content hash:** `958e4a2e3f19239b9be82405f9c10eef63a34a994ef4bc1706824b91459d6092`
+- **Processing hash:** `477b743cacd43637fe05aaac28752e617c1c1a6e06e8c1c6f5d0563a73fea9f9` | **metadata hash:** `24a6989fac991973354e5186423b3ff3250c80ad6affb4e8dca76df4a54947d0`

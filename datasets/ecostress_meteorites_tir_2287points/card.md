@@ -11,8 +11,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 55 sample(s), 57 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–2 (mean 1.036).
+- **Alignment:** observation level; 57 sample(s), 57 observation(s) total; sample_id available: False.
+- **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
@@ -24,36 +24,37 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| material_name | target | categorical | *Not specified.* | n=55, missing=0, classes=55, top ALH 84007 (×1) |
-| class_label | target | categorical | *Not specified.* | n=55, missing=0, classes=6, top Ordinary Chondrite (×17) |
-| subclass | target | categorical | *Not specified.* | n=55, missing=2, classes=20, top CM2 (×5) |
-| ecostress_resource_id | metadata | categorical | *Not specified.* | n=55, missing=0, classes=55, top meteorites.achondrite.aubrite.fine.tir.alh84007.jhu.becknic.spectrum (×1) |
-| category | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top meteorites (×55) |
-| material_type | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Meteorites (×55) |
-| site | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=55, missing=0, classes=53, top Smithsonian sample without a USNM catalognumber. (×2) |
-| country | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| year | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=55, missing=55, classes=0, — |
-| sample_description | metadata | categorical | *Not specified.* | n=55, missing=0, classes=55, top Stony Meteorites. Meteorite found in Antarctica in 1984. Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.meteorite.achondrite.aubrite.fine.a84007.spectrum.txt (×1) |
-| instrument | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top jhu.becknic (×55) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Bidirectional reflectance (×55) |
-| signal_type | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Reflectance (percent) (×55) |
-| axis_unit | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Wavelength (micrometers) (×55) |
-| axis_min | metadata | numeric | *Not specified.* | n=55, missing=0, range 2.079–2.079, mean 2.079 ± 4.482e-16 |
-| axis_max | metadata | numeric | *Not specified.* | n=55, missing=0, range 25.04–25.04, mean 25.04 ± 1.434e-14 |
-| n_points_original | metadata | numeric | *Not specified.* | n=55, missing=0, range 2287–2287, mean 2287 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×55) |
-| citation | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×55) |
-| license | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×55) |
-| rights_status | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top manual_review_needed (×55) |
-| usage_scope | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top private_use_only (×55) |
-| notes | metadata | categorical | *Not specified.* | n=55, missing=0, classes=1, top none (×55) |
+| material_name | target | categorical | *Not specified.* | n=57, missing=0, classes=57, top ALH 84007 (×1) |
+| class_label | target | categorical | *Not specified.* | n=57, missing=0, classes=6, top Ordinary Chondrite (×19) |
+| subclass | target | categorical | *Not specified.* | n=57, missing=2, classes=21, top CM2 (×5) |
+| ecostress_resource_id | metadata | categorical | *Not specified.* | n=57, missing=0, classes=57, top meteorites.achondrite.aubrite.fine.tir.alh84007.jhu.becknic.spectrum (×1) |
+| category | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top meteorites (×57) |
+| material_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Meteorites (×57) |
+| site | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=57, missing=0, classes=55, top Smithsonian sample without a USNM catalognumber. (×2) |
+| country | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| year | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| sample_description | metadata | categorical | *Not specified.* | n=57, missing=0, classes=57, top Stony Meteorites. Meteorite found in Antarctica in 1984. Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.meteorite.achondrite.aubrite.fine.a84007.spectrum.txt (×1) |
+| instrument | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top jhu.becknic (×57) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Bidirectional reflectance (×57) |
+| signal_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Reflectance (percent) (×57) |
+| axis_unit | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Wavelength (micrometers) (×57) |
+| axis_min | metadata | numeric | *Not specified.* | n=57, missing=0, range 2.079–2.079, mean 2.079 ± 4.48e-16 |
+| axis_max | metadata | numeric | *Not specified.* | n=57, missing=0, range 25.04–25.04, mean 25.04 ± 3.584e-15 |
+| n_points_original | metadata | numeric | *Not specified.* | n=57, missing=0, range 2287–2287, mean 2287 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top 10.1016/j.rse.2019.05.015 (×57) |
+| citation | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Meerdink et al. 2019, Baldridge et al. 2009 (×57) |
+| license | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×57) |
+| rights_status | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top manual_review_needed (×57) |
+| usage_scope | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top private_use_only (×57) |
+| notes | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top none (×57) |
+| original_sample_id | metadata | categorical | *Not specified.* | n=57, missing=0, classes=55, top ALHA77256 (×2) |
 
 ## Statistics — splits
 
@@ -74,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, material_name, class_label, subclass. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
 
 ## Uses
 
@@ -96,5 +97,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d26f11ac3d43f0726ecb5bfaae2fd3b0104a39d6110b254a7f5da2f07d8ab0be`
-- **Processing hash:** `018a8adc77bb54a54f543d21e5e03fdccbc2a27212e230888773ad43280626d8` | **metadata hash:** `89789c4453b3c02415d47dfed6345da0188ebbb5ad29b3ca96e456d1946d56ed`
+- **Content hash:** `6bc622b369fbde9539299ed485eddb0df6a83c0917c41505a4c138e65cee99be`
+- **Processing hash:** `8b91473a7d203182754a38b1c08528eb5b005e59d6b5dbd580e1ec3bc243b615` | **metadata hash:** `118cb0e55035e1fd5beef06d58e2a133fd2c3abe8925f0924f2a33bdfb1ffbc8`

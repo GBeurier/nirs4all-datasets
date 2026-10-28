@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top EthanolConcentration (×1572) |
 | product | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top solution_eau_ethanol_bouteille_whisky (×1572) |
 | trait_header | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top concentration_ethanol (×1572) |
-| trait_description | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top Ethanol concentration as a percentage. (×1572) |
+| trait_description | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top Concentration d'ethanol en pourcentage. (×1572) |
 | split | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=2, top test (×789) |
 | spectro | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top UV-visible / NIR (×1572) |
 | raw_label | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=4, top E40 (×396) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=4, top 2 (×396) |
 | dimensions | metadata | numeric | *Not specified.* | n=1572, missing=0, range 3–3, mean 3 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=1572, missing=0, range 1751–1751, mean 1751 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top Spectral axis applied over 226.0-1101.0 nm with a 0.5 nm step, consistent with 1751 variables. (×1572) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top Axe spectral applique sur 226.0-1101.0 nm avec un pas de 0.5 nm, coherent avec 1751 variables. (×1572) |
 
 ## Statistics — splits
 
@@ -80,5 +80,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `20b65ecb1d3bfc41eab63d50a823ed1808b1d2e6b236e9a270ff277d47380fa5`
+- **Content hash:** `8a826c3df11d2e678f90c249b96f9676434de8d7b40f3dde03ecf73f6c52dc32`
 - **Processing hash:** `f23424d19fbed7f5ca40742d8ea8379e35d6141e849200ca221ed556e191d2d7` | **metadata hash:** `a92cf1b800553de214599a895d5d42e24f7d8fbfe4786114d580a9754415ca3b`
