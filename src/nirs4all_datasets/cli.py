@@ -273,11 +273,14 @@ def get(
     source: str | None = typer.Option(None, help="Single source id (e.g. X1) instead of all sources."),
     token: str | None = typer.Option(None, help="Dataverse token for a private/anonymized dataset (else resolved from settings)."),
     instance: str | None = typer.Option(None, help="Dataverse instance URL override."),
+    cache_dir: Path | None = typer.Option(None, help="Original-source download and dataset cache."),
+    guestbook_response: Path | None = typer.Option(None, help="Optional JSON with your responses to an origin's required guestbook."),
 ) -> None:
     """Load a dataset (local if present, else fetched by DOI/origin) and print a one-line summary."""
     from nirs4all_datasets.access import get as get_dataset
 
-    ds = get_dataset(dataset_id, root=root, source=source, token=token, instance=instance)
+    profile = json.loads(guestbook_response.read_text(encoding="utf-8")) if guestbook_response else None
+    ds = get_dataset(dataset_id, root=root, source=source, token=token, instance=instance, cache_dir=cache_dir, guestbook_response=profile)
     typer.echo(f"loaded {dataset_id}: {len(ds.sources())} source(s) {ds.sources()}, {len(ds.sample_ids())} samples, {len(ds.variables())} variable(s), tier={ds.tier.value}")
 
 
@@ -292,6 +295,7 @@ def retrieve_cmd(
     timeout_secs: int | None = typer.Option(None, help="Per-request timeout in seconds."),
     max_total_bytes: int | None = typer.Option(None, help="Maximum total bytes for raw retrieval."),
     prepare: bool = typer.Option(True, "--prepare/--no-prepare", help="Prepare supported raw resources with the Rust reader stack after download."),
+    guestbook_response: Path | None = typer.Option(None, help="Optional JSON with your responses to an origin's required guestbook."),
 ) -> None:
     """Retrieve raw/canonical bytes by id and print the cache/preparation status."""
     from nirs4all_datasets.retrieval import retrieve
@@ -307,6 +311,7 @@ def retrieve_cmd(
             timeout_secs=timeout_secs,
             max_total_bytes=max_total_bytes,
             prepare=prepare,
+            guestbook_response=json.loads(guestbook_response.read_text(encoding="utf-8")) if guestbook_response else None,
         )
     except (KeyError, RuntimeError, ValueError) as exc:
         typer.echo(str(exc), err=True)

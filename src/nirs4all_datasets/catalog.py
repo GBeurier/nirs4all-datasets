@@ -191,7 +191,17 @@ def load_catalog(root: str | Path) -> dict[str, Any]:
     """Read the assembled catalog index."""
     path = Path(root) / "catalog" / "datasets.yaml"
     if not path.exists():
-        return {"schema_version": SCHEMA_VERSION, "n_datasets": 0, "datasets": []}
+        from nirs4all_datasets.index import load_index
+
+        try:
+            index = load_index(root)
+        except FileNotFoundError:
+            return {"schema_version": SCHEMA_VERSION, "n_datasets": 0, "datasets": []}
+        entries = []
+        for item in index["datasets"].values():
+            descriptor = item["descriptor"]
+            entries.append(catalog_entry(root, DatasetDescriptor(**descriptor)))
+        return {"schema_version": SCHEMA_VERSION, "n_datasets": len(entries), "datasets": entries}
     result: dict[str, Any] = yaml.safe_load(path.read_text(encoding="utf-8"))
     return result
 

@@ -11,26 +11,20 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 61 sample(s), 61 observation(s) total; sample_id available: False.
+- **Alignment:** sample level; 62 sample(s), 62 observation(s) total; sample_id available: False.
 - **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | X | *Not specified.* | NIR | 800.4–2500 nm | 61 | 3439 |
+| X | X | *Not specified.* | NIR | 800.4–2500 nm | 62 | 3439 |
 
 ### Variables (Y / metadata)
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| class | target | categorical | *Not specified.* | n=61, missing=0, classes=3, top YT (×27) |
-| class_label | metadata | categorical | *Not specified.* | n=61, missing=0, classes=3, top YT (×27) |
-| manual_download | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top True (×61) |
-| manual_download_source_dir | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\see cucumber (×61) |
-| manual_download_file | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top representative+original+spectra.rar (×61) |
-| official_source_url | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.n1066 (×61) |
-| standardization_batch | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top v0.8.58 (×61) |
+| class | target | categorical | *Not specified.* | n=62, missing=0, classes=3, top YT (×27) |
 
 ## Statistics — splits
 
@@ -50,7 +44,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.
 
 ## Uses
 
@@ -70,6 +64,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `b8742ff575b3dfa95782db7016f39fbb8e1a675033a593e15fffd7da46fb9368`
-- **Processing hash:** `03137031ba02716c0662510148a0808c6fa7db15ffdc8cb6a0f06e96f67d94e4` | **metadata hash:** `c86b07fd0cb4c4eab2cd3227edba62d2ebe2b92bbc72361883adb3f1e9a2ca3f`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `7a52a320f8ca44123afa09c445d0438c213d849889e2c457521fff80ea1d1f8b`
+- **Processing hash:** `6e00126e8b1d8773f8301e2bc5ce4c79866b47e0c31345885e9408e2bb09c4c6` | **metadata hash:** `91fa51fb7d6329eb328756e1da23383868cebe4078c99427468143463768e4dc`

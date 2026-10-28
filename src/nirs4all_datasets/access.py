@@ -3,9 +3,10 @@
 Resolution order for :func:`get`:
 
 1. **local** — ``<root>/datasets/<name>/canonical`` is present: load it directly (no network);
-2. **personal Dataverse DOI** — fetch the canonical Parquet by the descriptor's pinned DOI (public
+2. **packaged public-origin recipe** — download original files and assemble locally;
+3. **personal Dataverse DOI** — fetch the canonical Parquet by the descriptor's pinned DOI (public
    without a token; private/anonymized with one);
-3. **open origin source** — fetch the canonical bytes from an OPEN ``origin_sources`` entry by DOI.
+4. **open origin source** — fetch the canonical bytes from an OPEN ``origin_sources`` entry by DOI.
 
 The download itself — DOI/version-pinned resolution, the redirect-safe Dataverse fetch (the
 ``X-Dataverse-key`` never reaches signed storage), streaming SHA-256 verification against the manifest
@@ -16,6 +17,7 @@ owns only the *policy* around it: local-first short-circuit, the token gate, the
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -100,24 +102,27 @@ def get(
     cache_dir: str | Path | None = None,
     concat: bool = True,
     reproduce: bool = False,
+    guestbook_response: dict[str, Any] | None = None,
 ) -> NirsDataset:
     """Resolve a catalog dataset by ``name`` and return it as a :class:`NirsDataset`.
 
-    Resolution order: local ``<root>/datasets/<name>/canonical`` -> the descriptor's personal Dataverse
-    DOI (public via the origin, private/anonymized via token) -> an OPEN ``origin_sources`` entry. The
-    first that yields verified canonical bytes wins. Every download is SHA-256-verified by the native
-    core against the manifest's hashes (byte-identical because canonical files are stored with
-    ``tabIngest=false``); verified files are cached and reused.
+    Load current local canonical data when present. Public datasets with a packaged recipe
+    are assembled from their original public resources using packaged recipes; no checkout is needed.
+    These results carry their own provenance and hashes, rather than claiming byte identity with
+    historical canonical exports. Hosted canonical downloads retain manifest SHA-256 verification.
+    Private/anonymized datasets require a Dataverse token.
 
     Args:
-        name: Dataset id (a ``catalog/datasets/<name>.yaml`` descriptor under ``root``).
-        root: Registry root holding ``catalog/`` and ``datasets/`` (defaults to the current directory).
+        name: Dataset id from the bundled catalog, optionally overridden by a local descriptor.
+        root: Optional registry/local data root; the installed catalog is used outside a checkout.
         source: Forwarded to the returned dataset's accessors (validated against the dataset's sources).
         split: Forwarded similarly (the named native split to apply downstream).
         token: Dataverse API token for private/anonymized downloads; auto-resolved from settings if
             omitted for a non-public dataset.
         instance: Dataverse instance override (else the descriptor's instance).
         cache_dir: Download cache (defaults to the native core's OS cache).
+        guestbook_response: Optional explicit Harvard guestbook answers, required for the two malaria
+            datasets. No identity is supplied or submitted by default.
         concat: Default ``x()`` concat behaviour recorded on the returned dataset (informational).
         reproduce: When nothing is canonically fetchable, re-ingest from an OPEN origin's RAW bytes by
             delegating to nirs4all-io (a *reproduction*, not byte-pinned; needs the ``[io]`` extra).
@@ -136,14 +141,56 @@ def get(
 
     # 1. Local-first: a present canonical directory loads with no network and no descriptor lookup.
     if (dataset_dir / "canonical" / "dataset.json").exists():
-        return _wrap(dataset_dir, _read_descriptor(root, name), source=source, split=split, concat=concat)
+        local_descriptor = _read_descriptor(root, name)
+        current = True
+        if local_descriptor.tier is Tier.PUBLIC:
+            from nirs4all_datasets.public_pull import available
+
+            if available(name):
+                from nirs4all_datasets.manifest import processing_hash, read_manifest
+
+                try:
+                    manifest = dataset_dir / "manifest.json"
+                    current = manifest.exists() and read_manifest(manifest).processing_hash == processing_hash(local_descriptor)
+                    local_config = json.loads((dataset_dir / "canonical" / "dataset.json").read_text(encoding="utf-8"))
+                    entries = [*local_config.get("sources", []), *local_config.get("splits", [])]
+                    variables = local_config.get("variables")
+                    if variables:
+                        entries.append(variables)
+                    current = current and bool(local_config.get("sources")) and all((dataset_dir / entry["path"]).is_file() for entry in entries)
+                    if local_descriptor.targets:
+                        import pyarrow.parquet as pq
+
+                        variable_path = dataset_dir / variables["path"] if variables else None
+                        columns = set(pq.read_schema(variable_path).names) if variable_path and variable_path.is_file() else set()
+                        current = current and all(v.name in columns for v in local_descriptor.targets)
+                except (OSError, ValueError, KeyError, TypeError):
+                    current = False
+        if current:
+            return _wrap(dataset_dir, local_descriptor, source=source, split=split, concat=concat)
 
     descriptor = _read_descriptor(root, name)
-    manifest_path = dataset_dir / "manifest.json"
-    if not manifest_path.exists():
-        raise FileNotFoundError(f"no manifest for {name!r} at {manifest_path}; build it before remote access.")
+    if descriptor.tier is Tier.PUBLIC:
+        from nirs4all_datasets.public_pull import available, pull
 
-    contract = _resolved_contract(root, descriptor)
+        if available(name):
+            directory, runtime_descriptor = pull(descriptor, cache_dir=cache_dir, guestbook_response=guestbook_response)
+            return _wrap(directory, runtime_descriptor, source=source, split=split, concat=concat)
+
+    manifest_path = dataset_dir / "manifest.json"
+    if manifest_path.exists():
+        contract = _resolved_contract(root, descriptor)
+    else:
+        from nirs4all_datasets.index import load_index, resolve
+
+        try:
+            entry = resolve(load_index(root), name)
+        except (FileNotFoundError, KeyError):
+            entry = {}
+        dv = entry.get("dataverse") or {}
+        contract = {"id": name, "tier": descriptor.tier.value, "instance": dv.get("instance") or descriptor.dataverse.instance,
+                    "doi": dv.get("doi") or descriptor.dataverse.doi, "dataset_version": dv.get("dataset_version"),
+                    "files": entry.get("files") or [], "origins": entry.get("origins") or []}
     fetchable = bool(contract["doi"]) or _has_fetchable_origin(descriptor)
     if not fetchable:
         if reproduce:
@@ -193,7 +240,13 @@ def _read_descriptor(root: Path, name: str) -> DatasetDescriptor:
 
     descriptor_path = root / "catalog" / "datasets" / f"{name}.yaml"
     if not descriptor_path.exists():
-        raise FileNotFoundError(f"unknown dataset {name!r}: no local canonical data and no descriptor at {descriptor_path}.")
+        from nirs4all_datasets.index import load_index, resolve
+
+        try:
+            entry = resolve(load_index(root), name)
+        except (KeyError, FileNotFoundError):
+            raise FileNotFoundError(f"unknown dataset {name!r}: no local or bundled descriptor.") from None
+        return DatasetDescriptor(**entry["descriptor"])
     return DatasetDescriptor(**(yaml.safe_load(descriptor_path.read_text(encoding="utf-8")) or {}))
 
 

@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "nirs4all-datasets"
-version = "0.3.12"
+version = "0.3.13"
 description = "A citable, reproducible bank of raw NIRS reference datasets — multi-source/multi-target, tier-governed, with on-demand checksum-verified access from each dataset's origin."
 authors = [
     { name = "Gregory Beurier", email = "gregory.beurier@cirad.fr" },
@@ -38,6 +38,12 @@ dependencies = [
     "numpy>=1.24.0",
     "scipy>=1.10.0",
     "pandas>=2.0.0",
+    "openpyxl>=3.1.0",
+    "mat-io>=1.0.2",
+    "stream-unzip>=0.0.101",
+    "filelock>=3.16",
+    "xlrd>=2.0.1",
+    "py7zz>=1.4.0",
     "pyarrow>=14.0.0",
     # Schema / config
     "pydantic>=2.0.0",
@@ -66,7 +72,7 @@ nirs4all = [
 # vendor decoders. Needed only by the (opt-in) "reproduce from origin" acquisition path.
 io = [
     "nirs4all-io>=0.2.6",
-    "nirs4all-formats>=0.2.11",
+    "nirs4all-formats>=0.2.12",
 ]
 dev = [
     "pytest>=7.4.0",

@@ -8,6 +8,7 @@ import pytest
 import yaml
 
 from nirs4all_datasets.index import INDEX_SCHEMA, build_index, load_index, resolve
+from nirs4all_datasets.manifest import processing_hash
 from nirs4all_datasets.schema import DatasetDescriptor, Tier
 
 _GOLDEN_DIR = Path(__file__).parent / "goldens" / "nonpython_bridge"
@@ -194,7 +195,9 @@ def _native_resolved_view(dataset_id: str, entry: dict) -> dict:
 
 def test_index_carries_download_contract(tmp_path):
     desc = _descriptor()
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     idx = build_index(tmp_path)
 
     assert idx["schema"] == INDEX_SCHEMA
@@ -217,6 +220,17 @@ def test_index_carries_download_contract(tmp_path):
     assert entry["descriptor"]["id"] == "demo"
     assert entry["descriptor"]["sources"][0]["source_id"] == "X"
     assert entry["descriptor"]["variables"][0]["role"] == "target"
+
+
+def test_corrected_descriptor_drops_historical_file_contract(tmp_path):
+    desc = _descriptor()
+    manifest = _manifest("demo")
+    manifest["processing_hash"] = processing_hash(desc)
+    desc.sources[0].n_variables = 291
+    _write_dataset(tmp_path, desc, manifest)
+    entry = resolve(build_index(tmp_path), "demo")
+    assert entry["files"] == []
+    assert entry["descriptor"]["sources"][0]["n_variables"] == 291
 
 
 def test_nonpython_bridge_golden_resolves_to_io_dataset_spec_without_provider() -> None:
@@ -262,7 +276,9 @@ def test_index_synthesizes_raw_retrieval_from_open_direct_url(tmp_path):
         ],
         retrieval={},
     )
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     entry = resolve(build_index(tmp_path), "demo")
 
     route = entry["retrieval"]["routes"][0]
@@ -278,7 +294,9 @@ def test_index_synthesizes_raw_retrieval_from_nirs_db_raw_manifest(tmp_path):
         origin_sources=[{"kind": "url", "mode": "raw", "locator": "https://example.test/landing", "access": "open"}],
         retrieval={},
     )
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     raw_dir = tmp_path / "NIRS DB" / "v2.0" / "demo"
     raw_dir.mkdir(parents=True)
     (raw_dir / "raw_manifest.csv").write_text(
@@ -317,7 +335,9 @@ def test_open_raw_origin_without_safe_route_is_not_token_required(tmp_path):
         ],
         retrieval={},
     )
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     entry = resolve(build_index(tmp_path), "demo")
 
     assert entry["retrieval"]["status"] == "missing_delegate"
@@ -479,7 +499,9 @@ def test_missing_shared_converter_blocks_synthetic_reproduction(tmp_path):
     leaf = tmp_path / "NIRS DB" / "v2.0" / "demo"
     leaf.mkdir(parents=True)
     (leaf / "source_to_standard.py").write_text('script = ROOT / "convert_example_v1.py"\n', encoding="utf-8")
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
 
     retrieval = resolve(build_index(tmp_path), "demo")["retrieval"]
     assert retrieval["status"] == "missing_delegate"
@@ -505,7 +527,9 @@ def test_committed_source_audit_keeps_retrieval_stable_without_private_source_tr
 
 def test_manifest_file_url_preferred_and_missing_required_file_is_reported(tmp_path):
     desc = _descriptor(origin_sources=[{"kind": "url", "mode": "raw", "locator": "https://example.test/landing", "access": "open"}], retrieval={})
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     leaf = tmp_path / "NIRS DB" / "v2.0" / "demo"
     leaf.mkdir(parents=True)
     (leaf / "raw_manifest.csv").write_text(
@@ -525,7 +549,9 @@ def test_manifest_file_url_preferred_and_missing_required_file_is_reported(tmp_p
 
 def test_manual_origin_produces_explicit_manual_route(tmp_path):
     desc = _descriptor(origin_sources=[{"kind": "manual", "mode": "raw", "locator": "https://example.test/request", "access": "manual"}], retrieval={})
-    _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))
+    manifest = _manifest("demo", file_id=678)
+    manifest["processing_hash"] = processing_hash(desc)
+    _write_dataset(tmp_path, desc, manifest)
     retrieval = resolve(build_index(tmp_path), "demo")["retrieval"]
     assert retrieval["status"] == "manual_only"
     assert retrieval["routes"][0]["method"] == "manual"

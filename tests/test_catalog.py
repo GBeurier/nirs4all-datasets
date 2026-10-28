@@ -256,7 +256,10 @@ def test_search_filters(fleet: tuple[Path, dict[str, DatasetDescriptor]]) -> Non
     assert {e["id"] for e in search(root, tier="private", has_target=True)} == {"barley"}
 
 
-def test_load_catalog_missing_index(tmp_path: Path) -> None:
+def test_load_catalog_missing_index_uses_packaged_catalog(tmp_path: Path, monkeypatch: Any) -> None:
+    from nirs4all_datasets import index
+
+    monkeypatch.setattr(index, "load_index", lambda _: {"datasets": {}})
     catalog = load_catalog(tmp_path)
     assert catalog["n_datasets"] == 0
     assert catalog["datasets"] == []

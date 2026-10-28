@@ -42,17 +42,20 @@ def get(
     cache_dir: str | Path | None = None,
     concat: bool = True,
     reproduce: bool = False,
+    guestbook_response: dict[str, Any] | None = None,
 ) -> NirsDataset:
     """Resolve a catalog dataset and return it as a :class:`NirsDataset` (local-first, else fetch).
 
-    Resolution order: local canonical -> the personal Dataverse DOI (public via its origin, private/
-    anonymized via token) -> an OPEN origin source. Public datasets need no token. With
+    The bundled catalog works without a checkout. Current local canonical data are reused;
+    packaged public recipes otherwise download and assemble original resources. Protected datasets
+    use the personal Dataverse DOI and token. The optional ``guestbook_response`` supplies a profile
+    only when an origin requires one. With
     ``reproduce=True``, an un-fetchable dataset is re-ingested from an OPEN origin via nirs4all-io (a
     reproduction; needs the ``[io]`` extra). See :func:`nirs4all_datasets.access.get`.
     """
     from nirs4all_datasets.access import get as _get
 
-    return _get(name, root=root, source=source, split=split, token=token, instance=instance, cache_dir=cache_dir, concat=concat, reproduce=reproduce)
+    return _get(name, root=root, source=source, split=split, token=token, instance=instance, cache_dir=cache_dir, concat=concat, reproduce=reproduce, guestbook_response=guestbook_response)
 
 
 def list(root: str | Path = ".", **filters: Any) -> Sequence[dict[str, Any]]:
@@ -80,6 +83,7 @@ def retrieve(
     timeout_secs: int | None = None,
     max_total_bytes: int | None = None,
     prepare: bool = True,
+    guestbook_response: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Retrieve available raw/canonical bytes by dataset id and return a status dict."""
     from nirs4all_datasets.retrieval import retrieve as _retrieve
@@ -94,6 +98,7 @@ def retrieve(
         timeout_secs=timeout_secs,
         max_total_bytes=max_total_bytes,
         prepare=prepare,
+        guestbook_response=guestbook_response,
     )
 
 

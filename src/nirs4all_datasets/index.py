@@ -34,7 +34,7 @@ from urllib.parse import quote, unquote, urlparse
 
 import yaml
 
-from nirs4all_datasets.manifest import read_manifest
+from nirs4all_datasets.manifest import processing_hash, read_manifest
 from nirs4all_datasets.schema import DatasetDescriptor, FileRole, Manifest
 
 # The index format version (independent of the package version and of the dataset schema version).
@@ -120,6 +120,19 @@ def _origins(descriptor: DatasetDescriptor) -> list[dict[str, Any]]:
 def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any]:
     """The explicit user-side retrieval plan, separate from raw provenance origins."""
     data = descriptor.retrieval.model_dump(mode="json")
+    recipes = Path(__file__).with_name("public_pull") / "registry.json"
+    if descriptor.tier.value == "public" and recipes.is_file():
+        recipe = json.loads(recipes.read_text(encoding="utf-8"))["datasets"].get(descriptor.id)
+        if recipe:
+            conditional = recipe.get("requires_guestbook_response", False)
+            delegate = f"nirs4all_datasets.public_pull.{recipe['module']}"
+            route = {"id": "public_origin_recipe", "priority": 1, "access": "manual" if conditional else "open", "method": "delegate", "provider": "script",
+                     "locator": delegate, "automated_download_allowed": not conditional, "redistribution_allowed": False, "resources": [],
+                     "canonicalization": {"engine": "delegate", "recipe_id": descriptor.id, "recipe_version": recipe["recipe_version"], "delegate": delegate,
+                                          "expected_layout": "nirs4all canonical v1", "notes": "Packaged Python orchestration downloads original public resources through the native acquisition core and invokes existing Rust readers."}}
+            return {**data, "status": "manual_only" if conditional else "raw_reproducible", "canonical_hosted": False, "public_retrievable": not conditional,
+                    "routes": [route, *data["routes"]], "blockers": ["Harvard requires an explicitly supplied guestbook_response; personal responses are never fabricated"] if conditional else [],
+                    "notes": f"Original-source recipe is bundled with the Python package; representation={recipe['representation']}. Original canonical-file checksums do not identify freshly reassembled bytes."}
     if data["routes"]:
         return data
 
@@ -542,7 +555,9 @@ def index_entry(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, An
     dv = pub.dataverse
     doi = dv.doi or (manifest.doi if manifest else None)
     dataset_version = dv.dataset_version or (manifest.dataset_version if manifest else None)
-    files = _file_contract(manifest) if manifest else []
+    # A descriptor correction invalidates the historical byte contract. The original-source
+    # recipe will publish hashes for its freshly assembled representation in its cache marker.
+    files = _file_contract(manifest) if manifest and manifest.processing_hash == processing_hash(descriptor) else []
     origins = _origins(pub)
     retrieval = _retrieval(root, pub)
 
@@ -603,11 +618,17 @@ def build_index(root: str | Path, *, write: bool = True) -> dict[str, Any]:
     return index
 
 
-def load_index(source: str | Path) -> dict[str, Any]:
-    """Read an assembled index from a ``catalog/index.json`` file or a registry root containing one."""
+def load_index(source: str | Path = ".") -> dict[str, Any]:
+    """Read a registry index, falling back to the index shipped in the installed wheel."""
     path = Path(source)
-    if path.is_dir():
+    if path.is_dir() or (not path.exists() and path.suffix.lower() != ".json"):
         path = path / "catalog" / "index.json"
+        if not path.is_file():
+            from importlib.metadata import distribution
+
+            packaged = Path(str(distribution("nirs4all-datasets").locate_file("catalog/index.json")))
+            checkout = Path(__file__).resolve().parents[2] / "catalog" / "index.json"
+            path = checkout if checkout.is_file() else packaged
     data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
     return data
 

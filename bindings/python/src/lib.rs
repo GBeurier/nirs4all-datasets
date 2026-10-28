@@ -13,13 +13,18 @@ use nirs4all_datasets_core::fetch::FetchOptions;
 use nirs4all_datasets_core::model::Resolved;
 use nirs4all_datasets_core::prepare::{prepare_raw as core_prepare_raw, PrepareOptions};
 use nirs4all_datasets_core::retrieve::{RetrieveOptions, RetrieveRequest};
-use nirs4all_datasets_core::{fetch as core_fetch, resolve_json, retrieve_raw as core_retrieve_raw, verify_cached as core_verify, Error, UreqClient};
+use nirs4all_datasets_core::{
+    fetch as core_fetch, resolve_json, retrieve_raw as core_retrieve_raw,
+    verify_cached as core_verify, Error, UreqClient,
+};
 
 fn to_pyerr(err: Error) -> PyErr {
     match err {
         Error::UnknownDataset(_) => PyKeyError::new_err(err.to_string()),
         Error::TokenRequired(_) => PyRuntimeError::new_err(err.to_string()),
-        Error::NotFetchable(_) | Error::InvalidArgument(_) | Error::Json(_) => PyValueError::new_err(err.to_string()),
+        Error::NotFetchable(_) | Error::InvalidArgument(_) | Error::Json(_) => {
+            PyValueError::new_err(err.to_string())
+        }
         _ => PyRuntimeError::new_err(err.to_string()),
     }
 }
@@ -40,7 +45,8 @@ fn resolve(index_json: &str, dataset_id: &str) -> PyResult<String> {
 /// GIL for the (blocking, network) duration.
 #[pyfunction]
 fn fetch(py: Python<'_>, resolved_json: &str, opts_json: &str) -> PyResult<String> {
-    let resolved: Resolved = serde_json::from_str(resolved_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let resolved: Resolved =
+        serde_json::from_str(resolved_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = FetchOptions::from_json(opts_json).map_err(to_pyerr)?;
     py.detach(|| {
         let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
@@ -53,7 +59,8 @@ fn fetch(py: Python<'_>, resolved_json: &str, opts_json: &str) -> PyResult<Strin
 /// the blocking network/filesystem work.
 #[pyfunction]
 fn retrieve_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
-    let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let request: RetrieveRequest =
+        serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = RetrieveOptions::from_json(opts_json).map_err(to_pyerr)?;
     py.detach(|| {
         let client = UreqClient::new(opts.timeout_secs.unwrap_or(300));
@@ -65,7 +72,8 @@ fn retrieve_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult
 /// Prepare already-retrieved raw resources with the Rust reader stack.
 #[pyfunction]
 fn prepare_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<String> {
-    let request: RetrieveRequest = serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let request: RetrieveRequest =
+        serde_json::from_str(request_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let opts = PrepareOptions::from_json(opts_json).map_err(to_pyerr)?;
     py.detach(|| {
         let result = core_prepare_raw(&request, &opts).map_err(to_pyerr)?;
@@ -73,10 +81,31 @@ fn prepare_raw(py: Python<'_>, request_json: &str, opts_json: &str) -> PyResult<
     })
 }
 
+/// Read one original vendor file through the formats registry.
+#[pyfunction]
+fn format_open_path(py: Python<'_>, path: &str) -> PyResult<String> {
+    py.detach(|| {
+        let records =
+            nirs4all_formats::open_path(path).map_err(|e| PyValueError::new_err(e.to_string()))?;
+        serde_json::to_string(&records).map_err(|e| PyRuntimeError::new_err(e.to_string()))
+    })
+}
+
+/// Read a named in-memory original vendor file through the formats registry.
+#[pyfunction]
+fn format_open_bytes(py: Python<'_>, name: &str, data: &[u8]) -> PyResult<String> {
+    py.detach(|| {
+        let records = nirs4all_formats::open_bytes(name, data)
+            .map_err(|e| PyValueError::new_err(e.to_string()))?;
+        serde_json::to_string(&records).map_err(|e| PyRuntimeError::new_err(e.to_string()))
+    })
+}
+
 /// Offline re-verify of a cached dataset directory; return the report JSON.
 #[pyfunction]
 fn verify_cached(resolved_json: &str, dir: &str) -> PyResult<String> {
-    let resolved: Resolved = serde_json::from_str(resolved_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let resolved: Resolved =
+        serde_json::from_str(resolved_json).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let report = core_verify(&resolved, std::path::Path::new(dir)).map_err(to_pyerr)?;
     serde_json::to_string(&report).map_err(|e| PyRuntimeError::new_err(e.to_string()))
 }
@@ -89,5 +118,7 @@ fn _n4ds(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(retrieve_raw, m)?)?;
     m.add_function(wrap_pyfunction!(prepare_raw, m)?)?;
     m.add_function(wrap_pyfunction!(verify_cached, m)?)?;
+    m.add_function(wrap_pyfunction!(format_open_path, m)?)?;
+    m.add_function(wrap_pyfunction!(format_open_bytes, m)?)?;
     Ok(())
 }

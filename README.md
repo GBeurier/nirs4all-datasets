@@ -85,11 +85,11 @@ parity oracle. Surfaces over that core:
 See [`bindings/SPEC.md`](bindings/SPEC.md) (the binding contract) and
 [`docs/dev/release_process.md`](docs/dev/release_process.md).
 
-For the high-level Python API, `get()/list()/card()` still operate against a registry root checkout
-(`catalog/` + `datasets/`). For non-Python consumers, the native acquisition core consumes the bundled
-or committed `catalog/index.json` contract directly. R/WASM/Rust clients do not need the Python provider
-package: they resolve the index, inspect the returned descriptor, fetch/verify the listed files, then read
-the canonical Parquet with host-native tooling.
+The Python package uses its bundled catalog and original-source loading recipes.
+For non-Python consumers, the native acquisition core consumes the bundled or
+committed `catalog/index.json` contract directly. R/WASM/Rust clients resolve the
+index and fetch listed resources with host-native tooling. The dataset-specific
+Python assembly recipes are marked as delegate routes in that contract.
 
 ## Quickstart
 
@@ -97,17 +97,23 @@ the canonical Parquet with host-native tooling.
 import nirs4all_datasets as n4ad
 
 n4ad.list()                              # the catalog index
-n4ad.card("corn_eigenvector_nir")        # the identity card (dict): sources, variables, stats, provenance
+n4ad.card("barley_moisture_perten")        # generated card if present locally (otherwise None)
 
-ds = n4ad.get("corn_eigenvector_nir")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
-ds.sources()                             # ['X1', 'X2', 'X3'] — the same corn measured on three NIR instruments
-ds.x("X1")                               # one source's spectra as a 2D numpy array
+ds = n4ad.get("barley_moisture_perten")    # -> NirsDataset (original resources fetched, assembled, cached)
+ds.sources()                             # ['X'] for this dataset
+ds.x("X")                               # one source's spectra as a 2D numpy array
 ds.x(concat=False)                       # {source_id: array} for every source (sample-aligned, not row-aligned)
 ds.y()                                   # all declared targets, per sample
 ds.metadata()                            # the metadata columns (each a potential target)
 ds.split("original")                     # the native split labels, if the source defined one
 ds.to_nirs4all()                         # hand off to nirs4all for modelling
 ```
+
+The installed package includes the 297-entry catalog and origin-loading recipes for
+all 135 public datasets. Run from any directory; no checkout or CIRAD source bundle
+is needed. Two malaria datasets require an explicit optional guestbook profile.
+See [public-origin loading](docs/PUBLIC_ORIGIN_LOADING.md) for the profile option,
+provider limits, and the native ChEMBL peak-list representation.
 
 Private / anonymized datasets need a Dataverse token: `n4ad.get("name", token=...)`.
 

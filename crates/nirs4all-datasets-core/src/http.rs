@@ -16,6 +16,12 @@ pub struct HttpResponse {
     pub status: u16,
     /// The `Location` header, if present (used to follow a redirect manually).
     pub location: Option<String>,
+    /// Strong or weak entity tag supplied by the origin.
+    pub etag: Option<String>,
+    /// Length of this response body, if supplied.
+    pub content_length: Option<u64>,
+    /// The Content-Range header, if supplied.
+    pub content_range: Option<String>,
     /// The response body as a reader.
     pub body: Box<dyn Read + Send>,
 }
@@ -130,9 +136,15 @@ mod ureq_client {
             };
             let status = resp.status();
             let location = resp.header("Location").map(str::to_string);
+            let etag = resp.header("ETag").map(str::to_string);
+            let content_length = resp.header("Content-Length").and_then(|s| s.parse().ok());
+            let content_range = resp.header("Content-Range").map(str::to_string);
             Ok(HttpResponse {
                 status,
                 location,
+                etag,
+                content_length,
+                content_range,
                 body: Box::new(resp.into_reader()),
             })
         }
@@ -159,6 +171,7 @@ pub(crate) mod testing {
         pub url: String,
         pub headers: Vec<(String, String)>,
         pub follow_redirects: bool,
+        pub range_start: Option<u64>,
     }
 
     impl MockCall {
@@ -176,14 +189,21 @@ pub(crate) mod testing {
         pub status: u16,
         pub location: Option<String>,
         pub body: Vec<u8>,
+        pub etag: Option<String>,
+        pub content_length: Option<u64>,
+        pub content_range: Option<String>,
     }
 
     impl MockResponse {
         pub fn ok(body: impl Into<Vec<u8>>) -> MockResponse {
+            let body = body.into();
             MockResponse {
                 status: 200,
                 location: None,
-                body: body.into(),
+                content_length: Some(body.len() as u64),
+                etag: None,
+                content_range: None,
+                body,
             }
         }
         pub fn redirect(location: &str) -> MockResponse {
@@ -191,6 +211,9 @@ pub(crate) mod testing {
                 status: 303,
                 location: Some(location.to_string()),
                 body: Vec::new(),
+                etag: None,
+                content_length: Some(0),
+                content_range: None,
             }
         }
         pub fn status(code: u16) -> MockResponse {
@@ -198,6 +221,9 @@ pub(crate) mod testing {
                 status: code,
                 location: None,
                 body: Vec::new(),
+                etag: None,
+                content_length: Some(0),
+                content_range: None,
             }
         }
     }
@@ -230,17 +256,20 @@ pub(crate) mod testing {
             follow_redirects: bool,
             range_start: Option<u64>,
         ) -> Result<HttpResponse> {
-            let _ = range_start;
             let call = MockCall {
                 url: url.to_string(),
                 headers: headers.to_vec(),
                 follow_redirects,
+                range_start,
             };
             self.calls.lock().unwrap().push(call.clone());
             let r = (self.handler)(&call);
             Ok(HttpResponse {
                 status: r.status,
                 location: r.location,
+                etag: r.etag,
+                content_length: r.content_length,
+                content_range: r.content_range,
                 body: Box::new(Cursor::new(r.body)),
             })
         }
