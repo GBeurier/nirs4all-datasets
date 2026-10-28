@@ -61,11 +61,9 @@ checkout_ref_if_needed() {
     local selected_ref=""
     if [[ "${ref}" == rc/* ]]; then
         selected_ref="${ref}"
-    elif [[ "${ref}" == v[0-9]* ]]; then
-        # A Datasets tag names this repository's release, not its siblings'.
-        # Build it from the exact dependency tags declared in Cargo.toml; using
-        # each sibling's moving default branch could silently compile different
-        # source under Cargo's compatible-version requirement.
+    elif [[ "${ref}" == v[0-9]* || "${CI:-}" == true ]]; then
+        # All CI builds use the declared dependency tags, not moving sibling main.
+        # An rc/* integration ref above remains the explicit exception.
         selected_ref="v${pinned_version}"
     else
         return 0
@@ -73,7 +71,7 @@ checkout_ref_if_needed() {
     echo "  selecting ${selected_ref} in ${dest}"
     git -C "${dest}" fetch --depth 1 origin "${selected_ref}"
     git -C "${dest}" checkout --detach FETCH_HEAD
-    if [[ "${ref}" == v[0-9]* ]]; then
+    if [[ "${selected_ref}" == "v${pinned_version}" ]]; then
         local actual_version
         actual_version=$(read_workspace_version "${dest}")
         if [[ "${actual_version}" != "${pinned_version}" ]]; then
@@ -92,7 +90,9 @@ ensure_repo() {
     local dest="${PARENT}/${name}"
     if [[ -d "${dest}/.git" ]]; then
         echo "  found ${dest}"
-        checkout_ref_if_needed "${dest}" "${ref}" "${pinned_version}"
+        if [[ "${CI:-}" == true || -n "${NIRS4ALL_SIBLING_REF:-}" ]]; then
+            checkout_ref_if_needed "${dest}" "${ref}" "${pinned_version}"
+        fi
         return 0
     fi
     if [[ -e "${dest}" ]]; then
