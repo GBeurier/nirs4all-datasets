@@ -215,6 +215,14 @@ def _missing_shared_converters(root: str | Path, descriptor: DatasetDescriptor) 
     leaf = Path(root) / "NIRS DB" / (source_relpath or f"v2.0/{descriptor.id}")
     script = leaf / "source_to_standard.py"
     if not script.is_file():
+        # The authoritative source tree is intentionally excluded from Git and wheels.
+        # Use its tracked audit when rebuilding the index in CI or a fresh checkout.
+        audit_path = Path(root) / "catalog" / "source_audit.json"
+        if audit_path.is_file():
+            audit = json.loads(audit_path.read_text(encoding="utf-8"))
+            for entry in audit.get("datasets", []):
+                if entry.get("id") == descriptor.id:
+                    return sorted(entry.get("missing_shared_converters", []))
         return []
     text = script.read_text(encoding="utf-8", errors="replace")
     names = sorted(set(re.findall(r"\bconvert_[A-Za-z0-9_]+\.py\b", text)))

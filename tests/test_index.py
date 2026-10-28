@@ -487,6 +487,22 @@ def test_missing_shared_converter_blocks_synthetic_reproduction(tmp_path):
     assert retrieval["blockers"] == ["missing shared conversion script: convert_example_v1.py"]
 
 
+def test_committed_source_audit_keeps_retrieval_stable_without_private_source_tree(tmp_path):
+    desc = _descriptor(
+        origin_sources=[{"kind": "url", "mode": "raw", "locator": "https://example.test/input.csv", "access": "open"}],
+        retrieval={},
+    )
+    _write_dataset(tmp_path, desc, _manifest("demo"))
+    audit = {"datasets": [{"id": "demo", "missing_shared_converters": ["convert_example_v1.py"]}]}
+    (tmp_path / "catalog" / "source_audit.json").write_text(json.dumps(audit), encoding="utf-8")
+    before = build_index(tmp_path)
+    leaf = tmp_path / "NIRS DB" / "v2.0" / "demo"
+    leaf.mkdir(parents=True)
+    (leaf / "source_to_standard.py").write_text('script = ROOT / "convert_example_v1.py"\n', encoding="utf-8")
+    assert build_index(tmp_path) == before
+    assert before["datasets"]["demo"]["retrieval"]["status"] == "missing_delegate"
+
+
 def test_manifest_file_url_preferred_and_missing_required_file_is_reported(tmp_path):
     desc = _descriptor(origin_sources=[{"kind": "url", "mode": "raw", "locator": "https://example.test/landing", "access": "open"}], retrieval={})
     _write_dataset(tmp_path, desc, _manifest("demo", file_id=678))

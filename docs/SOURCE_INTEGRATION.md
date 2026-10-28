@@ -20,7 +20,7 @@ standardized data does not require the historical raw conversion scripts.
 
 [`catalog/integration_validation.json`](../catalog/integration_validation.json)
 records the local round-trip checks for all 297 datasets, with zero failed
-datasets. The Python suite passes 271 tests; single-source and six-source
+datasets. The Python suite passes 272 tests; single-source and six-source
 `to_nirs4all()` bridge checks also pass. The live origin health report records
 HTTP 403 for the Lake Fire EcoSIS source; its supplied local tables remain
 available.
