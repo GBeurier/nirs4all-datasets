@@ -1,16 +1,12 @@
 # Getting started
 
 This page walks through the two ways to use the catalog: the **Python API** and the **`n4a-datasets`
-CLI**. Both resolve a dataset *local-first*, otherwise download it by its Dataverse / open-canonical
-DOI, verify its SHA-256, cache it, and return the canonical form. See {doc}`installation` first.
-
-```{admonition} Point at the catalog checkout
-:class: note
-The API and CLI read the git-tracked catalog under a **registry root** (`root=` / `--root`, default
-`.`): `list()` reads `catalog/datasets.yaml`, and `get()` needs the dataset's local descriptor +
-manifest before it can fetch. Run from a clone of this repository, or pass `root=<checkout>` /
-`--root <checkout>`. (Bundling the index into the wheel for fully standalone use is planned.)
-```
+CLI**. Install the package and run from any directory. The bundled catalog contains
+297 datasets, including 135 public entries with original-source loading recipes.
+`get()` uses current local data when available, otherwise downloads and assembles
+public origin resources into its cache. Hosted canonical resources retain their
+manifest checksum verification. See {doc}`installation` and
+{doc}`PUBLIC_ORIGIN_LOADING` for provider requirements and representation details.
 
 ## Python API
 
@@ -21,9 +17,9 @@ The consumer surface is three module-level functions — `list`, `card`, and `ge
 import nirs4all_datasets as n4ad
 
 n4ad.list()                              # the catalog index (list of dicts), supports keyword filters
-n4ad.card("corn_eigenvector_nir")        # the identity card (dict): sources, variables, stats, provenance
+n4ad.card("barley_moisture_perten")        # generated card if present locally (otherwise None)
 
-ds = n4ad.get("corn_eigenvector_nir")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
+ds = n4ad.get("barley_moisture_perten")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
 ```
 
 `list()` forwards keyword filters to the catalog search, e.g.:
@@ -38,12 +34,12 @@ n4ad.list(domain="agriculture", spectro_family="NIR")
 Sources are kept **separate** and are aligned by **sample identity**, never by row position:
 
 ```python
-ds.sources()                  # e.g. ['X1', 'X2', 'X3'] — the same samples on three NIR instruments
-ds.x("X1")                    # one source's spectra as a 2D numpy array
+ds.sources()                  # ['X'] for this dataset; other datasets have multiple instruments
+ds.x("X")                    # one source's spectra as a 2D numpy array
 ds.x(concat=False)            # {source_id: array} for every source (sample-aligned)
-ds.wavelengths("X1")          # the wavelength axis of a source
+ds.wavelengths("X")          # the wavelength axis of a source
 ds.sample_ids()               # the sample identities
-ds.observation_ids("X1")      # the per-observation identities of a source
+ds.observation_ids("X")      # the per-observation identities of a source
 
 ds.variables()                # the declared variables (targets + metadata)
 ds.y()                        # all declared targets, per sample (DataFrame or None)
@@ -73,14 +69,15 @@ the sources are uniquely alignable by observation or sample id.
 
 ### Tokens for protected datasets
 
-Public datasets need no token. Private / anonymized datasets need a Dataverse token, passed inline or
+Public datasets need no Dataverse token. The two malaria datasets require optional,
+explicitly supplied guestbook profile answers; see {doc}`PUBLIC_ORIGIN_LOADING`. Private / anonymized datasets need a Dataverse token, passed inline or
 resolved from the environment / config file:
 
 ```python
 ds = n4ad.get("some_private_dataset", token="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 ```
 
-`get()` also accepts `root`, `source`, `split`, `instance`, `cache_dir`, `concat`, and `reproduce`
+`get()` also accepts `root`, `source`, `split`, `instance`, `cache_dir`, `concat`, `guestbook_response`, and `reproduce`
 keyword arguments; see its docstring for the full signature.
 
 ## CLI (`n4a-datasets`)

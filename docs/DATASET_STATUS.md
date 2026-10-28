@@ -62,9 +62,9 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `dryad_herbarium_resurvey_nirs_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2718 |
 | `dryad_rice_leaf_reflectance_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2700 |
 | `dryad_scarab_reflectance_firstbatch_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 236 |
-| `dryad_sea_cucumber_representative_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 61 |
-| `dryad_tree_leaf_girdling_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2731 |
-| `dryad_tree_tissue_nsc_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 180 |
+| `dryad_sea_cucumber_representative_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 62 |
+| `dryad_tree_leaf_girdling_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2737 |
+| `dryad_tree_tissue_nsc_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 1270 |
 | `dryad_walnut_moisture_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 136 |
 | `ecosis_2008_university_of_wisconsin_biotron_fresh_leaf_spectra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 87 |
 | `ecosis_2014_cedar_creek_esr_grassland_biodiversity_experiment_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | ⬆️ upload-pending | 831 |
@@ -225,7 +225,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `mendeley_black_pmma_transmissivity_uvvisnir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 2 |
 | `mendeley_chicken_meat_authenticity_handheld_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 4053 |
 | `mendeley_cocoa_beans_moisture_fat_nir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 72 |
-| `mendeley_coffee_drying_ftnir_moisture` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 73 |
+| `mendeley_coffee_drying_ftnir_moisture` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 76 |
 | `mendeley_cucurbitaceae_fruits_visnir` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 300 |
 | `mendeley_diesel_biodiesel_ftmir_opus` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 30 |
 | `mendeley_eliquid_alpha_mid_opus_manual` | public | qualified | ✅ | ✅ | ⏳ pending | 🌍 open | 26 |

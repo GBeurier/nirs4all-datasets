@@ -242,7 +242,10 @@ def _v2_numeric_columns(y_path: Path, sample_rows: int = 80, *, default_numeric:
     ``False`` for metadata (an empty metadata column must not be invented as numeric)."""
     if not y_path.exists():
         return {}
-    lines = [ln for ln in y_path.read_text(encoding="utf-8", errors="replace").splitlines() if ln.strip()][: sample_rows + 1]
+    from itertools import islice
+
+    with y_path.open(encoding="utf-8", errors="replace") as stream:
+        lines = [ln.rstrip("\r\n") for ln in islice((ln for ln in stream if ln.strip()), sample_rows + 1)]
     if len(lines) < 2:
         return {}
     delim = ";" if lines[0].count(";") >= lines[0].count(",") else ","

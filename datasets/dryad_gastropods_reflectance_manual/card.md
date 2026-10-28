@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | X | *Not specified.* | NIR | 187.6–1709 nm | 197 | 2422 |
+| X | X | *Not specified.* | NIR | 187.6–1709 nm | 197 | 2482 |
 
 ### Variables (Y / metadata)
 
@@ -29,11 +29,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | state | metadata | categorical | *Not specified.* | n=197, missing=0, classes=2, top WET (×99) |
 | body_region | metadata | categorical | *Not specified.* | n=197, missing=0, classes=12, top TOP (×48) |
 | size_code | metadata | categorical | *Not specified.* | n=197, missing=0, classes=4, top XXX (×159) |
-| manual_download | metadata | categorical | *Not specified.* | n=197, missing=0, classes=1, top True (×197) |
-| manual_download_source_dir | metadata | categorical | *Not specified.* | n=197, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\gastropods (×197) |
-| manual_download_file | metadata | categorical | *Not specified.* | n=197, missing=0, classes=1, top doi_10_5061_dryad_905qfttnv__v20221207.zip::Spec_RealDat.zip (×197) |
-| official_source_url | metadata | categorical | *Not specified.* | n=197, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.905qfttnv (×197) |
-| standardization_batch | metadata | categorical | *Not specified.* | n=197, missing=0, classes=1, top v0.8.58 (×197) |
 
 ## Statistics — splits
 
@@ -53,7 +48,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.
 
 ## Uses
 
@@ -73,6 +68,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `2764eddb1f512b44aca0a37ad9fa73d2844f791b723aa3bfdae73e7509ddf026`
-- **Processing hash:** `9b87fe9f6a396fdd56e9ab9610a95d5c56b43b1ca274d9d7d2b0b7783d9851a2` | **metadata hash:** `a05f75829616097390e7808e9127e9d3a6f003c494ece747d8295b785ec7e754`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `d0b90e9ba67449b0397146489ee5c68034ccb31399cf2740b64392faf269eb04`
+- **Processing hash:** `c200b1a0e74e8d76802a7b0010ea956e9a57480422c7ac2ea99ba5b0ceeeb493` | **metadata hash:** `609e4d194a7f166e628d6c10232e8b5829b099481f9ef245ae4d2af20f7583a8`

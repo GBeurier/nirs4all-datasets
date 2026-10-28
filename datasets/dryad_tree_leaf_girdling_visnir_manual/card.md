@@ -11,27 +11,22 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 2731 sample(s), 2731 observation(s) total; sample_id available: False.
+- **Alignment:** sample level; 2737 sample(s), 2737 observation(s) total; sample_id available: False.
 - **Repetitions per sample:** 1–1 (mean 1).
 
 ### Sources (X)
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | X | *Not specified.* | NIR | 350–2500 nm | 2731 | 2151 |
+| X | X | *Not specified.* | NIR | 350–2500 nm | 2737 | 2151 |
 
 ### Variables (Y / metadata)
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| treatment | target | categorical | *Not specified.* | n=2731, missing=0, classes=2, top control (×1557) |
-| leaf_code | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=2722, top 'GRD-T1477-MAC01-L500000.asd.txt' (×2) |
-| camera | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=5, top Cam02 (×700) |
-| manual_download | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=1, top True (×2731) |
-| manual_download_source_dir | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\tree leaf (×2731) |
-| manual_download_file | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=1, top doi_10_5061_dryad_d51c5b01n__v20201112.zip::*_spectra.xlsx (×2731) |
-| official_source_url | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.d51c5b01n (×2731) |
-| standardization_batch | metadata | categorical | *Not specified.* | n=2731, missing=0, classes=1, top v0.8.58 (×2731) |
+| treatment | target | categorical | *Not specified.* | n=2737, missing=0, classes=2, top control (×1563) |
+| leaf_code | metadata | categorical | *Not specified.* | n=2737, missing=0, classes=2728, top 'GRD-T1477-MAC01-L500000.asd.txt' (×2) |
+| camera | metadata | categorical | *Not specified.* | n=2737, missing=0, classes=5, top Cam02 (×700) |
 
 ## Statistics — splits
 
@@ -51,7 +46,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.
 
 ## Uses
 
@@ -71,6 +66,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f53f0e23866cb7f562c5e1da0fc7bbb311513fcdae9864af3a8fc54495d0da8d`
-- **Processing hash:** `1aed96204c8fad2b359e0142601dd891688b0ce87529b072f062e21840d225df` | **metadata hash:** `8a8e0d45809023c055ec7967e338bf87f44390c11fa6566a2e58b67e8a8ec40b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `c51ef833ceef6343885fe0993a56d1a1d00fdec268e051482d4fa4f03dc5febf`
+- **Processing hash:** `21b87e9bd2872d162f5218a6c73d4bd0f10f0a5b49aea7c2bbc14221cad2abe5` | **metadata hash:** `7114df7988abe7428ae4e7e5843a82d79e50131e5e67502009ccb243e959b862`

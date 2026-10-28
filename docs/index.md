@@ -11,19 +11,10 @@ the dataset.
 
 The heavy bytes **never enter git and are never re-hosted**. The catalog links to each dataset's
 **origin** (Zenodo / a data Dataverse / a vendor archive) and downloads on demand: `get("name")`
-resolves a dataset **local-first** (from the registry checkout), otherwise fetches it by its
-Dataverse / open-canonical DOI, **SHA-256-verifies** it, caches it through the native acquisition core,
-and returns a
-`NirsDataset`.
-
-```{admonition} Python high-level API uses the catalog checkout
-:class: important
-`get()` / `list()` read the git-tracked catalog under a **registry root** (`root=`, default `.`):
-`list()` reads `catalog/datasets.yaml`, and `get()` needs the dataset's local descriptor + manifest
-before it can fetch. Non-Python clients use the bundled or committed `catalog/index.json` instead:
-`n4ds_resolve` returns the byte contract and tier-sanitized descriptor, then R/WASM/Rust read the
-verified Parquet with their host-native readers. See {doc}`getting_started`.
-```
+uses the catalog bundled with the installed Python package, downloads original
+public resources through the native acquisition core, and assembles a cached
+`NirsDataset`. A repository checkout is optional. Existing hosted canonical
+contracts retain their SHA-256 verification. See {doc}`PUBLIC_ORIGIN_LOADING`.
 
 ```{admonition} Boundary rule
 :class: important
@@ -52,7 +43,7 @@ Three deliverables sit behind one catalog:
 - a native **acquisition contract** — `catalog/index.json` plus the Rust/C/WASM/R bindings that resolve a
   dataset id to descriptor + SHA-256-pinned files without importing Python providers.
 - an optional Python **package/binding** — `nirs4all_datasets.get("name")` wraps the native acquisition
-  core and returns a `NirsDataset` from a registry checkout;
+  core and returns a `NirsDataset` using the bundled catalog;
 - a static **site** — a browsable, qualified catalog with whole-bank dataviz and per-dataset
   identity cards.
 
@@ -66,6 +57,7 @@ The command-line entry point is **`n4a-datasets`**; see {doc}`getting_started`.
 
 installation
 getting_started
+PUBLIC_ORIGIN_LOADING
 ```
 
 ```{toctree}

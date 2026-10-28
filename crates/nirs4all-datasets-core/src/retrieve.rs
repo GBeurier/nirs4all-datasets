@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::cache::{default_cache_dir, part_path, safe_join};
 use crate::error::{Error, Result};
-use crate::hash::{sha256_hex_file, HashingWriter};
+use crate::hash::{sha256_hex_bytes, sha256_hex_file};
 use crate::http::HttpClient;
 use crate::origins::{ckan, dataverse, figshare, zenodo};
 
@@ -258,9 +258,11 @@ fn retrieve_one(
     let expected = resource.sha256.as_ref().map(|s| s.to_lowercase());
 
     if dest.exists() {
-        let actual = sha256_hex_file(&dest)?;
         let meta = fs::metadata(&dest)?;
-        if expected.as_ref().map(|s| s == &actual).unwrap_or(true) {
+        let actual = sha256_hex_file(&dest)?;
+        if resource.size.map(|size| size == meta.len()).unwrap_or(true)
+            && expected.as_ref().map(|s| s == &actual).unwrap_or(true)
+        {
             let extracted = extract_if_requested(route_dir, resource, &dest)?;
             return Ok(ResourceStatus {
                 id: resource.id.clone(),
@@ -281,32 +283,154 @@ fn retrieve_one(
     }
 
     let tmp = part_path(&dest);
+    let sidecar = sidecar_path(&tmp);
     if let Some(parent) = dest.parent() {
         fs::create_dir_all(parent)?;
     }
-    let resp = http.get(&url, &[], true, None)?;
-    if !resp.is_success() {
+    let url_hash = sha256_hex_bytes(url.as_bytes());
+    let saved = fs::read(&sidecar)
+        .ok()
+        .and_then(|bytes| serde_json::from_slice::<PartialDownload>(&bytes).ok());
+    let mut offset = fs::metadata(&tmp).map(|m| m.len()).unwrap_or(0);
+    let valid = saved.as_ref().is_some_and(|s| {
+        s.url_hash == url_hash
+            && s.sha256 == expected
+            && s.expected_size == resource.size
+            && (s.etag.is_some() || expected.is_some())
+    });
+    if offset == 0 || !valid {
+        remove_partial(&tmp, &sidecar);
+        offset = 0;
+    }
+    let mut headers = vec![("Accept-Encoding".to_string(), "identity".to_string())];
+    if offset > 0 {
+        if let Some(tag) = saved.as_ref().and_then(|s| s.etag.as_ref()) {
+            headers.push(("If-Range".to_string(), tag.clone()));
+        }
+    }
+    let resp = http.get(&url, &headers, true, (offset > 0).then_some(offset))?;
+    if resp.status != 200 && resp.status != 206 {
         return Err(Error::Http(format!(
             "raw retrieval {} failed: HTTP {}",
             resource.id, resp.status
         )));
     }
-
+    let mut representation_size = resp.content_length;
+    if resp.status == 206 {
+        if offset == 0 {
+            remove_partial(&tmp, &sidecar);
+            return Err(Error::Http(
+                "unexpected partial response for a full raw request".into(),
+            ));
+        }
+        let Some((start, end, length)) =
+            resp.content_range.as_deref().and_then(parse_content_range)
+        else {
+            remove_partial(&tmp, &sidecar);
+            return Err(Error::Http(
+                "invalid Content-Range in resumed raw response".into(),
+            ));
+        };
+        if start != offset || resp.content_length.is_some_and(|n| n != end - start + 1) {
+            remove_partial(&tmp, &sidecar);
+            return Err(Error::Http(
+                "resumed raw response has an incorrect Content-Range".into(),
+            ));
+        }
+        if let Some(previous) = saved.as_ref().and_then(|s| s.etag.as_ref()) {
+            if resp.etag.as_ref() != Some(previous) {
+                remove_partial(&tmp, &sidecar);
+                return Err(Error::Http(
+                    "resumed raw response changed or omitted its ETag".into(),
+                ));
+            }
+        }
+        if saved
+            .as_ref()
+            .and_then(|s| s.representation_size)
+            .is_some_and(|previous| previous != length)
+        {
+            remove_partial(&tmp, &sidecar);
+            return Err(Error::Http(
+                "resumed raw response changed its total length".into(),
+            ));
+        }
+        representation_size = Some(length);
+    } else if offset > 0 {
+        // A server may ignore Range or reject If-Range: replace, never append.
+        offset = 0;
+        remove_partial(&tmp, &sidecar);
+    }
+    if let (Some(expected_size), Some(actual_size)) = (resource.size, representation_size) {
+        if expected_size != actual_size {
+            remove_partial(&tmp, &sidecar);
+            return Err(Error::Http(format!(
+                "raw resource {} has length {actual_size}, expected {expected_size}",
+                resource.id
+            )));
+        }
+    }
+    let etag = resp
+        .etag
+        .as_deref()
+        .filter(|tag| is_strong_etag(tag))
+        .map(str::to_owned);
+    let can_resume = etag.is_some() || expected.is_some();
+    let partial = PartialDownload {
+        url_hash,
+        etag,
+        sha256: expected.clone(),
+        expected_size: resource.size,
+        representation_size,
+    };
+    if can_resume {
+        fs::write(&sidecar, serde_json::to_vec(&partial)?)?;
+    } else {
+        let _ = fs::remove_file(&sidecar);
+    }
+    if offset > limit.saturating_sub(*total) {
+        remove_partial(&tmp, &sidecar);
+        return Err(Error::NotFetchable(
+            "raw retrieval exceeds the configured byte limit".into(),
+        ));
+    }
+    *total += offset;
+    let mut file = fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(offset == 0)
+        .append(offset > 0)
+        .open(&tmp)?;
     let mut body = resp.body;
-    let mut hw = HashingWriter::new(fs::File::create(&tmp)?);
-    let bytes = match copy_limited(&mut body, &mut hw, limit, total) {
+    let downloaded = match copy_limited(&mut body, &mut file, limit, total) {
         Ok(n) => n,
-        Err(e) => {
-            let _ = fs::remove_file(&tmp);
-            return Err(e);
+        Err(err) => {
+            if !can_resume || matches!(err, Error::NotFetchable(_)) {
+                remove_partial(&tmp, &sidecar);
+            }
+            return Err(err);
         }
     };
-    let (file, actual, _n) = hw.finish();
-    file.sync_all().ok();
-
+    file.sync_all()?;
+    let bytes = offset + downloaded;
+    let promised = resource.size.or(representation_size);
+    if resp
+        .content_length
+        .is_some_and(|length| downloaded != length)
+        || promised.is_some_and(|length| bytes != length)
+    {
+        if !can_resume || promised.is_some_and(|length| bytes >= length) {
+            remove_partial(&tmp, &sidecar);
+        }
+        return Err(Error::Http(format!(
+            "raw resource {} ended at {bytes} bytes; expected {:?}",
+            resource.id, promised
+        )));
+    }
+    let actual = sha256_hex_file(&tmp)?;
     if let Some(expected) = &expected {
         if actual != *expected {
-            let _ = fs::remove_file(&tmp);
+            remove_partial(&tmp, &sidecar);
             return Err(Error::ChecksumMismatch {
                 name: resource.id.clone(),
                 expected: expected.clone(),
@@ -314,13 +438,9 @@ fn retrieve_one(
             });
         }
     }
-    if dest.exists() {
-        let _ = fs::remove_file(&dest);
-    }
-    if let Err(e) = fs::rename(&tmp, &dest) {
-        let _ = fs::remove_file(&tmp);
-        return Err(e.into());
-    }
+    fs::rename(&tmp, &dest)?;
+    let _ = fs::remove_file(&sidecar);
+
     let extracted = extract_if_requested(route_dir, resource, &dest)?;
     Ok(ResourceStatus {
         id: resource.id.clone(),
@@ -337,6 +457,43 @@ fn retrieve_one(
         extracted,
         reason: None,
     })
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct PartialDownload {
+    url_hash: String,
+    etag: Option<String>,
+    sha256: Option<String>,
+    expected_size: Option<u64>,
+    representation_size: Option<u64>,
+}
+
+fn sidecar_path(part: &Path) -> PathBuf {
+    let mut name = part.as_os_str().to_os_string();
+    name.push(".json");
+    PathBuf::from(name)
+}
+
+fn remove_partial(part: &Path, sidecar: &Path) {
+    let _ = fs::remove_file(part);
+    let _ = fs::remove_file(sidecar);
+}
+
+fn is_strong_etag(tag: &str) -> bool {
+    tag.starts_with('"') && tag.ends_with('"') && tag.len() >= 2
+}
+
+fn parse_content_range(value: &str) -> Option<(u64, u64, u64)> {
+    let value = value.strip_prefix("bytes ")?;
+    let (range, total) = value.split_once('/')?;
+    let (start, end) = range.split_once('-')?;
+    let start: u64 = start.parse().ok()?;
+    let end: u64 = end.parse().ok()?;
+    let total: u64 = total.parse().ok()?;
+    if start > end || end >= total {
+        return None;
+    }
+    Some((start, end, total))
 }
 
 fn copy_limited<R: io::Read, W: Write>(
@@ -867,5 +1024,372 @@ mod tests {
         assert!(!res.ok);
         assert_eq!(res.resources[0].status, "failed");
         assert!(!dir.path().join("demo/raw/official/raw.csv.part").exists());
+    }
+
+    fn request_for_test(size: Option<u64>, sha256: Option<String>) -> RetrieveRequest {
+        RetrieveRequest {
+            dataset_id: "resume_test".into(),
+            route: RetrievalRoute {
+                id: "official".into(),
+                access: "open".into(),
+                method: "raw_retrieve".into(),
+                provider: "url".into(),
+                locator: "https://example.test/raw.csv".into(),
+                landing_url: None,
+                api_url: None,
+                max_total_bytes: None,
+                resources: vec![RetrievalResource {
+                    id: "raw".into(),
+                    role: "raw".into(),
+                    required: true,
+                    selector: RetrievalSelector {
+                        kind: "direct_url".into(),
+                        value: "https://example.test/raw.csv".into(),
+                    },
+                    file_name: Some("raw.csv".into()),
+                    format: None,
+                    sha256,
+                    size,
+                    unpack: RetrievalUnpack::default(),
+                }],
+            },
+        }
+    }
+
+    fn options_for_test(dir: &tempfile::TempDir) -> RetrieveOptions {
+        RetrieveOptions {
+            cache_dir: Some(dir.path().to_string_lossy().into_owned()),
+            ..Default::default()
+        }
+    }
+
+    fn partial_response(body: &[u8]) -> MockResponse {
+        let mut r = MockResponse::ok(body.to_vec());
+        r.etag = Some("\"v1\"".into());
+        r.content_length = Some(6);
+        r
+    }
+
+    #[test]
+    fn resumes_truncated_response_with_strong_etag_and_range() {
+        let dir = tempfile::tempdir().unwrap();
+        let request = request_for_test(Some(6), None);
+        let calls = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |call| {
+            assert_eq!(call.header("Accept-Encoding"), Some("identity"));
+            if calls.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                assert_eq!(call.range_start, None);
+                partial_response(b"abc")
+            } else {
+                assert_eq!(call.range_start, Some(3));
+                assert_eq!(call.header("If-Range"), Some("\"v1\""));
+                let mut r = MockResponse::ok(b"def".to_vec());
+                r.status = 206;
+                r.etag = Some("\"v1\"".into());
+                r.content_range = Some("bytes 3-5/6".into());
+                r
+            }
+        });
+        let opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert!(dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+        assert!(retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert_eq!(
+            fs::read(dir.path().join("resume_test/raw/official/raw.csv")).unwrap(),
+            b"abcdef"
+        );
+    }
+
+    #[test]
+    fn server_ignoring_range_restarts_without_appending() {
+        let dir = tempfile::tempdir().unwrap();
+        let request = request_for_test(Some(6), None);
+        let count = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |call| {
+            if count.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                partial_response(b"abc")
+            } else {
+                assert_eq!(call.range_start, Some(3));
+                MockResponse::ok(b"ABCDEF".to_vec())
+            }
+        });
+        let opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert!(retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert_eq!(
+            fs::read(dir.path().join("resume_test/raw/official/raw.csv")).unwrap(),
+            b"ABCDEF"
+        );
+    }
+
+    #[test]
+    fn rejects_wrong_content_range_and_clears_partial() {
+        let dir = tempfile::tempdir().unwrap();
+        let request = request_for_test(Some(6), None);
+        let count = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |_| {
+            if count.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                partial_response(b"abc")
+            } else {
+                let mut r = MockResponse::ok(b"def".to_vec());
+                r.status = 206;
+                r.etag = Some("\"v1\"".into());
+                r.content_range = Some("bytes 2-4/6".into());
+                r
+            }
+        });
+        let opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert!(!retrieve_raw(&request, &opts, &http).unwrap().ok);
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+        assert!(!dir.path().join("resume_test/raw/official/raw.csv").exists());
+    }
+
+    #[test]
+    fn rejects_unpinned_truncation_checksum_and_size_mismatch() {
+        let dir = tempfile::tempdir().unwrap();
+        let opts = options_for_test(&dir);
+        let req = request_for_test(Some(6), None);
+        let http = MockHttp::new(|_| {
+            let mut r = MockResponse::ok(b"abc".to_vec());
+            r.content_length = Some(6);
+            r
+        });
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+        let req = request_for_test(Some(5), None);
+        assert!(
+            !retrieve_raw(
+                &req,
+                &opts,
+                &MockHttp::new(|_| MockResponse::ok(b"abcdef".to_vec()))
+            )
+            .unwrap()
+            .ok
+        );
+        let req = request_for_test(Some(6), Some(sha256_hex_bytes(b"ABCDEF")));
+        assert!(
+            !retrieve_raw(
+                &req,
+                &opts,
+                &MockHttp::new(|_| MockResponse::ok(b"abcdef".to_vec()))
+            )
+            .unwrap()
+            .ok
+        );
+        assert!(!dir.path().join("resume_test/raw/official/raw.csv").exists());
+    }
+
+    #[test]
+    fn rejects_invalid_existing_cache_length() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("resume_test/raw/official/raw.csv");
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        fs::write(&path, b"bad").unwrap();
+        let req = request_for_test(Some(6), None);
+        let http = MockHttp::new(|_| MockResponse::ok(b"abcdef".to_vec()));
+        assert!(
+            retrieve_raw(&req, &options_for_test(&dir), &http)
+                .unwrap()
+                .ok
+        );
+        assert_eq!(fs::read(path).unwrap(), b"abcdef");
+        assert_eq!(http.call_count(), 1);
+    }
+
+    #[test]
+    fn interrupted_stream_is_resumed_after_connection_reset() {
+        struct BrokenReader(bool);
+        impl io::Read for BrokenReader {
+            fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+                if self.0 {
+                    return Err(io::Error::new(
+                        io::ErrorKind::ConnectionReset,
+                        "interrupted",
+                    ));
+                }
+                self.0 = true;
+                buf[..3].copy_from_slice(b"abc");
+                Ok(3)
+            }
+        }
+        struct InterruptedHttp(std::sync::Mutex<usize>);
+        impl HttpClient for InterruptedHttp {
+            fn get(
+                &self,
+                _url: &str,
+                headers: &[(String, String)],
+                _follow: bool,
+                range: Option<u64>,
+            ) -> Result<crate::http::HttpResponse> {
+                let mut count = self.0.lock().unwrap();
+                *count += 1;
+                if *count == 1 {
+                    assert_eq!(range, None);
+                    Ok(crate::http::HttpResponse {
+                        status: 200,
+                        location: None,
+                        etag: Some("\"v1\"".into()),
+                        content_length: Some(6),
+                        content_range: None,
+                        body: Box::new(BrokenReader(false)),
+                    })
+                } else {
+                    assert_eq!(range, Some(3));
+                    assert!(headers
+                        .iter()
+                        .any(|(k, v)| k == "If-Range" && v == "\"v1\""));
+                    Ok(crate::http::HttpResponse {
+                        status: 206,
+                        location: None,
+                        etag: Some("\"v1\"".into()),
+                        content_length: Some(3),
+                        content_range: Some("bytes 3-5/6".into()),
+                        body: Box::new(io::Cursor::new(b"def")),
+                    })
+                }
+            }
+        }
+        let dir = tempfile::tempdir().unwrap();
+        let opts = options_for_test(&dir);
+        let req = request_for_test(Some(6), None);
+        let http = InterruptedHttp(std::sync::Mutex::new(0));
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert!(retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert_eq!(
+            fs::read(dir.path().join("resume_test/raw/official/raw.csv")).unwrap(),
+            b"abcdef"
+        );
+    }
+
+    #[test]
+    fn resumed_size_limit_removes_partial_and_sidecar() {
+        let dir = tempfile::tempdir().unwrap();
+        let req = request_for_test(Some(6), None);
+        let count = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |_| {
+            if count.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                partial_response(b"abc")
+            } else {
+                let mut r = MockResponse::ok(b"def".to_vec());
+                r.status = 206;
+                r.etag = Some("\"v1\"".into());
+                r.content_range = Some("bytes 3-5/6".into());
+                r
+            }
+        });
+        let mut opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        opts.max_total_bytes = Some(4);
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part.json")
+            .exists());
+    }
+
+    #[test]
+    fn accepts_complete_unknown_length_response_as_unverified() {
+        let dir = tempfile::tempdir().unwrap();
+        let req = request_for_test(None, None);
+        let http = MockHttp::new(|_| {
+            let mut r = MockResponse::ok(b"complete chunked body".to_vec());
+            r.content_length = None;
+            r
+        });
+        let result = retrieve_raw(&req, &options_for_test(&dir), &http).unwrap();
+        assert!(result.ok);
+        assert!(!result.verified);
+        assert_eq!(result.resources[0].status, "downloaded_unverified");
+        assert_eq!(
+            fs::read(dir.path().join("resume_test/raw/official/raw.csv")).unwrap(),
+            b"complete chunked body"
+        );
+    }
+
+    #[test]
+    fn sha_pin_allows_resume_without_etag() {
+        let dir = tempfile::tempdir().unwrap();
+        let req = request_for_test(Some(6), Some(sha256_hex_bytes(b"abcdef")));
+        let count = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |call| {
+            if count.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                let mut r = MockResponse::ok(b"abc".to_vec());
+                r.content_length = Some(6);
+                r.etag = Some("W/\"weak\"".into());
+                r
+            } else {
+                assert_eq!(call.range_start, Some(3));
+                assert_eq!(call.header("If-Range"), None);
+                let mut r = MockResponse::ok(b"def".to_vec());
+                r.status = 206;
+                r.content_range = Some("bytes 3-5/6".into());
+                r
+            }
+        });
+        let opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        let result = retrieve_raw(&req, &opts, &http).unwrap();
+        assert!(result.ok);
+        assert!(result.verified);
+    }
+
+    #[test]
+    fn weak_etag_without_sha_does_not_retain_partial() {
+        let dir = tempfile::tempdir().unwrap();
+        let req = request_for_test(Some(6), None);
+        let http = MockHttp::new(|_| {
+            let mut r = partial_response(b"abc");
+            r.etag = Some("W/\"weak\"".into());
+            r
+        });
+        assert!(
+            !retrieve_raw(&req, &options_for_test(&dir), &http)
+                .unwrap()
+                .ok
+        );
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+    }
+
+    #[test]
+    fn changed_etag_cannot_append_to_old_partial() {
+        let dir = tempfile::tempdir().unwrap();
+        let req = request_for_test(Some(6), None);
+        let count = std::sync::atomic::AtomicUsize::new(0);
+        let http = MockHttp::new(move |_| {
+            if count.fetch_add(1, std::sync::atomic::Ordering::SeqCst) == 0 {
+                partial_response(b"abc")
+            } else {
+                let mut r = MockResponse::ok(b"def".to_vec());
+                r.status = 206;
+                r.etag = Some("\"v2\"".into());
+                r.content_range = Some("bytes 3-5/6".into());
+                r
+            }
+        });
+        let opts = options_for_test(&dir);
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert!(!retrieve_raw(&req, &opts, &http).unwrap().ok);
+        assert!(!dir
+            .path()
+            .join("resume_test/raw/official/raw.csv.part")
+            .exists());
+        assert!(!dir.path().join("resume_test/raw/official/raw.csv").exists());
     }
 }

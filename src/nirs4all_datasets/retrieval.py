@@ -7,6 +7,7 @@ resource. Dataset-specific canonical assembly is still explicit.
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any, cast
 
@@ -57,6 +58,7 @@ def retrieve(
     timeout_secs: int | None = None,
     max_total_bytes: int | None = None,
     prepare: bool = True,
+    guestbook_response: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Retrieve a dataset's available bytes by id and return a structured status.
 
@@ -74,9 +76,21 @@ def retrieve(
 
     index = load_index(root)
     resolved = _acquire.resolve(index, dataset_id)
+    if prepare and resolved.get("tier") == "public" and route_id in (None, "public_origin_recipe"):
+        from nirs4all_datasets.public_pull import available, pull
+        from nirs4all_datasets.schema import DatasetDescriptor
+
+        if available(dataset_id):
+            directory, _ = pull(DatasetDescriptor(**resolved["descriptor"]), cache_dir=cache_dir, guestbook_response=guestbook_response, timeout_secs=timeout_secs, max_total_bytes=max_total_bytes)
+            origin = json.loads((directory / "origin-pull.json").read_text(encoding="utf-8"))
+            return {"dataset_id": dataset_id, "kind": "raw", "ok": True, "verified": False, "dir": str(directory), "retrieval_status": "raw_reproducible",
+                    "resources": origin["downloads"], "preparation": {"status": "assembled", "engine": "public_origin_recipe", "canonical_dir": str(directory / "canonical"),
+                                                                  "representation": origin["representation"], "warnings": origin["conversion_warnings"]}}
     retrieval = resolved.get("retrieval") or {}
     route = _select_route(retrieval, route_id)
     if route is not None:
+        if route.get("method") == "delegate":
+            raise ValueError("This original-source recipe requires preparation. Use get(dataset_id) or retrieve(dataset_id, prepare=True).")
         request = {"dataset_id": dataset_id, "route": route}
         result = _acquire.retrieve_raw(
             request,

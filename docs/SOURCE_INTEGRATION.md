@@ -1,35 +1,32 @@
 # CIRAD NIRS DB source integration
 
 The October 2026 integration adds 133 datasets to the existing 164, using the
-supplied standardized X/Y/M tables. The primary workflow is local access from
-the registry checkout, followed by the nirs4all bridge:
+supplied standardized X/Y/M tables for the initial local integration. Version
+0.3.13 adds packaged original-source recipes for all 135 public datasets, so a
+consumer can use the installed package without the CIRAD source bundle:
 
 ```python
 import nirs4all_datasets as bank
 
-dataset = bank.get("barley_moisture_perten", root="/path/to/nirs4all-datasets")
-spectra = dataset.x()
-targets = dataset.y()
+dataset = bank.get("barley_moisture_perten")
 n4a_dataset = dataset.to_nirs4all()
 ```
 
-The package catalog contains metadata and retrieval pointers; the heavy local
-canonical data remain outside Git and the wheel. A consumer on another machine
-needs the source bundle or an available origin route. Local use of the supplied
-standardized data does not require the historical raw conversion scripts.
+See [PUBLIC_ORIGIN_LOADING.md](PUBLIC_ORIGIN_LOADING.md) for original downloads,
+explicit optional Harvard profiles, source representation corrections, and
+provider limits. The 162 private datasets retain their protected access rules.
 
 [`catalog/integration_validation.json`](../catalog/integration_validation.json)
-records the local round-trip checks for all 297 datasets, with zero failed
-datasets. The Python suite passes 272 tests; single-source and six-source
-`to_nirs4all()` bridge checks also pass. The live origin health report records
-HTTP 403 for the Lake Fire EcoSIS source; its supplied local tables remain
-available.
+records the historical 0.3.12 local round-trip checks for all 297 standardized
+bundles. Those checks verify the supplied tables; they are not evidence of a
+fresh public download. Original-source validation is recorded separately in
+[`catalog/public_origin_validation.json`](../catalog/public_origin_validation.json).
 
 The audited snapshot is the CIRAD [NIRS DB v2.0 folder](https://ciradfr-my.sharepoint.com/personal/denis_cornet_cirad_fr/Documents/NIRS%20DB/v2.0), synchronized locally for this integration. The folder may require CIRAD authorization; these files are not republished here. Dataset availability and permitted use remain governed by the source and individual catalog descriptors.
 
 [`catalog/source_audit.json`](../catalog/source_audit.json) inventories all 297 standardized leaves. It records 133 IDs absent from baseline commit `e68d1befb6cb8245799e83d4b4e4c41e66287689`, relative leaf names, card and script fingerprints, table filenames, sizes, SHA-256 fingerprints and structural header details. It contains no table values or machine-specific paths. A leaf's presence establishes that a standardized bundle was supplied; it does not establish that its original raw source is downloadable or reproducible.
 
-All 297 leaves contain `source_to_standard.py`. Static inspection finds 255 scripts referencing 50 distinct `convert_*.py` files absent from the supplied source tree. The audit lists each reference and each missing filename. This is a filename-based dependency inventory, not execution or a complete analysis of Python imports. The other 42 scripts are not thereby certified self-contained. The locally available standardized tables remain importable subject to their format and rights, but these missing files prevent independently reconstructing the affected standardized bundles from their original raw sources with the supplied wrappers. No wrapper is executed automatically.
+All 297 leaves contain `source_to_standard.py`. Static inspection finds 255 scripts referencing 50 distinct `convert_*.py` files absent from the supplied source tree. The audit lists each reference and each missing filename. This is a filename-based dependency inventory, not execution or a complete analysis of Python imports. The other 42 scripts are not thereby certified self-contained. The locally available standardized tables remain importable subject to their format and rights, and the supplied wrappers alone cannot reconstruct those affected bundles. Public-origin recipes shipped in 0.3.13 replace the missing wrappers with explicit acquisition and assembly using existing readers. No wrapper is executed automatically.
 
 The inventory also identifies 116 nonempty `Y.csv` tables without an
 `observation_id` header. Import retains their paired X/Y/M layout only when

@@ -13,8 +13,8 @@ this page only summarizes
 the catalog-specific flows.
 
 For the current source train, public release is fail-closed on the exact contract in
-[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.12 consumes
-Formats 0.2.11 and IO 0.2.6. This integrated main train differs from the immutable
+[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.13 consumes
+Formats 0.2.12 and IO 0.2.6. This integrated main train differs from the immutable
 `v0.3.10` tag at `007d7aaf`, whose existing artifacts retain Formats 0.2.9 / IO 0.1.12.
 Publishing the refreshed dependency train requires a new package version and an
 updated contract; it does not replace those existing artifacts. Run the offline
@@ -31,7 +31,7 @@ python scripts/check_release_train.py --release --check-registry
 ```
 
 This second command must stay **HOLD** until the upstream crates are published
-in order (DMD 0.2.13, Formats 0.2.11, then IO 0.2.6). Local sibling/path builds
+in order (DMD 0.2.13, Formats 0.2.12, then IO 0.2.6). Local sibling/path builds
 are useful qualification evidence but cannot
 prove that a released wheel, crate, or source package resolves from public
 registries.
