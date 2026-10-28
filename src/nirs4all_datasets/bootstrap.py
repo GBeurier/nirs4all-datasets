@@ -14,6 +14,7 @@ raw bytes have already been converted upstream by each package's ``source_to_sta
 """
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import re
@@ -37,6 +38,7 @@ from nirs4all_datasets.schema import (
     OriginSource,
     Provenance,
     PublicationRef,
+    SignalType,
     Source,
     SourceAccess,
     SourceKind,
@@ -192,11 +194,25 @@ def _dir_fingerprint(path: Path) -> str:
 def _v2_axis_unit(block: dict[str, Any]) -> AxisUnit:
     """Map one v2.0 spectral block's ``axis_unit`` onto our enum (only nm/cm-1 are representable)."""
     unit = str(block.get("axis_unit") or "").strip().lower()
-    if "cm-1" in unit or "wavenumber" in unit:
+    if "cm-1" in unit or "cm^-1" in unit or "wavenumber" in unit:
         return AxisUnit.WAVENUMBER
     if unit in ("nm", "nanometer", "nanometers") or "wavelength (nm)" in unit:
         return AxisUnit.WAVELENGTH
+    if unit == "index":
+        return AxisUnit.INDEX
     return AxisUnit.NONE  # micrometers / unknown -> not representable; declared honestly as none
+
+
+def _v2_signal_type(block: dict[str, Any]) -> SignalType:
+    signal = str(block.get("signal_type") or block.get("spectral_signal") or "").lower()
+    if "absorbance" in signal:
+        return SignalType.ABSORBANCE
+    percent = "percent" in signal or "%" in signal
+    if "reflectance" in signal:
+        return SignalType.REFLECTANCE_PERCENT if percent else SignalType.REFLECTANCE
+    if "transmittance" in signal or "transmittence" in signal:
+        return SignalType.TRANSMITTANCE_PERCENT if percent else SignalType.TRANSMITTANCE
+    return SignalType.AUTO
 
 
 def _v2_modality(spectroscopy_type: Any) -> Modality:
@@ -244,7 +260,7 @@ def _v2_numeric_columns(y_path: Path, sample_rows: int = 80, *, default_numeric:
 
 
 def find_v2_leaves(source_root: str | Path) -> list[Path]:
-    """v2.0 standardized leaves: dirs under ``v2.0/`` holding a ``dataset_card.json`` + ``Y.csv``.
+    """v2.0 standardized leaves: dirs under ``v2.0/`` holding a ``dataset_card.json``.
 
     Each is a Frictionless-style package (machine-readable card declaring targets/sources/license), so
     the descriptor is authored from the card -- no free-text guessing.
@@ -252,7 +268,7 @@ def find_v2_leaves(source_root: str | Path) -> list[Path]:
     base = Path(source_root) / "v2.0"
     if not base.is_dir():
         return []
-    return sorted(d for d in base.iterdir() if d.is_dir() and (d / "dataset_card.json").exists() and (d / "Y.csv").exists())
+    return sorted(d for d in base.iterdir() if d.is_dir() and (d / "dataset_card.json").exists())
 
 
 def _csv_header(path: Path) -> list[str]:
@@ -260,13 +276,95 @@ def _csv_header(path: Path) -> list[str]:
     if not path.exists() or path.stat().st_size == 0:
         return []
     try:
-        line = path.open("r", encoding="utf-8", errors="replace").readline().strip()
+        line = path.open("r", encoding="utf-8", errors="replace").readline().rstrip("\r\n")
     except OSError:
         return []
     if not line:
         return []
     delim = ";" if line.count(";") >= line.count(",") else ","
-    return [h.strip().strip('"').strip("'") for h in line.split(delim)]
+    return next(csv.reader([line], delimiter=delim))
+
+
+def _metadata_aliases(leaf_dir: Path) -> dict[str, str]:
+    """Name overlapping M columns that differ from their Y counterparts without discarding either.
+
+    Compare the original strings, aligning keyed Y to M by observation ID. If alignment cannot be
+    established, retain both columns conservatively. Aliases never shadow an existing input column.
+    """
+    y_path, m_path = leaf_dir / "Y.csv", leaf_dir / "M.csv"
+    y_header, m_header = _csv_header(y_path), _csv_header(m_path)
+    overlaps = [c for c in m_header if c in y_header and c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not c.startswith("source_")]
+    if not overlaps:
+        return {}
+    import pandas as pd
+
+    y = pd.read_csv(y_path, sep=";", dtype=str, usecols=lambda c: c in overlaps or c == "observation_id")
+    m = pd.read_csv(m_path, sep=";", dtype=str, usecols=lambda c: c in overlaps or c == "observation_id")
+    if "observation_id" in y and "observation_id" in m and y["observation_id"].is_unique and m["observation_id"].is_unique:
+        y, m = y.set_index("observation_id").align(m.set_index("observation_id"), join="outer", axis=0)
+    elif len(y) != len(m) or "observation_id" in y:
+        # No reliable comparison: preserve all potentially distinct values.
+        y = y.iloc[:0]
+    used = set(y_header) | set(m_header)
+    aliases: dict[str, str] = {}
+    for col in overlaps:
+        if len(y) == len(m) and y[col].fillna("").equals(m[col].fillna("")):
+            continue
+        base = f"metadata_{col}"
+        alias, suffix = base, 2
+        while alias in used:
+            alias = f"{base}_{suffix}"
+            suffix += 1
+        aliases[col] = alias
+        used.add(alias)
+    return aliases
+
+
+def _original_sample_alias(leaf_dir: Path) -> str:
+    """Choose a non-colliding metadata name for an original sample key."""
+    used = set(_csv_header(leaf_dir / "M.csv")) | set(_csv_header(leaf_dir / "Y.csv"))
+    name, suffix = "original_sample_id", 2
+    while name in used:
+        name = f"original_sample_id_{suffix}"
+        suffix += 1
+    return name
+
+
+def _sample_conflicts(leaf_dir: Path) -> list[str]:
+    """Find observation-varying values that cannot be represented once per source sample ID."""
+    m_path = leaf_dir / "M.csv"
+    header = _csv_header(m_path)
+    if "observation_id" not in header or "sample_id" not in header:
+        return []
+    import pandas as pd
+
+    keys = pd.read_csv(m_path, sep=";", dtype=str, usecols=["observation_id", "sample_id"])
+    repeated = keys["sample_id"].notna() & keys["sample_id"].duplicated(keep=False)
+    if not repeated.any():
+        return []
+    m = pd.read_csv(m_path, sep=";", dtype=str)
+    cols = [c for c in m.columns if c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not c.startswith("source_")]
+    if "split_original" in m.columns:
+        cols.append("split_original")
+    data = m.loc[repeated, ["sample_id", *cols]]
+    counts = data.groupby("sample_id", sort=False)[cols].nunique(dropna=True)
+    conflicts = [str(c) for c in counts.columns if (counts[c] > 1).any()]
+
+    y_path = leaf_dir / "Y.csv"
+    if y_path.exists() and _csv_header(y_path):
+        y = pd.read_csv(y_path, sep=";", dtype=str)
+        if "observation_id" in y.columns and keys["observation_id"].is_unique:
+            y = y.drop(columns=["sample_id"], errors="ignore").merge(keys, on="observation_id", how="left")
+        elif "observation_id" not in y.columns and len(y) == len(keys):
+            # The source provenance separately records the unverified paired-row assumption.
+            y["sample_id"] = keys["sample_id"]
+        else:
+            return conflicts
+        targets = [c for c in y.columns if c not in _ID_COLUMNS]
+        if targets:
+            counts = y.groupby("sample_id", sort=False)[targets].nunique(dropna=True)
+            conflicts.extend(str(c) for c in counts.columns if (counts[c] > 1).any() and c not in conflicts)
+    return conflicts
 
 
 def _open_spdx(card: dict[str, Any]) -> str | None:
@@ -289,6 +387,9 @@ def _open_spdx(card: dict[str, Any]) -> str | None:
     )
     if not haystack.strip():
         return None
+    # A generic CC-BY substring also occurs in restricted NC/ND variants; never classify those as open.
+    if re.search(r"(?:^|[^a-z])(?:non[ -]?commercial|no[ -]?derivatives|by[- /](?:nc|nd))(?:[^a-z]|$)", haystack):
+        return None
     for token, spdx in _OPEN_LICENSE_HINTS:
         if token in haystack:
             return spdx if spdx in _OPEN_LICENSES else None
@@ -300,16 +401,23 @@ def _build_sources(card: dict[str, Any], warnings: list[str]) -> list[Source]:
     blocks = card.get("spectral_blocks") or []
     sources: list[Source] = []
     for block in blocks:
-        block_id = str(block.get("block_id") or "X").strip() or "X"
+        block_id = str(block.get("block_id") or Path(str(block.get("x_file") or "X.csv")).stem).strip() or "X"
+        native_unit = str(block.get("axis_unit") or "").strip()
+        if native_unit.lower() in {"um", "µm", "μm"} or "micrometer" in native_unit.lower() or "micrometre" in native_unit.lower():
+            warnings.append(
+                f"{block_id}: native axis unit is {native_unit!r} (micrometers), which is not supported by the axis unit enum; "
+                "axis values remain in micrometers. Multiply by 1000 to convert to nm."
+            )
         n_rows = block.get("n_rows")
         n_vars = block.get("n_spectral_variables")
         sources.append(
             Source(
                 source_id=block_id,
                 name=str(block.get("block_name")) if block.get("block_name") else None,
-                instrument_name=str(block.get("instrument_name")) if block.get("instrument_name") else None,
+                instrument_name=str(block.get("instrument_name") or block.get("instrument")) if block.get("instrument_name") or block.get("instrument") else None,
                 modality=_v2_modality(block.get("spectroscopy_type") or card.get("spectral_data_summary", {}).get("spectroscopy_type")),
                 axis_unit=_v2_axis_unit(block),
+                signal_type=_v2_signal_type(block),
                 axis_min=_to_float(block.get("axis_min")),
                 axis_max=_to_float(block.get("axis_max")),
                 axis_resolution=_to_float(block.get("axis_resolution")),
@@ -358,21 +466,25 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
         seen.add(name)
         variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name)))
 
-    m_header = set(_csv_header(leaf_dir / "M.csv"))
-    m_fields = [str(f) for f in ((card.get("metadata_fields_summary") or {}).get("m_fields") or [])]
+    m_header = _csv_header(leaf_dir / "M.csv")
+    aliases = _metadata_aliases(leaf_dir)
+    metadata_summary = card.get("metadata_fields_summary") or {}
+    declared_fields = metadata_summary.get("m_fields") or [] if isinstance(metadata_summary, dict) else []
+    m_fields = list(dict.fromkeys([str(f) for f in declared_fields] + m_header))
     for name in m_fields:
         # Only declare a metadata variable that is actually a column in M.csv (no phantom "absent" vars);
         # skip id/structural plumbing + the standardization script's source_* provenance-tracking columns.
-        if name in _ID_COLUMNS or name in _M_STRUCTURAL or name in seen or name.startswith("source_"):
+        if name in _ID_COLUMNS or name in _M_STRUCTURAL or (name in seen and name not in aliases) or name.startswith("source_"):
             continue
         if name not in m_header:  # a metadata variable must be a real M.csv column (none if M.csv is absent)
             continue
-        seen.add(name)
+        output_name = aliases.get(name, name)
+        seen.add(output_name)
         if _CLF_NAME_RE.search(_norm_tokens(name)):
             vtype = VarType.CATEGORICAL
         else:
             vtype = VarType.NUMERIC if m_numeric.get(_norm_key(name)) is True else VarType.CATEGORICAL
-        variables.append(Variable(name=name, role=VariableRole.METADATA, type=vtype))
+        variables.append(Variable(name=output_name, role=VariableRole.METADATA, type=vtype))
     return variables
 
 
@@ -391,7 +503,9 @@ def _harvest_origins(card: dict[str, Any], leaf_dir: Path, warnings: list[str]) 
     seen_doi: set[str] = set()
 
     candidates: list[Any] = [e.get("url") for e in (card.get("detected_sources") or []) if isinstance(e, dict) and e.get("url")]
-    candidates.append((card.get("source_summary") or {}).get("source_url"))
+    source_summary = card.get("source_summary") or {}
+    if isinstance(source_summary, dict):
+        candidates.append(source_summary.get("source_url"))
     official = card.get("official_source") or {}
     for key in ("download_urls", "landing_urls", "urls", "doi", "download_page", "landing_page", "source_page", "url"):
         value = official.get(key)
@@ -442,7 +556,7 @@ def _public_release_allowed(card: dict[str, Any]) -> bool:
     """Whether the card permits public redistribution (``license_summary`` or ``rights`` block)."""
     lic = card.get("license_summary") or {}
     rights = card.get("rights") or {}
-    return bool(lic.get("public_release_allowed", rights.get("public_release_allowed", False)))
+    return lic.get("public_release_allowed", rights.get("public_release_allowed", False)) is True
 
 
 def _build_governance(card: dict[str, Any], source_name: str, license_spdx: str | None, public_ok: bool) -> Governance:
@@ -477,15 +591,33 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
     sources = _build_sources(card, warnings)
     variables = _build_variables(card, leaf_dir)
 
+    y_header = _csv_header(leaf_dir / "Y.csv")
+    if y_header and "observation_id" not in y_header:
+        warnings.append("Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.")
+
     org = card.get("spectral_organization") or {}
     raw_level = str(org.get("alignment_level") or "observation").strip().lower()
     alignment_level = AlignmentLevel.SAMPLE if raw_level == "sample" else AlignmentLevel.OBSERVATION
 
     m_header = _csv_header(leaf_dir / "M.csv")
     sample_id_available = "sample_id" in m_header
-    ids = IdentitySpec(sample_id_available=sample_id_available)
+    conflicts = _sample_conflicts(leaf_dir) if sample_id_available else []
+    if conflicts:
+        original_name = _original_sample_alias(leaf_dir)
+        variables.append(Variable(name=original_name, role=VariableRole.METADATA, type=VarType.CATEGORICAL))
+        warnings.append(
+            f"Observation identity is used as the canonical join key because source sample_id has differing per-observation values in {', '.join(conflicts)}. "
+            f"The original physical-sample key is preserved as metadata {original_name!r}; sample grouping must use that field."
+        )
+        ids = IdentitySpec(sample_id="observation_id", sample_id_available=False)
+        # Separate multi-source blocks may have different observation IDs or counts.
+        alignment_level = AlignmentLevel.SAMPLE if len(sources) > 1 else AlignmentLevel.OBSERVATION
+    else:
+        ids = IdentitySpec(sample_id_available=sample_id_available)
 
     split_summary = card.get("split_summary") or {}
+    if not isinstance(split_summary, dict):
+        split_summary = {}
     splits: list[SplitRef] = []
     if split_summary.get("original_split_available"):
         splits = [SplitRef(name="original", kind="train_test", applied=False, documented_origin=str(split_summary.get("notes")) if split_summary.get("notes") else None)]
@@ -494,12 +626,13 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
     license_spdx = _open_spdx(card)
     tier = Tier.PUBLIC if (public_ok and license_spdx is not None) else Tier.PRIVATE
 
-    source_name = str((card.get("source_summary") or {}).get("source_name") or "NIRS DB v2.0 collection")
+    source_summary = card.get("source_summary") or {}
+    source_name = str((source_summary.get("source_name") if isinstance(source_summary, dict) else source_summary) or "NIRS DB v2.0 collection")
     governance = _build_governance(card, source_name, license_spdx, public_ok)
     origins, publications = _harvest_origins(card, leaf_dir, warnings)
 
     repro = card.get("reproducibility_assessment") or {}
-    reproducibility = {str(k): str(v) for k, v in repro.items() if v is not None}
+    reproducibility = {str(k): str(v) for k, v in repro.items() if v is not None} if isinstance(repro, dict) else {"assessment": str(repro)}
 
     n_targets = sum(1 for v in variables if v.role is VariableRole.TARGET)
     family = slugify(did.split("_")[0]) or None
@@ -587,6 +720,13 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, force: bool 
             if not (old.generation and old.generation.managed) and not force:
                 report["skipped"].append({"id": did, "reason": "human-managed (generation.managed not set)"})
                 continue
+            # These fields are maintained by the acquisition/publication workflows, not the v2 card.
+            # Preserve them even on a forced refresh, before deciding whether metadata changed.
+            descriptor.retrieval = old.retrieval
+            descriptor.dataverse = old.dataverse
+            descriptor.versions = old.versions
+            if old.retrieval.routes and old.reproducibility.get("notes"):
+                descriptor.reproducibility["notes"] = old.reproducibility["notes"]
             if not force and metadata_hash(old) == metadata_hash(descriptor):
                 report["skipped"].append({"id": did, "reason": "unchanged"})
                 continue

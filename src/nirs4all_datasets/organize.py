@@ -14,7 +14,7 @@ from pathlib import Path
 
 from nirs4all_datasets.canonical import CONVERTER_NAME, CONVERTER_VERSION, CanonicalResult, build_canonical
 from nirs4all_datasets.manifest import build_manifest, needs_rebuild, read_manifest, write_manifest
-from nirs4all_datasets.schema import DatasetDescriptor
+from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor, Tier
 
 
 @dataclass
@@ -27,6 +27,8 @@ class OrganizeResult:
     skipped: bool
     reasons: list[str] = field(default_factory=list)
     canonical_result: CanonicalResult | None = None
+    conversion_status: ConversionStatus | None = None
+    conversion_warnings: list[str] = field(default_factory=list)
 
 
 def _place_raw(source: Path, dataset_dir: Path) -> list[Path]:
@@ -95,7 +97,7 @@ def organize(
         verify_outputs=True,
     )
     if previous is not None and not changed and not force:
-        return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True)
+        return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True, conversion_status=previous.conversion_status, conversion_warnings=previous.conversion_warnings)
 
     placed = _place_raw(source, dataset_dir)
     result = build_canonical(source, descriptor, dataset_dir)
@@ -107,6 +109,16 @@ def organize(
         converter_config={},
         row_counts=result.row_counts,
         raw_files=placed,
+        conversion_status=result.status,
+        # Manifests are tracked/public; anonymized warnings can identify variables.
+        conversion_warnings=(
+            ["conversion warning details withheld for anonymized dataset"] * len(result.warnings)
+            if descriptor.tier is Tier.ANONYMIZED else result.warnings
+        ),
     )
     write_manifest(manifest, manifest_path)
-    return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=False, reasons=reasons, canonical_result=result)
+    if result.status is ConversionStatus.FAILED:
+        # A card from an earlier successful conversion must not represent this failed output.
+        for name in ("card.json", "card.md", "croissant.json", "card.anon.json"):
+            (dataset_dir / name).unlink(missing_ok=True)
+    return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=False, reasons=reasons, canonical_result=result, conversion_status=result.status, conversion_warnings=result.warnings)

@@ -1,0 +1,1803 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Grassland Hyspex spectra and plant species data. v2.0 standardized NIRS package: 1 spectral source(s), 100 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X",
+      "sha256": "f95cb2775429e1e1559ac1abdcadca286f1069c12fd43a0156fd3c4293b142bc"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "d980747a636e1cc770dce7292b1bc075a30cc6358205f197623aad4851763227"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "dryad"
+  ],
+  "license": "CC0-1.0",
+  "name": "dryad_grassland_hyspex_species_manual",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X' (104 observations x 317 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Achi.mill",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Achi.mill' (role target, type numeric).",
+          "name": "Achi.mill",
+          "source": {
+            "extract": {
+              "column": "Achi.mill"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Agri.eupa",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Agri.eupa' (role target, type numeric).",
+          "name": "Agri.eupa",
+          "source": {
+            "extract": {
+              "column": "Agri.eupa"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Agro.capi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Agro.capi' (role target, type numeric).",
+          "name": "Agro.capi",
+          "source": {
+            "extract": {
+              "column": "Agro.capi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Agro.vine",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Agro.vine' (role target, type numeric).",
+          "name": "Agro.vine",
+          "source": {
+            "extract": {
+              "column": "Agro.vine"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Anth.odor",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Anth.odor' (role target, type numeric).",
+          "name": "Anth.odor",
+          "source": {
+            "extract": {
+              "column": "Anth.odor"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Anth.vuln",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Anth.vuln' (role target, type numeric).",
+          "name": "Anth.vuln",
+          "source": {
+            "extract": {
+              "column": "Anth.vuln"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Apha.arve",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Apha.arve' (role target, type numeric).",
+          "name": "Apha.arve",
+          "source": {
+            "extract": {
+              "column": "Apha.arve"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Arab.thal",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Arab.thal' (role target, type numeric).",
+          "name": "Arab.thal",
+          "source": {
+            "extract": {
+              "column": "Arab.thal"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Arab.hirs",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Arab.hirs' (role target, type numeric).",
+          "name": "Arab.hirs",
+          "source": {
+            "extract": {
+              "column": "Arab.hirs"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Arrh.elat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Arrh.elat' (role target, type numeric).",
+          "name": "Arrh.elat",
+          "source": {
+            "extract": {
+              "column": "Arrh.elat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Arte.absi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Arte.absi' (role target, type numeric).",
+          "name": "Arte.absi",
+          "source": {
+            "extract": {
+              "column": "Arte.absi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Aspe.tinc",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Aspe.tinc' (role target, type numeric).",
+          "name": "Aspe.tinc",
+          "source": {
+            "extract": {
+              "column": "Aspe.tinc"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Bell.pere",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Bell.pere' (role target, type numeric).",
+          "name": "Bell.pere",
+          "source": {
+            "extract": {
+              "column": "Bell.pere"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Briz.medi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Briz.medi' (role target, type numeric).",
+          "name": "Briz.medi",
+          "source": {
+            "extract": {
+              "column": "Briz.medi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Brom.erec",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Brom.erec' (role target, type numeric).",
+          "name": "Brom.erec",
+          "source": {
+            "extract": {
+              "column": "Brom.erec"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Brom.hord",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Brom.hord' (role target, type numeric).",
+          "name": "Brom.hord",
+          "source": {
+            "extract": {
+              "column": "Brom.hord"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Camp.pers",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Camp.pers' (role target, type numeric).",
+          "name": "Camp.pers",
+          "source": {
+            "extract": {
+              "column": "Camp.pers"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Camp.rotu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Camp.rotu' (role target, type numeric).",
+          "name": "Camp.rotu",
+          "source": {
+            "extract": {
+              "column": "Camp.rotu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Caps.burs",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Caps.burs' (role target, type numeric).",
+          "name": "Caps.burs",
+          "source": {
+            "extract": {
+              "column": "Caps.burs"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Care.flac",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Care.flac' (role target, type numeric).",
+          "name": "Care.flac",
+          "source": {
+            "extract": {
+              "column": "Care.flac"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Care.sylv",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Care.sylv' (role target, type numeric).",
+          "name": "Care.sylv",
+          "source": {
+            "extract": {
+              "column": "Care.sylv"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cent.jace",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cent.jace' (role target, type numeric).",
+          "name": "Cent.jace",
+          "source": {
+            "extract": {
+              "column": "Cent.jace"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cent.scab",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cent.scab' (role target, type numeric).",
+          "name": "Cent.scab",
+          "source": {
+            "extract": {
+              "column": "Cent.scab"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cich.inty",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cich.inty' (role target, type numeric).",
+          "name": "Cich.inty",
+          "source": {
+            "extract": {
+              "column": "Cich.inty"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cirs.acau",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cirs.acau' (role target, type numeric).",
+          "name": "Cirs.acau",
+          "source": {
+            "extract": {
+              "column": "Cirs.acau"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cirs.arve",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cirs.arve' (role target, type numeric).",
+          "name": "Cirs.arve",
+          "source": {
+            "extract": {
+              "column": "Cirs.arve"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cirs.vulg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cirs.vulg' (role target, type numeric).",
+          "name": "Cirs.vulg",
+          "source": {
+            "extract": {
+              "column": "Cirs.vulg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Conv.arve",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Conv.arve' (role target, type numeric).",
+          "name": "Conv.arve",
+          "source": {
+            "extract": {
+              "column": "Conv.arve"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Cyno.cris",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Cyno.cris' (role target, type numeric).",
+          "name": "Cyno.cris",
+          "source": {
+            "extract": {
+              "column": "Cyno.cris"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dact.glom",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dact.glom' (role target, type numeric).",
+          "name": "Dact.glom",
+          "source": {
+            "extract": {
+              "column": "Dact.glom"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dauc.caro",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dauc.caro' (role target, type numeric).",
+          "name": "Dauc.caro",
+          "source": {
+            "extract": {
+              "column": "Dauc.caro"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dian.delt",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dian.delt' (role target, type numeric).",
+          "name": "Dian.delt",
+          "source": {
+            "extract": {
+              "column": "Dian.delt"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Drab.mura",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Drab.mura' (role target, type numeric).",
+          "name": "Drab.mura",
+          "source": {
+            "extract": {
+              "column": "Drab.mura"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Elyt.repe",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Elyt.repe' (role target, type numeric).",
+          "name": "Elyt.repe",
+          "source": {
+            "extract": {
+              "column": "Elyt.repe"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Erod.cicu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Erod.cicu' (role target, type numeric).",
+          "name": "Erod.cicu",
+          "source": {
+            "extract": {
+              "column": "Erod.cicu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Erop.vern",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Erop.vern' (role target, type numeric).",
+          "name": "Erop.vern",
+          "source": {
+            "extract": {
+              "column": "Erop.vern"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fest.ovin",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fest.ovin' (role target, type numeric).",
+          "name": "Fest.ovin",
+          "source": {
+            "extract": {
+              "column": "Fest.ovin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fest.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fest.prat' (role target, type numeric).",
+          "name": "Fest.prat",
+          "source": {
+            "extract": {
+              "column": "Fest.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fest.rubr",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fest.rubr' (role target, type numeric).",
+          "name": "Fest.rubr",
+          "source": {
+            "extract": {
+              "column": "Fest.rubr"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Fili.vulg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fili.vulg' (role target, type numeric).",
+          "name": "Fili.vulg",
+          "source": {
+            "extract": {
+              "column": "Fili.vulg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gali.albu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Gali.albu' (role target, type numeric).",
+          "name": "Gali.albu",
+          "source": {
+            "extract": {
+              "column": "Gali.albu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gali.bore",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Gali.bore' (role target, type numeric).",
+          "name": "Gali.bore",
+          "source": {
+            "extract": {
+              "column": "Gali.bore"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gali.veru",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Gali.veru' (role target, type numeric).",
+          "name": "Gali.veru",
+          "source": {
+            "extract": {
+              "column": "Gali.veru"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gera.colu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Gera.colu' (role target, type numeric).",
+          "name": "Gera.colu",
+          "source": {
+            "extract": {
+              "column": "Gera.colu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Gera.moll",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Gera.moll' (role target, type numeric).",
+          "name": "Gera.moll",
+          "source": {
+            "extract": {
+              "column": "Gera.moll"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Geum.urba",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Geum.urba' (role target, type numeric).",
+          "name": "Geum.urba",
+          "source": {
+            "extract": {
+              "column": "Geum.urba"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Heli.numm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Heli.numm' (role target, type numeric).",
+          "name": "Heli.numm",
+          "source": {
+            "extract": {
+              "column": "Heli.numm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Heli.oela",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Heli.oela' (role target, type numeric).",
+          "name": "Heli.oela",
+          "source": {
+            "extract": {
+              "column": "Heli.oela"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Heli.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Heli.prat' (role target, type numeric).",
+          "name": "Heli.prat",
+          "source": {
+            "extract": {
+              "column": "Heli.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Heli.pube",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Heli.pube' (role target, type numeric).",
+          "name": "Heli.pube",
+          "source": {
+            "extract": {
+              "column": "Heli.pube"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Hype.perf",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Hype.perf' (role target, type numeric).",
+          "name": "Hype.perf",
+          "source": {
+            "extract": {
+              "column": "Hype.perf"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Hypo.radi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Hypo.radi' (role target, type numeric).",
+          "name": "Hypo.radi",
+          "source": {
+            "extract": {
+              "column": "Hypo.radi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Knau.arve",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Knau.arve' (role target, type numeric).",
+          "name": "Knau.arve",
+          "source": {
+            "extract": {
+              "column": "Knau.arve"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Leuc.vulg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Leuc.vulg' (role target, type numeric).",
+          "name": "Leuc.vulg",
+          "source": {
+            "extract": {
+              "column": "Leuc.vulg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Linu.cath",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Linu.cath' (role target, type numeric).",
+          "name": "Linu.cath",
+          "source": {
+            "extract": {
+              "column": "Linu.cath"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Loli.pere",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Loli.pere' (role target, type numeric).",
+          "name": "Loli.pere",
+          "source": {
+            "extract": {
+              "column": "Loli.pere"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Lotu.corn",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Lotu.corn' (role target, type numeric).",
+          "name": "Lotu.corn",
+          "source": {
+            "extract": {
+              "column": "Lotu.corn"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Luzu.camp",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Luzu.camp' (role target, type numeric).",
+          "name": "Luzu.camp",
+          "source": {
+            "extract": {
+              "column": "Luzu.camp"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Medi.lupu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Medi.lupu' (role target, type numeric).",
+          "name": "Medi.lupu",
+          "source": {
+            "extract": {
+              "column": "Medi.lupu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Oxyt.camp",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Oxyt.camp' (role target, type numeric).",
+          "name": "Oxyt.camp",
+          "source": {
+            "extract": {
+              "column": "Oxyt.camp"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phle.phle",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Phle.phle' (role target, type numeric).",
+          "name": "Phle.phle",
+          "source": {
+            "extract": {
+              "column": "Phle.phle"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phle.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Phle.prat' (role target, type numeric).",
+          "name": "Phle.prat",
+          "source": {
+            "extract": {
+              "column": "Phle.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Plan.lanc",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Plan.lanc' (role target, type numeric).",
+          "name": "Plan.lanc",
+          "source": {
+            "extract": {
+              "column": "Plan.lanc"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Plan.majo",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Plan.majo' (role target, type numeric).",
+          "name": "Plan.majo",
+          "source": {
+            "extract": {
+              "column": "Plan.majo"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Poa.annu",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Poa.annu' (role target, type numeric).",
+          "name": "Poa.annu",
+          "source": {
+            "extract": {
+              "column": "Poa.annu"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Poa.comp",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Poa.comp' (role target, type numeric).",
+          "name": "Poa.comp",
+          "source": {
+            "extract": {
+              "column": "Poa.comp"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Poly.como",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Poly.como' (role target, type numeric).",
+          "name": "Poly.como",
+          "source": {
+            "extract": {
+              "column": "Poly.como"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Poly.vulg",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Poly.vulg' (role target, type numeric).",
+          "name": "Poly.vulg",
+          "source": {
+            "extract": {
+              "column": "Poly.vulg"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Poly.avic",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Poly.avic' (role target, type numeric).",
+          "name": "Poly.avic",
+          "source": {
+            "extract": {
+              "column": "Poly.avic"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Pote.arge",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Pote.arge' (role target, type numeric).",
+          "name": "Pote.arge",
+          "source": {
+            "extract": {
+              "column": "Pote.arge"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Pote.rept",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Pote.rept' (role target, type numeric).",
+          "name": "Pote.rept",
+          "source": {
+            "extract": {
+              "column": "Pote.rept"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Pote.tabe",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Pote.tabe' (role target, type numeric).",
+          "name": "Pote.tabe",
+          "source": {
+            "extract": {
+              "column": "Pote.tabe"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Prim.veri",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Prim.veri' (role target, type numeric).",
+          "name": "Prim.veri",
+          "source": {
+            "extract": {
+              "column": "Prim.veri"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Puls.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Puls.prat' (role target, type numeric).",
+          "name": "Puls.prat",
+          "source": {
+            "extract": {
+              "column": "Puls.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ranu.acri",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ranu.acri' (role target, type numeric).",
+          "name": "Ranu.acri",
+          "source": {
+            "extract": {
+              "column": "Ranu.acri"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ranu.bulb",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ranu.bulb' (role target, type numeric).",
+          "name": "Ranu.bulb",
+          "source": {
+            "extract": {
+              "column": "Ranu.bulb"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ranu.repe",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ranu.repe' (role target, type numeric).",
+          "name": "Ranu.repe",
+          "source": {
+            "extract": {
+              "column": "Ranu.repe"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Rume.acet",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Rume.acet' (role target, type numeric).",
+          "name": "Rume.acet",
+          "source": {
+            "extract": {
+              "column": "Rume.acet"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Rume.acel",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Rume.acel' (role target, type numeric).",
+          "name": "Rume.acel",
+          "source": {
+            "extract": {
+              "column": "Rume.acel"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Sang.mino",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Sang.mino' (role target, type numeric).",
+          "name": "Sang.mino",
+          "source": {
+            "extract": {
+              "column": "Sang.mino"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Satu.acin",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Satu.acin' (role target, type numeric).",
+          "name": "Satu.acin",
+          "source": {
+            "extract": {
+              "column": "Satu.acin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Saxi.gran",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Saxi.gran' (role target, type numeric).",
+          "name": "Saxi.gran",
+          "source": {
+            "extract": {
+              "column": "Saxi.gran"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Sedu.acre",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Sedu.acre' (role target, type numeric).",
+          "name": "Sedu.acre",
+          "source": {
+            "extract": {
+              "column": "Sedu.acre"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Sene.jaco",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Sene.jaco' (role target, type numeric).",
+          "name": "Sene.jaco",
+          "source": {
+            "extract": {
+              "column": "Sene.jaco"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Sesl.caer",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Sesl.caer' (role target, type numeric).",
+          "name": "Sesl.caer",
+          "source": {
+            "extract": {
+              "column": "Sesl.caer"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Stel.medi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Stel.medi' (role target, type numeric).",
+          "name": "Stel.medi",
+          "source": {
+            "extract": {
+              "column": "Stel.medi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Thym.serp",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Thym.serp' (role target, type numeric).",
+          "name": "Thym.serp",
+          "source": {
+            "extract": {
+              "column": "Thym.serp"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Trag.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Trag.prat' (role target, type numeric).",
+          "name": "Trag.prat",
+          "source": {
+            "extract": {
+              "column": "Trag.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Trif.arve",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Trif.arve' (role target, type numeric).",
+          "name": "Trif.arve",
+          "source": {
+            "extract": {
+              "column": "Trif.arve"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Trif.prat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Trif.prat' (role target, type numeric).",
+          "name": "Trif.prat",
+          "source": {
+            "extract": {
+              "column": "Trif.prat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Trif.repe",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Trif.repe' (role target, type numeric).",
+          "name": "Trif.repe",
+          "source": {
+            "extract": {
+              "column": "Trif.repe"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vero.cham",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vero.cham' (role target, type numeric).",
+          "name": "Vero.cham",
+          "source": {
+            "extract": {
+              "column": "Vero.cham"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vero.offi",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vero.offi' (role target, type numeric).",
+          "name": "Vero.offi",
+          "source": {
+            "extract": {
+              "column": "Vero.offi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vero.serp",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vero.serp' (role target, type numeric).",
+          "name": "Vero.serp",
+          "source": {
+            "extract": {
+              "column": "Vero.serp"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vero.spic",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vero.spic' (role target, type numeric).",
+          "name": "Vero.spic",
+          "source": {
+            "extract": {
+              "column": "Vero.spic"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vici.sati.sat",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vici.sati.sat' (role target, type numeric).",
+          "name": "Vici.sati.sat",
+          "source": {
+            "extract": {
+              "column": "Vici.sati.sat"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vici.crac",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vici.crac' (role target, type numeric).",
+          "name": "Vici.crac",
+          "source": {
+            "extract": {
+              "column": "Vici.crac"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vici.hirs",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vici.hirs' (role target, type numeric).",
+          "name": "Vici.hirs",
+          "source": {
+            "extract": {
+              "column": "Vici.hirs"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Vici.tetr",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Vici.tetr' (role target, type numeric).",
+          "name": "Vici.tetr",
+          "source": {
+            "extract": {
+              "column": "Vici.tetr"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Viol.hirt",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Viol.hirt' (role target, type numeric).",
+          "name": "Viol.hirt",
+          "source": {
+            "extract": {
+              "column": "Viol.hirt"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/plot_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'plot_id' (role metadata, type categorical).",
+          "name": "plot_id",
+          "source": {
+            "extract": {
+              "column": "plot_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/plot_id_info",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'plot_id_info' (role metadata, type categorical).",
+          "name": "plot_id_info",
+          "source": {
+            "extract": {
+              "column": "plot_id_info"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/site",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'site' (role metadata, type numeric).",
+          "name": "site",
+          "source": {
+            "extract": {
+              "column": "site"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/age",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'age' (role metadata, type categorical).",
+          "name": "age",
+          "source": {
+            "extract": {
+              "column": "age"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/swe99tm_x",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'swe99tm_x' (role metadata, type numeric).",
+          "name": "swe99tm_x",
+          "source": {
+            "extract": {
+              "column": "swe99tm_x"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/swe99tm_y",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'swe99tm_y' (role metadata, type numeric).",
+          "name": "swe99tm_y",
+          "source": {
+            "extract": {
+              "column": "swe99tm_y"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download' (role metadata, type categorical).",
+          "name": "manual_download",
+          "source": {
+            "extract": {
+              "column": "manual_download"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_source_dir",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_source_dir' (role metadata, type categorical).",
+          "name": "manual_download_source_dir",
+          "source": {
+            "extract": {
+              "column": "manual_download_source_dir"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_file",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_file' (role metadata, type categorical).",
+          "name": "manual_download_file",
+          "source": {
+            "extract": {
+              "column": "manual_download_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_source_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_source_url' (role metadata, type categorical).",
+          "name": "official_source_url",
+          "source": {
+            "extract": {
+              "column": "official_source_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/standardization_batch",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'standardization_batch' (role metadata, type categorical).",
+          "name": "standardization_batch",
+          "source": {
+            "extract": {
+              "column": "standardization_batch"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "10.5061/dryad.cfxpnvx9w",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

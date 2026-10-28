@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | RRUFF IR | not consistently available in selected text files | MIR | 399.2–4000 none | 347 | 1868 |
+| X | RRUFF IR | not consistently available in selected text files | MIR | 399.2–4000 cm-1 | 347 | 1868 |
 
 ### Variables (Y / metadata)
 
@@ -35,6 +35,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=347, missing=0, range 4000–4000, mean 4000 ± 4.554e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=347, missing=0, range 1868–1868, mean 1868 ± 0 |
 | sample_description | metadata | categorical | *Not specified.* | n=347, missing=0, classes=321, top White massive (×4) |
+| metadata_chemistry | metadata | categorical | *Not specified.* | n=347, missing=0, classes=342, top (Al_1.99_Fe^3+^_0.01_)Si_1.00_O_5_ (×2) |
 | locality | metadata | categorical | *Not specified.* | n=347, missing=0, classes=288, top unknown (×8) |
 | laser_wavelength | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
 | instrument | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
@@ -85,5 +86,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `b07e3761dc7d27dcedf17fd0053fbcd3705ee5fb1a35f04238af8d9061365b17`
-- **Processing hash:** `fc1426b202e7389694d9c8f5e2186fbcb19122352023b9e93e1608b71ebcb621` | **metadata hash:** `8015fc0db31d043a53ff405733fa60e55557bda0067613fec910df8aabfac4d3`
+- **Content hash:** `d355c36f515c721d54d7fda29cfa8e4f5d371add5996bc98f15683e0f6b897d0`
+- **Processing hash:** `bb8faec1aa868285ce8f5df0fdcd08eb0dee1d38ae3650e79e094bfeb93424ec` | **metadata hash:** `d56a726e8d9cda93c14ed9b831855863d2811b1a4965a4c0a6908a211c5a11d3`

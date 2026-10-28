@@ -108,6 +108,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=40175, missing=0, range 1076–1076, mean 1076 ± 0 |
 | dimensions | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top 1D (×40175) |
 | wavelength_note | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top ossl_visnir_350_2500_nm_step_2 (×40175) |
+| active_status | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top active (×40175) |
+| replaces_dataset_id | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top ossl_regression_743303ac \| ossl_soil_clay_tot_usda_a334_w_pct_lucas_nirs_ossl (×40175) |
 
 ## Statistics — splits
 
@@ -150,5 +152,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `ab59f771834a123690c57edee58909bfa036e49a05c324aaf89593cc875bbabf`
-- **Processing hash:** `b5754d10d4c4bbc0219b827fad270751616afb182732225d03537b572ab6f93e` | **metadata hash:** `85eb4419e1f2b60d5d0c4e629b00011a69a86f792c15f0cccd66a96129686816`
+- **Content hash:** `f626302888a38784c4c80569c4ce39b18d950dfcffbac2d36985836fbda47a99`
+- **Processing hash:** `b5754d10d4c4bbc0219b827fad270751616afb182732225d03537b572ab6f93e` | **metadata hash:** `a5a85649f95a35868a9803ac7308b152c7ed8424c77816c25ada0e852461c7f4`

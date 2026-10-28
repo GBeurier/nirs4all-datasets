@@ -855,6 +855,8 @@ class Manifest(BaseModel):
     files: list[FileEntry] = Field(default_factory=list)
     canonical_hashes: dict[str, str] = Field(default_factory=dict)  # canonical basename -> sha256
     row_counts: dict[str, int] = Field(default_factory=dict)  # per-source / targets / metadata
+    conversion_status: ConversionStatus | None = None  # absent in older manifests
+    conversion_warnings: list[str] = Field(default_factory=list)
     doi: str | None = None
     dataset_version: str | None = None
     expected_previous_version: str | None = None

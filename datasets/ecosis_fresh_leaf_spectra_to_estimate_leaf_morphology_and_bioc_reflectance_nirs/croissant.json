@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "FFT_Fresh_Spectra_v2.csv",
-      "sha256": "ae0d63de53252c095a34617a6c0b1da971c4d5142f53cd0dc26e4af5e347b41c"
+      "sha256": "a35d364b487c94c8a5e5ad7e70f1e1e96180c7b1c281f1c94391ef4a2bd2e189"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "5016a4eccfdcbaa739cc1462d544ea86f30440e9f6294d979ef3b8a22caac6d1"
+      "sha256": "8c2cf67e76d4fa0264ac8459efeb56b937039c5a30573ff8dd6703f74482a9b3"
     }
   ],
   "keywords": [
@@ -536,6 +536,21 @@
           "source": {
             "extract": {
               "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/original_sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'original_sample_id' (role metadata, type categorical).",
+          "name": "original_sample_id",
+          "source": {
+            "extract": {
+              "column": "original_sample_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"

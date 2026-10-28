@@ -2,29 +2,29 @@
   "alignment": {
     "level": "observation",
     "n_observations_total": 14,
-    "n_samples": 10,
+    "n_samples": 14,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.006032880475091546,
       "outlier_pressure": 0.4165479064477736,
       "reference_spread": 1.0,
-      "repeatability_risk": 1.0,
+      "repeatability_risk": 0.0,
       "shape_drift": 0.4886169081861968,
       "structure_complexity": 1.0
     },
     "reps_per_sample": {
-      "max": 2,
-      "mean": 1.4,
+      "max": 1,
+      "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": false
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-06-12T13:56:55.682632+00:00",
+  "generated_at": "2026-10-28T12:57:04.097629+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,10 +45,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "15cb2b3e42d8f5dcef70d69f7b8cece7b7f6eebd6840f9006f67e417e5d8236c",
+    "content_hash": "0a0c8e99c7af69cb55675b923f9dd21795820d22dd1b4f3d4b962688e43c85c4",
     "manifest": "manifest.json",
-    "metadata_hash": "b8fa20fc5778170c11d78de60d27e32a78b675b72c68cf3c49588284c580f6d4",
-    "processing_hash": "fd91c764ae7fd9971d357435aceac3ea6f35b05e2716ffd5af3bae0ee7230a43"
+    "metadata_hash": "b05ade5c8ef0701d9c1e5f163e821cecd8b96f499169bd95b7332164e87e6427",
+    "processing_hash": "84aa182b7dd20fc2434125faddad8351147581a0e41c14e62cf85f14fd6ab6a9"
   },
   "protocol_version": "5",
   "provenance": {
@@ -90,7 +90,10 @@
       }
     ],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
+      "Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, sample_description, notes, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field."
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1150,23 +1153,6 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM intra-ID"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Bruit/artefacts variables"
-                }
-              ],
-              "interpretation": "Positionnement, op\u00e9rateur ou protocole instable; investiguer les r\u00e9p\u00e9titions intra-ID.",
-              "key": "poor_repeatability",
-              "label": "Mauvaise r\u00e9p\u00e9tabilit\u00e9 d'acquisition",
-              "score": 0.8333333333333334,
-              "strength": "forte"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
                   "signal": "Spike rate"
                 },
                 {
@@ -1204,93 +1190,6 @@
                 },
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.4165479064477736,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.39988394357201723,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.6736664121478342,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Structure PCA"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "R\u00e9p\u00e9tabilit\u00e9"
-                },
-                {
-                  "level": 0.4165479064477736,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.39988394357201723,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.6506290960031665,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "R\u00e9p\u00e9tabilit\u00e9"
-                },
-                {
-                  "level": 0.4886169081861968,
-                  "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.4165479064477736,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.39988394357201723,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.6221498226008554,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Spike rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Jump rate"
-                },
-                {
-                  "level": 1.0,
                   "signal": "SNR normal/\u00e9lev\u00e9"
                 },
                 {
@@ -1305,7 +1204,36 @@
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "key": "resampling_error",
               "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.5565925941227113,
+              "score": 0.6065925941227113,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Spike rate"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.4165479064477736,
+                  "signal": "Mahalanobis / T2"
+                },
+                {
+                  "level": 0.39988394357201723,
+                  "signal": "PCA Q"
+                }
+              ],
+              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
+              "key": "vera25_like",
+              "label": "Signature VERA25-like",
+              "score": 0.5903330788145008,
               "strength": "moyenne"
             },
             {
@@ -1341,6 +1269,31 @@
               "evidence": [
                 {
                   "level": 1.0,
+                  "signal": "Structure PCA"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.4165479064477736,
+                  "signal": "Mahalanobis / T2"
+                },
+                {
+                  "level": 0.39988394357201723,
+                  "signal": "PCA Q"
+                }
+              ],
+              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
+              "key": "multi_regime",
+              "label": "Dataset multi-r\u00e9gimes",
+              "score": 0.5306290960031665,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
@@ -1356,6 +1309,56 @@
               "key": "out_of_domain",
               "label": "Spectre hors domaine valide",
               "score": 0.5066191625791094,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.4886169081861968,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 0.4165479064477736,
+                  "signal": "Mahalanobis / T2"
+                },
+                {
+                  "level": 0.39988394357201723,
+                  "signal": "PCA Q"
+                }
+              ],
+              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
+              "key": "probe_geometry",
+              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
+              "score": 0.4792926797437126,
+              "strength": "moyenne"
+            },
+            {
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.4886169081861968,
+                  "signal": "Baseline/mean/area"
+                },
+                {
+                  "level": 0.4165479064477736,
+                  "signal": "Mahalanobis / T2"
+                },
+                {
+                  "level": 0.39988394357201723,
+                  "signal": "PCA Q"
+                }
+              ],
+              "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "key": "background_shift",
+              "label": "Fond diff\u00e9rent",
+              "score": 0.4656109443986975,
               "strength": "moyenne"
             }
           ],
@@ -1395,7 +1398,7 @@
             "noise_risk": 0.006032880475091546,
             "outlier_pressure": 0.4165479064477736,
             "reference_spread": 1.0,
-            "repeatability_risk": 1.0,
+            "repeatability_risk": 0.0,
             "shape_drift": 0.4886169081861968,
             "structure_complexity": 1.0
           },
@@ -1415,11 +1418,11 @@
             "xcorr_lag_p95_features": 50.0
           },
           "repeatability": {
-            "cv_intra_id": 0.14453385292602178,
-            "distance_to_centroid_p95": 6.005923076261522,
-            "n_repeat_groups": 4,
-            "rms_intra_id": 4.2604442685440045,
-            "sam_intra_id": 0.24683941751933675
+            "cv_intra_id": null,
+            "distance_to_centroid_p95": null,
+            "n_repeat_groups": 0,
+            "rms_intra_id": null,
+            "sam_intra_id": null
           },
           "shape": {
             "baseline_slope": 3.8725140020053455,
@@ -1524,26 +1527,38 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.8999999999999999,
-        "imbalance_ratio": 1.0,
-        "minority_fraction": 0.1,
+        "gini_simpson": 0.8877551020408163,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.07142857142857142,
         "n_classes": 10,
-        "normalized_entropy": 0.9999999999999998
+        "normalized_entropy": 0.9741108952988199
       },
       "name": "material_name",
       "role": "target",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 10,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 1,
-            "name": "Hornblende Ca2(Fe2+,Mg)4Al(Si7,Al)O22(OH,F)2"
+            "count": 2,
+            "name": "Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2"
+          },
+          {
+            "count": 2,
+            "name": "Clinochlore (Fe+2,Mg)5Al(Si3Al)O10(OH)8"
+          },
+          {
+            "count": 2,
+            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
+          },
+          {
+            "count": 2,
+            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
           },
           {
             "count": 1,
-            "name": "Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2"
+            "name": "Hornblende Ca2(Fe2+,Mg)4Al(Si7,Al)O22(OH,F)2"
           },
           {
             "count": 1,
@@ -1555,23 +1570,11 @@
           },
           {
             "count": 1,
-            "name": "Clinochlore (Fe+2,Mg)5Al(Si3Al)O10(OH)8"
-          },
-          {
-            "count": 1,
             "name": "Clinochlore (Mg,Fe+2)5Al(Si3Al)O10(OH)8"
           },
           {
             "count": 1,
-            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
-          },
-          {
-            "count": 1,
             "name": "Chabazite CaAl2Si4O12.6H2O"
-          },
-          {
-            "count": 1,
-            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
           },
           {
             "count": 1,
@@ -1585,21 +1588,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.17999999999999994,
-        "imbalance_ratio": 9.0,
-        "minority_fraction": 0.1,
+        "gini_simpson": 0.13265306122448983,
+        "imbalance_ratio": 13.0,
+        "minority_fraction": 0.07142857142857142,
         "n_classes": 2,
-        "normalized_entropy": 0.46899559358928117
+        "normalized_entropy": 0.3712323266408757
       },
       "name": "class_label",
       "role": "target",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 2,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 9,
+            "count": 13,
             "name": "Silicate"
           },
           {
@@ -1614,33 +1617,33 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.691358024691358,
-        "imbalance_ratio": 4.0,
-        "minority_fraction": 0.1111111111111111,
+        "gini_simpson": 0.7218934911242603,
+        "imbalance_ratio": 2.5,
+        "minority_fraction": 0.15384615384615385,
         "n_classes": 4,
-        "normalized_entropy": 0.9182958340544897
+        "normalized_entropy": 0.9610115714257865
       },
       "name": "subclass",
       "role": "target",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 4,
         "n_missing": 1,
         "top_classes": [
           {
-            "count": 4,
+            "count": 5,
             "name": "Inosilicate"
           },
           {
-            "count": 2,
+            "count": 3,
             "name": "Phyllosilicate"
           },
           {
-            "count": 2,
+            "count": 3,
             "name": "Tectosilicate"
           },
           {
-            "count": 1,
+            "count": 2,
             "name": "Sorosilicate"
           }
         ]
@@ -1651,17 +1654,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.42000000000000004,
-        "imbalance_ratio": 2.3333333333333335,
-        "minority_fraction": 0.3,
-        "n_classes": 2,
-        "normalized_entropy": 0.8812908992306927
+        "gini_simpson": 0.5612244897959184,
+        "imbalance_ratio": 7.0,
+        "minority_fraction": 0.07142857142857142,
+        "n_classes": 3,
+        "normalized_entropy": 0.817581733764401
       },
       "name": "particle_size",
       "role": "target",
       "stats": {
-        "n": 10,
-        "n_classes": 2,
+        "n": 14,
+        "n_classes": 3,
         "n_missing": 0,
         "top_classes": [
           {
@@ -1669,8 +1672,12 @@
             "name": "Coarse"
           },
           {
-            "count": 3,
+            "count": 6,
             "name": "Solid"
+          },
+          {
+            "count": 1,
+            "name": "solid"
           }
         ]
       },
@@ -1680,21 +1687,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.17999999999999994,
-        "imbalance_ratio": 9.0,
-        "minority_fraction": 0.1,
+        "gini_simpson": 0.13265306122448983,
+        "imbalance_ratio": 13.0,
+        "minority_fraction": 0.07142857142857142,
         "n_classes": 2,
-        "normalized_entropy": 0.46899559358928117
+        "normalized_entropy": 0.3712323266408757
       },
       "name": "measurement",
       "role": "target",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 2,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 9,
+            "count": 13,
             "name": "Bidirectional reflectance"
           },
           {
@@ -1709,17 +1716,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.8999999999999999,
+        "gini_simpson": 0.9285714285714286,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.1,
-        "n_classes": 10,
+        "minority_fraction": 0.07142857142857142,
+        "n_classes": 14,
         "normalized_entropy": 0.9999999999999998
       },
       "name": "ecostress_resource_id",
       "role": "metadata",
       "stats": {
-        "n": 10,
-        "n_classes": 10,
+        "n": 14,
+        "n_classes": 14,
         "n_missing": 0,
         "top_classes": [
           {
@@ -1740,7 +1747,15 @@
           },
           {
             "count": 1,
+            "name": "mineral.silicate.inosilicate.solid.tir.hornblen_3.jhu.nicolet.spectrum"
+          },
+          {
+            "count": 1,
             "name": "mineral.silicate.phyllosilicate.coarse.tir.clinochl_2.jhu.nicolet.spectrum"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.phyllosilicate.solid.tir.clinochl_2.jhu.nicolet.spectrum"
           },
           {
             "count": 1,
@@ -1752,11 +1767,19 @@
           },
           {
             "count": 1,
+            "name": "mineral.silicate.sorosilicate.solid.tir.clinozo_1.jhu.nicolet.spectrum"
+          },
+          {
+            "count": 1,
             "name": "mineral.silicate.tectosilicate.coarse.tir.chabazite_1.jhu.nicolet.spectrum"
           },
           {
             "count": 1,
             "name": "mineral.silicate.tectosilicate.coarse.tir.clinopt_1.jhu.nicolet.spectrum"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.tectosilicate.solid.tir.clinopt_1.jhu.nicolet.spectrum"
           },
           {
             "count": 1,
@@ -1779,12 +1802,12 @@
       "name": "category",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "mineral"
           }
         ]
@@ -1804,12 +1827,12 @@
       "name": "material_type",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "Mineral"
           }
         ]
@@ -1822,9 +1845,9 @@
       "name": "site",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1833,26 +1856,38 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.8999999999999999,
-        "imbalance_ratio": 1.0,
-        "minority_fraction": 0.1,
+        "gini_simpson": 0.8877551020408163,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.07142857142857142,
         "n_classes": 10,
-        "normalized_entropy": 0.9999999999999998
+        "normalized_entropy": 0.9741108952988199
       },
       "name": "location",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 10,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 1,
-            "name": "Kragero, Norway via the Smithsonian (sample no. NMNH117329)."
+            "count": 2,
+            "name": "Calumet Island, Ottowa River, Canada via the Smithsaonian(sample no. NMNH 78662)"
+          },
+          {
+            "count": 2,
+            "name": "Hunt and Salisbury Collection (from the Clay Mineral SocietyRepository #CCA-1), orign, Flagstaff Hill, El Dorado Co., California."
+          },
+          {
+            "count": 2,
+            "name": "Sample from Baja California, Mexico via Smithsonian (sampleno. NMNH 112513-2."
+          },
+          {
+            "count": 2,
+            "name": "Donated by W. J. Ehmann , Sample #7 from Castle Creek,Idaho."
           },
           {
             "count": 1,
-            "name": "Calumet Island, Ottowa River, Canada via the Smithsaonian(sample no. NMNH 78662)"
+            "name": "Kragero, Norway via the Smithsonian (sample no. NMNH117329)."
           },
           {
             "count": 1,
@@ -1864,23 +1899,11 @@
           },
           {
             "count": 1,
-            "name": "Hunt and Salisbury Collection (from the Clay Mineral SocietyRepository #CCA-1), orign, Flagstaff Hill, El Dorado Co., California."
-          },
-          {
-            "count": 1,
             "name": "The Smithsonian (NMNH 83369), donated by Jim Crowley(USGS). Sample originally from Tilly Foster Mine, Brewster, New York."
           },
           {
             "count": 1,
-            "name": "Sample from Baja California, Mexico via Smithsonian (sampleno. NMNH 112513-2."
-          },
-          {
-            "count": 1,
             "name": "W. J. Ehmann #40, from Kyogle, N.S.W., Australia."
-          },
-          {
-            "count": 1,
-            "name": "Donated by W. J. Ehmann , Sample #7 from Castle Creek,Idaho."
           },
           {
             "count": 1,
@@ -1896,9 +1919,9 @@
       "name": "country",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1909,9 +1932,9 @@
       "name": "latitude",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1922,9 +1945,9 @@
       "name": "longitude",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1935,9 +1958,9 @@
       "name": "year",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1948,9 +1971,9 @@
       "name": "date",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1961,9 +1984,9 @@
       "name": "species",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1974,9 +1997,9 @@
       "name": "genus",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1987,9 +2010,9 @@
       "name": "family",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 0,
-        "n_missing": 10,
+        "n_missing": 14,
         "top_classes": []
       },
       "type": "categorical",
@@ -1998,17 +2021,17 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.8999999999999999,
+        "gini_simpson": 0.9285714285714286,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.1,
-        "n_classes": 10,
+        "minority_fraction": 0.07142857142857142,
+        "n_classes": 14,
         "normalized_entropy": 0.9999999999999998
       },
       "name": "sample_description",
       "role": "metadata",
       "stats": {
-        "n": 10,
-        "n_classes": 10,
+        "n": 14,
+        "n_classes": 14,
         "n_missing": 0,
         "top_classes": [
           {
@@ -2029,7 +2052,15 @@
           },
           {
             "count": 1,
+            "name": "Sample was a cluster of several large, deep green crystals. A small amount of contamination was found in thin veins along cleavage planes. Microscopic examination revealed newr purity with less than 1% impurities of low index veins. An index of refraction of <1.64 and pleochroism (green to greenish brown) indicated that this is probably magnesian hornblende. Sample had cleavage face. (Amphibole Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.solid.hornbl3.spectrum.txt"
+          },
+          {
+            "count": 1,
             "name": "The sample was made up of green chunks of coarsely crystalline material. Microscopic examination indicated that it was pure. Particle size was 74-250 Micrometers.(sheet silicates) (Chlorite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.phyllosilicate.coarse.clinoc2.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample was made up of green chunks of coarsely crystalline material. Microscopic examination indicated that it was pure.(sheet silicates) (Chlorite Group)Sampled measured had cleavage face. Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.phyllosilicate.solid.clinoc2.spectrum.txt"
           },
           {
             "count": 1,
@@ -2041,11 +2072,19 @@
           },
           {
             "count": 1,
+            "name": "The sample was one large (2.5 cm x 2 cm x 2 cm) crystal with good crystal faces, weighing 19 g. It was dark gray in color, with <<1% limonitic surface contamination, which was easily removed. Under the microscope the sample appears to be pure and free from alteration. (Epidote Group). Sample had cleavage face. Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.sorosilicate.solid.clinoz1.spectrum.txt"
+          },
+          {
+            "count": 1,
             "name": "The sample was a white crystalline mass. Petrographically the sample appears to be pure chabazite. Particle size was 74-250 Micrometers.(Framework silicates) (Zeolite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.tectosilicate.coarse.chabaz1.spectrum.txt"
           },
           {
             "count": 1,
             "name": "The sample is a cream-colored earthy mass. Because of the earthy nature of this mineral sample, there is little difference between the spectra of different particle size ranges. Petrographically it is clean and pure clinoptilolite. Particle size was 74-250 Micrometers.(Framework silicates) (Zeolite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.tectosilicate.coarse.clinop1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample is a cream-colored earthy mass. Because of the earthy nature of this mineral sample, there is little difference between the spectra of different particle size ranges. Petrographically it is clean and pure clinoptilolite. Sample was random surface.(Framework silicates) (Zeolite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.tectosilicate.solid.clinop1.spectrum.txt"
           },
           {
             "count": 1,
@@ -2068,12 +2107,12 @@
       "name": "instrument",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "jhu.nicolet"
           }
         ]
@@ -2084,21 +2123,21 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.17999999999999994,
-        "imbalance_ratio": 9.0,
-        "minority_fraction": 0.1,
+        "gini_simpson": 0.13265306122448983,
+        "imbalance_ratio": 13.0,
+        "minority_fraction": 0.07142857142857142,
         "n_classes": 2,
-        "normalized_entropy": 0.46899559358928117
+        "normalized_entropy": 0.3712323266408757
       },
       "name": "acquisition_mode",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 2,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 9,
+            "count": 13,
             "name": "Bidirectional reflectance"
           },
           {
@@ -2122,12 +2161,12 @@
       "name": "signal_type",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "Reflectance (percent)"
           }
         ]
@@ -2147,12 +2186,12 @@
       "name": "axis_unit",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "Wavelength (micrometers)"
           }
         ]
@@ -2176,7 +2215,7 @@
         "mean": 2.0795,
         "median": 2.0795,
         "min": 2.0795,
-        "n": 10,
+        "n": 14,
         "n_missing": 0,
         "q1": 2.0795,
         "q3": 2.0795,
@@ -2190,7 +2229,7 @@
       "name": "axis_max",
       "role": "metadata",
       "shape": {
-        "cv": 1.4953238432951929e-16,
+        "cv": 0.0,
         "is_normal": null,
         "kurtosis": null,
         "normality_p": null,
@@ -2198,14 +2237,14 @@
       },
       "stats": {
         "max": 25.044,
-        "mean": 25.044000000000004,
+        "mean": 25.044,
         "median": 25.044,
         "min": 25.044,
-        "n": 10,
+        "n": 14,
         "n_missing": 0,
         "q1": 25.044,
         "q3": 25.044,
-        "std": 3.744889033148481e-15
+        "std": 0.0
       },
       "type": "numeric",
       "unit": null
@@ -2226,7 +2265,7 @@
         "mean": 2287.0,
         "median": 2287.0,
         "min": 2287.0,
-        "n": 10,
+        "n": 14,
         "n_missing": 0,
         "q1": 2287.0,
         "q3": 2287.0,
@@ -2247,12 +2286,12 @@
       "name": "publication_doi",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "10.1016/j.rse.2019.05.015"
           }
         ]
@@ -2272,12 +2311,12 @@
       "name": "citation",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "Meerdink et al. 2019, Baldridge et al. 2009"
           }
         ]
@@ -2297,12 +2336,12 @@
       "name": "license",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "Copyright California Institute of Technology / JPL, all rights reserved"
           }
         ]
@@ -2322,12 +2361,12 @@
       "name": "rights_status",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "manual_review_needed"
           }
         ]
@@ -2347,12 +2386,12 @@
       "name": "usage_scope",
       "role": "metadata",
       "stats": {
-        "n": 10,
+        "n": 14,
         "n_classes": 1,
         "n_missing": 0,
         "top_classes": [
           {
-            "count": 10,
+            "count": 14,
             "name": "private_use_only"
           }
         ]
@@ -2363,18 +2402,18 @@
     {
       "assets": [],
       "balance": {
-        "gini_simpson": 0.8888888888888888,
+        "gini_simpson": 0.9166666666666666,
         "imbalance_ratio": 1.0,
-        "minority_fraction": 0.1111111111111111,
-        "n_classes": 9,
-        "normalized_entropy": 1.0
+        "minority_fraction": 0.08333333333333333,
+        "n_classes": 12,
+        "normalized_entropy": 1.0000000000000002
       },
       "name": "notes",
       "role": "metadata",
       "stats": {
-        "n": 10,
-        "n_classes": 9,
-        "n_missing": 1,
+        "n": 14,
+        "n_classes": 12,
+        "n_missing": 2,
         "top_classes": [
           {
             "count": 1,
@@ -2394,7 +2433,15 @@
           },
           {
             "count": 1,
+            "name": "mineral.silicate.inosilicate.solid.tir.hornblen_3.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
             "name": "mineral.silicate.phyllosilicate.coarse.tir.clinochl_2.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.phyllosilicate.solid.tir.clinochl_2.jhu.nicolet.ancillary.txt"
           },
           {
             "count": 1,
@@ -2410,7 +2457,72 @@
           },
           {
             "count": 1,
+            "name": "mineral.silicate.tectosilicate.solid.tir.clinopt_1.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
             "name": "mineral.sulfate.none.solid.tir.anhydrite_1.jhu.nicolet.ancillary.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8877551020408163,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.07142857142857142,
+        "n_classes": 10,
+        "normalized_entropy": 0.9741108952988199
+      },
+      "name": "original_sample_id",
+      "role": "metadata",
+      "stats": {
+        "n": 14,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "hornblen_3"
+          },
+          {
+            "count": 2,
+            "name": "clinochl_2"
+          },
+          {
+            "count": 2,
+            "name": "clinozo_1"
+          },
+          {
+            "count": 2,
+            "name": "clinopt_1"
+          },
+          {
+            "count": 1,
+            "name": "hornblen_2"
+          },
+          {
+            "count": 1,
+            "name": "tremol_2"
+          },
+          {
+            "count": 1,
+            "name": "diopside_1"
+          },
+          {
+            "count": 1,
+            "name": "clinochlore_1"
+          },
+          {
+            "count": 1,
+            "name": "chabazite_1"
+          },
+          {
+            "count": 1,
+            "name": "anhydrite_1"
           }
         ]
       },

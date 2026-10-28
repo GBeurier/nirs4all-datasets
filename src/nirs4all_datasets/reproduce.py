@@ -14,11 +14,13 @@ canonical (Dataverse) instead. Needs the ``[io]`` extra (``pip install nirs4all-
 """
 from __future__ import annotations
 
+import json
+import tempfile
 import zipfile
 from pathlib import Path
 from typing import Any
 
-from nirs4all_datasets.schema import DatasetDescriptor, OriginSource, SourceAccess, SourceKind
+from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor, OriginSource, SourceAccess, SourceKind
 
 # Origin kinds whose bytes can be auto-downloaded (resolved to direct file URLs).
 _DOWNLOADABLE = frozenset({SourceKind.ZENODO, SourceKind.FIGSHARE, SourceKind.URL})
@@ -86,6 +88,40 @@ def assemble(directory: str | Path, *, name: str | None = None) -> Any:
     except ImportError as exc:  # pragma: no cover - exercised only without the extra
         raise RuntimeError("reproduce/assemble needs the 'nirs4all-datasets[io]' extra (nirs4all-io + nirs4all-formats).") from exc
     return nio.load(str(directory), target="spectrodataset", name=name)
+
+
+def import_standardized(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir: str | Path) -> Any:
+    """Import a user-supplied v2.0 standardized bundle into canonical Parquet.
+
+    This is a local import of already-standardized data, not reproduction from
+    original instrument files. No source scripts are executed and no data is
+    downloaded. The caller is responsible for access to the supplied bundle.
+    Existing canonical data is never replaced. Conversion warnings and status
+    are returned in the usual ``CanonicalResult``.
+    """
+    from nirs4all_datasets.bootstrap import slugify
+    from nirs4all_datasets.canonical import build_canonical
+
+    leaf = Path(leaf_dir)
+    card_path = leaf / "dataset_card.json"
+    if not card_path.is_file():
+        raise ValueError(f"standardized bundle has no dataset_card.json: {leaf}")
+    card = json.loads(card_path.read_text(encoding="utf-8"))
+    if not isinstance(card, dict) or not card.get("dataset_id") or slugify(str(card["dataset_id"])) != descriptor.id:
+        raise ValueError(f"standardized bundle dataset_id does not match {descriptor.id!r}")
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    destination = out / "canonical"
+    if destination.exists():
+        raise FileExistsError(f"canonical data already exists: {destination}")
+    with tempfile.TemporaryDirectory(prefix=".standardized-import-", dir=out) as temp:
+        result = build_canonical(leaf, descriptor, temp)
+        if result.status is ConversionStatus.FAILED:
+            raise ValueError(f"standardized bundle could not be imported: {'; '.join(result.warnings)}")
+        result.canonical_dir.rename(destination)
+        result.dataset_dir = out
+        result.canonical_dir = destination
+        return result
 
 
 def reproduce_from_origin(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None, session: Any | None = None, max_bytes: int = _DEFAULT_MAX_BYTES) -> Any | None:

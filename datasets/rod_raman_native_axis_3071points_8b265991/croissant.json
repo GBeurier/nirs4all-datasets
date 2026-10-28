@@ -1,0 +1,513 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "ROD Raman native-axis 3071-point mineral subset 8b265991. v2.0 standardized NIRS package: 1 spectral source(s), 4 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "ROD native Raman axis group",
+      "sha256": "26b81f12a9b929a6d077d2f4a32a9d12bf3ab85cacb6d177793e8cedfafa88fe"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "22b4687ddfd2f76206c9063f0fa347cbf415fb418aa4ac951b47318c12e93c9f"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "rod"
+  ],
+  "license": "CC0-1.0",
+  "name": "rod_raman_native_axis_3071points_8b265991",
+  "recordSet": [
+    {
+      "@id": "X",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'ROD native Raman axis group' (10 observations x 3071 wavelengths).",
+      "field": [
+        {
+          "@id": "X/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the cm-1 axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X/sample_id"
+      },
+      "name": "X"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/mineral_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'mineral_name' (role target, type categorical).",
+          "name": "mineral_name",
+          "source": {
+            "extract": {
+              "column": "mineral_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_formula_sum",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_formula_sum' (role target, type categorical).",
+          "name": "chemical_formula_sum",
+          "source": {
+            "extract": {
+              "column": "chemical_formula_sum"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/compound_source",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'compound_source' (role target, type categorical).",
+          "name": "compound_source",
+          "source": {
+            "extract": {
+              "column": "compound_source"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rod_database_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rod_database_code' (role target, type categorical).",
+          "name": "rod_database_code",
+          "source": {
+            "extract": {
+              "column": "rod_database_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_digest",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_digest' (role metadata, type categorical).",
+          "name": "axis_digest",
+          "source": {
+            "extract": {
+              "column": "axis_digest"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_status' (role metadata, type categorical).",
+          "name": "axis_status",
+          "source": {
+            "extract": {
+              "column": "axis_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/interpolation_applied",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'interpolation_applied' (role metadata, type categorical).",
+          "name": "interpolation_applied",
+          "source": {
+            "extract": {
+              "column": "interpolation_applied"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_name_mineral",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_name_mineral' (role metadata, type categorical).",
+          "name": "chemical_name_mineral",
+          "source": {
+            "extract": {
+              "column": "chemical_name_mineral"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_name_common",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_name_common' (role metadata, type categorical).",
+          "name": "chemical_name_common",
+          "source": {
+            "extract": {
+              "column": "chemical_name_common"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_name_systematic",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_name_systematic' (role metadata, type categorical).",
+          "name": "chemical_name_systematic",
+          "source": {
+            "extract": {
+              "column": "chemical_name_systematic"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_formula_structural",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_formula_structural' (role metadata, type categorical).",
+          "name": "chemical_formula_structural",
+          "source": {
+            "extract": {
+              "column": "chemical_formula_structural"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chemical_compound_source",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'chemical_compound_source' (role metadata, type categorical).",
+          "name": "chemical_compound_source",
+          "source": {
+            "extract": {
+              "column": "chemical_compound_source"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raman_measurement_device_model",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raman_measurement_device_model' (role metadata, type categorical).",
+          "name": "raman_measurement_device_model",
+          "source": {
+            "extract": {
+              "column": "raman_measurement_device_model"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raman_measurement_device_company",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raman_measurement_device_company' (role metadata, type categorical).",
+          "name": "raman_measurement_device_company",
+          "source": {
+            "extract": {
+              "column": "raman_measurement_device_company"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raman_measurement_device_excitation_laser_wavelength",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raman_measurement_device_excitation_laser_wavelength' (role metadata, type categorical).",
+          "name": "raman_measurement_device_excitation_laser_wavelength",
+          "source": {
+            "extract": {
+              "column": "raman_measurement_device_excitation_laser_wavelength"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raman_measurement_range_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raman_measurement_range_min' (role metadata, type categorical).",
+          "name": "raman_measurement_range_min",
+          "source": {
+            "extract": {
+              "column": "raman_measurement_range_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/raman_measurement_range_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'raman_measurement_range_max' (role metadata, type categorical).",
+          "name": "raman_measurement_range_max",
+          "source": {
+            "extract": {
+              "column": "raman_measurement_range_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/publ_section_title",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'publ_section_title' (role metadata, type categorical).",
+          "name": "publ_section_title",
+          "source": {
+            "extract": {
+              "column": "publ_section_title"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/journal_paper_doi",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'journal_paper_doi' (role metadata, type categorical).",
+          "name": "journal_paper_doi",
+          "source": {
+            "extract": {
+              "column": "journal_paper_doi"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/journal_year",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'journal_year' (role metadata, type numeric).",
+          "name": "journal_year",
+          "source": {
+            "extract": {
+              "column": "journal_year"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://solsa.crystallography.net/rod/",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

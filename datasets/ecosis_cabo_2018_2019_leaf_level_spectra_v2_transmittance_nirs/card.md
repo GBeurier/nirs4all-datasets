@@ -27,7 +27,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | species | target | categorical | *Not specified.* | n=1971, missing=0, classes=106, top Populus tremuloides Michaux (×120) |
 | latin.genus | target | categorical | *Not specified.* | n=1971, missing=0, classes=66, top Acer (×265) |
 | latin.species | target | categorical | *Not specified.* | n=1971, missing=0, classes=93, top tremuloides (×120) |
-| plant.id | target | categorical | *Not specified.* | n=1971, missing=1, classes=1738, top 8554325.0 (×7) |
+| plant.id | target | categorical | *Not specified.* | n=1971, missing=1, classes=1738, top 8554325 (×7) |
 | growth.form | target | categorical | *Not specified.* | n=1971, missing=0, classes=4, top tree (×1124) |
 | family | target | categorical | *Not specified.* | n=1971, missing=0, classes=31, top Sapindaceae (×268) |
 | genus | target | categorical | *Not specified.* | n=1971, missing=0, classes=66, top Acer (×265) |
@@ -132,5 +132,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f1faeb551fddea78c2419eff9e2d274fb4fb8cf374b6cf6193c1414b50bdf80a`
-- **Processing hash:** `2f9e98ca930e0b4881cd8024239f8f3403469af618eb0eaf2fea0e3e92357c47` | **metadata hash:** `a81c6bb9b0e70e5b8f5cc8f1753ffb8d6059495909a22e13e01ca601a208a0ee`
+- **Content hash:** `0861f3a6fb3f38dcb636bef4a7ecf54ee137a8edb01725ef07d00671f054c7d4`
+- **Processing hash:** `d58a390fce45f96b075bb06b4d7f8e4f82b6c91ca8d05f2c362b1c0dd119465b` | **metadata hash:** `c4669dd295872cd6ecaef26cf31ac23939d2e80eeea52c5681dd93854bb1b2ce`

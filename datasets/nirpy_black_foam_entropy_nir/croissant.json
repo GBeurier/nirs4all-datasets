@@ -1,0 +1,682 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Nirpy Research black foam entropy smoothing NIR. v2.0 standardized NIRS package: 3 spectral source(s), 0 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X_absorbance.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Nirpy Research black foam entropy smoothing NIR - absorbance",
+      "sha256": "5c1ae9c139a18a23858146cb7435381d5e83f4acc4fa40d608d3bf7b278072e2"
+    },
+    {
+      "@id": "file/X_reference_signal.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Nirpy Research black foam entropy smoothing NIR - reference signal",
+      "sha256": "320c2098d6f2db5ad5a61d663ea7d8c3d66867c9e30ed379c3258cbcb5b44dc4"
+    },
+    {
+      "@id": "file/X_sample_signal.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Nirpy Research black foam entropy smoothing NIR - sample signal",
+      "sha256": "26bbb6118216e691612afecf9ebc11a2dd0d6f39a0f486b48f29fb4f41a92a95"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "037452d1db1d54b7a4646a1c4968c2b31aa8f7ec3a1dc73d75580ea853d5b90a"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "nirpy"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "nirpy_black_foam_entropy_nir",
+  "recordSet": [
+    {
+      "@id": "X_absorbance",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Nirpy Research black foam entropy smoothing NIR - absorbance' (500 observations x 228 wavelengths).",
+      "field": [
+        {
+          "@id": "X_absorbance/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_absorbance/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_absorbance/sample_id"
+      },
+      "name": "X_absorbance"
+    },
+    {
+      "@id": "X_reference_signal",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Nirpy Research black foam entropy smoothing NIR - reference signal' (500 observations x 228 wavelengths).",
+      "field": [
+        {
+          "@id": "X_reference_signal/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_reference_signal.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_reference_signal/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_reference_signal.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_reference_signal/sample_id"
+      },
+      "name": "X_reference_signal"
+    },
+    {
+      "@id": "X_sample_signal",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Nirpy Research black foam entropy smoothing NIR - sample signal' (500 observations x 228 wavelengths).",
+      "field": [
+        {
+          "@id": "X_sample_signal/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_sample_signal.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_sample_signal/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_sample_signal.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_sample_signal/sample_id"
+      },
+      "name": "X_sample_signal"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/sample_material",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'sample_material' (role metadata, type categorical).",
+          "name": "sample_material",
+          "source": {
+            "extract": {
+              "column": "sample_material"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/host_date_time",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'host_date_time' (role metadata, type categorical).",
+          "name": "host_date_time",
+          "source": {
+            "extract": {
+              "column": "host_date_time"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/system_temp_c",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'system_temp_c' (role metadata, type numeric).",
+          "name": "system_temp_c",
+          "source": {
+            "extract": {
+              "column": "system_temp_c"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/detector_temp_c",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'detector_temp_c' (role metadata, type numeric).",
+          "name": "detector_temp_c",
+          "source": {
+            "extract": {
+              "column": "detector_temp_c"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/humidity_percent",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'humidity_percent' (role metadata, type numeric).",
+          "name": "humidity_percent",
+          "source": {
+            "extract": {
+              "column": "humidity_percent"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/lamp_pd",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'lamp_pd' (role metadata, type numeric).",
+          "name": "lamp_pd",
+          "source": {
+            "extract": {
+              "column": "lamp_pd"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/serial_number",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'serial_number' (role metadata, type numeric).",
+          "name": "serial_number",
+          "source": {
+            "extract": {
+              "column": "serial_number"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_config_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_config_name' (role metadata, type categorical).",
+          "name": "scan_config_name",
+          "source": {
+            "extract": {
+              "column": "scan_config_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_config_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_config_type' (role metadata, type categorical).",
+          "name": "scan_config_type",
+          "source": {
+            "extract": {
+              "column": "scan_config_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/start_wavelength_nm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'start_wavelength_nm' (role metadata, type numeric).",
+          "name": "start_wavelength_nm",
+          "source": {
+            "extract": {
+              "column": "start_wavelength_nm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/end_wavelength_nm",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'end_wavelength_nm' (role metadata, type numeric).",
+          "name": "end_wavelength_nm",
+          "source": {
+            "extract": {
+              "column": "end_wavelength_nm"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/exposure_ms",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'exposure_ms' (role metadata, type numeric).",
+          "name": "exposure_ms",
+          "source": {
+            "extract": {
+              "column": "exposure_ms"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/digital_resolution",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'digital_resolution' (role metadata, type numeric).",
+          "name": "digital_resolution",
+          "source": {
+            "extract": {
+              "column": "digital_resolution"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pga_gain",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'pga_gain' (role metadata, type numeric).",
+          "name": "pga_gain",
+          "source": {
+            "extract": {
+              "column": "pga_gain"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/total_measurement_time_sec",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'total_measurement_time_sec' (role metadata, type numeric).",
+          "name": "total_measurement_time_sec",
+          "source": {
+            "extract": {
+              "column": "total_measurement_time_sec"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/absorbance_nonfinite_values_replaced",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'absorbance_nonfinite_values_replaced' (role metadata, type numeric).",
+          "name": "absorbance_nonfinite_values_replaced",
+          "source": {
+            "extract": {
+              "column": "absorbance_nonfinite_values_replaced"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/repository_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'repository_url' (role metadata, type categorical).",
+          "name": "repository_url",
+          "source": {
+            "extract": {
+              "column": "repository_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/blog_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'blog_url' (role metadata, type categorical).",
+          "name": "blog_url",
+          "source": {
+            "extract": {
+              "column": "blog_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/target_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'target_status' (role metadata, type categorical).",
+          "name": "target_status",
+          "source": {
+            "extract": {
+              "column": "target_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://github.com/nevernervous78/nirpyresearch/blob/master/data/NIR_black_foam_nirpy.zip",
+    "https://nirpyresearch.com/spectra-smoothing-based-on-information-entropy/",
+    "https://raw.githubusercontent.com/nevernervous78/nirpyresearch/master/LICENSE",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

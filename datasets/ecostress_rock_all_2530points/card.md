@@ -74,7 +74,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
 
 ## Uses
 
@@ -96,5 +96,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4b18636ce6513c7fd25a7ae2ae4d4d5bd1d0504bc8ba3e811e78048971a213da`
-- **Processing hash:** `5f2e213e7aa2606ac3b7d58a5d2456fc4e7797f2a23c101ba6c9bebef7a1ef5e` | **metadata hash:** `c3bb12cffd978a494f50d312f0a3932e0b92544134143f516aafe9110a3e7a9b`
+- **Content hash:** `3116eab1b6632bec21104665ed962de3aeda035df0ed7796212678d73538fdef`
+- **Processing hash:** `000fd7a18ef5589e45433f4a70d375f543c2708eefdebfda418b09c50d8fa197` | **metadata hash:** `ab331c0495e707a6d935d096b13e215aeac44f2a789bdb31b3cebaf35da59d83`

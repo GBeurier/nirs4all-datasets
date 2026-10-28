@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | FLOPP FTIR spectra | ATR-FTIR instruments as represented in source library | MIR | 399.2–4002 none | 186 | 1869 |
+| X | FLOPP FTIR spectra | ATR-FTIR instruments as represented in source library | MIR | 399.2–4002 cm-1 | 186 | 1869 |
 
 ### Variables (Y / metadata)
 
@@ -77,5 +77,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c861462a52e9d92b3db711eaa4eb3201940f8434e7a3d270bfdd530deddb95a2`
-- **Processing hash:** `4b07d22cb966349d226328d3cf037e801a9ad34123061660cac3c0151c2512f8` | **metadata hash:** `1706d1b2e71e01e6f6d4fedbe992a05fa9eb6c08a864e4de65bac8ead84d3895`
+- **Content hash:** `2c4482db22e77b2b124efc6249cd9ad967c16b61be18ece7c9520ab4132620f7`
+- **Processing hash:** `da0328864a191087b2ca89429aae7b9a33b30a2f5285ce77a375e47c015f5353` | **metadata hash:** `e77393ba8ed09f240317b3cdd2963eec78f42802330970db0ab4129023a26eca`

@@ -18,7 +18,7 @@ sources:
   axis_unit: none
   axis_min: 0.45
   axis_max: 0.95
-  signal_type: auto
+  signal_type: reflectance
   n_observations: 60
   n_variables: 256
 variables:
@@ -81,7 +81,9 @@ provenance:
   contributor: Urban Materials Spectral Library
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  warnings:
+  - 'X: native axis unit is ''um'' (micrometers), which is not supported by the axis
+    unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: Urban Materials Spectral Library
@@ -117,6 +119,12 @@ origin_sources:
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: EcoSIS CKAN package and local raw uploaded XLSX files
   license_status: manual_review_needed

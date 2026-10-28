@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top EthanolLevel (×1004) |
 | product | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top spiritueux_whisky_bouteille (×1004) |
 | trait_header | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top taux_ethanol (×1004) |
-| trait_description | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top Alcohol level of the spirit. (×1004) |
+| trait_description | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top Niveau d'alcool du spiritueux. (×1004) |
 | split | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=2, top train (×504) |
 | spectro | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top vibrational spectroscopy (×1004) |
 | raw_label | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=4, top 1 (×252) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=4, top 0 (×252) |
 | dimensions | metadata | numeric | *Not specified.* | n=1004, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=1004, missing=0, range 1751–1751, mean 1751 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top Spectral axis applied over 226.0-1101.0 nm with a 0.5 nm step, consistent with 1751 variables. (×1004) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top Axe spectral applique sur 226.0-1101.0 nm avec un pas de 0.5 nm, coherent avec 1751 variables. (×1004) |
 
 ## Statistics — splits
 
@@ -80,5 +80,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f48bcc677ce198985b533a4f4acb55bc33620ea857892e57f9e2e952eba988cf`
+- **Content hash:** `10233418722c0c3c4a4502172aafaee8da15bf6370c9d51378e58e9691195719`
 - **Processing hash:** `c87d8e8a2d443a8482df28c66f7076c7dec70f2047fe323378f928fb1502525a` | **metadata hash:** `ed34256b2bd1e9e54394896048495bed90454ef2228744240bb25c9175d79920`

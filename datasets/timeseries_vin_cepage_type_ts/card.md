@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dataset | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Wine (×111) |
 | product | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top vin (×111) |
 | trait_header | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top cepage_type (×111) |
-| trait_description | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Wine type (Cabernet Sauvignon vs Shiraz, raw dataset codes). (×111) |
+| trait_description | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Type de vin (Cabernet Sauvignon vs Shiraz, codes bruts du dataset). (×111) |
 | split | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top train (×57) |
 | spectro | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top FTIR-ATR (×111) |
 | raw_label | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 1 (×57) |
@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | class_index | metadata | categorical | *Not specified.* | n=111, missing=0, classes=2, top 0 (×57) |
 | dimensions | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=111, missing=0, range 234–234, mean 234 ± 0 |
-| wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top User hypothesis: same spectral convention as Strawberry; interpolated linear axis applied here in decreasing order 4000->400 over 234 variables. (×111) |
+| wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Hypothese utilisateur: meme convention spectrale que Strawberry, axe lineaire interpole applique ici en ordre decroissant 4000->400 sur 234 variables. (×111) |
 
 ## Statistics — splits
 
@@ -80,5 +80,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f1b7f6ef8c9cb679a035f2fe82088526ca5ef2d89fe5ebff142451ea7f786c68`
+- **Content hash:** `897938e878e15c73afc959d6db7d3b6c6dfc1c058abb1b3f855d35be809167dd`
 - **Processing hash:** `78826f045fad9b65a8b70cf6d2388aa91bd76c3fe2f2afb70d3ae42300d7a25e` | **metadata hash:** `42daa3bae145eda04fd90cf177dc589419f3e12123bf04dad307af9930004fa4`

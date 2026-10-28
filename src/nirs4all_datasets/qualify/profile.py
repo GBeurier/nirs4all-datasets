@@ -472,6 +472,12 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     dataset_dir = Path(dataset_dir)
     config = resolve_config(dataset_dir)
     warnings: list[str] = []
+    manifest_path = dataset_dir / "manifest.json"
+    if manifest_path.exists():
+        try:
+            warnings.extend(f"conversion: {warning}" for warning in read_manifest(manifest_path).conversion_warnings)
+        except Exception:  # noqa: BLE001 - integrity section records an unreadable manifest
+            warnings.append("conversion warnings unavailable: manifest unreadable")
 
     # --- sources (per spectral block) ---
     source_sections: list[dict[str, Any]] = []

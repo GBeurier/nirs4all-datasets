@@ -1,0 +1,724 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Bovine knee ligament multi-instrument NIR data. v2.0 standardized NIRS package: 2 spectral source(s), 28 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X_AvaSpec_NIR256_2_5_HSC.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X_AvaSpec_NIR256_2_5_HSC",
+      "sha256": "7dec9c3dfe9f5e6148b54352f6e7b862df8338b0dd3ddd43ab17efe1f4370b02"
+    },
+    {
+      "@id": "file/X_AvaSpec_ULS2048L_USB2.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X_AvaSpec_ULS2048L_USB2",
+      "sha256": "9ab3fc76152384f3466209fabd27b3f05aaf67212fa81035e2951ee4f45cfddb"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "224351ce15191a197a3bad53ad66b2dd0a198f2695488d16deb2c4d89dedf6ff"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "fairdata"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "fairdata_bovine_knee_ligament_nir_manual",
+  "recordSet": [
+    {
+      "@id": "X_AvaSpec_NIR256_2_5_HSC",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X_AvaSpec_NIR256_2_5_HSC' (250 observations x 243 wavelengths).",
+      "field": [
+        {
+          "@id": "X_AvaSpec_NIR256_2_5_HSC/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_AvaSpec_NIR256_2_5_HSC.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_AvaSpec_NIR256_2_5_HSC/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_AvaSpec_NIR256_2_5_HSC.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_AvaSpec_NIR256_2_5_HSC/sample_id"
+      },
+      "name": "X_AvaSpec_NIR256_2_5_HSC"
+    },
+    {
+      "@id": "X_AvaSpec_ULS2048L_USB2",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X_AvaSpec_ULS2048L_USB2' (250 observations x 1343 wavelengths).",
+      "field": [
+        {
+          "@id": "X_AvaSpec_ULS2048L_USB2/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key across sources and variables).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_AvaSpec_ULS2048L_USB2.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_AvaSpec_ULS2048L_USB2/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_AvaSpec_ULS2048L_USB2.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_AvaSpec_ULS2048L_USB2/sample_id"
+      },
+      "name": "X_AvaSpec_ULS2048L_USB2"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Per-sample target and metadata variables.",
+      "field": [
+        {
+          "@id": "variables/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phase difference 0.1 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Phase difference 0.1 Hz' (role target, type numeric).",
+          "name": "Phase difference 0.1 Hz",
+          "source": {
+            "extract": {
+              "column": "Phase difference 0.1 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phase difference 0.5 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Phase difference 0.5 Hz' (role target, type numeric).",
+          "name": "Phase difference 0.5 Hz",
+          "source": {
+            "extract": {
+              "column": "Phase difference 0.5 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Phase difference 1 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Phase difference 1 Hz' (role target, type numeric).",
+          "name": "Phase difference 1 Hz",
+          "source": {
+            "extract": {
+              "column": "Phase difference 1 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dynamic modulus 0.1 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dynamic modulus 0.1 Hz' (role target, type numeric).",
+          "name": "Dynamic modulus 0.1 Hz",
+          "source": {
+            "extract": {
+              "column": "Dynamic modulus 0.1 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dynamic modulus 0.5 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dynamic modulus 0.5 Hz' (role target, type numeric).",
+          "name": "Dynamic modulus 0.5 Hz",
+          "source": {
+            "extract": {
+              "column": "Dynamic modulus 0.5 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Dynamic modulus 1 Hz",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Dynamic modulus 1 Hz' (role target, type numeric).",
+          "name": "Dynamic modulus 1 Hz",
+          "source": {
+            "extract": {
+              "column": "Dynamic modulus 1 Hz"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Young's modulus",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Young's modulus' (role target, type numeric).",
+          "name": "Young's modulus",
+          "source": {
+            "extract": {
+              "column": "Young's modulus"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/A",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'A' (role target, type numeric).",
+          "name": "A",
+          "source": {
+            "extract": {
+              "column": "A"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/B",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'B' (role target, type numeric).",
+          "name": "B",
+          "source": {
+            "extract": {
+              "column": "B"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/C",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'C' (role target, type numeric).",
+          "name": "C",
+          "source": {
+            "extract": {
+              "column": "C"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/D",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'D' (role target, type numeric).",
+          "name": "D",
+          "source": {
+            "extract": {
+              "column": "D"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/F",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'F' (role target, type numeric).",
+          "name": "F",
+          "source": {
+            "extract": {
+              "column": "F"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Linear region length",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Linear region length' (role target, type numeric).",
+          "name": "Linear region length",
+          "source": {
+            "extract": {
+              "column": "Linear region length"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Toe region strain",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Toe region strain' (role target, type numeric).",
+          "name": "Toe region strain",
+          "source": {
+            "extract": {
+              "column": "Toe region strain"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Toe region stress",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Toe region stress' (role target, type numeric).",
+          "name": "Toe region stress",
+          "source": {
+            "extract": {
+              "column": "Toe region stress"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Yield strain",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Yield strain' (role target, type numeric).",
+          "name": "Yield strain",
+          "source": {
+            "extract": {
+              "column": "Yield strain"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Yield stress",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Yield stress' (role target, type numeric).",
+          "name": "Yield stress",
+          "source": {
+            "extract": {
+              "column": "Yield stress"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Toughness at yield",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Toughness at yield' (role target, type numeric).",
+          "name": "Toughness at yield",
+          "source": {
+            "extract": {
+              "column": "Toughness at yield"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ultimate strain",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ultimate strain' (role target, type numeric).",
+          "name": "Ultimate strain",
+          "source": {
+            "extract": {
+              "column": "Ultimate strain"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Ultimate strength",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Ultimate strength' (role target, type numeric).",
+          "name": "Ultimate strength",
+          "source": {
+            "extract": {
+              "column": "Ultimate strength"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Toughness at failure",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Toughness at failure' (role target, type numeric).",
+          "name": "Toughness at failure",
+          "source": {
+            "extract": {
+              "column": "Toughness at failure"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Water content",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Water content' (role target, type numeric).",
+          "name": "Water content",
+          "source": {
+            "extract": {
+              "column": "Water content"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Hydroxyproline content of wet weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Hydroxyproline content of wet weight' (role target, type numeric).",
+          "name": "Hydroxyproline content of wet weight",
+          "source": {
+            "extract": {
+              "column": "Hydroxyproline content of wet weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Hydroxyproline content of dry weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Hydroxyproline content of dry weight' (role target, type numeric).",
+          "name": "Hydroxyproline content of dry weight",
+          "source": {
+            "extract": {
+              "column": "Hydroxyproline content of dry weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Uronic acid content of wet weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Uronic acid content of wet weight' (role target, type numeric).",
+          "name": "Uronic acid content of wet weight",
+          "source": {
+            "extract": {
+              "column": "Uronic acid content of wet weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Uronic acid content of dry weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Uronic acid content of dry weight' (role target, type numeric).",
+          "name": "Uronic acid content of dry weight",
+          "source": {
+            "extract": {
+              "column": "Uronic acid content of dry weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Elastin content of wet weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Elastin content of wet weight' (role target, type numeric).",
+          "name": "Elastin content of wet weight",
+          "source": {
+            "extract": {
+              "column": "Elastin content of wet weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/Elastin content of dry weight",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'Elastin content of dry weight' (role target, type numeric).",
+          "name": "Elastin content of dry weight",
+          "source": {
+            "extract": {
+              "column": "Elastin content of dry weight"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/site",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'site' (role metadata, type numeric).",
+          "name": "site",
+          "source": {
+            "extract": {
+              "column": "site"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/knee_identifier",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'knee_identifier' (role metadata, type categorical).",
+          "name": "knee_identifier",
+          "source": {
+            "extract": {
+              "column": "knee_identifier"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ligament_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'ligament_type' (role metadata, type categorical).",
+          "name": "ligament_type",
+          "source": {
+            "extract": {
+              "column": "ligament_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download' (role metadata, type categorical).",
+          "name": "manual_download",
+          "source": {
+            "extract": {
+              "column": "manual_download"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_source_dir",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_source_dir' (role metadata, type categorical).",
+          "name": "manual_download_source_dir",
+          "source": {
+            "extract": {
+              "column": "manual_download_source_dir"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_file",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_file' (role metadata, type categorical).",
+          "name": "manual_download_file",
+          "source": {
+            "extract": {
+              "column": "manual_download_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_source_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_source_url' (role metadata, type categorical).",
+          "name": "official_source_url",
+          "source": {
+            "extract": {
+              "column": "official_source_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/standardization_batch",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'standardization_batch' (role metadata, type categorical).",
+          "name": "standardization_batch",
+          "source": {
+            "extract": {
+              "column": "standardization_batch"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/sample_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://etsin.fairdata.fi/dataset/925999ad-8127-4428-b7cc-c03c12e62d3c/data",
+    "source_to_standard.py"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.0.0"
+}

@@ -108,6 +108,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=40175, missing=0, range 1701–1701, mean 1701 ± 0 |
 | dimensions | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top 1D (×40175) |
 | wavelength_note | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top ossl_mir_600_4000_cm_minus_1_step_2 (×40175) |
+| active_status | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top active (×40175) |
+| replaces_dataset_id | metadata | categorical | *Not specified.* | n=40175, missing=0, classes=1, top ossl_regression_a0984e9c (×40175) |
 
 ## Statistics — splits
 
@@ -151,5 +153,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0321c3d885ba1f0fb241a8bb35439ce4b26ae35c073ee0c2f362a9de5a590325`
-- **Processing hash:** `d554d295cb0cc76bfd9d3bf1d317ad662706fc1a30fa48ecef06a50b08d437f7` | **metadata hash:** `7ab8b8a4756e8604f940ddaa7e4b621f1a76e932ee3f0d0c4c94243ad82b9629`
+- **Content hash:** `32cbbc320b3aac3866a7ee6abf719c6aa9ecff743c55763897b07c7d021b0933`
+- **Processing hash:** `d554d295cb0cc76bfd9d3bf1d317ad662706fc1a30fa48ecef06a50b08d437f7` | **metadata hash:** `25bee2f48a2cd9f2d3854e302586459ee7551b164f137f0e5f56c76806e25598`

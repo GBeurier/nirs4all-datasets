@@ -90,6 +90,25 @@ def add(source: Path, dataset_id: str, root: Path = typer.Option(Path("."), help
     build_catalog(root)
 
 
+@app.command("import-standardized")
+def import_standardized_cmd(
+    source: Path,
+    dataset_id: str,
+    root: Path = typer.Option(Path("."), help="Registry root containing the descriptor."),
+    out: Path = typer.Option(..., help="Output dataset directory; must not already contain canonical data."),
+) -> None:
+    """Import a local v2.0 bundle to canonical Parquet without running its scripts."""
+    from nirs4all_datasets.reproduce import import_standardized
+
+    try:
+        result = import_standardized(source, _descriptor(root, dataset_id), out)
+    except (ValueError, FileExistsError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(f"import-standardized: {result.status.value} -> {result.canonical_dir}")
+    for warning in result.warnings:
+        typer.echo(f"  WARNING: {warning}", err=True)
+
+
 @app.command()
 def qualify(
     dataset_id: str,

@@ -18,7 +18,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | RRUFF RAMAN | not consistently available in selected text files | Raman | 51.43–1570 none | 85 | 1340 |
+| X | RRUFF RAMAN | not consistently available in selected text files | Raman | 51.43–1570 cm-1 | 85 | 1340 |
 
 ### Variables (Y / metadata)
 
@@ -35,6 +35,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=85, missing=0, range 1570–1570, mean 1570 ± 2.287e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=85, missing=0, range 1340–1340, mean 1340 ± 0 |
 | sample_description | metadata | categorical | *Not specified.* | n=85, missing=0, classes=12, top Pale yellow fragment (×9) |
+| metadata_chemistry | metadata | categorical | *Not specified.* | n=85, missing=0, classes=12, top Pb_1.00_S_1.00_O_4_ (×9) |
 | locality | metadata | categorical | *Not specified.* | n=85, missing=0, classes=11, top Tsumeb mine, Tsumeb, Otavi District, Oshikoto, Namibia (×18) |
 | laser_wavelength | metadata | numeric | *Not specified.* | n=85, missing=0, range 514–514, mean 514 ± 0 |
 | instrument | metadata | categorical | *Not specified.* | n=85, missing=85, classes=0, — |
@@ -85,5 +86,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `228142208c9b8701ed191f9c44ce4a110df84211cb9a873beb6a57de08867ec8`
-- **Processing hash:** `2dff7ae808b19048c4429d3719e48145f045af90932a991a014a93bda914544b` | **metadata hash:** `ec2f9365a59927dc353d2dbedacbb974524ffe8070436a3007a76f1bf070f6f2`
+- **Content hash:** `75da4bed1d8b4d22d8e5df5e544f30cd4770203d59f0994f0520c27e8ef55f70`
+- **Processing hash:** `b250dda2f76a01fdcce2022598877e9218430226dde814487d418421584c23f1` | **metadata hash:** `c48ec33bf905d495b615a2ec863845c35937cb1bd679b183bbf595d8647e81ac`
