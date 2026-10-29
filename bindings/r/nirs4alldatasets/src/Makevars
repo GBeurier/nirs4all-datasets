@@ -24,7 +24,12 @@ RUSTC_MIN_VERSION = 1.88.0
 
 TMP_ROOT = $(if $(TMPDIR),$(TMPDIR),$(if $(TEMP),$(TEMP),$(if $(TMP),$(TMP),/tmp)))
 TARGET_DIR = $(TMP_ROOT)/n4ds-r-target
-LIBDIR = $(TARGET_DIR)/release
+# An explicit WebR target keeps the R linker and Cargo on the same path. The
+# rwasm Cargo wrapper otherwise flattens ./target, outside our private target dir.
+# Native installs retain their original target and library-directory layout.
+RUST_TARGET = $(if $(filter 1,$(N4DS_R_WASM)),wasm32-unknown-emscripten,)
+RUST_TARGET_ARG = $(if $(RUST_TARGET),--target=$(RUST_TARGET),)
+LIBDIR = $(TARGET_DIR)$(if $(RUST_TARGET),/$(RUST_TARGET),)/release
 STATLIB = $(LIBDIR)/libnirs4all_datasets_capi.a
 # Reference the staticlib by EXACT PATH, not `-L$(LIBDIR) -lnirs4all_datasets_capi`:
 # the configure-generated vendored capi crate emits the STATICLIB only (its
@@ -154,11 +159,11 @@ $(STATLIB):
 			rm -Rf "$(VENDOR_ROOT)" && mkdir -p "$(VENDOR_ROOT)" && \
 			cd "$(VENDOR_ROOT)" && tar xJf "$(CURDIR)/rust/vendor.tar.xz" \
 		); \
-		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2 --offline \
+		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2 $(RUST_TARGET_ARG) --offline \
 			--config 'source.crates-io.replace-with="vendored-sources"' \
 			--config 'source.vendored-sources.directory="$(VENDOR_DIR)"'; \
 	else \
-		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2; \
+		cd rust && "$$cargo" build -p nirs4all-datasets-capi --release -j 2 $(RUST_TARGET_ARG); \
 	fi
 
 # Post-link cleanup. Runs AFTER $(SHLIB) has linked $(STATLIB) into the package
