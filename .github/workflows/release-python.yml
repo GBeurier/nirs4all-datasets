@@ -99,7 +99,8 @@ jobs:
           stage="nirs4all-datasets-capi"
           mkdir -p "${stage}/lib" "${stage}/include" "${stage}/licenses"
           cp crates/nirs4all-datasets-capi/include/nirs4all_datasets.h "${stage}/include/"
-          cp LICENSE "${stage}/licenses/MIT.txt"
+          cp LICENSE "${stage}/licenses/LICENSE"
+          cp -R LICENSES "${stage}/licenses/LICENSES"
           # Copy whatever shared/static libs this platform produced.
           find target/release -maxdepth 1 \
             \( -name 'libnirs4all_datasets_capi.*' -o -name 'nirs4all_datasets_capi.dll' -o -name 'nirs4all_datasets_capi.lib' \) \

@@ -87,3 +87,32 @@ def test_registry_probe_uses_target_contract_versions(monkeypatch: Any) -> None:
         "https://crates.io/api/v1/crates/dag-ml-data/0.2.10",
         "https://crates.io/api/v1/crates/nirs4all-io/0.1.12",
     ]
+
+
+def test_capi_release_archive_preserves_the_actual_project_licenses(tmp_path: Path) -> None:
+    """Exercise the real CI assembler; a dual license must never be labeled MIT."""
+    import shutil
+    import subprocess
+    import tarfile
+
+    import yaml
+
+    workflow = yaml.safe_load((ROOT / ".github/workflows/release-python.yml").read_text())
+    assemble = next(step["run"] for step in workflow["jobs"]["c-abi-archive"]["steps"] if step.get("name") == "Assemble archive")
+    shutil.copyfile(ROOT / "LICENSE", tmp_path / "LICENSE")
+    shutil.copytree(ROOT / "LICENSES", tmp_path / "LICENSES")
+    header = Path("crates/nirs4all-datasets-capi/include/nirs4all_datasets.h")
+    (tmp_path / header).parent.mkdir(parents=True)
+    shutil.copyfile(ROOT / header, tmp_path / header)
+    (tmp_path / "target/release").mkdir(parents=True)
+    binary = tmp_path / "target/release/libnirs4all_datasets_capi.so"
+    binary.write_bytes(b"fixture binary for archive-assembly coverage")
+    subprocess.run(["bash", "-eu", "-c", assemble.replace("${{ matrix.os }}", "linux")], cwd=tmp_path, check=True)
+    with tarfile.open(tmp_path / "nirs4all-datasets-capi-linux.tar.gz") as archive:
+        assert "nirs4all-datasets-capi/licenses/MIT.txt" not in archive.getnames()
+        base = "nirs4all-datasets-capi/licenses/"
+        assert archive.extractfile(base + "LICENSE").read() == (ROOT / "LICENSE").read_bytes()
+        for notice in (ROOT / "LICENSES").iterdir():
+            if notice.is_file():
+                assert archive.extractfile(base + "LICENSES/" + notice.name).read() == notice.read_bytes()
+        assert archive.extractfile("nirs4all-datasets-capi/lib/" + binary.name).read() == binary.read_bytes()
