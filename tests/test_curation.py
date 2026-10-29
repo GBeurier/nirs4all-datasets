@@ -247,3 +247,14 @@ def test_malformed_declared_thousands_groups_are_invalid_not_silently_rescaled()
     assert audit["invalid"] == 2 and audit["censored"] == 1
     assert audit["rows"][0]["raw"] == "0.1" and audit["rows"][1]["status"] == "invalid"
     assert audit["rows"][3]["censoring"]["bound"] == .1
+
+
+def test_declared_response_derivation_matches_canonical_target_alias(tmp_path):
+    from nirs4all_datasets.schema import Variable
+
+    (tmp_path / "M.csv").write_text("observation_id;encoded_response;independent_temperature\na;0;10\nb;1;11\nc;2;12\n")
+    (tmp_path / "Y.csv").write_text("observation_id;Protein (%)\na;1\nb;2\nc;3\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[Variable(name="encoded_response", derived_from=["protein"])])
+    assert result.report["views"]["Y"] == ["protein"]
+    assert "encoded_response" not in result.metadata and "encoded_response" in result.passport
+    assert "independent_temperature" in result.metadata

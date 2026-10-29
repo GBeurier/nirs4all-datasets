@@ -299,6 +299,10 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     categorical_names = categorical_names or set()
     missing_rules = missing_rules or {}
     source_fields = source_fields or {}
+    target_identities = {canonical_name(name) for name in targets.columns if name != _OBS}
+    for original in targets.columns:
+        declared = {**policy.get("fields", {}).get("Y", {}).get(original, {}), **source_fields.get(f"Y:{original}", {})}
+        target_identities.add(canonical_name(declared.get("name") or original))
     # Y first ensures M copies/aliases cannot shadow the selected response.
     for role, source in [("Y", targets), ("M", metadata)]:
         frame = source.set_index(_OBS).reindex(universe)
@@ -312,7 +316,8 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
                 semantic, name = "measured_trait", original
             if dataset_id in _API_DATASETS and original == "api_concentration_design_percent":
                 semantic = "target_copy"
-            if role == "M" and (rule.get("equivalent_to") in targets or set(rule.get("derived_from", [])) & set(targets.columns)):
+            declared_responses = [*rule.get("derived_from", []), *([rule["equivalent_to"]] if rule.get("equivalent_to") else [])]
+            if role == "M" and any(canonical_name(reference) in target_identities for reference in declared_responses):
                 semantic = "target_copy"
             missing = dict(rule.get("missing_rule") or {})
             missing.update(missing_rules.get(f"{role}:{original}", {}))
