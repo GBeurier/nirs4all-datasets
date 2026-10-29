@@ -46,6 +46,8 @@ jobs:
           echo "prefix=nirs4all-datasets-matlab-octave-$VER" >> "$GITHUB_OUTPUT"
 
       - name: Build the MATLAB/Octave package (deterministic git archive)
+        env:
+          PACKAGE_PREFIX: ${{ steps.meta.outputs.prefix }}
         run: |
           mkdir -p dist
           # Archive only the bindings/matlab subtree under a clean top-level dir.
@@ -53,6 +55,33 @@ jobs:
             --prefix="${{ steps.meta.outputs.prefix }}/" \
             HEAD:bindings/matlab \
             -o "dist/${{ steps.meta.outputs.prefix }}.zip"
+          # Tree archives otherwise use wall-clock time. Normalize every member
+          # to the commit timestamp and include the actual project notices.
+          python3 <<'PY'
+          import os
+          import subprocess
+          import time
+          import zipfile
+          from pathlib import Path
+
+          prefix = os.environ["PACKAGE_PREFIX"]
+          epoch = int(subprocess.check_output(["git", "log", "-1", "--format=%ct"], text=True))
+          timestamp = time.gmtime(epoch)[:6]
+          notices = [Path("LICENSE"), *sorted(path for path in Path("LICENSES").rglob("*") if path.is_file())]
+          path = Path("dist") / f"{prefix}.zip"
+          with zipfile.ZipFile(path) as source:
+              entries = [(entry, source.read(entry)) for entry in source.infolist()]
+              comment = source.comment
+          with zipfile.ZipFile(path, "w") as archive:
+              archive.comment = comment
+              for entry, payload in entries:
+                  entry.date_time = timestamp
+                  archive.writestr(entry, payload, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+              for notice in notices:
+                  entry = zipfile.ZipInfo(f"{prefix}/{notice.as_posix()}", date_time=timestamp)
+                  entry.external_attr = 0o100644 << 16
+                  archive.writestr(entry, notice.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+          PY
           unzip -l "dist/${{ steps.meta.outputs.prefix }}.zip" | tail -3
 
       - name: Require the exact published V1 dependency train

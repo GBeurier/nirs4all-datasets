@@ -116,3 +116,39 @@ def test_capi_release_archive_preserves_the_actual_project_licenses(tmp_path: Pa
             if notice.is_file():
                 assert archive.extractfile(base + "LICENSES/" + notice.name).read() == notice.read_bytes()
         assert archive.extractfile("nirs4all-datasets-capi/lib/" + binary.name).read() == binary.read_bytes()
+
+
+def test_matlab_release_archive_includes_exact_notices_reproducibly(tmp_path: Path) -> None:
+    """The independently downloadable binding archive carries its own notices."""
+    import os
+    import shutil
+    import subprocess
+    import zipfile
+
+    import yaml
+
+    workflow = yaml.safe_load((ROOT / ".github/workflows/release-matlab.yml").read_text())
+    assemble = next(step["run"] for step in workflow["jobs"]["matlab-package"]["steps"] if step.get("name") == "Build the MATLAB/Octave package (deterministic git archive)")
+    shutil.copyfile(ROOT / "LICENSE", tmp_path / "LICENSE")
+    shutil.copytree(ROOT / "LICENSES", tmp_path / "LICENSES")
+    prefix = "nirs4all-datasets-matlab-octave-fixture"
+    command = assemble.replace("${{ steps.meta.outputs.prefix }}", prefix)
+    git_dir = subprocess.check_output(["git", "rev-parse", "--absolute-git-dir"], cwd=ROOT, text=True).strip()
+    env = {**os.environ, "GIT_DIR": git_dir, "GIT_WORK_TREE": str(ROOT), "PACKAGE_PREFIX": prefix}
+    subprocess.run(["bash", "-eu", "-c", command], cwd=tmp_path, env=env, check=True)
+    path = tmp_path / "dist" / f"{prefix}.zip"
+    first = path.read_bytes()
+    with zipfile.ZipFile(path) as archive:
+        assert archive.read(f"{prefix}/LICENSE") == (ROOT / "LICENSE").read_bytes()
+        for notice in (ROOT / "LICENSES").iterdir():
+            if notice.is_file():
+                assert archive.read(f"{prefix}/LICENSES/{notice.name}") == notice.read_bytes()
+        assert archive.read(f"{prefix}/build.m") == (ROOT / "bindings/matlab/build.m").read_bytes()
+        import time
+
+        epoch = int(subprocess.check_output(["git", "log", "-1", "--format=%ct"], cwd=ROOT, text=True))
+        expected_time = list(time.gmtime(epoch)[:6])
+        expected_time[-1] -= expected_time[-1] % 2  # ZIP's DOS timestamp resolution
+        assert {entry.date_time for entry in archive.infolist()} == {tuple(expected_time)}
+    subprocess.run(["bash", "-eu", "-c", command], cwd=tmp_path, env=env, check=True)
+    assert path.read_bytes() == first
