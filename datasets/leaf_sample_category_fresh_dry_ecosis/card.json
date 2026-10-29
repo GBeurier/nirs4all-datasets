@@ -1,5 +1,6 @@
 {
   "alignment": {
+    "identity_status": "available",
     "level": "sample",
     "n_observations_total": 75,
     "n_samples": 74,
@@ -7,24 +8,175 @@
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.018266267815220942,
-      "outlier_pressure": 0.7443678938086686,
+      "outlier_pressure": 0.7443678938086649,
       "reference_spread": 1.0,
       "repeatability_risk": 5.256635568667632e-07,
       "shape_drift": 0.26876910504056134,
-      "structure_complexity": 0.6756443469097831
+      "structure_complexity": 0.6756443469097833
     },
     "reps_per_sample": {
       "max": 2,
       "mean": 1.0135135135135136,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Plusieurs spectres export\u00e9s par identifiant ; nature non \u00e9tablie"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:51:58.008189+00:00",
+  "curation": {
+    "contract_sha256": "acefffc0ce40db980f759d3f97396095a4c867b6442faf7bf089f0328c8a2f4d",
+    "dataset_id": "leaf_sample_category_fresh_dry_ecosis",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M ; les fr\u00e9quences de cet identifiant d\u00e9crivent les lignes export\u00e9es, sans \u00e9tablir des r\u00e9p\u00e9titions techniques.",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 75,
+      "n_samples": 74,
+      "observations_per_unit": {
+        "1": 73,
+        "2": 1
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Plusieurs spectres export\u00e9s par identifiant ; nature non \u00e9tablie"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "7543d2c4647b1b9a8a9308a34bc78d260d8042865acca9ebe27dc6aba2d16fa1",
+      "Y.csv": "0b982b2f2325cb2f25dd34f01a1c5c908b35bcd22c532d0fc7ca4e89fa832eff"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "species",
+        "source_columns": [
+          {
+            "name": "Latin Species",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 78.66666666666667,
+          "imbalance_ratio": 2.2,
+          "n_missing": 16,
+          "n_present": 59,
+          "n_rows": 75,
+          "n_unique": 8,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "sample_type",
+        "source_columns": [
+          {
+            "name": "Sample Type",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 16.0,
+          "n_missing": 0,
+          "n_present": 75,
+          "n_rows": 75,
+          "n_unique": 23,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "sample_category",
+        "source_columns": [
+          {
+            "name": "Sample_category",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 3.6875,
+          "n_missing": 0,
+          "n_present": 75,
+          "n_rows": 75,
+          "n_unique": 2,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "species",
+        "sample_type"
+      ],
+      "Y": [
+        "sample_category"
+      ],
+      "measurements": [
+        "sample_name",
+        "class_label"
+      ],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "spectralrep",
+        "sample_code",
+        "sample_category",
+        "dataset",
+        "dataset_slug",
+        "dataset_title",
+        "task_type",
+        "trait_header",
+        "target_original_name",
+        "url",
+        "file",
+        "resource",
+        "measurement_hint",
+        "raw_label",
+        "reference_value",
+        "class_index",
+        "n_points_original",
+        "dimensions",
+        "axis_note",
+        "official_data_url",
+        "official_package_url",
+        "license",
+        "license_url",
+        "rights_status",
+        "usage_scope",
+        "public_release_allowed",
+        "parent_standardized_dataset_id",
+        "notes",
+        "m_instrument",
+        "m_foreoptic"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:30:32.324702+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +197,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "d9c57785e6ca5571c5ed8e6eef7517d876e446b708a5a139b389f387def2b081",
+    "content_hash": "f6d86aecd69494337fd7bdf6ecad3adbe10464d0206cb05162255ec82b711e5f",
     "manifest": "manifest.json",
-    "metadata_hash": "a80f8492de1a22619561d64503880e2ba74fddc4bf9ebf76a6042b0dce460067",
-    "processing_hash": "025d7557b0949d64f03f9e056c854fc5344f50cf22b13c72a2e8cab976897784"
+    "metadata_hash": "c6373af3fa6c8410400778d6992d5288f2485580a56d5edeaf0d3f67e564a855",
+    "processing_hash": "b5616f5897e575467c88372d2e5d0f23e0adb9c15a5a54a7fc158d1f73875ceb"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "Fresh and Dry Spectra of Several Plant Tissues and Chemical and Phenological Constituents",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -87,7 +239,8 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified."
+      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M ; les fr\u00e9quences de cet identifiant d\u00e9crivent les lignes export\u00e9es, sans \u00e9tablir des r\u00e9p\u00e9titions techniques."
     ]
   },
   "schema_version": "2.0",
@@ -102,8 +255,8 @@
       "n_observations": 75,
       "n_variables": 826,
       "name": "elvidge_spectra_values",
-      "signal_type": "absorbance",
-      "signal_type_confidence": 0.6,
+      "signal_type": null,
+      "signal_type_confidence": 0.0,
       "source_id": "X",
       "spectral": {
         "curve": {
@@ -1103,49 +1256,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9990270283159182,
-          "effective_rank": 2.43,
-          "n_components_95": 3,
-          "n_components_99": 5
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.62743066350619,
         "mean_min": 0.16354266629864772,
-        "n_outliers": 28,
-        "pca": {
-          "explained_variance_ratio": [
-            0.722829516922538,
-            0.14987525150014191,
-            0.10099718241677735,
-            0.013972196840310518,
-            0.005298300216779752,
-            0.0023728105696199193,
-            0.0019100549806411735,
-            0.000762045547564553,
-            0.0006781133537018274,
-            0.0003315559678431911,
-            0.00025051916757520533,
-            0.00015584995316828392,
-            0.00011464389028075566,
-            0.0001053529594039407,
-            6.914059187092863e-05,
-            5.4793811888557796e-05,
-            3.7911739113913326e-05,
-            3.422665739621476e-05,
-            2.632335169853055e-05,
-            2.4723605519566935e-05,
-            1.990177255485088e-05,
-            1.3624569469843738e-05,
-            9.45870361943652e-06,
-            8.199801147125417e-06,
-            7.202284543826742e-06,
-            6.119353009524649e-06,
-            5.713712821322468e-06,
-            4.764907358020547e-06,
-            3.872351446466883e-06,
-            3.1826569152586455e-06
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 0.9251702540252793,
@@ -1176,14 +1295,14 @@
                   "signal": "SNR non d\u00e9grad\u00e9"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
               "key": "splice",
               "label": "Splice / raccord d\u00e9tecteurs",
-              "score": 0.7052533308481603,
+              "score": 0.7052533308481596,
               "strength": "moyenne"
             },
             {
@@ -1201,14 +1320,14 @@
                   "signal": "Noise RMS faible"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "key": "resampling_error",
               "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.5735934976746655,
+              "score": 0.5735934976746645,
               "strength": "moyenne"
             },
             {
@@ -1222,18 +1341,18 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 }
               ],
               "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
               "key": "vera25_like",
               "label": "Signature VERA25-like",
-              "score": 0.5693821857263924,
+              "score": 0.5693821857263917,
               "strength": "moyenne"
             },
             {
@@ -1243,22 +1362,22 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.6756443469097831,
+                  "level": 0.6756443469097833,
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 }
               ],
               "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.5275672028620425,
+              "score": 0.527567202862042,
               "strength": "moyenne"
             },
             {
@@ -1272,11 +1391,11 @@
                   "signal": "artefacts locaux"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1287,7 +1406,7 @@
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
-              "score": 0.5254610018709552,
+              "score": 0.5254610018709546,
               "strength": "moyenne"
             },
             {
@@ -1297,11 +1416,11 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1312,7 +1431,7 @@
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "key": "probe_geometry",
               "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5030726886724266,
+              "score": 0.503072688672426,
               "strength": "moyenne"
             },
             {
@@ -1322,18 +1441,18 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.6756443469097831,
+                  "level": 0.6756443469097833,
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 }
               ],
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
               "key": "out_of_domain",
               "label": "Spectre hors domaine valide",
-              "score": 0.4779387270450496,
+              "score": 0.47793872704504975,
               "strength": "moyenne"
             },
             {
@@ -1343,11 +1462,11 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.7443678938086686,
+                  "level": 0.7443678938086649,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4583712961941999,
+                  "level": 0.4583712961942001,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1358,7 +1477,7 @@
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
-              "score": 0.4567129000139986,
+              "score": 0.456712900013998,
               "strength": "moyenne"
             }
           ],
@@ -1379,28 +1498,28 @@
             "worst_band_index": 776
           },
           "outliers": {
-            "hotelling_t2_max": 14.391871724245883,
-            "hotelling_t2_median": 2.232295845066153,
-            "hotelling_t2_p95": 7.504554724835197,
-            "hotelling_t2_ratio": 3.3618101030030823,
-            "mahalanobis_h_max": 3.7936620466570137,
-            "mahalanobis_h_median": 1.4940869603427216,
-            "mahalanobis_h_p95": 2.739386306556582,
-            "mahalanobis_h_ratio": 1.8334851847767997,
-            "pca_q_max": 4.833008166250147,
-            "pca_q_median": 0.5278354066620625,
-            "pca_q_p95": 3.1432298394774527,
-            "pca_q_ratio": 5.954943150469349
+            "hotelling_t2_max": 14.391871724245869,
+            "hotelling_t2_median": 2.2322958450661514,
+            "hotelling_t2_p95": 7.504554724835196,
+            "hotelling_t2_ratio": 3.3618101030030845,
+            "mahalanobis_h_max": 3.793662046657012,
+            "mahalanobis_h_median": 1.494086960342721,
+            "mahalanobis_h_p95": 2.7393863065565816,
+            "mahalanobis_h_ratio": 1.8334851847768003,
+            "pca_q_max": 4.833008166250144,
+            "pca_q_median": 0.5278354066620643,
+            "pca_q_p95": 3.1432298394774474,
+            "pca_q_ratio": 5.954943150469319
           },
           "profile_scores": {
             "integrity_risk": 0.0,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.018266267815220942,
-            "outlier_pressure": 0.7443678938086686,
+            "outlier_pressure": 0.7443678938086649,
             "reference_spread": 1.0,
             "repeatability_risk": 5.256635568667632e-07,
             "shape_drift": 0.26876910504056134,
-            "structure_complexity": 0.6756443469097831
+            "structure_complexity": 0.6756443469097833
           },
           "reference": {
             "affine_gain_median": 1.1556444392121168,
@@ -1431,9 +1550,9 @@
             "edge_noise_ratio": 0.8063073151216841
           },
           "structure": {
-            "density_cv": 0.39385930967603433,
+            "density_cv": 0.39385930967603444,
             "isolation_forest_score_p95": 0.5801513828811593,
-            "local_outlier_factor_p95": 2.0269330407293493,
+            "local_outlier_factor_p95": 2.0269330407293498,
             "pca_score_density": 0.5265548174913077
           }
         },
@@ -1445,309 +1564,309 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.7228295169225389,
-            0.14987525150014194
+            0.7228295169225386,
+            0.14987525150014208
           ],
           "points": [
             {
-              "x": -11.01582422422139,
+              "x": -11.015824224221396,
+              "y": -0.5431579047684689
+            },
+            {
+              "x": -11.015824224221396,
               "y": -0.5431579047684673
             },
             {
-              "x": -11.0158242242214,
-              "y": -0.5431579047684659
+              "x": -10.482131547672351,
+              "y": -0.4202198799217798
             },
             {
-              "x": -10.482131547672353,
-              "y": -0.4202198799217753
+              "x": -5.270729021488803,
+              "y": -5.080117843817765
             },
             {
-              "x": -5.270729021488806,
-              "y": -5.080117843817759
-            },
-            {
-              "x": -5.456195589764591,
-              "y": 4.0198939584981455
+              "x": -5.456195589764592,
+              "y": 4.019893958498151
             },
             {
               "x": -5.37633670840547,
-              "y": 3.087896947061905
+              "y": 3.0878969470619078
             },
             {
-              "x": -11.861088229914593,
-              "y": 2.4810999507972458
+              "x": -11.861088229914586,
+              "y": 2.481099950797245
             },
             {
-              "x": -12.69722670991538,
-              "y": 1.1054846193268126
+              "x": -12.697226709915375,
+              "y": 1.105484619326811
             },
             {
-              "x": -7.480375192923817,
-              "y": -1.9312476624780928
+              "x": -7.480375192923812,
+              "y": -1.9312476624780945
             },
             {
-              "x": -10.394016347282465,
-              "y": -2.014429040936351
+              "x": -10.39401634728246,
+              "y": -2.014429040936353
             },
             {
-              "x": -5.129713886485864,
-              "y": -1.1588200520385519
+              "x": -5.129713886485861,
+              "y": -1.158820052038552
             },
             {
-              "x": 1.5624662161336085,
-              "y": -1.1395068854717725
+              "x": 1.5624662161336087,
+              "y": -1.1395068854717758
             },
             {
-              "x": -10.587408039586869,
-              "y": 1.0465208392044576
+              "x": -10.58740803958687,
+              "y": 1.0465208392044545
             },
             {
-              "x": -4.800822706880876,
-              "y": -1.331723231115869
+              "x": -4.800822706880875,
+              "y": -1.3317232311158684
             },
             {
-              "x": 0.352579786921488,
-              "y": 1.9130085733177185
+              "x": 0.3525797869214879,
+              "y": 1.9130085733177205
             },
             {
-              "x": 6.370361993971942,
-              "y": 3.66114362444433
+              "x": 6.370361993971941,
+              "y": 3.661143624444328
             },
             {
-              "x": 3.129388481438158,
-              "y": -4.813510249770441
+              "x": 3.1293884814381565,
+              "y": -4.813510249770438
             },
             {
-              "x": 2.0836744572556425,
-              "y": -5.218744940675712
+              "x": 2.083674457255642,
+              "y": -5.218744940675711
             },
             {
-              "x": 3.875904608870496,
-              "y": -3.8780245825930195
+              "x": 3.875904608870493,
+              "y": -3.8780245825930164
             },
             {
-              "x": 1.7688369332950762,
-              "y": -2.068282963918107
+              "x": 1.768836933295076,
+              "y": -2.0682829639181075
             },
             {
-              "x": 2.8440689340285688,
-              "y": -3.8277954796291636
+              "x": 2.844068934028567,
+              "y": -3.82779547962916
             },
             {
-              "x": 3.3864481870125784,
+              "x": 3.386448187012576,
               "y": -4.67832276092935
             },
             {
-              "x": 1.9070167282299264,
-              "y": -2.064755834085795
+              "x": 1.9070167282299246,
+              "y": -2.0647558340857928
             },
             {
-              "x": 3.0847364534230914,
-              "y": -2.5698496979515624
+              "x": 3.0847364534230906,
+              "y": -2.5698496979515615
             },
             {
-              "x": 3.059637028143087,
-              "y": -3.7789092406479687
+              "x": 3.0596370281430856,
+              "y": -3.778909240647969
             },
             {
-              "x": 0.12511318348868214,
-              "y": -2.3579258538578083
+              "x": 0.12511318348868244,
+              "y": -2.3579258538578087
             },
             {
-              "x": 1.035536560192429,
-              "y": -3.0885796087938884
+              "x": 1.035536560192428,
+              "y": -3.0885796087938875
             },
             {
               "x": 3.3429901971386995,
-              "y": 3.7494409581718764
+              "y": 3.749440958171874
             },
             {
               "x": 2.6799787689138306,
-              "y": 1.4264400558130221
+              "y": 1.42644005581302
             },
             {
-              "x": 5.006532695715642,
-              "y": -1.5802333517122658
+              "x": 5.006532695715641,
+              "y": -1.5802333517122655
             },
             {
-              "x": 3.1514810846614045,
-              "y": -1.0816382335578598
+              "x": 3.1514810846614036,
+              "y": -1.0816382335578556
             },
             {
-              "x": -1.6929775711138766,
-              "y": 0.11629660731383679
+              "x": -1.692977571113878,
+              "y": 0.11629660731384164
             },
             {
               "x": 0.6736075363718881,
-              "y": -1.0978069102542116
+              "y": -1.0978069102542094
             },
             {
-              "x": 3.4245839075786937,
-              "y": 2.7169219004119443
+              "x": 3.424583907578692,
+              "y": 2.716921900411945
             },
             {
-              "x": 2.932907108955443,
-              "y": 2.7975371007897363
+              "x": 2.9329071089554417,
+              "y": 2.7975371007897323
             },
             {
               "x": 7.396805053794104,
-              "y": -0.20908416756944023
+              "y": -0.2090841675694429
             },
             {
-              "x": -3.6538709638612032,
-              "y": -0.699597366529672
+              "x": -3.653870963861202,
+              "y": -0.6995973665296699
             },
             {
-              "x": 3.1991600253164796,
-              "y": -0.3466419755626305
+              "x": 3.1991600253164783,
+              "y": -0.3466419755626264
             },
             {
-              "x": 3.886717573415645,
+              "x": 3.8867175734156443,
               "y": -1.8954802844025065
             },
             {
-              "x": 4.788125220671225,
-              "y": 2.075020775754973
+              "x": 4.788125220671224,
+              "y": 2.0750207757549717
             },
             {
-              "x": -0.9586951737232763,
-              "y": 2.2508128071368287
+              "x": -0.9586951737232756,
+              "y": 2.250812807136828
             },
             {
-              "x": 5.219279689382438,
-              "y": 0.48956137236284636
+              "x": 5.219279689382437,
+              "y": 0.48956137236284364
             },
             {
-              "x": -2.913051553720261,
-              "y": 1.1579415162220008
+              "x": -2.913051553720262,
+              "y": 1.157941516222005
             },
             {
-              "x": 1.7205171155590067,
-              "y": -0.16706926744883363
+              "x": 1.7205171155590058,
+              "y": -0.1670692674488333
             },
             {
-              "x": 1.2928257009210196,
-              "y": -0.5909594021701358
+              "x": 1.2928257009210198,
+              "y": -0.5909594021701363
             },
             {
-              "x": 4.815927252562543,
-              "y": 1.9130815901139993
+              "x": 4.815927252562541,
+              "y": 1.9130815901139984
             },
             {
-              "x": 0.8066824048189816,
-              "y": 2.9884746821703034
+              "x": 0.8066824048189811,
+              "y": 2.988474682170304
             },
             {
-              "x": 5.482029831051082,
-              "y": 0.46044916484443454
+              "x": 5.48202983105108,
+              "y": 0.46044916484443427
             },
             {
-              "x": 7.389596538904238,
-              "y": 2.200901279856473
+              "x": 7.389596538904236,
+              "y": 2.200901279856472
             },
             {
               "x": -4.457024824207995,
-              "y": -0.51481466648422
+              "y": -0.5148146664842213
             },
             {
-              "x": 0.7809013181481111,
-              "y": -0.9853729369515924
+              "x": 0.7809013181481104,
+              "y": -0.9853729369515883
             },
             {
-              "x": 2.7214814145037542,
-              "y": -1.695263302567351
+              "x": 2.7214814145037534,
+              "y": -1.6952633025673511
             },
             {
-              "x": 4.83142335839452,
-              "y": -3.270876171000285
+              "x": 4.831423358394521,
+              "y": -3.2708761710002876
             },
             {
-              "x": 1.1210042661050184,
-              "y": 2.4880997227592756
+              "x": 1.1210042661050186,
+              "y": 2.488099722759275
             },
             {
-              "x": -5.083818137206043,
-              "y": -0.12218216641518531
+              "x": -5.083818137206042,
+              "y": -0.12218216641518603
             },
             {
-              "x": -2.9097225979793797,
-              "y": 1.4810277592006484
+              "x": -2.9097225979793793,
+              "y": 1.4810277592006493
             },
             {
-              "x": -1.0173034112962651,
-              "y": 1.5873456291352162
+              "x": -1.0173034112962656,
+              "y": 1.5873456291352197
             },
             {
-              "x": 5.532966817727881,
-              "y": 2.40372547049657
+              "x": 5.532966817727879,
+              "y": 2.403725470496568
             },
             {
-              "x": 4.082599471945661,
-              "y": 1.855457373604978
+              "x": 4.08259947194566,
+              "y": 1.855457373604976
             },
             {
-              "x": 5.5450295862268835,
-              "y": 1.4338516444966933
+              "x": 5.545029586226884,
+              "y": 1.4338516444966904
             },
             {
-              "x": 0.3315805533921186,
-              "y": 1.025439619547019
+              "x": 0.3315805533921181,
+              "y": 1.0254396195470201
             },
             {
-              "x": -1.3348004511740563,
-              "y": -2.2625882684224807
+              "x": -1.3348004511740565,
+              "y": -2.262588268422481
             },
             {
               "x": 3.781884917648059,
-              "y": 2.2161782912962997
+              "y": 2.216178291296299
             },
             {
-              "x": 0.3631559699771619,
-              "y": 1.2278865063702953
+              "x": 0.36315596997716115,
+              "y": 1.2278865063702964
             },
             {
-              "x": -3.130604596347972,
-              "y": 1.4754049149770396
+              "x": -3.1306045963479714,
+              "y": 1.475404914977042
             },
             {
               "x": -3.3248875975895005,
-              "y": 0.16512919743736532
+              "y": 0.16512919743736615
             },
             {
-              "x": -0.06424383916287484,
-              "y": -0.1441884502111947
+              "x": -0.06424383916287478,
+              "y": -0.14418845021119497
             },
             {
-              "x": 7.766467135270235,
-              "y": -0.3191058329273011
+              "x": 7.7664671352702355,
+              "y": -0.3191058329273065
             },
             {
-              "x": 6.1053224516060265,
-              "y": 0.3662797040255891
+              "x": 6.105322451606025,
+              "y": 0.36627970402558596
             },
             {
-              "x": 3.493832492192467,
-              "y": 3.209685627557165
+              "x": 3.493832492192466,
+              "y": 3.209685627557163
             },
             {
-              "x": 0.11728770834087,
-              "y": 3.3184805736774186
+              "x": 0.11728770834086995,
+              "y": 3.318480573677418
             },
             {
-              "x": 0.9980388474695608,
-              "y": 2.596053587876502
+              "x": 0.9980388474695596,
+              "y": 2.5960535878765065
             },
             {
-              "x": -1.5570460624694369,
-              "y": 0.38577769930239914
+              "x": -1.5570460624694367,
+              "y": 0.3857776993024021
             },
             {
-              "x": -4.4885579113377965,
-              "y": -0.22297029128382354
+              "x": -4.488557911337795,
+              "y": -0.2229702912838232
             },
             {
-              "x": -1.2141964471317104,
-              "y": 0.8192030182675347
+              "x": -1.214196447131711,
+              "y": 0.8192030182675386
             }
           ]
         },
@@ -1763,10 +1882,14 @@
         "value_min": 0.007799999788403511,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -2123,14 +2246,6 @@
           },
           {
             "count": 2,
-            "name": "Brown Flower"
-          },
-          {
-            "count": 2,
-            "name": "Yellow Stem"
-          },
-          {
-            "count": 2,
             "name": "Brown Bark"
           },
           {
@@ -2138,8 +2253,12 @@
             "name": "Decayed Leaf"
           },
           {
-            "count": 1,
-            "name": "Pericarp"
+            "count": 2,
+            "name": "Brown Flower"
+          },
+          {
+            "count": 2,
+            "name": "Yellow Stem"
           },
           {
             "count": 1,
@@ -2147,7 +2266,7 @@
           },
           {
             "count": 1,
-            "name": "Senesced Leaf"
+            "name": "Pericarp"
           },
           {
             "count": 1,
@@ -2155,11 +2274,7 @@
           },
           {
             "count": 1,
-            "name": "Black Needle"
-          },
-          {
-            "count": 1,
-            "name": "Brown Cone"
+            "name": "Senesced Leaf"
           },
           {
             "count": 1,
@@ -2167,11 +2282,19 @@
           },
           {
             "count": 1,
+            "name": "Brown Cone"
+          },
+          {
+            "count": 1,
+            "name": "Black Needle"
+          },
+          {
+            "count": 1,
             "name": "Sap"
           },
           {
             "count": 1,
-            "name": "Grey Stem"
+            "name": "Grey Leaf"
           }
         ]
       },
@@ -2801,10 +2924,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

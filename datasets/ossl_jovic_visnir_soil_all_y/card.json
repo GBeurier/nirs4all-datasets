@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 135,
     "n_samples": 135,
     "profile_scores": {
@@ -18,13 +19,517 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": false
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:08.400100+00:00",
+  "curation": {
+    "contract_sha256": "d8a704c7a759f6fa5fa5baccd88567df1e05cfd3fd66e1a58ec9f4bae19af547",
+    "dataset_id": "ossl_jovic_visnir_soil_all_y",
+    "enrichments": [
+      {
+        "canonical_name": "site_id",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "id.dataset.site_ascii_txt",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "longitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "longitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "latitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "latitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_begin",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.begin_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_end",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.end_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "location_error_m",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "location.point.error_any_m",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      }
+    ],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 135,
+      "n_samples": 135,
+      "observations_per_unit": {
+        "1": 135
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "ID_sample"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "0d2d7ebc7ae92d27f6b8b88787cef61688a583aabfb137c71f365c3a4e998538",
+      "Y.csv": "62c60a9abbf1a3038b74f80fa81e093fd9ee2f0e0b130b5d10c3fbba34ef6af9"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "pedon_taxa",
+        "source_columns": [
+          {
+            "name": "pedon_taxa",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 5,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "horizon_designation",
+        "source_columns": [
+          {
+            "name": "horizon_designation",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 3.0,
+          "min": 1.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 3,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "longitude",
+        "source_columns": [
+          {
+            "name": "longitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 21.161,
+          "min": 19.134,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 15,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "latitude",
+        "source_columns": [
+          {
+            "name": "latitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 46.072,
+          "min": 44.537,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 15,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "c_tot_usda_a622_w_pct",
+        "source_columns": [
+          {
+            "name": "c_tot_usda_a622_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 33.333333333333336,
+          "max": 7.061,
+          "min": 1.425,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 90,
+          "n_present": 45,
+          "n_rows": 135,
+          "n_unique": 44,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "caco3_usda_a54_w_pct",
+        "source_columns": [
+          {
+            "name": "caco3_usda_a54_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 33.333333333333336,
+          "max": 21.994308376,
+          "min": 0.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 90,
+          "n_present": 45,
+          "n_rows": 135,
+          "n_unique": 28,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "clay_tot_usda_a334_w_pct",
+        "source_columns": [
+          {
+            "name": "clay_tot_usda_a334_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 60.8133333333333,
+          "min": 5.53333333333333,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 132,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "n_tot_usda_a623_w_pct",
+        "source_columns": [
+          {
+            "name": "n_tot_usda_a623_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 33.333333333333336,
+          "max": 0.493,
+          "min": 0.049,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 90,
+          "n_present": 45,
+          "n_rows": 135,
+          "n_unique": 40,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "oc_usda_c729_w_pct",
+        "source_columns": [
+          {
+            "name": "oc_usda_c729_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 33.333333333333336,
+          "max": 5.01584810624,
+          "min": 1.30152171032533,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 90,
+          "n_present": 45,
+          "n_rows": 135,
+          "n_unique": 44,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ph_h2o_usda_a268_index",
+        "source_columns": [
+          {
+            "name": "ph_h2o_usda_a268_index",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 33.333333333333336,
+          "max": 9.17666666666667,
+          "min": 5.38,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 90,
+          "n_present": 45,
+          "n_rows": 135,
+          "n_unique": 40,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "sand_tot_usda_c60_w_pct",
+        "source_columns": [
+          {
+            "name": "sand_tot_usda_c60_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 92.2666666666667,
+          "min": 9.02666666666667,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 135,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "silt_tot_usda_c62_w_pct",
+        "source_columns": [
+          {
+            "name": "silt_tot_usda_c62_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 53.3866666666667,
+          "min": 1.22666666666667,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 135,
+          "n_rows": 135,
+          "n_unique": 132,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "pedon_taxa",
+        "horizon_designation",
+        "longitude",
+        "latitude"
+      ],
+      "Y": [
+        "c_tot_usda_a622_w_pct",
+        "caco3_usda_a54_w_pct",
+        "clay_tot_usda_a334_w_pct",
+        "n_tot_usda_a623_w_pct",
+        "oc_usda_c729_w_pct",
+        "ph_h2o_usda_a268_index",
+        "sand_tot_usda_c60_w_pct",
+        "silt_tot_usda_c62_w_pct"
+      ],
+      "measurements": [
+        "class_label"
+      ],
+      "passport": [
+        "id_sample",
+        "spectralrep",
+        "dataset",
+        "collection_name",
+        "dataset_code",
+        "dataset_title",
+        "dataset_owner",
+        "dataset_slug",
+        "task_type",
+        "trait_header",
+        "trait_header_original",
+        "package_url",
+        "dataset_url",
+        "dataset_doi",
+        "file",
+        "resource",
+        "spectral_kind",
+        "scan_local_id",
+        "raw_label",
+        "reference_value",
+        "class_index",
+        "feature_count_per_dimension",
+        "dimensions",
+        "wavelength_note",
+        "dataset_id",
+        "root",
+        "relative_dir",
+        "split_original",
+        "grouped_y_exports",
+        "active_status",
+        "replaces_dataset_id",
+        "site_id",
+        "m_scan_lab",
+        "m_instrument_model",
+        "m_scan_model_code",
+        "m_acquisition_optics",
+        "m_sample_preparation",
+        "m_country",
+        "m_upper_depth_cm",
+        "m_lower_depth_cm",
+        "m_texture_class",
+        "m_campaign_date_begin",
+        "m_campaign_date_end",
+        "m_location_error_m",
+        "y_acidity_usda_a795_cmolc_kg",
+        "y_aggstb_usda_a1_w_pct",
+        "y_al_dith_usda_a65_w_pct",
+        "y_al_ext_aquaregia_g_kg",
+        "y_al_ext_usda_a1056_mg_kg",
+        "y_al_ext_usda_a69_cmolc_kg",
+        "y_al_ox_usda_a59_w_pct",
+        "y_awc_33_1500kpa_usda_c80_w_frac",
+        "y_b_ext_mel3_mg_kg",
+        "y_bd_usda_a4_g_cm3",
+        "y_ca_ext_aquaregia_mg_kg",
+        "y_ca_ext_usda_a1059_mg_kg",
+        "y_ca_ext_usda_a722_cmolc_kg",
+        "y_cec_usda_a723_cmolc_kg",
+        "y_cf_usda_c236_w_pct",
+        "y_cu_ext_usda_a1063_mg_kg",
+        "y_ec_usda_a364_ds_m",
+        "y_efferv_usda_a479_class",
+        "y_fe_dith_usda_a66_w_pct",
+        "y_fe_ext_aquaregia_g_kg",
+        "y_fe_ext_usda_a1064_mg_kg",
+        "y_fe_ox_usda_a60_w_pct",
+        "y_k_ext_aquaregia_mg_kg",
+        "y_k_ext_usda_a1065_mg_kg",
+        "y_k_ext_usda_a725_cmolc_kg",
+        "y_mg_ext_aquaregia_mg_kg",
+        "y_mg_ext_usda_a1066_mg_kg",
+        "y_mg_ext_usda_a724_cmolc_kg",
+        "y_mn_ext_aquaregia_mg_kg",
+        "y_mn_ext_usda_a1067_mg_kg",
+        "y_mn_ext_usda_a70_mg_kg",
+        "y_na_ext_aquaregia_mg_kg",
+        "y_na_ext_usda_a1068_mg_kg",
+        "y_na_ext_usda_a726_cmolc_kg",
+        "y_p_ext_aquaregia_mg_kg",
+        "y_p_ext_usda_a1070_mg_kg",
+        "y_p_ext_usda_a270_mg_kg",
+        "y_p_ext_usda_a274_mg_kg",
+        "y_ph_cacl2_usda_a481_index",
+        "y_s_ext_mel3_mg_kg",
+        "y_s_tot_usda_a624_w_pct",
+        "y_wr_10kpa_usda_a414_w_pct",
+        "y_wr_1500kpa_usda_a417_w_pct",
+        "y_wr_33kpa_usda_a415_w_pct",
+        "y_zn_ext_usda_a1073_mg_kg"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:32:29.234193+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +550,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "e3e303c3cd4e749bf65bb963fc4cf601c832201f6e73327a8dac768a84196dbd",
+    "content_hash": "bac0a83cf2dc45bcbc45d7ab7066d4f153b82aff3544c6e6d73a925ccf9a2332",
     "manifest": "manifest.json",
-    "metadata_hash": "496b93e0996ad6596b870b3d55485e9d2d861b14d268dd894eb0ab7bbc7b5269",
-    "processing_hash": "572e1d1bcdb917b70ff387241d2537deebecc122f23efce6c42716bff90df111"
+    "metadata_hash": "37fb32b82799093c2cf38a72cec482cf8762582c9fd5557d32ca9b21fe4e0843",
+    "processing_hash": "4f02ec69aa2a66e3893b59563b70817c2de868cf5380ddeebad87398b7847603"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "NIRS DB",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -86,7 +591,9 @@
     ],
     "publications": [],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1108,42 +1615,8 @@
         },
         "mean_max": null,
         "mean_min": null,
-        "n_outliers": 0,
-        "pca": {
-          "explained_variance_ratio": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": null,
@@ -1359,7 +1832,10 @@
         "value_min": null,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [
@@ -1371,6 +1847,7 @@
       }
     }
   ],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -2593,7 +3070,7 @@
         "cv": 0.34312592685777976,
         "is_normal": true,
         "kurtosis": -0.1712018601187122,
-        "normality_p": 0.1482474911312087,
+        "normality_p": 0.14824749113120866,
         "skewness": 0.6992740489319657
       },
       "stats": {
@@ -3886,23 +4363,19 @@
           },
           {
             "count": 1,
-            "name": "19.24"
-          },
-          {
-            "count": 1,
             "name": "15.8266666666667"
           },
           {
             "count": 1,
-            "name": "16.08"
-          },
-          {
-            "count": 1,
-            "name": "17.1866666666667"
+            "name": "19.24"
           },
           {
             "count": 1,
             "name": "12.7866666666667"
+          },
+          {
+            "count": 1,
+            "name": "16.08"
           },
           {
             "count": 1,
@@ -3918,7 +4391,7 @@
           },
           {
             "count": 1,
-            "name": "16.44"
+            "name": "17.1866666666667"
           },
           {
             "count": 1,
@@ -3947,6 +4420,10 @@
           {
             "count": 1,
             "name": "11.2266666666667"
+          },
+          {
+            "count": 1,
+            "name": "16.44"
           }
         ]
       },
@@ -4183,11 +4660,352 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9777777777777777,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.022222222222222223,
+        "n_classes": 45,
+        "normalized_entropy": 1.0
+      },
+      "name": "site_id",
+      "role": "metadata",
+      "stats": {
+        "n": 135,
+        "n_classes": 45,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "D. Pe\u0161\u010dara-arable"
+          },
+          {
+            "count": 3,
+            "name": "D. Pe\u0161\u010dara-meadow"
+          },
+          {
+            "count": 3,
+            "name": "D. Pe\u0161\u010dara-forest"
+          },
+          {
+            "count": 3,
+            "name": "Kelebija-arable"
+          },
+          {
+            "count": 3,
+            "name": "Kelebija-meadow"
+          },
+          {
+            "count": 3,
+            "name": "Kelebija-forest"
+          },
+          {
+            "count": 3,
+            "name": "Pali\u0107-arable"
+          },
+          {
+            "count": 3,
+            "name": "Pali\u0107-meadow"
+          },
+          {
+            "count": 3,
+            "name": "Pali\u0107-forest"
+          },
+          {
+            "count": 3,
+            "name": "Ka\u0107-arable"
+          },
+          {
+            "count": 3,
+            "name": "Ka\u0107-meadow"
+          },
+          {
+            "count": 3,
+            "name": "Ka\u0107-forest"
+          },
+          {
+            "count": 3,
+            "name": "Veternik-arable"
+          },
+          {
+            "count": 3,
+            "name": "Veternik-meadow"
+          },
+          {
+            "count": 3,
+            "name": "Veternik-forest"
+          },
+          {
+            "count": 3,
+            "name": "Novi Be\u010dej-arable"
+          },
+          {
+            "count": 3,
+            "name": "Novi Be\u010dej-meadow"
+          },
+          {
+            "count": 3,
+            "name": "Novi Be\u010dej-forest"
+          },
+          {
+            "count": 3,
+            "name": "Rimski \u0160an\u010devi-arable"
+          },
+          {
+            "count": 3,
+            "name": "Rimski \u0160an\u010devi-meadow"
+          }
+        ]
+      },
+      "type": "identifier",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          9,
+          0,
+          18,
+          27,
+          9,
+          9,
+          0,
+          0,
+          0,
+          0,
+          18,
+          18,
+          0,
+          9,
+          0,
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9
+        ],
+        "edges": [
+          19.134,
+          19.218458333333334,
+          19.30291666666667,
+          19.387375,
+          19.471833333333333,
+          19.556291666666667,
+          19.64075,
+          19.725208333333335,
+          19.80966666666667,
+          19.894125000000003,
+          19.978583333333333,
+          20.063041666666667,
+          20.1475,
+          20.231958333333335,
+          20.31641666666667,
+          20.400875,
+          20.485333333333333,
+          20.569791666666667,
+          20.65425,
+          20.738708333333335,
+          20.82316666666667,
+          20.907625000000003,
+          20.992083333333333,
+          21.076541666666667,
+          21.161
+        ]
+      },
+      "name": "longitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.026445286915034717,
+        "is_normal": false,
+        "kurtosis": 0.4572165197833735,
+        "normality_p": 0.00014161726019134543,
+        "skewness": 0.9448491409576693
+      },
+      "stats": {
+        "max": 21.161,
+        "mean": 19.822466666666664,
+        "median": 19.563,
+        "min": 19.134,
+        "n": 135,
+        "n_missing": 0,
+        "q1": 19.424,
+        "q3": 20.118,
+        "std": 0.5242108183637118
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9,
+          18,
+          18,
+          9,
+          27,
+          27,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          18
+        ],
+        "edges": [
+          44.537,
+          44.60095833333333,
+          44.66491666666666,
+          44.728875,
+          44.792833333333334,
+          44.856791666666666,
+          44.92075,
+          44.98470833333333,
+          45.04866666666667,
+          45.112625,
+          45.17658333333333,
+          45.240541666666665,
+          45.304500000000004,
+          45.368458333333336,
+          45.43241666666667,
+          45.496375,
+          45.56033333333333,
+          45.62429166666667,
+          45.688250000000004,
+          45.752208333333336,
+          45.81616666666667,
+          45.880125,
+          45.94408333333334,
+          46.00804166666667,
+          46.072
+        ]
+      },
+      "name": "latitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.00788259274161537,
+        "is_normal": false,
+        "kurtosis": 1.2010949183983186,
+        "normality_p": 0.013614967224354771,
+        "skewness": 0.4014251496335721
+      },
+      "stats": {
+        "max": 46.072,
+        "mean": 45.330799999999996,
+        "median": 45.319,
+        "min": 44.537,
+        "n": 135,
+        "n_missing": 0,
+        "q1": 45.153,
+        "q3": 45.406,
+        "std": 0.35732423505161803
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_begin",
+      "role": "metadata",
+      "stats": {
+        "n": 135,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 135,
+            "name": "2019-01-01"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_end",
+      "role": "metadata",
+      "stats": {
+        "n": 135,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 135,
+            "name": "2019-12-31"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "location_error_m",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 111.0,
+        "mean": 111.0,
+        "median": 111.0,
+        "min": 111.0,
+        "n": 135,
+        "n_missing": 0,
+        "q1": 111.0,
+        "q3": 111.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

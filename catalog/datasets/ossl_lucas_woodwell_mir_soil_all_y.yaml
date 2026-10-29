@@ -280,21 +280,45 @@ variables:
 - name: replaces_dataset_id
   role: metadata
   type: categorical
+- name: site_id
+  role: metadata
+  type: identifier
+- name: longitude
+  role: metadata
+  type: numeric
+- name: latitude
+  role: metadata
+  type: numeric
+- name: campaign_date_begin
+  role: metadata
+  type: datetime
+- name: campaign_date_end
+  role: metadata
+  type: datetime
+- name: location_error_m
+  role: metadata
+  type: numeric
+- name: campaign_year
+  role: metadata
+  type: numeric
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: OSSL_NIRS
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: OSSL_NIRS
@@ -362,6 +386,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/ossl_lucas_woodwell_mir_soil_all_y
-  source_fingerprint: cd9b6966e304bbf6d8d03883098fa71b5e78885c37fd71e20ce4572da3d8f345
+  generator_version: '2'
+  source_relpath: standardized_datasets/ossl_lucas_woodwell_mir_soil_all_y
+  source_fingerprint: 6c579b0fd375137b90e51bed69ee4b190d883bd351b02637bcb969d4af5dd4eb

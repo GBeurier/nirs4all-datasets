@@ -63,7 +63,7 @@ ids:
   observation_id: observation_id
   sample_id: sample_id
   sample_id_available: true
-alignment_level: observation
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
@@ -72,13 +72,18 @@ splits:
   applied: false
 tier: public
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: Nature Scientific Data supplementary data
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences
+    de cet identifiant décrivent les lignes exportées, sans établir des répétitions
+    techniques.'
 governance:
   license: CC-BY-4.0
   owner_steward: Nature Scientific Data supplementary data
@@ -107,6 +112,12 @@ publications:
   authors: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: official_source_identified
   reproducibility_status: reproducible_for_internal_use
@@ -114,6 +125,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/cartilage_spectroscopy_scientificdata_nir
-  source_fingerprint: acc7f6d7c02d1a82ec3eb55f68c9f1f66fc5f71247746c0aaf8cd03adcf75748
+  generator_version: '2'
+  source_relpath: standardized_datasets/cartilage_spectroscopy_scientificdata_nir
+  source_fingerprint: 90def790b7d8110bc3cb928fc438b825ca8c3ca3258c6c6530cc49eead5d07e3

@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 614 sample(s), 614 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 614 sample(s), 614 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -111,7 +113,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -120,7 +122,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 50 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -142,6 +145,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `894120491e1e5c19f05009a407d94b0f07306d4cc71bf97ea21a2a3dd62ed370`
-- **Processing hash:** `07bf6b0129ca28f2dd580b3142601999d80bc19ed22bb3f2a181ad5c99083624` | **metadata hash:** `cb24c3ac380563d2dab7eda13adc8a2093fe9282c39e9d61a03f4b454d053d7c`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `043a38fda879f3b837892edb2955dd7503e5c5ba85599613be6fd33dd8b8ac75`
+- **Processing hash:** `bd78ce594906c5b7879c87fbb7f455a522ca5c3aa415e2fec1d36f7db09594a7` | **metadata hash:** `0c606f2099795dd72dab3a5a759854a459a73e14cbb518a960032946703e4f81`

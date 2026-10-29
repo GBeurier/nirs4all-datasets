@@ -446,6 +446,7 @@ def _build_rice(context: PullContext) -> Path:
     rows = []
     identities = []
     varieties = []
+    source_samples = []
     for path in files:
         variety = path.name.split("_Reflectance_flag leaf.xlsx")[0]
         table = pd.read_excel(path)
@@ -466,11 +467,12 @@ def _build_rice(context: PullContext) -> Path:
         for column in table.columns[1:]:
             identities.append(f"rice_leaf_{variety}_{column}")
             varieties.append(variety)
+            source_samples.append(str(column))
             rows.append(table[column].tolist())
     if len(identities) != len(set(identities)):
         raise ValueError("Rice source observation identifiers are not unique")
     assert axes is not None
     x = pd.DataFrame(rows, columns=[format(v, ".12g") for v in axes])
     x.insert(0, "observation_id", identities)
-    metadata = pd.DataFrame({"observation_id": identities, "variety": varieties})
+    metadata = pd.DataFrame({"observation_id": identities, "variety": varieties, "source_sample_id": source_samples})
     return context.write_tables({"X": x}, metadata=metadata)

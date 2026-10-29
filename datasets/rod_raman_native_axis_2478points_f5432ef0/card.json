@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 11,
     "n_samples": 11,
     "profile_scores": {
@@ -18,13 +19,155 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:33.409614+00:00",
+  "curation": {
+    "contract_sha256": "842c6ab515b9e8132bf0c54735bfacbe9530b996f9f42b8cdf593b4815f7e8db",
+    "dataset_id": "rod_raman_native_axis_2478points_f5432ef0",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 11,
+      "n_samples": 11,
+      "observations_per_unit": {
+        "1": 11
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "2fb21d2e2bce0f0fc8f82be2dd68b4536d612c9ecfc080d39410f305645e03e8",
+      "Y.csv": "1a54dd64cd32bedc73999593b5c75ccb128d1fb5238c94d860adf9e723036cca"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "chemical_name_mineral",
+        "source_columns": [
+          {
+            "name": "chemical_name_mineral",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 2.0,
+          "n_missing": 0,
+          "n_present": 11,
+          "n_rows": 11,
+          "n_unique": 10,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "mineral_name",
+        "source_columns": [
+          {
+            "name": "mineral_name",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 2.0,
+          "n_missing": 0,
+          "n_present": 11,
+          "n_rows": 11,
+          "n_unique": 10,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chemical_formula_sum",
+        "source_columns": [
+          {
+            "name": "chemical_formula_sum",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 2.0,
+          "n_missing": 0,
+          "n_present": 11,
+          "n_rows": 11,
+          "n_unique": 10,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "chemical_name_mineral"
+      ],
+      "Y": [
+        "mineral_name",
+        "chemical_formula_sum"
+      ],
+      "measurements": [],
+      "passport": [
+        "compound_source",
+        "rod_database_code",
+        "dataset_id",
+        "source_sample_id",
+        "file",
+        "url",
+        "axis_digest",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "n_points_original",
+        "spectroscopy_type",
+        "axis_status",
+        "interpolation_applied",
+        "chemical_formula_sum",
+        "chemical_compound_source",
+        "raman_measurement_range_min",
+        "raman_measurement_range_max",
+        "publ_section_title",
+        "journal_paper_doi",
+        "journal_year",
+        "m_chemical_name_common",
+        "m_chemical_name_systematic",
+        "m_chemical_formula_structural",
+        "m_raman_measurement_device_model",
+        "m_raman_measurement_device_company",
+        "m_raman_measurement_device_excitation_laser_wavelength"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:38:28.909206+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -45,15 +188,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "696cfafac76c01541e6e2e2af82e81179f829966286204813ca50ce64085311e",
+    "content_hash": "9f13c4b04bc6322d41bad321fdf0b306ab394c187a2e8e497c62a2036032db38",
     "manifest": "manifest.json",
-    "metadata_hash": "1808c82ff4e55f3b817e23066fcbaa9492b7d6ae92f469c7f2b66551c810e65c",
-    "processing_hash": "ae4750fc65a13089c231fbeef357fb2b31bc504265608dee0b1c92e3a8461695"
+    "metadata_hash": "926f2b9776294340aa586178d614002065de7f62689f91ffc7a4117bd60dcfdf",
+    "processing_hash": "6596db8b1d7c6a7514e410940fa201f32c1a1805bc4384dd6b83b85f262e5f89"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "Raman Open Database",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -73,7 +216,8 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified."
+      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
     ]
   },
   "schema_version": "2.0",
@@ -1089,29 +1233,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 1.0,
-          "effective_rank": 1.0,
-          "n_components_95": 1,
-          "n_components_99": 1
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 31611.08567205884,
         "mean_min": 0.0,
-        "n_outliers": 3,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9998719220496632,
-            5.052297608973715e-05,
-            3.590062337935917e-05,
-            2.4175086125079224e-05,
-            5.438457531441773e-06,
-            3.75787065240669e-06,
-            3.261468282003759e-06,
-            2.337792308803352e-06,
-            2.0688991177187272e-06,
-            6.147768501531139e-07
-          ],
-          "n_components": 10
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 1512471.8590246427,
@@ -1146,7 +1276,7 @@
                   "signal": "SNR non d\u00e9grad\u00e9"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 }
               ],
@@ -1175,14 +1305,14 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
               "key": "vera25_like",
               "label": "Signature VERA25-like",
-              "score": 0.7463978962967944,
+              "score": 0.7463978962967943,
               "strength": "forte"
             },
             {
@@ -1225,14 +1355,14 @@
                   "signal": "Noise RMS faible"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "key": "resampling_error",
               "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.7239391244112773,
+              "score": 0.7239391244112772,
               "strength": "forte"
             },
             {
@@ -1250,7 +1380,7 @@
                   "signal": "artefacts locaux"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 },
                 {
@@ -1261,7 +1391,7 @@
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
-              "score": 0.7207297939627617,
+              "score": 0.7207297939627616,
               "strength": "forte"
             },
             {
@@ -1279,7 +1409,7 @@
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 }
               ],
@@ -1300,7 +1430,7 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 },
                 {
@@ -1311,7 +1441,7 @@
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
-              "score": 0.6790631272960951,
+              "score": 0.6790631272960949,
               "strength": "moyenne"
             },
             {
@@ -1325,7 +1455,7 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.8088301101927194,
+                  "level": 0.808830110192719,
                   "signal": "PCA Q"
                 },
                 {
@@ -1336,7 +1466,7 @@
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "key": "probe_geometry",
               "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.6416577767120921,
+              "score": 0.641657776712092,
               "strength": "moyenne"
             }
           ],
@@ -1357,18 +1487,18 @@
             "worst_band_index": 2
           },
           "outliers": {
-            "hotelling_t2_max": 9.090895624938828,
-            "hotelling_t2_median": 0.09119434431501029,
-            "hotelling_t2_p95": 4.591140834184548,
-            "hotelling_t2_ratio": 50.344578588398946,
+            "hotelling_t2_max": 9.09089562493883,
+            "hotelling_t2_median": 0.09119434431501028,
+            "hotelling_t2_p95": 4.591140834184549,
+            "hotelling_t2_ratio": 50.34457858839897,
             "mahalanobis_h_max": 3.0151112126982693,
-            "mahalanobis_h_median": 0.30198401334343894,
+            "mahalanobis_h_median": 0.3019840133434389,
             "mahalanobis_h_p95": 1.6587062294294488,
-            "mahalanobis_h_ratio": 5.49269549425798,
-            "pca_q_max": 160464545.51205513,
-            "pca_q_median": 20477846.611183338,
-            "pca_q_p95": 132504791.44826421,
-            "pca_q_ratio": 6.4706408815417555
+            "mahalanobis_h_ratio": 5.492695494257981,
+            "pca_q_max": 160464545.5120551,
+            "pca_q_median": 20477846.611183345,
+            "pca_q_p95": 132504791.44826418,
+            "pca_q_ratio": 6.470640881541752
           },
           "profile_scores": {
             "integrity_risk": 0.04035512510088781,
@@ -1403,16 +1533,16 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": -4060.127146624553,
+            "baseline_slope": -4060.1271466245503,
             "curvature_rms": 1.0400102078970057,
             "d1_rms": 4.222673453996906,
             "edge_noise_ratio": 1.8983229803757757
           },
           "structure": {
-            "density_cv": 3.154583728878948,
+            "density_cv": 3.1545837288789476,
             "isolation_forest_score_p95": 0.7559743416494245,
-            "local_outlier_factor_p95": 4279.320708716147,
-            "pca_score_density": 0.004058557228810152
+            "local_outlier_factor_p95": 4279.320708715897,
+            "pca_score_density": 0.004058557228809913
           }
         },
         "quality": {
@@ -1424,52 +1554,52 @@
         "score_plot": {
           "explained_variance_ratio": [
             0.9998719220496632,
-            5.052297608973715e-05
+            5.052297608973712e-05
           ],
           "points": [
             {
-              "x": -191672.2070037238,
-              "y": -157.60510282324614
+              "x": -191672.20700372386,
+              "y": -157.60510282324896
             },
             {
-              "x": -191941.58120037467,
-              "y": 285.21441753714333
+              "x": -191941.58120037473,
+              "y": 285.214417537143
             },
             {
-              "x": -191794.48030365925,
-              "y": 743.9175748709373
+              "x": -191794.48030365928,
+              "y": 743.917574870942
             },
             {
-              "x": -191826.3747866788,
-              "y": -1135.916910443574
+              "x": -191826.37478667885,
+              "y": -1135.916910443569
             },
             {
               "x": -191995.95952315326,
-              "y": -463.14709968385955
+              "y": -463.1470996838585
             },
             {
-              "x": -189240.29035286492,
-              "y": -10829.737030456741
+              "x": -189240.29035286495,
+              "y": -10829.737030456736
             },
             {
-              "x": -191946.2900645706,
-              "y": 214.58958801515985
+              "x": -191946.29006457067,
+              "y": 214.58958801516272
             },
             {
               "x": -191510.58367758864,
-              "y": -1444.9900667299437
+              "y": -1444.9900667299585
             },
             {
-              "x": -191453.11705737375,
-              "y": 6946.7715648152935
+              "x": -191453.11705737378,
+              "y": 6946.771564815296
             },
             {
-              "x": -191560.51208178012,
-              "y": 5829.368428260319
+              "x": -191560.51208178015,
+              "y": 5829.368428260317
             },
             {
-              "x": 1914941.396051767,
-              "y": 11.534636638497245
+              "x": 1914941.3960517675,
+              "y": 11.534636638497417
             }
           ]
         },
@@ -1485,10 +1615,14 @@
         "value_min": -0.6919304728507996,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -1524,11 +1658,11 @@
           },
           {
             "count": 1,
-            "name": "Vladimirite"
+            "name": "Almandine"
           },
           {
             "count": 1,
-            "name": "Almandine"
+            "name": "Vladimirite"
           },
           {
             "count": 1,
@@ -1585,11 +1719,11 @@
           },
           {
             "count": 1,
-            "name": "As3 Ca4 H9 O16"
+            "name": "Al2 Fe3 O12 Si3"
           },
           {
             "count": 1,
-            "name": "Al2 Fe3 O12 Si3"
+            "name": "As3 Ca4 H9 O16"
           },
           {
             "count": 1,
@@ -1976,11 +2110,11 @@
           },
           {
             "count": 1,
-            "name": "Vladimirite"
+            "name": "Almandine"
           },
           {
             "count": 1,
-            "name": "Almandine"
+            "name": "Vladimirite"
           },
           {
             "count": 1,
@@ -2206,11 +2340,11 @@
           },
           {
             "count": 1,
-            "name": "The crystal structure of vladimirite, with a revised chemical formula, Ca4(AsO4)2(AsO3OH)*4H2O Note: Sample R080001"
+            "name": "A combined temperature dependent 57Fe Mossbauer and single crystal X-ray diffraction study of synthetic almandine: evidence for the Gol'danskii-Karyagin Effect Sample: T = 293 K (B)"
           },
           {
             "count": 1,
-            "name": "A combined temperature dependent 57Fe Mossbauer and single crystal X-ray diffraction study of synthetic almandine: evidence for the Gol'danskii-Karyagin Effect Sample: T = 293 K (B)"
+            "name": "The crystal structure of vladimirite, with a revised chemical formula, Ca4(AsO4)2(AsO3OH)*4H2O Note: Sample R080001"
           },
           {
             "count": 1,
@@ -2360,11 +2494,14 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
     "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "conversion: variables: dropped duplicate columns ['chemical_formula_sum'] (kept the first source's values)."
+    "conversion: variables: dropped duplicate columns ['chemical_formula_sum'] (kept the first source's values).",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

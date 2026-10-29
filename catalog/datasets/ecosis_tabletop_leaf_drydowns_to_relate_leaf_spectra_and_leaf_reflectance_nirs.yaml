@@ -131,24 +131,24 @@ variables:
   type: categorical
 ids:
   observation_id: observation_id
-  sample_id: observation_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id: sample_id
+  sample_id_available: true
+alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: Tabletop leaf drydowns to relate leaf spectra and leaf water (Santa
     Barbara, CA)
   raw_sha256: []
   ingest_reader: v2.0-standardized
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
   warnings:
-  - Observation identity is used as the canonical join key because source sample_id
-    has differing per-observation values in spec_id, lwp_MPa, lwa_g/cm2. The original
-    physical-sample key is preserved as metadata 'original_sample_id'; sample grouping
-    must use that field.
+  - 'Curation identity contract: Suivi de dessiccation : les observations répétées
+    couvrent des états hydriques/temps différents.'
 governance:
   license: PDDL-1.0
   owner_steward: Tabletop leaf drydowns to relate leaf spectra and leaf water (Santa
@@ -195,6 +195,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/ecosis_tabletop_leaf_drydowns_to_relate_leaf_spectra_and_leaf_reflectance_nirs
-  source_fingerprint: 448552486cad26a7358d0873c3f7030a3a6c2bb533c0f8a1edaec973bb3af129
+  generator_version: '2'
+  source_relpath: standardized_datasets/ecosis_tabletop_leaf_drydowns_to_relate_leaf_spectra_and_leaf_reflectance_nirs
+  source_fingerprint: 4b59196cb0f9276eecb41185a943ca7eb661807999436d1a19e7d143478e36a9

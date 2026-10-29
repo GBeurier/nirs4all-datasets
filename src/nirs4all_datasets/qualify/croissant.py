@@ -121,22 +121,24 @@ def _source_record_sets(card: dict[str, Any], source_file_id: dict[str, str]) ->
         source_id = source.get("source_id")
         file_id = source_file_id.get(source_id)
         key_field: dict[str, Any] = {
-            "@type": "cr:Field", "@id": f"{source_id}/sample_id", "name": "sample_id",
-            "description": "Sample identity (join key across sources and variables).", "dataType": "sc:Text",
+            "@type": "cr:Field", "@id": f"{source_id}/observation_id", "name": "observation_id",
+            "description": "Unique acquisition identity within this spectral source.", "dataType": "sc:Text",
         }
+        sample_field: dict[str, Any] = {"@type": "cr:Field", "@id": f"{source_id}/sample_id", "name": "sample_id", "description": "Source-unit grouping (may repeat; availability documented in the card).", "dataType": "sc:Text"}
         spectrum: dict[str, Any] = {
             "@type": "cr:Field", "@id": f"{source_id}/spectrum", "name": "spectrum",
             "description": f"Spectral intensities across the {source.get('axis_unit') or 'axis'} axis.",
             "dataType": "sc:Float", "repeated": True,
         }
         if file_id:
-            key_field["source"] = {"fileObject": {"@id": file_id}, "extract": {"column": "sample_id"}}
+            key_field["source"] = {"fileObject": {"@id": file_id}, "extract": {"column": "observation_id"}}
+            sample_field["source"] = {"fileObject": {"@id": file_id}, "extract": {"column": "sample_id"}}
             spectrum["source"] = {"fileObject": {"@id": file_id}}
         record_sets.append({
             "@type": "cr:RecordSet", "@id": source_id, "name": source_id,
             "description": f"Spectra from source '{source.get('name') or source_id}' ({source.get('n_observations')} observations x {source.get('n_variables')} wavelengths).",
-            "key": {"@id": f"{source_id}/sample_id"},
-            "field": [key_field, spectrum],
+            "key": {"@id": f"{source_id}/observation_id"},
+            "field": [key_field, sample_field, spectrum],
         })
     return record_sets
 
@@ -146,10 +148,11 @@ def _variables_record_set(card: dict[str, Any]) -> dict[str, Any] | None:
     variables = card.get("variables") or []
     if not variables:
         return None
+    key = card.get("variable_join_key", "sample_id")
     key_field: dict[str, Any] = {
-        "@type": "cr:Field", "@id": "variables/sample_id", "name": "sample_id",
+        "@type": "cr:Field", "@id": f"variables/{key}", "name": key,
         "description": "Sample identity (join key).", "dataType": "sc:Text",
-        "source": {"fileObject": {"@id": "file/variables.parquet"}, "extract": {"column": "sample_id"}},
+        "source": {"fileObject": {"@id": "file/variables.parquet"}, "extract": {"column": key}},
     }
     fields: list[dict[str, Any]] = [key_field]
     for var in variables:
@@ -164,8 +167,8 @@ def _variables_record_set(card: dict[str, Any]) -> dict[str, Any] | None:
         fields.append(field)
     return {
         "@type": "cr:RecordSet", "@id": "variables", "name": "variables",
-        "description": "Per-sample target and metadata variables.",
-        "key": {"@id": "variables/sample_id"},
+        "description": f"Target and metadata variables keyed by {key}.",
+        "key": {"@id": f"variables/{key}"},
         "field": fields,
     }
 

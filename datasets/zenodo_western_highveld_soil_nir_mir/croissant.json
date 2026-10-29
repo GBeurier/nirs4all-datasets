@@ -59,7 +59,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "71aa323a0b0f463c20639f8a884a01a6a41b78ff8db0f51546d91d6bcb3b17cb"
+      "sha256": "bbfddbdadd9ed3d1dd39029b490f84ec068b61c48b0825b9cd759fdd08e7f390"
     }
   ],
   "keywords": [
@@ -76,10 +76,25 @@
       "description": "Spectra from source 'NeoSpectra handheld NIR' (803 observations x 251 wavelengths).",
       "field": [
         {
+          "@id": "X1/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        },
+        {
           "@id": "X1/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -105,7 +120,7 @@
         }
       ],
       "key": {
-        "@id": "X1/sample_id"
+        "@id": "X1/observation_id"
       },
       "name": "X1"
     },
@@ -115,10 +130,25 @@
       "description": "Spectra from source 'Bruker Alpha II MIR' (803 observations x 1655 wavelengths).",
       "field": [
         {
+          "@id": "X2/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        },
+        {
           "@id": "X2/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -144,14 +174,14 @@
         }
       ],
       "key": {
-        "@id": "X2/sample_id"
+        "@id": "X2/observation_id"
       },
       "name": "X2"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -512,5 +542,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

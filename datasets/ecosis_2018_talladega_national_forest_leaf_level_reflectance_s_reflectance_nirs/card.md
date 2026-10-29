@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 156 sample(s), 156 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 156 sample(s), 156 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -38,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | longitude | metadata | numeric | *Not specified.* | n=156, missing=0, range 3.645e+06–3.648e+06, mean 3.646e+06 ± 876.4 |
 | coordinate_precision_notes | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top source-provided coordinates when available (×156) |
 | year | metadata | numeric | *Not specified.* | n=156, missing=0, range 2018–2018, mean 2018 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180512 (×24) |
+| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180514 (×24) |
 | species | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top falcate (×18) |
 | genus | metadata | categorical | *Not specified.* | n=156, missing=0, classes=5, top Quercus (×63) |
 | family | metadata | categorical | *Not specified.* | n=156, missing=156, classes=0, — |
@@ -67,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 6 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c3978e911f3381821bb6ca23277dc0ff2d5c93c19db7f1a63bcbb64593a20fee`
-- **Processing hash:** `459ae84418c11359b98c21603b393625849e2e23fc50f2f44407ee81eaa61d45` | **metadata hash:** `4795f26ac9ec3988552503e2e18c2cd70783e82ed025833050e41ee78e2b87c7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `216bc8d216de3fab94cf2b72b3a9f912fd974184955c1a7f4323d6460b21dcf5`
+- **Processing hash:** `ab7a1f80c22f609afa92a8bb340ecb77aed732e22911528925c1ba58f6b4aabb` | **metadata hash:** `8e59798902eb92f138b41f233a50949cf7b86267ada78888a67c8adda2054579`

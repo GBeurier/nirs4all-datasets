@@ -158,6 +158,11 @@ governance, and Croissant/JSON downloads) that opens from `file://` too.
 
 ## Green gate (run before every commit)
 
+For scientific M/Y views, sample-identity corrections, OSSL design enrichment and
+the reproducible metadata migration, see [Scientific curation](docs/CURATION.md).
+Keep original columns and their mapping; curation is separate from the raw
+variable collection and must not change licensing or access tiers.
+
 ```bash
 ruff check .
 mypy --config-file pyproject.toml src

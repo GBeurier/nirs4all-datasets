@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 962 sample(s), 962 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 48 sample(s), 962 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 12–37 (mean 20.04).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -24,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| spec_id | target | categorical | *Not specified.* | n=962, missing=0, classes=955, top 20250925_00000 (×3) |
+| spec_id | target | categorical | *Not specified.* | n=962, missing=0, classes=955, top 20250204_00285 (×3) |
 | species_binom | target | categorical | *Not specified.* | n=962, missing=0, classes=13, top heteromeles arbutifolia (×202) |
 | lwp_MPa | target | numeric | *Not specified.* | n=962, missing=0, range 0.05–5.33, mean 1.994 ± 1.13 |
 | lwa_g/cm2 | target | numeric | *Not specified.* | n=962, missing=0, range 0.006364–0.02914, mean 0.01756 ± 0.005154 |
@@ -58,7 +60,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top explicit_open (×962) |
 | usage_scope | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top public_reuse_possible (×962) |
 | notes | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top EcoSIS package tabletop-leaf-drydowns-to-relate-leaf-spectra-and-leaf-water--santa-barbara--ca-, no interpolation applied by project. (×962) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=962, missing=0, classes=48, top hear_10 (×37) |
 
 ## Statistics — splits
 
@@ -69,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +79,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Observation identity is used as the canonical join key because source sample_id has differing per-observation values in spec_id, lwp_MPa, lwa_g/cm2. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Curation identity contract: Suivi de dessiccation : les observations répétées couvrent des états hydriques/temps différents.
+- **Curated views:** M: 1 fields, Y: 9 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `00a6b8d05b24004aa0903c81015126dfb422e7272d142cf9166a5cbc5fcd0def`
-- **Processing hash:** `7bef4236ed01f1b6a02fa855dca6d1470617604d2c17bd10a03f517de6d2bc9f` | **metadata hash:** `d6824a124054ad8dc9fc9b18d516b00506b88257a588aaa9a8cba3a0dd966886`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `456ddab7ef56b613578b3faa904199ba20d6513591916acd70d6516d111a98a8`
+- **Processing hash:** `b8a2dca26daff71cf0d546536a21795687a4decc4b1c1fe6ef99a8adfa3ee8e7` | **metadata hash:** `5ce3bfd573dea1d9f891714fb01beb4131abc970545c5d8d80fa2233d4a3094b`

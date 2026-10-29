@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 5000 sample(s), 5000 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 5000 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -53,7 +55,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -63,7 +65,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 5 fields, passport: 17 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +86,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d2344ece64b66f84479b1e61c34baab526c8f3f511ec135c23e85d318caf7914`
-- **Processing hash:** `14d9cb2c52793c0c641d512a3afd932c008b62de024ac8e08d096065286ce2ce` | **metadata hash:** `661072271840715f6f9c32d4a38569205d78f4ae5957383279143f43c898d7f7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `41ec391cab2e7589250e8464c443367da055d305206da2dcee5c0cb9f0996d7b`
+- **Processing hash:** `4540f6da25accf70e77ce1c2b52294f4388efb331c3568f41cdc5aa398803aa1` | **metadata hash:** `9e2ebee2bf80d2d2674abcfb540028155bbb822e3a5d3c20ea8a429f6826425c`

@@ -109,6 +109,12 @@ def test_keyless_targets_reject_unverified_order(tmp_path: Path, v2_leaf: Any) -
     x.write_text("\n".join([lines[0], *reversed(lines[1:])]) + "\n")
     res, _ = _build(leaf, tmp_path / "out")
     assert any("cannot be verified; skipping targets" in w for w in res.warnings)
+    import pandas as pd
+
+    curated = pd.read_parquet(res.canonical_dir / "curation" / "Y.parquet")
+    assert curated.columns.tolist() == ["observation_id", "sample_id"]
+    original = pd.read_parquet(res.canonical_dir / "curation" / "original_Y.parquet")
+    assert original["moisture"].tolist() == ["11.1", "14.0"]
 
 
 def test_different_metadata_with_same_target_name_is_preserved(tmp_path: Path, v2_leaf: Any) -> None:
@@ -148,22 +154,21 @@ def test_conflicting_sample_values_keep_each_observation_and_original_sample(tmp
 
     leaf = v2_leaf(tmp_path / "ds", sample_of={"o1": "same", "o2": "same"}, extra_meta=("region",))
     desc, warnings = build_descriptor_from_card(leaf)
-    assert desc.ids.sample_id == "observation_id" and not desc.ids.sample_id_available
-    assert any("original physical-sample key" in w for w in warnings)
-    assert any(v.name == "original_sample_id" for v in desc.metadata_variables)
+    assert desc.ids.sample_id == "sample_id" and desc.ids.sample_id_available
     res = build_canonical(leaf, desc, tmp_path / "out")
     values = pd.read_parquet(res.canonical_dir / "variables.parquet")
-    assert values["sample_id"].tolist() == ["o1", "o2"]
-    assert values["original_sample_id"].tolist() == ["same", "same"]
+    assert values["observation_id"].tolist() == ["o1", "o2"]
+    assert values["sample_id"].tolist() == ["same", "same"]
     assert values["Moisture"].tolist() == [1.0, 1.5]
     source = pd.read_parquet(res.canonical_dir / "sources" / "X.parquet")
-    assert source["sample_id"].tolist() == ["o1", "o2"]
+    assert source["sample_id"].tolist() == ["same", "same"]
+    assert res.config["variables"]["join_key"] == "observation_id"
 
 
 def test_conflicting_multisource_keeps_sample_alignment_guard(tmp_path: Path, v2_leaf: Any) -> None:
     leaf = v2_leaf(tmp_path / "ds", blocks=("X1", "X2"), sample_of={"o1": "same", "o2": "same"})
     desc, _ = build_descriptor_from_card(leaf)
-    assert desc.ids.sample_id == "observation_id"
+    assert desc.ids.sample_id == "sample_id"
     assert desc.alignment_level.value == "sample"
 
 

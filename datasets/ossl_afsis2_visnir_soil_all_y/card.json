@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 151,
     "n_samples": 151,
     "profile_scores": {
@@ -18,13 +19,567 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": false
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:06.331109+00:00",
+  "curation": {
+    "contract_sha256": "04d3728305d1460adbf20a014bee8d013ec8d3b09da8100c0fa63cd8c77a6700",
+    "dataset_id": "ossl_afsis2_visnir_soil_all_y",
+    "enrichments": [
+      {
+        "canonical_name": "site_id",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "id.dataset.site_ascii_txt",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "longitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "longitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "latitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "latitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_begin",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.begin_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_end",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.end_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "location_error_m",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "location.point.error_any_m",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      }
+    ],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 151,
+      "n_samples": 151,
+      "observations_per_unit": {
+        "1": 151
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "ID_sample"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "345627ae31e37f7520db63da9f394a03d613c036b8972d40ca5a5fdec4d8513d",
+      "Y.csv": "7e318bd5f26099b904889a4c817914c5cad458aadc6933af7156098ed42fe96d"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "al_ext_usda_a1056_mg_kg",
+        "source_columns": [
+          {
+            "name": "al_ext_usda_a1056_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 1672.0,
+          "min": 108.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 145,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "b_ext_mel3_mg_kg",
+        "source_columns": [
+          {
+            "name": "b_ext_mel3_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 4.635761589403973,
+          "max": 1.0,
+          "min": 0.3,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 144,
+          "n_present": 7,
+          "n_rows": 151,
+          "n_unique": 4,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "c_tot_usda_a622_w_pct",
+        "source_columns": [
+          {
+            "name": "c_tot_usda_a622_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 4.406,
+          "min": 0.097,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 142,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ca_ext_usda_a1059_mg_kg",
+        "source_columns": [
+          {
+            "name": "ca_ext_usda_a1059_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 4833.0,
+          "min": 15.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 139,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "cu_ext_usda_a1063_mg_kg",
+        "source_columns": [
+          {
+            "name": "cu_ext_usda_a1063_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.33774834437087,
+          "max": 6.29,
+          "min": 0.1,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 1,
+          "n_present": 150,
+          "n_rows": 151,
+          "n_unique": 38,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "fe_ext_usda_a1064_mg_kg",
+        "source_columns": [
+          {
+            "name": "fe_ext_usda_a1064_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 578.0,
+          "min": 24.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 113,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "k_ext_usda_a1065_mg_kg",
+        "source_columns": [
+          {
+            "name": "k_ext_usda_a1065_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.33774834437087,
+          "max": 416.0,
+          "min": 6.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 1,
+          "n_present": 150,
+          "n_rows": 151,
+          "n_unique": 87,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "mg_ext_usda_a1066_mg_kg",
+        "source_columns": [
+          {
+            "name": "mg_ext_usda_a1066_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 1351.0,
+          "min": 2.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 121,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "mn_ext_usda_a1067_mg_kg",
+        "source_columns": [
+          {
+            "name": "mn_ext_usda_a1067_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 509.9,
+          "min": 0.7,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 144,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "n_tot_usda_a623_w_pct",
+        "source_columns": [
+          {
+            "name": "n_tot_usda_a623_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 0.428,
+          "min": 0.008,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 94,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "oc_usda_c729_w_pct",
+        "source_columns": [
+          {
+            "name": "oc_usda_c729_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 4.396,
+          "min": 0.097,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 142,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ph_h2o_usda_a268_index",
+        "source_columns": [
+          {
+            "name": "ph_h2o_usda_a268_index",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 8.32,
+          "min": 4.1,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 109,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "s_ext_mel3_mg_kg",
+        "source_columns": [
+          {
+            "name": "s_ext_mel3_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 84.0,
+          "min": 1.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 151,
+          "n_rows": 151,
+          "n_unique": 25,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "zn_ext_usda_a1073_mg_kg",
+        "source_columns": [
+          {
+            "name": "zn_ext_usda_a1073_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 91.3907284768212,
+          "max": 30.8,
+          "min": 0.09,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 13,
+          "n_present": 138,
+          "n_rows": 151,
+          "n_unique": 41,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [],
+      "Y": [
+        "al_ext_usda_a1056_mg_kg",
+        "b_ext_mel3_mg_kg",
+        "c_tot_usda_a622_w_pct",
+        "ca_ext_usda_a1059_mg_kg",
+        "cu_ext_usda_a1063_mg_kg",
+        "fe_ext_usda_a1064_mg_kg",
+        "k_ext_usda_a1065_mg_kg",
+        "mg_ext_usda_a1066_mg_kg",
+        "mn_ext_usda_a1067_mg_kg",
+        "n_tot_usda_a623_w_pct",
+        "oc_usda_c729_w_pct",
+        "ph_h2o_usda_a268_index",
+        "s_ext_mel3_mg_kg",
+        "zn_ext_usda_a1073_mg_kg"
+      ],
+      "measurements": [
+        "class_label"
+      ],
+      "passport": [
+        "id_sample",
+        "spectralrep",
+        "dataset",
+        "collection_name",
+        "dataset_code",
+        "dataset_title",
+        "dataset_owner",
+        "dataset_slug",
+        "task_type",
+        "trait_header",
+        "trait_header_original",
+        "package_url",
+        "dataset_url",
+        "dataset_doi",
+        "file",
+        "resource",
+        "spectral_kind",
+        "scan_local_id",
+        "raw_label",
+        "reference_value",
+        "class_index",
+        "feature_count_per_dimension",
+        "dimensions",
+        "wavelength_note",
+        "dataset_id",
+        "root",
+        "relative_dir",
+        "split_original",
+        "grouped_y_exports",
+        "active_status",
+        "replaces_dataset_id",
+        "site_id",
+        "m_scan_lab",
+        "m_instrument_model",
+        "m_scan_model_code",
+        "m_acquisition_optics",
+        "m_sample_preparation",
+        "m_country",
+        "m_upper_depth_cm",
+        "m_lower_depth_cm",
+        "m_texture_class",
+        "m_pedon_taxa",
+        "m_horizon_designation",
+        "m_longitude",
+        "m_latitude",
+        "m_campaign_date_begin",
+        "m_campaign_date_end",
+        "m_location_error_m",
+        "y_acidity_usda_a795_cmolc_kg",
+        "y_aggstb_usda_a1_w_pct",
+        "y_al_dith_usda_a65_w_pct",
+        "y_al_ext_aquaregia_g_kg",
+        "y_al_ext_usda_a69_cmolc_kg",
+        "y_al_ox_usda_a59_w_pct",
+        "y_awc_33_1500kpa_usda_c80_w_frac",
+        "y_bd_usda_a4_g_cm3",
+        "y_ca_ext_aquaregia_mg_kg",
+        "y_ca_ext_usda_a722_cmolc_kg",
+        "y_caco3_usda_a54_w_pct",
+        "y_cec_usda_a723_cmolc_kg",
+        "y_cf_usda_c236_w_pct",
+        "y_clay_tot_usda_a334_w_pct",
+        "y_ec_usda_a364_ds_m",
+        "y_efferv_usda_a479_class",
+        "y_fe_dith_usda_a66_w_pct",
+        "y_fe_ext_aquaregia_g_kg",
+        "y_fe_ox_usda_a60_w_pct",
+        "y_k_ext_aquaregia_mg_kg",
+        "y_k_ext_usda_a725_cmolc_kg",
+        "y_mg_ext_aquaregia_mg_kg",
+        "y_mg_ext_usda_a724_cmolc_kg",
+        "y_mn_ext_aquaregia_mg_kg",
+        "y_mn_ext_usda_a70_mg_kg",
+        "y_na_ext_aquaregia_mg_kg",
+        "y_na_ext_usda_a1068_mg_kg",
+        "y_na_ext_usda_a726_cmolc_kg",
+        "y_p_ext_aquaregia_mg_kg",
+        "y_p_ext_usda_a1070_mg_kg",
+        "y_p_ext_usda_a270_mg_kg",
+        "y_p_ext_usda_a274_mg_kg",
+        "y_ph_cacl2_usda_a481_index",
+        "y_s_tot_usda_a624_w_pct",
+        "y_sand_tot_usda_c60_w_pct",
+        "y_silt_tot_usda_c62_w_pct",
+        "y_wr_10kpa_usda_a414_w_pct",
+        "y_wr_1500kpa_usda_a417_w_pct",
+        "y_wr_33kpa_usda_a415_w_pct"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:32:10.906003+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +600,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "b24beb77e173956fc802413c22e5dc3f54a0d63193f61c8f00664482040a759d",
+    "content_hash": "bee3f9a051d9c291d236c6ba748392f703cf2c50e77240858a4ef91b1d800297",
     "manifest": "manifest.json",
-    "metadata_hash": "90b0cebd787f68f02dba52ff64e8ef41472a0887b7048728a25527b9607fd1aa",
-    "processing_hash": "9a1df0d8ec4ccc31f7668d4a76193abf8338800a112001eb7670babdef5b3500"
+    "metadata_hash": "e095e911553419e46021a82f64c24ccf3bfd74bfc09a31e414a2bfce02a9bb09",
+    "processing_hash": "e3501aafc58bbf7b0aca7400b5d00edd8acee0be1ebd3a8eb0e38116a9528ae0"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "OSSL_NIRS",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -86,7 +641,9 @@
     ],
     "publications": [],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1108,42 +1665,8 @@
         },
         "mean_max": null,
         "mean_min": null,
-        "n_outliers": 0,
-        "pca": {
-          "explained_variance_ratio": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": null,
@@ -1359,7 +1882,10 @@
         "value_min": null,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [
@@ -1371,6 +1897,7 @@
       }
     }
   ],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -1900,7 +2427,7 @@
         "cv": 1.0753055597512178,
         "is_normal": false,
         "kurtosis": 4.034277862490313,
-        "normality_p": 2.456448067350555e-15,
+        "normality_p": 2.4564480673505553e-15,
         "skewness": 1.886454493381328
       },
       "stats": {
@@ -4105,7 +4632,7 @@
           },
           {
             "count": 4,
-            "name": "0.032"
+            "name": "0.035"
           },
           {
             "count": 4,
@@ -4113,19 +4640,7 @@
           },
           {
             "count": 4,
-            "name": "0.035"
-          },
-          {
-            "count": 3,
-            "name": "0.038"
-          },
-          {
-            "count": 3,
-            "name": "0.052"
-          },
-          {
-            "count": 3,
-            "name": "0.046"
+            "name": "0.032"
           },
           {
             "count": 3,
@@ -4133,15 +4648,23 @@
           },
           {
             "count": 3,
-            "name": "0.011"
+            "name": "0.038"
           },
           {
             "count": 3,
             "name": "0.047"
           },
           {
-            "count": 2,
-            "name": "0.08"
+            "count": 3,
+            "name": "0.011"
+          },
+          {
+            "count": 3,
+            "name": "0.046"
+          },
+          {
+            "count": 3,
+            "name": "0.052"
           },
           {
             "count": 2,
@@ -4149,15 +4672,11 @@
           },
           {
             "count": 2,
-            "name": "0.009"
-          },
-          {
-            "count": 2,
             "name": "0.064"
           },
           {
             "count": 2,
-            "name": "0.097"
+            "name": "0.053"
           },
           {
             "count": 2,
@@ -4165,11 +4684,19 @@
           },
           {
             "count": 2,
-            "name": "0.106"
+            "name": "0.063"
           },
           {
             "count": 2,
-            "name": "0.053"
+            "name": "0.033"
+          },
+          {
+            "count": 2,
+            "name": "0.008"
+          },
+          {
+            "count": 2,
+            "name": "0.098"
           }
         ]
       },
@@ -4406,11 +4933,154 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "name": "site_id",
+      "role": "metadata",
+      "stats": {
+        "n": 151,
+        "n_classes": 0,
+        "n_missing": 151,
+        "top_classes": []
+      },
+      "type": "identifier",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "longitude",
+      "role": "metadata",
+      "shape": {
+        "cv": null,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 151,
+        "n_missing": 151,
+        "q1": null,
+        "q3": null,
+        "std": null
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "latitude",
+      "role": "metadata",
+      "shape": {
+        "cv": null,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 151,
+        "n_missing": 151,
+        "q1": null,
+        "q3": null,
+        "std": null
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_begin",
+      "role": "metadata",
+      "stats": {
+        "n": 151,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 151,
+            "name": "2018-01-01"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_end",
+      "role": "metadata",
+      "stats": {
+        "n": 151,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 151,
+            "name": "2018-12-31"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "location_error_m",
+      "role": "metadata",
+      "shape": {
+        "cv": null,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 151,
+        "n_missing": 151,
+        "q1": null,
+        "q3": null,
+        "std": null
+      },
+      "type": "numeric",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

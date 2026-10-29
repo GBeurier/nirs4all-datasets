@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 648 sample(s), 648 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 216 sample(s), 648 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 3–3 (mean 3).
+- **Documented technical repetitions:** 3.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -24,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| api_reference_percent_w_w | target | numeric | *Not specified.* | n=648, missing=0, range 2–15, mean 8.75 ± 4.236 |
+| api_reference_percent_w_w | target | numeric | % w/w | n=648, missing=0, range 2–15, mean 8.75 ± 4.236 |
 | measurement_state | metadata | categorical | *Not specified.* | n=648, missing=0, classes=1, top after_moisture_control_desiccators (×648) |
 | measurement_datetime_serial | metadata | categorical | *Not specified.* | n=648, missing=0, classes=648, top 738652.5135185185 (×1) |
 | target_file | metadata | categorical | *Not specified.* | n=648, missing=0, classes=1, top Granules_API_reference_moisture_controlled.mat (×648) |
@@ -56,7 +58,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -66,7 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Le NIR sample ID est un lot/une combinaison du plan ; le flacon est identifié par _vN et chaque acquisition par .0/.1/.2. 216 flacons × 3 acquisitions. Les 64 scans instrumentaux sont moyennés dans chaque acquisition.
+- **Curated views:** M: 5 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +89,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `37127028be8c233260ae6d2ef2eb08d4993c9fddd10c352dfc2b2435c3b723a5`
-- **Processing hash:** `a08069d9b9842996b18357f8dbf38073715388970a6e3be86e5554a958cb9960` | **metadata hash:** `b704983dbe0fa5d840d6dbe092cc9324a83f6cd3b4db66fe6eb3efb3db93279b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6d75eee6d2e06f5af02c6f820e9430149a86705f5878a37b4eadfe3de73f1c69`
+- **Processing hash:** `543629f8dcdf552b9ffd66f24d194e328630b82076ef545d169c55a4a96848ca` | **metadata hash:** `2fc452d082490386e74070665b82013bd35fa284867d1d9c9d0f753a8702200f`

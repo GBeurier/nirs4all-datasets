@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 35 sample(s), 35 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 35 sample(s), 35 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -36,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top N/A (×35) |
 | species | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
@@ -53,7 +55,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×35) |
 | rights_status | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top manual_review_needed (×35) |
 | usage_scope | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top private_use_only (×35) |
-| notes | metadata | categorical | *Not specified.* | n=35, missing=1, classes=34, top rock.igneous.mafic.solid.all.ba12c1f.usgs.perknic.ancillary.txt (×1) |
+| notes | metadata | categorical | *Not specified.* | n=35, missing=0, classes=35, top rock.igneous.mafic.solid.all.ba12c1f.usgs.perknic.ancillary.txt (×1) |
 
 ## Statistics — splits
 
@@ -64,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9d16fe39a2c902792f91611edce76597775f7b97e703368b340a8f9ef2cbe3e9`
-- **Processing hash:** `4bcc42d1e01a8787a075bffd49bc0dec7b9201b01259db01ebeda4dc173221cd` | **metadata hash:** `7f59edef6d59e06efc6d630947cd86b4749d3145f46d6b26d1766587773d5da1`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `3d8a41aba1a020ca881921ae9062fcb09d776b0c09c72e1710958041174fd796`
+- **Processing hash:** `32c70144a9fb453d52385f3449f1d5f13a12a43a8906d8aca96c05e8ae823dea` | **metadata hash:** `ba7ba6e5f4cb13f29cbc6bab2734b2c0dac4661fa862bba2a0ba995230bee29a`

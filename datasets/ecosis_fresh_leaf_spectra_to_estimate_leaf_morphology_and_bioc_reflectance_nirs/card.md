@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 2379 sample(s), 2379 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 2363 sample(s), 2379 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.007).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -52,7 +54,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top explicit_open (×2379) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top public_reuse_possible (×2379) |
 | notes | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top EcoSIS package fresh-leaf-spectra-to-estimate-leaf-morphology-and-biochemistry-for-northern-temperate-forests, no interpolation applied by project. (×2379) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=2363, top DC05_PIRE_MN_LC_REFL (×2) |
 
 ## Statistics — splits
 
@@ -63,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -72,7 +73,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Observation identity is used as the canonical join key because source sample_id has differing per-observation values in site, species, Species. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 6 fields, Y: 1 fields, passport: 40 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +96,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7c5bbbdceaff246556261d4a17399e248c7699818cebbb716613bdd9301ed858`
-- **Processing hash:** `071cf96796bb1668984623ed84ed50b4209e1f78657877ef2ca0e07896b6e16e` | **metadata hash:** `43353373215f53ccf4ee2ec0542b24bfc12cafa8a25643560ace39060c28322d`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `1590060a309348d3e55bc559287afdad57603ef3840bccb97ada742051839008`
+- **Processing hash:** `d24a071caab373a4d8f161df476be24603398584460165400004c5365c5a9258` | **metadata hash:** `2b1232895abe199dd78edff5912a7478efadf085c0ce728820654ec2506d4b71`

@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 7 sample(s), 7 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; *Not specified.* sample(s), 7 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -43,7 +45,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -52,7 +54,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Non déterminé
+- **Curated views:** M: 2 fields, Y: 0 fields, passport: 6 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -72,6 +75,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `26e959f708450eae25f022c410211b932f1e5445040c4e072c6a7a129a1bf920`
-- **Processing hash:** `7d9cc6c497cf4c175d4a79d1f275102e2b74c50267fba2426a30cdddcfdf3ebd` | **metadata hash:** `bcc3fa851f26065b9d19c5561ff65d399187d11017814665f5e197356a286827`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `bf0aba8af415421b975f05c78fe059ee9d851f1f2a6fd82a41c7e0a789bc6f10`
+- **Processing hash:** `2d42dea3dea5e80f0b7468556ae3efaf104b74d32d43dfb95e94545f3039bd86` | **metadata hash:** `5ff45c1737607e1d82bc473c758e3e53197f9b94e8fe14b8c287cff8af3bd33d`

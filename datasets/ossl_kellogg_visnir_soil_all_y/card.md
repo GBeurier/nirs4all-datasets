@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 85669 sample(s), 85669 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 85669 sample(s), 85669 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -110,6 +112,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | wavelength_note | metadata | categorical | *Not specified.* | n=85669, missing=0, classes=1, top ossl_visnir_350_2500_nm_step_2 (×85669) |
 | active_status | metadata | categorical | *Not specified.* | n=85669, missing=0, classes=1, top active (×85669) |
 | replaces_dataset_id | metadata | categorical | *Not specified.* | n=85669, missing=0, classes=1, top ossl_soil_clay_tot_usda_a334_w_pct_kellogg_nirs_ossl \| ossl_soil_oc_usda_c729_w_pct_kellogg_nirs_ossl \| ossl_soil_ph_h2o_usda_a268_index_kellogg_nirs_ossl (×85669) |
+| site_id | metadata | identifier | *Not specified.* | *Not specified.* |
+| longitude | metadata | numeric | *Not specified.* | n=85669, missing=47325, range -173.2–-64.76, mean -101.3 ± 18.5 |
+| latitude | metadata | numeric | *Not specified.* | n=85669, missing=47325, range 17.95–71.32, mean 41.31 ± 6.984 |
+| campaign_date_begin | metadata | datetime | *Not specified.* | *Not specified.* |
+| campaign_date_end | metadata | datetime | *Not specified.* | *Not specified.* |
+| location_error_m | metadata | numeric | *Not specified.* | n=85669, missing=47325, range 30–30, mean 30 ± 0 |
 
 ## Statistics — splits
 
@@ -120,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -131,7 +139,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 9 fields, Y: 43 fields, passport: 49 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -151,6 +160,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9f63635808141ad872ebd2558f156c7b9cc4324f0fbbf6aaf02ae6fea1c780cc`
-- **Processing hash:** `17054ad7e45f3ff955dfd4650bcc7ee8a97278a30f60f4b755a266cf5bcc3c9d` | **metadata hash:** `a77d8f63e4fcb76468aa9e1a885dd39ff6de26bcafa857596b6cb615db5058bb`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `0ef0719fb8c5718794bc5bcd4b583e83394a38eabc0bdf3882a8e449462e9466`
+- **Processing hash:** `8bb2586ac5cbdeac020070670acfa55081d98ebbf74058864c538d024d3fa277` | **metadata hash:** `6c489732850e3cdd25fb40125be6979588c3f4db637fe26e0c6e4ecd420c87ba`

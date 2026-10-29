@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 220 sample(s), 220 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 220 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -37,7 +39,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=220, missing=0, range 602–602, mean 602 ± 0 |
 | n_points_original | metadata | numeric | *Not specified.* | n=220, missing=0, range 601–601, mean 601 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=220, missing=0, classes=1, top Converted from Nirpy Research GitHub raw data without interpolation or resampling. (×220) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=220, missing=0, classes=20, top 12/01/2018 (×11) |
 
 ## Statistics — splits
 
@@ -48,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -58,7 +59,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in labels. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant de type date/indice de colonne, identité physique non établie ; le comptage littéral est rejeté. Chaque libellé est réutilisé dans 11 classes Y différentes ; les anciennes valeurs 9/11 ne décrivaient pas des répétitions du même lait.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,6 +80,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c2c617cbbdfad60f7687c4c5e5cef4bbaa7470d7ddaef984c43acfb1c5c0f367`
-- **Processing hash:** `68b6f5d4c539c3b286f3aae1de71bea8a9a790c702f6587ee8e7bcf029193abc` | **metadata hash:** `9f6d5725ab9cf8ba5573e3ea7c5b8e3dbadccd11b1642092ad9e0fd77ba7a35c`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `d3022340783ad62d789728e7eddfc606b5c4700c4d086d49ab4cba9bea6b6d64`
+- **Processing hash:** `a0dc839f0279cef0c150d8e7749e39e59e1aca9127d5af9064abae9983716c9c` | **metadata hash:** `018fd216066637d820e0d0a6b4cbc3f59ed5b34cfce79c8a7009d24ad0b93634`

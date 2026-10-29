@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 41 sample(s), 41 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 39 sample(s), 41 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.051).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -38,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=41, missing=0, classes=1, top N/A (×41) |
 | species | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=41, missing=41, classes=0, — |
@@ -56,7 +58,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=41, missing=0, classes=1, top manual_review_needed (×41) |
 | usage_scope | metadata | categorical | *Not specified.* | n=41, missing=0, classes=1, top private_use_only (×41) |
 | notes | metadata | categorical | *Not specified.* | n=41, missing=0, classes=6, top none (×36) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=41, missing=0, classes=39, top gneiss6 (×2) |
 
 ## Statistics — splits
 
@@ -67,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, sample_description, notes, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `1ae8d8a46ba85a52ace6187b00666569f1829082fefc94c10b0fcf3736d18ce0`
-- **Processing hash:** `56f9a220c469ead7591006732976e0e181bcee6b1b6cc0e7334d11c525312295` | **metadata hash:** `697954132ce942482fba49f76e4761a96cb156e3309edb79d9cc18e27b1a219a`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `dee33de9c414745c37cd62322f486ed6acd3ffe9aa7553d3ac444065911dd083`
+- **Processing hash:** `91ef3e29b2d7bf3eba803b17fc681f6c25837c48d69d18c9832e7ffe227f1861` | **metadata hash:** `2d3702a88d0c742a4f695d9495b38a022fd62cad6321ca5020aa20910894026f`
