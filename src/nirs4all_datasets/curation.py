@@ -20,7 +20,7 @@ from typing import Any, cast
 import numpy as np
 import pandas as pd
 
-from nirs4all_datasets.schema import DatasetDescriptor, Variable
+from nirs4all_datasets.schema import DatasetDescriptor, Variable, VarType
 
 CURATION_VERSION = "1.1"
 _OBS = "observation_id"
@@ -89,6 +89,10 @@ def normalize_missing(values: pd.Series, *, tokens: list[str] | None = None, sen
 
 
 def _finite_float(value: Any) -> float | None:
+    # Python accepts digit separators in float("20_11"); CSV numeric parsing does
+    # not, and these spellings can be source identifiers rather than quantities.
+    if "_" in str(value):
+        return None
     try:
         number = float(str(value).replace(",", "."))
         return number if math.isfinite(number) else None
@@ -513,6 +517,10 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
             if original not in frame:
                 continue
             field_rule = fields.setdefault(f"{role}:{original}", {})
+            # The curated descriptor carries the reviewed scientific type. Source
+            # CSV schemas can label measured numbers as strings (UCPH Granules).
+            if "type" in variable.model_fields_set and variable.type in {VarType.NUMERIC, VarType.CATEGORICAL}:
+                field_rule["statistical_type"] = variable.type.value
             for key in ["unit", "semantic_role", "equivalent_to", "derived_from"]:
                 value = getattr(variable, key)
                 if value:

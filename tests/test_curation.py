@@ -145,6 +145,31 @@ def test_numeric_category_codes_remain_categories():
     assert stats["type"] == "categorical" and stats["imbalance_ratio"] == 2
 
 
+@pytest.mark.parametrize("source_type,reviewed_type,expected,statistical_type", [("string", "numeric", [2.0, 15.0], "numeric"), ("number", "categorical", ["002", "015"], "categorical"), ("string", None, ["002", "015"], "categorical")])
+def test_reviewed_descriptor_type_overrides_source_storage_type(tmp_path, source_type, reviewed_type, expected, statistical_type):
+    from nirs4all_datasets.schema import Variable
+
+    (tmp_path / "M.csv").write_text("observation_id\na\nb\n")
+    (tmp_path / "Y.csv").write_text("observation_id;response\na;002\nb;015\n")
+    (tmp_path / "datapackage.json").write_text(json.dumps({"resources": [{"path": "Y.csv", "schema": {"fields": [{"name": "response", "type": source_type}]}}]}))
+    variable = Variable(name="response", type=reviewed_type) if reviewed_type else Variable(name="response")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[variable])
+    assert result.targets["response"].tolist() == expected
+    assert pd.api.types.is_numeric_dtype(result.targets["response"]) == (reviewed_type == "numeric")
+    assert result.report["variables"][0]["stats"]["type"] == statistical_type
+    assert result.original_targets["response"].tolist() == ["002", "015"]
+
+
+def test_declared_numeric_source_codes_remain_invalid_without_being_rescaled():
+    m = pd.DataFrame({"observation_id": ["a", "b", "c"]})
+    y = pd.DataFrame({"observation_id": ["a", "b", "c"], "response": ["20_11", "2", "3"]})
+    result = curate_tables("synthetic", m, y, numeric_names={"response"})
+    assert result.targets["response"].tolist() == ["20_11", "2", "3"]
+    stats = result.report["variables"][0]["stats"]
+    assert stats["n_invalid"] == 1 and stats["min"] == 2 and stats["max"] == 3
+    assert result.original_targets["response"].equals(y["response"])
+
+
 def test_numeric_spellings_do_not_create_false_variability():
     m = pd.DataFrame({"observation_id": ["a", "b", "c"], "constant_measure": ["1", "1.0", "1,0"]})
     result = curate_tables("synthetic", m, numeric_names={"constant_measure"})
