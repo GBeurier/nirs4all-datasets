@@ -156,3 +156,53 @@ nirs4all is an **optional** extra (`[nirs4all]`) — imported lazily, degrading 
 green gate: `ruff check .` + `mypy --config-file pyproject.toml src` + `validate.py` (+ `--check-publish`)
 + `pytest`. The enum mirror (`AxisUnit`/`SignalType`/`Modality` mirror nirs4all by value) is guarded by
 `tests/test_schema.py`.
+
+
+## Optional external assessments and curation protocol
+
+Qualification protocol 6 preserves missing evidence as null. Diagnostic scores are
+heuristic signatures with `confidence_status: unvalidated`; they are not
+probabilities of physical causes. RMS/SAM in the legacy profile describe distance
+to the dataset mean, rather than an independent reference. Partial evidence is
+reported with coverage and cannot establish a reassuring "normal" score.
+
+`qualify.assessments` stores optional version-1 `assessments.json` sidecars next to
+`card.json`. Each assessment binds dataset/content/source/population/context and
+producer engine/protocol versions. Intrinsic and task/split-scoped reports remain
+separate. `write_assessments` validates identity against the canonical bytes;
+`NirsDataset.assessments()` reads them with anonymized-tier redaction. The raw
+producer `report` is retained losslessly when provided. Unavailable metrics have a
+null value and explicit reason. Unknown additive metrics remain in the report.
+
+`build_card(..., assessment_mode="shared")` consumes one explicitly selected
+intrinsic report per source without calling the legacy PCA/QC kernels. Missing
+metrics remain unavailable; there is no silent fallback or required unpublished
+package. Task reports are attached separately and never populate intrinsic QC.
+The default `legacy` mode preserves historical consumer contracts and labels its
+heuristic results explicitly. Protocol changes do not overwrite old cards.
+
+Canonical curation adds `observations.parquet` for acquisition-varying variables,
+`provenance.parquet` for original metadata, and a `curation.json` raw-token/rule
+journal. These local bytes are never placed in the public site. Variables varying
+within one sample are omitted from the per-sample table and retained by acquisition;
+`NirsDataset.observation_variables()` exposes that grain. Source-specific identity
+rules distinguish subject/aspect, vial/acquisition, product and unknown specimen
+identity. Exact duplicate spectral vectors are counted without removing rows or
+claiming a technical reacquisition. Unknown physical sample counts remain null.
+
+`Variable` optionally declares an original name, semantic role, equivalence or
+explicit derivation, column-specific missing tokens/sentinels and numeric dialect.
+Defaults preserve valid categorical `NA`, `ND` and `none` tokens. Censored numeric
+values retain operator, bound, unit and original token in the journal. The
+processing hash includes byte-affecting normalization directives while descriptive
+roles remain metadata. `NirsDataset.consumer_views(targets=[...])` returns explicit
+Y/M/structure/passport views with exclusion reasons; all original values remain
+accessible. Scientific API/reference targets are preserved by declared role, and
+copies/declared derivatives of the selected target are excluded from M.
+
+For LUCAS, `organize(..., source_context={"soilsite": "/path/to/ossl_soilsite_L0_v1.2.csv.gz"})`
+joins documented OSSL dataset/layer keys, exports site and campaign intervals,
+coordinates and geographic uncertainty, and records the source SHA-256. It does
+not reconstruct site identity from coordinates or treat campaign periods as exact
+individual collection dates. Changes to this side input invalidate incrementality.
+A missing soilsite input remains an explicit design-availability warning.

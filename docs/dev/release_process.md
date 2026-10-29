@@ -42,7 +42,7 @@ already reports 0.3.10; R-universe now follows this immutable tag.
 
 The release commits are integrated into main together with the subsequent
 maintenance commits. Main retains the IO 0.2 compatibility update and aligns its
-manifests and lockfiles with the published IO 0.2.6 / Formats 0.2.11 train.
+manifests and lockfiles with the qualified IO 0.2.11 / Formats 0.2.13 candidate train.
 `release/train-v1.toml` describes this current source tree. These dependency
 updates do not replace the existing tag or public archives. A future publication
 of the updated dependency train requires a new version and the normal gates.
@@ -117,7 +117,7 @@ Run these before tagging or publishing anything:
    Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
    manifest all agree. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.12, Formats 0.2.11, and IO 0.2.6,
+   the current source train: Datasets 0.3.14, Formats 0.2.13, and IO 0.2.11,
    then verifies those exact crates plus IO's DMD 0.2.13 prerequisite on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not

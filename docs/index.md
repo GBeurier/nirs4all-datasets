@@ -58,6 +58,9 @@ The command-line entry point is **`n4a-datasets`**; see {doc}`getting_started`.
 installation
 getting_started
 PUBLIC_ORIGIN_LOADING
+SOURCE_INTEGRATION
+CURATION
+RETRIEVAL_AUDIT
 ```
 
 ```{toctree}
@@ -83,6 +86,8 @@ ARCHITECTURE
 
 PUBLISHING
 RELEASING
+maintenance/quality_gates
+maintenance/release_checklist
 ```
 
 ## The nirs4all ecosystem

@@ -298,9 +298,9 @@ def _ratio(value: Any, denominator: Any, *, scale: float = 1.0) -> float | None:
     return float(value) / float(denominator) * scale
 
 
-def _saturate(v: Any, scale: float = 1.0) -> float:
+def _saturate(v: Any, scale: float = 1.0) -> float | None:
     if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(float(v)):
-        return 0.0
+        return None
     if scale <= 0:
         scale = 1.0
     return float(max(0.0, min(1.0, abs(float(v)) / scale)))
@@ -781,27 +781,19 @@ def dataset_structure_metrics(x: object, *, pca: dict[str, Any] | None = None) -
     }
 
 
-def aggregate_profile_scores(profiles: Iterable[dict[str, Any]]) -> dict[str, float] | None:
-    """Mean profile scores across sources, ignoring missing axes."""
-    rows: list[dict[str, float]] = []
-    for profile in profiles:
-        scores = profile.get("profile_scores") if isinstance(profile, dict) else None
-        if not isinstance(scores, dict):
-            continue
-        row = {k: float(v) for k, v in scores.items() if k in _PROFILE_SCORE_KEYS and isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(float(v))}
-        if row:
-            rows.append(row)
+def aggregate_profile_scores(profiles: Iterable[dict[str, Any]]) -> dict[str, float | None] | None:
+    """Aggregate only fully observed axes; a missing source is not a clean source."""
+    rows = [profile.get("profile_scores") or {} for profile in profiles if isinstance(profile, dict)]
     if not rows:
         return None
-    out: dict[str, float] = {}
+    result: dict[str, float | None] = {}
     for key in _PROFILE_SCORE_KEYS:
-        vals = [row[key] for row in rows if key in row]
-        if vals:
-            out[key] = float(np.mean(vals))
-    return out or None
+        values = [_finite_float(row.get(key)) for row in rows]
+        result[key] = None if any(value is None for value in values) else sum(value for value in values if value is not None) / len(values)
+    return result
 
 
-def _profile_scores(profile: dict[str, Any]) -> dict[str, float]:
+def _profile_scores(profile: dict[str, Any]) -> dict[str, float | None]:
     integrity = profile.get("integrity") or {}
     amp = profile.get("amplitude") or {}
     noise = profile.get("noise") or {}
@@ -815,23 +807,23 @@ def _profile_scores(profile: dict[str, Any]) -> dict[str, float]:
     mean_reflectance = _finite_float(amp.get("mean_reflectance"))
     mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
     ptp_value = _finite_float(ptp)
-    signal_scale = max(mean_abs, abs(ptp_value) if ptp_value is not None else 0.0, 1e-12)
+    signal_scale = None if mean_reflectance is None and ptp_value is None else max(mean_abs, abs(ptp_value) if ptp_value is not None else 0.0, 1e-12)
     snr_db = _finite_float(noise.get("snr_db"))
-    noise_from_snr = 0.0 if snr_db is not None and snr_db >= 40 else (1.0 - max(0.0, snr_db) / 40.0 if snr_db is not None else 0.5)
+    noise_from_snr = 0.0 if snr_db is not None and snr_db >= 40 else (1.0 - max(0.0, snr_db) / 40.0 if snr_db is not None else None)
     return {
-        "integrity_risk": max(_saturate(integrity.get("nan_ratio"), 0.05), _saturate(integrity.get("zero_column_ratio"), 0.02), _saturate(integrity.get("inf_count"), 1.0)),
-        "noise_risk": max(noise_from_snr, _saturate(_ratio(noise.get("noise_rms"), signal_scale), 0.05)),
-        "local_artefact_risk": max(_saturate(artefacts.get("spike_rate"), 0.01), _saturate(artefacts.get("jump_rate"), 0.01), _saturate(artefacts.get("clip_fraction"), 0.01)),
-        "shape_drift": max(_saturate(_ratio(shape.get("baseline_slope"), signal_scale), 0.5), _saturate(shape.get("edge_noise_ratio"), 3.0)),
-        "outlier_pressure": max(_saturate(outliers.get("pca_q_ratio"), 8.0), _saturate(outliers.get("hotelling_t2_ratio"), 8.0), _saturate(outliers.get("mahalanobis_h_ratio"), 4.0)),
-        "reference_spread": max(
+        "integrity_risk": _max_score(_saturate(integrity.get("nan_ratio"), 0.05), _saturate(integrity.get("zero_column_ratio"), 0.02), _saturate(integrity.get("inf_count"), 1.0)),
+        "noise_risk": _max_score(noise_from_snr, _saturate(_ratio(noise.get("noise_rms"), signal_scale), 0.05)),
+        "local_artefact_risk": _max_score(_saturate(artefacts.get("spike_rate"), 0.01), _saturate(artefacts.get("jump_rate"), 0.01), _saturate(artefacts.get("clip_fraction"), 0.01)),
+        "shape_drift": _max_score(_saturate(_ratio(shape.get("baseline_slope"), signal_scale), 0.5), _saturate(shape.get("edge_noise_ratio"), 3.0)),
+        "outlier_pressure": _max_score(_saturate(outliers.get("pca_q_ratio"), 8.0), _saturate(outliers.get("hotelling_t2_ratio"), 8.0), _saturate(outliers.get("mahalanobis_h_ratio"), 4.0)),
+        "reference_spread": _max_score(
             _saturate(_ratio(reference.get("rms_to_mean_spectrum_p95"), signal_scale), 0.25),
             _saturate(reference.get("sam_to_mean_spectrum_p95"), 0.35),
             _saturate(_ratio(reference.get("affine_residual_rms_p95"), signal_scale), 0.12),
             _saturate(reference.get("xcorr_lag_p95_features"), 5.0),
         ),
-        "repeatability_risk": max(_saturate(_ratio(repeatability.get("rms_intra_id"), signal_scale), 0.1), _saturate(repeatability.get("sam_intra_id"), 0.15), _saturate(repeatability.get("cv_intra_id"), 0.25)),
-        "structure_complexity": max(_saturate(structure.get("local_outlier_factor_p95"), 3.0), _saturate(structure.get("density_cv"), 1.5)),
+        "repeatability_risk": _max_score(_saturate(_ratio(repeatability.get("rms_intra_id"), signal_scale), 0.1), _saturate(repeatability.get("sam_intra_id"), 0.15), _saturate(repeatability.get("cv_intra_id"), 0.25)),
+        "structure_complexity": _max_score(_saturate(structure.get("local_outlier_factor_p95"), 3.0), _saturate(structure.get("density_cv"), 1.5)),
     }
 
 
@@ -870,13 +862,13 @@ def _metric_value(profile: dict[str, Any], key: str) -> Any:
     return value
 
 
-def _signal_scale(profile: dict[str, Any]) -> float:
+def _signal_scale(profile: dict[str, Any]) -> float | None:
     amp = profile.get("amplitude") or {}
     mean_reflectance = _finite_float(amp.get("mean_reflectance"))
     peak_to_peak = _finite_float(amp.get("peak_to_peak"))
     mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
     ptp = abs(peak_to_peak) if peak_to_peak is not None else 0.0
-    return max(mean_abs, ptp, 1e-12)
+    return None if mean_reflectance is None and peak_to_peak is None else max(mean_abs, ptp, 1e-12)
 
 
 def _snr_alert(value: Any, *, good_db: float) -> float | None:
@@ -896,7 +888,7 @@ def _metric_alert_score(profile: dict[str, Any], key: str, value: Any) -> float 
     if key == "integrity.zero_ratio":
         return _saturate(value, 0.05)
     if key in {"amplitude.mean_reflectance", "amplitude.area_under_curve"}:
-        return float(scores.get("shape_drift") or 0.0)
+        return _finite_float(scores.get("shape_drift"))
     if key in {"amplitude.peak_to_peak", "amplitude.variance"}:
         return _diagnostic_signals(profile)["flat"]
     if key == "noise.noise_rms":
@@ -938,13 +930,13 @@ def _metric_alert_score(profile: dict[str, Any], key: str, value: Any) -> float 
     if key == "repeatability.cv_intra_id":
         return _saturate(value, 0.25)
     if key == "structure.pca_score_density":
-        return float(scores.get("structure_complexity") or 0.0)
+        return _finite_float(scores.get("structure_complexity"))
     if key == "structure.local_outlier_factor_p95":
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
             return None
         return _saturate(max(0.0, float(value) - 1.0), 2.0)
     if key == "structure.isolation_forest_score_p95":
-        return float(scores.get("structure_complexity") or 0.0)
+        return _finite_float(scores.get("structure_complexity"))
     return None
 
 
@@ -1000,56 +992,74 @@ def metric_score_rows(profile: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
-def _diagnostic_signals(profile: dict[str, Any]) -> dict[str, float]:
-    scores = profile.get("profile_scores") or {}
+def _diagnostic_signals(profile: dict[str, Any]) -> dict[str, float | None]:
+    """Preserve unavailable evidence; observed zero is distinct from missing."""
+    scores = profile.get("profile_scores") or _profile_scores(profile)
     out = profile.get("outliers") or {}
     art = profile.get("artefacts") or {}
     noise = profile.get("noise") or {}
     amp = profile.get("amplitude") or {}
-    shape = profile.get("shape") or {}
-    ref = profile.get("reference") or {}
-    rep = profile.get("repeatability") or {}
     snr_db = _finite_float(noise.get("snr_db"))
-    snr_low = 1.0 - max(0.0, min(1.0, snr_db / 40.0)) if snr_db is not None else float(scores.get("noise_risk") or 0.0)
-    snr_high = max(0.0, min(1.0, (snr_db - 25.0) / 25.0)) if snr_db is not None else 0.0
-    mean_reflectance = _finite_float(amp.get("mean_reflectance"))
-    peak_to_peak = _finite_float(amp.get("peak_to_peak"))
-    mean_abs = abs(mean_reflectance) if mean_reflectance is not None else 0.0
-    ptp = abs(peak_to_peak) if peak_to_peak is not None else 0.0
-    dynamic_ratio = ptp / max(mean_abs, 1e-12)
-    flat = 1.0 - max(0.0, min(1.0, dynamic_ratio / 0.08))
+    mean = _finite_float(amp.get("mean_reflectance"))
+    ptp = _finite_float(amp.get("peak_to_peak"))
+    flat = None if mean is None or ptp is None else 1.0 - min(1.0, abs(ptp) / max(abs(mean), 1e-12) / 0.08)
     return {
         "q": _saturate(out.get("pca_q_ratio"), 8.0),
-        "h": max(_saturate(out.get("hotelling_t2_ratio"), 8.0), _saturate(out.get("mahalanobis_h_ratio"), 4.0)),
+        "h": _max_score(_saturate(out.get("hotelling_t2_ratio"), 8.0), _saturate(out.get("mahalanobis_h_ratio"), 4.0)),
         "spike": _saturate(art.get("spike_rate"), 0.01),
         "jump": _saturate(art.get("jump_rate"), 0.01),
         "clip": _saturate(art.get("clip_fraction"), 0.01),
-        "noise": float(scores.get("noise_risk") or 0.0),
-        "snr_low": snr_low,
-        "snr_high": snr_high,
-        "baseline": max(float(scores.get("shape_drift") or 0.0), _saturate(_ratio(shape.get("baseline_slope"), max(mean_abs, ptp, 1e-12)), 0.5)),
-        "reference": float(scores.get("reference_spread") or max(_saturate(ref.get("sam_to_mean_spectrum_p95"), 0.35), _saturate(_ratio(ref.get("rms_to_mean_spectrum_p95"), max(mean_abs, ptp, 1e-12)), 0.25), _saturate(ref.get("xcorr_lag_p95_features"), 5.0))),
-        "repeatability": float(scores.get("repeatability_risk") or max(_saturate(rep.get("sam_intra_id"), 0.15), _saturate(_ratio(rep.get("rms_intra_id"), max(mean_abs, ptp, 1e-12)), 0.1))),
-        "structure": float(scores.get("structure_complexity") or 0.0),
+        "noise": _finite_float(scores.get("noise_risk")),
+        "snr_low": None if snr_db is None else 1.0 - max(0.0, min(1.0, snr_db / 40.0)),
+        "snr_high": None if snr_db is None else max(0.0, min(1.0, (snr_db - 25.0) / 25.0)),
+        "baseline": _finite_float(scores.get("shape_drift")),
+        "reference": _finite_float(scores.get("reference_spread")),
+        "repeatability": _finite_float(scores.get("repeatability_risk")),
+        "structure": _finite_float(scores.get("structure_complexity")),
         "flat": flat,
-        "amplitude": max(float(scores.get("shape_drift") or 0.0), _saturate(_ratio(shape.get("baseline_slope"), max(mean_abs, ptp, 1e-12)), 0.5)),
+        "amplitude": _finite_float(scores.get("shape_drift")),
     }
 
 
-def _mean_score(*parts: float) -> float:
-    vals = [float(v) for v in parts if math.isfinite(float(v))]
-    return float(max(0.0, min(1.0, sum(vals) / len(vals)))) if vals else 0.0
+def _max_score(*parts: float | None) -> float | None:
+    """Unknown contributors cannot establish that a maximum risk is low."""
+    return None if not parts or any(v is None for v in parts) else max(v for v in parts if v is not None)
 
 
-def _low(v: float) -> float:
-    return 1.0 - max(0.0, min(1.0, float(v)))
+def _scale_score(value: float | None, weight: float) -> float | None:
+    return None if value is None else value * weight
 
 
-def _diagnostic_row(key: str, label: str, score: float, interpretation: str, evidence: list[tuple[str, float]]) -> dict[str, Any]:
-    strength = "forte" if score >= 0.72 else "moyenne" if score >= 0.42 else "faible"
-    top = [(name, float(max(0.0, min(1.0, value)))) for name, value in evidence if value >= 0.18]
-    top.sort(key=lambda x: -x[1])
-    return {"key": key, "label": label, "score": float(max(0.0, min(1.0, score))), "strength": strength, "evidence": [{"signal": name, "level": value} for name, value in top[:5]], "interpretation": interpretation}
+def _sum_score(*parts: float | None) -> float | None:
+    return None if any(v is None for v in parts) else sum(v for v in parts if v is not None)
+
+
+def _mean_score(*parts: float | None) -> float | None:
+    if not parts or any(v is None or not math.isfinite(v) for v in parts):
+        return None
+    return max(0.0, min(1.0, sum(v for v in parts if v is not None) / len(parts)))
+
+
+def _low(v: float | None) -> float | None:
+    return None if v is None else 1.0 - max(0.0, min(1.0, v))
+
+
+def _diagnostic_row(key: str, label: str, score: float | None, interpretation: str, evidence: list[tuple[str, float | None]]) -> dict[str, Any]:
+    available = [(name, value) for name, value in evidence if value is not None]
+    top = [(name, max(0.0, min(1.0, value))) for name, value in available if value >= 0.18]
+    top.sort(key=lambda item: -item[1])
+    return {
+        "key": key, "label": label, "score": score,
+        "strength": "inconnue" if score is None else "forte" if score >= 0.72 else "moyenne" if score >= 0.42 else "faible",
+        "score_kind": "heuristic_signature", "confidence_status": "unvalidated",
+        "availability": "available" if score is not None else "partial" if available else "unavailable",
+        "evidence_coverage": len(available) / len(evidence) if evidence else 0.0,
+        "missing_evidence": [name for name, value in evidence if value is None],
+        "evidence": [{"signal": name, "level": value} for name, value in top[:5]],
+        "interpretation": interpretation,
+        "interpretation_kind": "possible_cause" if key != "normal" else "descriptive_signature",
+        "reference_scope": "dataset_mean_not_independent_reference",
+    }
 
 
 def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None) -> list[dict[str, Any]]:
@@ -1060,24 +1070,46 @@ def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None) 
     signature.
     """
     s = _diagnostic_signals(profile)
-    normal_bad = max(s["q"], s["h"], s["spike"], s["jump"], s["clip"], s["noise"], s["baseline"], s["reference"], s["repeatability"], s["structure"])
+    normal_bad = _max_score(s["q"], s["h"], s["spike"], s["jump"], s["clip"], s["noise"], s["baseline"], s["reference"], s["repeatability"], s["structure"])
     rows = [
-        _diagnostic_row("normal", "Spectre normal", _low(normal_bad), "Spectre conforme à la population, acquisition correcte.", [("faibles anomalies", _low(normal_bad))]),
-        _diagnostic_row("very_noisy", "Spectre très bruité", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], s["reference"] * 0.6), "Faible signal, problème détecteur, lampe ou acquisition instable.", [("PCA Q", s["q"]), ("Noise RMS", s["noise"]), ("SNR bas", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM référence", s["reference"])]),
-        _diagnostic_row("splice", "Splice / raccord détecteurs", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], s["snr_high"] * 0.4 + _low(s["noise"]) * 0.3), "Rupture aux jonctions de détecteurs, calibration locale ou sonde différente.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"]), ("SNR non dégradé", s["snr_high"])]),
-        _diagnostic_row("partial_coverage", "Mélange feuille + fond", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"] * 0.65, _low(max(s["spike"], s["jump"])) * 0.55), "Couverture partielle du spot; contribution du fond ou du support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("background_shift", "Fond différent", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _low(max(s["spike"], s["jump"])) * 0.45), "Effet systématique du support, blanc/noir, transflectance ou environnement de mesure.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"])]),
-        _diagnostic_row("out_of_domain", "Spectre hors domaine valide", _mean_score(s["h"], s["h"], s["reference"], s["structure"] * 0.7, _low(max(s["noise"], s["spike"], s["jump"]))), "Variété, espèce, lot ou condition différente mais physiquement plausible.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM référence", s["reference"]), ("Structure PCA", s["structure"]), ("artefacts faibles", _low(max(s["noise"], s["spike"], s["jump"])))]),
-        _diagnostic_row("white_calibration", "Erreur calibration / référence blanche", _mean_score(s["q"], s["h"] * 0.7, s["baseline"], s["baseline"], s["reference"], max(s["spike"], s["jump"]) * 0.55), "Décalage systématique entre campagnes, instruments ou référence blanche.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("artefacts locaux", max(s["spike"], s["jump"]))]),
-        _diagnostic_row("probe_geometry", "Différence de sonde / géométrie", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], max(s["spike"], s["jump"]) * 0.7, s["snr_high"] * 0.35), "Modification de l'illumination, collecte, angle ou distance sonde-échantillon.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("clipping", "Spectre saturé / clipping", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], s["jump"] * 0.6), "Détecteur saturé ou dynamique insuffisante.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
-        _diagnostic_row("resampling_error", "Erreur interpolation / rééchantillonnage", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _low(s["noise"]) * 0.6, s["snr_high"] * 0.5, _low(s["repeatability"]) * 0.35), "Artefacts numériques ou traitement spectral incorrect.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Noise RMS faible", _low(s["noise"])), ("SNR normal/élevé", s["snr_high"])]),
-        _diagnostic_row("flat_low_signal", "Spectre plat / signal faible", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _low(max(s["spike"], s["jump"])) * 0.5), "Mauvais contact, échantillon absent, mesure dégradée ou dynamique très faible.", [("PCA Q", s["q"]), ("SNR bas", s["snr_low"]), ("Variance très faible", s["flat"]), ("artefacts faibles", _low(max(s["spike"], s["jump"])))]),
-        _diagnostic_row("poor_repeatability", "Mauvaise répétabilité d'acquisition", _mean_score(s["repeatability"], s["repeatability"], max(s["noise"], s["spike"], s["jump"]) * 0.5), "Positionnement, opérateur ou protocole instable; investiguer les répétitions intra-ID.", [("RMS/SAM intra-ID", s["repeatability"]), ("Bruit/artefacts variables", max(s["noise"], s["spike"], s["jump"]))]),
-        _diagnostic_row("multi_regime", "Dataset multi-régimes", _mean_score(s["structure"], s["reference"], s["q"] * 0.8, s["h"] * 0.8, s["repeatability"] * 0.6), "Mélange de campagnes, opérateurs, lots, setups ou sous-populations spectrales.", [("Structure PCA", s["structure"]), ("RMS/SAM référence", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("vera25_like", "Signature VERA25-like", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _low(s["noise"]) * 0.55, s["snr_high"] * 0.55, s["reference"], s["repeatability"] * 0.75), "Combinaison possible changement de sonde + splice, amplifiée par géométrie, fond ou calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"])]),
+        _diagnostic_row("normal", "Spectre normal", _low(normal_bad), "Faibles signatures sur les métriques disponibles ; ne certifie ni la validité physique ni l’absence de défaut.", [("faibles anomalies", _low(normal_bad))]),
+        _diagnostic_row("very_noisy", "Spectre très bruité", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], _scale_score(s["reference"], 0.6)), "Faible signal, problème détecteur, lampe ou acquisition instable.", [("PCA Q", s["q"]), ("Noise RMS", s["noise"]), ("SNR bas", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM référence", s["reference"])]),
+        _diagnostic_row("splice", "Splice / raccord détecteurs", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], _sum_score(_scale_score(s["snr_high"], 0.4), _scale_score(_low(s["noise"]), 0.3))), "Rupture aux jonctions de détecteurs, calibration locale ou sonde différente.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"]), ("SNR non dégradé", s["snr_high"])]),
+        _diagnostic_row("partial_coverage", "Mélange feuille + fond", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], _scale_score(s["repeatability"], 0.65), _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.55)), "Couverture partielle du spot; contribution du fond ou du support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("background_shift", "Fond différent", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.45)), "Effet systématique du support, blanc/noir, transflectance ou environnement de mesure.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"])]),
+        _diagnostic_row("out_of_domain", "Signature compatible avec un écart de population", _mean_score(s["h"], s["h"], s["reference"], _scale_score(s["structure"], 0.7), _low(_max_score(s["noise"], s["spike"], s["jump"]))), "Variété, espèce, lot ou condition différente mais physiquement plausible.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM référence", s["reference"]), ("Structure PCA", s["structure"]), ("artefacts faibles", _low(_max_score(s["noise"], s["spike"], s["jump"])))]),
+        _diagnostic_row("white_calibration", "Erreur calibration / référence blanche", _mean_score(s["q"], _scale_score(s["h"], 0.7), s["baseline"], s["baseline"], s["reference"], _scale_score(_max_score(s["spike"], s["jump"]), 0.55)), "Décalage systématique entre campagnes, instruments ou référence blanche.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("artefacts locaux", _max_score(s["spike"], s["jump"]))]),
+        _diagnostic_row("probe_geometry", "Différence de sonde / géométrie", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], _scale_score(_max_score(s["spike"], s["jump"]), 0.7), _scale_score(s["snr_high"], 0.35)), "Modification de l'illumination, collecte, angle ou distance sonde-échantillon.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("clipping", "Spectre saturé / clipping", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], _scale_score(s["jump"], 0.6)), "Détecteur saturé ou dynamique insuffisante.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
+        _diagnostic_row("resampling_error", "Erreur interpolation / rééchantillonnage", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.6), _scale_score(s["snr_high"], 0.5), _scale_score(_low(s["repeatability"]), 0.35)), "Artefacts numériques ou traitement spectral incorrect.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Noise RMS faible", _low(s["noise"])), ("SNR normal/élevé", s["snr_high"])]),
+        _diagnostic_row("flat_low_signal", "Spectre plat / signal faible", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.5)), "Mauvais contact, échantillon absent, mesure dégradée ou dynamique très faible.", [("PCA Q", s["q"]), ("SNR bas", s["snr_low"]), ("Variance très faible", s["flat"]), ("artefacts faibles", _low(_max_score(s["spike"], s["jump"])))]),
+        _diagnostic_row("poor_repeatability", "Mauvaise répétabilité d'acquisition", _mean_score(s["repeatability"], s["repeatability"], _scale_score(_max_score(s["noise"], s["spike"], s["jump"]), 0.5)), "Positionnement, opérateur ou protocole instable; investiguer les répétitions intra-ID.", [("RMS/SAM intra-ID", s["repeatability"]), ("Bruit/artefacts variables", _max_score(s["noise"], s["spike"], s["jump"]))]),
+        _diagnostic_row("multi_regime", "Dataset multi-régimes", _mean_score(s["structure"], s["reference"], _scale_score(s["q"], 0.8), _scale_score(s["h"], 0.8), _scale_score(s["repeatability"], 0.6)), "Mélange de campagnes, opérateurs, lots, setups ou sous-populations spectrales.", [("Structure PCA", s["structure"]), ("RMS/SAM référence", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("vera25_like", "Signature VERA25-like", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.55), _scale_score(s["snr_high"], 0.55), s["reference"], _scale_score(s["repeatability"], 0.75)), "Combinaison possible changement de sonde + splice, amplifiée par géométrie, fond ou calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"])]),
     ]
-    rows.sort(key=lambda row: -row["score"])
+    required = {
+        "normal": ["q", "h", "spike", "jump", "clip", "noise", "baseline", "reference", "repeatability", "structure"],
+        "very_noisy": ["q", "noise", "snr_low", "spike", "reference"],
+        "splice": ["q", "spike", "jump", "reference", "snr_high", "noise"],
+        "partial_coverage": ["q", "h", "baseline", "reference", "repeatability", "spike", "jump"],
+        "background_shift": ["q", "h", "baseline", "reference", "spike", "jump"],
+        "out_of_domain": ["h", "reference", "structure", "noise", "spike", "jump"],
+        "white_calibration": ["q", "h", "baseline", "reference", "spike", "jump"],
+        "probe_geometry": ["q", "h", "baseline", "reference", "repeatability", "spike", "jump", "snr_high"],
+        "clipping": ["clip", "q", "baseline", "jump"],
+        "resampling_error": ["q", "spike", "jump", "noise", "snr_high", "repeatability"],
+        "flat_low_signal": ["q", "snr_low", "flat", "spike", "jump"],
+        "poor_repeatability": ["repeatability", "noise", "spike", "jump"],
+        "multi_regime": ["structure", "reference", "q", "h", "repeatability"],
+        "vera25_like": ["q", "h", "spike", "jump", "noise", "snr_high", "reference", "repeatability"],
+    }
+    for row in rows:
+        signals = required[row["key"]]
+        missing = [name for name in signals if s[name] is None]
+        row["missing_evidence"] = missing
+        row["evidence_coverage"] = (len(signals) - len(missing)) / len(signals)
+        row["availability"] = "available" if not missing else "unavailable" if len(missing) == len(signals) else "partial"
+    rows.sort(key=lambda row: (row["score"] is None, -(row["score"] or 0.0)))
     if top_k is not None:
         rows = rows[:top_k]
     return rows

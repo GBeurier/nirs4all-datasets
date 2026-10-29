@@ -92,7 +92,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M Champs d’index examinés : source_rep_ID. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 2 fields, Y: 19 fields, passport: 34 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 19 fields, measurements: 1 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

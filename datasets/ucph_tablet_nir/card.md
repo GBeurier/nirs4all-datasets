@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Le source_sample_id inclut lot et numéro de comprimé ; les dix numéros ne démontrent pas dix réacquisitions du même comprimé.
-- **Curated views:** M: 2 fields, Y: 2 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

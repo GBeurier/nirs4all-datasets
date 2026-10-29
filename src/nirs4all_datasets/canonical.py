@@ -42,6 +42,7 @@ import pyarrow.parquet as pq
 
 from nirs4all_datasets import __version__ as _PKG_VERSION
 from nirs4all_datasets.bootstrap import _metadata_aliases, _original_sample_alias
+from nirs4all_datasets.curation import is_provenance_column, normalize_variable
 from nirs4all_datasets.manifest import sha256_file
 from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
 
@@ -108,7 +109,7 @@ def _x_files(leaf: Path) -> dict[str, Path]:
     return blocks
 
 
-def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tuple[pd.DataFrame | None, bool, list[str]]:
+def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str], dataset_id: str = "", source_context: dict[str, str] | None = None) -> tuple[pd.DataFrame | None, bool, list[str]]:
     """Read ``M.csv`` and build the ``observation_id -> sample_id`` mapping.
 
     Returns ``(m_df, has_sample_id, warnings)`` where ``m_df`` is the full metadata table (or ``None``
@@ -183,6 +184,8 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
     if obs.str.strip().eq("").any() or not obs.is_unique:
         raise ValueError(f"{path.name}: observation_id must be nonempty and unique within the spectral source")
 
+    if obs.duplicated().any():
+        raise ValueError(f"{path.name}: observation_id must be unique within each source")
     sample, n_orphans = _sample_for(obs, m, has_sample, ids_sample)
     if n_orphans:
         warnings.append(f"{path.name}: {n_orphans} observation_id(s) have no row in M.csv; used identity sample_id for them.")
@@ -203,6 +206,11 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
         "path": f"canonical/sources/{source_id}.parquet",
         "n_observations": int(len(obs)),
         "n_variables": len(spectral_cols),
+        "duplicate_vectors": {
+            "distinct": int(len(spectral) - spectral.duplicated().sum()),
+            "additional_copies": int(spectral.duplicated().sum()),
+            "semantics": "equal stored spectral values; not proof of technical reacquisition; no rows removed",
+        },
         "axis_unit": None,
         "axis_min": min(numeric) if numeric else None,
         "axis_max": max(numeric) if numeric else None,
@@ -218,7 +226,7 @@ def _to_float(value: str) -> float | None:
         return None
 
 
-def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str], text_cols: set[str], aliases: dict[str, str]) -> tuple[pd.DataFrame | None, list[str]]:
+def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str], text_cols: set[str], aliases: dict[str, str], column_mapping: dict[str, str] | None = None) -> tuple[pd.DataFrame | None, list[str]]:
     """Build the per-sample variables table (Y columns UNION extra M columns), one row per sample_id.
 
     Y.csv columns and non-structural M columns are merged on ``observation_id``, then collapsed to one
@@ -232,7 +240,10 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     y_path = leaf / "Y.csv"
     if y_path.exists():
-        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str), keep_default_na=False)
+        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str), keep_default_na=False, na_values=[""])
+        y = y.rename(columns=column_mapping or {})
+        if y.columns.duplicated().any():
+            raise ValueError("declared variable mapping creates duplicate Y columns")
         if _OBS_KEY not in y.columns:
             # Some upstream packages export X/Y/M as paired rows, without a key in Y. Only attach
             # M's keys when an X block independently confirms its complete observation order.
@@ -253,8 +264,10 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     if m is not None:
         # Drop structural plumbing + the standardization script's `source_*` provenance-tracking columns
         # (file paths, repo refs, grouped-export notes): these are bookkeeping, not sample measurements.
-        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not str(c).startswith("source_")]
-        m_extra = m[keep].rename(columns=aliases)
+        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not (str(c).startswith("source_") and is_provenance_column(str(c)))]
+        m_extra = m[keep].rename(columns=aliases | (column_mapping or {}))
+        if m_extra.columns.duplicated().any():
+            raise ValueError("declared variable mapping creates duplicate metadata columns")
         if m_extra.shape[1] > 1:
             frames.append(m_extra)
 
@@ -277,13 +290,14 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
         if (per_sample_distinct > 1).any():
             varying = True
             warnings.append(f"variables: column {col!r} varies within a sample_id; retained at observation grain.")
+    merged.attrs["observation_variables"] = merged.copy()
     grouped = merged[[_OBS_KEY, JOIN_KEY, *value_cols]].copy() if varying else merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
     grouped[JOIN_KEY] = grouped[JOIN_KEY].astype(str)
     # Coerce comma-decimal float columns (European locales export "12,5") to real floats -- but ONLY for
     # columns the descriptor declares NUMERIC, so a genuinely numeric target/metadata is not stranded as an
     # unparseable string while a declared-categorical code (e.g. "001") is never silently turned into a float.
     for col in value_cols:
-        if col not in numeric_cols or grouped[col].dtype != object:
+        if col not in numeric_cols or pd.api.types.is_numeric_dtype(grouped[col]):
             continue
         text = grouped[col].astype("string").str.strip()
         nonblank = text[text.notna() & (text != "") & (text.str.lower() != "nan")]
@@ -295,7 +309,9 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     phantom = sorted(set(grouped[JOIN_KEY]) - spectral_samples)
     if phantom:
         warnings.append(f"variables: {len(phantom)} sample_id(s) have Y/metadata but no spectra in any source (e.g. {phantom[:3]}); kept.")
-    return grouped[([_OBS_KEY] if varying else []) + [JOIN_KEY] + value_cols], warnings
+    result = grouped[([_OBS_KEY] if varying else []) + [JOIN_KEY] + value_cols]
+    result.attrs["observation_variables"] = merged.attrs["observation_variables"]
+    return result, warnings
 
 
 def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> tuple[pd.DataFrame | None, str | None, list[str]]:
@@ -325,7 +341,7 @@ def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> t
     return split, "original", warnings
 
 
-def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir: str | Path) -> CanonicalResult:
+def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir: str | Path, *, source_context: dict[str, str] | None = None) -> CanonicalResult:
     """Convert a v2.0 leaf into the canonical per-source, sample-identity-joined form.
 
     Wipes ``<out_dir>/canonical/`` first (no stale artifacts), then writes one Parquet per X block
@@ -352,16 +368,23 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
 
     warnings: list[str] = []
     ids_sample = descriptor.ids.sample_id
+    source_identity_rules = {"mendeley_human_arm_muscle_vis_swir_reflectance", "ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y", "ucph_granules_ambient_moisture_api_nir", "ucph_granules_moisture_controlled_api_nir", "dryad_rice_leaf_reflectance_manual", "flanagan_api_compounds_raman", "drug_compound_flanagan_raman", "drug_common_application_flanagan_raman", "drug_solvent_reagent_flanagan_raman"}
+    if descriptor.id in source_identity_rules:
+        ids_sample = JOIN_KEY
     aliases = _metadata_aliases(leaf)
+    column_mapping = {v.original_name: v.name for v in descriptor.variables if v.original_name and v.original_name != v.name}
+    if len(column_mapping) != sum(bool(v.original_name and v.original_name != v.name) for v in descriptor.variables):
+        raise ValueError("original variable names must map unambiguously")
     text_cols = {v.name for v in descriptor.variables if v.type is not VarType.NUMERIC}
+    text_cols.update(v.original_name for v in descriptor.variables if v.original_name and v.type is not VarType.NUMERIC)
     text_cols.update(name for name, alias in aliases.items() if alias in text_cols)
-    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols)
+    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols, descriptor.id, source_context)
     warnings.extend(m_warnings)
     from nirs4all_datasets.curation import curate_bundle, write_curated
 
     # The raw, unified variables remain available; curated M/Y/structure/passport
     # are separate observation-level views with an exhaustive source mapping.
-    curated = curate_bundle(leaf, descriptor.id, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True)
+    curated = curate_bundle(leaf, descriptor.id, soilsite=Path(source_context["soilsite"]) if source_context and source_context.get("soilsite") else None, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True)
     warnings.extend(curated.warnings)
     if m is not None:
         enriched = curated.enriched_metadata
@@ -370,7 +393,9 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
                 m[column] = enriched[column].to_numpy()
         if ids_sample != _OBS_KEY:
             m[ids_sample] = curated.structure.set_index(_OBS_KEY)[JOIN_KEY].reindex(m[_OBS_KEY]).to_numpy()
-            has_sample = bool(curated.report["identity"]["sample_id_available"])
+            has_sample = bool(curated.structure[JOIN_KEY].notna().any())
+    identity = curated.report["identity"]
+    (canonical / "identity.json").write_text(json.dumps(identity, indent=2), encoding="utf-8")
     if descriptor.ids.sample_id_available and not has_sample:
         warnings.append(f"descriptor declares sample_id available but {ids_sample!r} is absent from M.csv; using identity sample_id.")
 
@@ -381,6 +406,10 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         warnings.append(f"declared sources {sorted(declared)} != on-disk X blocks {sorted(found)}; converting the on-disk blocks.")
 
     hashes: dict[str, str] = {}
+    if m is not None:
+        original_metadata = curated.original_metadata.copy()
+        original_metadata.attrs.clear()
+        hashes["provenance.parquet"] = _write_table(pa.Table.from_pandas(original_metadata, preserve_index=False), canonical / "provenance.parquet")
     row_counts: dict[str, int] = {}
     source_entries: list[dict[str, Any]] = []
     spectral_samples: set[str] = set()
@@ -403,10 +432,26 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         return CanonicalResult(out, canonical, config, CONVERTER_NAME, CONVERTER_VERSION, ConversionStatus.FAILED, hashes, row_counts, warnings)
 
     numeric_cols = {v.name for v in descriptor.variables if v.type is VarType.NUMERIC}
-    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols, text_cols, aliases)
+    numeric_cols.update(item["canonical_name"] for item in curated.report["enrichments"] if item["canonical_name"] in {"longitude", "latitude", "location_error_m"})
+    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols, text_cols, aliases, column_mapping)
     warnings.extend(var_warnings)
     variables_path: str | None = None
     if variables is not None:
+        observation_variables = variables.attrs.pop("observation_variables", None)
+        variables.attrs.clear()
+        if observation_variables is not None:
+            observation_variables.attrs.clear()
+        normalization = []
+        for variable in descriptor.variables:
+            if variable.name in variables:
+                variables[variable.name], record = normalize_variable(variables[variable.name], variable)
+                normalization.append(record)
+            if observation_variables is not None and variable.name in observation_variables:
+                observation_variables[variable.name], _ = normalize_variable(observation_variables[variable.name], variable)
+        if observation_variables is not None:
+            hashes["observations.parquet"] = _write_table(pa.Table.from_pandas(observation_variables, preserve_index=False), canonical / "observations.parquet")
+            row_counts["observation_variables"] = len(observation_variables)
+        (canonical / "curation.json").write_text(json.dumps({"protocol_version": "1", "variables": normalization}, indent=2, allow_nan=False), encoding="utf-8")
         out_var = canonical / "variables.parquet"
         hashes["variables.parquet"] = _write_table(pa.Table.from_pandas(variables, preserve_index=False), out_var)
         row_counts["variables"] = int(len(variables))
@@ -432,6 +477,7 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
     curation_config["mapping"] = Path(curation_config["mapping"]).relative_to(out).as_posix()
     curation_config["identity"] = curated.report["identity"]
     config["curation"] = curation_config
+    config["identity"] = identity
     for path in sorted((canonical / "curation").iterdir()):
         hashes[path.relative_to(canonical).as_posix()] = sha256_file(path)
     (canonical / "dataset.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")

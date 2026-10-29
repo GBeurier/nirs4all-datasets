@@ -126,6 +126,12 @@ class NirsDataset:
         card: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
         return public_card(card, self.tier)
 
+    def assessments(self) -> list[dict[str, Any]]:
+        """Return validated optional assessments, with anonymized-tier redaction."""
+        from nirs4all_datasets.qualify.assessments import public_assessments, read_assessments
+
+        return public_assessments(read_assessments(self._dir, self.id), anonymized=self.tier is Tier.ANONYMIZED)
+
     # -- structure ---------------------------------------------------------------------------------
     def sources(self) -> list[str]:
         """The X source ids, in canonical order (from ``dataset.json``)."""
@@ -341,6 +347,30 @@ class NirsDataset:
             KeyError: If ``name`` is not a column in the variables table.
         """
         return self._select(VariableRole.METADATA, name, kind="metadata")
+
+    def observation_variables(self) -> pd.DataFrame | None:
+        """Return acquisition-grain values without collapsing repeated sample rows.
+
+        Legacy datasets without this additive table return None. Physical sample
+        identity and observation identity remain separate columns.
+        """
+        path = self._dir / "canonical" / "observations.parquet"
+        if not path.exists():
+            return None
+        frame = pd.read_parquet(path)
+        if self.tier is Tier.ANONYMIZED:
+            observations = frame["observation_id"].copy()
+            frame, _ = self._anonymize(frame.drop(columns=["observation_id"]))
+            frame.insert(0, "observation_id", observations)
+        return frame
+
+    def consumer_views(self, *, targets: list[str] | None = None) -> dict[str, Any]:
+        """Return task-specific M/Y/structure/passport views and an exclusion journal."""
+        from nirs4all_datasets.curation import consumer_views
+
+        values = self._variables_frame()
+        frame = values[0] if values is not None else pd.DataFrame()
+        return consumer_views(frame, self.descriptor, targets=targets)
 
     # -- splits ------------------------------------------------------------------------------------
     def split(self, name: str = "original") -> pd.DataFrame | None:

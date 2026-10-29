@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Les 495 noms de colonnes sont locaux aux 11 fichiers de variétés. Les fusionner produit de faux groupes de 5–6 spectres. 2700 couples variété × colonne sont distincts ; indépendance physique et répétitions techniques non établies.
-- **Curated views:** M: 1 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

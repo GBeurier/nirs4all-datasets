@@ -123,6 +123,10 @@ def import_standardized(leaf_dir: str | Path, descriptor: DatasetDescriptor, out
         import time
 
         for attempt in range(6):
+            # A conversion can take long enough for another caller to create
+            # the destination. POSIX rename would replace an empty directory.
+            if destination.exists() or destination.is_symlink():
+                raise FileExistsError(f"canonical data already exists: {destination}")
             try:
                 result.canonical_dir.rename(destination)
                 break

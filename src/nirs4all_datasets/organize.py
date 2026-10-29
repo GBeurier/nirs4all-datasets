@@ -68,6 +68,7 @@ def organize(
     datasets_root: str | Path,
     *,
     force: bool = False,
+    source_context: dict[str, str] | None = None,
 ) -> OrganizeResult:
     """Place raw, (re)build the canonical form + manifest for one dataset, idempotently.
 
@@ -92,6 +93,7 @@ def organize(
     if soilsite:
         converter_config["soilsite_sha256"] = sha256_file(soilsite)
 
+    converter_config.update({f"source_context:{key}": sha256_file(path) for key, path in sorted((source_context or {}).items())})
     changed, reasons = needs_rebuild(
         descriptor,
         dataset_dir=dataset_dir,
@@ -106,7 +108,7 @@ def organize(
         return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True, conversion_status=previous.conversion_status, conversion_warnings=previous.conversion_warnings)
 
     placed = _place_raw(source, dataset_dir)
-    result = build_canonical(source, descriptor, dataset_dir)
+    result = build_canonical(source, descriptor, dataset_dir, source_context=source_context)
     manifest = build_manifest(
         descriptor,
         dataset_dir=dataset_dir,

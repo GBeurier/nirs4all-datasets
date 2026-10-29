@@ -64,6 +64,13 @@ def processing_hash(descriptor: DatasetDescriptor) -> str:
     Parquet.
     """
     data = descriptor.model_dump(mode="json", exclude=_PROCESSING_EXCLUDE)
+    # Normalization directives affect bytes; descriptive roles/units still do not.
+    transforms = []
+    for variable in descriptor.variables:
+        if variable.original_name or variable.missing_values or variable.numeric_sentinels or variable.thousands_separator or variable.decimal_separator != ",":
+            transforms.append({"name": variable.name, "original_name": variable.original_name, "missing_values": variable.missing_values, "numeric_sentinels": variable.numeric_sentinels, "decimal_separator": variable.decimal_separator, "thousands_separator": variable.thousands_separator})
+    if transforms:
+        data["variable_normalization"] = transforms
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 
@@ -76,6 +83,12 @@ def metadata_hash(descriptor: DatasetDescriptor) -> str:
     is not rebuilt).
     """
     data = descriptor.model_dump(mode="json", exclude=_METADATA_EXCLUDE)
+    # Additive curation defaults preserve historical descriptor/card identities.
+    defaults: dict[str, object] = {"semantic_role": None, "original_name": None, "equivalent_to": None, "derived_from": [], "missing_values": [], "numeric_sentinels": [], "decimal_separator": ",", "thousands_separator": None}
+    for variable in data.get("variables", []):
+        for key, value in defaults.items():
+            if variable.get(key) == value:
+                variable.pop(key, None)
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 

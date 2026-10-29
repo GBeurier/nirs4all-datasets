@@ -83,7 +83,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Non déterminé
-- **Curated views:** M: 0 fields, Y: 8 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

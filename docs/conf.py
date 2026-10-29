@@ -1,6 +1,6 @@
 """Sphinx configuration for the nirs4all-datasets documentation.
 
-Built on ReadTheDocs (ubuntu-24.04, Python 3.12) from ``docs/requirements.txt``. MyST-Markdown is the
+Built on ReadTheDocs (ubuntu-24.04, Python 3.13) from ``docs/requirements.txt``. MyST-Markdown is the
 authoring format; the furo theme renders the site. Maintainer-only worklists (e.g. the private-dataset
 upload backlog) are excluded from the published build.
 """
