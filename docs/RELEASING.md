@@ -57,8 +57,8 @@ registries.
 scripts/bump_version.sh --bump 0.3.14
 scripts/bump_version.sh --check
 python scripts/check_release_train.py --release --check-registry
-git commit -am "chore(release): bump datasets to 0.3.12"
-git tag v0.3.12
+git commit -am "chore(release): bump datasets to 0.3.14"
+git tag v0.3.14
 git push origin main --tags
 ```
 
