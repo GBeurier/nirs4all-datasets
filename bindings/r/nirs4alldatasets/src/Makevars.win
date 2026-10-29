@@ -18,7 +18,9 @@
 # build-local CARGO_HOME) are RELOCATED to a SHORT directory under the session temp
 # instead of $(CURDIR)/rust/target. TMPDIR is exported by R during install; fall
 # back to TEMP, then TMP, then the Rtools /tmp mount.
-TARGET ?= $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
+# R-universe supplies the actual Rust triple on ARM64 (WIN is empty there).
+# Keep the Rtools x64/i686 fallback for ordinary Windows source installs.
+TARGET ?= $(if $(strip $(CARGO_BUILD_TARGET)),$(strip $(CARGO_BUILD_TARGET)),$(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu)
 SHORTTMP = $(if $(TMPDIR),$(TMPDIR),$(if $(TEMP),$(TEMP),$(if $(TMP),$(TMP),/tmp)))
 TARGET_DIR = $(SHORTTMP)/n4ds
 CARGOTMP = $(SHORTTMP)/n4ds-ch
@@ -91,7 +93,7 @@ $(STATLIB):
 	# directly.
 	export CARGO_HOME="$(CARGOTMP)" && \
 	export CARGO_TARGET_DIR="$(TARGET_DIR)" && \
-	$(if $(strip $(CARGO_LINKER)),export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="$(CARGO_LINKER)" && )\
+	$(if $(and $(filter x86_64-pc-windows-gnu,$(TARGET)),$(strip $(CARGO_LINKER))),export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="$(CARGO_LINKER)" && )\
 	export LIBRARY_PATH="$${LIBRARY_PATH};$(TARGET_DIR)/libgcc_mock" && \
 	if [ -f rust/vendor.tar.xz ]; then \
 		[ -d "$(VENDOR_DIR)" ] || ( \

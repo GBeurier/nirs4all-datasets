@@ -825,13 +825,11 @@ PY
 #     windows-sys/windows-targets closure pulled in by ureq/rustls/getrandom/
 #     directories), and each of those crates ships a 4–13 MB prebuilt import-lib
 #     blob — ~76 MB total, by far the heaviest part of the vendor tree. But the R
-#     package only ever builds two triples: the host (Linux/macOS, where NO windows
-#     crate compiles) and x86_64-pc-windows-gnu (where ONLY windows_x86_64_gnu is
-#     linked). Every other arch/env import lib (msvc / gnullvm / i686 / aarch64) is
-#     pulled into the lockfile but never extracted or linked for either target, so
-#     its binary payload is pure tarball bloat. windows_x86_64_gnu is kept intact
-#     (BOTH the 0.48.x and 0.52.x majors, since the exact one the gnu target
-#     resolves can't be known without a Windows build). Each removed lib/ file's
+#     package builds the host (Linux/macOS, where NO windows crate compiles),
+#     x86_64-pc-windows-gnu and aarch64-pc-windows-gnullvm. Keep every version of
+#     windows_x86_64_gnu and windows_aarch64_gnullvm intact: both 0.48.x and 0.52.x
+#     are present in the Windows dependency closure. Import libraries for other
+#     Windows triples are not linked by this R build. Each removed lib/ file's
 #     entry is dropped from .cargo-checksum.json so cargo's OFFLINE checksum
 #     verification (which only checks the files it lists, and only for crates it
 #     actually extracts) stays consistent — exactly as for the Makefile prune above.
@@ -845,9 +843,8 @@ removed_bytes = removed_files = 0
 for name in sorted(os.listdir(root)):
     if not name.startswith("windows_"):
         continue
-    # windows_x86_64_gnu is the ONLY windows import-lib crate linked on the
-    # x86_64-pc-windows-gnu target the R package builds; keep it (both majors).
-    if name.startswith("windows_x86_64_gnu-"):
+    # Preserve both supported Rtools targets, across every vendored version.
+    if name.startswith(("windows_x86_64_gnu-", "windows_aarch64_gnullvm-")):
         continue
     d = os.path.join(root, name)
     cj = os.path.join(d, ".cargo-checksum.json")
