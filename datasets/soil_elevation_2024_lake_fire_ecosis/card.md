@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 106 sample(s), 106 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 106 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -58,7 +60,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | public_release_allowed | metadata | categorical | *Not specified.* | n=106, missing=0, classes=1, top True (×106) |
 | parent_standardized_dataset_id | metadata | categorical | *Not specified.* | n=106, missing=106, classes=0, — |
 | notes | metadata | categorical | *Not specified.* | n=106, missing=0, classes=1, top Task-specific EcoSIS target not present in active parent Y table, wavelengths kept as provided by EcoSIS resource, no project interpolation. (×106) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=106, missing=0, classes=2, top 8/29/2024 (×79) |
 
 ## Statistics — splits
 
@@ -69,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -80,7 +81,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in plot_name, file_name, level_1, species, file_num, longitude, latitude, elevation, utc_time, raw_label, reference_value. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Le convertisseur amont a choisi date : 27 et 79 lignes sur deux dates. Les 106 fichiers ASD et heures sont distincts, avec 7 parcelles ; la date n’est pas un identifiant d’échantillon et le fichier identifie une acquisition.
+- **Curated views:** M: 7 fields, Y: 1 fields, passport: 32 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +102,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `1f4ed06d8d9f1400097c6ba08e6697bbb5908f3e41586b9660d41d46695d5e3d`
-- **Processing hash:** `0ed4c9b0dd79deb7463432b9aad43f54b87616215fc0bc15fc04a96862bb9543` | **metadata hash:** `f2b804e7e373813648afa8dc8c3c8e82eccf37d0da7f60033302b3218a32ed7a`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `b5ad69e093dcec8f450505d63856d08dda1a4b675d5171f1423319ac4fd89c0b`
+- **Processing hash:** `d133929ea04ea757ebef1ee6bf84005d1a25a9f191268a1363555e9877ba488f` | **metadata hash:** `b2306149320727147b36c2e767ee7d84567bb798f112dfbcc61f8eb4e70f26aa`

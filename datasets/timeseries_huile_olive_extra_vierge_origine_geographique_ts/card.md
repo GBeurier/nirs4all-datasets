@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 60 sample(s), 60 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 60 sample(s), 60 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -44,12 +46,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 30, test: 30
+- **original** (documented, not applied): test: 30, train: 30
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -59,7 +61,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -79,6 +82,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7e227c94e0477e84dd23e5f0f73d6e196277237896956cda22365f09e0cf05e8`
-- **Processing hash:** `0e35c420e99a51a9c3343506dafc5e7ef8bf7015ee908c54595087bae773500b` | **metadata hash:** `778e711ac61f161441661026fc25783b6aa0d9b6b5b7a2ce07cf3b35dcc24706`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `0478f5a701acddf5e470ab9fa585027d4b7be57739ea695f8cb778c782151a6b`
+- **Processing hash:** `3891fd53347385f106b8f6025b37f98be803016e790022ca7200ded4f463132d` | **metadata hash:** `f64b45a8ffa0514e1f742ac6ccd129eceb533b3070393a1dcc16ce03c7ae5891`

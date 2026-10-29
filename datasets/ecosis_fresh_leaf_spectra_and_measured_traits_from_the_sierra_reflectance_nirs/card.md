@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 35 sample(s), 363 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 9–16 (mean 10.37).
+- **Alignment:** sample level; 35 sample(s), 363 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 9–16 (mean 10.37).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -72,7 +74,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -81,7 +83,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : source_replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 6 fields, Y: 13 fields, passport: 35 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,6 +104,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d84f6cd5ba62b867fb19f170ae8afae7f25505bb1f81c2270879a49c58a8273c`
-- **Processing hash:** `8757607b5bd3b0bd9de1cf28fd53e7a8084914b60aec68004d915e6faf2d5d49` | **metadata hash:** `a10f6bca008f3140bd66ba86bf8edb7e842d762e07f3c03dc8c0ee2755aee977`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `b7ad044524a670edae509ba9d2b03052a7887914723ac352d2941a3eb658aabc`
+- **Processing hash:** `8f3dc4605bf4d6b92b23a43670d2179ed675a9b056b3ff6f2685e79d64f656ff` | **metadata hash:** `1964dd9d8bc3c42c43c9963a886fd22f7319dca4d690505c40f029625cf6258f`

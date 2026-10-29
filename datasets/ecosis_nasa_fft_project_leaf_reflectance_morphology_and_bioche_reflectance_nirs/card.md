@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1382 sample(s), 1382 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1382 sample(s), 1382 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -70,7 +72,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -80,7 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 10 fields, Y: 8 fields, passport: 41 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,6 +104,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `90878f7afa8e427e5f8af480433d7b415b6af1a602f63abd8938b2b44ec117ff`
-- **Processing hash:** `84350bd75688618ca0b6d0a50349942dd1596b4803647447977d78daf32cee56` | **metadata hash:** `15a45c2abbafd4d54241f5ff23bf9ccc3614b7aa6f22e438645cc1abb3a3efc7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `2b0e4b3e37d483e83aa0b318349d2c9165606dfe3e28eee02a3e984acf51c141`
+- **Processing hash:** `325f5c141b99b1ac400eb07213959a0a2718a5dbd20208699138d986dc52dd78` | **metadata hash:** `7ab3908a1c127c7dd356c2fb3a89c1b68cb8be478b8f457969b89f5d147d870a`

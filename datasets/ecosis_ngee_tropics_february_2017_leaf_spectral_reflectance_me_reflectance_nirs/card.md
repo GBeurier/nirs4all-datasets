@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 249 sample(s), 249 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 249 sample(s), 249 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -73,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -82,7 +84,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 12 fields, passport: 46 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -107,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e0d5857bdf61edeb235ab8edccbe780f940d5fb0ef76e1deb803fb6fa633252e`
-- **Processing hash:** `21c805541eac988e2ed606fc8bcee732df4132748fffba93f8f7b2014bf6c5e4` | **metadata hash:** `a45dbdd051f7778706c96a59fdc04390efdfa90882b27cff3c246a3e94884a45`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `48a1e0feaf9a34bb12a571163f36012b3af265abf7a080942b6f8849eb3d4549`
+- **Processing hash:** `dd53701bedc51b20aef995789ee4d52fe3d1be7d022a0bc02aadd7bc701b63b7` | **metadata hash:** `032931311b8adee25749845c9be7038a71cdf6b865756629f479f44314b56239`

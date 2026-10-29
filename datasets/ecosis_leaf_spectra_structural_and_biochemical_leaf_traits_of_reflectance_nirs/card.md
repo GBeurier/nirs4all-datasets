@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 184 sample(s), 184 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 184 sample(s), 184 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -106,7 +108,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -115,7 +117,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 46 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -137,6 +140,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9a35d1a0f7632c35a8c54a1141ec9b0ebc6de9a90778472858920156ef5d8b09`
-- **Processing hash:** `47f38389f5987d4e641a6a9f04a2ac07e3c75f1a5c65faf19f2e7727b143e72f` | **metadata hash:** `5ffa5fd0ffa6ae49c87dc0f997bcdf48c016b9b7035a71fdbc410494c6de747b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e9deaaa1d74e5a7e0e615609c13c0500145a9219c09554bd4110dcceb96bd974`
+- **Processing hash:** `fcf58af4b7b78c7af6e9ac275ca1fec80b7f67009393722f2df6803ea1bc4965` | **metadata hash:** `ce741913be6cbfb1fd1a8c25d05fd5de7386835ff545f74f5c2778f141996277`

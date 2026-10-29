@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 27 sample(s), 27 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 27 sample(s), 27 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -46,7 +48,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -55,7 +57,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 14 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,6 +78,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `6f516e7e4ba55e1bde675aa16942b3e73c1ee6f1c5c2234922a03a8cba859258`
-- **Processing hash:** `f3f60a57699a31798dc972618a3343f9fe6e3c55443571c68f8ab0ff84050d82` | **metadata hash:** `f486f68fb7c7976e7cef29e71a4c51af555100e2d9b7dc852dd7f1ec33d63852`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `95f37348d6405c95407996354c6758b3e403a435fae62659be0ef74e31fc0835`
+- **Processing hash:** `8d8534f493af9c3c02506e5d7113e5f665832dafa0c01c04f751694e59cd7d4f` | **metadata hash:** `21e65860f6f913d9be1dccdefbdcae396c77d88b5db4db17cef9167b4197c710`

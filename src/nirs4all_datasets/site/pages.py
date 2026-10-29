@@ -809,6 +809,21 @@ def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
     )
 
 
+def _curation_panel(view: DatasetView) -> str:
+    report = (view.card or {}).get("curation") or {}
+    if not report.get("views") or not view.show_value_stats:
+        return ""
+    rows = []
+    for variable in report.get("variables", []):
+        stats = variable.get("stats") or {}
+        extent = f'{num(stats.get("min"))} – {num(stats.get("max"))}' if stats.get("type") == "numeric" else f'IR {num(stats.get("imbalance_ratio"))}'
+        rows.append(f'<tr><td>{esc(variable.get("name"))}</td><td>{esc(variable.get("view"))}</td><td>{num(stats.get("n_unique"))}</td><td>{num(stats.get("completeness_pct"))}%</td><td>{extent}</td></tr>')
+    counts = report["views"]
+    summary = f'{len(counts.get("M", []))} experimental metadata fields (M) · {len(counts.get("Y", []))} informative targets (Y).'
+    table = '<table><thead><tr><th>Variable</th><th>Role</th><th>Distinct values</th><th>Complete</th><th>Range / balance</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table>'
+    return '<section class="panel wide"><h2>Curated scientific variables</h2><div class="panel-body"><p>' + esc(summary) + '</p>' + table + '<p class="dl-note">Identifiers and sampling groups remain available separately. Statistics count exported observations.</p></div></section>'
+
+
 def _variables_panel(view: DatasetView, rel: str) -> str:
     card = view.card or {}
     variables = card.get("variables") or []
@@ -873,7 +888,11 @@ def _alignment_panel(view: DatasetView) -> str:
         ("Observations (total)", num(al.get("n_observations_total"))),
     ]
     if reps:
-        rows.append(("Reps per sample", f'min {num(reps.get("min"))} · mean {num(reps.get("mean"))} · max {num(reps.get("max"))}'))
+        rows.append(("Exported observations per unit", f'min {num(reps.get("min"))} · mean {num(reps.get("mean"))} · max {num(reps.get("max"))}'))
+    if al.get("identity_status"):
+        rows.append(("Identity status", al["identity_status"]))
+        rows.append(("Documented technical repetitions", al.get("technical_repetitions") if al.get("technical_repetitions") is not None else "ND"))
+        rows.append(("Source unit", al.get("unit")))
     return f'<section class="panel"><h2>Alignment</h2><div class="panel-body">{_kv(rows)}</div></section>'
 
 
@@ -1010,6 +1029,7 @@ def render_dataset(view: DatasetView) -> str:
             _profile_panel(view),
             _sources_panel(view, rel),
             _metric_reference_panel(),
+            _curation_panel(view),
             _variables_panel(view, rel),
             _alignment_panel(view),
             _splits_panel(view),

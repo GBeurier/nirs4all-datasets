@@ -59,7 +59,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "7f6b456d117f48bdd73b2daf2f7f50316eae24af37c804e9ac9d30ea275f56fa"
+      "sha256": "43cb190073ff510939317dbd7a12eaa8131a566b6c7bc708d0305577423c4b4f"
     }
   ],
   "keywords": [
@@ -76,10 +76,25 @@
       "description": "Spectra from source 'DG standardized NIR absorbance' (332 observations x 700 wavelengths).",
       "field": [
         {
+          "@id": "X_DG/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_DG.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_DG/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -105,7 +120,7 @@
         }
       ],
       "key": {
-        "@id": "X_DG/sample_id"
+        "@id": "X_DG/observation_id"
       },
       "name": "X_DG"
     },
@@ -115,10 +130,25 @@
       "description": "Spectra from source 'FH standardized NIR absorbance' (332 observations x 700 wavelengths).",
       "field": [
         {
+          "@id": "X_FH/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_FH.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_FH/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -144,14 +174,14 @@
         }
       ],
       "key": {
-        "@id": "X_FH/sample_id"
+        "@id": "X_FH/observation_id"
       },
       "name": "X_FH"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -632,5 +662,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

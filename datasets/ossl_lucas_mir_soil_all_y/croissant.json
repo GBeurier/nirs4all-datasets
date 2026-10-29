@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "recovered_spectra",
-      "sha256": "40a09d1133e74f1e856bbbd58ab606f1127ce9d4ff8349f868b3cabdff7e8788"
+      "sha256": "9e8ae544856969e46579ee234cd7a34b58d1fdc8fd15d8a05eafb98f3a4d3f4c"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "dd233d833346123910f1e1e7e1564b418f78aa8c98ec80e2c181fbc67071a7cc"
+      "sha256": "c4c12006b5758948ad63c89a568fa4ff365de094e1dbea0d05393d8d2351e86c"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'recovered_spectra' (40175 observations x 1701 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -1411,6 +1426,111 @@
               "@id": "file/variables.parquet"
             }
           }
+        },
+        {
+          "@id": "variables/site_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Variable 'site_id' (role metadata, type identifier).",
+          "name": "site_id",
+          "source": {
+            "extract": {
+              "column": "site_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/longitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'longitude' (role metadata, type numeric).",
+          "name": "longitude",
+          "source": {
+            "extract": {
+              "column": "longitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'latitude' (role metadata, type numeric).",
+          "name": "latitude",
+          "source": {
+            "extract": {
+              "column": "latitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/campaign_date_begin",
+          "@type": "cr:Field",
+          "dataType": "sc:Date",
+          "description": "Variable 'campaign_date_begin' (role metadata, type datetime).",
+          "name": "campaign_date_begin",
+          "source": {
+            "extract": {
+              "column": "campaign_date_begin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/campaign_date_end",
+          "@type": "cr:Field",
+          "dataType": "sc:Date",
+          "description": "Variable 'campaign_date_end' (role metadata, type datetime).",
+          "name": "campaign_date_end",
+          "source": {
+            "extract": {
+              "column": "campaign_date_end"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/location_error_m",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'location_error_m' (role metadata, type numeric).",
+          "name": "location_error_m",
+          "source": {
+            "extract": {
+              "column": "location_error_m"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/campaign_year",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'campaign_year' (role metadata, type numeric).",
+          "name": "campaign_year",
+          "source": {
+            "extract": {
+              "column": "campaign_year"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
         }
       ],
       "key": {
@@ -1427,5 +1547,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

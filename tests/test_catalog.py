@@ -40,6 +40,7 @@ _ENTRY_KEYS = {
     "n_samples", "doi", "retrieval_status", "retrieval_canonical_hosted", "retrieval_route_count", "origin_kinds", "origin_access", "n_publications",
     "card_protocol", "content_hash", "processing_hash", "has_card", "has_manifest",
     "is_stale", "publishable",
+    "n_curated_metadata", "n_curated_targets", "curated_metadata", "curated_targets", "identity_status", "technical_repetitions",
 }
 
 
@@ -203,7 +204,9 @@ def test_bank_summary_aggregates(fleet: tuple[Path, dict[str, DatasetDescriptor]
     assert summary["total_sources"] == 4  # 2 + 1 + 1
 
     # samples distribution: every dataset has 2 samples.
-    assert summary["samples"] == {"min": 2, "median": 2, "max": 2, "total": 6}
+    # The X-only dataset has no documented sample identity: observations are
+    # not silently counted as physical samples.
+    assert summary["samples"] == {"min": 2, "median": 2, "max": 2, "total": 4}
 
 
 def test_bank_summary_empty() -> None:

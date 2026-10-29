@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 199 sample(s), 199 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 199 sample(s), 199 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -71,7 +73,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -80,7 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 2 fields, Y: 10 fields, passport: 43 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +106,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f49a5e6625a33cc02b7dc600319a21f8ef0c56403aeb3337fc111927d9494c22`
-- **Processing hash:** `64c675b9f879fb84b2e21ce69201ac51c4aa255c4a8701dd0e5227f9066fcc4d` | **metadata hash:** `9fb8008679902e1504d656c4a76d8f48b2858afe2799908061ffd3e74ed33317`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `ceb472435fa045445bbd09fa8012654e7a20453d4513a66b72ff014dba36431d`
+- **Processing hash:** `a956ead344cb9b82d6f9385c3fc2a08eb74f01dccb705e75cdcadbb75d29527f` | **metadata hash:** `de75a24ce2bad4fb7a6f3bdbc8181297d14efa2ba5188c02157cc1a782441b95`

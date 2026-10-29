@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 56 sample(s), 56 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 56 sample(s), 56 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -39,7 +41,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -48,7 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -68,6 +71,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `a942f524afe01248fee335ec4a7afb87a067af1e748bf0256e94f109f993987b`
-- **Processing hash:** `51ee4fe7028eea8d9460e9c84577a37a74c2c19fb18a382bdbf3da5f94e2c248` | **metadata hash:** `dea94e148a559ae79ed0978b73089c50ecba53dee230e1c6d519ec8e02450232`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e29f4cb8077e1fee3d2b45dee84fff2fea6684c81e960e59f92dedce36c7d24d`
+- **Processing hash:** `792cdee52308ad1714fb23053a7a43676516985cd15dc73dd10cc4a37097e909` | **metadata hash:** `3c8076fe349916918a7cfe12d0f4cd891e24b43865ce108bb2025224737d0a38`

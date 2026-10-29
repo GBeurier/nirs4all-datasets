@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 27 sample(s), 27 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 27 sample(s), 27 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -59,7 +61,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -68,7 +70,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 2 fields, passport: 25 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +91,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f5765c815ccd4fa3b6d8d6a601a49a23062380360e9aa4881c4dee32537ed64a`
-- **Processing hash:** `aa700cb2a1ea10bee129cb8227ba9756bcc33d7ee5d22eaf3ee555a74573d6ee` | **metadata hash:** `ec175417d348ec889fee9f8aeee5269b9bfa01f29762cc7b1da87c33120242a3`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `9b57d17e211e6f4698b61b2356852ee8cbd41f2eaee3d992e65988d242cbe8a2`
+- **Processing hash:** `f69753c5a696d9f7ad90e77b017d94bf54ea4a1aca33acdd74c5af2ec08b602d` | **metadata hash:** `7312f5d77d538b80ceb015e1cfaac2b0c9068e19a7fe3da3da7cc70938e026c5`

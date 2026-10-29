@@ -39,8 +39,8 @@ variables:
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
@@ -49,13 +49,17 @@ splits:
   applied: false
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: UCPH Chemometrics tablet dataset
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Le source_sample_id inclut lot et numéro de comprimé
+    ; les dix numéros ne démontrent pas dix réacquisitions du même comprimé.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: UCPH Chemometrics tablet dataset
@@ -87,6 +91,12 @@ origin_sources:
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: official_source_identified
   reproducibility_status: reproducible_for_internal_use
@@ -94,6 +104,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/ucph_tablet_nir
-  source_fingerprint: 671b44c512e7dd7a7b78b1060792dfc647ae349c24ed7e408a77e0a5e41b6d14
+  generator_version: '2'
+  source_relpath: standardized_datasets/ucph_tablet_nir
+  source_fingerprint: 9fe7e60786c1f51752449b17a0caa3c518c2341777366cd242c6af809929f6c4

@@ -169,8 +169,8 @@ variables:
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
@@ -179,13 +179,18 @@ splits:
   applied: false
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: GRAPEVINE LeafTraits local source files
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Feuille × date, alignée entre les quatre blocs ;
+    regroupement par la colonne source conservée dans M. La multiplicité exportée
+    ne prouve pas le nombre de scans moyennés en amont.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: GRAPEVINE LeafTraits local source files
@@ -220,6 +225,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/grapevine_leaftraits_multisensor_nir
-  source_fingerprint: aeb380f5f0c83eb6c20d3ac5a8920b3c11cb5410259fdda29f3c6e25d41566bc
+  generator_version: '2'
+  source_relpath: standardized_datasets/grapevine_leaftraits_multisensor_nir
+  source_fingerprint: fe16ef2ae18e071e0d9bea57e9dada989c3216b85d21aada572e3f1df1f3217d

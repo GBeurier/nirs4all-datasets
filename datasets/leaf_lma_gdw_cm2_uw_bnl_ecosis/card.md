@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 74 sample(s), 97 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–2 (mean 1.311).
+- **Exported observations per source unit:** 1–2 (mean 1.311).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -28,11 +30,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | SpectralRep | metadata | numeric | *Not specified.* | n=74, missing=0, range 1–1, mean 1 ± 0 |
 | Unique_Sample_ID | metadata | categorical | *Not specified.* | n=74, missing=0, classes=74, top CVARS_Plot1_CAAN4_L1T1N_LC_RG_41430 (×1) |
 | Spectra_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=74, top CVARS_Plot1_CAAN4_L1T1N_LC_RG (×1) |
-| Sample_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=71, top MCON_Tower_QUKE_L1T1 (×2) |
+| Sample_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=71, top SJER_Tower_QUDO_L1T1 (×2) |
 | Site | metadata | categorical | *Not specified.* | n=74, missing=0, classes=7, top SJER (×24) |
 | Site_Long | metadata | categorical | *Not specified.* | n=74, missing=0, classes=7, top San Joaquin Experimental Range (×24) |
 | Sample_Date | metadata | categorical | *Not specified.* | n=74, missing=0, classes=20, top 3/26/13 (×9) |
-| USDA_Species_Code | metadata | categorical | *Not specified.* | n=74, missing=0, classes=18, top QUDO (×7) |
+| USDA_Species_Code | metadata | categorical | *Not specified.* | n=74, missing=0, classes=18, top CECU (×7) |
 | Latitude | metadata | numeric | *Not specified.* | n=74, missing=1, range 33.52–37.12, mean 35.52 ± 1.688 |
 | Longitude | metadata | numeric | *Not specified.* | n=74, missing=1, range -119.7–-116.2, mean -118.4 ± 1.373 |
 | Instrument | metadata | categorical | *Not specified.* | n=74, missing=0, classes=3, top ASD_FS3 (×42) |
@@ -110,7 +112,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top LMA_gDW_cm2 (×74) |
 | target_original_name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top LMA_gDW_cm2 (×74) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top UW-BNL_NASA_HyspIRI_Airborne_Campaign_Compiled_Leaf_and_Canopy_Spectra (×74) |
-| raw_label | metadata | categorical | *Not specified.* | n=74, missing=0, classes=66, top 0.009567142 (×2) |
+| raw_label | metadata | categorical | *Not specified.* | n=74, missing=0, classes=66, top 0.008318444 (×2) |
 | reference_value | metadata | numeric | *Not specified.* | n=74, missing=0, range 0.003656–0.03929, mean 0.01636 ± 0.009912 |
 | class_index | metadata | categorical | *Not specified.* | n=74, missing=74, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=74, missing=74, classes=0, — |
@@ -136,7 +138,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -147,7 +149,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 20 fields, Y: 1 fields, passport: 50 fields, measurements: 38 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -167,6 +170,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `cde65afb49d381f7e64c7c6ee3426664f8e98fbafa294fbcd60a9a9bc6c685c7`
-- **Processing hash:** `7f8cf0bcba95dc82edf5ded69e5c83ddc741c365427b3c18f5c967a04175d5bb` | **metadata hash:** `b4e40e8c4e94cfed826c34ae18c1c7e8702f90642632cf5f2e038640b848a8e1`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `7215d48ff0990921314d1d637da1ce3277e8cca0ff249ccaa96274150262a8e3`
+- **Processing hash:** `11d42a764eb1c5ea13a3636d704a770ce37fa2fcd7de1af6f0392b3c37fce02a` | **metadata hash:** `84a5dd5b0eef58b0d38184af49768fcc1910a2e899f316725f012ef060b56580`

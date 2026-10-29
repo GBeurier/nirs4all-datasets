@@ -45,35 +45,35 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "micronir",
-      "sha256": "7b6f138cec30b2d38c984151d425fc043fc0c8b20254dff8b50f1fbf45f1770e"
+      "sha256": "f825f1c24099b7a1a08c43a7edae5eea862bd42d0374b4424c92c33f9d470971"
     },
     {
       "@id": "file/X2.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "neospectra",
-      "sha256": "1e6b221d55916de31cc254ce611d3bd1535e8dee380b2324047b00f07fb3fdc6"
+      "sha256": "755edcdcfbf4cbdba50ea959a2233577aea18ab0a9e88655752c5f2028c96982"
     },
     {
       "@id": "file/X3.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "micronir_neospectra",
-      "sha256": "467eb82a596bf1708932fb9c45344c43be9cdf53f7d5524a6783b9afc1bec479"
+      "sha256": "c895de59b03abd7d3902b68c823ae73c238de9b88242b3a6a1948b185e8e3249"
     },
     {
       "@id": "file/X4.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "asd",
-      "sha256": "d0226717bf520e41c03778151176b970d7cbc5b12e57c424b04c9a3c32fabd7b"
+      "sha256": "c600264ac5365336dbd8fffad7f19558479ca6911d8f5fdce8e3226ee6737499"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "a07db5abf281303c19cf09911b36e581be3441b19419071e32abfeff7fcfee51"
+      "sha256": "12fddca59a74721ed339694df1357b52c6232265b13cf95ca261f359d9dc9fe0"
     }
   ],
   "keywords": [
@@ -90,10 +90,25 @@
       "description": "Spectra from source 'micronir' (2079 observations x 125 wavelengths).",
       "field": [
         {
+          "@id": "X1/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        },
+        {
           "@id": "X1/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -119,7 +134,7 @@
         }
       ],
       "key": {
-        "@id": "X1/sample_id"
+        "@id": "X1/observation_id"
       },
       "name": "X1"
     },
@@ -129,10 +144,25 @@
       "description": "Spectra from source 'neospectra' (2079 observations x 257 wavelengths).",
       "field": [
         {
+          "@id": "X2/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        },
+        {
           "@id": "X2/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -158,7 +188,7 @@
         }
       ],
       "key": {
-        "@id": "X2/sample_id"
+        "@id": "X2/observation_id"
       },
       "name": "X2"
     },
@@ -168,10 +198,25 @@
       "description": "Spectra from source 'micronir_neospectra' (2079 observations x 276 wavelengths).",
       "field": [
         {
+          "@id": "X3/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X3.parquet"
+            }
+          }
+        },
+        {
           "@id": "X3/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -197,7 +242,7 @@
         }
       ],
       "key": {
-        "@id": "X3/sample_id"
+        "@id": "X3/observation_id"
       },
       "name": "X3"
     },
@@ -207,10 +252,25 @@
       "description": "Spectra from source 'asd' (2079 observations x 2101 wavelengths).",
       "field": [
         {
+          "@id": "X4/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X4.parquet"
+            }
+          }
+        },
+        {
           "@id": "X4/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -236,14 +296,14 @@
         }
       ],
       "key": {
-        "@id": "X4/sample_id"
+        "@id": "X4/observation_id"
       },
       "name": "X4"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -263,8 +323,8 @@
         {
           "@id": "variables/LMA",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'LMA' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'LMA' (role target, type numeric).",
           "name": "LMA",
           "source": {
             "extract": {
@@ -278,8 +338,8 @@
         {
           "@id": "variables/WCf",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'WCf' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'WCf' (role target, type numeric).",
           "name": "WCf",
           "source": {
             "extract": {
@@ -308,8 +368,8 @@
         {
           "@id": "variables/An",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'An' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'An' (role target, type numeric).",
           "name": "An",
           "source": {
             "extract": {
@@ -323,8 +383,8 @@
         {
           "@id": "variables/PSI",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'PSI' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'PSI' (role target, type numeric).",
           "name": "PSI",
           "source": {
             "extract": {
@@ -338,8 +398,8 @@
         {
           "@id": "variables/WUEintr",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'WUEintr' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'WUEintr' (role target, type numeric).",
           "name": "WUEintr",
           "source": {
             "extract": {
@@ -353,8 +413,8 @@
         {
           "@id": "variables/WUEinst",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'WUEinst' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'WUEinst' (role target, type numeric).",
           "name": "WUEinst",
           "source": {
             "extract": {
@@ -368,8 +428,8 @@
         {
           "@id": "variables/gsw",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'gsw' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'gsw' (role target, type numeric).",
           "name": "gsw",
           "source": {
             "extract": {
@@ -383,8 +443,8 @@
         {
           "@id": "variables/gbw",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'gbw' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'gbw' (role target, type numeric).",
           "name": "gbw",
           "source": {
             "extract": {
@@ -398,8 +458,8 @@
         {
           "@id": "variables/gtw",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'gtw' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'gtw' (role target, type numeric).",
           "name": "gtw",
           "source": {
             "extract": {
@@ -413,8 +473,8 @@
         {
           "@id": "variables/E_apparent",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'E_apparent' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'E_apparent' (role target, type numeric).",
           "name": "E_apparent",
           "source": {
             "extract": {
@@ -428,8 +488,8 @@
         {
           "@id": "variables/VPcham",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'VPcham' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPcham' (role target, type numeric).",
           "name": "VPcham",
           "source": {
             "extract": {
@@ -443,8 +503,8 @@
         {
           "@id": "variables/VPref",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'VPref' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPref' (role target, type numeric).",
           "name": "VPref",
           "source": {
             "extract": {
@@ -458,8 +518,8 @@
         {
           "@id": "variables/VPleaf",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'VPleaf' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPleaf' (role target, type numeric).",
           "name": "VPleaf",
           "source": {
             "extract": {
@@ -473,8 +533,8 @@
         {
           "@id": "variables/VPDleaf",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'VPDleaf' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'VPDleaf' (role target, type numeric).",
           "name": "VPDleaf",
           "source": {
             "extract": {
@@ -488,8 +548,8 @@
         {
           "@id": "variables/H2O_r",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'H2O_r' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_r' (role target, type numeric).",
           "name": "H2O_r",
           "source": {
             "extract": {
@@ -503,8 +563,8 @@
         {
           "@id": "variables/H2O_s",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'H2O_s' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_s' (role target, type numeric).",
           "name": "H2O_s",
           "source": {
             "extract": {
@@ -518,8 +578,8 @@
         {
           "@id": "variables/H2O_leaf",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'H2O_leaf' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'H2O_leaf' (role target, type numeric).",
           "name": "H2O_leaf",
           "source": {
             "extract": {
@@ -533,8 +593,8 @@
         {
           "@id": "variables/Fs",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'Fs' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fs' (role target, type numeric).",
           "name": "Fs",
           "source": {
             "extract": {
@@ -548,8 +608,8 @@
         {
           "@id": "variables/Fm.",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'Fm.' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'Fm.' (role target, type numeric).",
           "name": "Fm.",
           "source": {
             "extract": {
@@ -563,8 +623,8 @@
         {
           "@id": "variables/PhiPS2",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'PhiPS2' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'PhiPS2' (role target, type numeric).",
           "name": "PhiPS2",
           "source": {
             "extract": {
@@ -578,8 +638,8 @@
         {
           "@id": "variables/ETR",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'ETR' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'ETR' (role target, type numeric).",
           "name": "ETR",
           "source": {
             "extract": {
@@ -683,8 +743,8 @@
         {
           "@id": "variables/G",
           "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'G' (role target, type categorical).",
+          "dataType": "sc:Float",
+          "description": "Variable 'G' (role target, type numeric).",
           "name": "G",
           "source": {
             "extract": {
@@ -841,5 +901,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

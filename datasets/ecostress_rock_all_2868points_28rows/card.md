@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 28 sample(s), 28 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 28 sample(s), 28 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -37,7 +39,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top N/A (×28) |
 | species | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=28, missing=28, classes=0, — |
@@ -54,7 +56,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×28) |
 | rights_status | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top manual_review_needed (×28) |
 | usage_scope | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top private_use_only (×28) |
-| notes | metadata | categorical | *Not specified.* | n=28, missing=1, classes=3, top none (×25) |
+| notes | metadata | categorical | *Not specified.* | n=28, missing=0, classes=4, top none (×25) |
 
 ## Statistics — splits
 
@@ -65,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +77,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `66a5b32ec35601795096fd1ba5d0021d7ba1d54176bfc29c8ca3b523f9da2af1`
-- **Processing hash:** `d65361ac57d465be9224ce8dcaa1589adbc8c79239aeff07ec7e0664b16a352b` | **metadata hash:** `982adc72da9e2506537dd472f15f0b4f786c25434a0a87e15da5270ca724774b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `9cf3e834f42f0c0d4570693416799ad248d2ba718064955aed260865b6c813d3`
+- **Processing hash:** `43d4aa91d365f32755b68b6fcc2eb49d52bf4678204d5ac4e32ca9e4b9789817` | **metadata hash:** `ab04ccd94710bb58b9c3e40fc0985990051c41bbc4476174eee3fb66d7727873`

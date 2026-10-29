@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 250 sample(s), 500 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 50 sample(s), 500 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 5–5 (mean 5).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -58,7 +60,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | ligament_type | metadata | categorical | *Not specified.* | n=250, missing=225, classes=5, top ACL (×5) |
 | manual_download | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top True (×250) |
 | manual_download_source_dir | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\bovine knee (×250) |
-| manual_download_file | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top 925999ad-8127-4428-b7cc-c03c12e62d3c_ovzjey37.zip::Ristaniemi_et_al._Biomechanical_biochemical_and_near_infrared_spectral_data_of_bovine_knee_ligaments_and_patellar_tendon/Data_NIRS.xlsx (×250) |
+| manual_download_file | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top minimal_source/Data_NIRS.xlsx \| minimal_source/Data_biomechanics_and_biochemistry.xlsx (×250) |
 | official_source_url | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top https://etsin.fairdata.fi/dataset/925999ad-8127-4428-b7cc-c03c12e62d3c/data (×250) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top v0.8.57 (×250) |
 
@@ -71,7 +73,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -80,7 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 50 ligaments mesurés en cinq sites chacun, dans deux blocs alignés ; 5 positions spatiales, pas cinq préparations indépendantes.
+- **Curated views:** M: 2 fields, Y: 28 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +103,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4cf4c77c7711cd0ce9012c54df174900558b9abb78fb091a19735dc830ac5f2d`
-- **Processing hash:** `a5ff19808819ff943267d211bfbc268d29458d7971c71a7849dc29f396fc7ded` | **metadata hash:** `eb57bf6ac074978fcc3128f4f2b8dcf097e838b992791c55ad1d848996dfd642`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `b18f0d138e10784cb7d316d57711b629f8b86a39248dfb24d77ce5884040bf23`
+- **Processing hash:** `e42e3f20f09b47d3dddfa3a0134d7f9bc6c7d761b3e8cd3fc0b9a3ba29afb495` | **metadata hash:** `fefd91a439e1cec160402724283c16c6a6fb7c4b539ec607843f3ebbd72ad935`

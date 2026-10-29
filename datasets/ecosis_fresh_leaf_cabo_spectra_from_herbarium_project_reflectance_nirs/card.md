@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 609 sample(s), 609 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 609 sample(s), 609 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -111,7 +113,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -120,7 +122,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 5 fields, Y: 50 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -144,6 +147,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `11cf0d806d8ec1e8d02241b46ba5220f19338b9d5206108547e99268c8ba137a`
-- **Processing hash:** `f61d4da467b0ae087dec62e3bbbab2c67dc122603173fcffbe30dc90dee79d7c` | **metadata hash:** `a7713f7d33eae555f5227e148aabbf1347d4dbd50321ca0590a1019ab0c1ddd1`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `a8b9e2c3f334f7bd4c44646d5e99d9c86869cc2a94cbe1d593eb7e9c819cca9b`
+- **Processing hash:** `adca4addd08035aad90dd2a92d89894a6fe50fa134d9b6323ce9936ab76a3be0` | **metadata hash:** `e627591f42a5abee60aa62cae8af3f857f7d6671c6cf12054179481d1c67588c`

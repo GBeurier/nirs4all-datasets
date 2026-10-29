@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 261 sample(s), 358 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–2 (mean 1.372).
+- **Exported observations per source unit:** 1–2 (mean 1.372).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -136,7 +138,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -147,7 +149,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : GE_Rep. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 19 fields, Y: 1 fields, passport: 51 fields, measurements: 38 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -167,6 +170,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `a35904706b77889ace3fb889126389167275eb413654df0c53bd91151df34972`
-- **Processing hash:** `b783a4728d1cc2d68fd8d02b7767c4d2734c73f9341d348c97f0aa123506d12a` | **metadata hash:** `3d5a668f8496637da458126337d538eebb261cdc4ed19f2dadd9ab08adf6a6ca`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `75aa2f49f99c89d0c0e71159b1fa7b238ebf4ffc341489ed9677775d9c11f51a`
+- **Processing hash:** `9db9eae2ed76c900134472e062d9638b64477e62fc61cc8c179dbc64fca28f02` | **metadata hash:** `98b70e5329974b79730274662e2aef6ca63c0197e9a7e8964102d4a3a70ba8a0`

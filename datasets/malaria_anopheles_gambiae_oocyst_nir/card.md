@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 333 sample(s), 333 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 333 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -25,7 +27,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
 | x | target | numeric | *Not specified.* | n=333, missing=0, range 0–6.096e+04, mean 2386 ± 6742 |
-| ID1 | metadata | categorical | *Not specified.* | n=333, missing=0, classes=71, top Minfection/113G3 (×14) |
+| ID1 | metadata | categorical | *Not specified.* | n=333, missing=0, classes=71, top Minfection/114 (×14) |
 | ID2 | metadata | numeric | *Not specified.* | n=333, missing=0, range 0–9, mean 4.21 ± 2.809 |
 | ID | metadata | categorical | *Not specified.* | n=333, missing=0, classes=274, top Minfection/11310 (×2) |
 | Oocytes | metadata | numeric | *Not specified.* | n=333, missing=0, range 0–6.096e+04, mean 2386 ± 6742 |
@@ -37,12 +39,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 227, test: 106
+- **original** (documented, not applied): test: 106, train: 227
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -51,7 +53,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: 274 chaînes ID pour 333 lignes ; ID1/ID2 peuvent entrer en collision après concaténation. Identité des moustiques et réacquisitions non établies par le script de reconstruction disponible.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 13 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,6 +74,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `8593a5782f904b132f77133c275ac402135e304a106d1b3d17b4c827277c7a3b`
-- **Processing hash:** `941780cde2ed375f081d6605d96aba1bb21d9620a389bc0e05ab00ee3401ff2d` | **metadata hash:** `e4d66c82feaed6d2c46a0d0b160bb5dc9ada85cbef3f83f2785cc5dc7df50f44`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `dd31b0f333961869d43c5ee2f5dfc96e655295666c38ffba0e64547953b24768`
+- **Processing hash:** `83a61ffa4daa70f3102b7a03930c2470033ddb90d5e204e95eb0220f27e409e2` | **metadata hash:** `413de6253900daca33207f6a3efa97a85e1891b8248d33cdcb6f3b251e62cf0d`

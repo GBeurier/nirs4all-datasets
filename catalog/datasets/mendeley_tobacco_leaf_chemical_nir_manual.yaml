@@ -84,21 +84,26 @@ variables:
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
+  sample_id_available: true
 alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: Data In Brief / Mendeley tobacco leaf
   raw_sha256: []
   ingest_reader: v2.0-standardized
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
   warnings:
   - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
     match and M observation order matches an X block. Y row pairing is not independently
     verified.
+  - 'Curation identity contract: Échantillon source de tabac ; regroupement par la
+    colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre
+    de scans moyennés en amont.'
 governance:
   license: CC-BY-4.0
   owner_steward: Data In Brief / Mendeley tobacco leaf
@@ -139,6 +144,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/mendeley_tobacco_leaf_chemical_nir_manual
-  source_fingerprint: 6242460e7bb1375a794b519751878b6475400801ddd9ffa30b4f94026f836f01
+  generator_version: '2'
+  source_relpath: standardized_datasets/mendeley_tobacco_leaf_chemical_nir_manual
+  source_fingerprint: cb71cf1186abbab19c062edbaf7a85c68687a838223dd23db2797389e03bdb3b
