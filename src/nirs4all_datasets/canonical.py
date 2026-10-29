@@ -384,7 +384,7 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
 
     # The raw, unified variables remain available; curated M/Y/structure/passport
     # are separate observation-level views with an exhaustive source mapping.
-    curated = curate_bundle(leaf, descriptor.id, soilsite=Path(source_context["soilsite"]) if source_context and source_context.get("soilsite") else None, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True)
+    curated = curate_bundle(leaf, descriptor.id, soilsite=Path(source_context["soilsite"]) if source_context and source_context.get("soilsite") else None, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True, variable_specs=descriptor.variables)
     warnings.extend(curated.warnings)
     if m is not None:
         enriched = curated.enriched_metadata

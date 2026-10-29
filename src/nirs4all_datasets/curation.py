@@ -22,7 +22,7 @@ import pandas as pd
 
 from nirs4all_datasets.schema import DatasetDescriptor, Variable
 
-CURATION_VERSION = "1.0"
+CURATION_VERSION = "1.1"
 _OBS = "observation_id"
 _SAMPLE = "sample_id"
 _IDS = {"sample_id", "id_sample", "sampleid", "observation_id", "dataset_id"}
@@ -312,6 +312,8 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
                 semantic, name = "measured_trait", original
             if dataset_id in _API_DATASETS and original == "api_concentration_design_percent":
                 semantic = "target_copy"
+            if role == "M" and (rule.get("equivalent_to") in targets or set(rule.get("derived_from", [])) & set(targets.columns)):
+                semantic = "target_copy"
             missing = dict(rule.get("missing_rule") or {})
             missing.update(missing_rules.get(f"{role}:{original}", {}))
             if missing.get("sentinels") and not missing.get("confirmed"):
@@ -326,6 +328,16 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
             elif not numeric and semantic not in {"identifier", "acquisition_index", "provenance"}:
                 nonempty = values.dropna()
                 numeric = bool(len(nonempty)) and all(_finite_float(value) is not None or _CENSORED.fullmatch(str(value)) for value in nonempty)
+            dialect_audit: dict[str, Any] | None = None
+            if numeric and ("decimal_separator" in rule or "thousands_separator" in rule):
+                # Reuse the canonical normalizer. Preserve textual censored/invalid
+                # forms in these source views; typed model values live in variables.parquet.
+                specification = Variable(name=name, unit=rule.get("unit"), decimal_separator=rule.get("decimal_separator", ","), thousands_separator=rule.get("thousands_separator"))
+                normalized, dialect_audit = normalize_variable(values, specification)
+                values = pd.Series([
+                    original_value if record["status"] in {"invalid", "censored"} else None if pd.isna(value) else str(value)
+                    for original_value, value, record in zip(values, normalized, dialect_audit["rows"], strict=True)
+                ], index=values.index, dtype="string")
             stats = variable_stats(values, numeric=numeric)
             if numeric and not stats.get("n_invalid") and not stats.get("n_censored"):
                 values = pd.to_numeric(values.astype("string").str.replace(",", ".", regex=False), errors="raise").astype("Float64")
@@ -361,6 +373,9 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
             else:
                 output[output_name] = values
             entries.append({"source_resource": f"{role}.csv", "original_name": original, "canonical_name": output_name, "original_role": role, "semantic_role": semantic, "view": destination, "operation": operation, "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained", "grain": "observation", "unit": rule.get("unit"), "missing_rule": {"rule_version": CURATION_VERSION, "tokens": sorted(_MISSING) if semantic != "identifier" else [""], **missing}, "stats": stats, "reasons": reasons})
+            if dialect_audit is not None:
+                entries[-1]["numeric_dialect"] = {key: dialect_audit[key] for key in ("decimal_separator", "thousands_separator")}
+                entries[-1]["value_issues"] = [{"observation_id": observation, **record} for observation, record in zip(values.index, dialect_audit["rows"], strict=True) if record["status"] in {"invalid", "censored"}]
         entries.append({"source_resource": f"{role}.csv", "original_name": _OBS, "canonical_name": _OBS, "original_role": role, "semantic_role": "identifier", "view": "structure", "operation": "identity", "grain": "observation"})
     variable_sections = []
     for view in ["M", "Y"]:
@@ -391,6 +406,9 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     for view, output in outputs.items():
         output.insert(0, _SAMPLE, structure.set_index(_OBS)[_SAMPLE].reindex(universe))
         outputs[view] = output.reset_index()
+    for entry in entries:
+        entry["variable_id"] = f"{dataset_id}:{entry['canonical_name']}"
+        entry["mapping_version"] = CURATION_VERSION
     report = {"schema_version": CURATION_VERSION, "dataset_id": dataset_id, "contract_sha256": contract_hash(dataset_id), "grain": "observation", "identity": identity, "views": {name: [column for column in output if column not in {_OBS, _SAMPLE}] for name, output in outputs.items()}, "mapping": entries, "variables": variable_sections, "enrichments": enrichments, "warnings": warnings, "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.", "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible."}
     return CuratedTables(outputs["M"], outputs["Y"], structure, outputs["passport"], outputs["measurements"], report, metadata, originals[0], originals[1], warnings)
 
@@ -464,16 +482,40 @@ def _source_fields(leaf: Path) -> dict[str, dict[str, Any]]:
                 entry["missing_rule"] = {"tokens": [str(token) for token in tokens], "evidence": f"datapackage.json/{name}/schema/{field_name}/missingValues", "confirmed": True}
             if isinstance(field_spec.get("unit"), str):
                 entry["unit"] = field_spec["unit"]
+            statistical_type = field_spec.get("type")
+            if statistical_type in {"integer", "number"}:
+                entry["statistical_type"] = "numeric"
+            elif statistical_type in {"string", "boolean", "date", "datetime", "time"}:
+                entry["statistical_type"] = "categorical"
+            for source_key, canonical_key in [("decimalChar", "decimal_separator"), ("groupChar", "thousands_separator")]:
+                if source_key in field_spec:
+                    entry[canonical_key] = field_spec[source_key]
+            if "decimal_separator" in entry or "thousands_separator" in entry:
+                Variable(name=str(field_name), decimal_separator=entry.get("decimal_separator", ","), thousands_separator=entry.get("thousands_separator"))
             if entry:
                 result[f"{name}:{field_name}"] = entry
     return result
 
 
-def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, assume_paired_y: bool = False, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, allow_unaligned_y: bool = False, verify_spectral_order: bool = False) -> CuratedTables:
+def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, assume_paired_y: bool = False, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, allow_unaligned_y: bool = False, verify_spectral_order: bool = False, variable_specs: list[Variable] | None = None) -> CuratedTables:
     m, y, warnings = read_bundle(leaf, assume_paired_y=assume_paired_y, allow_unaligned_y=allow_unaligned_y, verify_spectral_order=verify_spectral_order)
     if m.empty and not y.empty:
         m = y[[_OBS]].copy()
-    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=_source_fields(leaf))
+    fields = _source_fields(leaf)
+    for variable in variable_specs or []:
+        original = variable.original_name or variable.name
+        for role, frame in [("M", m), ("Y", y)]:
+            if original not in frame:
+                continue
+            field_rule = fields.setdefault(f"{role}:{original}", {})
+            for key in ["unit", "semantic_role", "equivalent_to", "derived_from"]:
+                value = getattr(variable, key)
+                if value:
+                    field_rule[key] = value
+            for key in ["decimal_separator", "thousands_separator"]:
+                if key in variable.model_fields_set:
+                    field_rule[key] = getattr(variable, key)
+    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields)
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
     if any(warning.startswith("Y/M row pairing explicitly assumed;") for warning in warnings):
@@ -536,7 +578,7 @@ def curate_tree(source_tree: Path, output: Path, *, soilsite: Path | None = None
 
 
 # Descriptor-driven adapters preserve typed original-name/dialect contracts.
-CURATION_PROTOCOL = "1"
+CURATION_PROTOCOL = CURATION_VERSION
 _ID_ALIASES = ("sample_id", "id_sample", "ID_sample", "SampleID", "source_sample_id")
 _DESCRIPTOR_PASSPORT = frozenset({"dataset_id", "observation_id", "sample_id", "notes", "note", "license", "license_id", "license_url", "rights_status", "usage_scope", "source_file", "source_file_spectra", "source_file_metadata", "source_dataset_title", "source_dataset_url", "source_dataset_doi", "source_package_url", "source_resource", "source_relative_dir", "source_root", "source_grouped_y_exports", "source_member", "source_subset", "target_file", "source_url", "source_page", "sample_id_available", "public_release_allowed", "n_points_original", "axis_unit", "axis_min", "axis_max", "official_source_url", "official_data_url", "official_package_url", "standardization_batch", "ecosis_resource_id", "dataset", "dataset_slug", "dataset_title", "dataset_owner", "task_type", "trait_header", "trait_header_original", "target_original_name", "spectroscopy_type", "signal_type", "dimensions", "wavelength_note", "source_label", "split_original", "split_source", "original_split"})
 
@@ -568,16 +610,26 @@ def normalize_variable(values: pd.Series, variable: Variable) -> tuple[pd.Series
     missing |= text.str.casefold().isin(declared)
     reasons = pd.Series("", index=values.index, dtype="string")
     reasons.loc[missing] = "not_reported"
-    censored = text.str.match(r"^(?:[<>]=?\s*[-+]?\d|below\s+(?:lod|loq))", case=False, na=False)
+    censored = pd.Series(False, index=values.index)
     normalized = values.copy()
     normalized.loc[missing] = None
     invalid = pd.Series(False, index=values.index)
     if variable.type.value == "numeric":
         numeric_text = text
         if variable.thousands_separator:
+            # Reject malformed groups instead of turning 0.1 into 1 under a
+            # declared dot-thousands/comma-decimal dialect.
+            group = re.escape(variable.thousands_separator)
+            decimal = re.escape(variable.decimal_separator)
+            integer = rf"(?:\d+|\d{{1,3}}(?:{group}\d{{3}})+)"
+            number = rf"[+-]?(?:{integer}(?:{decimal}\d*)?|{decimal}\d+)(?:[eE][+-]?\d+)?"
+            candidate = text.str.replace(r"^(?:[<>]=?|≤|≥)\s*", "", regex=True)
+            valid_grouping = candidate.str.fullmatch(number, na=False)
+            numeric_text = numeric_text.mask(~valid_grouping & ~text.str.match(r"^below\s+(?:lod|loq)(?:\s.*)?$", case=False, na=False))
             numeric_text = numeric_text.str.replace(variable.thousands_separator, "", regex=False)
         if variable.decimal_separator != ".":
             numeric_text = numeric_text.str.replace(variable.decimal_separator, ".", regex=False)
+        censored = numeric_text.str.match(_CENSORED, na=False) | numeric_text.str.match(r"^below\s+(?:lod|loq)(?:\s.*)?$", case=False, na=False)
         parsed = pd.to_numeric(numeric_text.mask(missing | censored), errors="coerce")
         sentinel = parsed.isin(variable.numeric_sentinels)
         missing |= sentinel
@@ -598,8 +650,14 @@ def normalize_variable(values: pd.Series, variable: Variable) -> tuple[pd.Series
     for row in audit["rows"]:
         if row["status"] != "censored":
             continue
-        match = re.fullmatch(r"([<>]=?)\s*([-+]?\d+(?:[.,]\d+)?)", row["raw"].strip())
-        row["censoring"] = {"operator": match.group(1) if match else "below_detection_limit", "bound": float(match.group(2).replace(",", ".")) if match else None, "unit": variable.unit}
+        token = row["raw"].strip()
+        if variable.thousands_separator:
+            token = token.replace(variable.thousands_separator, "")
+        if variable.decimal_separator != ".":
+            token = token.replace(variable.decimal_separator, ".")
+        match = _CENSORED.fullmatch(token)
+        operator = {"≤": "<=", "≥": ">="}.get(match.group(1), match.group(1)) if match else "below_detection_limit"
+        row["censoring"] = {"operator": operator, "bound": float(match.group(2).replace(",", ".")) if match else None, "unit": variable.unit}
     return normalized, audit
 
 

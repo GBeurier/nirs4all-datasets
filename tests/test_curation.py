@@ -169,3 +169,81 @@ def test_partial_identity_preserves_known_units_without_claiming_complete_sample
     assert structure["sample_id"].tolist()[0] == "001"
     assert pd.isna(structure["sample_id"].iloc[1])
     assert source["sample_id"].iloc[1] == ""
+
+
+def test_source_numeric_dialect_is_preserved_in_curated_views_and_statistics(tmp_path):
+    (tmp_path / "M.csv").write_text("observation_id;sample_id;dose;category\na;001;1,000.5;001\nb;002;2,000.5;002\nc;003;inf;002\nd;004;<0.1;001\n")
+    (tmp_path / "datapackage.json").write_text(json.dumps({"resources": [{"path": "M.csv", "schema": {"fields": [
+        {"name": "dose", "type": "number", "decimalChar": ".", "groupChar": ",", "unit": "mg"},
+        {"name": "category", "type": "string"},
+    ]}}]}))
+    result = curate_bundle(tmp_path, "synthetic")
+    assert result.metadata.dose.iloc[:2].tolist() == ["1000.5", "2000.5"]
+    assert result.metadata.category.tolist() == ["001", "002", "002", "001"]
+    variable = next(item for item in result.report["variables"] if item["name"] == "dose")
+    assert variable["stats"]["min"] == 1000.5 and variable["stats"]["max"] == 2000.5
+    assert variable["stats"]["n_invalid"] == 1 and variable["stats"]["n_censored"] == 1
+    mapping = next(item for item in result.report["mapping"] if item["original_name"] == "dose")
+    assert mapping["numeric_dialect"] == {"decimal_separator": ".", "thousands_separator": ","}
+    assert mapping["value_issues"][0] == {"observation_id": "c", "raw": "inf", "status": "invalid"}
+    assert mapping["value_issues"][1]["censoring"] == {"operator": "<", "bound": 0.1, "unit": "mg"}
+    assert result.original_metadata.dose.iloc[0] == "1,000.5"
+    assert all(item["variable_id"] and item["mapping_version"] == "1.1" for item in result.report["mapping"])
+
+
+def test_only_explicit_descriptor_dialect_overrides_source_declaration(tmp_path):
+    from nirs4all_datasets.schema import Variable
+
+    (tmp_path / "M.csv").write_text("observation_id;dose\na;1,000\nb;2,000\n")
+    (tmp_path / "datapackage.json").write_text(json.dumps({"resources": [{"path": "M.csv", "schema": {"fields": [
+        {"name": "dose", "type": "number", "decimalChar": ".", "groupChar": ","},
+    ]}}]}))
+    from_source = curate_bundle(tmp_path, "synthetic", variable_specs=[Variable(name="dose")])
+    assert from_source.metadata.dose.tolist() == [1000., 2000.]
+    override = curate_bundle(tmp_path, "synthetic", variable_specs=[Variable(name="dose", decimal_separator=",", thousands_separator=None)])
+    assert override.metadata.dose.tolist() == [1., 2.]
+
+
+def test_descriptor_scientific_roles_and_target_derivations_reach_curated_views(tmp_path):
+    from nirs4all_datasets.schema import Variable
+
+    (tmp_path / "M.csv").write_text("observation_id;target_encoding;other_lab_reference;source_temperature\na;0;5;10\nb;1;6;11\nc;1;7;12\n")
+    (tmp_path / "Y.csv").write_text("observation_id;protein\na;2\nb;3\nc;4\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[
+        Variable(name="target_encoding", derived_from=["protein"]),
+        Variable(name="other_lab_reference", semantic_role="measured_trait", unit="mg"),
+        Variable(name="source_temperature", semantic_role="experimental_context", unit="degC"),
+    ])
+    assert "target_encoding" not in result.metadata and "target_encoding" in result.passport
+    assert "other_lab_reference" not in result.metadata and "other_lab_reference" in result.measurements
+    assert "source_temperature" in result.metadata
+    mapping = {item["original_name"]: item for item in result.report["mapping"]}
+    assert mapping["target_encoding"]["semantic_role"] == "target_copy"
+    assert mapping["other_lab_reference"]["unit"] == "mg"
+    assert mapping["source_temperature"]["unit"] == "degC"
+
+
+def test_censoring_keeps_unicode_exponents_declared_dialect_and_categorical_literals():
+    from nirs4all_datasets.curation import normalize_variable
+    from nirs4all_datasets.schema import Variable
+
+    values = pd.Series(["≤1e-3", ">=1,000.5", "below LOD", "-1", "inf"])
+    parsed, audit = normalize_variable(values, Variable(name="dose", unit="mg", decimal_separator=".", thousands_separator=","))
+    assert parsed.iloc[:3].isna().all() and parsed.iloc[3] == -1 and pd.isna(parsed.iloc[4])
+    assert audit["censored"] == 3 and audit["invalid"] == 1
+    assert audit["rows"][0]["censoring"] == {"operator": "<=", "bound": .001, "unit": "mg"}
+    assert audit["rows"][1]["censoring"] == {"operator": ">=", "bound": 1000.5, "unit": "mg"}
+    text, categorical = normalize_variable(pd.Series(["<0.1", "none", "NA"]), Variable(name="class", type="categorical"))
+    assert text.tolist() == ["<0.1", "none", "NA"] and categorical["censored"] == 0 and categorical["present"] == 3
+
+
+def test_malformed_declared_thousands_groups_are_invalid_not_silently_rescaled():
+    from nirs4all_datasets.curation import normalize_variable
+    from nirs4all_datasets.schema import Variable
+
+    values = pd.Series(["0.1", "<0.1", "1.234,5", "<0,1"])
+    result, audit = normalize_variable(values, Variable(name="dose", decimal_separator=",", thousands_separator="."))
+    assert result.iloc[:2].isna().all() and result.iloc[2] == 1234.5
+    assert audit["invalid"] == 2 and audit["censored"] == 1
+    assert audit["rows"][0]["raw"] == "0.1" and audit["rows"][1]["status"] == "invalid"
+    assert audit["rows"][3]["censoring"]["bound"] == .1

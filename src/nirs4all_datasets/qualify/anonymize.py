@@ -151,6 +151,9 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     if "curation" in out:
         report = out["curation"] or {}
         out["curation"] = {"schema_version": report.get("schema_version"), "grain": report.get("grain"), "view_counts": {name: len(columns) for name, columns in report.get("views", {}).items()}, "mapping": "withheld for anonymized tier"}
+    if isinstance(out.get("qualification_provenance"), dict):
+        out["qualification_provenance"]["diagnostic_domain"] = None
+    out.pop("assessment_selection", None)  # Population/context selectors may identify private groups.
     name_map = _variable_index_map(out)
     out["warnings"] = []  # warnings quote original variable names / authored free text -> drop wholesale
     if "assessments" in out:
@@ -172,6 +175,13 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
             source["warnings"] = []  # per-source warnings may quote authored text
             spectral = source.get("spectral")
             if isinstance(spectral, dict):
+                profile = spectral.get("profile")
+                if isinstance(profile, dict):
+                    profile["diagnostics"] = [row for row in (profile.get("diagnostics") or []) if isinstance(row, dict) and row.get("key") != "vera25_like"]
+                    if isinstance(profile.get("producer"), dict):
+                        profile["producer"] = {key: profile["producer"][key] for key in ("name", "engine_version", "protocol_version", "scope") if key in profile["producer"]}
+                    if isinstance(profile.get("signature_metadata"), dict):
+                        profile["signature_metadata"]["domain_context"] = None
                 for xy in spectral.get("xy") or []:
                     if isinstance(xy, dict) and xy.get("target") is not None:
                         xy["target"] = name_map.get(str(xy.get("target")), str(xy.get("target")))
