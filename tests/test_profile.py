@@ -28,6 +28,8 @@ _CARD_KEYS = {
     "governance",
     "assets",
     "warnings",
+    "curation",
+    "variable_join_key",
 }
 
 # Per-source spectral keys.

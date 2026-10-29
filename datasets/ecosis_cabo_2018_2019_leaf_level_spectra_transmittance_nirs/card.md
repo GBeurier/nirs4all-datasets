@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -90,7 +92,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -99,7 +101,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 31 fields, passport: 27 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -124,6 +127,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `89fa9144ac3569f7e4075df7643b74a9e914f4db387fa28f79c0bafc6e68b8cb`
-- **Processing hash:** `c8b72eef30809ea065468efdc54ca1b0022debcd2e7d6e24442c42616d2bc80d` | **metadata hash:** `13f5ba62091209e0b42f10ea76c8289c9157ade2da07c77a5884538c87697b19`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `a847bd17955bebc7d3e2f6c31d82455ee2ac2144d85d73eee8a84ed53e282f75`
+- **Processing hash:** `0f3cb8ddd39a76149db8c55996d06d6376e1c04fde9013e2f60f6955e3f8f016` | **metadata hash:** `e5c947fcca69a2629ce60171afff063369a792739be7bc32da8e24b46a0d02f6`

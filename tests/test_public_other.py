@@ -37,6 +37,30 @@ def test_twinspectra_retains_group_and_native_identifiers(tmp_path):
     assert sources["X"]["observation_id"].equals(y["observation_id"])
 
 
+def test_flanagan_original_loader_keeps_product_grouping(tmp_path):
+    from nirs4all_datasets.curation import curate_tables
+
+    spectra = tmp_path / "spectra.csv"
+    products = tmp_path / "products.xlsx"
+    pd.DataFrame({"label": ["A", "A", "B"], "500": [1, 2, 3], "501": [2, 3, 4]}).to_csv(spectra, index=False)
+    pd.DataFrame({"Compound": ["A", "B"], "Common Application": ["x", "y"], "Solvent / Reagent": ["s", "r"], "Organic": [True, True], "Formula": ["x", "y"], "Supplier - Product": ["a", "b"], "Assay %": [99, 98], "Exposure (secs)": [1, 1], "Pixel Fill %": [2, 2], "Samples": [1, 1], "Approx. Raman bands (deviation of 2 cm-1 per external sources)": [5, 6]}).to_excel(products, index=False)
+
+    class FlanaganContext(Context):
+        def provider_files(self, *_):
+            return [{"name": "raman_spectra_api_compounds.csv", "url": "spectra"}, {"name": "API_Product_Information.xlsx", "url": "products"}]
+
+        def download(self, url, filename=None):
+            return spectra if url == "spectra" else products
+
+    for dataset_id in ["flanagan_api_compounds_raman", "drug_common_application_flanagan_raman", "drug_compound_flanagan_raman", "drug_solvent_reagent_flanagan_raman"]:
+        context = FlanaganContext(spectra)
+        other.build(SimpleNamespace(id=dataset_id), context)
+        _, targets, metadata = context.result
+        result = curate_tables(dataset_id, metadata, targets)
+        assert result.structure["sample_id"].tolist() == ["A", "A", "B"]
+        assert result.report["identity"]["n_samples"] == 2
+
+
 def test_milk_uses_total_transmittance_and_all_targets(tmp_path):
     path = tmp_path / "raw.csv"
     metadata = {k: [1] for k in ("Cow_ID", "Fat", "Prot", "Lact", "SCC", "Urea", "Milk_yield", "Milk_Interv", "SET", "Time_Dark", "Time_Milk", "Time_PrevMilk", "Time_Sample", "Time_White")}

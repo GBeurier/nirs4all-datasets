@@ -39,7 +39,7 @@ def _ids(dataset_id: str, n: int) -> pd.Series:
     return pd.Series([f"{dataset_id}_{i:05d}" for i in range(1, n + 1)], name="observation_id")
 
 
-def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.DataFrame], targets: list[str], sample: pd.Series | None, url: str) -> Path:
+def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.DataFrame], targets: list[str], sample: pd.Series | None, url: str, groupings: dict[str, pd.Series] | None = None) -> Path:
     raw = raw.reset_index(drop=True)
     obs = _ids(dataset_id, len(raw))
     source_frames = {}
@@ -59,6 +59,8 @@ def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.Dat
     m.insert(0, "observation_id", obs)
     m.insert(0, "dataset_id", dataset_id)
     m["origin_url"] = url
+    for name, values in (groupings or {}).items():
+        m[name] = values.reset_index(drop=True).astype(str)
     return Path(context.write_tables(source_frames, y, m))
 
 
@@ -161,7 +163,7 @@ def _flanagan(dataset_id: str, context) -> Path:
         targets = ["compound", "common_application", "solvent_reagent"]
     else:
         targets = [dataset_id.removeprefix("drug_").removesuffix("_flanagan_raman")]
-    return _write(context, dataset_id, raw, {"X": spectral.drop(columns="label")}, targets, None, files[spectral_name])
+    return _write(context, dataset_id, raw, {"X": spectral.drop(columns="label")}, targets, raw["compound"], files[spectral_name], groupings={"source_label": raw["compound"], "compound_key": raw["compound"]})
 
 
 def _uva(dataset_id: str, context) -> Path:

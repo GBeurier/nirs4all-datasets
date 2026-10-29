@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 231 sample(s), 231 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -38,7 +40,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -47,7 +49,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 0 fields, Y: 4 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -67,6 +70,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4f16ea88ec3176ebd677a985ea56eeabf07ac4b2b9821406ed654d6ca9065b5a`
-- **Processing hash:** `262dcacad6e5f8b95b1c5aa2a6561a191bdfc4739004ffd7bc83a0569cf7412e` | **metadata hash:** `a47dfcaa7c6c515b78aa5a9efcb24c8a5e847c491793ad21b67806c32785fbc6`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `4f57a59a4b1af946366f9a1cc5dec22cdce9ebdcb022bbdbe8c057ca2b17aa95`
+- **Processing hash:** `7526b8eab443d67866f1d3ec64c89bd6d4b1a46983f537ae9cd843e3af7c0c9a` | **metadata hash:** `0a72cfb33c599ec0b2786e76cf16540ec911aede764c313a8e9b5e30ddd1ca19`

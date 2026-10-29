@@ -122,21 +122,26 @@ ids:
   observation_id: observation_id
   sample_id: sample_id
   sample_id_available: true
-alignment_level: observation
+alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: A dataset of Visible - Short Wave InfraRed reflectance spectra collected
     in-vivo on the dorsal and ventral aspect of arms
   raw_sha256: []
   ingest_reader: v2.0-standardized
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
   warnings:
   - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
     match and M observation order matches an X block. Y row pairing is not independently
     verified.
+  - 'Curation identity contract: 20 sujets, 40 unités sujet × face, 50 spectres chacune.
+    Le suffixe de scan du sample_id exporté est retiré uniquement pour ce contrat
+    vérifié.'
 governance:
   license: CC-BY-4.0
   owner_steward: A dataset of Visible - Short Wave InfraRed reflectance spectra collected
@@ -186,6 +191,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/mendeley_human_arm_muscle_vis_swir_reflectance
-  source_fingerprint: c939877bb98f7e1e734acfe5f02aa61ee4fac30b5873821107604006c9c7f117
+  generator_version: '2'
+  source_relpath: standardized_datasets/mendeley_human_arm_muscle_vis_swir_reflectance
+  source_fingerprint: 7e24ad3cc401adf6464837b9ede29672b1e3d27405626a680f8b301e8ab1b932

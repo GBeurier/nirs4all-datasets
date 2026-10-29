@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 10 sample(s), 10 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 10 sample(s), 10 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -34,7 +36,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top N/A (×10) |
 | species | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=10, missing=10, classes=0, — |
@@ -62,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -72,7 +74,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 48 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,6 +96,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0be7cffa72ea7605c5f3f6aca618d43fdc9417c4bc19e3ffb1f9a01f42b2dd75`
-- **Processing hash:** `e67f361202ab2b2b36500d4a4127af037d7f658812da3bf66d7b1b20851ff9ea` | **metadata hash:** `a1ec77d41e9000cd0704e81079bf98ce56df482d4acbee7b3ed7267d24e91f5f`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `214385fabd2425cdfb8ce19e602158db749a3cb0242562264ba1613e1725919f`
+- **Processing hash:** `59a41246f67f1c557d701ec329e05abe8a70bb2b0b4b511a47c2a77c8aa73664` | **metadata hash:** `af6ac9ae3e2ec428dfdbf844601ec6c0ba6503ae2f0f37dd11577fdb7a9a44ff`

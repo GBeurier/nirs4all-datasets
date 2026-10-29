@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 607 sample(s), 607 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 607 sample(s), 607 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -92,7 +94,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -101,7 +103,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 31 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -124,6 +127,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c5ccb609e397639f1e02bb601ed49108e8a273e92414e0a66fbd77705f1cceb2`
-- **Processing hash:** `d80470dc411944d3531772b3a3bab13d0fc53b63c91bc08e5149f81e8ed9bbe5` | **metadata hash:** `2d691bd11975f2323a5a89bbbc2ec1aaab92d2430519827cb8b8e48412621ef6`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6e0635ecd69dc493dbd460f656667510404a60ae564006ee9346fb6f2c7d34ba`
+- **Processing hash:** `29ce09264b18826e8e4ad2ba89c8c232c89b626b71d3bb41432a425c7b1fe866` | **metadata hash:** `22f4e7faa5146dd08aa0b8eda24e529bc7decdd82d741f657215b09abbebabe5`

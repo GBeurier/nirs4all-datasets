@@ -46,8 +46,8 @@ from nirs4all_datasets.manifest import sha256_file
 from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
 
 CONVERTER_NAME = "nirs4all-datasets-canonical"
-CONVERTER_VERSION = _PKG_VERSION or "2.0"
-CANONICAL_FORMAT_VERSION = "1.0"
+CONVERTER_VERSION = (_PKG_VERSION or "2.0") + "+curation.1"
+CANONICAL_FORMAT_VERSION = "1.1"
 JOIN_KEY = "sample_id"
 _OBS_KEY = "observation_id"
 _READ_CHUNK = 8192  # X read chunk (rows) for big files (e.g. the 40k-row OSSL)
@@ -119,7 +119,7 @@ def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tup
     m_path = leaf / "M.csv"
     if not m_path.exists():
         return None, False, warnings
-    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY, ids_sample, JOIN_KEY}, str))
+    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY, ids_sample, JOIN_KEY}, str), keep_default_na=False)
     if _OBS_KEY not in m.columns:
         warnings.append(f"M.csv has no {_OBS_KEY!r} column; ignoring metadata and using identity sample_id.")
         return None, False, warnings
@@ -129,9 +129,10 @@ def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tup
         return m, False, warnings
     has_sample = ids_sample in m.columns
     if has_sample:
+        m[ids_sample] = m[ids_sample].astype("string").str.strip().replace("", pd.NA)
         conflicts = m.groupby(_OBS_KEY, dropna=False)[ids_sample].nunique(dropna=True)
         if (conflicts > 1).any():
-            warnings.append("M.csv: some observation_id values map to multiple sample_id values; kept the first.")
+            raise ValueError("M.csv: observation_id maps to conflicting sample_id values")
     return m, has_sample, warnings
 
 
@@ -173,11 +174,14 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
 
     obs_chunks: list[pd.Series] = []
     spectral_chunks: list[pd.DataFrame] = []
-    for chunk in pd.read_csv(path, sep=sep, dtype=dtypes, chunksize=_READ_CHUNK):
+    missing_spectral = {column: ["", "NA", "N/A", "NaN", "nan", "null", "NULL", "<NA>"] for column in spectral_cols}
+    for chunk in pd.read_csv(path, sep=sep, dtype=dtypes, chunksize=_READ_CHUNK, keep_default_na=False, na_values=missing_spectral):
         obs_chunks.append(chunk[_OBS_KEY].astype(str))
         spectral_chunks.append(chunk[spectral_cols])
     obs = pd.concat(obs_chunks, ignore_index=True) if obs_chunks else pd.Series([], dtype=str, name=_OBS_KEY)
     spectral = pd.concat(spectral_chunks, ignore_index=True) if spectral_chunks else pd.DataFrame(columns=spectral_cols)
+    if obs.str.strip().eq("").any() or not obs.is_unique:
+        raise ValueError(f"{path.name}: observation_id must be nonempty and unique within the spectral source")
 
     sample, n_orphans = _sample_for(obs, m, has_sample, ids_sample)
     if n_orphans:
@@ -228,7 +232,7 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     y_path = leaf / "Y.csv"
     if y_path.exists():
-        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str))
+        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str), keep_default_na=False)
         if _OBS_KEY not in y.columns:
             # Some upstream packages export X/Y/M as paired rows, without a key in Y. Only attach
             # M's keys when an X block independently confirms its complete observation order.
@@ -267,11 +271,13 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     merged[JOIN_KEY], _ = _sample_for(merged[_OBS_KEY], m, has_sample, ids_sample)
     value_cols = [c for c in merged.columns if c not in (_OBS_KEY, JOIN_KEY)]
+    varying = False
     for col in value_cols:
         per_sample_distinct = merged.groupby(JOIN_KEY, dropna=False)[col].nunique(dropna=True)
         if (per_sample_distinct > 1).any():
-            warnings.append(f"variables: column {col!r} has >1 distinct value within a sample_id; kept the first.")
-    grouped = merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
+            varying = True
+            warnings.append(f"variables: column {col!r} varies within a sample_id; retained at observation grain.")
+    grouped = merged[[_OBS_KEY, JOIN_KEY, *value_cols]].copy() if varying else merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
     grouped[JOIN_KEY] = grouped[JOIN_KEY].astype(str)
     # Coerce comma-decimal float columns (European locales export "12,5") to real floats -- but ONLY for
     # columns the descriptor declares NUMERIC, so a genuinely numeric target/metadata is not stranded as an
@@ -289,7 +295,7 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     phantom = sorted(set(grouped[JOIN_KEY]) - spectral_samples)
     if phantom:
         warnings.append(f"variables: {len(phantom)} sample_id(s) have Y/metadata but no spectra in any source (e.g. {phantom[:3]}); kept.")
-    return grouped[[JOIN_KEY] + value_cols], warnings
+    return grouped[([_OBS_KEY] if varying else []) + [JOIN_KEY] + value_cols], warnings
 
 
 def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> tuple[pd.DataFrame | None, str | None, list[str]]:
@@ -312,7 +318,9 @@ def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> t
     split = pd.DataFrame({JOIN_KEY: sample.astype(str), "partition": raw})
     split = split[has_value.to_numpy()].reset_index(drop=True)
     if (split.groupby(JOIN_KEY, dropna=False)["partition"].nunique(dropna=True) > 1).any():
-        warnings.append("split 'original': some sample_id has observations in >1 partition; kept the first per sample.")
+        warnings.append("split 'original': a sample occurs in multiple partitions; retained the observation-level assignments (potential group leakage).")
+        split.insert(0, _OBS_KEY, m.loc[has_value, _OBS_KEY].to_numpy())
+        return split, "original", warnings
     split = split.drop_duplicates(subset=[JOIN_KEY], keep="first").reset_index(drop=True)
     return split, "original", warnings
 
@@ -349,6 +357,20 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
     text_cols.update(name for name, alias in aliases.items() if alias in text_cols)
     m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols)
     warnings.extend(m_warnings)
+    from nirs4all_datasets.curation import curate_bundle, write_curated
+
+    # The raw, unified variables remain available; curated M/Y/structure/passport
+    # are separate observation-level views with an exhaustive source mapping.
+    curated = curate_bundle(leaf, descriptor.id, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True)
+    warnings.extend(curated.warnings)
+    if m is not None:
+        enriched = curated.enriched_metadata
+        for column in enriched:
+            if column not in m:
+                m[column] = enriched[column].to_numpy()
+        if ids_sample != _OBS_KEY:
+            m[ids_sample] = curated.structure.set_index(_OBS_KEY)[JOIN_KEY].reindex(m[_OBS_KEY]).to_numpy()
+            has_sample = bool(curated.report["identity"]["sample_id_available"])
     if descriptor.ids.sample_id_available and not has_sample:
         warnings.append(f"descriptor declares sample_id available but {ids_sample!r} is absent from M.csv; using identity sample_id.")
 
@@ -400,6 +422,18 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         split_refs.append({"name": split_name, "path": f"canonical/splits/{split_name}.parquet"})
 
     config = _dataset_json(descriptor, source_entries, variables_path=variables_path, split_refs=split_refs)
+    if variables is not None:
+        config["variables"]["join_key"] = _OBS_KEY if _OBS_KEY in variables else JOIN_KEY
+    for entry in config["splits"]:
+        if split_df is not None:
+            entry["join_key"] = _OBS_KEY if _OBS_KEY in split_df else JOIN_KEY
+    curation_config = write_curated(curated, canonical / "curation")
+    curation_config["tables"] = {name: Path(path).relative_to(out).as_posix() for name, path in curation_config["tables"].items()}
+    curation_config["mapping"] = Path(curation_config["mapping"]).relative_to(out).as_posix()
+    curation_config["identity"] = curated.report["identity"]
+    config["curation"] = curation_config
+    for path in sorted((canonical / "curation").iterdir()):
+        hashes[path.relative_to(canonical).as_posix()] = sha256_file(path)
     (canonical / "dataset.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
 
     status = ConversionStatus.PARTIAL if warnings else ConversionStatus.OK
@@ -428,10 +462,14 @@ def resolve_config(dataset_dir: str | Path) -> dict[str, Any]:
     root = Path(dataset_dir)
     config: dict[str, Any] = json.loads((root / "canonical" / "dataset.json").read_text(encoding="utf-8"))
     for entry in config.get("sources", []):
-        entry["path"] = str((root / entry["path"]).resolve())
+        entry["path"] = (root / entry["path"]).resolve().as_posix()
     variables = config.get("variables")
     if variables is not None and variables.get("path") is not None:
-        variables["path"] = str((root / variables["path"]).resolve())
+        variables["path"] = (root / variables["path"]).resolve().as_posix()
     for split in config.get("splits", []):
-        split["path"] = str((root / split["path"]).resolve())
+        split["path"] = (root / split["path"]).resolve().as_posix()
+    curation = config.get("curation")
+    if curation:
+        curation["mapping"] = str((root / curation["mapping"]).resolve())
+        curation["tables"] = {name: str((root / path).resolve()) for name, path in curation["tables"].items()}
     return config

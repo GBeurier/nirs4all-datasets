@@ -1,0 +1,1121 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "mendeley_chicken_meat_authenticity_handheld_nir",
+  "contract_sha256": "31412a76f2c4eb26b46d696b7b11998daeb2fb22433ef1a2cc15f4905ed0a0e6",
+  "grain": "observation",
+  "identity": {
+    "method": "column",
+    "source_columns": [
+      "sample_id"
+    ],
+    "sample_id_available": true,
+    "status": "available",
+    "n_samples": 153,
+    "n_observations_with_identity": 4053,
+    "n_missing_identity": 0,
+    "observations_per_unit": {
+      "10": 5,
+      "14": 2,
+      "15": 5,
+      "16": 2,
+      "19": 1,
+      "20": 33,
+      "21": 2,
+      "22": 1,
+      "23": 1,
+      "26": 1,
+      "27": 1,
+      "29": 4,
+      "30": 55,
+      "31": 19,
+      "32": 12,
+      "33": 4,
+      "35": 3,
+      "36": 1,
+      "37": 1
+    },
+    "technical_repetitions": null,
+    "unit": "Plusieurs spectres exportés par identifiant ; nature non établie",
+    "conclusion": "Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.",
+    "missing_source_columns": [],
+    "evidence": []
+  },
+  "views": {
+    "M": [],
+    "Y": [
+      "production_system",
+      "scan_type",
+      "freshness"
+    ],
+    "passport": [
+      "dataset_id",
+      "source_sample_id",
+      "file",
+      "url",
+      "api_url",
+      "files_api_url",
+      "article_url",
+      "doi_dataset",
+      "license",
+      "license_id",
+      "license_url",
+      "rights_status",
+      "usage_scope",
+      "public_release_allowed",
+      "spectroscopy_type",
+      "axis_unit",
+      "axis_min",
+      "axis_max",
+      "n_points_original",
+      "notes"
+    ],
+    "measurements": []
+  },
+  "mapping": [
+    {
+      "source_resource": "Y.csv",
+      "original_name": "Production_system",
+      "canonical_name": "production_system",
+      "original_role": "Y",
+      "semantic_role": "measured_trait",
+      "view": "Y",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 8,
+        "type": "categorical",
+        "imbalance_ratio": 2.6762402088772848
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "Y.csv",
+      "original_name": "Scan_type",
+      "canonical_name": "scan_type",
+      "original_role": "Y",
+      "semantic_role": "measured_trait",
+      "view": "Y",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 3,
+        "type": "categorical",
+        "imbalance_ratio": 1.336306868867083
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "Y.csv",
+      "original_name": "Freshness",
+      "canonical_name": "freshness",
+      "original_role": "Y",
+      "semantic_role": "measured_trait",
+      "view": "Y",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.1967479674796748
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "observation_id",
+      "canonical_name": "observation_id",
+      "original_role": "Y",
+      "semantic_role": "identifier",
+      "view": "structure",
+      "operation": "assumed_row_pairing_to_Y",
+      "grain": "observation",
+      "target_resource": "Y.csv",
+      "independently_verified_target_ids": false,
+      "M_X_order_checked": true
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "dataset_id",
+      "canonical_name": "dataset_id",
+      "original_role": "M",
+      "semantic_role": "identifier",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          ""
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "sample_id",
+      "canonical_name": "source_sample_id",
+      "original_role": "M",
+      "semantic_role": "identifier",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          ""
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 153,
+        "type": "categorical",
+        "imbalance_ratio": 3.7
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "source_file",
+      "canonical_name": "file",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "source_url",
+      "canonical_name": "url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "api_url",
+      "canonical_name": "api_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "files_api_url",
+      "canonical_name": "files_api_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "article_url",
+      "canonical_name": "article_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "doi_dataset",
+      "canonical_name": "doi_dataset",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "license",
+      "canonical_name": "license",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "license_id",
+      "canonical_name": "license_id",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "license_url",
+      "canonical_name": "license_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "rights_status",
+      "canonical_name": "rights_status",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "usage_scope",
+      "canonical_name": "usage_scope",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "public_release_allowed",
+      "canonical_name": "public_release_allowed",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "spectroscopy_type",
+      "canonical_name": "spectroscopy_type",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "axis_unit",
+      "canonical_name": "axis_unit",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "axis_min",
+      "canonical_name": "axis_min",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "numeric",
+        "min": 908.1,
+        "max": 908.1,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "axis_max",
+      "canonical_name": "axis_max",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "numeric",
+        "min": 1676.2,
+        "max": 1676.2,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "n_points_original",
+      "canonical_name": "n_points_original",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "numeric",
+        "min": 125.0,
+        "max": 125.0,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "notes",
+      "canonical_name": "notes",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.0",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": []
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "observation_id",
+      "canonical_name": "observation_id",
+      "original_role": "M",
+      "semantic_role": "identifier",
+      "view": "structure",
+      "operation": "identity",
+      "grain": "observation"
+    }
+  ],
+  "variables": [
+    {
+      "name": "production_system",
+      "view": "Y",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 8,
+        "type": "categorical",
+        "imbalance_ratio": 2.6762402088772848
+      },
+      "source_columns": [
+        {
+          "resource": "Y.csv",
+          "name": "Production_system"
+        }
+      ]
+    },
+    {
+      "name": "scan_type",
+      "view": "Y",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 3,
+        "type": "categorical",
+        "imbalance_ratio": 1.336306868867083
+      },
+      "source_columns": [
+        {
+          "resource": "Y.csv",
+          "name": "Scan_type"
+        }
+      ]
+    },
+    {
+      "name": "freshness",
+      "view": "Y",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 4053,
+        "n_present": 4053,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.1967479674796748
+      },
+      "source_columns": [
+        {
+          "resource": "Y.csv",
+          "name": "Freshness"
+        }
+      ]
+    }
+  ],
+  "enrichments": [],
+  "warnings": [
+    "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+  ],
+  "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+  "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+  "source_hashes": {
+    "M.csv": "287374ba99e6d9003fea4be0e943929666d05790b8fe38e3b4f560aed89d8416",
+    "Y.csv": "fbe8d58c56a80b3f6bbeebfe1b55bc86478c884c9fe191283258ebc115cf976f"
+  }
+}

@@ -87,13 +87,16 @@ alignment_level: observation
 splits: []
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: OpenSpecy
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Non déterminé'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: OpenSpecy
@@ -151,16 +154,25 @@ retrieval:
       format: openspecy_rds
       sha256: aa6d66a3cf2a977a5349ed5398d8025df80003fb1d7356ff4aca9f7ebc529cdf
       size: 25865439
+      unpack:
+        archive: false
+        members: []
     canonicalization:
       engine: nirs4all_formats
-      delegate: source_to_standard.py
+      parameters: {}
       expected_layout: v2_standard
       expected_files:
       - X.csv
       - Y.csv
       - M.csv
+      delegate: source_to_standard.py
       notes: Rust reads the shared OpenSpecy RDS source through nirs4all-formats;
         canonical assembly keeps the FTIR subset.
+    health:
+      probe: true
+      expected_status:
+      - 200
+      - 302
   blockers: []
   notes: Retrieves the shared OpenSpecy nobaseline RDS source; nirs4all-formats decodes
     the OpenSpecy object and canonicalization keeps the FTIR subset.
@@ -173,6 +185,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/openspecy_ftir
-  source_fingerprint: 88695edaa26e3ee9ad9dac87d6c10302c6597c8631d5c059bbae4b80d05da9ab
+  generator_version: '2'
+  source_relpath: standardized_datasets/openspecy_ftir
+  source_fingerprint: c333f7b57e326527ff404aad08cee0db554afa926f5e723bcc2fa60679c0a1dd

@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "2018+2019_stress_six_leaf_traits_spec.csv",
-      "sha256": "70f55f9c8f12b10288b670a5b6e306a88cbbdd41fdc2baec6af5c077cd5d07ca"
+      "sha256": "52791340264074214c6d8ea1a87e71889952b98f68b702ebd6d0ecd0ac5a6cc8"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "1552ed4509e32912602906e2366ce57ca6858e6119cdf40e28e05286108ea9d7"
+      "sha256": "07e4c8525e47b646b4a3fa2d834266a9d464bf26e6ef54bc6d64fb6de91383e4"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source '2018+2019_stress_six_leaf_traits_spec.csv' (987 observations x 2151 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -630,5 +645,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

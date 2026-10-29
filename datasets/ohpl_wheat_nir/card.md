@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 100 sample(s), 100 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 100 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -35,7 +37,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -44,7 +46,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -64,6 +67,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f7c3616c0ead2ab204fc6b6111faae54e8791efdf6a4c94054d8bccee6f61107`
-- **Processing hash:** `1902bc01ac7b918c8e9f4c43bca5bd9f4ad69f728a07255a304476117c7778b7` | **metadata hash:** `cc553ffd95acad30246152991a2509b27c1489cf262f069c70eb68c887c2170f`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `1a4835275cf0c5340727b8de9aed08946e9baee24861c9311f74c118bedb03d9`
+- **Processing hash:** `bc25a31e9c4434c5cea1eaf9dc055a4dddcc3d49c074c4b568e503ae00fc690f` | **metadata hash:** `951476acb754dc58b69725b5b5ed86d63c5a37620767b1d9df88b9e159d87bbe`

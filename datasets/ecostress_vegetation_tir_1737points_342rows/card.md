@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 342 sample(s), 342 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 324 sample(s), 342 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.056).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -54,7 +56,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top manual_review_needed (×342) |
 | usage_scope | metadata | categorical | *Not specified.* | n=342, missing=0, classes=1, top private_use_only (×342) |
 | notes | metadata | categorical | *Not specified.* | n=342, missing=0, classes=342, top vegetation.shrub.adenostoma.fasciculatum.tir.vh033.ucsb.nicolet.ancillary.txt (×1) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=342, missing=0, classes=324, top VH049 (×2) |
 
 ## Statistics — splits
 
@@ -65,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, species, notes, material_name, class_label. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 7 fields, Y: 3 fields, passport: 43 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `958e4a2e3f19239b9be82405f9c10eef63a34a994ef4bc1706824b91459d6092`
-- **Processing hash:** `477b743cacd43637fe05aaac28752e617c1c1a6e06e8c1c6f5d0563a73fea9f9` | **metadata hash:** `24a6989fac991973354e5186423b3ff3250c80ad6affb4e8dca76df4a54947d0`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `cc39cebdd5e0ed04fa0b72da8763fe80a2902bab1e2f0112134d4b9c83626f2e`
+- **Processing hash:** `229f413ba8c81a44071539164b20f8f4e52eb49c17b1b2462d6b3b5f3586741d` | **metadata hash:** `807e9068547797fb1dee3b341b9d9f04689ab6449c32c78b729fd421489d7994`

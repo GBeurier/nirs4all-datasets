@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 449 sample(s), 449 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; *Not specified.* sample(s), 449 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -39,7 +41,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -48,7 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -68,6 +71,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `ed4bb951667539e45888a96aa8ad6e415177b44d4c88ba49db54c3a483fcb796`
-- **Processing hash:** `c3c64a1c5178500d0bea1538f334a52f2cc9d845a549a58085a0467fb0e82c12` | **metadata hash:** `2ab1f52c3e729f26b238be2fca66f0b12f84935f5dcbed9cfc6a080aa8fce76b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `49ba087b206d1821740a944b60306f270c2f2954478f07a9b07af40cf3689afd`
+- **Processing hash:** `76351464ddad75697bdf1f6b7cba63b69f19792765cf5bf4febda6049052b2a5` | **metadata hash:** `527507dccbd12f3d26aba45f1c154a775288d1ad3d175260a8645c678d32a32d`

@@ -219,7 +219,7 @@ class NirsDataset:
             return np.asarray(self._read_source(source)[_SAMPLE_KEY].astype(str).to_numpy())
         framed = self._variables_frame()
         if framed is not None:
-            return np.asarray(framed[0][_SAMPLE_KEY].astype(str).to_numpy())
+            return np.asarray(framed[0][_SAMPLE_KEY].astype(str).drop_duplicates().to_numpy())
         seen: dict[str, None] = {}
         for sid in self.sources():
             for value in self._read_source(sid)[_SAMPLE_KEY].astype(str):
@@ -240,7 +240,7 @@ class NirsDataset:
         df = pd.read_parquet(variables["path"])
         if self.tier is Tier.ANONYMIZED:
             return self._anonymize(df)
-        identity = {c: c for c in df.columns if c != _SAMPLE_KEY}
+        identity = {c: c for c in df.columns if c not in _ID_COLS}
         return df, identity
 
     def _anonymize(self, variables: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, str]]:
@@ -268,11 +268,51 @@ class NirsDataset:
                 # exists to hide, so listing them in an error would leak them.
                 available = sorted(c for c in variables.columns if c != _SAMPLE_KEY)
                 raise KeyError(f"{kind} {name!r} not in {self.id!r}; available: {available}")
-            return variables[[_SAMPLE_KEY, column]]
+            return variables[[*[key for key in _ID_COLS if key in variables], column]]
         cols = [name_map[n] for n in self._names_for(role) if name_map.get(n) in variables.columns]
         if not cols:
             return None
-        return variables[[_SAMPLE_KEY, *cols]]
+        return variables[[*[key for key in _ID_COLS if key in variables], *cols]]
+
+    def curation_report(self) -> dict[str, Any]:
+        """The versioned mapping, missing rules, source hashes and identity conclusions."""
+        config = self._config.get("curation")
+        if not config:
+            raise ValueError("This canonical cache predates curation; rebuild/import it to obtain traced views.")
+        report: dict[str, Any] = json.loads(Path(config["mapping"]).read_text(encoding="utf-8"))
+        if self.tier is Tier.ANONYMIZED:
+            return {"schema_version": report["schema_version"], "grain": report["grain"], "view_counts": {name: len(columns) for name, columns in report["views"].items()}, "mapping": "withheld for anonymized tier"}
+        return report
+
+    def curated(self, view: str = "M", *, source: str | None = None) -> pd.DataFrame:
+        """Read an observation-level M/Y, structure, passport or original source view.
+
+        M/Y exclude empty/constant variables, passport and target copies. Site and
+        specimen IDs remain in ``structure`` for grouping. With ``source``, rows
+        follow that source's explicit observation keys, never a positional zip.
+        """
+        config = self._config.get("curation")
+        if not config or view not in config.get("tables", {}):
+            raise ValueError(f"curated view {view!r} is unavailable; rebuild/import the canonical cache")
+        if self.tier is Tier.ANONYMIZED:
+            # The existing masked y()/metadata() accessors remain available;
+            # raw mappings, original tables and hierarchy fields must not leak.
+            raise RuntimeError("Curated source views are withheld for anonymized datasets; use masked y()/metadata().")
+        frame = pd.read_parquet(config["tables"][view])
+        if source is not None:
+            order = self._read_source(source)[[_OBS_KEY]]
+            if _OBS_KEY not in frame or not frame[_OBS_KEY].is_unique:
+                raise ValueError(f"view {view!r} cannot be aligned by unique observation identifiers")
+            frame = order.merge(frame, on=_OBS_KEY, how="left", validate="one_to_one", sort=False)
+        return frame
+
+    def curated_metadata(self, *, source: str | None = None) -> pd.DataFrame:
+        """Informative experimental context, without passport or selected target copies."""
+        return self.curated("M", source=source)
+
+    def curated_y(self, *, source: str | None = None) -> pd.DataFrame:
+        """Informative declared reference targets, retaining acquisition grain."""
+        return self.curated("Y", source=source)
 
     def y(self, name: str | None = None) -> pd.DataFrame | None:
         """Per-sample target values as a DataFrame (``sample_id`` + target columns), or ``None``.
@@ -444,7 +484,8 @@ class NirsDataset:
         variables, name_map = framed
         target_cols = [name_map[n] for n in self._names_for(VariableRole.TARGET) if name_map.get(n) in variables.columns]
         metadata_cols = [name_map[n] for n in self._names_for(VariableRole.METADATA) if name_map.get(n) in variables.columns]
-        selected = {_SAMPLE_KEY, *target_cols, *metadata_cols}
+        join_key = variables_entry.get("join_key", _SAMPLE_KEY)
+        selected = {join_key, *target_cols, *metadata_cols}
         ignored = [c for c in variables.columns if c not in selected]
         column_roles: list[dict[str, Any]] = []
         if ignored:
@@ -459,9 +500,9 @@ class NirsDataset:
             "id": "variables",
             "role": "mixed",
             "input": variables_entry["path"],
-            "key": _SAMPLE_KEY,
+            "key": join_key,
             "columns": column_roles,
-            "join": {"to": primary, "on": _SAMPLE_KEY, "how": "m:1", "coverage": "warn"},
+            "join": {"to": primary, "on": join_key, "how": "m:1", "coverage": "warn"},
         }
 
     def _io_split_spec(self, primary: str, split: str | None) -> dict[str, Any] | None:
@@ -471,13 +512,14 @@ class NirsDataset:
             if str(split_entry["name"]) != split or not split_entry.get("path"):
                 continue
             split_id = "split_" + "".join(ch if ch.isalnum() else "_" for ch in split).strip("_")
+            join_key = split_entry.get("join_key", _SAMPLE_KEY)
             return {
                 "id": split_id or "split",
                 "role": "mixed",
                 "input": split_entry["path"],
-                "key": _SAMPLE_KEY,
+                "key": join_key,
                 "columns": [{"role": "metadata", "select": ["partition"]}],
-                "join": {"to": primary, "on": _SAMPLE_KEY, "how": "m:1", "coverage": "warn"},
+                "join": {"to": primary, "on": join_key, "how": "m:1", "coverage": "warn"},
             }
         return None
 
@@ -515,10 +557,14 @@ class NirsDataset:
         framed = self._variables_frame()
         if framed is not None:
             variables, name_map = framed
-            indexed = variables.set_index(_SAMPLE_KEY)
-            sample_for_obs = self._read_source(ids[0]).set_index(_OBS_KEY)[_SAMPLE_KEY].astype(str)
-            per_obs_samples = sample_for_obs.reindex(order)
-            aligned = indexed.reindex(per_obs_samples)
+            join_key = self._config["variables"].get("join_key", _SAMPLE_KEY)
+            indexed = variables.set_index(join_key)
+            if join_key == _OBS_KEY:
+                aligned = indexed.reindex(order)
+            else:
+                sample_for_obs = self._read_source(ids[0]).set_index(_OBS_KEY)[_SAMPLE_KEY].astype(str)
+                per_obs_samples = sample_for_obs.reindex(order)
+                aligned = indexed.reindex(per_obs_samples)
 
             target_cols = [name_map[n] for n in self._names_for(VariableRole.TARGET) if name_map.get(n) in aligned.columns]
             if target_cols:

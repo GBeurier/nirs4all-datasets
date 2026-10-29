@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 609 sample(s), 609 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 609 sample(s), 609 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -111,7 +113,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -120,7 +122,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 5 fields, Y: 50 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -145,6 +148,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4dde9f2575d7ed3c56cdcd5c69433f571881450fbe7e2e1ee52eb595fcbf25cd`
-- **Processing hash:** `7afe7aa5c3478ba8d92bd296714584da7f785f12242bd261ce0cce015cdded3a` | **metadata hash:** `168aa27fa025cf1bbecdf4a879a6a631aa50041cb1b6161e59e16fd746f5853e`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `0c884303a7e89b3883d898f4bc3cca84d27c95cc3940c955a6c72862faf908aa`
+- **Processing hash:** `93e636f6de264ba28444549961f2748833092ca91229a908adb5812820345f0f` | **metadata hash:** `fe0e05598cdaae48c6a49bef168fda7a9ff2cfb7599b4f7331f46bd425efdda6`

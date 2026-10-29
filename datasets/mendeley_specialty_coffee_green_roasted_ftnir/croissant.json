@@ -45,21 +45,21 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "green coffee raw FT-NIR",
-      "sha256": "98730454d5bc7258b78b5992d1cfff0497910df2c96b23542b364498737f8fcb"
+      "sha256": "03a0baa02b2dfed4c7aea830c73d6cf18fce27224631aaac11512c2b74d590e8"
     },
     {
       "@id": "file/X2.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "roasted coffee raw FT-NIR",
-      "sha256": "b019fdc9aada37b08af9c1ecdb46afe44ad1bad19541b80b218de5816e91e00e"
+      "sha256": "818fae1aa00f88a5e9bc49919a6998d3ae605adbf27a6f1476027621b77e5063"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "266edbaf270292df7241ecda99f354c092ea6101935bed7a1393e457cf71af69"
+      "sha256": "43c94b839d991de12e868f09aae66845271a27c2f8dc91245087ddd975f3bba2"
     }
   ],
   "keywords": [
@@ -76,10 +76,25 @@
       "description": "Spectra from source 'green coffee raw FT-NIR' (192 observations x 2001 wavelengths).",
       "field": [
         {
+          "@id": "X1/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X1.parquet"
+            }
+          }
+        },
+        {
           "@id": "X1/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -105,7 +120,7 @@
         }
       ],
       "key": {
-        "@id": "X1/sample_id"
+        "@id": "X1/observation_id"
       },
       "name": "X1"
     },
@@ -115,10 +130,25 @@
       "description": "Spectra from source 'roasted coffee raw FT-NIR' (192 observations x 2001 wavelengths).",
       "field": [
         {
+          "@id": "X2/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X2.parquet"
+            }
+          }
+        },
+        {
           "@id": "X2/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -144,24 +174,24 @@
         }
       ],
       "key": {
-        "@id": "X2/sample_id"
+        "@id": "X2/observation_id"
       },
       "name": "X2"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -437,25 +467,10 @@
               "@id": "file/variables.parquet"
             }
           }
-        },
-        {
-          "@id": "variables/original_sample_id",
-          "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'original_sample_id' (role metadata, type categorical).",
-          "name": "original_sample_id",
-          "source": {
-            "extract": {
-              "column": "original_sample_id"
-            },
-            "fileObject": {
-              "@id": "file/variables.parquet"
-            }
-          }
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }
@@ -468,5 +483,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

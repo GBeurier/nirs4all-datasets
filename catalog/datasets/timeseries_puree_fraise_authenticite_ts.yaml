@@ -70,21 +70,24 @@ variables:
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
   applied: false
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: timeseries_classif_nirs_database
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: timeseries_classif_nirs_database
@@ -116,6 +119,12 @@ origin_sources:
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: local_export_available
   license_status: manual_review_needed
@@ -142,6 +151,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/timeseries_puree_fraise_authenticite_ts
-  source_fingerprint: 10c036ab471333e26c39daa7d1ce573586ee2892a231083407c21a5b5b1c746f
+  generator_version: '2'
+  source_relpath: standardized_datasets/timeseries_puree_fraise_authenticite_ts
+  source_fingerprint: d265a517ef492867fd30b9124a1a2ef39151b8d87fb752fabbe62b46c9d5de29

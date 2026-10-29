@@ -1,13 +1,14 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 190,
     "n_samples": 190,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.000900066943947423,
-      "outlier_pressure": 0.434706134943949,
+      "outlier_pressure": 0.43470613494394894,
       "reference_spread": 0.6993926214719087,
       "repeatability_risk": 0.0,
       "shape_drift": 0.9570479939916943,
@@ -18,13 +19,448 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:51:13.082064+00:00",
+  "curation": {
+    "contract_sha256": "e9e40a60ed1c03fd07a764c6dbbdf8ddbc548f0769b496afae92c175eac0a766",
+    "dataset_id": "ecosis_leaf_reflectance_and_traits_of_plants_sampled_along_a_w_reflectance_nirs",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 190,
+      "n_samples": 190,
+      "observations_per_unit": {
+        "1": 190
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "514666151d0e3c5f5255f80d8e953fef70261fa31849b74849f4e217181c2b0b",
+      "Y.csv": "5d1c99bff980cfe833e99f57c7de4ff12edd5b068c90bb03f3c60e76a01da3ce"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "usda_species_code",
+        "source_columns": [
+          {
+            "name": "source_USDAsymbol",
+            "resource": "M.csv"
+          },
+          {
+            "name": "source_USDAsymbol_aux",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 6.0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 13,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "month",
+        "source_columns": [
+          {
+            "name": "source_month",
+            "resource": "M.csv"
+          },
+          {
+            "name": "source_month_aux",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 2,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "group",
+        "source_columns": [
+          {
+            "name": "group",
+            "resource": "Y.csv"
+          },
+          {
+            "name": "group_aux",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 2.6666666666666665,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 3,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chl_a",
+        "source_columns": [
+          {
+            "name": "Chl-a",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 61.19,
+          "min": 13.72,
+          "n_censored": 0,
+          "n_invalid": 2,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 182,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chl_b",
+        "source_columns": [
+          {
+            "name": "Chl-b",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 16.62,
+          "min": 3.41,
+          "n_censored": 0,
+          "n_invalid": 2,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 162,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "car",
+        "source_columns": [
+          {
+            "name": "Car",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 14.43,
+          "min": 3.78,
+          "n_censored": 0,
+          "n_invalid": 2,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 173,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chl_a_chl_b",
+        "source_columns": [
+          {
+            "name": "Chl-a_Chl-b",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 6.1,
+          "min": 2.75,
+          "n_censored": 0,
+          "n_invalid": 3,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 123,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chl_car",
+        "source_columns": [
+          {
+            "name": "Chl_Car",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 6.24,
+          "min": 2.42,
+          "n_censored": 0,
+          "n_invalid": 4,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 139,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "thickness",
+        "source_columns": [
+          {
+            "name": "Thickness",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 1234.0,
+          "min": 123.5,
+          "n_censored": 0,
+          "n_invalid": 2,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 183,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ewt",
+        "source_columns": [
+          {
+            "name": "EWT",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 529.03,
+          "min": 24.33,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 175,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "lma",
+        "source_columns": [
+          {
+            "name": "LMA",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 118.66,
+          "min": 14.53,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 160,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "dmc",
+        "source_columns": [
+          {
+            "name": "DMC",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 0.7529,
+          "min": 0.1391,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 183,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "lnc",
+        "source_columns": [
+          {
+            "name": "LNC",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 0.0492,
+          "min": 0.0139,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 36,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "lcc",
+        "source_columns": [
+          {
+            "name": "LCC",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 0.5315,
+          "min": 0.4136,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 190,
+          "n_rows": 190,
+          "n_unique": 36,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "usda_species_code",
+        "month"
+      ],
+      "Y": [
+        "group",
+        "chl_a",
+        "chl_b",
+        "car",
+        "chl_a_chl_b",
+        "chl_car",
+        "thickness",
+        "ewt",
+        "lma",
+        "dmc",
+        "lnc",
+        "lcc"
+      ],
+      "measurements": [],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "ecosis_resource_id",
+        "file",
+        "url",
+        "coordinate_precision_notes",
+        "signal_type",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "n_points_original",
+        "publication_doi",
+        "citation",
+        "license",
+        "rights_status",
+        "usage_scope",
+        "notes",
+        "id",
+        "code",
+        "m_site",
+        "m_location",
+        "m_country",
+        "m_latitude",
+        "m_longitude",
+        "m_year",
+        "m_date",
+        "m_species",
+        "m_genus",
+        "m_family",
+        "m_plant_part",
+        "m_canopy_or_leaf",
+        "m_instrument",
+        "m_acquisition_mode"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:24:34.367917+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +481,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "cbe82efc824505e8b4c07c0fbf6d54753ec40f3b60ceeaabfd255229ef82b76f",
+    "content_hash": "c53c1ff44bbffc00304db53cee5cb0ef10af307bad824c7012c3fbc5e9a255a3",
     "manifest": "manifest.json",
-    "metadata_hash": "e297cd8532d78e298cd7d5372073660bbd8699e3cee5d470867a5caa465a8aa0",
-    "processing_hash": "6b4ca4d229c51234a543ad8d44c5140ba488a8ea63f3fc491497ea53ab26b583"
+    "metadata_hash": "461b26e3c60cad0d3a69fe56719bde04e516bf9e713bc306d7ed41fcdf41845d",
+    "processing_hash": "966be2257b37b70d6ce09dd02d4a11c68f95df02b345bea81c5c11afd5bb19b1"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "Leaf reflectance and traits of plants sampled along a water affinity gradient (AQGRAD)",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -83,7 +519,9 @@
       }
     ],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -97,8 +535,8 @@
       "n_observations": 190,
       "n_variables": 2101,
       "name": "leaf_spectra.csv",
-      "signal_type": "absorbance",
-      "signal_type_confidence": 0.6,
+      "signal_type": null,
+      "signal_type_confidence": 0.0,
       "source_id": "X",
       "spectral": {
         "curve": {
@@ -1098,49 +1536,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.998656055826997,
-          "effective_rank": 2.81,
-          "n_components_95": 3,
-          "n_components_99": 5
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.493923262075374,
         "mean_min": 0.036683342066642484,
-        "n_outliers": 79,
-        "pca": {
-          "explained_variance_ratio": [
-            0.5217336542563008,
-            0.3818586338397679,
-            0.0691515176339219,
-            0.011072086641505243,
-            0.0084617523242861,
-            0.0027069036244455028,
-            0.0015401065065164185,
-            0.0008868563170569785,
-            0.0007439601620408654,
-            0.0005005845211553366,
-            0.0003208955868595069,
-            0.0002099638100813767,
-            0.00017478972715594067,
-            0.0001620409284691683,
-            9.123684786842928e-05,
-            8.220604849344735e-05,
-            6.453154400619018e-05,
-            4.2486351151276974e-05,
-            3.436137559921636e-05,
-            2.8983745221847363e-05,
-            1.841184936372469e-05,
-            1.2909733304416226e-05,
-            1.1253598372655931e-05,
-            9.305369996687202e-06,
-            7.354222073901759e-06,
-            5.362979620043182e-06,
-            5.288141391262542e-06,
-            4.323076720259484e-06,
-            3.7734958828360974e-06,
-            3.1536693840575613e-06
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 507.97429450607706,
@@ -1175,7 +1579,7 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
@@ -1200,11 +1604,11 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
@@ -1233,14 +1637,14 @@
                   "signal": "Noise RMS faible"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "key": "resampling_error",
               "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.585020509801539,
+              "score": 0.5850205098015389,
               "strength": "moyenne"
             },
             {
@@ -1254,11 +1658,11 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
@@ -1283,11 +1687,11 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
@@ -1308,18 +1712,18 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "key": "probe_geometry",
               "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.49485550782801757,
+              "score": 0.4948555078280174,
               "strength": "moyenne"
             },
             {
@@ -1333,14 +1737,14 @@
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 }
               ],
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
               "key": "out_of_domain",
               "label": "Spectre hors domaine valide",
-              "score": 0.4048585969791175,
+              "score": 0.40485859697911747,
               "strength": "faible"
             },
             {
@@ -1354,18 +1758,18 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.434706134943949,
+                  "level": 0.43470613494394894,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.3228418043885707,
+                  "level": 0.3228418043885704,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
               "key": "partial_coverage",
               "label": "M\u00e9lange feuille + fond",
-              "score": 0.40233142579935377,
+              "score": 0.4023314257993537,
               "strength": "faible"
             }
           ],
@@ -1386,24 +1790,24 @@
             "worst_band_index": 2097
           },
           "outliers": {
-            "hotelling_t2_max": 32.89835204316177,
+            "hotelling_t2_max": 32.898352043161694,
             "hotelling_t2_median": 2.1035101847878552,
-            "hotelling_t2_p95": 6.361292503389612,
+            "hotelling_t2_p95": 6.3612925033896115,
             "hotelling_t2_ratio": 3.0241320196085315,
-            "mahalanobis_h_max": 5.735708504026488,
-            "mahalanobis_h_median": 1.450310940729131,
+            "mahalanobis_h_max": 5.735708504026481,
+            "mahalanobis_h_median": 1.4503109407291312,
             "mahalanobis_h_p95": 2.521836254045133,
-            "mahalanobis_h_ratio": 1.738824539775796,
-            "pca_q_max": 0.29697504130358143,
-            "pca_q_median": 0.06919988399811224,
-            "pca_q_p95": 0.17872492330744266,
-            "pca_q_ratio": 2.5827344351085655
+            "mahalanobis_h_ratio": 1.7388245397757958,
+            "pca_q_max": 0.29697504130358154,
+            "pca_q_median": 0.06919988399811232,
+            "pca_q_p95": 0.17872492330744272,
+            "pca_q_ratio": 2.5827344351085633
           },
           "profile_scores": {
             "integrity_risk": 0.0,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.000900066943947423,
-            "outlier_pressure": 0.434706134943949,
+            "outlier_pressure": 0.43470613494394894,
             "reference_spread": 0.6993926214719087,
             "repeatability_risk": 0.0,
             "shape_drift": 0.9570479939916943,
@@ -1438,7 +1842,7 @@
             "edge_noise_ratio": 0.24478438877622097
           },
           "structure": {
-            "density_cv": 0.6236027587486223,
+            "density_cv": 0.6236027587486221,
             "isolation_forest_score_p95": 0.562057685391228,
             "local_outlier_factor_p95": 1.9520918294390615,
             "pca_score_density": 2.2277442148214677
@@ -1452,769 +1856,769 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.5217336542563001,
-            0.38185863383976826
+            0.5217336542562999,
+            0.38185863383976854
           ],
           "points": [
             {
-              "x": -0.689586626221173,
-              "y": -0.6811416149498604
+              "x": -0.6895866262211748,
+              "y": -0.6811416149498575
             },
             {
-              "x": -0.6480607758684925,
-              "y": -0.5256259699556234
+              "x": -0.6480607758684945,
+              "y": -0.5256259699556236
             },
             {
-              "x": -0.6943911302844507,
-              "y": -0.8453038396600481
+              "x": -0.6943911302844515,
+              "y": -0.845303839660047
             },
             {
-              "x": -0.7833608091688017,
-              "y": -0.3254320090638755
+              "x": -0.7833608091688021,
+              "y": -0.32543200906387465
             },
             {
-              "x": -1.0065472287433388,
-              "y": -0.0859150833901201
+              "x": -1.0065472287433392,
+              "y": -0.08591508339011851
             },
             {
-              "x": -0.023917016087005815,
-              "y": -0.15747777062953494
+              "x": -0.023917016087006023,
+              "y": -0.1574777706295349
             },
             {
-              "x": 0.1533217506097151,
-              "y": -0.21268866599533054
+              "x": 0.15332175060971504,
+              "y": -0.21268866599533098
             },
             {
-              "x": -0.2481503678717804,
-              "y": 0.18652575949027797
+              "x": -0.24815036787177994,
+              "y": 0.18652575949027808
             },
             {
               "x": -0.27512246763860115,
-              "y": -0.19637059440638677
+              "y": -0.1963705944063868
             },
             {
-              "x": 0.6726800790781823,
-              "y": 0.8371086222027023
+              "x": 0.672680079078184,
+              "y": 0.8371086222027017
             },
             {
-              "x": -1.193591772371626,
-              "y": 1.175314883264005
+              "x": -1.193591772371623,
+              "y": 1.1753148832640075
             },
             {
-              "x": -1.5527339779718172,
-              "y": 1.206249450245134
+              "x": -1.5527339779718152,
+              "y": 1.2062494502451362
             },
             {
-              "x": -1.0660889341551933,
-              "y": 0.9725449944187978
+              "x": -1.0660889341551913,
+              "y": 0.9725449944187993
             },
             {
-              "x": -0.9265014033878847,
-              "y": 0.3196343585994222
+              "x": -0.9265014033878839,
+              "y": 0.31963435859942346
             },
             {
-              "x": -0.4190526929479927,
-              "y": 0.5806169648872838
+              "x": -0.41905269294799213,
+              "y": 0.5806169648872849
             },
             {
-              "x": -1.3713414149378576,
-              "y": -0.12472723376719791
+              "x": -1.371341414937858,
+              "y": -0.12472723376719623
             },
             {
-              "x": -0.7960479364288207,
-              "y": 0.5502666017193857
+              "x": -0.7960479364288201,
+              "y": 0.5502666017193871
             },
             {
-              "x": -0.8222814048118401,
-              "y": 0.5995642532411929
+              "x": -0.8222814048118394,
+              "y": 0.5995642532411948
             },
             {
-              "x": -1.1415244824599422,
-              "y": -0.3133322072765665
+              "x": -1.1415244824599429,
+              "y": -0.31333220727656536
             },
             {
-              "x": -0.7037005479794062,
-              "y": 0.7805711358764521
+              "x": -0.7037005479794044,
+              "y": 0.7805711358764528
             },
             {
-              "x": -1.0902268810063485,
-              "y": 1.9172146184673424
+              "x": -1.0902268810063451,
+              "y": 1.917214618467344
             },
             {
-              "x": -0.7496884530632872,
-              "y": 2.0097005191305897
+              "x": -0.7496884530632837,
+              "y": 2.0097005191305923
             },
             {
-              "x": -1.8812223280918443,
-              "y": 1.7765713648876187
+              "x": -1.881222328091841,
+              "y": 1.7765713648876216
             },
             {
-              "x": -1.2881689074018972,
-              "y": 1.5713083262838754
+              "x": -1.288168907401894,
+              "y": 1.571308326283878
             },
             {
-              "x": -1.8141361369791293,
-              "y": 1.6257843906873863
+              "x": -1.8141361369791265,
+              "y": 1.6257843906873886
             },
             {
-              "x": -0.8266951842100148,
-              "y": 2.3256467189157273
+              "x": -0.8266951842100115,
+              "y": 2.325646718915729
             },
             {
-              "x": -1.5035934304039051,
-              "y": 2.13388953222277
+              "x": -1.5035934304039025,
+              "y": 2.1338895322227738
             },
             {
-              "x": -1.3333909757621358,
-              "y": 2.0734087696485086
+              "x": -1.3333909757621325,
+              "y": 2.0734087696485113
             },
             {
-              "x": -0.5043906052786509,
-              "y": 2.4493940799116256
+              "x": -0.5043906052786465,
+              "y": 2.449394079911627
             },
             {
-              "x": -1.4860779774571358,
-              "y": 2.2021223754653976
+              "x": -1.4860779774571304,
+              "y": 2.2021223754653994
             },
             {
-              "x": -1.7655754684743077,
-              "y": 1.2174928775298408
+              "x": -1.765575468474306,
+              "y": 1.2174928775298437
             },
             {
-              "x": -0.457661290241768,
-              "y": 1.4029186305865757
+              "x": -0.4576612902417662,
+              "y": 1.402918630586577
             },
             {
-              "x": -0.6247586262413488,
-              "y": 2.2617336231623737
+              "x": -0.624758626241345,
+              "y": 2.2617336231623755
             },
             {
-              "x": -1.0049571608028953,
-              "y": 2.322265639775699
+              "x": -1.0049571608028924,
+              "y": 2.322265639775702
             },
             {
-              "x": -1.5406482824585797,
-              "y": 1.3789568843080076
+              "x": -1.5406482824585772,
+              "y": 1.37895688430801
             },
             {
-              "x": -0.8109472751262358,
-              "y": 1.8095709633390877
+              "x": -0.8109472751262319,
+              "y": 1.8095709633390893
             },
             {
-              "x": -0.562066656155303,
-              "y": 2.4141000438896665
+              "x": -0.5620666561552993,
+              "y": 2.4141000438896683
             },
             {
-              "x": -0.39763935745883877,
-              "y": 2.309124320187636
+              "x": -0.3976393574588351,
+              "y": 2.309124320187638
             },
             {
-              "x": -1.223379792954318,
-              "y": 2.18732666305032
+              "x": -1.2233797929543142,
+              "y": 2.1873266630503223
             },
             {
-              "x": -1.1202808417691803,
-              "y": 1.6371304436855665
+              "x": -1.1202808417691779,
+              "y": 1.6371304436855696
             },
             {
-              "x": -0.44614540118396895,
+              "x": -0.446145401183971,
               "y": -1.1162951027870633
             },
             {
-              "x": -0.6336250430240741,
-              "y": -0.7272609053402953
+              "x": -0.633625043024075,
+              "y": -0.7272609053402951
             },
             {
-              "x": -0.12969635806806723,
+              "x": -0.12969635806806643,
               "y": 0.4095806283019567
             },
             {
-              "x": -0.6922971715236043,
-              "y": -0.8237845225858763
+              "x": -0.6922971715236056,
+              "y": -0.8237845225858758
             },
             {
-              "x": -0.13860177070071558,
-              "y": -0.8265227612362372
+              "x": -0.13860177070071697,
+              "y": -0.8265227612362375
             },
             {
-              "x": -0.5616547809459479,
-              "y": -1.0543904738500969
+              "x": -0.5616547809459495,
+              "y": -1.054390473850097
             },
             {
-              "x": -0.2650237773651813,
-              "y": -0.2523043240938232
+              "x": -0.2650237773651814,
+              "y": -0.25230432409382303
             },
             {
-              "x": -0.11740027258963324,
-              "y": -0.9122167799381055
+              "x": -0.11740027258963485,
+              "y": -0.9122167799381057
             },
             {
-              "x": -0.41472878017723036,
-              "y": 0.6102570265288038
+              "x": -0.4147287801772289,
+              "y": 0.6102570265288043
             },
             {
-              "x": -0.593415963124176,
-              "y": -0.36786663889703247
+              "x": -0.5934159631241763,
+              "y": -0.36786663889703225
             },
             {
-              "x": -0.0752341689156961,
+              "x": -0.07523416891569687,
               "y": -0.5263591098888974
             },
             {
-              "x": -0.3986277652900534,
-              "y": -0.626454950869821
+              "x": -0.3986277652900545,
+              "y": -0.6264549508698211
             },
             {
-              "x": 0.11899573074030113,
-              "y": -0.8161388934191284
+              "x": 0.11899573074030012,
+              "y": -0.8161388934191288
             },
             {
-              "x": -0.1387823132047519,
-              "y": -0.7544839793664424
+              "x": -0.13878231320475318,
+              "y": -0.7544839793664426
             },
             {
-              "x": 0.11225596543663408,
-              "y": -0.4464661197386883
+              "x": 0.11225596543663374,
+              "y": -0.4464661197386887
             },
             {
-              "x": 0.36841289166914243,
-              "y": -0.23987242541684126
+              "x": 0.36841289166914204,
+              "y": -0.23987242541684184
             },
             {
-              "x": 0.03691530748118524,
-              "y": -0.550319238300999
+              "x": 0.03691530748118486,
+              "y": -0.5503192383009992
             },
             {
-              "x": 0.08483286789345967,
-              "y": -1.0107231771932843
+              "x": 0.08483286789345804,
+              "y": -1.010723177193285
             },
             {
-              "x": -0.017730273712555183,
-              "y": -0.5520029835362206
+              "x": -0.017730273712556113,
+              "y": -0.5520029835362203
             },
             {
-              "x": 0.058672925091692335,
-              "y": -0.45815792361699575
+              "x": 0.05867292509169217,
+              "y": -0.4581579236169954
             },
             {
-              "x": -1.2833185472960924,
-              "y": -0.29550106720058306
+              "x": -1.2833185472960933,
+              "y": -0.2955010672005819
             },
             {
-              "x": -1.5010646236994443,
-              "y": -1.262344921106111
+              "x": -1.5010646236994472,
+              "y": -1.2623449211061104
             },
             {
-              "x": -1.9062624919483169,
-              "y": -1.4307338999984744
+              "x": -1.9062624919483202,
+              "y": -1.4307338999984736
             },
             {
-              "x": -1.3599379714349569,
-              "y": -1.1460322854150224
+              "x": -1.3599379714349582,
+              "y": -1.1460322854150218
             },
             {
-              "x": -1.9712180862461472,
-              "y": -1.3090426085272924
+              "x": -1.9712180862461501,
+              "y": -1.309042608527291
             },
             {
-              "x": -1.4578903175231848,
-              "y": -0.5555556843182495
+              "x": -1.4578903175231857,
+              "y": -0.5555556843182483
             },
             {
-              "x": -1.2864078090711213,
-              "y": -0.589132666381168
+              "x": -1.2864078090711228,
+              "y": -0.5891326663811672
             },
             {
-              "x": -1.4363552434878535,
-              "y": -0.6382695404196171
+              "x": -1.4363552434878546,
+              "y": -0.6382695404196158
             },
             {
-              "x": -1.0104710785417497,
-              "y": -0.5685133012419955
+              "x": -1.010471078541751,
+              "y": -0.568513301241995
             },
             {
-              "x": -1.4868260736837335,
-              "y": -1.0208303634145317
+              "x": -1.4868260736837355,
+              "y": -1.0208303634145313
             },
             {
-              "x": -1.5319733570494454,
-              "y": -1.083053963635501
+              "x": -1.531973357049447,
+              "y": -1.0830539636355003
             },
             {
-              "x": -1.3977838721581717,
-              "y": -0.3214830946250201
+              "x": -1.3977838721581726,
+              "y": -0.3214830946250186
             },
             {
-              "x": -1.7046609528610783,
-              "y": -1.3688292018157273
+              "x": -1.7046609528610812,
+              "y": -1.3688292018157264
             },
             {
-              "x": -0.7309635753480476,
-              "y": -0.4618600479928286
+              "x": -0.7309635753480483,
+              "y": -0.46186004799282787
             },
             {
-              "x": -1.1844421367145863,
-              "y": -0.6590140600624113
+              "x": -1.1844421367145874,
+              "y": -0.6590140600624105
             },
             {
-              "x": -1.3036266888139707,
-              "y": -1.0504867067507144
+              "x": -1.3036266888139731,
+              "y": -1.050486706750714
             },
             {
-              "x": -1.455992856978926,
-              "y": -0.7893205269344168
+              "x": -1.4559928569789267,
+              "y": -0.789320526934416
             },
             {
-              "x": -1.4339981424162176,
-              "y": -0.8114336103134664
+              "x": -1.4339981424162187,
+              "y": -0.811433610313465
             },
             {
-              "x": -1.6863679056205552,
-              "y": -0.5999425755483984
+              "x": -1.6863679056205558,
+              "y": -0.5999425755483975
             },
             {
-              "x": -1.337155137152337,
-              "y": -0.69825310616567
+              "x": -1.3371551371523391,
+              "y": -0.6982531061656708
             },
             {
-              "x": 0.7678757665870984,
-              "y": 1.4100333872296358
+              "x": 0.7678757665871017,
+              "y": 1.4100333872296367
             },
             {
-              "x": 0.6631420716103197,
-              "y": 1.1516038216192162
+              "x": 0.6631420716103216,
+              "y": 1.1516038216192164
             },
             {
-              "x": 0.7764641961492916,
-              "y": 1.2970232044843248
+              "x": 0.7764641961492943,
+              "y": 1.2970232044843257
             },
             {
-              "x": 0.3998270323618467,
-              "y": 0.9628190957298381
+              "x": 0.39982703236184824,
+              "y": 0.9628190957298386
             },
             {
-              "x": 1.0285373474769823,
-              "y": 1.1352141426352642
+              "x": 1.0285373474769848,
+              "y": 1.135214142635264
             },
             {
-              "x": 0.09450563171967184,
-              "y": 0.6164769000769361
+              "x": 0.09450563171967251,
+              "y": 0.6164769000769368
             },
             {
-              "x": -0.018192882593753082,
-              "y": 0.6770686124585854
+              "x": -0.01819288259375224,
+              "y": 0.6770686124585859
             },
             {
-              "x": 0.5362768307851106,
+              "x": 0.536276830785112,
               "y": 0.7915488684444587
             },
             {
-              "x": 0.9537086367686449,
-              "y": 1.3748669463769476
+              "x": 0.9537086367686479,
+              "y": 1.3748669463769492
             },
             {
-              "x": 0.6119008899148298,
-              "y": 1.5599782068490635
+              "x": 0.611900889914833,
+              "y": 1.559978206849064
             },
             {
-              "x": 0.5656328993790859,
-              "y": 0.6936747044850964
+              "x": 0.565632899379087,
+              "y": 0.6936747044850962
             },
             {
-              "x": 1.161156934082002,
-              "y": 0.6541273960422072
+              "x": 1.1611569340820038,
+              "y": 0.6541273960422064
             },
             {
-              "x": 0.31915662363285285,
-              "y": 0.7552103110056541
+              "x": 0.31915662363285413,
+              "y": 0.7552103110056543
             },
             {
-              "x": 0.7511446344432018,
+              "x": 0.7511446344432032,
               "y": 0.7422009673454306
             },
             {
-              "x": 0.5266479741977639,
-              "y": 0.9767133377916757
+              "x": 0.5266479741977657,
+              "y": 0.9767133377916765
             },
             {
-              "x": 0.7798344062402456,
-              "y": 1.046701239648127
+              "x": 0.7798344062402474,
+              "y": 1.0467012396481266
             },
             {
-              "x": 0.7582555251221217,
-              "y": 0.33314894142859547
+              "x": 0.7582555251221222,
+              "y": 0.33314894142859464
             },
             {
-              "x": 0.6907191643516265,
+              "x": 0.6907191643516278,
               "y": 0.9347964758025367
             },
             {
-              "x": 1.254387619777712,
-              "y": 1.4619656366347054
+              "x": 1.2543876197777144,
+              "y": 1.4619656366347051
             },
             {
-              "x": 1.2062800300239422,
-              "y": 0.8682309537584747
+              "x": 1.2062800300239431,
+              "y": 0.8682309537584737
             },
             {
               "x": 0.6184757801471086,
-              "y": 0.20263673162905127
+              "y": 0.20263673162905071
             },
             {
-              "x": 0.8828498637518343,
-              "y": 0.10359307918230094
+              "x": 0.8828498637518347,
+              "y": 0.10359307918230005
             },
             {
-              "x": 0.8254064098353842,
-              "y": 1.183236556427653
+              "x": 0.8254064098353858,
+              "y": 1.1832365564276524
             },
             {
-              "x": 0.8421670971673006,
-              "y": 0.8709486812015204
+              "x": 0.8421670971673028,
+              "y": 0.8709486812015202
             },
             {
-              "x": 0.5691434457925093,
-              "y": 0.4295587689245315
+              "x": 0.5691434457925102,
+              "y": 0.429558768924531
             },
             {
-              "x": 0.4010958652810066,
+              "x": 0.40109586528100794,
               "y": 0.7429135995801963
             },
             {
-              "x": 0.7940470353082268,
-              "y": 1.3137406007611085
+              "x": 0.794047035308229,
+              "y": 1.3137406007611083
             },
             {
-              "x": 0.20665252491553382,
-              "y": 0.8018201515825043
+              "x": 0.20665252491553515,
+              "y": 0.8018201515825042
             },
             {
-              "x": 0.2757817290594691,
-              "y": 0.7592771469078913
+              "x": 0.27578172905947024,
+              "y": 0.7592771469078918
             },
             {
-              "x": 0.9309437253067726,
-              "y": 0.5871055131093418
+              "x": 0.9309437253067734,
+              "y": 0.5871055131093407
             },
             {
-              "x": -0.9923835489360177,
-              "y": 0.03720875965417608
+              "x": -0.9923835489360181,
+              "y": 0.03720875965417742
             },
             {
-              "x": -1.3665855642631075,
-              "y": -0.3433503762062118
+              "x": -1.366585564263109,
+              "y": -0.3433503762062129
             },
             {
-              "x": -1.158079844350531,
-              "y": -0.5619443102012349
+              "x": -1.1580798443505327,
+              "y": -0.5619443102012344
             },
             {
-              "x": -1.3166504602690796,
-              "y": -0.7722344831745228
+              "x": -1.3166504602690823,
+              "y": -0.7722344831745224
             },
             {
-              "x": -2.526855051056578,
-              "y": -1.4617779380093494
+              "x": -2.5268550510565806,
+              "y": -1.4617779380093476
             },
             {
-              "x": -1.084852978067588,
-              "y": -0.47139424360339005
+              "x": -1.0848529780675895,
+              "y": -0.4713942436033897
             },
             {
-              "x": -2.8133289565857735,
-              "y": -0.671282466842602
+              "x": -2.8133289565857766,
+              "y": -0.6712824668426004
             },
             {
-              "x": -1.4595123685122493,
-              "y": 0.5800234267569425
+              "x": -1.4595123685122489,
+              "y": 0.5800234267569427
             },
             {
-              "x": -1.680967412370087,
-              "y": 0.41909019719470336
+              "x": -1.6809674123700868,
+              "y": 0.41909019719470364
             },
             {
-              "x": -1.116786928781808,
-              "y": -0.9336117890846463
+              "x": -1.1167869287818102,
+              "y": -0.9336117890846458
             },
             {
-              "x": -0.6750553479327649,
-              "y": 0.6626753654826015
+              "x": -0.6750553479327637,
+              "y": 0.6626753654826025
             },
             {
-              "x": -1.46196954312227,
-              "y": 0.04209707654180598
+              "x": -1.4619695431222706,
+              "y": 0.04209707654180777
             },
             {
-              "x": -1.184691764566649,
-              "y": 0.18618545675128295
+              "x": -1.1846917645666486,
+              "y": 0.18618545675128417
             },
             {
-              "x": -0.6154462020177055,
-              "y": 0.4816664550119337
+              "x": -0.6154462020177048,
+              "y": 0.4816664550119346
             },
             {
-              "x": -0.6278587928813326,
-              "y": 0.29267483594760796
+              "x": -0.6278587928813322,
+              "y": 0.2926748359476088
             },
             {
-              "x": 0.567987255845646,
-              "y": 0.2687299111718912
+              "x": 0.5679872558456465,
+              "y": 0.2687299111718908
             },
             {
-              "x": 1.6346623141080006,
-              "y": 0.741345146535219
+              "x": 1.634662314108002,
+              "y": 0.7413451465352185
             },
             {
-              "x": 1.350401262367316,
-              "y": 0.3119672305424146
+              "x": 1.350401262367317,
+              "y": 0.3119672305424132
             },
             {
-              "x": 2.511375650288091,
-              "y": 0.6830492260463579
+              "x": 2.5113756502880924,
+              "y": 0.6830492260463557
             },
             {
-              "x": -0.4469709896493617,
-              "y": -0.621473810939429
+              "x": -0.44697098964936294,
+              "y": -0.6214738109394287
             },
             {
-              "x": -1.0132903526591714,
-              "y": -0.9716579802096359
+              "x": -1.0132903526591734,
+              "y": -0.9716579802096348
             },
             {
-              "x": -1.412121106168355,
-              "y": -1.1074542389447015
+              "x": -1.4121211061683572,
+              "y": -1.1074542389447006
             },
             {
-              "x": -0.6073701903153595,
-              "y": -0.5629561429877876
+              "x": -0.6073701903153603,
+              "y": -0.5629561429877875
             },
             {
-              "x": -0.860469434508917,
-              "y": -0.9032947792751379
+              "x": -0.8604694345089182,
+              "y": -0.9032947792751372
             },
             {
-              "x": -1.3345615056509723,
-              "y": -0.5329004203726522
+              "x": -1.3345615056509734,
+              "y": -0.5329004203726513
             },
             {
-              "x": 2.1009220838022142,
-              "y": 0.4262051923185079
+              "x": 2.100922083802215,
+              "y": 0.42620519231850623
             },
             {
-              "x": 1.3598781940914364,
-              "y": 0.16317872377406048
+              "x": 1.359878194091437,
+              "y": 0.16317872377405898
             },
             {
-              "x": 0.809841679912648,
-              "y": -0.15684799873132466
+              "x": 0.8098416799126481,
+              "y": -0.156847998731326
             },
             {
-              "x": 0.025494937938612214,
-              "y": 0.13636044052205182
+              "x": 0.025494937938612454,
+              "y": 0.1363604405220518
             },
             {
-              "x": 0.387648036430672,
-              "y": -0.9074105299745996
+              "x": 0.3876480364306707,
+              "y": -0.9074105299746006
             },
             {
-              "x": 1.6082324476672416,
-              "y": -0.3139503874075157
+              "x": 1.6082324476672407,
+              "y": -0.3139503874075181
             },
             {
-              "x": 0.9190313683668229,
-              "y": -0.7102074303818858
+              "x": 0.9190313683668218,
+              "y": -0.7102074303818873
             },
             {
-              "x": 2.083518505196853,
-              "y": 0.524281904347231
+              "x": 2.083518505196854,
+              "y": 0.5242819043472294
             },
             {
-              "x": 2.4809516966755534,
-              "y": -0.19862567340463833
+              "x": 2.480951696675553,
+              "y": -0.19862567340464046
             },
             {
-              "x": 2.4926811350904448,
-              "y": 0.8183477131146804
+              "x": 2.4926811350904456,
+              "y": 0.8183477131146788
             },
             {
-              "x": 0.26177249233153205,
-              "y": -1.682203418155854
+              "x": 0.26177249233152916,
+              "y": -1.6822034181558547
             },
             {
-              "x": 1.4004790536441682,
-              "y": -0.11189383219116038
+              "x": 1.4004790536441687,
+              "y": -0.11189383219116227
             },
             {
-              "x": 1.430124346900035,
-              "y": -0.0034962091091161043
+              "x": 1.4301243469000344,
+              "y": -0.0034962091091175905
             },
             {
-              "x": 2.0357063130330015,
-              "y": -0.07950627723537985
+              "x": 2.035706313033002,
+              "y": -0.07950627723538167
             },
             {
               "x": 1.330172784790476,
-              "y": -0.3534440947632856
+              "y": -0.3534440947632866
             },
             {
-              "x": 2.2825219298817703,
-              "y": -0.5838612565975706
+              "x": 2.28252192988177,
+              "y": -0.5838612565975735
             },
             {
-              "x": 1.4765464887103363,
-              "y": -0.4864673548716501
+              "x": 1.4765464887103361,
+              "y": -0.48646735487165266
             },
             {
-              "x": 2.193720039622324,
-              "y": -0.6606672986781501
+              "x": 2.1937200396223213,
+              "y": -0.6606672986781538
             },
             {
-              "x": 2.29600474827271,
-              "y": -0.27006687275574454
+              "x": 2.2960047482727095,
+              "y": -0.2700668727557463
             },
             {
-              "x": 2.1321961038595814,
-              "y": -0.9126659758260621
+              "x": 2.1321961038595796,
+              "y": -0.9126659758260645
             },
             {
-              "x": 0.26015441038733167,
-              "y": -1.754079696956288
+              "x": 0.2601544103873291,
+              "y": -1.7540796969562884
             },
             {
-              "x": 2.427307942664326,
-              "y": -0.43927177831508446
+              "x": 2.4273079426643256,
+              "y": -0.43927177831508724
             },
             {
-              "x": 2.40545499803693,
-              "y": -0.03634652090585418
+              "x": 2.4054549980369306,
+              "y": -0.036346520905856834
             },
             {
-              "x": 1.9323467766348235,
-              "y": -0.1037790596208886
+              "x": 1.9323467766348241,
+              "y": -0.103779059620891
             },
             {
-              "x": 1.875898011827378,
-              "y": -0.33625197515793215
+              "x": 1.875898011827377,
+              "y": -0.3362519751579348
             },
             {
-              "x": 0.6040253447625541,
-              "y": -1.3665770134425659
+              "x": 0.6040253447625523,
+              "y": -1.3665770134425674
             },
             {
-              "x": 1.927265385714091,
-              "y": 0.7176204285935758
+              "x": 1.9272653857140927,
+              "y": 0.7176204285935748
             },
             {
-              "x": 1.0281441830768037,
-              "y": -0.8839837957335691
+              "x": 1.0281441830768026,
+              "y": -0.8839837957335706
             },
             {
-              "x": 0.8985534880749368,
-              "y": -0.060701612639041266
+              "x": 0.8985534880749374,
+              "y": -0.0607016126390422
             },
             {
-              "x": 1.7306702628867108,
-              "y": -0.04423923614266389
+              "x": 1.7306702628867114,
+              "y": -0.044239236142666616
             },
             {
-              "x": 1.350471867913398,
-              "y": -0.8536576251229617
+              "x": 1.3504718679133965,
+              "y": -0.8536576251229632
             },
             {
-              "x": 1.759373196585144,
-              "y": -0.6781350769952968
+              "x": 1.7593731965851434,
+              "y": -0.678135076995299
             },
             {
-              "x": 1.5226006530224128,
-              "y": -1.0430764801384869
+              "x": 1.5226006530224125,
+              "y": -1.0430764801384902
             },
             {
-              "x": 1.8329485886909664,
-              "y": -1.321863070852641
+              "x": 1.8329485886909633,
+              "y": -1.3218630708526433
             },
             {
-              "x": 2.1041622477257063,
-              "y": 0.04610240684653265
+              "x": 2.1041622477257067,
+              "y": 0.046102406846529685
             },
             {
-              "x": -0.8074022548449076,
-              "y": -0.08881544188432268
+              "x": -0.8074022548449077,
+              "y": -0.08881544188432197
             },
             {
-              "x": -1.6571386672231465,
-              "y": -2.0906645746966883
+              "x": -1.6571386672231505,
+              "y": -2.090664574696688
             },
             {
-              "x": -1.1932141685077104,
-              "y": -0.29642910266384287
+              "x": -1.1932141685077116,
+              "y": -0.2964291026638417
             },
             {
-              "x": -2.698771019919355,
-              "y": -4.901431564464079
+              "x": -2.698771019919361,
+              "y": -4.901431564464077
             },
             {
-              "x": -0.7198604245571731,
-              "y": -1.7970577381979456
+              "x": -0.7198604245571767,
+              "y": -1.7970577381979453
             },
             {
-              "x": 1.0622252832206236,
-              "y": -1.1083254725213523
+              "x": 1.062225283220622,
+              "y": -1.1083254725213532
             },
             {
-              "x": 1.3253686172601595,
-              "y": -0.6141481604845952
+              "x": 1.3253686172601584,
+              "y": -0.6141481604845973
             },
             {
-              "x": 1.0250978168387772,
-              "y": 0.433244779349869
+              "x": 1.0250978168387788,
+              "y": 0.43324477934986816
             },
             {
-              "x": 0.9054359901910306,
-              "y": 0.13216334415452602
+              "x": 0.9054359901910309,
+              "y": 0.13216334415452552
             },
             {
-              "x": 0.7513875978480353,
-              "y": 0.37903099170569465
+              "x": 0.7513875978480363,
+              "y": 0.37903099170569415
             },
             {
-              "x": 2.4519807962526694,
-              "y": -1.0161600745500012
+              "x": 2.451980796252667,
+              "y": -1.0161600745500037
             },
             {
-              "x": 1.7439095019062583,
-              "y": -1.8310141976913836
+              "x": 1.7439095019062547,
+              "y": -1.831014197691386
             },
             {
-              "x": 2.275039181688078,
-              "y": -1.2148303840883619
+              "x": 2.2750391816880766,
+              "y": -1.2148303840883647
             },
             {
-              "x": 2.328116713797518,
-              "y": -1.6351938800390868
+              "x": 2.3281167137975145,
+              "y": -1.63519388003909
             },
             {
-              "x": 2.4281922791411223,
-              "y": -1.108416131593976
+              "x": 2.42819227914112,
+              "y": -1.1084161315939793
             },
             {
-              "x": 0.08942042378959911,
-              "y": -1.8872581118057976
+              "x": 0.08942042378959565,
+              "y": -1.8872581118057996
             },
             {
-              "x": 0.8587606212635592,
-              "y": -1.2962814579401287
+              "x": 0.8587606212635567,
+              "y": -1.2962814579401305
             },
             {
-              "x": 1.09781804226276,
-              "y": -1.3240030945793937
+              "x": 1.097818042262758,
+              "y": -1.3240030945793961
             },
             {
-              "x": 0.5062611524107157,
-              "y": -0.7127757085085008
+              "x": 0.5062611524107142,
+              "y": -0.712775708508502
             },
             {
-              "x": 0.8092076349647609,
-              "y": -0.7946942967220078
+              "x": 0.8092076349647597,
+              "y": -0.7946942967220092
             }
           ]
         },
@@ -7027,10 +7431,14 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -7881,7 +8289,7 @@
         "cv": 0.2770296243226785,
         "is_normal": false,
         "kurtosis": -0.7639841850930491,
-        "normality_p": 0.0030172853551862946,
+        "normality_p": 0.003017285355186295,
         "skewness": -0.021204244756885454
       },
       "stats": {
@@ -8547,8 +8955,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

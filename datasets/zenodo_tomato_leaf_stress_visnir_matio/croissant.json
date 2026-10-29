@@ -66,7 +66,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "edb36d5790c5973b521ee3337e31333986fab284d1be6f668c245848f75b9ecf"
+      "sha256": "9ea418fd340fed46dd8c8c9c1b9f13da0f12719d9c3ae3efa7ad71f0e3291be3"
     }
   ],
   "keywords": [
@@ -83,10 +83,25 @@
       "description": "Spectra from source 'absorbance' (216 observations x 832 wavelengths).",
       "field": [
         {
+          "@id": "X_absorbance/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_absorbance/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -112,7 +127,7 @@
         }
       ],
       "key": {
-        "@id": "X_absorbance/sample_id"
+        "@id": "X_absorbance/observation_id"
       },
       "name": "X_absorbance"
     },
@@ -122,10 +137,25 @@
       "description": "Spectra from source 'reflectance' (216 observations x 832 wavelengths).",
       "field": [
         {
+          "@id": "X_reflectance/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_reflectance.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_reflectance/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -151,7 +181,7 @@
         }
       ],
       "key": {
-        "@id": "X_reflectance/sample_id"
+        "@id": "X_reflectance/observation_id"
       },
       "name": "X_reflectance"
     },
@@ -161,10 +191,25 @@
       "description": "Spectra from source 'transmittance' (216 observations x 832 wavelengths).",
       "field": [
         {
+          "@id": "X_transmittance/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_transmittance.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_transmittance/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -190,14 +235,14 @@
         }
       ],
       "key": {
-        "@id": "X_transmittance/sample_id"
+        "@id": "X_transmittance/observation_id"
       },
       "name": "X_transmittance"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -512,5 +557,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
