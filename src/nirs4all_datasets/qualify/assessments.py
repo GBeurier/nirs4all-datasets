@@ -15,6 +15,12 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from nirs4all_datasets.manifest import sha256_file
 
+# Only definitions independently qualified against their native protocol may
+# populate historical display slots. Unknown values remain lossless in sidecars.
+QUALIFIED_METRIC_BINDINGS = {
+    ("nirs4all-preflight", "integrity.missing_cells", "0.1.0"): "integrity.missing_cells",
+}
+
 
 class AssessmentMetric(BaseModel):
     """A producer-owned observation with explicit availability and protocol."""
@@ -79,6 +85,10 @@ class Assessment(BaseModel):
             raise ValueError("intrinsic assessments cannot contain target/split/evaluation context")
         if self.scope == "task" and not all((self.target_id, self.split_id, self.fit_population_id, self.evaluation_population_id)):
             raise ValueError("task assessments require target, split and fit/evaluation populations")
+        if self.scope == "task" and self.producer != "nirs4all-domains":
+            raise ValueError("task assessments require the Domains owner; Preflight/Methods provide intrinsic evidence")
+        if self.scope == "task" and self.fit_population_id == self.evaluation_population_id:
+            raise ValueError("task fit and evaluation populations must be distinct")
         for metric in self.metrics:
             native = metric.native_metric or {}
             identities = {"metric_id": metric.metric_id, "protocol_version": metric.protocol_version, "view_id": metric.view_id, "source_id": self.source_id, "population_id": self.population_id, "target_id": self.target_id}
@@ -190,8 +200,9 @@ def card_assessments(reports: list[dict[str, Any]], *, view_id: str) -> list[dic
 def intrinsic_profile(report: dict[str, Any], *, view_id: str = "native") -> dict[str, Any]:
     """Project versioned producer metrics into legacy display slots, without kernels.
 
-    Only exact documented legacy slot IDs are consumed. Unknown additive metric IDs
-    remain in the assessment rather than being guessed or recomputed.
+    Only an explicit producer/metric/protocol binding may populate a legacy slot.
+    Exact name equality alone never establishes scientific equivalence. Unknown
+    definitions remain in the assessment rather than being guessed or recomputed.
     """
     parsed = Assessment.model_validate(report)
     if parsed.scope != "intrinsic":
@@ -201,15 +212,23 @@ def intrinsic_profile(report: dict[str, Any], *, view_id: str = "native") -> dic
     sections = {"integrity", "amplitude", "noise", "artefacts", "shape", "outliers", "reference", "repeatability", "structure"}
     profile: dict[str, Any] = {key: {} for key in sections}
     projected_slots = set()
+    qualified_bindings = []
+    unmapped = 0
     for metric in parsed.metrics:
         if metric.view_id != view_id:
             continue
-        section, separator, key = metric.metric_id.partition(".")
+        binding = QUALIFIED_METRIC_BINDINGS.get((parsed.producer, metric.metric_id, metric.protocol_version))
+        if binding is None:
+            unmapped += 1
+            continue
+        section, separator, key = binding.partition(".")
         if separator and section in sections:
-            if metric.metric_id in projected_slots:
+            if binding in projected_slots:
                 raise ValueError("ambiguous shared metric slot: select a single protocol/parameter context before projecting")
-            projected_slots.add(metric.metric_id)
+            projected_slots.add(binding)
             profile[section][key] = metric.value if metric.availability == "available" else None
+            qualified_bindings.append({"producer": parsed.producer, "metric_id": metric.metric_id, "metric_protocol": metric.protocol_version, "legacy_slot": binding})
+    profile["projection"] = {"binding_schema_version": "1", "qualified_bindings": qualified_bindings, "n_unmapped_metrics": unmapped}
     profile["profile_scores"] = metrics._profile_scores(profile)
     profile["diagnostics"] = metrics.diagnostic_hypotheses(profile, top_k=8)
     profile["producer"] = {
