@@ -30,6 +30,7 @@ class AssessmentMetric(BaseModel):
     confidence_status: Literal["unvalidated", "unknown", "validated"] = "unknown"
     native_status: str | None = None
     native_metric: dict[str, Any] | None = None
+    metric_context_id: str | None = Field(default=None, pattern=r"^sha256:[0-9a-f]{64}$")
     view_id: str = Field(default="native", min_length=1)
     evidence_coverage: float | None = Field(default=None, ge=0, le=1)
     signal_strength: float | None = Field(default=None, ge=0, le=1)
@@ -83,7 +84,18 @@ class Assessment(BaseModel):
             identities = {"metric_id": metric.metric_id, "protocol_version": metric.protocol_version, "view_id": metric.view_id, "source_id": self.source_id, "population_id": self.population_id, "target_id": self.target_id}
             if any(key in native and native[key] != expected for key, expected in identities.items()):
                 raise ValueError("native metric identity disagrees with the selected assessment context")
-        keys = [(m.metric_id, m.protocol_version, m.view_id, json.dumps((m.native_metric or {}).get("parameters", {}), sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)) for m in self.metrics]
+        keys = []
+        opaque_contexts: dict[str, str] = {}
+        for metric in self.metrics:
+            native = metric.native_metric or {}
+            context = json.dumps({"parameters": native.get("parameters", {}), "denominators": native.get("denominators", {})}, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+            keys.append((metric.metric_id, metric.protocol_version, metric.view_id, context))
+            if metric.metric_context_id is not None:
+                if metric.native_metric is None:
+                    raise ValueError("metric_context_id requires preserved native context")
+                previous = opaque_contexts.setdefault(metric.metric_context_id, context)
+                if previous != context:
+                    raise ValueError("metric_context_id collides with distinct native parameters/denominators")
         if len(keys) != len(set(keys)):
             raise ValueError("duplicate metric/protocol identity")
         json.dumps(self.model_dump(mode="json"), allow_nan=False)
