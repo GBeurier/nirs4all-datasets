@@ -109,3 +109,5 @@ jobs:
           git diff --exit-code catalog/datasets.yaml
       - name: Pytest (no network)
         run: uv run --no-sync python -m pytest -m "not network"
+      - name: R build recipes (native, Windows ARM64, WebR)
+        run: uv run --no-sync python -m pytest -q bindings/r/tests
