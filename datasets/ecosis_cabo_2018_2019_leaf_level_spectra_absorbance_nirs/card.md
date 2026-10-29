@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -90,7 +92,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -99,7 +101,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 31 fields, passport: 27 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -124,6 +127,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4382329bd0defdb1e6e2f3784446356bb832d0f057192fdae02aa9533233549c`
-- **Processing hash:** `a65650d30261b05ddf1b2744722093dc335c40693cffaec987e80c052e590cf7` | **metadata hash:** `36220f400f16f794f078e204bbe94f9339d9bcc54805f9afb20b9cb7c88e139b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `4f4ed56a5a73450d9364762a54b4444e5a82c88b4f8711bc50093edf3251a933`
+- **Processing hash:** `146de5343c16fa1954978abe634df594b7550e714b134df9a872df73258804e1` | **metadata hash:** `94e322c05a79b01bec9b514368fda5b0cb06b1bf65a93922ea2318b28d03e7e0`

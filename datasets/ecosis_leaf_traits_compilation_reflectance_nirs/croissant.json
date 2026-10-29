@@ -52,7 +52,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "68e8ac53da960905127d624d45f70c9cf2955b196df4a9f3953322a96b05b15c"
+      "sha256": "52079b38a14f35cc5c9087793e169a6c0b4fa86b7b7d6e9b09662ece70aa8780"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'Paired leaf traits and leaf spectra dataset.csv' (47393 observations x 196 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -481,5 +496,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

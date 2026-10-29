@@ -52,7 +52,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "af229386452c1b74a1e4b86395c7ef26c2dff3c94017e409eb4ddb3496264d9c"
+      "sha256": "ba6b008ad92422728c4bd9da29c889d1c92571eaa248366c102baa4b3b3ad9e2"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'spectra' (1224 observations x 256 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -586,5 +601,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

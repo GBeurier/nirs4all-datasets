@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 45 sample(s), 45 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 45 sample(s), 45 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -110,6 +112,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | wavelength_note | metadata | categorical | *Not specified.* | n=45, missing=0, classes=1, top ossl_mir_600_4000_cm_minus_1_step_2 (×45) |
 | active_status | metadata | categorical | *Not specified.* | n=45, missing=0, classes=1, top active (×45) |
 | replaces_dataset_id | metadata | categorical | *Not specified.* | n=45, missing=0, classes=1, top ossl_regression_7b437d2c (×45) |
+| site_id | metadata | identifier | *Not specified.* | *Not specified.* |
+| longitude | metadata | numeric | *Not specified.* | n=45, missing=0, range 19.13–21.16, mean 19.82 ± 0.5282 |
+| latitude | metadata | numeric | *Not specified.* | n=45, missing=0, range 44.54–46.07, mean 45.33 ± 0.36 |
+| campaign_date_begin | metadata | datetime | *Not specified.* | *Not specified.* |
+| campaign_date_end | metadata | datetime | *Not specified.* | *Not specified.* |
+| location_error_m | metadata | numeric | *Not specified.* | n=45, missing=0, range 111–111, mean 111 ± 0 |
 
 ## Statistics — splits
 
@@ -120,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -132,7 +140,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 8 fields, passport: 90 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -152,6 +161,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `b9981f752026bdd48605d2a9688fd3a0a2796d696382084291a226b01970a457`
-- **Processing hash:** `e4b4ec0ae43945cdcab51ffac8542dfe4697b16e7e89935836cbe58276ebef3d` | **metadata hash:** `f92b7c8fa7b0ab389503e1c921f53bfabc250c217c7fecec59ff97a82832d9ba`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `35683fa387d117cbeb7a5ac4d4111abb53445e9a77e957100778abf7e8f30e25`
+- **Processing hash:** `81f4241a8e74e49c3027ee5decbc88d02b6337ac351ff2461d85ed71e433c7f7` | **metadata hash:** `c4691c47c3ca720f0f9ff887592127540a0b0c859e5d45b10fcb9b648c20a977`

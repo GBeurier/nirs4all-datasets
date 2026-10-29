@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "X",
-      "sha256": "88889e6a4fddd9d3fe0e171233698cfe10187bbdd0504480b7c0b6035f0941ef"
+      "sha256": "f94be1c95908844d22eedfeabfe374328efd0e53356f27fd22e7851ede87eff5"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "fb4b6eda26506cae12539c8bdb79be28256fdc364b983fd4e7f652ffe914c069"
+      "sha256": "0af487c276a7be130e865337c66920de953c02193c7cf9e386591530ff623065"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'X' (56 observations x 701 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -209,5 +224,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

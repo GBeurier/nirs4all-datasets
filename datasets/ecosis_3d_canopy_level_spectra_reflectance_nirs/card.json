@@ -1,13 +1,14 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 59,
     "n_samples": 59,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.018799032181325604,
-      "outlier_pressure": 0.8091525557567208,
+      "outlier_pressure": 0.8091525557567203,
       "reference_spread": 0.7440991780914847,
       "repeatability_risk": 0.0,
       "shape_drift": 0.8175176148059576,
@@ -18,13 +19,228 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Parcelle \u00d7 ann\u00e9e source"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:50:56.685313+00:00",
+  "curation": {
+    "contract_sha256": "cbf863e3d9bd08f6925e4d50bb2e04843f844176c33902b6f44465d39797d3ec",
+    "dataset_id": "ecosis_3d_canopy_level_spectra_reflectance_nirs",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Parcelle \u00d7 ann\u00e9e source ; regroupement par la colonne source conserv\u00e9e dans M. La multiplicit\u00e9 export\u00e9e ne prouve pas le nombre de scans moyenn\u00e9s en amont.",
+      "evidence": [
+        {
+          "lines": [
+            1032,
+            1052,
+            1083,
+            1084
+          ],
+          "script": "scripts/convert_ecosis_nirs.py"
+        }
+      ],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 59,
+      "n_samples": 59,
+      "observations_per_unit": {
+        "1": 59
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "source_plot_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Parcelle \u00d7 ann\u00e9e source"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "3ab2ce6ee55bf3363038da4430428205c9d051e37d449c2e2e574a4132f02806",
+      "Y.csv": "db1420553df863988c38237de37b63ee9331b8a210004671826d42f405a06e85"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "year",
+        "source_columns": [
+          {
+            "name": "year",
+            "resource": "M.csv"
+          },
+          {
+            "name": "source_year",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 2017.0,
+          "min": 2016.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 59,
+          "n_rows": 59,
+          "n_unique": 2,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "plot",
+        "source_columns": [
+          {
+            "name": "source_plot_id",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 59,
+          "n_rows": 59,
+          "n_unique": 59,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "easting",
+        "source_columns": [
+          {
+            "name": "easting",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 729562.7731888598,
+          "min": 302691.3110848352,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 59,
+          "n_rows": 59,
+          "n_unique": 59,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "northing",
+        "source_columns": [
+          {
+            "name": "northing",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 5126617.185387239,
+          "min": 5036905.1891348,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 59,
+          "n_rows": 59,
+          "n_unique": 59,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "lma_g_m2",
+        "source_columns": [
+          {
+            "name": "lma_g_m2",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 117.6924333395641,
+          "min": 48.26487038333044,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 59,
+          "n_rows": 59,
+          "n_unique": 59,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "year",
+        "plot"
+      ],
+      "Y": [
+        "easting",
+        "northing",
+        "lma_g_m2"
+      ],
+      "measurements": [],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "ecosis_resource_id",
+        "file",
+        "url",
+        "coordinate_precision_notes",
+        "signal_type",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "n_points_original",
+        "publication_doi",
+        "citation",
+        "license",
+        "rights_status",
+        "usage_scope",
+        "notes",
+        "m_site",
+        "m_location",
+        "m_country",
+        "m_latitude",
+        "m_longitude",
+        "m_date",
+        "m_species",
+        "m_genus",
+        "m_family",
+        "m_plant_part",
+        "m_canopy_or_leaf",
+        "m_instrument",
+        "m_acquisition_mode"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:22:33.119625+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +261,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "93abcb3873de27a0b85a974f8235c683e64546fc8bf6317a23bde0c073d08dd3",
+    "content_hash": "d79749c5f154a3e07e12cf9240095d7b944dd1b54c3cf3de673f50c2ff950448",
     "manifest": "manifest.json",
-    "metadata_hash": "f7d63e5c02abf8693989af44279e3c4604b68fd8a4b66763e67285f8d64cb06e",
-    "processing_hash": "a5cf71e12b8948410fd53d9ce6e8b29f2ad91c1191c140d9a80477d58cd60667"
+    "metadata_hash": "9ce2c3a20b41eb59c4dcfd95269a65f48315af5fb7fbf574fbf0cc663513921f",
+    "processing_hash": "d7aa5a0c2c9427e94ce787c0bf74916c1ba01080a498516b680cbb3419b67ef8"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "3D LMA Canopy Level Spectra",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -83,7 +299,9 @@
       }
     ],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Parcelle \u00d7 ann\u00e9e source ; regroupement par la colonne source conserv\u00e9e dans M. La multiplicit\u00e9 export\u00e9e ne prouve pas le nombre de scans moyenn\u00e9s en amont."
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1098,49 +1316,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9996810127201247,
-          "effective_rank": 1.37,
-          "n_components_95": 2,
-          "n_components_99": 3
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 4032.511987718485,
         "mean_min": 142.60094102762514,
-        "n_outliers": 18,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9301441330010364,
-            0.05243688559063407,
-            0.007809658037424326,
-            0.005250354200361885,
-            0.0023102732036530357,
-            0.000638155798552424,
-            0.00047908084134263315,
-            0.00030527100304873636,
-            0.0001805939935473716,
-            0.00012660705052373105,
-            0.00011171075916098948,
-            4.9764268848477524e-05,
-            3.866410323681252e-05,
-            2.6221042289192125e-05,
-            2.0043906897007477e-05,
-            1.4690286337432484e-05,
-            1.0816675781418191e-05,
-            8.509855391402985e-06,
-            6.175366216604504e-06,
-            5.8603068579211824e-06,
-            5.2373573354074745e-06,
-            3.2224870966415235e-06,
-            2.949674264013499e-06,
-            2.560467749645785e-06,
-            1.996234133738095e-06,
-            1.233575390215482e-06,
-            1.032269985804672e-06,
-            8.651483215473841e-07,
-            8.008842782813356e-07,
-            6.545785297472801e-07
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 3242428.7915287986,
@@ -1175,7 +1359,7 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
@@ -1196,7 +1380,7 @@
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1204,7 +1388,7 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
@@ -1233,7 +1417,7 @@
                   "signal": "Noise RMS faible"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
@@ -1254,7 +1438,7 @@
                   "signal": "Jump rate"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1262,14 +1446,14 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
               "key": "vera25_like",
               "label": "Signature VERA25-like",
-              "score": 0.6082397238800461,
+              "score": 0.608239723880046,
               "strength": "moyenne"
             },
             {
@@ -1279,7 +1463,7 @@
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1290,7 +1474,7 @@
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
               "key": "out_of_domain",
               "label": "Spectre hors domaine valide",
-              "score": 0.6008843737549385,
+              "score": 0.6008843737549383,
               "strength": "moyenne"
             },
             {
@@ -1300,7 +1484,7 @@
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1308,14 +1492,14 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
-              "score": 0.6006515979743483,
+              "score": 0.6006515979743482,
               "strength": "moyenne"
             },
             {
@@ -1325,7 +1509,7 @@
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1333,14 +1517,14 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "key": "probe_geometry",
               "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5480559961485904,
+              "score": 0.5480559961485902,
               "strength": "moyenne"
             },
             {
@@ -1350,7 +1534,7 @@
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.8091525557567208,
+                  "level": 0.8091525557567203,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1358,14 +1542,14 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 0.41562262438596886,
+                  "level": 0.4156226243859689,
                   "signal": "PCA Q"
                 }
               ],
               "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.528217458489632,
+              "score": 0.5282174584896318,
               "strength": "moyenne"
             }
           ],
@@ -1387,23 +1571,23 @@
           },
           "outliers": {
             "hotelling_t2_max": 7.907327169418058,
-            "hotelling_t2_median": 0.9562954326447615,
-            "hotelling_t2_p95": 6.190311147063903,
-            "hotelling_t2_ratio": 6.473220446053767,
+            "hotelling_t2_median": 0.9562954326447617,
+            "hotelling_t2_p95": 6.1903111470639,
+            "hotelling_t2_ratio": 6.473220446053762,
             "mahalanobis_h_max": 2.811997007362927,
-            "mahalanobis_h_median": 0.9779035906697354,
-            "mahalanobis_h_p95": 2.4863765571978096,
-            "mahalanobis_h_ratio": 2.5425579585968885,
-            "pca_q_max": 3352714.446043092,
-            "pca_q_median": 684909.1530225815,
-            "pca_q_p95": 2277309.9171617315,
-            "pca_q_ratio": 3.324980995087751
+            "mahalanobis_h_median": 0.9779035906697355,
+            "mahalanobis_h_p95": 2.486376557197809,
+            "mahalanobis_h_ratio": 2.5425579585968876,
+            "pca_q_max": 3352714.4460430928,
+            "pca_q_median": 684909.1530225816,
+            "pca_q_p95": 2277309.9171617324,
+            "pca_q_ratio": 3.3249809950877514
           },
           "profile_scores": {
             "integrity_risk": 0.0,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.018799032181325604,
-            "outlier_pressure": 0.8091525557567208,
+            "outlier_pressure": 0.8091525557567203,
             "reference_spread": 0.7440991780914847,
             "repeatability_risk": 0.0,
             "shape_drift": 0.8175176148059576,
@@ -1441,7 +1625,7 @@
             "density_cv": 0.6236109024937948,
             "isolation_forest_score_p95": 0.5972932269134772,
             "local_outlier_factor_p95": 2.7515039107275685,
-            "pca_score_density": 0.0006518519035311954
+            "pca_score_density": 0.0006518519035311953
           }
         },
         "quality": {
@@ -1458,23 +1642,23 @@
           "points": [
             {
               "x": -7312.075048088472,
-              "y": -3020.0143885957104
+              "y": -3020.0143885957095
             },
             {
               "x": -901.0033050035306,
-              "y": -2873.4124894003676
+              "y": -2873.4124894003703
             },
             {
               "x": -5721.5802562119325,
-              "y": -447.62621159323373
+              "y": -447.6262115932337
             },
             {
-              "x": -350.00116721939804,
+              "x": -350.00116721939816,
               "y": -4684.733574427507
             },
             {
               "x": 13742.688225150074,
-              "y": -245.87837137444006
+              "y": -245.87837137444023
             },
             {
               "x": 11888.077595199453,
@@ -1482,35 +1666,35 @@
             },
             {
               "x": -3129.654188479777,
-              "y": -462.21453074199417
+              "y": -462.21453074199405
             },
             {
-              "x": -2146.9755306088427,
-              "y": -4100.259820632366
+              "x": -2146.975530608843,
+              "y": -4100.2598206323655
             },
             {
-              "x": 3520.934408055154,
-              "y": -1423.8674060405988
+              "x": 3520.9344080551537,
+              "y": -1423.8674060405986
             },
             {
-              "x": -3975.2278556299602,
-              "y": -3352.2827464172105
+              "x": -3975.227855629961,
+              "y": -3352.28274641721
             },
             {
-              "x": -4170.890931430248,
+              "x": -4170.890931430247,
               "y": 720.2585967713603
             },
             {
               "x": -6129.236310670146,
-              "y": -4406.857411172345
+              "y": -4406.857411172344
             },
             {
               "x": -2429.164374667106,
-              "y": 1449.8885184700894
+              "y": 1449.8885184700891
             },
             {
               "x": -4152.468990953801,
-              "y": -995.2824819890556
+              "y": -995.2824819890553
             },
             {
               "x": -5129.455628523002,
@@ -1518,15 +1702,15 @@
             },
             {
               "x": 4215.384924428656,
-              "y": 761.5896910092258
+              "y": 761.5896910092257
             },
             {
               "x": -10935.498723256622,
-              "y": 704.627503668196
+              "y": 704.6275036681961
             },
             {
               "x": -7206.280112239954,
-              "y": -3665.5430847478574
+              "y": -3665.5430847478565
             },
             {
               "x": -1573.2497241439,
@@ -1538,35 +1722,35 @@
             },
             {
               "x": -5585.0264570407,
-              "y": 973.5724224219947
+              "y": 973.572422421995
             },
             {
               "x": 543.3629165100147,
-              "y": 664.8421420154259
+              "y": 664.8421420154258
             },
             {
               "x": 13448.437815392517,
-              "y": 574.5165342005514
+              "y": 574.5165342005513
             },
             {
-              "x": -1.7921372265292268,
-              "y": 625.3949501835359
+              "x": -1.7921372265291722,
+              "y": 625.3949501835358
             },
             {
               "x": 5366.214058263222,
-              "y": 940.8097799879066
+              "y": 940.8097799879065
             },
             {
               "x": 4391.148508816833,
-              "y": 250.86076030032072
+              "y": 250.86076030032052
             },
             {
               "x": 3500.901494565523,
-              "y": -252.85110637165104
+              "y": -252.85110637165107
             },
             {
               "x": 467.6187044833096,
-              "y": 205.65764741935277
+              "y": 205.65764741935274
             },
             {
               "x": -2567.9741141637232,
@@ -1574,7 +1758,7 @@
             },
             {
               "x": 11207.850008177713,
-              "y": 43.114786116249846
+              "y": 43.114786116249725
             },
             {
               "x": -2982.7050708753895,
@@ -1582,14 +1766,14 @@
             },
             {
               "x": 994.2204066832516,
-              "y": -257.4801602480226
+              "y": -257.48016024802257
             },
             {
               "x": -9079.529481320109,
-              "y": -62.492423774471376
+              "y": -62.49242377447132
             },
             {
-              "x": -439.6795432276664,
+              "x": -439.67954322766644,
               "y": -1013.0602564667435
             },
             {
@@ -1606,11 +1790,11 @@
             },
             {
               "x": 10099.599695709372,
-              "y": -757.4189852713242
+              "y": -757.4189852713243
             },
             {
-              "x": 3679.968887630567,
-              "y": 924.480501470097
+              "x": 3679.9688876305677,
+              "y": 924.4805014700968
             },
             {
               "x": 3571.7685801332927,
@@ -1625,12 +1809,12 @@
               "y": 1288.0135527361615
             },
             {
-              "x": -724.1778659035909,
+              "x": -724.1778659035908,
               "y": 1881.6711895205324
             },
             {
-              "x": 145.148216869247,
-              "y": 163.72113714685338
+              "x": 145.14821686924702,
+              "y": 163.7211371468533
             },
             {
               "x": -6792.218958419653,
@@ -1638,23 +1822,23 @@
             },
             {
               "x": 8725.788509319307,
-              "y": 2065.4488890640264
+              "y": 2065.448889064026
             },
             {
               "x": 2687.5133300699013,
-              "y": 906.2638378024185
+              "y": 906.2638378024187
             },
             {
-              "x": 748.0092885055418,
+              "x": 748.0092885055419,
               "y": 1389.1792586272143
             },
             {
               "x": -3257.7904942567716,
-              "y": 1655.8199582866193
+              "y": 1655.8199582866196
             },
             {
               "x": 19914.89715231513,
-              "y": 138.84794820288278
+              "y": 138.8479482028827
             },
             {
               "x": -3332.0160439356127,
@@ -1662,7 +1846,7 @@
             },
             {
               "x": 4337.635577348175,
-              "y": -501.59058187966616
+              "y": -501.5905818796662
             },
             {
               "x": -5532.332824436553,
@@ -1670,7 +1854,7 @@
             },
             {
               "x": -10128.453554258975,
-              "y": 489.96811342714966
+              "y": 489.96811342715
             },
             {
               "x": 13180.13781840114,
@@ -1682,15 +1866,15 @@
             },
             {
               "x": -13307.40795833503,
-              "y": 508.98677448491185
+              "y": 508.986774484912
             },
             {
               "x": -5205.611123594499,
-              "y": 70.81204760693866
+              "y": 70.81204760693875
             },
             {
               "x": 17170.335492164177,
-              "y": -445.19315893008326
+              "y": -445.1931589300836
             }
           ]
         },
@@ -3015,10 +3199,14 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -3896,10 +4084,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: X.csv: 59 observation_id(s) have no row in M.csv; used identity sample_id for them."
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

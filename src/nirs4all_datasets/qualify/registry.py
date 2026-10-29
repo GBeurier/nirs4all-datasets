@@ -18,7 +18,7 @@ import numpy as np
 
 from nirs4all_datasets.qualify import metrics
 
-PROTOCOL_VERSION = "5"  # 5: dataset-property explorer profile + diagnostic hypotheses; 4: detected signal type; 3: scientific stats; 2: quantile curves + histogram bins
+PROTOCOL_VERSION = "6"  # 6: traced curation, honest identity and observation-grain variables; 5: spectral-property explorer
 
 Scope = Literal["source", "variable", "dataset"]
 MetricFn = Callable[..., Any]

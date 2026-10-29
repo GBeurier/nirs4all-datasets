@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 2415 sample(s), 2415 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 2181 sample(s), 2415 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.107).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -24,35 +26,35 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| USDA_Species_Code | target | categorical | *Not specified.* | n=2415, missing=24, classes=41, top SOLY2 (×163) |
-| Target_Type | target | categorical | *Not specified.* | n=2415, missing=0, classes=6, top Vegetation (×2385) |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top db21126e-7517-4fa2-a578-dfedb9df88bf (×2415) |
-| site | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=13, top KARE (×433) |
-| location | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top NASA HyspIRI Airborne Campaign (×2415) |
-| country | metadata | categorical | *Not specified.* | n=2415, missing=2415, classes=0, — |
-| latitude | metadata | numeric | *Not specified.* | n=2415, missing=59, range 32.81–38.54, mean 35.6 ± 1.826 |
-| longitude | metadata | numeric | *Not specified.* | n=2415, missing=59, range -121.9–-115.4, mean -118.5 ± 1.845 |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top source-provided coordinates when available (×2415) |
-| year | metadata | numeric | *Not specified.* | n=2415, missing=0, range 2019–2019, mean 2019 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=2415, missing=2415, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=2415, missing=2415, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=2415, missing=2415, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=2415, missing=2415, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top Leaf, Canopy, Mineral, NPV, Reference, Rock, Soil (×2415) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top canopy (×2415) |
-| instrument | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top Analytical Spectral Devices, Spectral Evolution FieldSpec3, PSR-3500 (×2415) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top Contact, Proximal (×2415) |
-| signal_type | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top reflectance (×2415) |
-| axis_unit | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top nm (×2415) |
-| axis_min | metadata | numeric | *Not specified.* | n=2415, missing=0, range 350–350, mean 350 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=2415, missing=0, range 2500–2500, mean 2500 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=2415, missing=0, range 2151–2151, mean 2151 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top 10.1016/j.rse.2015.05.024 \| 10.1111/nph.16123 (×2415) |
-| citation | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top Shawn P. Serbin Sean DuBois Andrew Jablonski Alexey Shiklomanov Ankur Desai Eric L. Kruger Philip A. Townsend. 2019. UW-BNL NASA HyspIRI Airborne Campaign Leaf and Canopy Spectra and Trait Data. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×2415) |
-| license | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top Creative Commons Attribution (×2415) |
-| rights_status | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top explicit_open (×2415) |
-| usage_scope | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top public_reuse_possible (×2415) |
-| notes | metadata | categorical | *Not specified.* | n=2415, missing=0, classes=1, top EcoSIS package uw-bnl-nasa-hyspiri-airborne-campaign-leaf-and-canopy-spectra-and-trait-data, no interpolation applied by project. (×2415) |
+| USDA_Species_Code | target | categorical | *Not specified.* | n=2181, missing=24, classes=41, top SOLY2 (×141) |
+| Target_Type | target | categorical | *Not specified.* | n=2181, missing=0, classes=6, top Vegetation (×2151) |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top db21126e-7517-4fa2-a578-dfedb9df88bf (×2181) |
+| site | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=13, top KARE (×427) |
+| location | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top NASA HyspIRI Airborne Campaign (×2181) |
+| country | metadata | categorical | *Not specified.* | n=2181, missing=2181, classes=0, — |
+| latitude | metadata | numeric | *Not specified.* | n=2181, missing=41, range 32.81–38.54, mean 35.66 ± 1.817 |
+| longitude | metadata | numeric | *Not specified.* | n=2181, missing=41, range -121.9–-115.4, mean -118.6 ± 1.838 |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top source-provided coordinates when available (×2181) |
+| year | metadata | numeric | *Not specified.* | n=2181, missing=0, range 2019–2019, mean 2019 ± 0 |
+| date | metadata | categorical | *Not specified.* | n=2181, missing=2181, classes=0, — |
+| species | metadata | categorical | *Not specified.* | n=2181, missing=2181, classes=0, — |
+| genus | metadata | categorical | *Not specified.* | n=2181, missing=2181, classes=0, — |
+| family | metadata | categorical | *Not specified.* | n=2181, missing=2181, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top Leaf, Canopy, Mineral, NPV, Reference, Rock, Soil (×2181) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top canopy (×2181) |
+| instrument | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top Analytical Spectral Devices, Spectral Evolution FieldSpec3, PSR-3500 (×2181) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top Contact, Proximal (×2181) |
+| signal_type | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top reflectance (×2181) |
+| axis_unit | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top nm (×2181) |
+| axis_min | metadata | numeric | *Not specified.* | n=2181, missing=0, range 350–350, mean 350 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=2181, missing=0, range 2500–2500, mean 2500 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=2181, missing=0, range 2151–2151, mean 2151 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top 10.1016/j.rse.2015.05.024 \| 10.1111/nph.16123 (×2181) |
+| citation | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top Shawn P. Serbin Sean DuBois Andrew Jablonski Alexey Shiklomanov Ankur Desai Eric L. Kruger Philip A. Townsend. 2019. UW-BNL NASA HyspIRI Airborne Campaign Leaf and Canopy Spectra and Trait Data. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×2181) |
+| license | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top Creative Commons Attribution (×2181) |
+| rights_status | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top explicit_open (×2181) |
+| usage_scope | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top public_reuse_possible (×2181) |
+| notes | metadata | categorical | *Not specified.* | n=2181, missing=0, classes=1, top EcoSIS package uw-bnl-nasa-hyspiri-airborne-campaign-leaf-and-canopy-spectra-and-trait-data, no interpolation applied by project. (×2181) |
 
 ## Statistics — splits
 
@@ -63,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -72,7 +74,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 9 fields, Y: 2 fields, passport: 34 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,6 +96,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `ab0ea1dbcb1dfb0603f974ab7c017206711088105c219933378d891eaa5f7a45`
-- **Processing hash:** `a6bcbecfcc4fb67246e061a3fc9a3431cf23499e602228bb0014c0f1ddbd9b94` | **metadata hash:** `6def7c6174a73fbe9104a2cb7d4ca02c17d1a31a6bb9e89936b57f84a9ae71bc`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e98f7bb4fc63a6261f5aa0dbeb67cf1daed41812f115ec752eb4066545ecbc29`
+- **Processing hash:** `272a766b11b20189d8e8d257f2b60f492115841ee209713d6c536f395378c43e` | **metadata hash:** `f384b2447813dd8c5df603bb617bee363304e733e6068a578ad0010ffe923c0a`

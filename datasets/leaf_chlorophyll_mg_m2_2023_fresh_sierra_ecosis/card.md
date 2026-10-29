@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 363 sample(s), 363 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 35 sample(s), 363 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 9–16 (mean 10.37).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | chlorophyll_mg_m2 | target | numeric | *Not specified.* | n=363, missing=0, range 293–835, mean 459.1 ± 106.3 |
 | SpectralRep | metadata | numeric | *Not specified.* | n=363, missing=0, range 1–1, mean 1 ± 0 |
-| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00004 (×28) |
+| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00005 (×28) |
 | foreoptic_type | metadata | categorical | *Not specified.* | n=363, missing=0, classes=2, top LC (×294) |
 | individualspectra_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=363, top CA2023_005_LC_00002 (×1) |
 | sampling_date | metadata | categorical | *Not specified.* | n=363, missing=0, classes=8, top 7/7/2023 (×100) |
@@ -74,7 +76,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | public_release_allowed | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top True (×363) |
 | parent_standardized_dataset_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top ecosis_fresh_leaf_spectra_and_measured_traits_from_the_sierra_reflectance_nirs (×363) |
 | notes | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Task-specific EcoSIS target not present in active parent Y table, wavelengths kept as provided by EcoSIS resource, no project interpolation. (×363) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=35, top CA2023_076 (×16) |
 
 ## Statistics — splits
 
@@ -85,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -96,7 +97,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in replicate_id, individualspectra_id. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 11 fields, Y: 1 fields, passport: 33 fields, measurements: 11 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -116,6 +118,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c902c3f7a293c02e6bea434806ea753b4a2959c483be39772ce7ec8a22131830`
-- **Processing hash:** `a028e78e9a6a15a00b939910d7016377368aefef1b9edf5e6b0fe5b97196f32f` | **metadata hash:** `e82f9b8369cbb237a1b19d41807785b469bc1aeae9efda37b3a1b6c8404cb674`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `765934b7f330c8df177210c8608e7eecfdce25739a66b94712f8013cc9232fdc`
+- **Processing hash:** `ced1b97cffd7576c9d998306a0d3955641a8d8438a005aa80b8427912afca783` | **metadata hash:** `7ad081c3733ab50551eadb237d43649af625cd8ddcc3d0fdb86d517aa8207e07`

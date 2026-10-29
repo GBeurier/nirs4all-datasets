@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 31 sample(s), 31 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 31 sample(s), 31 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -62,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -71,7 +73,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 2 fields, Y: 1 fields, passport: 43 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +97,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `cabf0a00b4909f7863f2e531f32af2157440903418add109bff381fe7a821879`
-- **Processing hash:** `719908ec9ef76e95be71f1306a665243cf750eb073e8ab4c42262608747d6e51` | **metadata hash:** `f6498d09d6e816a0201656df6ad538f55acd6eb42c3154422b0538539683687f`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `d995d49e7d50a0fabf619afe660137655cb62f0b4310a30e19a136ee0f81d013`
+- **Processing hash:** `bd97badf21065f5949a647065221d938d877b3f39718f065695fb7cd45683905` | **metadata hash:** `0f7212739cd7a37724acba22022339d9c9a44313276bd99cac0f6434b2dedda8`

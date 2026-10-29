@@ -11,20 +11,28 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 62 sample(s), 62 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 61 sample(s), 61 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | X | *Not specified.* | NIR | 800.4–2500 nm | 62 | 3439 |
+| X | X | *Not specified.* | NIR | 800.4–2500 nm | 61 | 3439 |
 
 ### Variables (Y / metadata)
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| class | target | categorical | *Not specified.* | n=62, missing=0, classes=3, top YT (×27) |
+| class | target | categorical | *Not specified.* | n=61, missing=0, classes=3, top YT (×27) |
+| class_label | metadata | categorical | *Not specified.* | n=61, missing=0, classes=3, top YT (×27) |
+| manual_download | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top True (×61) |
+| manual_download_source_dir | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\see cucumber (×61) |
+| manual_download_file | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top representative+original+spectra.rar (×61) |
+| official_source_url | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.n1066 (×61) |
+| standardization_batch | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top v0.8.58 (×61) |
 
 ## Statistics — splits
 
@@ -35,7 +43,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -44,7 +52,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -64,6 +73,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `7a52a320f8ca44123afa09c445d0438c213d849889e2c457521fff80ea1d1f8b`
-- **Processing hash:** `6e00126e8b1d8773f8301e2bc5ce4c79866b47e0c31345885e9408e2bb09c4c6` | **metadata hash:** `91fa51fb7d6329eb328756e1da23383868cebe4078c99427468143463768e4dc`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `3f63239f8a5948c3705af9bf9777a9109ec4543261e7675d857826e74a0ca58d`
+- **Processing hash:** `f8b7d68e114cdde19170928eacc8627ac0bdb26de4eeedfb592d59def92e6324` | **metadata hash:** `79b7e335041f83f4c7abb8b539c06035a030a47b64b429547f02b7065ea98324`

@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 42 sample(s), 42 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 42 sample(s), 42 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -39,7 +41,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -48,7 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -68,6 +71,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `120851d863763f70b35e8a808064272af9690ae41757bacf92f9c1fe0a740404`
-- **Processing hash:** `5598eb694cb8d31426d1f537a8b8e8e2b6af379bd17c120f20c9b58f46901833` | **metadata hash:** `7e461b7c825475dc02f5ab469509755331117bbfa277a37fb0486bf4c50ea949`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `ad5dfdd39c4da8d63c318e4a09bb266669627d21f4848376f8aafffb9ba92e00`
+- **Processing hash:** `0a53687a99b60acbdd062885d76ae3e137c1a86ddb29d8be378e5c8b1aeae00d` | **metadata hash:** `a0ebc19db0a9f9cd091a2116f89480b014b42eb338aa56733a36a979e04757b0`

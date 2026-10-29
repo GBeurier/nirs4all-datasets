@@ -54,6 +54,25 @@ def _save_descriptor_dataverse(root: Path, dataset_id: str, doi: str, dataset_ve
 # Author / build the catalog
 # =============================================================================
 @app.command()
+def curate(
+    source_tree: Path,
+    out: Path = typer.Option(Path("catalog/curation"), help="Small mapping/statistics reports; no raw data are published."),
+    soilsite: Path | None = typer.Option(None, help="Original local OSSL soilsite CSV(.gz) for keyed design enrichment."),
+    assume_paired_y: bool = typer.Option(False, help="Explicitly accept legacy Y/M row pairing without independently verified target IDs."),
+    only: str | None = typer.Option(None, help="Comma-separated dataset IDs."),
+) -> None:
+    """Build traced scientific M/Y views and identity reports from local standardized bundles."""
+    from nirs4all_datasets.curation import curate_tree
+
+    report = curate_tree(source_tree, out, soilsite=soilsite, assume_paired_y=assume_paired_y, only=set(only.split(",")) if only else None)
+    typer.echo(f"curate: processed={len(report['processed'])} errors={len(report['errors'])} -> {out}")
+    for error in report["errors"]:
+        typer.echo(f"  ERROR {error['dataset_id']}: {error['error']}", err=True)
+    if report["errors"]:
+        raise typer.Exit(1)
+
+
+@app.command()
 def bootstrap(
     source_tree: Path,
     root: Path = typer.Option(Path("."), help="Registry root."),

@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 192 sample(s), 384 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 64 sample(s), 384 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 3–3 (mean 3).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -43,7 +45,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=192, missing=0, range 4000–4000, mean 4000 ± 0 |
 | n_points_original | metadata | numeric | *Not specified.* | n=192, missing=0, range 2001–2001, mean 2001 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=192, missing=0, classes=1, top Aligned raw FT-NIR spectra for green and roasted coffee with roasted coffee sensory cup quality. (×192) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=192, missing=0, classes=64, top 1 (×3) |
 
 ## Statistics — splits
 
@@ -54,7 +55,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -66,7 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in replicate. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `844d21a266ebe66a0abe8905d13c46a5fbf67653d29f49a6bfad8221d5fbaee8`
-- **Processing hash:** `0cde0362eb542edd3a7c2708f7f74eb6e95921a1097c9a15af48df41644d7683` | **metadata hash:** `dd5461c3fa736ae2fa8f322e034d014a116381633f8484bd742530deb0de5b7e`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `504b712bebe2516ce86b721f73995526e9a2adaf51d4eba7be28436f6907bb2a`
+- **Processing hash:** `5b5316a167f51ac059aed1216df98be9f8a6a357ebbb72ce4fd8224fce3792ab` | **metadata hash:** `0061d2ada9c72f53133c9df327f45304cc19061c4f9c30f86c861e9605182dea`

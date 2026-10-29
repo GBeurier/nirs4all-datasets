@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 138 sample(s), 138 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 138 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -65,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 5 fields, Y: 4 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `40bfa5dad8dca054f83e6f78167fb1081aa1c795c6f2109f9e786b91e3145445`
-- **Processing hash:** `4ae4d4240c200fac0fa25bd04ad52219193bda7c370961caedb4f260af6cd396` | **metadata hash:** `a7d0a62c665fd3c2233ce334d2265a3ca7c04d545b04fe70ab78f94af4c454ac`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `f231b2c4cff7bd73d521875833cc71f1f82c62362cc34178feeb8c936cff776d`
+- **Processing hash:** `2d079f5eb0af8c3431c4a106b2252b0fad710a4bbdaa49b7759069fcc396d9b8` | **metadata hash:** `5a79e2d352b04c02a807bcd7be164b7039f167320a1edf81d25daa3fef80f202`

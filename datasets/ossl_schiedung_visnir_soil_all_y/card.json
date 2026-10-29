@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 259,
     "n_samples": 259,
     "profile_scores": {
@@ -18,13 +19,544 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": false
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:23.695890+00:00",
+  "curation": {
+    "contract_sha256": "3befb4868a8bba33262ad0bfe9f9a7afe82ba75c9c12b6f686f61930231132af",
+    "dataset_id": "ossl_schiedung_visnir_soil_all_y",
+    "enrichments": [
+      {
+        "canonical_name": "site_id",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "id.dataset.site_ascii_txt",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "longitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "longitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "latitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "latitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_begin",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.begin_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_end",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.end_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "location_error_m",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "location.point.error_any_m",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      }
+    ],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 259,
+      "n_samples": 259,
+      "observations_per_unit": {
+        "1": 259
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "ID_sample"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "825fabd0e728413b7f12dd81a5f102887b840c65baf703da62a3e68d1431a0dd",
+      "Y.csv": "0f4357c54ab5e3d0c1185e00c2d20a6967c308ab03fe0aca5ecb0c09920d78b1"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "upper_depth_cm",
+        "source_columns": [
+          {
+            "name": "upper_depth_cm",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 45.0,
+          "min": 0.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 4,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "lower_depth_cm",
+        "source_columns": [
+          {
+            "name": "lower_depth_cm",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 60.0,
+          "min": 15.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 4,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "longitude",
+        "source_columns": [
+          {
+            "name": "longitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": -112.2048889,
+          "min": -133.5328333,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 79,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "latitude",
+        "source_columns": [
+          {
+            "name": "latitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 68.3170556,
+          "min": 59.4399722,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 64,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "bd_usda_a4_g_cm3",
+        "source_columns": [
+          {
+            "name": "bd_usda_a4_g_cm3",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 1.71535687167806,
+          "min": 0.481481481481481,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 258,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "c_tot_usda_a622_w_pct",
+        "source_columns": [
+          {
+            "name": "c_tot_usda_a622_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 15.6820900050185,
+          "min": 0.002096353376827,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 259,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "clay_tot_usda_a334_w_pct",
+        "source_columns": [
+          {
+            "name": "clay_tot_usda_a334_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.52509652509653,
+          "max": 40.0,
+          "min": 2.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 9,
+          "n_present": 250,
+          "n_rows": 259,
+          "n_unique": 20,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ec_usda_a364_ds_m",
+        "source_columns": [
+          {
+            "name": "ec_usda_a364_ds_m",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.52509652509653,
+          "max": 2.41,
+          "min": 2.251,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 9,
+          "n_present": 250,
+          "n_rows": 259,
+          "n_unique": 28,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "n_tot_usda_a623_w_pct",
+        "source_columns": [
+          {
+            "name": "n_tot_usda_a623_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 92.27799227799228,
+          "max": 0.679,
+          "min": 0.021,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 20,
+          "n_present": 239,
+          "n_rows": 259,
+          "n_unique": 124,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "oc_usda_c729_w_pct",
+        "source_columns": [
+          {
+            "name": "oc_usda_c729_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 11.8421818474556,
+          "min": 0.0677046096331784,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 259,
+          "n_rows": 259,
+          "n_unique": 259,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ph_cacl2_usda_a481_index",
+        "source_columns": [
+          {
+            "name": "ph_cacl2_usda_a481_index",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.52509652509653,
+          "max": 7.07,
+          "min": 3.65,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 9,
+          "n_present": 250,
+          "n_rows": 259,
+          "n_unique": 34,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "sand_tot_usda_c60_w_pct",
+        "source_columns": [
+          {
+            "name": "sand_tot_usda_c60_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.52509652509653,
+          "max": 95.0,
+          "min": 12.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 9,
+          "n_present": 250,
+          "n_rows": 259,
+          "n_unique": 28,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "silt_tot_usda_c62_w_pct",
+        "source_columns": [
+          {
+            "name": "silt_tot_usda_c62_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.52509652509653,
+          "max": 66.0,
+          "min": 3.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 9,
+          "n_present": 250,
+          "n_rows": 259,
+          "n_unique": 27,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "upper_depth_cm",
+        "lower_depth_cm",
+        "longitude",
+        "latitude"
+      ],
+      "Y": [
+        "bd_usda_a4_g_cm3",
+        "c_tot_usda_a622_w_pct",
+        "clay_tot_usda_a334_w_pct",
+        "ec_usda_a364_ds_m",
+        "n_tot_usda_a623_w_pct",
+        "oc_usda_c729_w_pct",
+        "ph_cacl2_usda_a481_index",
+        "sand_tot_usda_c60_w_pct",
+        "silt_tot_usda_c62_w_pct"
+      ],
+      "measurements": [
+        "class_label"
+      ],
+      "passport": [
+        "id_sample",
+        "spectralrep",
+        "dataset",
+        "collection_name",
+        "dataset_code",
+        "dataset_title",
+        "dataset_owner",
+        "dataset_slug",
+        "task_type",
+        "trait_header",
+        "trait_header_original",
+        "package_url",
+        "dataset_url",
+        "dataset_doi",
+        "file",
+        "resource",
+        "spectral_kind",
+        "scan_local_id",
+        "raw_label",
+        "reference_value",
+        "class_index",
+        "feature_count_per_dimension",
+        "dimensions",
+        "wavelength_note",
+        "dataset_id",
+        "root",
+        "relative_dir",
+        "split_original",
+        "grouped_y_exports",
+        "active_status",
+        "replaces_dataset_id",
+        "site_id",
+        "m_scan_lab",
+        "m_instrument_model",
+        "m_scan_model_code",
+        "m_acquisition_optics",
+        "m_sample_preparation",
+        "m_country",
+        "m_texture_class",
+        "m_pedon_taxa",
+        "m_horizon_designation",
+        "m_campaign_date_begin",
+        "m_campaign_date_end",
+        "m_location_error_m",
+        "y_acidity_usda_a795_cmolc_kg",
+        "y_aggstb_usda_a1_w_pct",
+        "y_al_dith_usda_a65_w_pct",
+        "y_al_ext_aquaregia_g_kg",
+        "y_al_ext_usda_a1056_mg_kg",
+        "y_al_ext_usda_a69_cmolc_kg",
+        "y_al_ox_usda_a59_w_pct",
+        "y_awc_33_1500kpa_usda_c80_w_frac",
+        "y_b_ext_mel3_mg_kg",
+        "y_ca_ext_aquaregia_mg_kg",
+        "y_ca_ext_usda_a1059_mg_kg",
+        "y_ca_ext_usda_a722_cmolc_kg",
+        "y_caco3_usda_a54_w_pct",
+        "y_cec_usda_a723_cmolc_kg",
+        "y_cf_usda_c236_w_pct",
+        "y_cu_ext_usda_a1063_mg_kg",
+        "y_efferv_usda_a479_class",
+        "y_fe_dith_usda_a66_w_pct",
+        "y_fe_ext_aquaregia_g_kg",
+        "y_fe_ext_usda_a1064_mg_kg",
+        "y_fe_ox_usda_a60_w_pct",
+        "y_k_ext_aquaregia_mg_kg",
+        "y_k_ext_usda_a1065_mg_kg",
+        "y_k_ext_usda_a725_cmolc_kg",
+        "y_mg_ext_aquaregia_mg_kg",
+        "y_mg_ext_usda_a1066_mg_kg",
+        "y_mg_ext_usda_a724_cmolc_kg",
+        "y_mn_ext_aquaregia_mg_kg",
+        "y_mn_ext_usda_a1067_mg_kg",
+        "y_mn_ext_usda_a70_mg_kg",
+        "y_na_ext_aquaregia_mg_kg",
+        "y_na_ext_usda_a1068_mg_kg",
+        "y_na_ext_usda_a726_cmolc_kg",
+        "y_p_ext_aquaregia_mg_kg",
+        "y_p_ext_usda_a1070_mg_kg",
+        "y_p_ext_usda_a270_mg_kg",
+        "y_p_ext_usda_a274_mg_kg",
+        "y_ph_h2o_usda_a268_index",
+        "y_s_ext_mel3_mg_kg",
+        "y_s_tot_usda_a624_w_pct",
+        "y_wr_10kpa_usda_a414_w_pct",
+        "y_wr_1500kpa_usda_a417_w_pct",
+        "y_wr_33kpa_usda_a415_w_pct",
+        "y_zn_ext_usda_a1073_mg_kg"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:37:44.702581+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +577,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "f677cdbe7e6c667bac592c9b1097ac174394d85954b78e3665c08015633f74ec",
+    "content_hash": "a3f4745d0390a544fee01e34424d1f610a1a37560db1b25f4edf861b8ca2a3a0",
     "manifest": "manifest.json",
-    "metadata_hash": "05b5615613968684e420d38dc848a5d57c91ed1096dac31430574f0faf582c6e",
-    "processing_hash": "bd68e632c4f6175d2c4c7a8b14522331c67ddc7463dc2bfcaeffc6529ff18195"
+    "metadata_hash": "1b6ad7814626bd21f5621eb73b4c3ebd387de2edcb3b7bf596aca6c37419e6a3",
+    "processing_hash": "efd44d4d2000f91cf3c9d396e9c9b2ba50ea4a2b75e4954007aa43ad488b87dc"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "NIRS DB",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -86,7 +618,9 @@
     ],
     "publications": [],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1108,42 +1642,8 @@
         },
         "mean_max": null,
         "mean_min": null,
-        "n_outliers": 0,
-        "pca": {
-          "explained_variance_ratio": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": null,
@@ -1359,7 +1859,10 @@
         "value_min": null,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [
@@ -1371,6 +1874,7 @@
       }
     }
   ],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -1740,7 +2244,7 @@
         "cv": 1.1277519454879306,
         "is_normal": false,
         "kurtosis": 12.25618507124462,
-        "normality_p": 8.995143288953612e-41,
+        "normality_p": 8.99514328895374e-41,
         "skewness": 2.8331711864899756
       },
       "stats": {
@@ -2648,7 +3152,7 @@
         "cv": 1.2248928501155874,
         "is_normal": false,
         "kurtosis": 8.063164327887412,
-        "normality_p": 1.4329928264538691e-34,
+        "normality_p": 1.43299282645389e-34,
         "skewness": 2.494694425515495
       },
       "stats": {
@@ -3810,7 +4314,7 @@
         "cv": 0.900298834222662,
         "is_normal": false,
         "kurtosis": -1.1305176212601424,
-        "normality_p": 1.3974394581946228e-21,
+        "normality_p": 1.3974394581946334e-21,
         "skewness": 0.3800465083307742
       },
       "stats": {
@@ -3890,7 +4394,7 @@
         "cv": 0.489051218590088,
         "is_normal": false,
         "kurtosis": -1.1305176212601424,
-        "normality_p": 1.3974394581946228e-21,
+        "normality_p": 1.3974394581946334e-21,
         "skewness": 0.3800465083307742
       },
       "stats": {
@@ -4110,7 +4614,7 @@
         "cv": 1.2248928501155874,
         "is_normal": false,
         "kurtosis": 8.063164327887412,
-        "normality_p": 1.4329928264538691e-34,
+        "normality_p": 1.43299282645389e-34,
         "skewness": 2.494694425515495
       },
       "stats": {
@@ -4277,11 +4781,352 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.987582176771366,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.003861003861003861,
+        "n_classes": 93,
+        "normalized_entropy": 0.9810107622436101
+      },
+      "name": "site_id",
+      "role": "metadata",
+      "stats": {
+        "n": 259,
+        "n_classes": 93,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "1.1"
+          },
+          {
+            "count": 4,
+            "name": "1.3"
+          },
+          {
+            "count": 4,
+            "name": "3.9"
+          },
+          {
+            "count": 4,
+            "name": "4.2"
+          },
+          {
+            "count": 4,
+            "name": "4.5"
+          },
+          {
+            "count": 4,
+            "name": "1.6"
+          },
+          {
+            "count": 4,
+            "name": "1.7"
+          },
+          {
+            "count": 4,
+            "name": "1.5"
+          },
+          {
+            "count": 4,
+            "name": "2.7"
+          },
+          {
+            "count": 4,
+            "name": "2.5"
+          },
+          {
+            "count": 4,
+            "name": "2.3"
+          },
+          {
+            "count": 4,
+            "name": "2.2"
+          },
+          {
+            "count": 4,
+            "name": "2.1"
+          },
+          {
+            "count": 4,
+            "name": "3.4"
+          },
+          {
+            "count": 4,
+            "name": "3.3"
+          },
+          {
+            "count": 4,
+            "name": "3.1"
+          },
+          {
+            "count": 4,
+            "name": "2.8"
+          },
+          {
+            "count": 4,
+            "name": "2.6"
+          },
+          {
+            "count": 4,
+            "name": "5.6"
+          },
+          {
+            "count": 4,
+            "name": "5.9"
+          }
+        ]
+      },
+      "type": "identifier",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          96,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          158
+        ],
+        "edges": [
+          -133.5328333,
+          -132.64416895,
+          -131.7555046,
+          -130.86684025,
+          -129.9781759,
+          -129.08951155,
+          -128.2008472,
+          -127.31218285,
+          -126.4235185,
+          -125.53485415,
+          -124.6461898,
+          -123.75752545,
+          -122.8688611,
+          -121.98019675,
+          -121.0915324,
+          -120.20286804999999,
+          -119.3142037,
+          -118.42553935,
+          -117.536875,
+          -116.64821065,
+          -115.7595463,
+          -114.87088195,
+          -113.9822176,
+          -113.09355325,
+          -112.2048889
+        ]
+      },
+      "name": "longitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.08534867610586953,
+        "is_normal": false,
+        "kurtosis": -1.7228532812848607,
+        "normality_p": 0.0,
+        "skewness": -0.5376420464934953
+      },
+      "stats": {
+        "max": -112.2048889,
+        "mean": -120.13673217451738,
+        "median": -112.3531944,
+        "min": -133.5328333,
+        "n": 259,
+        "n_missing": 0,
+        "q1": -133.4287222,
+        "q3": -112.2215,
+        "std": 10.25351104278048
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          123,
+          40,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          96
+        ],
+        "edges": [
+          59.4399722,
+          59.809850675,
+          60.17972915,
+          60.549607625,
+          60.9194861,
+          61.289364575,
+          61.65924305,
+          62.029121525,
+          62.399,
+          62.768878475,
+          63.13875695,
+          63.508635425,
+          63.8785139,
+          64.24839237500001,
+          64.61827085,
+          64.988149325,
+          65.3580278,
+          65.72790627500001,
+          66.09778475,
+          66.467663225,
+          66.8375417,
+          67.20742017500001,
+          67.57729865,
+          67.947177125,
+          68.3170556
+        ]
+      },
+      "name": "latitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.06594279960483108,
+        "is_normal": false,
+        "kurtosis": -1.7200810364067092,
+        "normality_p": 0.0,
+        "skewness": 0.5333685875466294
+      },
+      "stats": {
+        "max": 68.3170556,
+        "mean": 62.80320194401545,
+        "median": 60.0171944,
+        "min": 59.4399722,
+        "n": 259,
+        "n_missing": 0,
+        "q1": 59.5248056,
+        "q3": 68.16881945,
+        "std": 4.141418960335948
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_begin",
+      "role": "metadata",
+      "stats": {
+        "n": 259,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 259,
+            "name": "2019-07-01"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_end",
+      "role": "metadata",
+      "stats": {
+        "n": 259,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 259,
+            "name": "2019-08-31"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "location_error_m",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 30.0,
+        "mean": 30.0,
+        "median": 30.0,
+        "min": 30.0,
+        "n": 259,
+        "n_missing": 0,
+        "q1": 30.0,
+        "q3": 30.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

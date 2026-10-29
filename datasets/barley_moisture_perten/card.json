@@ -1,5 +1,6 @@
 {
   "alignment": {
+    "identity_status": "available",
     "level": "sample",
     "n_observations_total": 150,
     "n_samples": 150,
@@ -18,13 +19,207 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:50:38.165028+00:00",
+  "curation": {
+    "contract_sha256": "fb8962ce1acec867a02d5dd7a0997141976b93d4d91cc3d25f9dc20f68cb2121",
+    "dataset_id": "barley_moisture_perten",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 150,
+      "n_samples": 150,
+      "observations_per_unit": {
+        "1": 150
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "45e25ae6d6750a3b99fffc1132051fc86a0349a47b3074a52cfd0257ab6e9427",
+      "Y.csv": "f8ba72b44eea49bed57dd67ca2c0dfaf91fe6f9be71b2f30b75d1e713bf04441"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "instrument",
+        "source_columns": [
+          {
+            "name": "Spectrometer",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 12.4,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 3,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "country",
+        "source_columns": [
+          {
+            "name": "Country",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 3.3125,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 5,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "year",
+        "source_columns": [
+          {
+            "name": "Year",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 2016.0,
+          "min": 0.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 6,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "moisture",
+        "source_columns": [
+          {
+            "name": "moisture",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 25.5,
+          "min": 6.369999886,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 119,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "instrument",
+        "country",
+        "year"
+      ],
+      "Y": [
+        "moisture"
+      ],
+      "measurements": [
+        "protein"
+      ],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "spectralrep",
+        "dataset",
+        "dataset_title",
+        "dataset_slug",
+        "url",
+        "file",
+        "spectroscopy_type",
+        "trait_header",
+        "trait_header_original",
+        "task_type",
+        "raw_label",
+        "reference_value",
+        "n_points_original",
+        "dimensions",
+        "axis_note",
+        "id",
+        "reference_method_protein",
+        "reference_method_moisture",
+        "units_for_protein",
+        "units_for_moisture",
+        "reference_for_moisture",
+        "citation",
+        "autorship",
+        "sampling_notes",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "license",
+        "license_url",
+        "rights_status",
+        "usage_scope",
+        "public_release_allowed",
+        "doi_dataset",
+        "notes",
+        "m_cereal",
+        "m_variety",
+        "m_instrument_2",
+        "m_wavelength_range_nm",
+        "m_spectral_resolution_nm",
+        "m_number_of_scans_per_spectrum",
+        "m_cereal_2",
+        "m_country_2",
+        "m_year_2",
+        "m_detector_type",
+        "m_geometry",
+        "m_optical_reference_material",
+        "m_software_used_for_acquisition"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:17:58.824685+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -45,15 +240,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "d52ed2c3bffd0429adf7b92ae7cf912ad3ad9830007607c7aa163b6d8ccd4960",
+    "content_hash": "4289f80700b1e567e1477aa9460d50f21b5f373d7b03e25574fdeccd5537f109",
     "manifest": "manifest.json",
-    "metadata_hash": "d587d9d08e9a69f48bd3ee563e7b5b1d30fd4841bff6f3a3f68dc4850b78acc0",
-    "processing_hash": "910e89ac8491be3f5e98044c3bd25253af3fc307c983d64cf7de80e2b3ac38eb"
+    "metadata_hash": "4fa80c77f8b974267b05c8c7445bec2b47c6dbbcc8c1b1c16db328b0a55b45f3",
+    "processing_hash": "272b4a7767aa2c42d3a2fa7c01159cf408a3295c20fde3cb9ef6ed01580bff40"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "sensAIfood cereal NIR data (wheat, corn, barley) and reference protein and moisture (Perten set)",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -87,7 +282,8 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified."
+      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
     ]
   },
   "schema_version": "2.0",
@@ -102,8 +298,8 @@
       "n_observations": 150,
       "n_variables": 141,
       "name": "Barley Perten moisture NIR",
-      "signal_type": "absorbance",
-      "signal_type_confidence": 0.6,
+      "signal_type": null,
+      "signal_type_confidence": 0.0,
       "source_id": "X",
       "spectral": {
         "curve": {
@@ -1103,49 +1299,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9999950127081154,
-          "effective_rank": 1.56,
-          "n_components_95": 2,
-          "n_components_99": 2
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.4937964928150177,
         "mean_min": 0.146789499844114,
-        "n_outliers": 70,
-        "pca": {
-          "explained_variance_ratio": [
-            0.8502202137463664,
-            0.14580175589589367,
-            0.0026364928638374493,
-            0.0011114334761761966,
-            0.00010621159822665206,
-            6.311213766809776e-05,
-            2.7439058508913856e-05,
-            2.186229348612687e-05,
-            3.429978198598109e-06,
-            3.0616597534364188e-06,
-            1.813762043233835e-06,
-            1.110289203737044e-06,
-            5.551718466584133e-07,
-            3.558491644201112e-07,
-            3.0124971944228065e-07,
-            2.179264871944499e-07,
-            1.106123954896414e-07,
-            9.933344512791605e-08,
-            7.32800752530273e-08,
-            3.982005974549655e-08,
-            3.868528780334425e-08,
-            3.203382975075108e-08,
-            2.7569702493963587e-08,
-            2.4842514854596078e-08,
-            2.0785676521777346e-08,
-            1.6431391621723264e-08,
-            1.353973495349739e-08,
-            1.2961863085602172e-08,
-            1.1545251744952676e-08,
-            1.0520861489694646e-08
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 209.9360577907413,
@@ -2492,10 +2654,14 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -4195,10 +4361,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

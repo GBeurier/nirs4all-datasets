@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 614 sample(s), 614 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 614 sample(s), 614 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -111,7 +113,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -120,7 +122,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 50 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -141,6 +144,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `05542dfa0c3fac8237af53e45bc8d0eb582ca97b92277039627fb60c5b6ddcfa`
-- **Processing hash:** `82d472362b6b2d0cefb0b46c03538168e451d004b8b54e724aa17cb4ebaffaea` | **metadata hash:** `53ff538e6c46b59061ba63082d2f5773c8bdc602798639af92c6827b54adddc7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `33c1a96d443f1a0a3d5ff1829dee43989c47b4a845c93152e36e43e67a5ecbac`
+- **Processing hash:** `c04354af86f126b638a193e3cafac0e7ea5a2b7e3e78f1a6d52cc2da9d5bab0a` | **metadata hash:** `b4034de946c4d61e0ebb013000aa3839772d360487c22975636ea4fb1f33c9dd`

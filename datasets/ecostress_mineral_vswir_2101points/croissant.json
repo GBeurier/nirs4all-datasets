@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "mineral vswir",
-      "sha256": "c430f71aa83a77111baa2e4f583b4029de27cc97f9fd2358cb7a07fca078a29a"
+      "sha256": "361a0a9645d1f8b1d3efeef5ff1e13a6f5389daf21f045ffdcc91bce2c3294e5"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "8cec8dc479f830f35ca4973617902fa468b8ab374339942856e137758b8f154b"
+      "sha256": "1d76e6d23aa892aa0989de9145df6de58a4c806a15dd4751c9aeeabf354d3ca1"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'mineral vswir' (406 observations x 2101 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,24 +113,24 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -586,25 +601,10 @@
               "@id": "file/variables.parquet"
             }
           }
-        },
-        {
-          "@id": "variables/original_sample_id",
-          "@type": "cr:Field",
-          "dataType": "sc:Integer",
-          "description": "Variable 'original_sample_id' (role metadata, type categorical).",
-          "name": "original_sample_id",
-          "source": {
-            "extract": {
-              "column": "original_sample_id"
-            },
-            "fileObject": {
-              "@id": "file/variables.parquet"
-            }
-          }
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }
@@ -617,5 +617,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

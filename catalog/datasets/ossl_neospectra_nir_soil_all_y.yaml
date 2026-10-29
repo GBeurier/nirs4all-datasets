@@ -190,21 +190,44 @@ variables:
 - name: replaces_dataset_id
   role: metadata
   type: categorical
+- name: site_id
+  role: metadata
+  type: identifier
+- name: longitude
+  role: metadata
+  type: numeric
+- name: latitude
+  role: metadata
+  type: numeric
+- name: campaign_date_begin
+  role: metadata
+  type: datetime
+- name: campaign_date_end
+  role: metadata
+  type: datetime
+- name: location_error_m
+  role: metadata
+  type: numeric
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: OSSL_NIRS
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences
+    de cet identifiant décrivent les lignes exportées, sans établir des répétitions
+    techniques.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: OSSL_NIRS
@@ -267,6 +290,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/ossl_neospectra_nir_soil_all_y
-  source_fingerprint: 49f834b68b65b95227574c37554d1b556ac102ef94abcfd3b712ce0e57d3a506
+  generator_version: '2'
+  source_relpath: standardized_datasets/ossl_neospectra_nir_soil_all_y
+  source_fingerprint: d9e61f426eb75e2f9f0bb30fd8e20f15722ffbd48547b68b355cf54fcb4bdff6

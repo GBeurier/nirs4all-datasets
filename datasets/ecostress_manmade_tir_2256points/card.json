@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 16,
     "n_samples": 16,
     "profile_scores": {
@@ -11,20 +12,145 @@
       "reference_spread": 0.1632458436223246,
       "repeatability_risk": 0.0,
       "shape_drift": 0.39660343930479924,
-      "structure_complexity": 0.7535589285497634
+      "structure_complexity": 0.7535589285497641
     },
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:51:31.056224+00:00",
+  "curation": {
+    "contract_sha256": "6d9034157873e93424cd7b4f7b16e85f1516d4478beca93c45abd9bfb9a93994",
+    "dataset_id": "ecostress_manmade_tir_2256points",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M La cl\u00e9 est le num\u00e9ro de sp\u00e9cimen source ; pr\u00e9parations, g\u00e9om\u00e9tries et instruments peuvent diff\u00e9rer. Aucun regroupement par nom de mat\u00e9riau.",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 16,
+      "n_samples": 16,
+      "observations_per_unit": {
+        "1": 16
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "d62ee0ac74fd02f020ec41991f839a43505bba4180b4725a50c79f5d1d272cf5",
+      "Y.csv": "290bf8c74851ecece5b42051b2371139201ea5bcab633938ac2392e2cf719f9f"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "material_name",
+        "source_columns": [
+          {
+            "name": "material_name",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 15.0,
+          "n_missing": 0,
+          "n_present": 16,
+          "n_rows": 16,
+          "n_unique": 2,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [],
+      "Y": [
+        "material_name"
+      ],
+      "measurements": [
+        "type",
+        "class",
+        "subclass",
+        "owner",
+        "measurement"
+      ],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "ecostress_resource_id",
+        "file",
+        "url",
+        "sample_description",
+        "signal_type",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "n_points_original",
+        "publication_doi",
+        "citation",
+        "license",
+        "rights_status",
+        "usage_scope",
+        "notes",
+        "name",
+        "sample_no",
+        "wavelength_range",
+        "origin",
+        "description",
+        "first_column",
+        "second_column",
+        "x_units",
+        "y_units",
+        "first_x_value",
+        "last_x_value",
+        "number_of_x_values",
+        "additional_information",
+        "material_name",
+        "file_name",
+        "m_category",
+        "m_material_type",
+        "m_site",
+        "m_location",
+        "m_country",
+        "m_latitude",
+        "m_longitude",
+        "m_year",
+        "m_date",
+        "m_species",
+        "m_genus",
+        "m_family",
+        "m_instrument",
+        "m_acquisition_mode",
+        "m_particle_size",
+        "m_collection_date",
+        "m_sample_type"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:27:08.662552+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +171,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "7417a8c2ededb760315b03db72bac6c4e60fa9915b2a32d168524975a568b9d4",
+    "content_hash": "a3c748a19ac94918f14356dc3fd5b56b6aea4469459d8c6ff8b7bbdaef37588f",
     "manifest": "manifest.json",
-    "metadata_hash": "e4214e97df542d9901c0d549c0954284323cf1bf672f1b656198ce26373ebb74",
-    "processing_hash": "ee5c1faa67913cedd4b6162f85e5702d2b389fa4008660b797880341571eabb8"
+    "metadata_hash": "f19b27c8f6ca83c27e46abc273ed98350d332203a0973e4661d53ccc0fbe57a2",
+    "processing_hash": "043bef8704db342a217f66b6eb8836e6765e8fe007ed6967a03232a3462f2020"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -91,7 +217,8 @@
     ],
     "reference_method": null,
     "warnings": [
-      "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm."
+      "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M La cl\u00e9 est le num\u00e9ro de sp\u00e9cimen source ; pr\u00e9parations, g\u00e9om\u00e9tries et instruments peuvent diff\u00e9rer. Aucun regroupement par nom de mat\u00e9riau."
     ]
   },
   "schema_version": "2.0",
@@ -1107,34 +1234,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9997622728679726,
-          "effective_rank": 1.26,
-          "n_components_95": 2,
-          "n_components_99": 2
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 89.48991203308105,
         "mean_min": 84.86405038833618,
-        "n_outliers": 5,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9489131207966438,
-            0.04391194976614659,
-            0.005167745670123509,
-            0.0008397179142829978,
-            0.0004887079250106825,
-            0.00012916411061241885,
-            0.00010990876911064601,
-            7.472490193668148e-05,
-            7.215124700222817e-05,
-            5.508176710325594e-05,
-            5.447769823188341e-05,
-            5.049229249246607e-05,
-            4.7812153513164964e-05,
-            4.627804686397899e-05,
-            3.8666940925594254e-05
-          ],
-          "n_components": 15
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 1170.634523154235,
@@ -1182,11 +1290,11 @@
                   "signal": "artefacts faibles"
                 },
                 {
-                  "level": 0.7535589285497634,
+                  "level": 0.7535589285497641,
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.4056041558675554,
+                  "level": 0.4056041558675551,
                   "signal": "Mahalanobis / T2"
                 }
               ],
@@ -1203,7 +1311,7 @@
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4056041558675554,
+                  "level": 0.4056041558675551,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1224,7 +1332,7 @@
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4056041558675554,
+                  "level": 0.4056041558675551,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1287,18 +1395,18 @@
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.7535589285497634,
+                  "level": 0.7535589285497641,
                   "signal": "Structure PCA"
                 },
                 {
-                  "level": 0.4056041558675554,
+                  "level": 0.4056041558675551,
                   "signal": "Mahalanobis / T2"
                 }
               ],
               "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.40825761937322647,
+              "score": 0.4082576193732265,
               "strength": "faible"
             },
             {
@@ -1308,7 +1416,7 @@
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.4056041558675554,
+                  "level": 0.4056041558675551,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1319,7 +1427,7 @@
               "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
               "key": "partial_coverage",
               "label": "M\u00e9lange feuille + fond",
-              "score": 0.4027206855252297,
+              "score": 0.40272068552522966,
               "strength": "faible"
             }
           ],
@@ -1340,18 +1448,18 @@
             "worst_band_index": 1531
           },
           "outliers": {
-            "hotelling_t2_max": 6.206870458859593,
-            "hotelling_t2_median": 1.6203234621808407,
-            "hotelling_t2_p95": 4.324747579184553,
-            "hotelling_t2_ratio": 2.669064344327736,
-            "mahalanobis_h_max": 2.4913591589450914,
-            "mahalanobis_h_median": 1.2727812247603656,
-            "mahalanobis_h_p95": 2.0649814170920053,
-            "mahalanobis_h_ratio": 1.6224166234702215,
-            "pca_q_max": 569.7708554945722,
-            "pca_q_median": 34.80588982550185,
-            "pca_q_p95": 295.6900780538969,
-            "pca_q_ratio": 8.49540349453294
+            "hotelling_t2_max": 6.2068704588596,
+            "hotelling_t2_median": 1.620323462180846,
+            "hotelling_t2_p95": 4.32474757918456,
+            "hotelling_t2_ratio": 2.6690643443277318,
+            "mahalanobis_h_max": 2.4913591589450927,
+            "mahalanobis_h_median": 1.2727812247603678,
+            "mahalanobis_h_p95": 2.0649814170920076,
+            "mahalanobis_h_ratio": 1.6224166234702204,
+            "pca_q_max": 569.7708554945668,
+            "pca_q_median": 34.80588982550277,
+            "pca_q_p95": 295.69007805389646,
+            "pca_q_ratio": 8.495403494532702
           },
           "profile_scores": {
             "integrity_risk": 0.0,
@@ -1361,7 +1469,7 @@
             "reference_spread": 0.1632458436223246,
             "repeatability_risk": 0.0,
             "shape_drift": 0.39660343930479924,
-            "structure_complexity": 0.7535589285497634
+            "structure_complexity": 0.7535589285497641
           },
           "reference": {
             "affine_gain_median": 1.2453669876367686,
@@ -1386,16 +1494,16 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": -2.532355953624516,
+            "baseline_slope": -2.5323559536245632,
             "curvature_rms": 0.11887708702903832,
             "d1_rms": 0.09407046355761958,
             "edge_noise_ratio": 1.1898103179143977
           },
           "structure": {
-            "density_cv": 0.55527159635812,
+            "density_cv": 0.5552715963581211,
             "isolation_forest_score_p95": 0.5978381671309219,
-            "local_outlier_factor_p95": 2.26067678564929,
-            "pca_score_density": 0.016224418405097165
+            "local_outlier_factor_p95": 2.2606767856492924,
+            "pca_score_density": 0.01622441840509711
           }
         },
         "quality": {
@@ -1406,73 +1514,73 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.9489131207966438,
-            0.04391194976614659
+            0.9489131207966444,
+            0.043911949766146326
           ],
           "points": [
             {
-              "x": -126.53937719755831,
-              "y": 25.55906412092918
+              "x": -126.53937719755774,
+              "y": 25.559064120928994
             },
             {
-              "x": 87.77694295215844,
-              "y": -39.05596873671654
+              "x": 87.77694295215872,
+              "y": -39.055968736716586
             },
             {
-              "x": -12.891325620585066,
-              "y": -24.2908575593497
+              "x": -12.891325620585093,
+              "y": -24.290857559349686
             },
             {
-              "x": -142.481810822465,
-              "y": -19.38394104511574
+              "x": -142.48181082246552,
+              "y": -19.383941045115744
             },
             {
-              "x": -42.49975311603231,
-              "y": -23.28750390721816
+              "x": -42.49975311603247,
+              "y": -23.287503907218206
             },
             {
-              "x": -119.7824294328418,
-              "y": -20.37791582885535
+              "x": -119.78242943284236,
+              "y": -20.377915828855276
             },
             {
-              "x": 103.40851472352519,
-              "y": 10.05609285343516
+              "x": 103.40851472352573,
+              "y": 10.056092853435144
             },
             {
-              "x": 252.22241562342603,
-              "y": 14.673590704812392
+              "x": 252.2224156234271,
+              "y": 14.673590704812312
             },
             {
-              "x": -41.620823802693565,
-              "y": 26.83788048811153
+              "x": -41.62082380269376,
+              "y": 26.837880488111576
             },
             {
-              "x": -72.30792741012216,
-              "y": 24.638612344333104
+              "x": -72.30792741012245,
+              "y": 24.638612344333158
             },
             {
-              "x": -36.95065704209254,
-              "y": 21.449893825246807
+              "x": -36.950657042092715,
+              "y": 21.449893825246853
             },
             {
-              "x": 138.75512412841164,
-              "y": 2.3837678766778807
+              "x": 138.75512412841226,
+              "y": 2.38376787667781
             },
             {
-              "x": -4.669214897367997,
-              "y": 12.302548362891104
+              "x": -4.669214897368027,
+              "y": 12.302548362891105
             },
             {
-              "x": -35.97476061976238,
-              "y": 14.80611091319547
+              "x": -35.97476061976255,
+              "y": 14.806110913195512
             },
             {
-              "x": 28.665488884354755,
-              "y": 5.6399804080526215
+              "x": 28.665488884354904,
+              "y": 5.639980408052607
             },
             {
-              "x": 24.889593649644983,
-              "y": -31.95135482042976
+              "x": 24.889593649645093,
+              "y": -31.951354820429778
             }
           ]
         },
@@ -1488,10 +1596,14 @@
         "value_min": 77.693603515625,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -1749,13 +1861,25 @@
     },
     {
       "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
       "name": "date",
       "role": "metadata",
       "stats": {
         "n": 16,
-        "n_classes": 0,
-        "n_missing": 16,
-        "top_classes": []
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 16,
+            "name": "N/A"
+          }
+        ]
       },
       "type": "categorical",
       "unit": null
@@ -2211,8 +2335,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

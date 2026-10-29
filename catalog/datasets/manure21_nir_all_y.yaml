@@ -59,20 +59,23 @@ ids:
   observation_id: observation_id
   sample_id: sample_id
   sample_id_available: true
-alignment_level: observation
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
   applied: false
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: NIRS DB MANURE21
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: NIRS DB MANURE21
@@ -93,6 +96,12 @@ origin_sources:
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: local_private_raw_only
   license_status: not_cleared
@@ -106,6 +115,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/manure21_nir_all_y
-  source_fingerprint: cb714e13ae21ae29e3d41f9d77a1263fcf439a378db39c5867c8b4b80979e823
+  generator_version: '2'
+  source_relpath: standardized_datasets/manure21_nir_all_y
+  source_fingerprint: a4fb9337507bff8128f7e05bc6a899429f2b25cb2455d5c60567659d5a9a6f35

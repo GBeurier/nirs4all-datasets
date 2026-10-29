@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 190 sample(s), 190 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 190 sample(s), 190 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -74,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -83,7 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 2 fields, Y: 12 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `cbe82efc824505e8b4c07c0fbf6d54753ec40f3b60ceeaabfd255229ef82b76f`
-- **Processing hash:** `6b4ca4d229c51234a543ad8d44c5140ba488a8ea63f3fc491497ea53ab26b583` | **metadata hash:** `e297cd8532d78e298cd7d5372073660bbd8699e3cee5d470867a5caa465a8aa0`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `c53c1ff44bbffc00304db53cee5cb0ef10af307bad824c7012c3fbc5e9a255a3`
+- **Processing hash:** `966be2257b37b70d6ce09dd02d4a11c68f95df02b345bea81c5c11afd5bb19b1` | **metadata hash:** `461b26e3c60cad0d3a69fe56719bde04e516bf9e713bc306d7ed41fcdf41845d`

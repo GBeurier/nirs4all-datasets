@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "granules NIR spectra",
-      "sha256": "f6cc880c8fb9aeb1a697b0bb1c5453f0c97166739836084d22b6a487c720b8ef"
+      "sha256": "9a37fd88255a405cee6075969554678f1aa212c893de4d4b0b95082318ed384f"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "cabff453dbae2bf2b9979b957cfd55b5100be96f38b3e4afc47952a24d99b1e1"
+      "sha256": "514bd4f5f241dec27745a4f71973cd8a70bd6f31b4d3136c67f23ce09dd5e14a"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'granules NIR spectra' (648 observations x 1899 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,24 +113,24 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -126,7 +141,7 @@
           "@id": "variables/api_reference_percent_w_w",
           "@type": "cr:Field",
           "dataType": "sc:Float",
-          "description": "Variable 'api_reference_percent_w_w' (role target, type numeric).",
+          "description": "Variable 'api_reference_percent_w_w' (role target, type numeric, unit % w/w).",
           "name": "api_reference_percent_w_w",
           "source": {
             "extract": {
@@ -454,7 +469,7 @@
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }
@@ -465,5 +480,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

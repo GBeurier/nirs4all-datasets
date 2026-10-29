@@ -45,21 +45,21 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "X_AvaSpec_NIR256_2_5_HSC",
-      "sha256": "7dec9c3dfe9f5e6148b54352f6e7b862df8338b0dd3ddd43ab17efe1f4370b02"
+      "sha256": "4be3800292e4efc708e0a039c4d4b27dc391f826aa621de408db2200aa60dc6c"
     },
     {
       "@id": "file/X_AvaSpec_ULS2048L_USB2.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "X_AvaSpec_ULS2048L_USB2",
-      "sha256": "9ab3fc76152384f3466209fabd27b3f05aaf67212fa81035e2951ee4f45cfddb"
+      "sha256": "8bcdcfdab522d859f9875e75c90f7d943d6a026cd4cf679913632af553e42bba"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "224351ce15191a197a3bad53ad66b2dd0a198f2695488d16deb2c4d89dedf6ff"
+      "sha256": "f8e6edd12a62cc2f15f4f7226d98f4323047563e02073fd22e7ed271c68d0fcd"
     }
   ],
   "keywords": [
@@ -76,10 +76,25 @@
       "description": "Spectra from source 'X_AvaSpec_NIR256_2_5_HSC' (250 observations x 243 wavelengths).",
       "field": [
         {
+          "@id": "X_AvaSpec_NIR256_2_5_HSC/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_AvaSpec_NIR256_2_5_HSC.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_AvaSpec_NIR256_2_5_HSC/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -105,7 +120,7 @@
         }
       ],
       "key": {
-        "@id": "X_AvaSpec_NIR256_2_5_HSC/sample_id"
+        "@id": "X_AvaSpec_NIR256_2_5_HSC/observation_id"
       },
       "name": "X_AvaSpec_NIR256_2_5_HSC"
     },
@@ -115,10 +130,25 @@
       "description": "Spectra from source 'X_AvaSpec_ULS2048L_USB2' (250 observations x 1343 wavelengths).",
       "field": [
         {
+          "@id": "X_AvaSpec_ULS2048L_USB2/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_AvaSpec_ULS2048L_USB2.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_AvaSpec_ULS2048L_USB2/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -144,24 +174,24 @@
         }
       ],
       "key": {
-        "@id": "X_AvaSpec_ULS2048L_USB2/sample_id"
+        "@id": "X_AvaSpec_ULS2048L_USB2/observation_id"
       },
       "name": "X_AvaSpec_ULS2048L_USB2"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -710,7 +740,7 @@
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }
@@ -720,5 +750,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

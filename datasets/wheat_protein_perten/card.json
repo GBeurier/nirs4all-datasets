@@ -1,5 +1,6 @@
 {
   "alignment": {
+    "identity_status": "available",
     "level": "sample",
     "n_observations_total": 150,
     "n_samples": 150,
@@ -18,13 +19,229 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:42.824080+00:00",
+  "curation": {
+    "contract_sha256": "6d192486c6824fe122db13918d65ea84ec752edee9baf0456bbf8ef3a9320dba",
+    "dataset_id": "wheat_protein_perten",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 150,
+      "n_samples": 150,
+      "observations_per_unit": {
+        "1": 150
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "691f895316b41334d70f59c462f0c6b062f60f645e137c498c686b67d067fa59",
+      "Y.csv": "5fe1646b0acf7e1a3d912c3e88dbd2b0e3ca54dc87a850c76e910d13c852a52c"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "instrument",
+        "source_columns": [
+          {
+            "name": "Spectrometer",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 141.0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 3,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "variety",
+        "source_columns": [
+          {
+            "name": "Variety",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 4.5,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 3,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "country",
+        "source_columns": [
+          {
+            "name": "Country",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 57.0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 7,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "year",
+        "source_columns": [
+          {
+            "name": "Year",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 2014.0,
+          "min": 2002.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 6,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "protein",
+        "source_columns": [
+          {
+            "name": "protein",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 20.29117012,
+          "min": 8.420000076,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 150,
+          "n_rows": 150,
+          "n_unique": 128,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "instrument",
+        "variety",
+        "country",
+        "year"
+      ],
+      "Y": [
+        "protein"
+      ],
+      "measurements": [
+        "moisture"
+      ],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "spectralrep",
+        "dataset",
+        "dataset_title",
+        "dataset_slug",
+        "url",
+        "file",
+        "spectroscopy_type",
+        "trait_header",
+        "trait_header_original",
+        "task_type",
+        "raw_label",
+        "reference_value",
+        "n_points_original",
+        "dimensions",
+        "axis_note",
+        "id",
+        "reference_method_protein",
+        "reference_method_moisture",
+        "units_for_protein",
+        "units_for_moisture",
+        "reference_for_moisture",
+        "citation",
+        "autorship",
+        "sampling_notes",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "license",
+        "license_url",
+        "rights_status",
+        "usage_scope",
+        "public_release_allowed",
+        "doi_dataset",
+        "notes",
+        "m_cereal",
+        "m_instrument_2",
+        "m_wavelength_range_nm",
+        "m_spectral_resolution_nm",
+        "m_number_of_scans_per_spectrum",
+        "m_cereal_2",
+        "m_variety_2",
+        "m_country_2",
+        "m_year_2",
+        "m_detector_type",
+        "m_geometry",
+        "m_optical_reference_material",
+        "m_software_used_for_acquisition"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:39:22.085148+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -45,15 +262,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "4ec5a9ac4820859e14af7c9dd756abc2f54234d6fd793566a4d56972a4205868",
+    "content_hash": "638aa55c77e7860778f590ab3b772967db974085cb9509ebec6d553c7abbc638",
     "manifest": "manifest.json",
-    "metadata_hash": "79efa483ed9ba63b3ff83433fd34a582513b386229e38ab5e455b1a051d831a0",
-    "processing_hash": "db226fe1aad0f4672c49c3c14943f282356d47a8cdf20e3a3e1c5f1bf062f497"
+    "metadata_hash": "49f9d7817555b1a0aa8b5113fcb5ff88b9e00c8bbd5d800f836772ac26dba672",
+    "processing_hash": "84906bc87df8d0bb1ed0c1509285d6334b8482761776cd1e0d79e1cc2d608aa3"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "sensAIfood cereal NIR data (wheat, corn, barley) and reference protein and moisture (Perten set)",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -87,7 +304,8 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified."
+      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
     ]
   },
   "schema_version": "2.0",
@@ -102,8 +320,8 @@
       "n_observations": 150,
       "n_variables": 141,
       "name": "Wheat Perten protein NIR",
-      "signal_type": "absorbance",
-      "signal_type_confidence": 0.6,
+      "signal_type": null,
+      "signal_type_confidence": 0.0,
       "source_id": "X",
       "spectral": {
         "curve": {
@@ -1103,49 +1321,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9999904027516482,
-          "effective_rank": 1.26,
-          "n_components_95": 2,
-          "n_components_99": 2
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.7492234802246094,
         "mean_min": 0.18367740328113238,
-        "n_outliers": 66,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9456543654557993,
-            0.04898144140205814,
-            0.0032757761609730194,
-            0.0016348104797254714,
-            0.00024126671744394482,
-            9.564498152696585e-05,
-            8.183753976434903e-05,
-            1.3023099601666208e-05,
-            7.767958468154965e-06,
-            4.468956287228432e-06,
-            3.372330281842759e-06,
-            2.6330336683806144e-06,
-            1.6899780071571306e-06,
-            5.066630567444805e-07,
-            3.6741258032967694e-07,
-            1.972120602417146e-07,
-            1.0688056394705663e-07,
-            1.0135471039032045e-07,
-            7.947864971483414e-08,
-            6.907804435858585e-08,
-            4.94285539231937e-08,
-            4.506002552962353e-08,
-            3.0755614225964154e-08,
-            2.52557488390089e-08,
-            2.179991341067237e-08,
-            2.1069837000052133e-08,
-            1.6727785018694874e-08,
-            1.6426724317187842e-08,
-            1.603305546278892e-08,
-            1.3814229083781927e-08
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 307.89991219018896,
@@ -2492,10 +2676,14 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -4211,10 +4399,13 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

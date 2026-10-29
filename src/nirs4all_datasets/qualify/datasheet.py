@@ -144,7 +144,7 @@ def render_datasheet(card: dict[str, Any], descriptor: DatasetDescriptor) -> str
 
     reps_text = (
         f"{_fmt(reps.get('min'))}–{_fmt(reps.get('max'))} (mean {_fmt(reps.get('mean'))})"
-        if reps else "1 (one observation per sample)"
+        if reps else "ND (identity/repetition information unavailable)"
     )
 
     lines = [
@@ -164,7 +164,9 @@ def render_datasheet(card: dict[str, Any], descriptor: DatasetDescriptor) -> str
         f"- **Alignment:** {_na(alignment.get('level'))} level; "
         f"{_na(alignment.get('n_samples'))} sample(s), {_na(alignment.get('n_observations_total'))} observation(s) total; "
         f"sample_id available: {_na(alignment.get('sample_id_available'))}.",
-        f"- **Repetitions per sample:** {reps_text}.",
+        f"- **Exported observations per source unit:** {reps_text}.",
+        f"- **Documented technical repetitions:** {_na(alignment.get('technical_repetitions'))}.",
+        f"- **Variable grain / join key:** {_na(card.get('variable_join_key') or 'sample_id')}.",
         "",
         "### Sources (X)",
         "",
@@ -196,6 +198,7 @@ def render_datasheet(card: dict[str, Any], descriptor: DatasetDescriptor) -> str
         "## Preprocessing / cleaning / labeling",
         "",
         f"- **Conversion warnings:** {_na('; '.join(provenance.get('warnings') or []) or None)}",
+        f"- **Curated views:** {_na(', '.join(f'{key}: {len(value)} fields' for key, value in ((card.get('curation') or {}).get('views') or {}).items()) or None)}. Original variables and the versioned mapping are retained separately.",
         "",
         "## Uses",
         "",

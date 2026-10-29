@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 200 sample(s), 200 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 200 sample(s), 200 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -28,8 +30,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latin.genus | target | categorical | *Not specified.* | n=200, missing=0, classes=59, top Acer (×30) |
 | latin.species | target | categorical | *Not specified.* | n=200, missing=0, classes=82, top americana (×9) |
 | growth.form | target | categorical | *Not specified.* | n=200, missing=0, classes=4, top tree (×107) |
-| family | target | categorical | *Not specified.* | n=200, missing=3, classes=37, top Sapindaceae (×30) |
-| genus | target | categorical | *Not specified.* | n=200, missing=3, classes=57, top Acer (×30) |
+| family | target | categorical | *Not specified.* | n=200, missing=0, classes=38, top Sapindaceae (×30) |
+| genus | target | categorical | *Not specified.* | n=200, missing=0, classes=58, top Acer (×30) |
 | SLA | target | numeric | *Not specified.* | n=200, missing=0, range 9.425–46.95, mean 19.68 ± 7.375 |
 | LMA | target | numeric | *Not specified.* | n=200, missing=0, range 0.0213–0.1061, mean 0.05733 ± 0.01897 |
 | LDMC | target | numeric | *Not specified.* | n=200, missing=0, range 125.2–496.2, mean 328.8 ± 81.29 |
@@ -89,7 +91,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -98,7 +100,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 5 fields, Y: 31 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,6 +125,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `1614b78778e138e06b0c2bd27503df8487cff956b7c28b08bcf3523fcc03522c`
-- **Processing hash:** `c42f55af2507033e6612b62e8cec138e60e92da570b1e254aaa8c57815bccfeb` | **metadata hash:** `123462f0258618a635f1bdee9004cc6f9192b9a4544b72f050dbc6868bbbed91`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e9e648f741ca2bc5679d42f0aaabb06ebe584a09895c4d465f296a7fafe5d515`
+- **Processing hash:** `6c918b05712d90a66aa2f11078f0168ea8edbf36b176486344ad092dec92fba8` | **metadata hash:** `dc7d291a1a1cb228bff425a63507de58bb62e96f17b3d70581059fdae6f8d877`

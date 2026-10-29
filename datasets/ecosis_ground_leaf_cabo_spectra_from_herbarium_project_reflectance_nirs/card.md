@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 607 sample(s), 607 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 607 sample(s), 607 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -92,7 +94,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -101,7 +103,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 31 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,6 +125,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `1dbc4707101a45e4b4c57c75811f245b8798c756e886715c5b15c86afa4b06c3`
-- **Processing hash:** `7f9ac961f3e1354e502b79f6a663a4bbc96a768ba9f92e58d40911ab8c7dd2f7` | **metadata hash:** `46d12e29517b35f29b49dc1c6ed9df9982cf944dcd70872686ddc0e5787d2315`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `a7cdc372c369aebc7ae5240174166319bbef1fdebe46b54d0db941e0b7867cae`
+- **Processing hash:** `fc25b9faf31ef10883c49be702bebd544611237e985cbfdc7a0424415bfbf743` | **metadata hash:** `4b9804d852c1b35b6a6c28c520d12015c7e77556c0086aee2cedd910fe121a73`

@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "Flanagan Raman solvent reagent classification",
-      "sha256": "f59cb69a7a28b24b23137eef855912b57e26c8d3f763a810c8c2a6437554c091"
+      "sha256": "6391fa6d7879ff691ede8e9cbed3cf109adea7928855df944d14cc28476a6e6d"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "ded0b1f83e3c928f40578a86bb9a378670a029adfbda893da78adf9fb3850c81"
+      "sha256": "abd69e5a45b6399a89c569c699144c20e5f4e3a9e64c92c6d9282c61d6e265d1"
     }
   ],
   "keywords": [
@@ -69,10 +69,25 @@
       "description": "Spectra from source 'Flanagan Raman solvent reagent classification' (3510 observations x 3276 wavelengths).",
       "field": [
         {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
+        {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,24 +113,24 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -709,7 +724,7 @@
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }
@@ -722,5 +737,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
