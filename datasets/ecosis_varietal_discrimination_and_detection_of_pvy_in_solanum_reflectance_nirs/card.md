@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 761 sample(s), 761 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 761 sample(s), 761 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -24,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| row_id | target | categorical | *Not specified.* | n=761, missing=0, classes=226, top 253 (×13) |
+| row_id | target | categorical | *Not specified.* | n=761, missing=0, classes=226, top 388 (×13) |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=761, missing=0, classes=1, top 1d5f5b6f-9d0e-4719-a655-587f681bcc18 (×761) |
 | site | metadata | categorical | *Not specified.* | n=761, missing=761, classes=0, — |
 | location | metadata | categorical | *Not specified.* | n=761, missing=761, classes=0, — |
@@ -62,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -71,7 +73,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M Champs d’index examinés : source_rep. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 4 fields, Y: 0 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,6 +94,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `09705aaee3c99e21fd271e1e2c90869680442df21961aa834657f7988e7d3571`
-- **Processing hash:** `0554fb99354f607133724228ba4409389170d5ad8859057e04978ad4e10d09b9` | **metadata hash:** `0516a01dcc099e794d9bcb148d5bae04b4cae0f3f001fdf8f456bd66280a2916`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `2942a729560142d914738ccb5e01401f79c55c8852f4238077d6d0457914bc82`
+- **Processing hash:** `11216a6e8ea6ace5452c24eea0ef0750f97009c505863715693fe9006776b2e7` | **metadata hash:** `deaff4021df0c5854677089e7028e92bb41a88c53b7de9c900eaba233efd637e`

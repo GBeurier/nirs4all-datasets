@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 2718 sample(s), 2718 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1229 sample(s), 2718 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 2–3 (mean 2.212).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -24,11 +26,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| manual_download | metadata | categorical | *Not specified.* | n=2718, missing=0, classes=1, top True (×2718) |
-| manual_download_source_dir | metadata | categorical | *Not specified.* | n=2718, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\herbarium (×2718) |
-| manual_download_file | metadata | categorical | *Not specified.* | n=2718, missing=0, classes=1, top doi_10_5061_dryad_z34tmpgpw__v20241216.zip::Kuehn_et_al._Resurvey_-_JEcol_Open_Data.zip::*dpt (×2718) |
-| official_source_url | metadata | categorical | *Not specified.* | n=2718, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.z34tmpgpw (×2718) |
-| standardization_batch | metadata | categorical | *Not specified.* | n=2718, missing=0, classes=1, top v0.8.60 (×2718) |
+| manual_download | metadata | categorical | *Not specified.* | n=1229, missing=0, classes=1, top True (×1229) |
+| manual_download_source_dir | metadata | categorical | *Not specified.* | n=1229, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\herbarium (×1229) |
+| manual_download_file | metadata | categorical | *Not specified.* | n=1229, missing=0, classes=1, top doi_10_5061_dryad_z34tmpgpw__v20241216.zip::Kuehn_et_al._Resurvey_-_JEcol_Open_Data.zip::*dpt (×1229) |
+| official_source_url | metadata | categorical | *Not specified.* | n=1229, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.z34tmpgpw (×1229) |
+| standardization_batch | metadata | categorical | *Not specified.* | n=1229, missing=0, classes=1, top v0.8.60 (×1229) |
 
 ## Statistics — splits
 
@@ -39,7 +41,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -48,7 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: 1229 identifiants source et 1229 vecteurs spectraux distincts pour 2718 lignes : chaque spectre est copié dans 2–3 dossiers calibration/prédiction. Les 1489 lignes supplémentaires ne prouvent aucune répétition d’acquisition.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -68,6 +71,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `6dec520c520ac572f1d00d30cc42237c8520136ca548d97008ddddd3aea2f413`
-- **Processing hash:** `b0c9ae943c16e92e3abc492a3f38237e27a68aed80f01301647d45b6eac595cd` | **metadata hash:** `4ada1c053f865cb1e6b5103a895a193183568b4d91b5424bdb61413ac319930e`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `67813c88bcbc4611f39cfa50697bd1f2263a266e7ac6fba94052abdcab7130ab`
+- **Processing hash:** `b9700900997687889de09c317fc59420c0a4166c6e0e92e0f22f57786bebf31f` | **metadata hash:** `5bf3fa69ecad1caead0b281dfd3b8baf8f6b5f650f995069f91f18564971e28f`

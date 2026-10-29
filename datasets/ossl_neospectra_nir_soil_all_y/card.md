@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 8151 sample(s), 8151 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 2106 sample(s), 8151 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–19 (mean 3.87).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -47,7 +49,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | p_ext_usda_a1070_mg_kg | target | numeric | *Not specified.* | n=8151, missing=7889, range 0.3618–256.4, mean 25.99 ± 31.44 |
 | k_ext_usda_a1065_mg_kg | target | numeric | *Not specified.* | n=8151, missing=7889, range 0–730.2, mean 167 ± 117.1 |
 | ec_usda_a364_ds_m | target | numeric | *Not specified.* | n=8151, missing=4378, range 0.012–81.93, mean 1.423 ± 6.264 |
-| ID_sample | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=2106, top 67922 (×19) |
+| ID_sample | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=2106, top 122183 (×19) |
 | SpectralRep | metadata | numeric | *Not specified.* | n=8151, missing=0, range 1–19, mean 2.941 ± 1.963 |
 | dataset | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top Neospectra database v1.2 (×8151) |
 | collection_name | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top neospectra_nir (×8151) |
@@ -80,17 +82,23 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | wavelength_note | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top neospectra_nir_1350_2550_nm_step_2 (×8151) |
 | active_status | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top active (×8151) |
 | replaces_dataset_id | metadata | categorical | *Not specified.* | n=8151, missing=0, classes=1, top ossl_regression_b031e1af \| ossl_soil_ph_h2o_usda_a268_index_neospectra_nirs_ossl (×8151) |
+| site_id | metadata | identifier | *Not specified.* | *Not specified.* |
+| longitude | metadata | numeric | *Not specified.* | n=8151, missing=8151, range —, mean *Not specified.* ± *Not specified.* |
+| latitude | metadata | numeric | *Not specified.* | n=8151, missing=8151, range —, mean *Not specified.* ± *Not specified.* |
+| campaign_date_begin | metadata | datetime | *Not specified.* | *Not specified.* |
+| campaign_date_end | metadata | datetime | *Not specified.* | *Not specified.* |
+| location_error_m | metadata | numeric | *Not specified.* | n=8151, missing=8151, range —, mean *Not specified.* ± *Not specified.* |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): all: 8151
+- **original** (documented, not applied): all: 2106
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -101,7 +109,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 9 fields, Y: 23 fields, measurements: 1 fields, passport: 39 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,6 +130,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0c53261dbdbd0bfb8477bd7278d7e58fc7df7ad046834d0257016874398db5b8`
-- **Processing hash:** `8c86b608e46fa2dd770ca0a316a56569c803166018c1774c8d02ad6bc15e3da6` | **metadata hash:** `3bffe97b182a8ed6ee584d62df985c47bab28d1ef3931cbacb6a835562b6c3f7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `a826bb4ebd0dfb2bded7a794778a4611d5c83499387a0da5cbcb74b9d2bce1be`
+- **Processing hash:** `c7c36882c0204e3a135b1ea2a3f3833206b78b20dccb2a5193dbfa58fd4f8404` | **metadata hash:** `6b70f0d1e72e7153fe644e592ac4ad753ea89bd38d4e0186bcea53e7ff43e059`

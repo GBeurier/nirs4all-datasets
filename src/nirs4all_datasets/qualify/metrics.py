@@ -707,15 +707,20 @@ def repeatability_metrics(x: object, sample_ids: Iterable[object] | None = None)
     labels = np.asarray([str(s) for s in sample_ids], dtype=object)
     if labels.size != arr.shape[0]:
         return {**_nulls(_REPEATABILITY_KEYS), "n_repeat_groups": 0}
+    # Build memberships once. Re-scanning all labels for every unique soil ID
+    # is quadratic and cannot reveal any repeatability in singleton groups.
+    memberships: dict[str, list[int]] = {}
+    for index, label in enumerate(labels):
+        memberships.setdefault(str(label), []).append(index)
+    repeated = [np.asarray(indices) for indices in memberships.values() if len(indices) > 1]
+    if not repeated:
+        return {**_nulls(_REPEATABILITY_KEYS), "n_repeat_groups": 0}
     filled, _report = impute_columns(arr)
     rms_all: list[float] = []
     sam_all: list[float] = []
     cv_all: list[float] = []
     groups = 0
-    for label in sorted(set(labels.tolist())):
-        idx = np.where(labels == label)[0]
-        if idx.size < 2:
-            continue
+    for idx in repeated:
         groups += 1
         block = filled[idx]
         centroid = block.mean(axis=0)

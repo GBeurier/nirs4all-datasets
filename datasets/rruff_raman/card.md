@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 85 sample(s), 85 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 12 sample(s), 85 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 3–9 (mean 7.083).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -54,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -65,7 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Le RRUFFID identifie le spécimen ; le suffixe de sample_name distingue des configurations. En Raman : 12 spécimens, 30 libellés/configurations et 85 acquisitions avec orientations variées. Ne pas transformer ces orientations en répétitions techniques identiques.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `75da4bed1d8b4d22d8e5df5e544f30cd4770203d59f0994f0520c27e8ef55f70`
-- **Processing hash:** `b250dda2f76a01fdcce2022598877e9218430226dde814487d418421584c23f1` | **metadata hash:** `c48ec33bf905d495b615a2ec863845c35937cb1bd679b183bbf595d8647e81ac`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `fca1c66c300ed137e7d3b12e281a2defbb24179dea61c4dc01a2b0d04d352892`
+- **Processing hash:** `1179462b7342e924a5e83f6198436ab36ccec8fe2520bfc0b15cb5ec2e9e9382` | **metadata hash:** `8df3df737f8ba6abecb1d8e1d8e25d6eefacbd28c51249da9e82b2f9e0c9ded1`

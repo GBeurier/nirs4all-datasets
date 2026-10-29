@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 57 sample(s), 57 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 55 sample(s), 57 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.036).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=57, missing=0, classes=57, top ALH 84007 (×1) |
 | class_label | target | categorical | *Not specified.* | n=57, missing=0, classes=6, top Ordinary Chondrite (×19) |
-| subclass | target | categorical | *Not specified.* | n=57, missing=2, classes=21, top CM2 (×5) |
+| subclass | target | categorical | *Not specified.* | n=57, missing=0, classes=22, top CO (×5) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=57, missing=0, classes=57, top meteorites.achondrite.aubrite.fine.tir.alh84007.jhu.becknic.spectrum (×1) |
 | category | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top meteorites (×57) |
 | material_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Meteorites (×57) |
@@ -36,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top N/A (×57) |
 | species | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=57, missing=57, classes=0, — |
@@ -54,7 +56,6 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top manual_review_needed (×57) |
 | usage_scope | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top private_use_only (×57) |
 | notes | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top none (×57) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=57, missing=0, classes=55, top ALHA77256 (×2) |
 
 ## Statistics — splits
 
@@ -65,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, material_name, class_label, subclass. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `6bc622b369fbde9539299ed485eddb0df6a83c0917c41505a4c138e65cee99be`
-- **Processing hash:** `8b91473a7d203182754a38b1c08528eb5b005e59d6b5dbd580e1ec3bc243b615` | **metadata hash:** `118cb0e55035e1fd5beef06d58e2a133fd2c3abe8925f0924f2a33bdfb1ffbc8`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `c634a6652e821ddd2e78376ecee9c52084afc5a2a87771b21b7654a5d067cff0`
+- **Processing hash:** `06c9246a8be3c5a909cb9c7d11a42107c0562f1adaa4bab1fc8fe74a5d0485b5` | **metadata hash:** `30ebc5a6ed0e49ce095d61b3a48b58978282d0ed9af577878a9e0d3f3c9415ab`

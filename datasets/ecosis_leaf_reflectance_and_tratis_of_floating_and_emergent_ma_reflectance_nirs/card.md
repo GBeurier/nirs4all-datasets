@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 325 sample(s), 325 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 325 sample(s), 325 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -74,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -83,7 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 13 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,6 +108,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `fced3748e84239378839c56ddd5646c8562b82a62cd1897eef42303e53c164a4`
-- **Processing hash:** `2b63d3bc0d18d9318e26e436dff98c50c08e08bb433e4d95c5f1240b5ebcc13d` | **metadata hash:** `c4fd0395886d6132098193588f3b9245263622b065046cdada11912416c67f8d`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `9d3464d2857417370ec3d399c4ae51eff0a15e1948e10cb58684df0da28d0392`
+- **Processing hash:** `31796deff7a5d08aa67ea17ed3a435afcf0e28869def5de8d62f10cb11df4ea3` | **metadata hash:** `c453d46dbeea3e6f453e3d8df546e9b6cd3621649ce271f2dc80abd472d05b48`

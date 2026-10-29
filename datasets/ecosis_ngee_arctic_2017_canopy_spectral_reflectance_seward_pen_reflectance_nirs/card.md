@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 511 sample(s), 511 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 511 sample(s), 511 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -63,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -72,7 +74,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 6 fields, Y: 1 fields, measurements: 1 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,6 +95,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `4a2218d723fb8ff2134c50eaa8014e7ec51e22428b91687bd729ef1802117e87`
-- **Processing hash:** `5b7391a03d8af4f91583bfafc3cd89c93b8ba69c81ae2fd7e61f759f445d0a4f` | **metadata hash:** `c87de0bd3ecd666526232b7f127e71f03b90b387bef7d084054c6679af5418ff`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e2e9b15f9d7a5849e94027f52b731733906e5076a5de2db057da372018dd2a27`
+- **Processing hash:** `630d35a8e6050e93588edf0200f86899af53e201ab3ecae1c96a9ce339b5dbe3` | **metadata hash:** `4bf734bf63b0557c3ef682b6b0a0ec044c6445ebef0335ac4235523c5f2e0f18`

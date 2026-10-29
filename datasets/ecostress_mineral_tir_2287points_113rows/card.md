@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 113 sample(s), 113 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 113 sample(s), 113 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=113, missing=0, classes=93, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×4) |
 | class_label | target | categorical | *Not specified.* | n=113, missing=0, classes=7, top Silicate (×90) |
-| subclass | target | categorical | *Not specified.* | n=113, missing=23, classes=7, top Nesosilicate (×23) |
+| subclass | target | categorical | *Not specified.* | n=113, missing=0, classes=8, top None (×23) |
 | measurement | target | categorical | *Not specified.* | n=113, missing=0, classes=3, top Transmission (×111) |
 | owner | target | categorical | *Not specified.* | n=113, missing=0, classes=2, top JHU (×112) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=113, missing=0, classes=113, top mineral.carbonate.none.fine.tir.aragonite_1.jhu.nicolet.spectrum (×1) |
@@ -38,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top N/A (×113) |
 | species | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=113, missing=113, classes=0, — |
@@ -55,7 +57,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×113) |
 | rights_status | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top manual_review_needed (×113) |
 | usage_scope | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top private_use_only (×113) |
-| notes | metadata | categorical | *Not specified.* | n=113, missing=6, classes=92, top none (×16) |
+| notes | metadata | categorical | *Not specified.* | n=113, missing=0, classes=93, top none (×16) |
 
 ## Statistics — splits
 
@@ -66,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 2 fields, Y: 4 fields, measurements: 2 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `db576ac3f2ae021e7a1a253d149c6a79fc882f0a0b18568a9d253de4d67030d4`
-- **Processing hash:** `65933b00dad166d669c78b0bfce75eb6d26902e254733076b73031c7d04ce8cf` | **metadata hash:** `ccbaeeffaeb79e1efb501a90ade3574c7de7add83b66037159386836a87f40cf`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `eceec71954838bbab1a862b217614ae82ce606a39b0ec370579180f0e2e71430`
+- **Processing hash:** `5cc73047dd5cdf7b60a8817265584d240528a7c4b58d39ea10a48830141f938b` | **metadata hash:** `2d984f45e651e35b1f1e3051f3263c1c9584ce6f8a44efc21ccc716fb1b63203`

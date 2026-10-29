@@ -66,7 +66,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "45f25d13b0cb2d94743b725c18e1b2db790c4c76216d867d5caa2d37fe3bffad"
+      "sha256": "f6e791bec1fc10bc88008f59d1d07fff9f5a518cab595ce2828b3c3be96ff0e5"
     }
   ],
   "keywords": [
@@ -83,10 +83,25 @@
       "description": "Spectra from source 'Nirpy Research avocado Whittaker smoothing NIR - absorbance' (100 observations x 228 wavelengths).",
       "field": [
         {
+          "@id": "X_absorbance/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_absorbance.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_absorbance/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -112,7 +127,7 @@
         }
       ],
       "key": {
-        "@id": "X_absorbance/sample_id"
+        "@id": "X_absorbance/observation_id"
       },
       "name": "X_absorbance"
     },
@@ -122,10 +137,25 @@
       "description": "Spectra from source 'Nirpy Research avocado Whittaker smoothing NIR - reference signal' (100 observations x 228 wavelengths).",
       "field": [
         {
+          "@id": "X_reference_signal/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_reference_signal.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_reference_signal/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -151,7 +181,7 @@
         }
       ],
       "key": {
-        "@id": "X_reference_signal/sample_id"
+        "@id": "X_reference_signal/observation_id"
       },
       "name": "X_reference_signal"
     },
@@ -161,10 +191,25 @@
       "description": "Spectra from source 'Nirpy Research avocado Whittaker smoothing NIR - sample signal' (100 observations x 228 wavelengths).",
       "field": [
         {
+          "@id": "X_sample_signal/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_sample_signal.parquet"
+            }
+          }
+        },
+        {
           "@id": "X_sample_signal/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -190,14 +235,14 @@
         }
       ],
       "key": {
-        "@id": "X_sample_signal/sample_id"
+        "@id": "X_sample_signal/observation_id"
       },
       "name": "X_sample_signal"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -678,5 +723,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

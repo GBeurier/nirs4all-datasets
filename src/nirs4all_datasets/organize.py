@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from nirs4all_datasets.canonical import CONVERTER_NAME, CONVERTER_VERSION, CanonicalResult, build_canonical
-from nirs4all_datasets.manifest import build_manifest, needs_rebuild, read_manifest, write_manifest
+from nirs4all_datasets.manifest import build_manifest, needs_rebuild, read_manifest, sha256_file, write_manifest
 from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor, Tier
 
 
@@ -86,10 +86,14 @@ def organize(
     dataset_dir.mkdir(parents=True, exist_ok=True)
     manifest_path = dataset_dir / "manifest.json"
     previous = read_manifest(manifest_path) if manifest_path.exists() else None
+    from nirs4all_datasets.curation import contract_hash, find_soilsite
 
-    from nirs4all_datasets.manifest import sha256_file
+    converter_config = {"curation_contract_sha256": contract_hash(descriptor.id)}
+    soilsite = find_soilsite(source) if descriptor.id.startswith("ossl_") else None
+    if soilsite:
+        converter_config["soilsite_sha256"] = sha256_file(soilsite)
 
-    converter_config = {f"source_context:{key}": sha256_file(path) for key, path in sorted((source_context or {}).items())}
+    converter_config.update({f"source_context:{key}": sha256_file(path) for key, path in sorted((source_context or {}).items())})
     changed, reasons = needs_rebuild(
         descriptor,
         dataset_dir=dataset_dir,

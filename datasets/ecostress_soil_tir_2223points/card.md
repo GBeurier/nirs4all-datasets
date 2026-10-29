@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 11 sample(s), 11 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 11 sample(s), 11 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -35,7 +37,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top N/A (×11) |
 | species | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=11, missing=11, classes=0, — |
@@ -52,7 +54,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×11) |
 | rights_status | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top manual_review_needed (×11) |
 | usage_scope | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top private_use_only (×11) |
-| notes | metadata | categorical | *Not specified.* | n=11, missing=1, classes=10, top soil.aridisol.none.unsorted.tir.fgg009.jpl.nicolet.ancillary.txt (×1) |
+| notes | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top soil.aridisol.none.unsorted.tir.fgg009.jpl.nicolet.ancillary.txt (×1) |
 
 ## Statistics — splits
 
@@ -63,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -73,7 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 5 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +97,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0db0b49000bc085411adecc67f043f82bfa1d9e27539afebbd2cf73a9cc212d2`
-- **Processing hash:** `f8c91b72b6f151bdb69da217ee3805d5e6a0574b11b57965ecf4a45cf55cff4a` | **metadata hash:** `f6c78b2b5c70a04c4e756b4503cdace7618d5ff246753ad591b77f89f6aa94c7`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `d68e054e5b3730eb42b0085a4c765b4229d0be4933d3484bcc4c212ca41765b6`
+- **Processing hash:** `ebacb2eb32d4e98327f6079142c853f7f00dbfd90c9c6b2e33551cc83d87cc5b` | **metadata hash:** `b0ceb0fc5c7ced3a3cae092612af7fb28139135e28eda4bab9cf93749bc5743f`

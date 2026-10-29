@@ -27,6 +27,7 @@ import numpy as np
 import pandas as pd
 
 from nirs4all_datasets.canonical import resolve_config
+from nirs4all_datasets.curation import card_curation
 from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
 from nirs4all_datasets.qualify import anonymize, croissant, datasheet, registry
 from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
@@ -103,19 +104,24 @@ def _provenance(descriptor: DatasetDescriptor) -> dict[str, Any]:
 
 def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor, source_profiles: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     n_observations_total = int(sum(int(s.get("n_observations") or 0) for s in config.get("sources", [])))
-    sample_available = bool((config.get("identity") or {}).get("sample_id_available", descriptor.ids.sample_id_available))
     reps = registry.metrics_for("dataset")["reps_per_sample"](np.asarray(reps_counts, dtype="float64")) if reps_counts else None
     from nirs4all_datasets.qualify import metrics
 
+    identity = (config.get("curation") or {}).get("identity")
+    available = bool(identity.get("sample_id_available")) if identity else bool(descriptor.ids.sample_id_available)
     return {
         "level": config.get("alignment_level"),
-        "sample_id_available": sample_available,
-        "identity": config.get("identity"),
-        "n_samples": len(sample_ids) if sample_available else None,
+        "sample_id_available": available,
+        "identity": identity,
         "n_observation_groups": len(sample_ids),
-        "n_observations_total": n_observations_total,
-        "reps_per_sample": reps if sample_available else None,
         "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
+        "n_samples": identity.get("n_samples") if identity and available else (len(sample_ids) if available else None),
+        "n_known_sample_units": identity.get("n_samples") if identity else None,
+        "n_observations_total": n_observations_total,
+        "reps_per_sample": reps if available else None,
+        "technical_repetitions": identity.get("technical_repetitions") if identity else None,
+        "identity_status": identity.get("status") if identity else ("available" if available else "unavailable"),
+        "unit": identity.get("unit") if identity else None,
         "profile_scores": metrics.aggregate_profile_scores(source_profiles or []),
     }
 
@@ -227,18 +233,21 @@ def _attach_xy_metrics(source_sections: list[dict[str, Any]], source_frames: lis
     numeric_targets = [v for v in variable_sections if v.get("role") == VariableRole.TARGET.value and v.get("type") == VarType.NUMERIC.value and v.get("name") in variables_df.columns]
     if not numeric_targets:
         return
-    y_frame = variables_df[[_SAMPLE_KEY, *[str(v["name"]) for v in numeric_targets]]].copy()
-    y_frame[_SAMPLE_KEY] = y_frame[_SAMPLE_KEY].astype(str)
-    y_frame = y_frame.drop_duplicates(subset=[_SAMPLE_KEY], keep="first").set_index(_SAMPLE_KEY)
+    join_key = _OBS_KEY if _OBS_KEY in variables_df else _SAMPLE_KEY
+    y_frame = variables_df[[join_key, *[str(v["name"]) for v in numeric_targets]]].copy()
+    y_frame[join_key] = y_frame[join_key].astype(str)
+    if not y_frame[join_key].is_unique:
+        raise ValueError("Variable join keys must be unique for X/Y diagnostics")
+    y_frame = y_frame.set_index(join_key)
     for section, df in zip(source_sections, source_frames, strict=False):
         if _SAMPLE_KEY not in df.columns:
             continue
         spectral_cols = [c for c in df.columns if c not in (_OBS_KEY, _SAMPLE_KEY)]
         if not spectral_cols:
             continue
-        grouped = df[[_SAMPLE_KEY, *spectral_cols]].copy()
-        grouped[_SAMPLE_KEY] = grouped[_SAMPLE_KEY].astype(str)
-        x_by_sample = grouped.groupby(_SAMPLE_KEY, sort=True)[spectral_cols].mean()
+        grouped = df[[join_key, *spectral_cols]].copy()
+        grouped[join_key] = grouped[join_key].astype(str)
+        x_by_sample = grouped.groupby(join_key, sort=True)[spectral_cols].mean()
         common = x_by_sample.index.intersection(y_frame.index)
         if len(common) < 3:
             continue
@@ -335,6 +344,7 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, 
     is attached for the site's interactive distribution chart (categorical vars use ``stats.top_classes``)."""
     from nirs4all_datasets.qualify import metrics
 
+    values = values.mask(values.astype("string").str.strip().eq(""))
     variable_metrics = registry.metrics_for("variable")
     effective_type = var.type
     histogram: dict[str, Any] | None = None
@@ -551,6 +561,8 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor, source_profiles),
         "sources": source_sections,
         "variables": variable_sections,
+        "variable_join_key": variables_block.get("join_key", _SAMPLE_KEY) if variables_block else _SAMPLE_KEY,
+        "curation": card_curation(json.loads(Path(config["curation"]["mapping"]).read_text(encoding="utf-8"))) if config.get("curation") else None,
         "splits": _splits_sections(config, warnings),
         "provenance": _provenance(descriptor),
         "integrity": _integrity(dataset_dir, descriptor, warnings),

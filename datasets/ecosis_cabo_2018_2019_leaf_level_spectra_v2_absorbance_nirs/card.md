@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -109,7 +111,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -119,7 +121,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 49 fields, measurements: 0 fields, passport: 29 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -150,6 +153,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `59ea85b188cbaccfb416d2fb33fa0bbde96382e87b91a3406616d1d77d5309a6`
-- **Processing hash:** `8a89ba1e78553c0dd5a7863a914fff259897cc3b7dbfc8013414ccbe0fd1c17d` | **metadata hash:** `45d58b80d2de9600b4cb113c9c353f12a5ef4492bf229d3d467b4e7f9212400b`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `843f65f39d37dc9a271dda2c7cc093e9b1e23f73e28bea0e5a35e927eb977006`
+- **Processing hash:** `f834cae0864af13644c7ac10de54a7bc88ccfa99a7e80fb2e1d09d2ab07bfd22` | **metadata hash:** `bc6888bf9a9ca1aefd58e612088c92f685d14a4f896c0630042370fb31bf53c7`

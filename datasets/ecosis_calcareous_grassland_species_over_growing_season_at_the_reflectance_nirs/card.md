@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1100 sample(s), 1100 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1100 sample(s), 1100 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -63,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -72,7 +74,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 1 fields, passport: 42 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,6 +95,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `be0aaed1d9de99fcf094e1b4e4a35a644ad42ce266f6f195961fe17962c34f39`
-- **Processing hash:** `edbf5c39ee69288b46edb5a9e1431891ac1a867ea4383b2cd7b511ae585ff030` | **metadata hash:** `54fc0dcf2c1cf6c9a8e4140bd659244c14f2e59ff85ce3a8ed055d719b73dd81`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `22361a7bf29005587c63c27b53f9135f17b3766693be03862c96004bc7d17e45`
+- **Processing hash:** `38cf2f51bd357b7d7c2e6a7613c06c35499a3c311de423366f01a625885ed06a` | **metadata hash:** `1f87dd97d028a9921afa1b19ece5cd7fb4bb9b6afc46b3557b6eeb130bcd0f77`

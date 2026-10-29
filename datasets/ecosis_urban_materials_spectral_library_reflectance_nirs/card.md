@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 60 sample(s), 60 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 60 sample(s), 60 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -29,7 +31,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | location | metadata | categorical | *Not specified.* | n=60, missing=0, classes=11, top 207 East 6th St., Dayton, OH (×8) |
 | latitude | metadata | numeric | *Not specified.* | n=60, missing=0, range 39.68–40.01, mean 39.8 ± 0.1039 |
 | longitude | metadata | numeric | *Not specified.* | n=60, missing=0, range -84.19–-83.01, mean -83.95 ± 0.389 |
-| comment | metadata | categorical | *Not specified.* | n=60, missing=11, classes=38, top worn (×3) |
+| comment | metadata | categorical | *Not specified.* | n=60, missing=0, classes=39, top nan (×11) |
 | instrument | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Ocean Optics JAZ-EL350 (×60) |
 | signal_type | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top reflectance (×60) |
 | axis_unit | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top um (×60) |
@@ -49,7 +51,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -60,7 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `5d48e37dee25c70617b27ddc8cedfdf2001db627cfa95693902903dc4ff50238`
-- **Processing hash:** `8aaa875b0f34faa2c20b46eccd16bdd00f6614c7f8e351c7fd013d2efbb70ee0` | **metadata hash:** `f80c78a571d037127f73ef7e7aba79b98e288b3568cb1192244c4a16716132a8`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e4721da319a73998b45952c3ce92d8f78b7cb099324db03f64ff4ba861c4bc37`
+- **Processing hash:** `084d748415ccb5300fb0db5d888b15c13ddf6d81a61f6fa455e58bc75323e3e0` | **metadata hash:** `a3ddeaa81851a7e76531b1b3c619d5e0567c889c416de93e0e53b8a54d951e4d`

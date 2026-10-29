@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 3776 sample(s), 3776 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 3776 sample(s), 3776 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -110,6 +112,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | wavelength_note | metadata | categorical | *Not specified.* | n=3776, missing=0, classes=1, top ossl_visnir_350_2500_nm_step_2 (×3776) |
 | active_status | metadata | categorical | *Not specified.* | n=3776, missing=0, classes=1, top active (×3776) |
 | replaces_dataset_id | metadata | categorical | *Not specified.* | n=3776, missing=0, classes=1, top ossl_soil_clay_tot_usda_a334_w_pct_icraf_nirs_ossl \| ossl_soil_oc_usda_c729_w_pct_icraf_nirs_ossl \| ossl_soil_ph_h2o_usda_a268_index_icraf_nirs_ossl (×3776) |
+| site_id | metadata | identifier | *Not specified.* | *Not specified.* |
+| longitude | metadata | numeric | *Not specified.* | n=3776, missing=60, range -172.4–153, mean 9.217 ± 69.59 |
+| latitude | metadata | numeric | *Not specified.* | n=3776, missing=60, range -38.67–64.87, mean 13.3 ± 25.12 |
+| campaign_date_begin | metadata | datetime | *Not specified.* | *Not specified.* |
+| campaign_date_end | metadata | datetime | *Not specified.* | *Not specified.* |
+| location_error_m | metadata | numeric | *Not specified.* | n=3776, missing=60, range 30–30, mean 30 ± 0 |
 
 ## Statistics — splits
 
@@ -120,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -131,7 +139,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 18 fields, measurements: 1 fields, passport: 76 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -151,6 +160,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7c68ced73f90e5f1e6d95bb4204df0d9cdb0a7c86427ffecce52ce07f3307f4e`
-- **Processing hash:** `bdb0b42bf1a945e1985ceb57b331ba10c3d5fcaed2e06268c01a9b29a5e1780e` | **metadata hash:** `326cf59322c921ab7d658b7250d0c8467382bfb8660c232a226cf81d12492fde`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `69633daa30f7a1ad811624f8357d0449540fc5c16f53c304c6fab9c2e2a6e978`
+- **Processing hash:** `3c21ffe811f62077d624ae9fa37932bda1999dcb3954bc6fb263af54bae1488b` | **metadata hash:** `2fc6782a06db1ab9360018d2f1100d7d9d2b75e9826af9ea828b01af6f14350b`

@@ -96,7 +96,7 @@ def _relpath(path: str | Path, base: Path) -> str:
     """Path relative to ``base``; raises if it resolves outside (no basename collisions)."""
     resolved = Path(path).resolve()
     try:
-        return str(resolved.relative_to(base.resolve()))
+        return resolved.relative_to(base.resolve()).as_posix()
     except ValueError as exc:
         raise ValueError(f"file {path} is outside dataset_dir {base}; raw files must live under the dataset directory.") from exc
 

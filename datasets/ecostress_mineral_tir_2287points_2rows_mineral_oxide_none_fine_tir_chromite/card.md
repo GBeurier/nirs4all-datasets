@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 2 sample(s), 2 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 2 sample(s), 2 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=2, missing=0, classes=2, top Chromite Fe+2Cr2O4 (×1) |
 | class_label | target | categorical | *Not specified.* | n=2, missing=0, classes=2, top Oxide (×1) |
-| subclass | target | categorical | *Not specified.* | n=2, missing=1, classes=1, top Nesosilicate (×1) |
+| subclass | target | categorical | *Not specified.* | n=2, missing=0, classes=2, top None (×1) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top mineral.oxide.none.fine.tir.chromite_1.jhu.nicolet.spectrum (×1) |
 | category | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top mineral (×2) |
 | material_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Mineral (×2) |
@@ -36,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
 | species | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=2, missing=2, classes=0, — |
@@ -64,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `2fa1c50001f0d363a0f9c5b71685a1b1d9dc460acede00eb00c13b0918934c4f`
-- **Processing hash:** `969ea8a2181e7a2a071af1b8fc91e78d06905db68f1892a9807d2cc67c0c0a51` | **metadata hash:** `134d1a8086f5188bbdfe964e01994c0ff1dde2ea36d6ee8bd5780a1972ed8870`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `35bbb67c12a58aebc560c62732ec6154b2b6dba40db947627892c74f5c81122d`
+- **Processing hash:** `14c33bfda10a807aee4d0617c37c1ed88c245500b095be6ef83242cb24c79af0` | **metadata hash:** `ae6652728fab3c5e00bf93b16f6ab911b12435bfe7ee26ddfe364c733a6f6858`

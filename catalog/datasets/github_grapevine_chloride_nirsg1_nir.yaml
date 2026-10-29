@@ -87,20 +87,25 @@ ids:
   observation_id: observation_id
   sample_id: sample_id
   sample_id_available: true
-alignment_level: observation
+alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: Hyperspectral sensing for high-throughput chloride detection in grapevines
   raw_sha256: []
   ingest_reader: v2.0-standardized
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
   warnings:
   - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
     match and M observation order matches an X block. Y row pairing is not independently
     verified.
+  - 'Curation identity contract: Chaque couple trial × pot_number est unique. replicate=1…5
+    est la répétition biologique du plan génotype × sel. Les trois lectures au chloridomètre
+    sont analytiques dans Y ; aucune n’est une répétition spectrale.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: Hyperspectral sensing for high-throughput chloride detection in grapevines
@@ -134,6 +139,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/github_grapevine_chloride_nirsg1_nir
-  source_fingerprint: 091465de085f0ebe431f9a8e6e12b178037425cbc0589eb2fde1c4fc478bd990
+  generator_version: '2'
+  source_relpath: standardized_datasets/github_grapevine_chloride_nirsg1_nir
+  source_fingerprint: 70db2259ce87cbbcc83df58e120cafdfa0f0d5f9b0c0e939650f15560420f40c

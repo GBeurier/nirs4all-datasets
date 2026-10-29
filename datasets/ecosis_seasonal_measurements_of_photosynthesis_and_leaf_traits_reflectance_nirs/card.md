@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 48 sample(s), 48 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 48 sample(s), 48 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -80,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -89,7 +91,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 2 fields, Y: 18 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -110,6 +113,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `745b9e65f7d8eeb12030bc2566ee68203ec1bceb0d3173c8a9524c0dacbc4938`
-- **Processing hash:** `2a3c11b6ff9015ecd3bda4040dd62807d4221405d6f4908c7fa47154a0e301e1` | **metadata hash:** `91de7fd38f95c3fd3d34734e6952676707dbc4e859e3b001b9aa5e816a88351a`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `cfa948a174995fd85f9ee18badb8e5e14d4056841d45a7d7fe35bb39efb9fe64`
+- **Processing hash:** `a5b657effeec3fadce9cf2c1e9ba3bffccdac72508998b0db05035f42038d341` | **metadata hash:** `d2d2623a8e63fe9fda92b8ecee986c3162070726ad034673e00790b482e1e327`

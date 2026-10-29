@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 3235 sample(s), 3235 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 3235 sample(s), 3235 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -64,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -73,7 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 1 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +97,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `57bc27becdba448a2ff6fe8507cb1924bf90fe5b002dda8bb0b41683ddc065f5`
-- **Processing hash:** `558c679619b71a631d02786791dc87d19c63c25b9929de26b846a46c96180cfa` | **metadata hash:** `af98b888e8d7ad66d47ec43d0d798900010f608a5f720bb49c4a455cc588f6dc`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `48bb86c010911dfea2f81cf1975a93632abc2a0e8db6f881d952f409a9eb90f3`
+- **Processing hash:** `09a04a3f48bd4396c5fdba51b1f3e3a4f909fa7d7ea16f4e68d25b3bdf63b739` | **metadata hash:** `71442666c5e4b6383aa1d93d1a121cce38e7cbcbdcc145bca945585677369393`

@@ -67,7 +67,8 @@ def _pull(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None,
 
     fingerprint.update(__version__.encode())
     module_path = Path(getattr(module, "__file__", __file__))
-    paths = {Path(__file__), Path(__file__).with_name("common.py"), module_path}
+    package_root = Path(__file__).parent.parent
+    paths = {Path(__file__), Path(__file__).with_name("common.py"), module_path, package_root / "canonical.py", package_root / "curation.py", package_root / "curation_contracts.json"}
     paths.update(module_path.parent.glob(module_path.stem + "*.json"))
     for path in sorted(paths):
         fingerprint.update(path.read_bytes())
@@ -129,18 +130,18 @@ def _pull(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None,
         declared = {v.name for v in runtime.variables}
         numeric = _v2_numeric_columns(m_path, default_numeric=False)
         structural = {"dataset_id", "observation_id", "sample_id", "split_original", "split_source", "source_sample_index"}
+        from nirs4all_datasets.curation import is_provenance_column
+
         for name in m_cols:
-            if name not in declared and name not in structural and not name.startswith("source_"):
+            if name not in declared and name not in structural and not is_provenance_column(name):
                 runtime.variables.append(Variable(name=name, role=VariableRole.METADATA, type=VarType.NUMERIC if numeric.get(name) else VarType.CATEGORICAL))
-        conflicts = _sample_conflicts(leaf)
-        if conflicts:
-            runtime.ids.sample_id = "observation_id"
-            runtime.ids.sample_id_available = False
-            runtime.alignment_level = AlignmentLevel.SAMPLE if len(runtime.sources) > 1 else AlignmentLevel.OBSERVATION
-            alias = _original_sample_alias(leaf)
-            if alias not in {v.name for v in runtime.variables}:
-                runtime.variables.append(Variable(name=alias, role=VariableRole.METADATA, type=VarType.CATEGORICAL))
-            runtime.provenance.warnings.append("Origin observations have varying values within supplied sample IDs; observation keys preserve the rows, with original sample IDs retained as metadata.")
+        from nirs4all_datasets.curation import identity_view
+
+        metadata = pd.read_csv(m_path, sep=";", dtype=str, keep_default_na=False) if m_path.is_file() else pd.DataFrame(columns=["observation_id"])
+        _, identity = identity_view(runtime.id, metadata)
+        runtime.ids.sample_id = "sample_id"
+        runtime.ids.sample_id_available = identity["sample_id_available"]
+        runtime.alignment_level = AlignmentLevel.SAMPLE if runtime.ids.sample_id_available else AlignmentLevel.OBSERVATION
         output = directory / "output"
         result = build_canonical(leaf, runtime, output)
         if result.status is ConversionStatus.FAILED:

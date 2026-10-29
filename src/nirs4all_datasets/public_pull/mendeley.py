@@ -256,6 +256,8 @@ def _build_human_arm(descriptor: DatasetDescriptor, context: PullContext) -> Pat
     metadata = subjects.loc[parts[0]].reset_index()
     metadata.insert(0, "observation_id", ids)
     metadata["arm_aspect_code"] = parts[1]
+    metadata["source_label"] = parts[0] + parts[1]
+    metadata["sample_id"] = metadata["source_label"]
     metadata["replicate_index_within_subject_aspect"] = labels.groupby(labels).cumcount() + 1
     return context.write_tables({"X": x}, targets=targets, metadata=metadata)
 

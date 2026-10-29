@@ -40,6 +40,7 @@ _ENTRY_KEYS = {
     "n_samples", "doi", "retrieval_status", "retrieval_canonical_hosted", "retrieval_route_count", "origin_kinds", "origin_access", "n_publications",
     "card_protocol", "content_hash", "processing_hash", "has_card", "has_manifest",
     "is_stale", "publishable",
+    "n_curated_metadata", "n_curated_targets", "curated_metadata", "curated_targets", "identity_status", "technical_repetitions",
 }
 
 

@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 330 sample(s), 330 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -64,7 +66,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Equivalent_Water_Thickness_g_cm2 (×330) |
 | target_original_name | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Equivalent Water Thickness (g/cm²) (×330) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Lopex1993_Reflectance__Lopex_Refl (×330) |
-| raw_label | metadata | categorical | *Not specified.* | n=330, missing=0, classes=298, top 0.012292682926829269 (×3) |
+| raw_label | metadata | categorical | *Not specified.* | n=330, missing=0, classes=298, top 0.004951219512195122 (×3) |
 | reference_value | metadata | numeric | *Not specified.* | n=330, missing=0, range 0.0002927–0.05249, mean 0.01113 ± 0.006979 |
 | class_index | metadata | categorical | *Not specified.* | n=330, missing=330, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=330, missing=330, classes=0, — |
@@ -90,7 +92,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -101,7 +103,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 1 fields, measurements: 23 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,6 +124,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `b03ab74d2ca189cb3c29c5ed9ebe00b19e7c10a7b6c042a03f2944b358df6043`
-- **Processing hash:** `63d966f6140b63a7e4051f3e0a3d46846a4edbf0d664707fbfe9f3cc52755cd9` | **metadata hash:** `d4e8b924ea86ab47bd8d8112a7e38566bac5f072a8bd39005bb4390297bc7ae0`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `3fe238dcdf929ae332157a39a6c258feae86e889d3947f6f53f656434b8a86df`
+- **Processing hash:** `723c67ba9c7ae2f6a944131adb590d8f4189e6cb150b59f7ee4667c3b98b30df` | **metadata hash:** `6210cae17dcc2b4257a8e5cf1df8b7cad9f68c255dde4e83728c476e0fb2db3c`

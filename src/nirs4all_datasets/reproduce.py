@@ -118,7 +118,24 @@ def import_standardized(leaf_dir: str | Path, descriptor: DatasetDescriptor, out
         result = build_canonical(leaf, descriptor, temp)
         if result.status is ConversionStatus.FAILED:
             raise ValueError(f"standardized bundle could not be imported: {'; '.join(result.warnings)}")
-        result.canonical_dir.rename(destination)
+        # Windows scanners can briefly hold a newly written Parquet directory.
+        # Retry the atomic rename; an existing destination is never replaced.
+        import time
+
+        for attempt in range(6):
+            # A conversion can take long enough for another caller to create
+            # the destination. POSIX rename would replace an empty directory.
+            if destination.exists() or destination.is_symlink():
+                raise FileExistsError(f"canonical data already exists: {destination}")
+            try:
+                result.canonical_dir.rename(destination)
+                break
+            except PermissionError:
+                if destination.exists():
+                    raise FileExistsError(f"canonical data already exists: {destination}") from None
+                if attempt == 5:
+                    raise
+                time.sleep(0.05 * (attempt + 1))
         result.dataset_dir = out
         result.canonical_dir = destination
         return result

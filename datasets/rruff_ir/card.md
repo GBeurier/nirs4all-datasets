@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 347 sample(s), 347 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 347 sample(s), 347 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -35,7 +37,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=347, missing=0, range 4000–4000, mean 4000 ± 4.554e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=347, missing=0, range 1868–1868, mean 1868 ± 0 |
 | sample_description | metadata | categorical | *Not specified.* | n=347, missing=0, classes=321, top White massive (×4) |
-| metadata_chemistry | metadata | categorical | *Not specified.* | n=347, missing=0, classes=342, top (Al_1.99_Fe^3+^_0.01_)Si_1.00_O_5_ (×2) |
+| metadata_chemistry | metadata | categorical | *Not specified.* | n=347, missing=0, classes=342, top Ca_1.000_ F_2.000_ (×2) |
 | locality | metadata | categorical | *Not specified.* | n=347, missing=0, classes=288, top unknown (×8) |
 | laser_wavelength | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
 | instrument | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
@@ -54,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -65,7 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: 347 spécimens RRUFF distincts, chacun avec un seul spectre IR exporté.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d355c36f515c721d54d7fda29cfa8e4f5d371add5996bc98f15683e0f6b897d0`
-- **Processing hash:** `bb8faec1aa868285ce8f5df0fdcd08eb0dee1d38ae3650e79e094bfeb93424ec` | **metadata hash:** `d56a726e8d9cda93c14ed9b831855863d2811b1a4965a4c0a6908a211c5a11d3`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `64b14476975997931a990e85177d00e9b85604e7df5a264b8f38b1696ab5d461`
+- **Processing hash:** `e85f9240cd572685df6d384f5022099e572f41776cef4b7ce97d794530db2bc8` | **metadata hash:** `49424639ade54aa280fd13cd72d57c71f8b96cc8234241d57a230fcfd5274883`

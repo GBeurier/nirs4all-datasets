@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 207 sample(s), 207 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 125 sample(s), 207 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–4 (mean 1.656).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=207, missing=0, classes=101, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×7) |
 | class_label | target | categorical | *Not specified.* | n=207, missing=0, classes=7, top Silicate (×165) |
-| subclass | target | categorical | *Not specified.* | n=207, missing=43, classes=7, top Nesosilicate (×43) |
+| subclass | target | categorical | *Not specified.* | n=207, missing=0, classes=8, top None (×43) |
 | particle_size | target | categorical | *Not specified.* | n=207, missing=0, classes=4, top Coarse (×121) |
 | measurement | target | categorical | *Not specified.* | n=207, missing=0, classes=3, top Bidirectional reflectance (×199) |
 | owner | target | categorical | *Not specified.* | n=207, missing=0, classes=2, top JHU (×205) |
@@ -39,7 +41,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top N/A (×207) |
 | species | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=207, missing=207, classes=0, — |
@@ -56,8 +58,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×207) |
 | rights_status | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top manual_review_needed (×207) |
 | usage_scope | metadata | categorical | *Not specified.* | n=207, missing=0, classes=1, top private_use_only (×207) |
-| notes | metadata | categorical | *Not specified.* | n=207, missing=31, classes=159, top none (×18) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=207, missing=0, classes=125, top pyroph_1 (×4) |
+| notes | metadata | categorical | *Not specified.* | n=207, missing=0, classes=160, top None (×31) |
 
 ## Statistics — splits
 
@@ -68,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +79,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, notes, material_name, class_label, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 2 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +101,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `7e2a7a13f9766247197e9cd33ff537de4d826a9a9637798ce57880ebae467a7d`
-- **Processing hash:** `213364fde60f3a6c95c811ffa021ae05d8e98aa1defa5449af9a3abf3c1fd1f4` | **metadata hash:** `7ccdd4bd8cb708753cfbcec9ba333e9ef26e5599e54a76ffac42f842e815e690`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6f3fc094c94c845ff867206a2e8d59813563f919ffdaa3012b757e119a8875d9`
+- **Processing hash:** `954ecae2a4301945507d957fde7f0f06b7be62a72003e6b98e9b5c8748a4a488` | **metadata hash:** `b55557cd7ab3998b790a6f2da6188b2a1c51e5ec31caeddeebf45e0581b08028`

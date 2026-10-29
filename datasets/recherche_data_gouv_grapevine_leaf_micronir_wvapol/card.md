@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 2408 sample(s), 2408 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -56,7 +58,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Water_treatment | metadata | categorical | *Not specified.* | n=2408, missing=849, classes=3, top WW (×525) |
 | Date_leaf_measurement | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=23, top 03/06/2022 (×92) |
 | Nb_min_since_8am | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=1051, top 241.8 (×5) |
-| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2408, missing=1005, classes=1259, top 1100.6 (×3) |
+| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2408, missing=1005, classes=1259, top 1084.8 (×3) |
 | Temp_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 23.696739665618 (×92) |
 | Hr_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 68.1819247646913 (×92) |
 | PPFD_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 232.279047090758 (×92) |
@@ -73,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -83,7 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 13 fields, Y: 7 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +106,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `8df9b0169278e00552c17d03eaabec6b9c15ac3e17cc9fa8826dd43a858dd6f8`
-- **Processing hash:** `43eadb727b63811eb53d0e6fb18e6952aa0d7a9b9a01066f4ab207f49d9f6e9b` | **metadata hash:** `d4abf6672dffd16333bbc740ffdd04730465a7959bce6f72cfb0efc33920f500`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `06fcd933389770af7e4bacffb11106f7de5158c64c6813a7f93db9fc669d1c1d`
+- **Processing hash:** `f10e06773aedabcf5a30da0a0045377c48444486154ed6f6f8eb57fced0ae37d` | **metadata hash:** `6883b9db571e6245afffa33181175131867550e039f5a7b1ef5437621acb5d69`

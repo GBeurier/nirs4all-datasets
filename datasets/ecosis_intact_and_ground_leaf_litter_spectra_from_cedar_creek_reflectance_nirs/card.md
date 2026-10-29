@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 322 sample(s), 322 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 322 sample(s), 322 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -72,7 +74,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -82,7 +84,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 11 fields, measurements: 1 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,6 +105,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `db8f4eec468ef0c3b4ea497a1beab3115e4bf33e035904a9480f2b96ef8b9eab`
-- **Processing hash:** `7ed7f408902759d973e9be62f8454e210aa599276290ef4e83e408230ce544ae` | **metadata hash:** `e31930bc843276696c6e078a0234fc06b9b4979a5dd4ac5c5e2e10d2da40a894`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `0ca9d0861d6a64b10648010bcde80962566744f60abf0b9aecf150a49e7075a9`
+- **Processing hash:** `008070c445b16fa06af043be984ae318aa822b63853205b94dbc0b9529d6ed2a` | **metadata hash:** `d85e4316babb007ff797ffc9c0eb8a794bc53794b44aba113bb5f8fef5db485c`

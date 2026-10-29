@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 430 sample(s), 430 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 160 sample(s), 430 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–3 (mean 2.688).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,18 +28,18 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=430, missing=0, classes=143, top Quartz SiO_2 (×15) |
 | class_label | target | categorical | *Not specified.* | n=430, missing=0, classes=12, top Silicate (×216) |
-| subclass | target | categorical | *Not specified.* | n=430, missing=214, classes=6, top Phyllosilicate (×70) |
+| subclass | target | categorical | *Not specified.* | n=430, missing=0, classes=7, top None (×214) |
 | particle_size | target | categorical | *Not specified.* | n=430, missing=0, classes=3, top Fine (×160) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=430, missing=0, classes=430, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.beckman.spectrum (×1) |
 | category | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top mineral (×430) |
 | material_type | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top Mineral (×430) |
 | site | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=430, missing=57, classes=116, top USA, California, Kern County, Boron (×15) |
+| location | metadata | categorical | *Not specified.* | n=430, missing=56, classes=117, top USA, California, Kern County, Boron (×15) |
 | country | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
 | latitude | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top N/A (×430) |
 | species | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=430, missing=430, classes=0, — |
@@ -54,8 +56,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×430) |
 | rights_status | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top manual_review_needed (×430) |
 | usage_scope | metadata | categorical | *Not specified.* | n=430, missing=0, classes=1, top private_use_only (×430) |
-| notes | metadata | categorical | *Not specified.* | n=430, missing=9, classes=421, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.beckman.ancillary.txt (×1) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=430, missing=0, classes=160, top A-1A (×3) |
+| notes | metadata | categorical | *Not specified.* | n=430, missing=0, classes=422, top None (×9) |
 
 ## Statistics — splits
 
@@ -66,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +77,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, sample_description, notes, material_name, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `468ee75052cb92f0abdd0a5f76614392bec0fad26721c05972f098096ae7db69`
-- **Processing hash:** `3857be766c2d0c3608fc962c026e692441027c11836d95cbf2d26ed597156747` | **metadata hash:** `b12899284a1821888ef72d63621f387db314e33578933c3bbbdb7c1abdf885d4`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `69a41ee487e5b8ad04dff33e57f7e24f40d70f630adcf70cc14493264a5cacaa`
+- **Processing hash:** `34c8c4598648df01432aaf13445748e269c3c576062567e3f80a740f14fd64e7` | **metadata hash:** `7bc1035b390a66842613ddd04296ab6b641af322de27cfa1a219d31ab9716475`

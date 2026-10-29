@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "X",
-      "sha256": "77f9c315673150a7047e8288754e8f2f8007827f9a3953e8d23dd2f166c00085"
+      "sha256": "ff0ec1a1247e43a9d491c63c2364344ac52e2a9bcd1cc9ec134763d6e1d89f9d"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "2672ce0568a4962357429f016bc77b028a6c0b9e6f2816692f28a1ea57d70523"
+      "sha256": "d9ec2e910833c423d0a352adb1591f8655e18e986b5164d3bc5679842a918bac"
     }
   ],
   "keywords": [
@@ -66,13 +66,28 @@
     {
       "@id": "X",
       "@type": "cr:RecordSet",
-      "description": "Spectra from source 'X' (62 observations x 3439 wavelengths).",
+      "description": "Spectra from source 'X' (61 observations x 3439 wavelengths).",
       "field": [
+        {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
         {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -136,6 +151,96 @@
               "@id": "file/variables.parquet"
             }
           }
+        },
+        {
+          "@id": "variables/class_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'class_label' (role metadata, type categorical).",
+          "name": "class_label",
+          "source": {
+            "extract": {
+              "column": "class_label"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download' (role metadata, type categorical).",
+          "name": "manual_download",
+          "source": {
+            "extract": {
+              "column": "manual_download"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_source_dir",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_source_dir' (role metadata, type categorical).",
+          "name": "manual_download_source_dir",
+          "source": {
+            "extract": {
+              "column": "manual_download_source_dir"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download_file",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download_file' (role metadata, type categorical).",
+          "name": "manual_download_file",
+          "source": {
+            "extract": {
+              "column": "manual_download_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_source_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_source_url' (role metadata, type categorical).",
+          "name": "official_source_url",
+          "source": {
+            "extract": {
+              "column": "official_source_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/standardization_batch",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'standardization_batch' (role metadata, type categorical).",
+          "name": "standardization_batch",
+          "source": {
+            "extract": {
+              "column": "standardization_batch"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
         }
       ],
       "key": {
@@ -149,5 +254,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.1.0"
+  "version": "1.2.0"
 }

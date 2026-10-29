@@ -63,7 +63,7 @@ def anonymize_variables(df: pd.DataFrame, descriptor: DatasetDescriptor) -> tupl
     out = df.copy()
 
     for col in out.columns:
-        if col == _JOIN_KEY or col not in targets:
+        if col in {_JOIN_KEY, "observation_id"} or col not in targets:
             continue
         series = out[col].astype("float64")
         finite = series[series.notna()]
@@ -75,7 +75,7 @@ def anonymize_variables(df: pd.DataFrame, descriptor: DatasetDescriptor) -> tupl
     rename: dict[str, str] = {}
     slot = 0
     for col in out.columns:
-        if col == _JOIN_KEY:
+        if col in {_JOIN_KEY, "observation_id"}:
             continue
         generic = _generic_name(slot)
         name_map[col] = generic
@@ -148,6 +148,9 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     provenance), but their titles are removed. The input card is not mutated. Deterministic; no network.
     """
     out = copy.deepcopy(card)
+    if "curation" in out:
+        report = out["curation"] or {}
+        out["curation"] = {"schema_version": report.get("schema_version"), "grain": report.get("grain"), "view_counts": {name: len(columns) for name, columns in report.get("views", {}).items()}, "mapping": "withheld for anonymized tier"}
     name_map = _variable_index_map(out)
     out["warnings"] = []  # warnings quote original variable names / authored free text -> drop wholesale
     if "assessments" in out:
