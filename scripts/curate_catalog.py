@@ -42,7 +42,7 @@ def refresh_views(root: Path, leaf: Path) -> dict[str, Any]:
     canonical = dataset_dir / "canonical"
     report_path = canonical / "curation" / "mapping.json"
     previous = json.loads(report_path.read_text(encoding="utf-8"))
-    result = curate_bundle(leaf, dataset_id, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True)
+    result = curate_bundle(leaf, dataset_id, assume_paired_y=True, numeric_names={v.name for v in descriptor.variables if v.type is VarType.NUMERIC}, categorical_names={v.name for v in descriptor.variables if v.type is VarType.CATEGORICAL}, allow_unaligned_y=True, verify_spectral_order=True, variable_specs=descriptor.variables)
     if previous.get("source_hashes") != result.report.get("source_hashes") or previous.get("enrichments") != result.report.get("enrichments"):
         raise ValueError("source inputs/enrichment changed: a full canonical rebuild is required")
     old_structure = pd.read_parquet(canonical / "curation" / "structure.parquet")

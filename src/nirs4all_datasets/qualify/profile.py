@@ -29,7 +29,7 @@ import pandas as pd
 from nirs4all_datasets.canonical import resolve_config
 from nirs4all_datasets.curation import card_curation
 from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
-from nirs4all_datasets.qualify import anonymize, croissant, datasheet, registry
+from nirs4all_datasets.qualify import anonymize, croissant, datasheet, metrics, registry
 from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
 
 SCHEMA_VERSION = "2.0"
@@ -469,7 +469,17 @@ def card_metadata_fresh(card_path_or_dir: str | Path, descriptor: DatasetDescrip
 # =============================================================================
 # Card assembly
 # =============================================================================
-def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, compute_pca: bool = True, assessment_mode: str = "legacy") -> dict[str, Any]:
+def build_card(
+    dataset_dir: str | Path,
+    descriptor: DatasetDescriptor,
+    *,
+    compute_assets: bool = True,
+    compute_pca: bool = True,
+    assessment_mode: str = "legacy",
+    diagnostic_domain: str | None = None,
+    assessment_selector: dict[str, str] | None = None,
+    assessment_view: str = "native",
+) -> dict[str, Any]:
     """Build the identity card for a dataset directory from its canonical Parquet.
 
     Reads ``canonical/dataset.json`` (via :func:`resolve_config`) and each source/variables/splits
@@ -482,20 +492,33 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         descriptor: The dataset descriptor (identity, variables, governance, provenance).
         compute_assets: Render the per-source/per-variable PNGs (off => no plot files, no asset paths).
         compute_pca: Compute the per-source PCA explained-variance summary (off => ``pca: null``).
+        assessment_mode: Legacy Python calculations or explicit shared intrinsic reports.
+        diagnostic_domain: Optional VERA25 exploration context; specificity stays unvalidated.
+        assessment_selector: Explicit producer/engine/protocol/population/context selection.
+            Ambiguous source contexts are rejected rather than choosing the newest report.
+        assessment_view: Metric view ID to project; other views remain in the sidecar.
     """
     dataset_dir = Path(dataset_dir)
     config = resolve_config(dataset_dir)
     if assessment_mode not in {"legacy", "shared"}:
         raise ValueError("assessment_mode must be legacy or shared")
-    from nirs4all_datasets.qualify.assessments import intrinsic_profile, read_assessments
+    from nirs4all_datasets.qualify.assessments import card_assessments, intrinsic_profile, read_assessments
 
     reports = read_assessments(dataset_dir, descriptor.id) if assessment_mode == "shared" else []
-    intrinsic = [r for r in reports if r["scope"] == "intrinsic"]
+    selector = assessment_selector or {}
+    allowed_selectors = {"producer", "engine_version", "protocol_version", "population_id", "context_id"}
+    if set(selector) - allowed_selectors:
+        raise ValueError("unsupported assessment_selector field")
+    intrinsic = [r for r in reports if r["scope"] == "intrinsic" and all(r.get(key) == value for key, value in selector.items())]
+    if selector and not intrinsic:
+        raise ValueError("assessment_selector matches no intrinsic assessment context")
     by_source: dict[str, dict[str, Any]] = {}
     for report in intrinsic:
+        if report["metrics"] and not any(metric["view_id"] == assessment_view for metric in report["metrics"]):
+            raise ValueError("assessment_view matches no metric in the selected context")
         if report["source_id"] in by_source:
             raise ValueError("select exactly one intrinsic assessment context per source")
-        by_source[report["source_id"]] = intrinsic_profile(report)
+        by_source[report["source_id"]] = intrinsic_profile(report, view_id=assessment_view)
     warnings: list[str] = []
     manifest_path = dataset_dir / "manifest.json"
     if manifest_path.exists():
@@ -516,6 +539,8 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         source_frames.append(df)
         profile = (section.get("spectral") or {}).get("profile")
         if isinstance(profile, dict):
+            if diagnostic_domain is not None:
+                profile["diagnostics"] = metrics.diagnostic_hypotheses(profile, top_k=8, domain_context=diagnostic_domain)
             source_profiles.append(profile)
         all_sample_ids |= src_samples
         if _SAMPLE_KEY in df.columns:
@@ -541,7 +566,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         for section in variable_sections:
             if section["name"] in by_name:
                 section["normalization"] = {k: v for k, v in by_name[section["name"]].items() if k != "rows"}
-                section["denominator"] = "canonical_sample_units"
+                section["denominator"] = "canonical_observations" if variables_block and variables_block.get("join_key") == _OBS_KEY else "canonical_sample_units"
     if assessment_mode == "legacy":
         _attach_xy_metrics(source_sections, source_frames, variable_sections, variables_df)
     else:
@@ -555,6 +580,12 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     card: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "protocol_version": registry.PROTOCOL_VERSION,
+        "qualification_provenance": {
+            "assessment_mode": assessment_mode,
+            "legacy_calculation_protocol": registry.PROTOCOL_VERSION if assessment_mode == "legacy" else None,
+            "diagnostic_domain": diagnostic_domain,
+            "interpretation": "uncalibrated_heuristic_signature",
+        },
         "generated_at": datetime.now(UTC).isoformat(),
         "identity": _identity(descriptor),
         "versions": _versions(descriptor),
@@ -571,7 +602,8 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         "warnings": warnings,
     }
     if assessment_mode == "shared":
-        card["assessments"] = reports
+        card["assessments"] = card_assessments(intrinsic, view_id=assessment_view)
+        card["assessment_selection"] = {"selector": selector, "view_id": assessment_view}
         card["assessment_mode"] = "shared"
     sanitized: dict[str, Any] = _jsonify(card)
     return sanitized

@@ -30,6 +30,7 @@ _CARD_KEYS = {
     "warnings",
     "curation",
     "variable_join_key",
+    "qualification_provenance",
 }
 
 # Per-source spectral keys.
@@ -78,7 +79,9 @@ def test_build_card_multi_source_targets_and_metadata(canonical_dataset: Any) ->
     # --- top-level contract: exactly the documented key set ---
     assert set(card) == _CARD_KEYS
     assert card["schema_version"] == "2.0"
-    assert card["protocol_version"]
+    assert card["protocol_version"] == "7"
+    assert card["qualification_provenance"]["legacy_calculation_protocol"] == "7"
+    assert card["qualification_provenance"]["interpretation"] == "uncalibrated_heuristic_signature"
     assert card["identity"]["id"] == "corn"
 
     # --- sources: one per spectral block, finite spectral stats, pca present (dict or null) ---

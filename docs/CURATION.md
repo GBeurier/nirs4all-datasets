@@ -56,8 +56,8 @@ the variables' `join_key`; Python/IO/Croissant readers use it. Native split
 assignments that differ within a group are likewise retained by observation and
 flagged as a possible group overlap. No split is invented or applied.
 
-The canonical format is **1.1**, the curation contract **1.0**, and the card
-protocol **6**. Existing format-1.0 caches remain readable, but need rebuilding
+The canonical format is **1.1**, the curation contract **1.1**, and the card
+protocol **7**. Existing format-1.0 caches remain readable, but need rebuilding
 to expose curated views. The curated source views and full mapping are withheld
 for the anonymized tier; its existing masked accessors remain available.
 
@@ -181,3 +181,22 @@ conversion. Re-running unchanged inputs skips canonical conversion.
 `--refresh-curation-only` refreshes views and variable/card metadata without
 recomputing spectral analyses. It requires identical input hashes and source-unit
 membership; an identity or input change instead requires the full migration.
+
+## Explicit numeric dialects (curation 1.1)
+
+Curated M/Y and their statistics consume source Table Schema `decimalChar`,
+`groupChar` and field types. Explicit descriptor dialects take precedence; an
+unspecified descriptor default does not erase a source declaration. Parsing uses
+the same normalizer as the unified canonical variables. No dialect is guessed
+from value magnitude. Source views preserve textual censored/invalid tokens and
+record their status, operator/bound/unit; the typed canonical variables use null
+with a separate normalization audit. Original M/Y bytes remain unchanged.
+Every source-column mapping carries `mapping_version` and a stable `variable_id`
+within that protocol, including fields excluded from an informative view.
+
+The numeric normalization audit also uses protocol 1.1. Unicode inequalities and
+scientific-notation bounds retain operator, bound and unit; categorical literals
+are not treated as censored numbers. A declared thousands separator must form
+valid groups, so malformed tokens are flagged rather than silently rescaled.
+Variable statistics state whether their denominator is canonical observations or
+source units, according to the actual canonical join key.

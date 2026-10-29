@@ -198,7 +198,7 @@ def test_dataset_page_per_dataset(tmp_path: Path) -> None:
     assert "Corn — oil" in public
     assert "Dataset property explorer" in public and "Spectral sources" in public and "Provenance" in public
     assert "Metric interpretation reference" in public and "PCA Q (SPE)" in public
-    assert "Computed metric scores" in public and "Interprétation dataset" in public
+    assert "Computed metric scores" in public and "Interprétation descriptive" in public and "Causes possibles à vérifier" in public
     assert "count(isnan(X)) / X.size" in public
     assert "Bug-hunting / supervised audits" in public and "Label bugs" in public
     assert "X-Y spectral correlation" in public and "PCA score plot" in public
@@ -338,3 +338,14 @@ def test_stale_card_renders_as_pending(tmp_path: Path) -> None:
     page = (out / "dataset" / "corn_oil.html").read_text(encoding="utf-8")
     assert "card pending" in page.lower()  # a stale card is treated as no card (never shows wrong stats)
     assert not (out / "data" / "corn_oil.card.json").exists()
+
+
+def test_intrinsic_profile_renders_external_checks_and_exact_provider_context():
+    from nirs4all_datasets.qualify import metrics
+
+    profile = {"diagnostics": metrics.diagnostic_hypotheses({}), "producer": {"name": "nirs4all-preflight", "engine_version": "0.1.0", "protocol_version": "1", "population_id": "development_real", "context_id": "intrinsic/masked/v1", "view_id": "native"}}
+    view = DatasetView(entry={"id": "d"}, tier="public", card={"sources": [{"source_id": "X", "spectral": {"profile": profile}}]}, has_card=True, show_value_stats=True, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=True, asset_dataset_id="d")
+    html = pages._profile_panel(view)
+    assert "référence blanche/noire réellement acquise" in html
+    assert "intrinsic/masked/v1" in html and "development_real" in html and "nirs4all-preflight" in html
+    assert "0.78 ne signifie pas 78 %" in html

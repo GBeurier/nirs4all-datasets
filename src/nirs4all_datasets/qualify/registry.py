@@ -18,12 +18,20 @@ import numpy as np
 
 from nirs4all_datasets.qualify import metrics
 
-PROTOCOL_VERSION = "6"  # 6: traced curation, honest identity and observation-grain variables; 5: spectral-property explorer
+PROTOCOL_VERSION = "7"  # Explicit heuristic/domain semantics and proxy aliases; raw legacy calculations remain separately identifiable.
 
 Scope = Literal["source", "variable", "dataset"]
 MetricFn = Callable[..., Any]
 
 _REGISTRY: dict[Scope, dict[str, MetricFn]] = {"source": {}, "variable": {}, "dataset": {}}
+
+
+def migration_inventory() -> dict[str, Any]:
+    """Read the packaged, source-bound inventory; this runs no scientific kernel."""
+    import json
+    from importlib.resources import files
+
+    return dict(json.loads(files("nirs4all_datasets.qualify").joinpath("metric_inventory.json").read_text(encoding="utf-8")))
 
 
 def register(key: str, scope: Scope) -> Callable[[MetricFn], MetricFn]:
