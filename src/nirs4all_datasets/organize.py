@@ -68,6 +68,7 @@ def organize(
     datasets_root: str | Path,
     *,
     force: bool = False,
+    source_context: dict[str, str] | None = None,
 ) -> OrganizeResult:
     """Place raw, (re)build the canonical form + manifest for one dataset, idempotently.
 
@@ -86,13 +87,16 @@ def organize(
     manifest_path = dataset_dir / "manifest.json"
     previous = read_manifest(manifest_path) if manifest_path.exists() else None
 
+    from nirs4all_datasets.manifest import sha256_file
+
+    converter_config = {f"source_context:{key}": sha256_file(path) for key, path in sorted((source_context or {}).items())}
     changed, reasons = needs_rebuild(
         descriptor,
         dataset_dir=dataset_dir,
         previous=previous,
         converter_name=CONVERTER_NAME,
         converter_version=CONVERTER_VERSION,
-        converter_config={},
+        converter_config=converter_config,
         raw_files=_source_raw_pairs(source),
         verify_outputs=True,
     )
@@ -100,13 +104,13 @@ def organize(
         return OrganizeResult(descriptor.id, dataset_dir, manifest_path, skipped=True, conversion_status=previous.conversion_status, conversion_warnings=previous.conversion_warnings)
 
     placed = _place_raw(source, dataset_dir)
-    result = build_canonical(source, descriptor, dataset_dir)
+    result = build_canonical(source, descriptor, dataset_dir, source_context=source_context)
     manifest = build_manifest(
         descriptor,
         dataset_dir=dataset_dir,
         converter_name=result.converter_name,
         converter_version=result.converter_version,
-        converter_config={},
+        converter_config=converter_config,
         row_counts=result.row_counts,
         raw_files=placed,
         conversion_status=result.status,

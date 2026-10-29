@@ -150,6 +150,10 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     out = copy.deepcopy(card)
     name_map = _variable_index_map(out)
     out["warnings"] = []  # warnings quote original variable names / authored free text -> drop wholesale
+    if "assessments" in out:
+        from nirs4all_datasets.qualify.assessments import public_assessments
+
+        out["assessments"] = public_assessments(out["assessments"], anonymized=True)
 
     identity = out.get("identity")
     if isinstance(identity, dict):
@@ -172,6 +176,7 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     for var in out.get("variables") or []:
         if not isinstance(var, dict):
             continue
+        var.pop("normalization", None)  # original names/raw parsing rules belong to private provenance
         var.pop("histogram", None)  # the raw-value histogram would leak the real distribution/range
         if "assets" in var:
             var["assets"] = _mask_variable_assets(var.get("assets") or [], name_map)
@@ -233,7 +238,8 @@ def public_descriptor(descriptor: DatasetDescriptor) -> DatasetDescriptor:
 
     if descriptor.tier is not Tier.ANONYMIZED:
         return descriptor
-    variables = [v.model_copy(update={"name": _generic_name(i), "unit": None}) for i, v in enumerate(descriptor.variables)]
+    names = {v.name: _generic_name(i) for i, v in enumerate(descriptor.variables)}
+    variables = [v.model_copy(update={"name": names[v.name], "unit": None, "original_name": None, "equivalent_to": names.get(v.equivalent_to) if v.equivalent_to else None, "derived_from": [names[name] for name in v.derived_from if name in names]}) for v in descriptor.variables]
     provenance = descriptor.provenance.model_copy(update={"contributor": _MASK, "reference_method": None})
     publications = [p.model_copy(update={"title": None}) for p in descriptor.publications]
     # A DOI / origin locator / Dataverse version resolves to the *named* dataset, so for the

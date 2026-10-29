@@ -7,6 +7,7 @@
 # monorepo). src/Makevars builds `-p nirs4all-datasets-capi --offline` to produce
 # the staticlib (libnirs4all_datasets_capi.a), which the C shim (src/n4ds.c) links.
 [workspace]
+exclude = ["patched-readers/hdf5-reader", "patched-readers/netcdf-reader"]
 resolver = "2"
 members = [
     "vendored/nirs4all-datasets-core",
@@ -18,7 +19,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.3.13"
+version = "0.3.14"
 edition = "2021"
 rust-version = "1.88"
 license = "CECILL-2.1 OR AGPL-3.0-or-later"
@@ -28,11 +29,11 @@ homepage = "https://github.com/GBeurier/nirs4all-datasets"
 readme = "README.md"
 
 [workspace.dependencies]
-nirs4all-datasets-core = { path = "vendored/nirs4all-datasets-core", version = "0.3.13" }
-nirs4all-formats-core = { path = "vendored/nirs4all-formats-core", version = "0.2.12" }
-nirs4all-formats = { path = "vendored/nirs4all-formats", version = "0.2.12" }
-nirs4all-io-core = { path = "vendored/nirs4all-io-core", version = "0.2.6" }
-nirs4all-io = { path = "vendored/nirs4all-io", version = "0.2.6" }
+nirs4all-datasets-core = { path = "vendored/nirs4all-datasets-core", version = "0.3.14" }
+nirs4all-formats-core = { path = "vendored/nirs4all-formats-core", version = "0.2.13" }
+nirs4all-formats = { path = "vendored/nirs4all-formats", version = "0.2.13" }
+nirs4all-io-core = { path = "vendored/nirs4all-io-core", version = "0.2.11" }
+nirs4all-io = { path = "vendored/nirs4all-io", version = "0.2.11" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order", "float_roundtrip"] }
 thiserror = "2.0"
@@ -40,7 +41,7 @@ sha2 = "0.10"
 hex = "0.4"
 directories = "5"
 ureq = "2"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.1", default-features = false, features = ["deflate"] }
 regex = "1.10"
 toml = "0.8"
 indexmap = { version = "2.2", features = ["serde"] }

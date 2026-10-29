@@ -42,11 +42,12 @@ import pyarrow.parquet as pq
 
 from nirs4all_datasets import __version__ as _PKG_VERSION
 from nirs4all_datasets.bootstrap import _metadata_aliases, _original_sample_alias
+from nirs4all_datasets.curation import enrich_lucas_metadata, identity_frame, is_provenance_column, normalize_variable
 from nirs4all_datasets.manifest import sha256_file
 from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
 
 CONVERTER_NAME = "nirs4all-datasets-canonical"
-CONVERTER_VERSION = _PKG_VERSION or "2.0"
+CONVERTER_VERSION = (_PKG_VERSION or "2.0") + "+curation.1"
 CANONICAL_FORMAT_VERSION = "1.0"
 JOIN_KEY = "sample_id"
 _OBS_KEY = "observation_id"
@@ -108,7 +109,7 @@ def _x_files(leaf: Path) -> dict[str, Path]:
     return blocks
 
 
-def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tuple[pd.DataFrame | None, bool, list[str]]:
+def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str], dataset_id: str = "", source_context: dict[str, str] | None = None) -> tuple[pd.DataFrame | None, bool, list[str]]:
     """Read ``M.csv`` and build the ``observation_id -> sample_id`` mapping.
 
     Returns ``(m_df, has_sample_id, warnings)`` where ``m_df`` is the full metadata table (or ``None``
@@ -119,7 +120,20 @@ def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tup
     m_path = leaf / "M.csv"
     if not m_path.exists():
         return None, False, warnings
-    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY, ids_sample, JOIN_KEY}, str))
+    m = pd.read_csv(m_path, sep=_sniff_sep(m_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY, ids_sample, JOIN_KEY, "id_sample", "ID_sample", "SampleID", "source_sample_id"}, str), keep_default_na=False, na_values=[""])
+    if dataset_id and _OBS_KEY in m:
+        m, identity = identity_frame(dataset_id, m)
+        m.attrs["identity_report"] = identity
+        if identity.get("reason") == "partially_missing_sample_id":
+            warnings.append("M.csv: missing sample IDs use identity sample_id; physical sample identity is unavailable for those rows")
+        if dataset_id in {"ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y"}:
+            soilsite = (source_context or {}).get("soilsite")
+            if soilsite:
+                m, design = enrich_lucas_metadata(m, soilsite)
+                m.attrs["identity_report"] = identity
+                m.attrs["source_design"] = design
+            elif "site_id" not in m:
+                warnings.append("LUCAS sampling design unavailable: provide source_context soilsite; missing site/campaign information is not evidence of independent samples")
     if _OBS_KEY not in m.columns:
         warnings.append(f"M.csv has no {_OBS_KEY!r} column; ignoring metadata and using identity sample_id.")
         return None, False, warnings
@@ -131,7 +145,7 @@ def _read_obs_to_sample(leaf: Path, ids_sample: str, text_cols: set[str]) -> tup
     if has_sample:
         conflicts = m.groupby(_OBS_KEY, dropna=False)[ids_sample].nunique(dropna=True)
         if (conflicts > 1).any():
-            warnings.append("M.csv: some observation_id values map to multiple sample_id values; kept the first.")
+            raise ValueError("M.csv: observation_id maps to conflicting sample_id values")
     return m, has_sample, warnings
 
 
@@ -173,12 +187,16 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
 
     obs_chunks: list[pd.Series] = []
     spectral_chunks: list[pd.DataFrame] = []
-    for chunk in pd.read_csv(path, sep=sep, dtype=dtypes, chunksize=_READ_CHUNK):
+    for chunk in pd.read_csv(path, sep=sep, dtype=dtypes, chunksize=_READ_CHUNK, keep_default_na=False, na_values={c: ["", "NA", "NaN", "nan", "N/A", "NULL"] for c in spectral_cols}):
+        if chunk[_OBS_KEY].isna().any() or chunk[_OBS_KEY].str.strip().eq("").any():
+            raise ValueError(f"{path.name}: observation_id must be nonempty")
         obs_chunks.append(chunk[_OBS_KEY].astype(str))
         spectral_chunks.append(chunk[spectral_cols])
     obs = pd.concat(obs_chunks, ignore_index=True) if obs_chunks else pd.Series([], dtype=str, name=_OBS_KEY)
     spectral = pd.concat(spectral_chunks, ignore_index=True) if spectral_chunks else pd.DataFrame(columns=spectral_cols)
 
+    if obs.duplicated().any():
+        raise ValueError(f"{path.name}: observation_id must be unique within each source")
     sample, n_orphans = _sample_for(obs, m, has_sample, ids_sample)
     if n_orphans:
         warnings.append(f"{path.name}: {n_orphans} observation_id(s) have no row in M.csv; used identity sample_id for them.")
@@ -199,6 +217,11 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
         "path": f"canonical/sources/{source_id}.parquet",
         "n_observations": int(len(obs)),
         "n_variables": len(spectral_cols),
+        "duplicate_vectors": {
+            "distinct": int(len(spectral) - spectral.duplicated().sum()),
+            "additional_copies": int(spectral.duplicated().sum()),
+            "semantics": "equal stored spectral values; not proof of technical reacquisition; no rows removed",
+        },
         "axis_unit": None,
         "axis_min": min(numeric) if numeric else None,
         "axis_max": max(numeric) if numeric else None,
@@ -214,7 +237,7 @@ def _to_float(value: str) -> float | None:
         return None
 
 
-def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str], text_cols: set[str], aliases: dict[str, str]) -> tuple[pd.DataFrame | None, list[str]]:
+def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, spectral_samples: set[str], numeric_cols: set[str], text_cols: set[str], aliases: dict[str, str], column_mapping: dict[str, str] | None = None) -> tuple[pd.DataFrame | None, list[str]]:
     """Build the per-sample variables table (Y columns UNION extra M columns), one row per sample_id.
 
     Y.csv columns and non-structural M columns are merged on ``observation_id``, then collapsed to one
@@ -228,7 +251,10 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     y_path = leaf / "Y.csv"
     if y_path.exists():
-        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str))
+        y = pd.read_csv(y_path, sep=_sniff_sep(y_path), dtype=dict.fromkeys(text_cols | {_OBS_KEY}, str), keep_default_na=False, na_values=[""])
+        y = y.rename(columns=column_mapping or {})
+        if y.columns.duplicated().any():
+            raise ValueError("declared variable mapping creates duplicate Y columns")
         if _OBS_KEY not in y.columns:
             # Some upstream packages export X/Y/M as paired rows, without a key in Y. Only attach
             # M's keys when an X block independently confirms its complete observation order.
@@ -249,8 +275,10 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     if m is not None:
         # Drop structural plumbing + the standardization script's `source_*` provenance-tracking columns
         # (file paths, repo refs, grouped-export notes): these are bookkeeping, not sample measurements.
-        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not str(c).startswith("source_")]
-        m_extra = m[keep].rename(columns=aliases)
+        keep = [_OBS_KEY] + [c for c in m.columns if c not in _M_STRUCTURAL and c != _OBS_KEY and c != ids_sample and not (str(c).startswith("source_") and is_provenance_column(str(c)))]
+        m_extra = m[keep].rename(columns=aliases | (column_mapping or {}))
+        if m_extra.columns.duplicated().any():
+            raise ValueError("declared variable mapping creates duplicate metadata columns")
         if m_extra.shape[1] > 1:
             frames.append(m_extra)
 
@@ -270,8 +298,14 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     for col in value_cols:
         per_sample_distinct = merged.groupby(JOIN_KEY, dropna=False)[col].nunique(dropna=True)
         if (per_sample_distinct > 1).any():
-            warnings.append(f"variables: column {col!r} has >1 distinct value within a sample_id; kept the first.")
-    grouped = merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
+            warnings.append(f"variables: column {col!r} varies within a sample_id; retained at acquisition grain in observations.parquet and omitted from per-sample variables.")
+    # Acquisition-varying values must not be reduced to an arbitrary first value.
+    merged.attrs["observation_variables"] = merged.copy()
+    stable = [col for col in value_cols if not (merged.groupby(JOIN_KEY, dropna=False)[col].nunique(dropna=True) > 1).any()]
+    observation_variables = merged.attrs["observation_variables"]
+    grouped = merged.groupby(JOIN_KEY, dropna=False, sort=False)[stable].first().reset_index()
+    value_cols = stable
+    grouped.attrs["observation_variables"] = observation_variables
     grouped[JOIN_KEY] = grouped[JOIN_KEY].astype(str)
     # Coerce comma-decimal float columns (European locales export "12,5") to real floats -- but ONLY for
     # columns the descriptor declares NUMERIC, so a genuinely numeric target/metadata is not stranded as an
@@ -289,7 +323,9 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
     phantom = sorted(set(grouped[JOIN_KEY]) - spectral_samples)
     if phantom:
         warnings.append(f"variables: {len(phantom)} sample_id(s) have Y/metadata but no spectra in any source (e.g. {phantom[:3]}); kept.")
-    return grouped[[JOIN_KEY] + value_cols], warnings
+    result = grouped[[JOIN_KEY] + value_cols]
+    result.attrs["observation_variables"] = observation_variables
+    return result, warnings
 
 
 def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> tuple[pd.DataFrame | None, str | None, list[str]]:
@@ -317,7 +353,7 @@ def _build_split(m: pd.DataFrame | None, has_sample: bool, ids_sample: str) -> t
     return split, "original", warnings
 
 
-def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir: str | Path) -> CanonicalResult:
+def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir: str | Path, *, source_context: dict[str, str] | None = None) -> CanonicalResult:
     """Convert a v2.0 leaf into the canonical per-source, sample-identity-joined form.
 
     Wipes ``<out_dir>/canonical/`` first (no stale artifacts), then writes one Parquet per X block
@@ -344,11 +380,23 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
 
     warnings: list[str] = []
     ids_sample = descriptor.ids.sample_id
+    source_identity_rules = {"mendeley_human_arm_muscle_vis_swir_reflectance", "ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y", "ucph_granules_ambient_moisture_api_nir", "ucph_granules_moisture_controlled_api_nir", "dryad_rice_leaf_reflectance_manual", "flanagan_api_compounds_raman", "drug_compound_flanagan_raman", "drug_common_application_flanagan_raman", "drug_solvent_reagent_flanagan_raman"}
+    if descriptor.id in source_identity_rules:
+        ids_sample = JOIN_KEY
     aliases = _metadata_aliases(leaf)
+    column_mapping = {v.original_name: v.name for v in descriptor.variables if v.original_name and v.original_name != v.name}
+    if len(column_mapping) != sum(bool(v.original_name and v.original_name != v.name) for v in descriptor.variables):
+        raise ValueError("original variable names must map unambiguously")
     text_cols = {v.name for v in descriptor.variables if v.type is not VarType.NUMERIC}
+    text_cols.update(v.original_name for v in descriptor.variables if v.original_name and v.type is not VarType.NUMERIC)
     text_cols.update(name for name, alias in aliases.items() if alias in text_cols)
-    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols)
+    m, has_sample, m_warnings = _read_obs_to_sample(leaf, ids_sample, text_cols, descriptor.id, source_context)
     warnings.extend(m_warnings)
+    identity = m.attrs.get("identity_report") if m is not None else None
+    if identity:
+        (canonical / "identity.json").write_text(json.dumps(identity, indent=2), encoding="utf-8")
+    if m is not None and m.attrs.get("source_design"):
+        (canonical / "source-design.json").write_text(json.dumps(m.attrs["source_design"], indent=2), encoding="utf-8")
     if descriptor.ids.sample_id_available and not has_sample:
         warnings.append(f"descriptor declares sample_id available but {ids_sample!r} is absent from M.csv; using identity sample_id.")
 
@@ -359,6 +407,10 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         warnings.append(f"declared sources {sorted(declared)} != on-disk X blocks {sorted(found)}; converting the on-disk blocks.")
 
     hashes: dict[str, str] = {}
+    if m is not None:
+        original_metadata = m.copy()
+        original_metadata.attrs.clear()
+        hashes["provenance.parquet"] = _write_table(pa.Table.from_pandas(original_metadata, preserve_index=False), canonical / "provenance.parquet")
     row_counts: dict[str, int] = {}
     source_entries: list[dict[str, Any]] = []
     spectral_samples: set[str] = set()
@@ -381,10 +433,25 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         return CanonicalResult(out, canonical, config, CONVERTER_NAME, CONVERTER_VERSION, ConversionStatus.FAILED, hashes, row_counts, warnings)
 
     numeric_cols = {v.name for v in descriptor.variables if v.type is VarType.NUMERIC}
-    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols, text_cols, aliases)
+    variables, var_warnings = _build_variables(leaf, m, has_sample, ids_sample, spectral_samples, numeric_cols, text_cols, aliases, column_mapping)
     warnings.extend(var_warnings)
     variables_path: str | None = None
     if variables is not None:
+        observation_variables = variables.attrs.pop("observation_variables", None)
+        variables.attrs.clear()
+        if observation_variables is not None:
+            observation_variables.attrs.clear()
+        normalization = []
+        for variable in descriptor.variables:
+            if variable.name in variables:
+                variables[variable.name], record = normalize_variable(variables[variable.name], variable)
+                normalization.append(record)
+            if observation_variables is not None and variable.name in observation_variables:
+                observation_variables[variable.name], _ = normalize_variable(observation_variables[variable.name], variable)
+        if observation_variables is not None:
+            hashes["observations.parquet"] = _write_table(pa.Table.from_pandas(observation_variables, preserve_index=False), canonical / "observations.parquet")
+            row_counts["observation_variables"] = len(observation_variables)
+        (canonical / "curation.json").write_text(json.dumps({"protocol_version": "1", "variables": normalization}, indent=2, allow_nan=False), encoding="utf-8")
         out_var = canonical / "variables.parquet"
         hashes["variables.parquet"] = _write_table(pa.Table.from_pandas(variables, preserve_index=False), out_var)
         row_counts["variables"] = int(len(variables))
@@ -400,6 +467,8 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
         split_refs.append({"name": split_name, "path": f"canonical/splits/{split_name}.parquet"})
 
     config = _dataset_json(descriptor, source_entries, variables_path=variables_path, split_refs=split_refs)
+    if identity:
+        config["identity"] = identity
     (canonical / "dataset.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
 
     status = ConversionStatus.PARTIAL if warnings else ConversionStatus.OK

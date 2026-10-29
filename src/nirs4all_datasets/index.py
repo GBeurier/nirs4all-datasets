@@ -583,6 +583,12 @@ def index_entry(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, An
         }
 
     descriptor_dump = pub.model_dump(mode="json")
+    # Keep additive optional defaults out of historical cross-language contracts.
+    defaults: dict[str, object] = {"semantic_role": None, "original_name": None, "equivalent_to": None, "derived_from": [], "missing_values": [], "numeric_sentinels": [], "decimal_separator": ",", "thousands_separator": None}
+    for variable in descriptor_dump.get("variables", []):
+        for key, value in defaults.items():
+            if variable.get(key) == value:
+                variable.pop(key, None)
     descriptor_dump["retrieval"] = retrieval
 
     return {
