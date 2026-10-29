@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 163 sample(s), 163 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 163 sample(s), 163 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -69,7 +71,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +80,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 2 fields, Y: 8 fields, measurements: 1 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +101,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `653bab68539e08bcb06f9028a648e6db6170ee87c5b8ade1701da8afd0493419`
-- **Processing hash:** `bf1cd03b9b8595503eb2e3b54b4a590f9ec47df2dd6f5cd1cdab0b7b96465241` | **metadata hash:** `768c9c2257419394c5d20fa1e5cea7102cac9398431de073b2889636a0a9798c`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `102b33b69a38b0119016d6d11a844672a6c9dfaf2da01f433055f4cf6704f141`
+- **Processing hash:** `0d961da3ded5658f50b96c3e50544a84f62d2e0bdd5dd30389319ba8dc11dd60` | **metadata hash:** `d21b4dfd0da3b24e8a3614cd029804e89c6fc70db1f887f0d5fa239122b3405e`

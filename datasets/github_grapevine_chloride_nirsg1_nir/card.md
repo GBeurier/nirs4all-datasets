@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 259 sample(s), 259 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 259 sample(s), 259 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -56,7 +58,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -64,7 +66,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Chaque couple trial × pot_number est unique. replicate=1…5 est la répétition biologique du plan génotype × sel. Les trois lectures au chloridomètre sont analytiques dans Y ; aucune n’est une répétition spectrale.
+- **Curated views:** M: 3 fields, Y: 4 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,6 +87,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e963179e3ad9cf050e0e8cc3c83d33b7451d82d7d9acff1304607c23fbd4981e`
-- **Processing hash:** `77ae60877fc4dab5030ec0e11af705a908b691571f210d38315c73dd356611a6` | **metadata hash:** `fcff7da266837a36d20f40eea40f0d58af42ebb1d9b9d136b802839da62d10f3`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `ed9200ff2bb8af47590837b66266d0f8d6f296dda232a6c65ab3f3c669cb9fe7`
+- **Processing hash:** `2f1ec3c5d4e0fdc510ad5ff78d05002ab3bd19f3f065585eb0eff3a1bd586faf` | **metadata hash:** `ff2cb293ecf396443c59bb19629089c48f9a9ea2012ea57be90223bc13cfffd0`

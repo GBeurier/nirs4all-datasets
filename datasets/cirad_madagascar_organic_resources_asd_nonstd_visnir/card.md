@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 1000 sample(s), 1000 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -94,7 +96,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Litter_Fodder | metadata | categorical | *Not specified.* | n=1000, missing=782, classes=2, top no (×209) |
 | Sample_type | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=7, top Composite (×858) |
 | Composted/Non_conposted | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=2, top nc (×894) |
-| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 1825 (×7) |
+| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 3650 (×7) |
 | OR_Stage | metadata | categorical | *Not specified.* | n=1000, missing=976, classes=3, top mature (×11) |
 
 ## Statistics — splits
@@ -106,7 +108,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -117,7 +119,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 30 fields, Y: 20 fields, measurements: 0 fields, passport: 26 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -137,6 +140,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `461df0c1eefa9db47f7d79f9e464aa13266f35856049e62630c87ccecd3c95b5`
-- **Processing hash:** `6b3c02c86ef5be539aecc4dd325cb3488a4208815158a0edb55540d8cb93fdb8` | **metadata hash:** `dabfdce228a060e1379857bcce075a3d3808847db7b05d461d84219048110983`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e0e9cfaf3a4029dcf3391e0dcda12e74cbe927c1f6a0298db2288173f699e8e3`
+- **Processing hash:** `0b715d12b7460ef7b5c4d8208a0ef56e75658c2a3217c75783f27ab784b01935` | **metadata hash:** `4e41c8c7579794b6e20bd0cea96d2147d0f42d0383d9df7c6e32baeb2cb9d432`

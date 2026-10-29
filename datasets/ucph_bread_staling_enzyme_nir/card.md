@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 324 sample(s), 324 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -49,7 +51,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -59,7 +61,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 324 positions exportées ; L/M/R sont trois positions spatiales. Ne pas confondre pain, position et répétition à position fixe.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -79,6 +82,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `930b5adad3f19f574effdcbf7825ec8c11a86c7e36b8c7e692124dc957b0cc2a`
-- **Processing hash:** `6828afe504907912f795c52e4c10393ed0960f23c16dda77fb79bb33d8bb348a` | **metadata hash:** `70fa6cdc85f65a3ec22d82541254b6b0cc5d63be0160ef18d71924150d6a4fc8`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6d7a06fba70664bc016f7cc06e4bf12e4bcab8efd99b78faa410a2c367748f41`
+- **Processing hash:** `8f8462dd18f5f78734da943611ea36948da0b789f1f578563ee0197adab34994` | **metadata hash:** `845efacd60df5f2231e0c9d14187aa7cbf6833b8c415885ca43ae49afe907f00`

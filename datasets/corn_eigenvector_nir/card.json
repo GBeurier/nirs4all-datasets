@@ -1,5 +1,6 @@
 {
   "alignment": {
+    "identity_status": "available",
     "level": "sample",
     "n_observations_total": 240,
     "n_samples": 80,
@@ -9,7 +10,7 @@
       "noise_risk": 0.0021686361166518785,
       "outlier_pressure": 1.0,
       "reference_spread": 0.36396103370053456,
-      "repeatability_risk": 0.0,
+      "repeatability_risk": null,
       "shape_drift": 1.0,
       "structure_complexity": 1.0
     },
@@ -18,13 +19,167 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:50:39.886018+00:00",
+  "curation": {
+    "contract_sha256": "20863a24f66b8e173e76547cfec9c812b09dff402a88a49cef02fd771e67095d",
+    "dataset_id": "corn_eigenvector_nir",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 80,
+      "n_samples": 80,
+      "observations_per_unit": {
+        "1": 80
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "966fd8e2c1b8113058c83b071133a11f2c821d40cc7f66af622bd8cf1bd518c2",
+      "Y.csv": "441bc9ce1dba1c7ffdee8003aff9b0a83d11b50526904534ace27e5020c362d0"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "moisture",
+        "source_columns": [
+          {
+            "name": "Moisture",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 10.993,
+          "min": 9.377,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 80,
+          "n_rows": 80,
+          "n_unique": 77,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "oil",
+        "source_columns": [
+          {
+            "name": "Oil",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 3.832,
+          "min": 3.088,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 80,
+          "n_rows": 80,
+          "n_unique": 73,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "protein",
+        "source_columns": [
+          {
+            "name": "Protein",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 9.711,
+          "min": 7.654,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 80,
+          "n_rows": 80,
+          "n_unique": 78,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "starch",
+        "source_columns": [
+          {
+            "name": "Starch",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 66.472,
+          "min": 62.826,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 80,
+          "n_rows": 80,
+          "n_unique": 80,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [],
+      "Y": [
+        "moisture",
+        "oil",
+        "protein",
+        "starch"
+      ],
+      "measurements": [],
+      "passport": [
+        "dataset_id",
+        "source_sample_id",
+        "sample_index",
+        "dataset",
+        "split_original",
+        "split_source"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:19:05.679151+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +200,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "97c04865570431e9602dcdca39b3f8f1a0c9501de6d71f46439a32ca68797b4a",
+    "content_hash": "e48c1df02aaf777303bb563982985087cb1c1b187718acff727fa46ce4dda10e",
     "manifest": "manifest.json",
-    "metadata_hash": "b9291350222a0b5c4ce90c8f796f388dd6cf5ccfd0256b7dfffac1d1a734b4de",
-    "processing_hash": "b3772222aa96d7824d939eefb2b8d6053122c2320cda3b689534f622f9141ebf"
+    "metadata_hash": "af4f077e8c781c0edc6ab89cef8bdae430b562e41034d04886e57ed53fd00350",
+    "processing_hash": "febfb0792a07c2a27a92ca2af929d9fd3320a2b09a3044d4095d187d525484e6"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "Eigenvector CORN",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "manual",
@@ -93,7 +248,9 @@
     ],
     "publications": [],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -107,8 +264,8 @@
       "n_observations": 80,
       "n_variables": 700,
       "name": "m5spec",
-      "signal_type": "absorbance",
-      "signal_type_confidence": 0.6,
+      "signal_type": null,
+      "signal_type_confidence": 0.0,
       "source_id": "X1",
       "spectral": {
         "curve": {
@@ -1108,49 +1265,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9999688106975504,
-          "effective_rank": 1.06,
-          "n_components_95": 1,
-          "n_components_99": 1
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.7482501856982708,
         "mean_min": 0.04540419871918857,
-        "n_outliers": 28,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9907833869951107,
-            0.007629115853063187,
-            0.0006981519308048197,
-            0.00038568657878169964,
-            0.00017421337298001725,
-            0.00011474949780473555,
-            9.860849664054053e-05,
-            4.642448949567697e-05,
-            2.5144713305904115e-05,
-            1.332876956306614e-05,
-            8.495944323581895e-06,
-            7.924778160871432e-06,
-            3.4741760929156047e-06,
-            2.8560390685103968e-06,
-            1.8868541347859658e-06,
-            1.5283688641347646e-06,
-            1.0399773970066344e-06,
-            7.974868297171042e-07,
-            5.518890513689898e-07,
-            4.2434183029106214e-07,
-            2.9833797869365024e-07,
-            2.6028786590899134e-07,
-            2.3706330703721623e-07,
-            1.508633256835171e-07,
-            1.3617803991557284e-07,
-            1.1059073834135564e-07,
-            1.0275168575333626e-07,
-            9.735741998591501e-08,
-            6.712328847555869e-08,
-            5.875017557573567e-08
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 543.816198649723,
@@ -1167,6 +1290,8 @@
           },
           "diagnostics": [
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1185,13 +1310,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
               "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.8122311192428073,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1210,13 +1342,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.8026899731129631,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1235,13 +1374,48 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6784376331826641,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "PCA Q"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "SNR non d\u00e9grad\u00e9"
+                },
+                {
+                  "level": 0.370765914952409,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
+              "key": "splice",
+              "label": "Splice / raccord d\u00e9tecteurs",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.41473077517377543,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1250,113 +1424,83 @@
                 {
                   "level": 1.0,
                   "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.9969856715763724,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.370765914952409,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
-              "key": "partial_coverage",
-              "label": "M\u00e9lange feuille + fond",
-              "score": 0.6526302787481111,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "interpretation_kind": "possible_cause",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4014285714285714,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Structure PCA"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.9969856715763724,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.370765914952409,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                }
-              ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.5936708904427015,
-              "strength": "moyenne"
-            },
-            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.9969856715763724,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.370765914952409,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "level": 0.9964183381088825,
+                  "signal": "artefacts faibles"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5314655356932233,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "interpretation_kind": "possible_cause",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.29964183381088827,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.9969856715763724,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
                   "level": 0.370765914952409,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.4966734959221899,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.20511098067114833,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
-                },
-                {
-                  "level": 0.9976876634178364,
-                  "signal": "Noise RMS faible"
-                }
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.9,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
+              "key": "normal",
+              "label": "Spectre normal",
+              "missing_evidence": [
+                "repeatability"
               ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.49317060856311706,
-              "strength": "moyenne"
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -1384,10 +1528,10 @@
             "mahalanobis_h_median": 0.6457261912405493,
             "mahalanobis_h_p95": 1.823592741052731,
             "mahalanobis_h_ratio": 2.824095980293599,
-            "pca_q_max": 0.07088219909191298,
-            "pca_q_median": 0.003798584036484634,
+            "pca_q_max": 0.07088219909191296,
+            "pca_q_median": 0.003798584036484638,
             "pca_q_p95": 0.03938255585429859,
-            "pca_q_ratio": 10.367693718511182
+            "pca_q_ratio": 10.367693718511171
           },
           "profile_scores": {
             "integrity_risk": 0.0,
@@ -1395,7 +1539,7 @@
             "noise_risk": 0.002312336582163574,
             "outlier_pressure": 1.0,
             "reference_spread": 0.370765914952409,
-            "repeatability_risk": 0.0,
+            "repeatability_risk": null,
             "shape_drift": 1.0,
             "structure_complexity": 1.0
           },
@@ -1422,7 +1566,7 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": 0.5948046723989124,
+            "baseline_slope": 0.5948046723989127,
             "curvature_rms": 0.0003195828142101506,
             "d1_rms": 0.00333378224620828,
             "edge_noise_ratio": 1.8951058639110174
@@ -1430,8 +1574,8 @@
           "structure": {
             "density_cv": 1.1884352049519968,
             "isolation_forest_score_p95": 0.6292411751332972,
-            "local_outlier_factor_p95": 4.025482555752796,
-            "pca_score_density": 11.370785638753956
+            "local_outlier_factor_p95": 4.025482555752795,
+            "pca_score_density": 11.370785638753954
           }
         },
         "quality": {
@@ -1448,135 +1592,135 @@
           "points": [
             {
               "x": -0.3913894680357887,
-              "y": -0.017284367598747716
+              "y": -0.01728436759874769
             },
             {
-              "x": -0.4439360326636615,
-              "y": 0.017012358622559367
+              "x": -0.44393603266366144,
+              "y": 0.017012358622559533
             },
             {
               "x": -0.7260375260729479,
-              "y": 0.06927760347178906
+              "y": 0.0692776034717891
             },
             {
               "x": -0.9610702387250413,
-              "y": 0.013002752769284488
+              "y": 0.013002752769284526
             },
             {
               "x": 0.6062013859951082,
-              "y": 0.05030649076894671
+              "y": 0.050306490768946735
             },
             {
               "x": 0.5559881402290096,
-              "y": -0.03005596672117435
+              "y": -0.030055966721174304
             },
             {
               "x": 0.6132006797147092,
-              "y": 0.0011931787703775608
+              "y": 0.0011931787703776146
             },
             {
               "x": 0.7990294397535178,
-              "y": 0.028948494779101552
+              "y": 0.02894849477910159
             },
             {
               "x": -0.6972777140637915,
-              "y": 0.059647651980971425
+              "y": 0.05964765198097148
             },
             {
               "x": -0.3443789066478367,
-              "y": 0.00021167692789832786
+              "y": 0.00021167692789838218
             },
             {
               "x": 1.9215511341079767,
-              "y": 0.008435897504959535
+              "y": 0.008435897504959508
             },
             {
               "x": 1.7068072081977264,
-              "y": -0.0749965711056946
+              "y": -0.07499657110569456
             },
             {
               "x": -0.46160180720261773,
-              "y": -0.06274725395213887
+              "y": -0.06274725395213884
             },
             {
               "x": -0.2250689393834786,
-              "y": -0.026960914323067745
+              "y": -0.026960914323067724
             },
             {
               "x": 1.3663147127197062,
-              "y": -0.057285565047332225
+              "y": -0.0572855650473322
             },
             {
               "x": 1.7874077864889046,
-              "y": -0.07571956937379706
+              "y": -0.07571956937379705
             },
             {
               "x": 0.28055859979502484,
-              "y": 0.05129785850722077
+              "y": 0.05129785850722075
             },
             {
               "x": 0.8363584583513524,
-              "y": -0.06454874524223635
+              "y": -0.06454874524223639
             },
             {
               "x": 0.46836510054663605,
-              "y": 0.04947237428605484
+              "y": 0.04947237428605482
             },
             {
               "x": 0.902753007413498,
-              "y": -0.036985019484619394
+              "y": -0.03698501948461939
             },
             {
               "x": 0.33784721720504596,
-              "y": -0.06864117952738248
+              "y": -0.06864117952738245
             },
             {
               "x": 0.9090511349222614,
-              "y": -0.061241692524645674
+              "y": -0.061241692524645695
             },
             {
               "x": 0.9012263021779375,
-              "y": -0.03112061035573512
+              "y": -0.031120610355735125
             },
             {
               "x": 0.8992490117244673,
-              "y": -0.03704612596715362
+              "y": -0.037046125967153634
             },
             {
               "x": 0.5850924351652236,
-              "y": 0.07579059932013042
+              "y": 0.07579059932013038
             },
             {
               "x": 0.17386424241506648,
-              "y": -0.015581460423344587
+              "y": -0.015581460423344597
             },
             {
               "x": 1.5887802375549642,
-              "y": -0.08793194131745295
+              "y": -0.08793194131745297
             },
             {
               "x": 1.5821407020946812,
-              "y": -0.12117851145121039
+              "y": -0.12117851145121036
             },
             {
               "x": 1.3955731303842263,
-              "y": -0.05170357122577473
+              "y": -0.05170357122577471
             },
             {
               "x": -1.22863508074771,
-              "y": -0.010228922639832737
+              "y": -0.010228922639832766
             },
             {
               "x": -1.1047323135069727,
-              "y": -0.03624973153042845
+              "y": -0.03624973153042848
             },
             {
               "x": -0.2913394511794739,
-              "y": 0.01301262235114739
+              "y": 0.013012622351147387
             },
             {
               "x": -0.13888593242849168,
-              "y": 0.008601140596463256
+              "y": 0.00860114059646324
             },
             {
               "x": 0.7632596278169678,
@@ -1584,19 +1728,19 @@
             },
             {
               "x": 0.9263978266041815,
-              "y": 0.006585413428030296
+              "y": 0.006585413428030304
             },
             {
               "x": -1.0337070335125706,
-              "y": 0.003072866083607158
+              "y": 0.0030728660836071486
             },
             {
               "x": -1.1652907403286494,
-              "y": 0.03106165220615688
+              "y": 0.031061652206156875
             },
             {
               "x": -0.8080360926772672,
-              "y": 0.034789860664004954
+              "y": 0.03478986066400493
             },
             {
               "x": -1.0734005393655235,
@@ -1604,7 +1748,7 @@
             },
             {
               "x": -1.3858763097750486,
-              "y": -0.03335968058011133
+              "y": -0.03335968058011136
             },
             {
               "x": -1.252203826568334,
@@ -1616,7 +1760,7 @@
             },
             {
               "x": -1.3143206657822013,
-              "y": -0.0024124806210618008
+              "y": -0.0024124806210617847
             },
             {
               "x": -0.4747000061296613,
@@ -1624,15 +1768,15 @@
             },
             {
               "x": -0.6894594730967679,
-              "y": 0.0579072297399715
+              "y": 0.05790722973997148
             },
             {
               "x": 0.004708447651061655,
-              "y": 0.06274555508492677
+              "y": 0.06274555508492682
             },
             {
               "x": 0.6339154573136362,
-              "y": 0.07588887658785548
+              "y": 0.07588887658785554
             },
             {
               "x": -0.21347740019843067,
@@ -1640,35 +1784,35 @@
             },
             {
               "x": -0.4163754712327986,
-              "y": 0.00519862232658657
+              "y": 0.005198622326586575
             },
             {
               "x": -0.5301836971220493,
-              "y": 0.028457867952349197
+              "y": 0.02845786795234919
             },
             {
               "x": -0.10009635832956397,
-              "y": 0.01595986330693942
+              "y": 0.01595986330693943
             },
             {
               "x": -0.2032920415231537,
-              "y": -0.008924584625006084
+              "y": -0.008924584625006076
             },
             {
               "x": 0.21784449947391904,
-              "y": -0.004914882097741565
+              "y": -0.00491488209774158
             },
             {
               "x": -1.628128410689012,
-              "y": 0.012208572464915914
+              "y": 0.012208572464915855
             },
             {
               "x": -1.719104660358677,
-              "y": 0.021257462301861634
+              "y": 0.021257462301861572
             },
             {
               "x": -0.7359647394032705,
-              "y": -0.14161550015825664
+              "y": -0.1416155001582566
             },
             {
               "x": 0.2514103289560069,
@@ -1676,75 +1820,75 @@
             },
             {
               "x": 0.07177886424443401,
-              "y": -0.05475661056997382
+              "y": -0.05475661056997387
             },
             {
               "x": -0.06834536759721783,
               "y": -0.08991319133634343
             },
             {
-              "x": 0.1356751782286784,
-              "y": -0.03618918026263574
+              "x": 0.13567517822867836,
+              "y": -0.036189180262635706
             },
             {
               "x": -0.6066727443366302,
-              "y": -0.011912687080581649
+              "y": -0.011912687080581654
             },
             {
               "x": -0.0428263616155151,
-              "y": -0.014906895798810101
+              "y": -0.01490689579881013
             },
             {
               "x": 0.41176024986894055,
-              "y": -0.018783412659674155
+              "y": -0.018783412659674172
             },
             {
               "x": -0.366103224164019,
-              "y": -0.09052020122748179
+              "y": -0.09052020122748176
             },
             {
-              "x": -0.22450969236804869,
-              "y": -0.058792104737001485
+              "x": -0.2245096923680487,
+              "y": -0.05879210473700147
             },
             {
               "x": -1.122390712445743,
-              "y": -0.030974542970863952
+              "y": -0.03097454297086399
             },
             {
               "x": 0.03541803218940363,
-              "y": -0.06282973378247479
+              "y": -0.06282973378247486
             },
             {
               "x": -0.7566925794568721,
-              "y": -0.06070910495795087
+              "y": -0.06070910495795092
             },
             {
-              "x": 0.03577512612987361,
-              "y": -0.07087736114978312
+              "x": 0.0357751261298736,
+              "y": -0.0708773611497831
             },
             {
               "x": -0.7376922418687563,
-              "y": 0.03915875409360174
+              "y": 0.03915875409360178
             },
             {
-              "x": 0.009704666321967198,
+              "x": 0.009704666321967197,
               "y": -0.15016140317719356
             },
             {
               "x": 0.10673155473455986,
-              "y": -0.19394120104884402
+              "y": -0.19394120104884408
             },
             {
               "x": -0.6006298189071998,
-              "y": 0.06806877200155803
+              "y": 0.06806877200155806
             },
             {
               "x": -1.3183913289204403,
-              "y": 0.1164857635493073
+              "y": 0.11648576354930734
             },
             {
               "x": 2.9039605187394426,
-              "y": 0.2057429311400854
+              "y": 0.20574293114008532
             },
             {
               "x": -0.1317148312849459,
@@ -1752,19 +1896,19 @@
             },
             {
               "x": 2.31586100934886,
-              "y": 0.26544142637989576
+              "y": 0.2654414263798958
             },
             {
               "x": 0.16151235801507152,
-              "y": 0.13858695432751486
+              "y": 0.13858695432751483
             },
             {
-              "x": 0.05253915148896024,
-              "y": 0.23102581079942977
+              "x": 0.05253915148896025,
+              "y": 0.23102581079942974
             },
             {
               "x": -0.10528042218201235,
-              "y": 0.20486421490166729
+              "y": 0.20486421490166737
             }
           ]
         },
@@ -3525,7 +3669,10 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     },
     {
       "assets": [],
@@ -4538,49 +4685,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.999979167256845,
-          "effective_rank": 1.06,
-          "n_components_95": 1,
-          "n_components_99": 1
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.7075537227094173,
         "mean_min": -0.00994903371502005,
-        "n_outliers": 27,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9906319547501151,
-            0.007810937445540434,
-            0.0006565746959787954,
-            0.0003615735504375403,
-            0.00025383103451822627,
-            0.0001495586626770665,
-            5.5813240105061405e-05,
-            2.7844440828671828e-05,
-            2.0084137746540587e-05,
-            1.0995298897446392e-05,
-            6.1558883885759075e-06,
-            3.3383840929598797e-06,
-            3.124370374618955e-06,
-            1.989569098382888e-06,
-            1.4545090899009308e-06,
-            9.475456323667966e-07,
-            5.865586178709969e-07,
-            5.182384010834902e-07,
-            3.307449391174908e-07,
-            2.6513389704298607e-07,
-            2.4903258908696643e-07,
-            2.2332886580642837e-07,
-            1.7732472175737597e-07,
-            1.4805233154364334e-07,
-            1.3480771673455158e-07,
-            1.094274259437569e-07,
-            1.0443782929764948e-07,
-            9.397728591649334e-08,
-            7.882963166464829e-08,
-            6.673844825028469e-08
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 482.17736974814414,
@@ -4597,6 +4710,8 @@
           },
           "diagnostics": [
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -4615,13 +4730,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
               "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.8121623070873252,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -4640,13 +4762,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.8020147345721883,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -4665,13 +4794,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6773132063964482,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -4679,114 +4815,112 @@
                 },
                 {
                   "level": 1.0,
-                  "signal": "Mahalanobis / T2"
+                  "signal": "SNR non d\u00e9grad\u00e9"
+                },
+                {
+                  "level": 0.36289428135863105,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
+              "key": "splice",
+              "label": "Splice / raccord d\u00e9tecteurs",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4128120577055177,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "PCA Q"
                 },
                 {
                   "level": 1.0,
                   "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.36289428135863105,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
-              "key": "partial_coverage",
-              "label": "M\u00e9lange feuille + fond",
-              "score": 0.6519848873897622,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "interpretation_kind": "possible_cause",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4014285714285714,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Structure PCA"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.36289428135863105,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                }
-              ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.5925788562717262,
-              "strength": "moyenne"
-            },
-            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.36289428135863105,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "level": 0.9982091690544412,
+                  "signal": "artefacts faibles"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5305925518600746,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "interpretation_kind": "possible_cause",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.2998209169054441,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
                   "level": 0.36289428135863105,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.49594884467189865,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.20394881526745776,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
-                },
-                {
-                  "level": 0.9979172540779954,
-                  "signal": "Noise RMS faible"
-                }
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.9,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
+              "key": "normal",
+              "label": "Spectre normal",
+              "missing_evidence": [
+                "repeatability"
               ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.4929344547703366,
-              "strength": "moyenne"
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -4807,15 +4941,15 @@
           },
           "outliers": {
             "hotelling_t2_max": 6.578243152849917,
-            "hotelling_t2_median": 0.4312958390930019,
-            "hotelling_t2_p95": 3.717239878148578,
-            "hotelling_t2_ratio": 8.618770554257575,
+            "hotelling_t2_median": 0.43129583909300173,
+            "hotelling_t2_p95": 3.7172398781485767,
+            "hotelling_t2_ratio": 8.618770554257576,
             "mahalanobis_h_max": 2.5648085996522076,
-            "mahalanobis_h_median": 0.6561288801535148,
+            "mahalanobis_h_median": 0.6561288801535147,
             "mahalanobis_h_p95": 1.9277583930565398,
-            "mahalanobis_h_ratio": 2.938078861283322,
-            "pca_q_max": 0.06495583063745541,
-            "pca_q_median": 0.003030483920374723,
+            "mahalanobis_h_ratio": 2.9380788612833224,
+            "pca_q_max": 0.06495583063745539,
+            "pca_q_median": 0.0030304839203747227,
             "pca_q_p95": 0.029582167872359823,
             "pca_q_ratio": 9.761532695643524
           },
@@ -4825,7 +4959,7 @@
             "noise_risk": 0.0020827459220045994,
             "outlier_pressure": 1.0,
             "reference_spread": 0.36289428135863105,
-            "repeatability_risk": 0.0,
+            "repeatability_risk": null,
             "shape_drift": 1.0,
             "structure_complexity": 1.0
           },
@@ -4852,7 +4986,7 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": 0.6049301474907618,
+            "baseline_slope": 0.6049301474907621,
             "curvature_rms": 0.00030201961701186304,
             "d1_rms": 0.0033234271484545407,
             "edge_noise_ratio": 1.9243370551137533
@@ -4861,7 +4995,7 @@
             "density_cv": 0.8585223746515157,
             "isolation_forest_score_p95": 0.614953276878551,
             "local_outlier_factor_p95": 3.828345233208307,
-            "pca_score_density": 12.089059657283656
+            "pca_score_density": 12.089059657283645
           }
         },
         "quality": {
@@ -4873,123 +5007,123 @@
         "score_plot": {
           "explained_variance_ratio": [
             0.9906319547501149,
-            0.007810937445540424
+            0.007810937445540423
           ],
           "points": [
             {
-              "x": -0.4695806271265907,
-              "y": -0.005606940043942779
+              "x": -0.4695806271265891,
+              "y": -0.005606940043942721
             },
             {
               "x": -0.3840409835314879,
-              "y": -0.055023334595271506
+              "y": -0.05502333459527151
             },
             {
-              "x": -0.8020217546099274,
-              "y": 0.026774811172377653
+              "x": -0.8020217546099279,
+              "y": 0.02677481117237758
             },
             {
-              "x": -0.9584731046135035,
-              "y": -0.03499727418409985
+              "x": -0.9584731046135037,
+              "y": -0.03499727418409979
             },
             {
-              "x": 0.4911301734700515,
-              "y": 0.013086410672573013
+              "x": 0.4911301734700516,
+              "y": 0.01308641067257302
             },
             {
-              "x": 0.7531518161513941,
-              "y": -0.05279786342717118
+              "x": 0.753151816151394,
+              "y": -0.05279786342717121
             },
             {
-              "x": 0.4597544107001712,
-              "y": -0.018292075726259068
+              "x": 0.4597544107001713,
+              "y": -0.018292075726259065
             },
             {
-              "x": 0.6784095991223221,
-              "y": -0.020812161605661936
+              "x": 0.6784095991223225,
+              "y": -0.02081216160566194
             },
             {
-              "x": -0.28109589707237054,
-              "y": -0.004902998406796436
+              "x": -0.2810958970723706,
+              "y": -0.004902998406796441
             },
             {
               "x": -0.41758109675252303,
-              "y": -0.033214759217027254
+              "y": -0.03321475921702725
             },
             {
               "x": 1.7152097868852476,
-              "y": 0.02773585410353011
+              "y": 0.027735854103530067
             },
             {
-              "x": 1.5130821393649236,
-              "y": -0.07359792380825998
+              "x": 1.513082139364924,
+              "y": -0.07359792380825995
             },
             {
-              "x": -0.37948928953408684,
+              "x": -0.3794892895340868,
               "y": -0.05278276131860036
             },
             {
-              "x": -0.15551436410307823,
-              "y": -0.0013494254642005595
+              "x": -0.15551436410307828,
+              "y": -0.0013494254642005946
             },
             {
-              "x": 1.5015794098278512,
-              "y": -0.0384568410188506
+              "x": 1.5015794098278514,
+              "y": -0.038456841018850586
             },
             {
               "x": 1.8614906247577472,
-              "y": -0.10055965968664146
+              "y": -0.10055965968664143
             },
             {
-              "x": 0.33233886050446,
+              "x": 0.3323388605044601,
               "y": 0.03867984289143791
             },
             {
-              "x": 0.6960852151625938,
-              "y": 0.0016233030800933503
+              "x": 0.6960852151625939,
+              "y": 0.0016233030800933451
             },
             {
-              "x": 0.46090569186694613,
-              "y": 0.05275404243927253
+              "x": 0.46090569186694624,
+              "y": 0.05275404243927256
             },
             {
-              "x": 0.9008473789243322,
-              "y": -0.040731461267289285
+              "x": 0.9008473789243326,
+              "y": -0.040731461267289236
             },
             {
-              "x": 0.5270972077762257,
-              "y": -0.05584778221155648
+              "x": 0.5270972077762258,
+              "y": -0.055847782211556486
             },
             {
-              "x": 0.9060521531742235,
-              "y": -0.0900691787810948
+              "x": 0.9060521531742238,
+              "y": -0.09006917878109483
             },
             {
               "x": 1.0182611345507202,
-              "y": -0.08089668523952197
+              "y": -0.08089668523952191
             },
             {
-              "x": 0.555092965786204,
-              "y": -0.03145315842562812
+              "x": 0.5550929657862044,
+              "y": -0.031453158425628104
             },
             {
-              "x": 0.6656099057703289,
-              "y": 0.08184936458086209
+              "x": 0.6656099057703287,
+              "y": 0.0818493645808621
             },
             {
-              "x": 0.14063439411616085,
-              "y": 0.006597136290480744
+              "x": 0.1406343941161609,
+              "y": 0.0065971362904807445
             },
             {
-              "x": 1.8439765848153715,
-              "y": -0.10249147971546325
+              "x": 1.8439765848153726,
+              "y": -0.10249147971546323
             },
             {
-              "x": 1.4285014390674422,
+              "x": 1.4285014390674424,
               "y": -0.10242746985812329
             },
             {
-              "x": 1.2249472462698947,
+              "x": 1.224947246269895,
               "y": -0.05181745222815316
             },
             {
@@ -4997,204 +5131,204 @@
               "y": -0.03926630025481595
             },
             {
-              "x": -0.9765470263593586,
-              "y": -0.046854746728287044
+              "x": -0.9765470263593591,
+              "y": -0.04685474672828701
             },
             {
               "x": -0.6110909567381909,
-              "y": -0.033695665758047395
+              "y": -0.033695665758047375
             },
             {
-              "x": 0.1584337101716249,
-              "y": -0.002514602298847558
+              "x": 0.15843371017162494,
+              "y": -0.0025146022988475326
             },
             {
-              "x": 0.750713488047782,
+              "x": 0.7507134880477824,
               "y": -0.10101740641537649
             },
             {
-              "x": 0.7124310131774736,
-              "y": -0.011746843541793266
+              "x": 0.7124310131774737,
+              "y": -0.01174684354179325
             },
             {
-              "x": -1.016808999889578,
-              "y": 0.00017107238521117652
+              "x": -1.0168089998895782,
+              "y": 0.00017107238521117663
             },
             {
-              "x": -1.1125665855029612,
-              "y": 0.007129529631865923
+              "x": -1.1125665855029614,
+              "y": 0.007129529631865924
             },
             {
               "x": -0.9949742951745977,
-              "y": 0.014904281205861547
+              "y": 0.014904281205861566
             },
             {
-              "x": -0.8654434503706262,
-              "y": -0.01645425004146547
+              "x": -0.8654434503706268,
+              "y": -0.01645425004146549
             },
             {
-              "x": -1.408133045435442,
-              "y": -0.04932615628567741
+              "x": -1.4081330454354426,
+              "y": -0.04932615628567729
             },
             {
-              "x": -1.3184794466343661,
-              "y": -0.011503222527714348
+              "x": -1.3184794466343663,
+              "y": -0.01150322252771435
             },
             {
-              "x": -1.3201857630174056,
-              "y": 0.051070223576484906
+              "x": -1.320185763017406,
+              "y": 0.05107022357648487
             },
             {
-              "x": -1.3615468427444164,
-              "y": 0.006507105834647288
+              "x": -1.3615468427444168,
+              "y": 0.006507105834647316
             },
             {
-              "x": -0.5277485085331258,
-              "y": 0.002076383287326807
+              "x": -0.5277485085331259,
+              "y": 0.002076383287326813
             },
             {
-              "x": -0.8078179226233551,
-              "y": 0.02144483608732867
+              "x": -0.8078179226233553,
+              "y": 0.021444836087328712
             },
             {
-              "x": 0.3730593479969741,
-              "y": 0.07146760172653958
+              "x": 0.3730593479969742,
+              "y": 0.0714676017265395
             },
             {
-              "x": 0.457406553605724,
-              "y": 0.017789031268439403
+              "x": 0.45740655360572424,
+              "y": 0.017789031268439365
             },
             {
-              "x": -0.34431060966445515,
-              "y": 0.0749442485654952
+              "x": -0.3443106096644552,
+              "y": 0.07494424856549518
             },
             {
-              "x": -0.5190445853187049,
-              "y": 0.030002864933715786
+              "x": -0.519044585318705,
+              "y": 0.030002864933715782
             },
             {
-              "x": -0.5568408146785039,
-              "y": 0.020910425931535324
+              "x": -0.556840814678504,
+              "y": 0.020910425931535335
             },
             {
               "x": 0.010744321700707396,
-              "y": 0.02495492083919385
+              "y": 0.024954920839193845
             },
             {
-              "x": 0.043359631424504094,
-              "y": 0.04539371253603292
+              "x": 0.043359631424504115,
+              "y": 0.045393712536032894
             },
             {
-              "x": 0.2780141671908266,
-              "y": 0.018933726734669205
+              "x": 0.2780141671908267,
+              "y": 0.018933726734669233
             },
             {
-              "x": -1.4877516648711682,
-              "y": 0.05125664850991413
+              "x": -1.4877516648711684,
+              "y": 0.051256648509914134
             },
             {
-              "x": -1.5238217837107517,
-              "y": 0.04677395755150723
+              "x": -1.5238217837107522,
+              "y": 0.04677395755150719
             },
             {
               "x": -0.7187050785824642,
-              "y": -0.07126185807561478
+              "y": -0.07126185807561479
             },
             {
               "x": 0.24265093141933128,
               "y": -0.16736095249391272
             },
             {
-              "x": 0.19715003155929328,
-              "y": -0.020146323049588077
+              "x": 0.19715003155929325,
+              "y": -0.02014632304958806
             },
             {
-              "x": 0.16040764705943236,
+              "x": 0.16040764705943242,
               "y": -0.06260379672458966
             },
             {
-              "x": 0.15067129229285975,
+              "x": 0.1506712922928598,
               "y": -0.02525176823601127
             },
             {
-              "x": -0.6848123496586173,
-              "y": 0.009431097783825683
+              "x": -0.6848123496586174,
+              "y": 0.009431097783825691
             },
             {
-              "x": 0.13486686318426896,
+              "x": 0.134866863184269,
               "y": 0.046998759439597526
             },
             {
-              "x": 0.19005863999400377,
-              "y": 0.0012984991813197936
+              "x": 0.1900586399940038,
+              "y": 0.0012984991813197947
             },
             {
-              "x": -0.5232136150182343,
-              "y": -0.08039153295326412
+              "x": -0.5232136150182344,
+              "y": -0.08039153295326415
             },
             {
-              "x": -0.3005871715545919,
-              "y": -0.025069749817008102
+              "x": -0.300587171554592,
+              "y": -0.025069749817008057
             },
             {
               "x": -1.0300193755196334,
-              "y": -0.031078097833636752
+              "y": -0.03107809783363675
             },
             {
-              "x": -0.19561260312344703,
-              "y": -0.06080666976005109
+              "x": -0.19561260312344714,
+              "y": -0.06080666976005114
             },
             {
               "x": -0.5608640574507445,
-              "y": 0.0008237268124565516
+              "y": 0.0008237268124566206
             },
             {
-              "x": -0.27859748747825636,
-              "y": -0.041361309206141846
+              "x": -0.2785974874782564,
+              "y": -0.041361309206141825
             },
             {
-              "x": -0.6167932219954207,
-              "y": 0.013822183020051698
+              "x": -0.616793221995421,
+              "y": 0.013822183020051691
             },
             {
-              "x": 0.4159465881529758,
-              "y": -0.1456282258111258
+              "x": 0.415946588152976,
+              "y": -0.1456282258111259
             },
             {
-              "x": -0.12269986185805515,
-              "y": -0.13646687285854903
+              "x": -0.12269986185805513,
+              "y": -0.13646687285854897
             },
             {
-              "x": -0.9393899403701135,
-              "y": 0.08017725320255038
+              "x": -0.9393899403701137,
+              "y": 0.0801772532025504
             },
             {
-              "x": -1.152430478075496,
-              "y": 0.09742322339122951
+              "x": -1.1524304780754964,
+              "y": 0.09742322339122943
             },
             {
-              "x": 2.0751066882343356,
-              "y": 0.23780079234926219
+              "x": 2.0751066882343365,
+              "y": 0.23780079234926232
             },
             {
-              "x": -0.06729787846833346,
-              "y": 0.16278120965854448
+              "x": -0.0672978784683335,
+              "y": 0.1627812096585445
             },
             {
-              "x": 2.2905867960681965,
-              "y": 0.2539459430503987
+              "x": 2.290586796068197,
+              "y": 0.25394594305039875
             },
             {
-              "x": 0.006925166655334379,
-              "y": 0.15433732789608695
+              "x": 0.006925166655334384,
+              "y": 0.1543373278960869
             },
             {
-              "x": 0.10280840812906822,
-              "y": 0.2436896259370992
+              "x": 0.10280840812906825,
+              "y": 0.24368962593709892
             },
             {
-              "x": 0.3263032292414596,
-              "y": 0.170574059342311
+              "x": 0.32630322924145966,
+              "y": 0.17057405934231104
             }
           ]
         },
@@ -6955,7 +7089,10 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     },
     {
       "assets": [],
@@ -7968,49 +8105,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9999775075931358,
-          "effective_rank": 1.06,
-          "n_components_95": 1,
-          "n_components_99": 1
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 0.6974532373249531,
         "mean_min": -0.019485677519696765,
-        "n_outliers": 29,
-        "pca": {
-          "explained_variance_ratio": [
-            0.9917278383996908,
-            0.006454313643962439,
-            0.0007709492483052105,
-            0.0004781090498514576,
-            0.0002743113617100105,
-            0.0001601250284117681,
-            5.479475847862731e-05,
-            3.148075180586257e-05,
-            1.5570729556525755e-05,
-            1.001462136315157e-05,
-            6.5860647898950415e-06,
-            4.500933614196149e-06,
-            3.639655814564104e-06,
-            2.2083648221059964e-06,
-            1.5092172910302205e-06,
-            1.2542018791544297e-06,
-            6.147000028304283e-07,
-            5.333617631853438e-07,
-            2.6859653626362507e-07,
-            2.3301208556297686e-07,
-            2.0193260941285595e-07,
-            1.5272237411681412e-07,
-            1.2036813817168705e-07,
-            9.66207988060736e-08,
-            8.504770745703582e-08,
-            7.116277337667673e-08,
-            6.296443823173193e-08,
-            5.303395323376245e-08,
-            3.693538869887418e-08,
-            2.7306768990717842e-08
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 465.73873420542435,
@@ -8027,6 +8130,8 @@
           },
           "diagnostics": [
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -8045,13 +8150,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.7914315345538903,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -8070,13 +8182,20 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
               "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.7877194687334017,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -8095,13 +8214,48 @@
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6699295756832209,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "PCA Q"
+                },
+                {
+                  "level": 1.0,
+                  "signal": "SNR non d\u00e9grad\u00e9"
+                },
+                {
+                  "level": 0.35822290479056357,
+                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
+              "key": "splice",
+              "label": "Splice / raccord d\u00e9tecteurs",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.412234263785589,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -8110,113 +8264,83 @@
                 {
                   "level": 1.0,
                   "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.941978050383781,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.35822290479056357,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
-              "key": "partial_coverage",
-              "label": "M\u00e9lange feuille + fond",
-              "score": 0.6413718401890383,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "interpretation_kind": "possible_cause",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4014285714285714,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Structure PCA"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.941978050383781,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.35822290479056357,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                }
-              ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.5823610690195177,
-              "strength": "moyenne"
-            },
-            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "Baseline/mean/area"
-                },
-                {
-                  "level": 0.941978050383781,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.35822290479056357,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "level": 0.9964183381088825,
+                  "signal": "artefacts faibles"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5218154454997324,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "interpretation_kind": "possible_cause",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.29964183381088827,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
-                },
-                {
-                  "level": 0.9978891741542125,
-                  "signal": "Noise RMS faible"
-                }
-              ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.4931878809119493,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.941978050383781,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
                   "level": 0.35822290479056357,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 }
               ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.48918018476114217,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.20378950940950505,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.9,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
+              "key": "normal",
+              "label": "Spectre normal",
+              "missing_evidence": [
+                "repeatability"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -8255,7 +8379,7 @@
             "noise_risk": 0.002110825845787462,
             "outlier_pressure": 1.0,
             "reference_spread": 0.35822290479056357,
-            "repeatability_risk": 0.0,
+            "repeatability_risk": null,
             "shape_drift": 1.0,
             "structure_complexity": 1.0
           },
@@ -8282,7 +8406,7 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": 0.6016986917588276,
+            "baseline_slope": 0.6016986917588278,
             "curvature_rms": 0.00030523412958015144,
             "d1_rms": 0.0033757298600083988,
             "edge_noise_ratio": 1.9231185040258552
@@ -8308,87 +8432,87 @@
           "points": [
             {
               "x": -0.4845629470076305,
-              "y": -0.01570022403030277
+              "y": -0.015700224030302752
             },
             {
               "x": -0.37443215617442593,
-              "y": -0.03885127252668237
+              "y": -0.038851272526682155
             },
             {
               "x": -0.8288176532838103,
-              "y": 0.044569290869353496
+              "y": 0.044569290869353566
             },
             {
               "x": -0.9792030149482203,
-              "y": -0.004972212305587947
+              "y": -0.0049722123055879084
             },
             {
               "x": 0.5153238318225224,
-              "y": 0.0345896806288879
+              "y": 0.034589680628887925
             },
             {
               "x": 0.661908003791803,
-              "y": -0.032217454907691845
+              "y": -0.0322174549076918
             },
             {
               "x": 0.47840073434879926,
-              "y": 0.008004911295450716
+              "y": 0.008004911295450747
             },
             {
               "x": 0.6800274417236957,
-              "y": -0.009672897829481808
+              "y": -0.009672897829481804
             },
             {
               "x": -0.3274576238391959,
-              "y": 0.023147117579107795
+              "y": 0.023147117579107812
             },
             {
               "x": -0.40732406326757625,
-              "y": -0.009214761639513286
+              "y": -0.009214761639513255
             },
             {
               "x": 1.6882524846642983,
-              "y": 0.025872988217897915
+              "y": 0.025872988217897932
             },
             {
               "x": 1.5672356077890064,
-              "y": -0.06987342082988138
+              "y": -0.06987342082988135
             },
             {
               "x": -0.391888618501722,
-              "y": -0.028695928186265228
+              "y": -0.028695928186265186
             },
             {
               "x": -0.12322949698452604,
-              "y": 0.01996092077333948
+              "y": 0.01996092077333952
             },
             {
               "x": 1.5688642590092883,
-              "y": -0.029121480875101167
+              "y": -0.029121480875101118
             },
             {
               "x": 1.9093400639719107,
-              "y": -0.08584238484984005
+              "y": -0.08584238484984004
             },
             {
               "x": 0.31917816824212253,
-              "y": 0.05962304194672284
+              "y": 0.05962304194672286
             },
             {
               "x": 0.7142518019487331,
-              "y": 0.020425581687370478
+              "y": 0.020425581687370454
             },
             {
               "x": 0.48112710577758766,
-              "y": 0.07053612915538934
+              "y": 0.07053612915538937
             },
             {
               "x": 0.9315748990128008,
-              "y": -0.020248855213415247
+              "y": -0.02024885521341526
             },
             {
               "x": 0.5107287324714,
-              "y": -0.028331777632026763
+              "y": -0.028331777632026735
             },
             {
               "x": 0.9631090256724968,
@@ -8396,19 +8520,19 @@
             },
             {
               "x": 1.0391887360856806,
-              "y": -0.06850410730421998
+              "y": -0.06850410730422
             },
             {
               "x": 0.5500069906565886,
-              "y": -0.020309816590503793
+              "y": -0.0203098165905038
             },
             {
               "x": 0.6522742180361922,
-              "y": 0.08794874047693843
+              "y": 0.08794874047693847
             },
             {
               "x": 0.15460228232524237,
-              "y": 0.021953032831944493
+              "y": 0.021953032831944504
             },
             {
               "x": 1.888149137293467,
@@ -8416,75 +8540,75 @@
             },
             {
               "x": 1.5076779435347578,
-              "y": -0.09036940526128916
+              "y": -0.0903694052612891
             },
             {
               "x": 1.262352825432159,
-              "y": -0.029994050988655475
+              "y": -0.029994050988655447
             },
             {
               "x": -0.9860236399493756,
-              "y": -0.0011684648537724355
+              "y": -0.0011684648537724001
             },
             {
               "x": -0.9718174689007879,
-              "y": -0.0070636397704276575
+              "y": -0.007063639770427619
             },
             {
               "x": -0.5904140221269145,
-              "y": -0.007741097294906592
+              "y": -0.007741097294906553
             },
             {
               "x": 0.1658335947662219,
-              "y": 0.016339910012188
+              "y": 0.01633991001218805
             },
             {
               "x": 0.9068516059668688,
-              "y": -0.045687998515484676
+              "y": -0.04568799851548461
             },
             {
               "x": 0.8161953650351216,
-              "y": 0.019528632514195638
+              "y": 0.019528632514195676
             },
             {
               "x": -0.9855395880389233,
-              "y": 0.03125817623210729
+              "y": 0.03125817623210735
             },
             {
               "x": -1.0751899102656481,
-              "y": 0.04304255648722476
+              "y": 0.043042556487224826
             },
             {
               "x": -0.9200650860723585,
-              "y": 0.05082052892251916
+              "y": 0.05082052892251919
             },
             {
               "x": -0.8244042446169406,
-              "y": 0.010713708074656032
+              "y": 0.010713708074656053
             },
             {
               "x": -1.3645785328598496,
-              "y": -0.017959525089162723
+              "y": -0.017959525089162705
             },
             {
               "x": -1.356140863567681,
-              "y": -0.015072628851379315
+              "y": -0.015072628851379331
             },
             {
               "x": -1.3443922173674727,
-              "y": 0.031015443871488645
+              "y": 0.031015443871488618
             },
             {
               "x": -1.3955845702604686,
-              "y": 0.0021284882286688434
+              "y": 0.002128488228668851
             },
             {
               "x": -0.5352127239595876,
-              "y": -0.02187967876448916
+              "y": -0.021879678764489183
             },
             {
               "x": -0.8073551729532158,
-              "y": -0.006932904054645999
+              "y": -0.006932904054646058
             },
             {
               "x": 0.3022145964527439,
@@ -8492,39 +8616,39 @@
             },
             {
               "x": 0.4284095683710019,
-              "y": -0.023420693319103042
+              "y": -0.02342069331910306
             },
             {
               "x": -0.38743400357554125,
-              "y": 0.05792585566271202
+              "y": 0.05792585566271198
             },
             {
               "x": -0.5581506973661328,
-              "y": 0.006785140828627462
+              "y": 0.00678514082862744
             },
             {
               "x": -0.6166195278317266,
-              "y": 0.0023981628741541537
+              "y": 0.002398162874154118
             },
             {
               "x": -0.032822462318195,
-              "y": 0.005358797956515989
+              "y": 0.005358797956515963
             },
             {
               "x": -0.026804190934473893,
-              "y": 0.018060968878897094
+              "y": 0.018060968878897087
             },
             {
               "x": 0.19132103277891416,
-              "y": -0.0014430935610360164
+              "y": -0.0014430935610360563
             },
             {
               "x": -1.560489423246675,
-              "y": 0.037553132943273795
+              "y": 0.03755313294327376
             },
             {
               "x": -1.5425501706253142,
-              "y": 0.0430033053253212
+              "y": 0.04300330532532114
             },
             {
               "x": -0.8428081757468739,
@@ -8532,83 +8656,83 @@
             },
             {
               "x": 0.2121503395341805,
-              "y": -0.20059793291183783
+              "y": -0.2005979329118379
             },
             {
               "x": 0.06603892933117675,
-              "y": -0.030770288626578064
+              "y": -0.030770288626578095
             },
             {
               "x": 0.11872831200977409,
-              "y": -0.08140140757778572
+              "y": -0.08140140757778576
             },
             {
               "x": 0.14743978399900304,
-              "y": -0.04430366776274985
+              "y": -0.0443036677627499
             },
             {
               "x": -0.6210526351352065,
-              "y": -0.023863239467104946
+              "y": -0.023863239467104974
             },
             {
               "x": 0.10311312631249756,
-              "y": 0.015556543762827849
+              "y": 0.015556543762827842
             },
             {
               "x": 0.14734048128673702,
-              "y": -0.019456962270696775
+              "y": -0.019456962270696803
             },
             {
               "x": -0.5419039988551798,
-              "y": -0.10016401011392687
+              "y": -0.10016401011392691
             },
             {
               "x": -0.33678122889049444,
-              "y": -0.045984713051291586
+              "y": -0.045984713051291606
             },
             {
               "x": -1.0417571781159478,
-              "y": -0.0591397580683466
+              "y": -0.05913975806834661
             },
             {
               "x": -0.2248892370654677,
-              "y": -0.0874393352397874
+              "y": -0.08743933523978749
             },
             {
               "x": -0.5951664463219724,
-              "y": -0.01931308608727081
+              "y": -0.019313086087270906
             },
             {
               "x": -0.2652584965327351,
-              "y": -0.05974972205826153
+              "y": -0.059749722058261526
             },
             {
               "x": -0.6674593360952056,
-              "y": 0.007617477862935069
+              "y": 0.007617477862935097
             },
             {
               "x": 0.6791122935056405,
-              "y": -0.12813923188969076
+              "y": -0.1281392318896908
             },
             {
-              "x": -0.13000988702925115,
-              "y": -0.168665157317933
+              "x": -0.13000988702925112,
+              "y": -0.16866515731793302
             },
             {
               "x": -0.9395771236420705,
-              "y": 0.06121701881068592
+              "y": 0.061217018810685926
             },
             {
               "x": -1.2148477240724773,
-              "y": 0.10136610141754478
+              "y": 0.10136610141754474
             },
             {
               "x": 2.214730428143448,
-              "y": 0.21445653109933777
+              "y": 0.2144565310993377
             },
             {
               "x": -0.15247753129903824,
-              "y": 0.1524320690957902
+              "y": 0.15243206909579018
             },
             {
               "x": 2.254844181504015,
@@ -8616,7 +8740,7 @@
             },
             {
               "x": 0.13433634248198764,
-              "y": 0.12697985044711876
+              "y": 0.12697985044711874
             },
             {
               "x": 0.09910775405995645,
@@ -10385,10 +10509,14 @@
           }
         ]
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -10712,8 +10840,17 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X1.csv.",
+    "source X1: x-outlier detection failed: ModuleNotFoundError",
+    "source X1: signal-type detection failed: ModuleNotFoundError",
+    "source X2: x-outlier detection failed: ModuleNotFoundError",
+    "source X2: signal-type detection failed: ModuleNotFoundError",
+    "source X3: x-outlier detection failed: ModuleNotFoundError",
+    "source X3: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

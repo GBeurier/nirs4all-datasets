@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 2550 sample(s), 2550 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 2550 sample(s), 2550 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -24,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| Genus | target | categorical | *Not specified.* | n=2550, missing=810, classes=4, top Picea (×580) |
+| Genus | target | categorical | *Not specified.* | n=2550, missing=0, classes=5, top #N/A (×810) |
 | Species | target | categorical | *Not specified.* | n=2550, missing=810, classes=6, top laricina (×290) |
 | Individual | target | numeric | *Not specified.* | n=2550, missing=0, range 1–5, mean 3 ± 1.414 |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top 121ea0c1-b3b1-4502-95a1-d13fae6d1323 (×2550) |
@@ -37,7 +39,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | year | metadata | numeric | *Not specified.* | n=2550, missing=0, range 2016–2016, mean 2016 ± 0 |
 | date | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=58, top 20150721 (×45) |
 | species | metadata | categorical | *Not specified.* | n=2550, missing=810, classes=6, top laricina (×290) |
-| genus | metadata | categorical | *Not specified.* | n=2550, missing=810, classes=4, top Picea (×580) |
+| genus | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=5, top #N/A (×810) |
 | family | metadata | categorical | *Not specified.* | n=2550, missing=2550, classes=0, — |
 | plant_part | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top Canopy (×2550) |
 | canopy_or_leaf | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top canopy (×2550) |
@@ -64,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -73,7 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 1 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d63b7b4aa89546a2bfc255a22084aaa5daf7a66a27abff7c06222b4fdc46c15f`
-- **Processing hash:** `1854fabdf59611bb2b4bd42909af0b755f15426a2594fbe7a90e84fecb228c77` | **metadata hash:** `32eb382fa0d733a537cde8f0f1778bc7e99b64e67076522a0693342fcd62dd1e`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6412baa7e645735c1e9c232799cbcc1dee99289c174a2489d0663966f719925b`
+- **Processing hash:** `bbf2ff254967cd9469333aa842440f5f458d4b716cc3fbe6d0b340494cae6a11` | **metadata hash:** `a58dcc8da6b62d24187f629ec53fd3ecb2dba94e6c7a3ddef4fa13b49d412a27`

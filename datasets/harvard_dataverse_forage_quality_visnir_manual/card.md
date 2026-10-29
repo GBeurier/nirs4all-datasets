@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 1112 sample(s), 1112 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; *Not specified.* sample(s), 1112 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -30,7 +32,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | PC | target | numeric | *Not specified.* | n=1112, missing=643, range 0.634–17.55, mean 7.251 ± 2.846 |
 | country | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=2, top Colombia (×1104) |
 | location | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=6, top Palmira (×833) |
-| harvest_date | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=26, top 1/1/2019 (×228) |
+| harvest_date | metadata | categorical | *Not specified.* | n=1112, missing=1, classes=25, top 1/1/2019 (×228) |
 | manual_download | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=1, top True (×1112) |
 | manual_download_source_dir | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\forage (×1112) |
 | manual_download_file | metadata | categorical | *Not specified.* | n=1112, missing=0, classes=1, top dataverse_files.zip::02a. Fulldata.csv (×1112) |
@@ -46,7 +48,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -55,7 +57,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Non déterminé
+- **Curated views:** M: 3 fields, Y: 4 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,6 +78,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d759e9534fd3bf022f698c5513c06ba7061dbaa8edebd159097ed2985bb826e7`
-- **Processing hash:** `2ca9a4866793466be15a7b62e9e3ec4e11c0d39456c32be19f29333d50419acd` | **metadata hash:** `47ca405ad78d0633f3b4c20b5dd7b1b33da79276f9995d58fab21596b51ef892`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `33a68ecccb48217ba2f612ac703c4ef081bca7e4b66a7cc8af3554c3bc4c22ce`
+- **Processing hash:** `dd1250165c7e6326f9916981007cba024fe76e255ddf997e3a234ad3ae24f4bd` | **metadata hash:** `8b6154013410ae322845187ede0e7cbf420bda7c39a1b0ce4a821d103fc743db`

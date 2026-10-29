@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 108 sample(s), 108 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 108 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -35,7 +37,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -44,7 +46,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -64,6 +67,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `ec7af75a7e131b0c6d5a4038355ec6b9dcfdc5694c7746f3771a8863a75a4a06`
-- **Processing hash:** `33a3006965f8fb1dc6593950147ae7c9c93d48c34cd4be71e0f4ba719ca3c502` | **metadata hash:** `738b6d2cb9a3e334d22886e4c882022ec5552395323f7735381469a6e6aed6d8`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `9c8c18dc635e87f2517881ba497672ec95255f0e5a2ae7577396871ea7be18e6`
+- **Processing hash:** `241bb1f2794fd64e22bebab705349cbe295ac390031a5f62777704b664a21308` | **metadata hash:** `f2cc3afedfeeada987d5b7f1f909e8145b53391e1ff0e2872ff701807936a4fc`

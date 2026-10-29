@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 406 sample(s), 406 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 148 sample(s), 406 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–3 (mean 2.743).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,8 +28,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=406, missing=0, classes=131, top Quartz SiO_2 (×15) |
 | class_label | target | categorical | *Not specified.* | n=406, missing=0, classes=12, top Silicate (×198) |
-| subclass | target | categorical | *Not specified.* | n=406, missing=202, classes=7, top Phyllosilicate (×67) |
-| particle_size | target | categorical | *Not specified.* | n=406, missing=1, classes=3, top Fine (×147) |
+| subclass | target | categorical | *Not specified.* | n=406, missing=0, classes=8, top None (×202) |
+| particle_size | target | categorical | *Not specified.* | n=406, missing=0, classes=4, top Fine (×147) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=406, missing=0, classes=406, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.spectrum (×1) |
 | category | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top mineral (×406) |
 | material_type | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Mineral (×406) |
@@ -37,7 +39,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top N/A (×406) |
 | species | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=406, missing=406, classes=0, — |
@@ -54,8 +56,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×406) |
 | rights_status | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top manual_review_needed (×406) |
 | usage_scope | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top private_use_only (×406) |
-| notes | metadata | categorical | *Not specified.* | n=406, missing=5, classes=401, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.ancillary.txt (×1) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=406, missing=0, classes=148, top A-1A (×3) |
+| notes | metadata | categorical | *Not specified.* | n=406, missing=0, classes=402, top None (×5) |
 
 ## Statistics — splits
 
@@ -66,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +77,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, location, sample_description, notes, material_name, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e0daaaddcc0cbed0c4062838445a933a7834f137607f39090f795857a372cbd3`
-- **Processing hash:** `8498ac950267140992d504a6d675c189904a17ba7de38f184c773ea1cb4eb198` | **metadata hash:** `2124273624ae61289f000c06b3a9356f08a6a3d64f72390f371aff277a5aa03d`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `e6da0f37f3529ae4c4a2fddc07a043a72ddef4ce86cba49e5ebad94745fdd747`
+- **Processing hash:** `da505e014fb27b3ba3acd279155f0e52b38c7764c3d49f4b1263b7fb406ea8d6` | **metadata hash:** `05d7e47214b8af4a56712425da36c361fe831f030c2f53480a9a28c74676eb6c`

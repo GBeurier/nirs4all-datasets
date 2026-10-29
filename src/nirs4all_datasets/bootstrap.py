@@ -53,7 +53,7 @@ from nirs4all_datasets.schema import (
 )
 
 GENERATOR = "bootstrap-v2"
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
 
 # Id columns that link spectra <-> samples <-> Y/metadata; never authored as a Variable.
 _ID_COLUMNS = frozenset({"observation_id", "sample_id", "dataset_id"})
@@ -189,6 +189,9 @@ def _classify_origin(raw: Any) -> tuple[str, dict[str, Any] | str | None]:
 def _dir_fingerprint(path: Path) -> str:
     """Cheap content fingerprint of a leaf dir: sha256 over its sorted ``(name, size)`` files."""
     parts = [f"{p.name}:{p.stat().st_size}" for p in sorted(path.iterdir()) if p.is_file()]
+    from nirs4all_datasets.curation import contract_hash
+
+    parts.append(contract_hash(slugify(path.name)))
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
 
 
@@ -269,8 +272,9 @@ def find_v2_leaves(source_root: str | Path) -> list[Path]:
     Each is a Frictionless-style package (machine-readable card declaring targets/sources/license), so
     the descriptor is authored from the card -- no free-text guessing.
     """
-    base = Path(source_root) / "v2.0"
-    if not base.is_dir():
+    root = Path(source_root)
+    base = next((root / name for name in ["v2.0", "standardized_datasets"] if (root / name).is_dir()), None)
+    if base is None:
         return []
     return sorted(d for d in base.iterdir() if d.is_dir() and (d / "dataset_card.json").exists())
 
@@ -468,8 +472,7 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
         if name in _ID_COLUMNS or name in seen:
             continue
         seen.add(name)
-        scientific_unit = "% m/m" if str(card.get("dataset_id", "")).startswith("ucph_granules_") and name == "api_reference_percent_w_w" else None
-        variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name), unit=scientific_unit))
+        variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name), unit="% w/w" if name == "api_reference_percent_w_w" else None))
 
     m_header = _csv_header(leaf_dir / "M.csv")
     aliases = _metadata_aliases(leaf_dir)
@@ -605,43 +608,35 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
     alignment_level = AlignmentLevel.SAMPLE if raw_level == "sample" else AlignmentLevel.OBSERVATION
 
     m_header = _csv_header(leaf_dir / "M.csv")
-    sample_id_available = "sample_id" in m_header
-    conflicts = _sample_conflicts(leaf_dir) if sample_id_available else []
-    if conflicts:
-        original_name = _original_sample_alias(leaf_dir)
-        variables.append(Variable(name=original_name, role=VariableRole.METADATA, type=VarType.CATEGORICAL))
-        warnings.append(
-            f"Observation identity is used as the canonical join key because source sample_id has differing per-observation values in {', '.join(conflicts)}. "
-            f"The original physical-sample key is preserved as metadata {original_name!r}; sample grouping must use that field."
-        )
-        ids = IdentitySpec(sample_id="observation_id", sample_id_available=False)
-        # Separate multi-source blocks may have different observation IDs or counts.
-        alignment_level = AlignmentLevel.SAMPLE if len(sources) > 1 else AlignmentLevel.OBSERVATION
+    import pandas as pd
+
+    from nirs4all_datasets.curation import identity_view
+
+    m_path = leaf_dir / "M.csv"
+    metadata = pd.read_csv(m_path, sep=";", dtype=str, keep_default_na=False) if m_header else pd.DataFrame(columns=["observation_id"])
+    if "observation_id" in metadata:
+        from nirs4all_datasets.curation import enrich_ossl, find_soilsite
+
+        if did.startswith("ossl_"):
+            metadata, enrichments, enrichment_warnings = enrich_ossl(did, metadata, find_soilsite(leaf_dir))
+            warnings.extend(enrichment_warnings)
+            present = {variable.name for variable in variables}
+            for enrichment in enrichments:
+                name = enrichment["canonical_name"]
+                if name not in present:
+                    vtype = VarType.IDENTIFIER if name == "site_id" else (VarType.DATETIME if name.startswith("campaign_date_") else VarType.NUMERIC)
+                    variables.append(Variable(name=name, role=VariableRole.METADATA, type=vtype))
+                    present.add(name)
+        _, identity = identity_view(did, metadata)
+        sample_id_available = bool(identity["sample_id_available"])
+        if identity.get("conclusion"):
+            warnings.append("Curation identity contract: " + identity["conclusion"])
     else:
-        ids = IdentitySpec(sample_id_available=sample_id_available)
-
-    # Source-specific, evidence-backed unit definitions supersede acquisition labels.
-    # Values varying within those units are retained separately by canonical.py.
-    if (leaf_dir / "M.csv").exists() and "observation_id" in m_header:
-        import pandas as pd
-
-        from nirs4all_datasets.curation import identity_frame
-
-        raw_metadata = pd.read_csv(leaf_dir / "M.csv", sep=";", dtype=str, keep_default_na=False, na_values=[""])
-        _, identity_report = identity_frame(did, raw_metadata)
-        if identity_report["rule"] != "declared_identity":
-            ids = IdentitySpec(sample_id_available=bool(identity_report["sample_id_available"]))
-            alignment_level = AlignmentLevel.SAMPLE if ids.sample_id_available else AlignmentLevel.OBSERVATION
-            warnings.append(f"Identity protocol {identity_report['protocol_version']}: {identity_report['rule']}; unit={identity_report['unit']}; independence={identity_report['independence']}.")
-        if did in {"ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y"}:
-            from nirs4all_datasets.curation import LUCAS_SOILSITE_FIELDS
-
-            known = {variable.name for variable in variables}
-            for name in list(LUCAS_SOILSITE_FIELDS.values()) + ["campaign_year"]:
-                if name in known:
-                    continue
-                kind = VarType.IDENTIFIER if name == "site_id" else VarType.DATETIME if name.endswith("_date") else VarType.NUMERIC
-                variables.append(Variable(name=name, role=VariableRole.METADATA, type=kind, semantic_role="identifier" if name == "site_id" else "experimental_context", decimal_separator="."))
+        sample_id_available = False
+    # Changes of instrument, treatment, date or response do not invalidate a
+    # physical grouping. Canonical variables retain observation grain when needed.
+    ids = IdentitySpec(sample_id_available=sample_id_available)
+    alignment_level = AlignmentLevel.SAMPLE if sample_id_available else AlignmentLevel.OBSERVATION
 
     split_summary = card.get("split_summary") or {}
     if not isinstance(split_summary, dict):
@@ -722,9 +717,11 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, force: bool 
 
     items: list[tuple[DatasetDescriptor, list[str], str]] = []
     for leaf_dir in find_v2_leaves(source_root):
-        rel = f"v2.0/{leaf_dir.name}"
+        rel = leaf_dir.relative_to(Path(source_root)).as_posix()
         try:
             descriptor, warns = build_descriptor_from_card(leaf_dir)
+            if descriptor.generation:
+                descriptor.generation.source_relpath = rel
             items.append((descriptor, warns, rel))
         except Exception as exc:  # noqa: BLE001 - one bad package must not abort the sweep
             report["errors"].append({"leaf": rel, "error": f"{type(exc).__name__}: {exc}"})

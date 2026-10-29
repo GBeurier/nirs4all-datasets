@@ -45,14 +45,14 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "Dryad tree tissue nonstructural carbohydrates NIR",
-      "sha256": "266ae9a954a8d63b418b92cfec69272c28e47e1368567e67888c3f76093da1f2"
+      "sha256": "c99c93dfc047bb879462395c211478151fbd20120fddd6e328cf7738ae440016"
     },
     {
       "@id": "file/variables.parquet",
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "93227c3ccbd21d95ab92c40354396ff997cb7c94d4632c97a2e6a1ddaf96c4ce"
+      "sha256": "930d2abb8e5cf45208e50bb296e83593f10756d477180e886d37be3b73e61d30"
     }
   ],
   "keywords": [
@@ -66,13 +66,28 @@
     {
       "@id": "X",
       "@type": "cr:RecordSet",
-      "description": "Spectra from source 'Dryad tree tissue nonstructural carbohydrates NIR' (1270 observations x 1154 wavelengths).",
+      "description": "Spectra from source 'Dryad tree tissue nonstructural carbohydrates NIR' (180 observations x 1154 wavelengths).",
       "field": [
+        {
+          "@id": "X/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X.parquet"
+            }
+          }
+        },
         {
           "@id": "X/sample_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
-          "description": "Sample identity (join key across sources and variables).",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
           "name": "sample_id",
           "source": {
             "extract": {
@@ -98,14 +113,14 @@
         }
       ],
       "key": {
-        "@id": "X/sample_id"
+        "@id": "X/observation_id"
       },
       "name": "X"
     },
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Per-sample target and metadata variables.",
+      "description": "Target and metadata variables keyed by sample_id.",
       "field": [
         {
           "@id": "variables/sample_id",
@@ -273,14 +288,14 @@
           }
         },
         {
-          "@id": "variables/nsc_tissue",
+          "@id": "variables/manual_download_source_dir",
           "@type": "cr:Field",
           "dataType": "sc:Integer",
-          "description": "Variable 'nsc_tissue' (role metadata, type categorical).",
-          "name": "nsc_tissue",
+          "description": "Variable 'manual_download_source_dir' (role metadata, type categorical).",
+          "name": "manual_download_source_dir",
           "source": {
             "extract": {
-              "column": "nsc_tissue"
+              "column": "manual_download_source_dir"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -288,14 +303,44 @@
           }
         },
         {
-          "@id": "variables/nsc_place",
+          "@id": "variables/manual_download_file",
           "@type": "cr:Field",
           "dataType": "sc:Integer",
-          "description": "Variable 'nsc_place' (role metadata, type categorical).",
-          "name": "nsc_place",
+          "description": "Variable 'manual_download_file' (role metadata, type categorical).",
+          "name": "manual_download_file",
           "source": {
             "extract": {
-              "column": "nsc_place"
+              "column": "manual_download_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/official_source_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'official_source_url' (role metadata, type categorical).",
+          "name": "official_source_url",
+          "source": {
+            "extract": {
+              "column": "official_source_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/manual_download",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'manual_download' (role metadata, type categorical).",
+          "name": "manual_download",
+          "source": {
+            "extract": {
+              "column": "manual_download"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -314,5 +359,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.1.0"
+  "version": "1.2.0"
 }

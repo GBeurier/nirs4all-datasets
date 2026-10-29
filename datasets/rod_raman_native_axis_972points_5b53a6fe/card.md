@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 30 sample(s), 30 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 30 sample(s), 30 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | mineral_name | target | categorical | *Not specified.* | n=30, missing=0, classes=30, top Boron trioxide (×1) |
 | chemical_formula_sum | target | categorical | *Not specified.* | n=30, missing=0, classes=29, top O2 Ti (×2) |
-| compound_source | target | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial powder Alfa Aesar 99.9% (×3) |
+| compound_source | target | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial Alfa Aesar 99% (×3) |
 | rod_database_code | target | categorical | *Not specified.* | n=30, missing=0, classes=30, top 3500179 (×1) |
 | axis_digest | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top 5b53a6fecfabbeea (×30) |
 | axis_unit | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top cm^-1 (×30) |
@@ -40,7 +42,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | chemical_name_common | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | chemical_name_systematic | metadata | categorical | *Not specified.* | n=30, missing=1, classes=29, top Boron trioxide (×1) |
 | chemical_formula_structural | metadata | categorical | *Not specified.* | n=30, missing=0, classes=29, top O2 Ti (×2) |
-| chemical_compound_source | metadata | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial powder Alfa Aesar 99.9% (×3) |
+| chemical_compound_source | metadata | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial Alfa Aesar 99% (×3) |
 | raman_measurement_device_model | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | raman_measurement_device_company | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | raman_measurement_device_excitation_laser_wavelength | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
@@ -59,7 +61,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -68,7 +70,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 2 fields, measurements: 0 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +91,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `c4e6ae3d27d617671aa9dc1332b2a812c8059b7d8944ec6f6315e05602349d00`
-- **Processing hash:** `339d4660167627997bd19b8d100ce6a3b3aa4751139e3cf480ee138419ccca00` | **metadata hash:** `f49ce22a6d13813f5bd9a8294334d261131dc1c99350a612730c1ac0156716d5`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `64af0e67074e2cee157382335da1899e4f47551bf5366a2186f2e0354ccf3a90`
+- **Processing hash:** `d8f8adeef3a594bb7bd50b8235c1b562f9b61cc6a1afc85d4267feab8fc5a37d` | **metadata hash:** `775fa455517c86ce29c327050e0843ff57ab9551f3fc453ea80cbfd6db114f07`

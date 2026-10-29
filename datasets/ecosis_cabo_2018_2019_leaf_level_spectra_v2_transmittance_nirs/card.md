@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1971 sample(s), 1971 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -90,7 +92,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -100,7 +102,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 30 fields, measurements: 0 fields, passport: 28 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -131,6 +134,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0861f3a6fb3f38dcb636bef4a7ecf54ee137a8edb01725ef07d00671f054c7d4`
-- **Processing hash:** `d58a390fce45f96b075bb06b4d7f8e4f82b6c91ca8d05f2c362b1c0dd119465b` | **metadata hash:** `c4669dd295872cd6ecaef26cf31ac23939d2e80eeea52c5681dd93854bb1b2ce`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `7c270407fc4a8333bd07f970797214ff77f6cc4a08e9201ff03e952c0fefee6e`
+- **Processing hash:** `afeb08fe463f9a610b211772b579332217d6a7bb1e30dd903465b82fe74ee1d9` | **metadata hash:** `4a73b2fb48c43730de069947f32021fef0cfc74bb5d977de32f08a4f10afd9d0`

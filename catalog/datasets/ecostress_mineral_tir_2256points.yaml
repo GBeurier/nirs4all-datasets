@@ -121,26 +121,28 @@ variables:
   type: categorical
 ids:
   observation_id: observation_id
-  sample_id: observation_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id: sample_id
+  sample_id_available: true
+alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: ECOSTRESS Spectral Library
   raw_sha256: []
   ingest_reader: v2.0-standardized
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
   warnings:
   - 'X: native axis unit is ''Wavelength (micrometers)'' (micrometers), which is not
     supported by the axis unit enum; axis values remain in micrometers. Multiply by
     1000 to convert to nm.'
-  - Observation identity is used as the canonical join key because source sample_id
-    has differing per-observation values in ecostress_resource_id, sample_description,
-    notes, material_name, particle_size. The original physical-sample key is preserved
-    as metadata 'original_sample_id'; sample grouping must use that field.
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences
+    de cet identifiant décrivent les lignes exportées, sans établir des répétitions
+    techniques. La clé est le numéro de spécimen source ; préparations, géométries
+    et instruments peuvent différer. Aucun regroupement par nom de matériau.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: ECOSTRESS Spectral Library
@@ -192,6 +194,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/ecostress_mineral_tir_2256points
-  source_fingerprint: 8b01afb7ae58a1f71412eacfc564534328e65c96972021a38f8eb02ea43d40a9
+  generator_version: '2'
+  source_relpath: standardized_datasets/ecostress_mineral_tir_2256points
+  source_fingerprint: 73d0902ad582ceb2b93e5941ee29ebf94a40900ab6a5d1c468519b16b509b4d0

@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 216 sample(s), 648 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -28,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | treatment | target | categorical | *Not specified.* | n=216, missing=0, classes=3, top c (×80) |
 | par_condition | target | categorical | *Not specified.* | n=216, missing=0, classes=2, top PAR1000 (×108) |
-| day_after_stress | target | categorical | *Not specified.* | n=216, missing=0, classes=4, top 4 (×72) |
+| day_after_stress | target | categorical | *Not specified.* | n=216, missing=0, classes=4, top 7 (×72) |
 | replicate | metadata | categorical | *Not specified.* | n=216, missing=0, classes=7, top r5 (×42) |
 | leaf_sample | metadata | categorical | *Not specified.* | n=216, missing=0, classes=6, top L2 (×104) |
 | doi_dataset | metadata | categorical | *Not specified.* | n=216, missing=0, classes=1, top 10.5281/zenodo.12800065 (×216) |
@@ -55,7 +57,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -65,7 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Les numéros r1…r7 sont des facteurs expérimentaux ; les feuilles et modalités restent distinctes. Aucun regroupement par r seul.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `d9b3f6eb2be966f88da806c69b26dbb46c7a02402d0da2b1065ce5fd902bde47`
-- **Processing hash:** `08496f5f7b8fea6a0c4eb1f2b92397539d98d720b46f3356a17fdd4b2dea496d` | **metadata hash:** `034b75fb3d9be3528f325206767413490a454ea273c6a996168e8aa7f7090f88`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `8362b35070da503794d9f98544a4ef92bd25943bd025d5857d268ee8f9d3f745`
+- **Processing hash:** `88b9b6ad69b9f7622297c4e47f059fa8c647f709f5efc1fcbe08fc4d9da4f3f4` | **metadata hash:** `97e33bccb951b62f92c59487198f5b6d3737504b2a88c916dca0e6dca905b23a`

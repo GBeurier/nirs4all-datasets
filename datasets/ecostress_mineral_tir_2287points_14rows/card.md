@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 14 sample(s), 14 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 10 sample(s), 14 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–2 (mean 1.4).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=14, missing=0, classes=10, top Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2 (×2) |
 | class_label | target | categorical | *Not specified.* | n=14, missing=0, classes=2, top Silicate (×13) |
-| subclass | target | categorical | *Not specified.* | n=14, missing=1, classes=4, top Inosilicate (×5) |
+| subclass | target | categorical | *Not specified.* | n=14, missing=0, classes=5, top Inosilicate (×5) |
 | particle_size | target | categorical | *Not specified.* | n=14, missing=0, classes=3, top Coarse (×7) |
 | measurement | target | categorical | *Not specified.* | n=14, missing=0, classes=2, top Bidirectional reflectance (×13) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.spectrum (×1) |
@@ -38,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top N/A (×14) |
 | species | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=14, missing=14, classes=0, — |
@@ -55,8 +57,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×14) |
 | rights_status | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manual_review_needed (×14) |
 | usage_scope | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top private_use_only (×14) |
-| notes | metadata | categorical | *Not specified.* | n=14, missing=2, classes=12, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.ancillary.txt (×1) |
-| original_sample_id | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top hornblen_3 (×2) |
+| notes | metadata | categorical | *Not specified.* | n=14, missing=0, classes=13, top None (×2) |
 
 ## Statistics — splits
 
@@ -67,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Observation identity is used as the canonical join key because source sample_id has differing per-observation values in ecostress_resource_id, sample_description, notes, particle_size. The original physical-sample key is preserved as metadata 'original_sample_id'; sample grouping must use that field.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `0a0c8e99c7af69cb55675b923f9dd21795820d22dd1b4f3d4b962688e43c85c4`
-- **Processing hash:** `84aa182b7dd20fc2434125faddad8351147581a0e41c14e62cf85f14fd6ab6a9` | **metadata hash:** `b05ade5c8ef0701d9c1e5f163e821cecd8b96f499169bd95b7332164e87e6427`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `ba6c0c112abc4fa0f00fb055c9ba982f3870c6c694ed6659d2ecc0f16fc28fd4`
+- **Processing hash:** `4b131d5a131b36a761687358a1ccab365331589676cdde402f2d33b6bb98c961` | **metadata hash:** `e5bae7458c862795f700b74ea7a717560e474046b7a17bdaae81831b6b8ce7bb`

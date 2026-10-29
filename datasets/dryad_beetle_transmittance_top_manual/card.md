@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** sample level; 56 sample(s), 56 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 56 sample(s), 56 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -39,7 +41,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -48,7 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -68,6 +71,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `aed15c4fca7023f94d1faf8d2df3d9b98812035ce3a20680ca8930ee8620cee8`
-- **Processing hash:** `7b99f69121a71d18f0f691a9936c76b0c12acb2ca0542c100f480bad0d98ebcb` | **metadata hash:** `add0096dff3facce0c3776aec9aa1ffdbcb7281be172d1184f6a0cb449f50433`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `2218a965f21807baa69a3a7d44316ef51c433d426ce30391b853e3f93e49d02c`
+- **Processing hash:** `58440f27ee3e8f274e7bac9c7b1b65791ba0971e333271a6adb44d27943bde96` | **metadata hash:** `8bb5c5fe43c9746c7a943a6be101f338508fab082d80284464bcb84953556576`

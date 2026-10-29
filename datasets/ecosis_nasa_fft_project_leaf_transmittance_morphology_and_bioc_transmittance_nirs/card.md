@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 765 sample(s), 765 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 765 sample(s), 765 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -74,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -84,7 +86,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 10 fields, Y: 11 fields, measurements: 2 fields, passport: 41 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,6 +108,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9fc0783f1843bf374a65d07d593bda124e0324dd0f3b7eb738c4b4cd3fe3fcd1`
-- **Processing hash:** `079989e39b22d03ba8a9766000aec76f815969dd3fb432b196977d6adeb436df` | **metadata hash:** `37de4dc41120baf933c8ceeaa94761da4f415ce8255fde523d05d8eb11e040ef`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6dd82df781664046db9e0d5ca169e74684cf0c214c872e1840f452442e116f7d`
+- **Processing hash:** `3479a9cc2a6842c2bdf4a5d6b53e28704fe03adc31439e02e7d8c1969432a827` | **metadata hash:** `29a87468f18d1bff49bf4ab32ecf3a839b7d37ac3b289ee173cb65452fadc388`

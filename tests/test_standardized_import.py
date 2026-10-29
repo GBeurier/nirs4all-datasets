@@ -73,3 +73,61 @@ def test_cli_import_standardized_normalizes_bundle_id(tmp_path, descriptor, monk
     assert result.exit_code == 0, result.output
     assert (out / "canonical/dataset.json").is_file()
     assert "import-standardized:" in result.output
+
+
+def _minimal_bundle(tmp_path, descriptor):
+    leaf = tmp_path / "bundle"
+    leaf.mkdir()
+    (leaf / "dataset_card.json").write_text(json.dumps({"dataset_id": descriptor.id}))
+    (leaf / "X1.csv").write_text("observation_id;1100;1200\no1;0.1;0.2\n")
+    (leaf / "M.csv").write_text("observation_id;sample_id\no1;s1\n")
+    return leaf
+
+
+def test_destination_created_during_conversion_is_never_replaced(tmp_path, descriptor, monkeypatch):
+    from nirs4all_datasets import canonical
+
+    leaf = _minimal_bundle(tmp_path, descriptor)
+    out = tmp_path / "output"
+    destination = out / "canonical"
+    build = canonical.build_canonical
+    identities = []
+
+    def concurrent_destination(*args, **kwargs):
+        result = build(*args, **kwargs)
+        destination.mkdir()
+        identities.append(destination.stat().st_ino)
+        return result
+
+    monkeypatch.setattr(canonical, "build_canonical", concurrent_destination)
+    with pytest.raises(FileExistsError, match="already exists"):
+        import_standardized(leaf, descriptor, out)
+    assert destination.stat().st_ino == identities[0]
+    assert list(destination.iterdir()) == []
+    assert not list(out.glob(".standardized-import-*"))
+
+
+def test_transient_windows_directory_hold_retries_without_rebuilding(tmp_path, descriptor, monkeypatch):
+    import time
+    from pathlib import Path
+
+    leaf = _minimal_bundle(tmp_path, descriptor)
+    out = tmp_path / "output"
+    rename = Path.rename
+    calls = []
+    delays = []
+
+    def held_directory(source, destination):
+        if destination == out / "canonical":
+            calls.append(source)
+            if len(calls) < 3:
+                raise PermissionError("simulated Windows scanner")
+        return rename(source, destination)
+
+    monkeypatch.setattr(Path, "rename", held_directory)
+    monkeypatch.setattr(time, "sleep", delays.append)
+    result = import_standardized(leaf, descriptor, out)
+    assert result.canonical_dir == out / "canonical"
+    assert (result.canonical_dir / "dataset.json").is_file()
+    assert len(calls) == 3 and len(set(calls)) == 1
+    assert delays == [0.05, 0.1]

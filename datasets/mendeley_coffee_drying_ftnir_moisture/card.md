@@ -11,24 +11,41 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 76 sample(s), 76 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 20 sample(s), 73 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–5 (mean 3.65).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | FT-NIR spectra | FT-NIR spectrometer | NIR | 4000–1.2e+04 cm-1 | 76 | 2001 |
+| X | FT-NIR spectra | FT-NIR spectrometer | NIR | 4000–1.2e+04 cm-1 | 73 | 2001 |
 
 ### Variables (Y / metadata)
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| Moisture_WB | target | numeric | *Not specified.* | n=76, missing=3, range 8.5–52.49, mean 32.29 ± 17.63 |
-| sample_group | metadata | categorical | *Not specified.* | n=76, missing=0, classes=21, top M 10 (×5) |
-| replicate | metadata | numeric | *Not specified.* | n=76, missing=0, range 1–5, mean 2.421 ± 1.169 |
-| moisture_standard_deviation | metadata | numeric | *Not specified.* | n=76, missing=3, range 0.1029–2.019, mean 0.5485 ± 0.463 |
-| moisture_coefficient_of_variation_pct | metadata | numeric | *Not specified.* | n=76, missing=3, range 0.2026–4.11, mean 2.009 ± 1.138 |
+| Moisture_WB | target | numeric | *Not specified.* | n=73, missing=0, range 8.5–52.49, mean 32.29 ± 17.63 |
+| sample_group | metadata | categorical | *Not specified.* | n=73, missing=0, classes=20, top M 20 (×5) |
+| replicate | metadata | numeric | *Not specified.* | n=73, missing=0, range 1–5, mean 2.438 ± 1.178 |
+| api_url | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/snapshot/1 (×73) |
+| files_api_url | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/files?folder_id=root&version=1&$start=0&$limit=1000 (×73) |
+| doi_dataset | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top 10.17632/7c6gx7rr6d.1 (×73) |
+| license | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top Creative Commons Attribution 4.0 International (×73) |
+| license_id | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top cc-by-4.0 (×73) |
+| license_url | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top https://creativecommons.org/licenses/by/4.0/ (×73) |
+| rights_status | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top explicit_open (×73) |
+| usage_scope | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top public_reuse_possible (×73) |
+| public_release_allowed | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top True (×73) |
+| spectroscopy_type | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top FT-NIR (×73) |
+| axis_unit | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top cm^-1 (×73) |
+| axis_min | metadata | numeric | *Not specified.* | n=73, missing=0, range 1.2e+04–1.2e+04, mean 1.2e+04 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=73, missing=0, range 4000–4000, mean 4000 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=73, missing=0, range 2001–2001, mean 2001 ± 0 |
+| moisture_standard_deviation | metadata | numeric | *Not specified.* | n=73, missing=0, range 0.1029–2.019, mean 0.5485 ± 0.463 |
+| moisture_coefficient_of_variation_pct | metadata | numeric | *Not specified.* | n=73, missing=0, range 0.2026–4.11, mean 2.009 ± 1.138 |
+| notes | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top Unprocessed FT-NIR spectra of parchment coffee during drying, sample columns without moisture target were excluded from X/Y/M. (×73) |
 
 ## Statistics — splits
 
@@ -39,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -51,7 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groupes M 1…M 20 alignés aux références d’humidité ; 1–5 spectres indexés par groupe, 73 au total. Le suffixe est explicitement traité comme répétition par le convertisseur. Le caractère strictement technique plutôt que préparation indépendante reste non documenté.
+- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 2 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,6 +89,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `fcc957e26197727a3176ce20d3ba622e14c06f1f79f234f1fed911ec59e32dc2`
-- **Processing hash:** `8d4712d1bea002dbd3774fa08646acc6dd0e0076fa1f72a5665a2b1d949d95b6` | **metadata hash:** `d35d2103c6d57ac714340ba23f59c80c58e0f0552a561428e1c50f77f4396610`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `f2278cd58a496a321aa16cc9a36a40d1f99949d17a15dcc582a413320b1d8932`
+- **Processing hash:** `e24131ec5767c006a367dbd3677e98dbaaada1bdf715964c48a868cb62e6b94a` | **metadata hash:** `1c55db5fff3233a314a5c8834af2f7fc7ee40dd6852c2547b8947486e33f3b32`

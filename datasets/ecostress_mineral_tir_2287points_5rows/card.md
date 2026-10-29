@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 5 sample(s), 5 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 5 sample(s), 5 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -35,7 +37,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | latitude | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
 | longitude | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
 | year | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
-| date | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
+| date | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top N/A (×5) |
 | species | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
 | genus | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
 | family | metadata | categorical | *Not specified.* | n=5, missing=5, classes=0, — |
@@ -52,7 +54,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | license | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Copyright California Institute of Technology / JPL, all rights reserved (×5) |
 | rights_status | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top manual_review_needed (×5) |
 | usage_scope | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top private_use_only (×5) |
-| notes | metadata | categorical | *Not specified.* | n=5, missing=1, classes=4, top mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.ancillary.txt (×1) |
+| notes | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.ancillary.txt (×1) |
 
 ## Statistics — splits
 
@@ -63,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -73,7 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +97,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `f6bb67929d39ed9179a5608e9a5947f5fa6b43aa4831fda54ef80af3c0e03136`
-- **Processing hash:** `248962aeeedc15da0653a23704db7b880ace8199bb22a9d89b0278eb962bb7a9` | **metadata hash:** `8b16eb5854429fb9970346aa66d1de397424270df9db5cbaba42a04166a9d7b9`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `71c637ed5f56dbf44be7c36f776fc7746190eab86cb7a58290a9c37cac5ff21a`
+- **Processing hash:** `9816b01811353d2fccdafa03fb7bebb2c626f36d5343621741a87256254a62bf` | **metadata hash:** `33a6b19470bf39207b7fb2e4c44fab5fbe7734f560058f95c5036c7643eacf7a`

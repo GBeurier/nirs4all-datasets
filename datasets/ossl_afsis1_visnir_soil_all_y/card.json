@@ -1,30 +1,826 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 1904,
     "n_samples": 1904,
     "profile_scores": {
       "integrity_risk": 1.0,
-      "local_artefact_risk": 0.0,
-      "noise_risk": 0.5,
-      "outlier_pressure": 0.0,
-      "reference_spread": 0.0,
-      "repeatability_risk": 0.0,
-      "shape_drift": 0.0,
-      "structure_complexity": 0.0
+      "local_artefact_risk": null,
+      "noise_risk": null,
+      "outlier_pressure": null,
+      "reference_spread": null,
+      "repeatability_risk": null,
+      "shape_drift": null,
+      "structure_complexity": null
     },
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": false
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:06.618725+00:00",
+  "curation": {
+    "contract_sha256": "7327a2c313cbfa8b78a6fe99b464a04ac7e158f5cd364e889dd80f467c7e5d4d",
+    "dataset_id": "ossl_afsis1_visnir_soil_all_y",
+    "enrichments": [
+      {
+        "canonical_name": "site_id",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "id.dataset.site_ascii_txt",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "longitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "longitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "latitude",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "latitude.point_wgs84_dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_begin",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.begin_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "campaign_date_end",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "observation.date.end_iso.8601_yyyy.mm.dd",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      },
+      {
+        "canonical_name": "location_error_m",
+        "join_keys": [
+          "dataset.code_ascii_txt",
+          "id.layer_uuid_txt"
+        ],
+        "operation": "join_dataset_layer",
+        "original_name": "location.point.error_any_m",
+        "resource": "ossl_soilsite_L0_v1.2.csv.gz",
+        "sha256": "7dffacfbbce8f1d77b5f76f33b2182e963bb846bcd8e56a0df1fa0dc6974b6b2"
+      }
+    ],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 1904,
+      "n_samples": 1904,
+      "observations_per_unit": {
+        "1": 1904
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "ID_sample"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "5b3fc8dbb55ae11f7c35b4afc1f37a80dbd562fb232bbc8d584d6f2960a6745e",
+      "Y.csv": "7695089d7d2e1f20adbe8712f86b14db9d86b035750d03aec17ec59083b86914"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "upper_depth_cm",
+        "source_columns": [
+          {
+            "name": "upper_depth_cm",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.53361344537815,
+          "max": 20.0,
+          "min": 0.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 66,
+          "n_present": 1838,
+          "n_rows": 1904,
+          "n_unique": 2,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "lower_depth_cm",
+        "source_columns": [
+          {
+            "name": "lower_depth_cm",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.53361344537815,
+          "max": 50.0,
+          "min": 20.0,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 66,
+          "n_present": 1838,
+          "n_rows": 1904,
+          "n_unique": 2,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "longitude",
+        "source_columns": [
+          {
+            "name": "longitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.53361344537815,
+          "max": 48.7565,
+          "min": -13.43299667,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 66,
+          "n_present": 1838,
+          "n_rows": 1904,
+          "n_unique": 929,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "latitude",
+        "source_columns": [
+          {
+            "name": "latitude",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 96.53361344537815,
+          "max": 14.87954,
+          "min": -29.9813,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 66,
+          "n_present": 1838,
+          "n_rows": 1904,
+          "n_unique": 928,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "al_ext_usda_a1056_mg_kg",
+        "source_columns": [
+          {
+            "name": "al_ext_usda_a1056_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 3041.0,
+          "min": 1.672,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1270,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "b_ext_mel3_mg_kg",
+        "source_columns": [
+          {
+            "name": "b_ext_mel3_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.89495798319328,
+          "max": 55.09,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 2,
+          "n_present": 1902,
+          "n_rows": 1904,
+          "n_unique": 737,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "c_tot_usda_a622_w_pct",
+        "source_columns": [
+          {
+            "name": "c_tot_usda_a622_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.89495798319328,
+          "max": 11.28760099,
+          "min": 0.08429971,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 2,
+          "n_present": 1902,
+          "n_rows": 1904,
+          "n_unique": 1902,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ca_ext_usda_a1059_mg_kg",
+        "source_columns": [
+          {
+            "name": "ca_ext_usda_a1059_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 35200.0,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1469,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "clay_tot_usda_a334_w_pct",
+        "source_columns": [
+          {
+            "name": "clay_tot_usda_a334_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.5798319327731,
+          "max": 100.0,
+          "min": 0.32,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 8,
+          "n_present": 1896,
+          "n_rows": 1904,
+          "n_unique": 1748,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "cu_ext_usda_a1063_mg_kg",
+        "source_columns": [
+          {
+            "name": "cu_ext_usda_a1063_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 23.7,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1018,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ec_usda_a364_ds_m",
+        "source_columns": [
+          {
+            "name": "ec_usda_a364_ds_m",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 8.73,
+          "min": 0.006,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 350,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "fe_ext_usda_a1064_mg_kg",
+        "source_columns": [
+          {
+            "name": "fe_ext_usda_a1064_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 981.0,
+          "min": 1.26,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1198,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "k_ext_usda_a1065_mg_kg",
+        "source_columns": [
+          {
+            "name": "k_ext_usda_a1065_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 5047.0,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1335,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "mg_ext_usda_a1066_mg_kg",
+        "source_columns": [
+          {
+            "name": "mg_ext_usda_a1066_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 4740.0,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1418,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "mn_ext_usda_a1067_mg_kg",
+        "source_columns": [
+          {
+            "name": "mn_ext_usda_a1067_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 686.6,
+          "min": 0.57,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1364,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "n_tot_usda_a623_w_pct",
+        "source_columns": [
+          {
+            "name": "n_tot_usda_a623_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.89495798319328,
+          "max": 0.658916563,
+          "min": 0.004175606,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 2,
+          "n_present": 1902,
+          "n_rows": 1904,
+          "n_unique": 1902,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "na_ext_usda_a1068_mg_kg",
+        "source_columns": [
+          {
+            "name": "na_ext_usda_a1068_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.68487394957984,
+          "max": 31800.0,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 6,
+          "n_present": 1898,
+          "n_rows": 1904,
+          "n_unique": 1212,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "oc_usda_c729_w_pct",
+        "source_columns": [
+          {
+            "name": "oc_usda_c729_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.89495798319328,
+          "max": 10.93421984,
+          "min": 0.071649872,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 2,
+          "n_present": 1902,
+          "n_rows": 1904,
+          "n_unique": 1902,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "p_ext_usda_a1070_mg_kg",
+        "source_columns": [
+          {
+            "name": "p_ext_usda_a1070_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 396.0,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 1344,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "ph_h2o_usda_a268_index",
+        "source_columns": [
+          {
+            "name": "ph_h2o_usda_a268_index",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 9.86,
+          "min": 3.61,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 995,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "s_ext_mel3_mg_kg",
+        "source_columns": [
+          {
+            "name": "s_ext_mel3_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.89495798319328,
+          "max": 3940.0,
+          "min": 0.62,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 2,
+          "n_present": 1902,
+          "n_rows": 1904,
+          "n_unique": 1240,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "sand_tot_usda_c60_w_pct",
+        "source_columns": [
+          {
+            "name": "sand_tot_usda_c60_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.3172268907563,
+          "max": 100.0,
+          "min": 0.12,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 13,
+          "n_present": 1891,
+          "n_rows": 1904,
+          "n_unique": 1745,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "silt_tot_usda_c62_w_pct",
+        "source_columns": [
+          {
+            "name": "silt_tot_usda_c62_w_pct",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 99.26470588235294,
+          "max": 57.27,
+          "min": 0.34,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 14,
+          "n_present": 1890,
+          "n_rows": 1904,
+          "n_unique": 1557,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "zn_ext_usda_a1073_mg_kg",
+        "source_columns": [
+          {
+            "name": "zn_ext_usda_a1073_mg_kg",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "max": 36.51,
+          "min": 0.001,
+          "n_censored": 0,
+          "n_invalid": 0,
+          "n_missing": 0,
+          "n_present": 1904,
+          "n_rows": 1904,
+          "n_unique": 881,
+          "type": "numeric"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "upper_depth_cm",
+        "lower_depth_cm",
+        "longitude",
+        "latitude"
+      ],
+      "Y": [
+        "al_ext_usda_a1056_mg_kg",
+        "b_ext_mel3_mg_kg",
+        "c_tot_usda_a622_w_pct",
+        "ca_ext_usda_a1059_mg_kg",
+        "clay_tot_usda_a334_w_pct",
+        "cu_ext_usda_a1063_mg_kg",
+        "ec_usda_a364_ds_m",
+        "fe_ext_usda_a1064_mg_kg",
+        "k_ext_usda_a1065_mg_kg",
+        "mg_ext_usda_a1066_mg_kg",
+        "mn_ext_usda_a1067_mg_kg",
+        "n_tot_usda_a623_w_pct",
+        "na_ext_usda_a1068_mg_kg",
+        "oc_usda_c729_w_pct",
+        "p_ext_usda_a1070_mg_kg",
+        "ph_h2o_usda_a268_index",
+        "s_ext_mel3_mg_kg",
+        "sand_tot_usda_c60_w_pct",
+        "silt_tot_usda_c62_w_pct",
+        "zn_ext_usda_a1073_mg_kg"
+      ],
+      "measurements": [
+        "class_label"
+      ],
+      "passport": [
+        "id_sample",
+        "spectralrep",
+        "dataset",
+        "collection_name",
+        "dataset_code",
+        "dataset_title",
+        "dataset_owner",
+        "dataset_slug",
+        "task_type",
+        "trait_header",
+        "trait_header_original",
+        "package_url",
+        "dataset_url",
+        "dataset_doi",
+        "file",
+        "resource",
+        "spectral_kind",
+        "scan_local_id",
+        "raw_label",
+        "reference_value",
+        "class_index",
+        "feature_count_per_dimension",
+        "dimensions",
+        "wavelength_note",
+        "dataset_id",
+        "root",
+        "relative_dir",
+        "split_original",
+        "grouped_y_exports",
+        "active_status",
+        "replaces_dataset_id",
+        "site_id",
+        "m_scan_lab",
+        "m_instrument_model",
+        "m_scan_model_code",
+        "m_acquisition_optics",
+        "m_sample_preparation",
+        "m_country",
+        "m_texture_class",
+        "m_pedon_taxa",
+        "m_horizon_designation",
+        "m_campaign_date_begin",
+        "m_campaign_date_end",
+        "m_location_error_m",
+        "y_acidity_usda_a795_cmolc_kg",
+        "y_aggstb_usda_a1_w_pct",
+        "y_al_dith_usda_a65_w_pct",
+        "y_al_ext_aquaregia_g_kg",
+        "y_al_ext_usda_a69_cmolc_kg",
+        "y_al_ox_usda_a59_w_pct",
+        "y_awc_33_1500kpa_usda_c80_w_frac",
+        "y_bd_usda_a4_g_cm3",
+        "y_ca_ext_aquaregia_mg_kg",
+        "y_ca_ext_usda_a722_cmolc_kg",
+        "y_caco3_usda_a54_w_pct",
+        "y_cec_usda_a723_cmolc_kg",
+        "y_cf_usda_c236_w_pct",
+        "y_efferv_usda_a479_class",
+        "y_fe_dith_usda_a66_w_pct",
+        "y_fe_ext_aquaregia_g_kg",
+        "y_fe_ox_usda_a60_w_pct",
+        "y_k_ext_aquaregia_mg_kg",
+        "y_k_ext_usda_a725_cmolc_kg",
+        "y_mg_ext_aquaregia_mg_kg",
+        "y_mg_ext_usda_a724_cmolc_kg",
+        "y_mn_ext_aquaregia_mg_kg",
+        "y_mn_ext_usda_a70_mg_kg",
+        "y_na_ext_aquaregia_mg_kg",
+        "y_na_ext_usda_a726_cmolc_kg",
+        "y_p_ext_aquaregia_mg_kg",
+        "y_p_ext_usda_a270_mg_kg",
+        "y_p_ext_usda_a274_mg_kg",
+        "y_ph_cacl2_usda_a481_index",
+        "y_s_tot_usda_a624_w_pct",
+        "y_wr_10kpa_usda_a414_w_pct",
+        "y_wr_1500kpa_usda_a417_w_pct",
+        "y_wr_33kpa_usda_a415_w_pct"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:32:07.773929+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -45,15 +841,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "afebba5910ff2f7f2196346a96ddd92fb0a2fbddd010c6bb2903d8a94a73bed1",
+    "content_hash": "77dd3bb2c60dd5d0cc3b5d6fbd3cbc104511adb65f363bc3a9ce8d1b3b910fa2",
     "manifest": "manifest.json",
-    "metadata_hash": "1f056dfc62a31ceb7d8e844195e761f76661d05b30c27fa3c1f063c1a07daa6a",
-    "processing_hash": "8d7394e76905207a16ad779020deb5af0c3448e19b72a86455fcc0929bf92224"
+    "metadata_hash": "46958fc03ddb7e05d6a861c6f1ee8c6eb38d762c6496f9dee67435b1294c7223",
+    "processing_hash": "4e8aa57d71b2372532528d7e912ff5114661f603a20a49f6af5fe4ef7d73ba3d"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "NIRS DB",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -86,7 +882,9 @@
     ],
     "publications": [],
     "reference_method": null,
-    "warnings": []
+    "warnings": [
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
+    ]
   },
   "schema_version": "2.0",
   "sources": [
@@ -1108,42 +1906,8 @@
         },
         "mean_max": null,
         "mean_min": null,
-        "n_outliers": 0,
-        "pca": {
-          "explained_variance_ratio": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "n_components": 30
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": null,
@@ -1160,110 +1924,171 @@
           },
           "diagnostics": [
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Variance tr\u00e8s faible"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "artefacts faibles"
-                },
-                {
-                  "level": 0.5,
-                  "signal": "SNR bas"
-                }
-              ],
-              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
-              "key": "flat_low_signal",
-              "label": "Spectre plat / signal faible",
-              "score": 0.6,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 0.5,
-                  "signal": "faibles anomalies"
-                }
-              ],
-              "interpretation": "Spectre conforme \u00e0 la population, acquisition correcte.",
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.2,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
               "key": "normal",
               "label": "Spectre normal",
-              "score": 0.5,
-              "strength": "moyenne"
+              "missing_evidence": [
+                "q",
+                "h",
+                "clip",
+                "noise",
+                "baseline",
+                "reference",
+                "repeatability",
+                "structure"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             },
             {
-              "evidence": [
-                {
-                  "level": 0.5,
-                  "signal": "Noise RMS"
-                },
-                {
-                  "level": 0.5,
-                  "signal": "SNR bas"
-                }
-              ],
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.2,
               "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
               "key": "very_noisy",
               "label": "Spectre tr\u00e8s bruit\u00e9",
-              "score": 0.25,
-              "strength": "faible"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 0.5,
-                  "signal": "artefacts faibles"
-                }
+              "missing_evidence": [
+                "q",
+                "noise",
+                "snr_low",
+                "reference"
               ],
-              "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
-              "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
-              "score": 0.1,
-              "strength": "faible"
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             },
             {
-              "evidence": [
-                {
-                  "level": 0.5,
-                  "signal": "Noise RMS faible"
-                }
-              ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.09285714285714285,
-              "strength": "faible"
-            },
-            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
               "evidence": [],
+              "evidence_coverage": 0.3333333333333333,
+              "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
+              "key": "splice",
+              "label": "Splice / raccord d\u00e9tecteurs",
+              "missing_evidence": [
+                "q",
+                "reference",
+                "snr_high",
+                "noise"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.2857142857142857,
               "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
+              "interpretation_kind": "possible_cause",
               "key": "partial_coverage",
               "label": "M\u00e9lange feuille + fond",
-              "score": 0.09166666666666667,
-              "strength": "faible"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 0.5,
-                  "signal": "Bruit/artefacts variables"
-                }
+              "missing_evidence": [
+                "q",
+                "h",
+                "baseline",
+                "reference",
+                "repeatability"
               ],
-              "interpretation": "Positionnement, op\u00e9rateur ou protocole instable; investiguer les r\u00e9p\u00e9titions intra-ID.",
-              "key": "poor_repeatability",
-              "label": "Mauvaise r\u00e9p\u00e9tabilit\u00e9 d'acquisition",
-              "score": 0.08333333333333333,
-              "strength": "faible"
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             },
             {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
               "evidence": [],
+              "evidence_coverage": 0.3333333333333333,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
-              "score": 0.075,
-              "strength": "faible"
+              "missing_evidence": [
+                "q",
+                "h",
+                "baseline",
+                "reference"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.3333333333333333,
+              "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
+              "key": "out_of_domain",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [
+                "h",
+                "reference",
+                "structure",
+                "noise"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.3333333333333333,
+              "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
+              "key": "white_calibration",
+              "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "missing_evidence": [
+                "q",
+                "h",
+                "baseline",
+                "reference"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.25,
+              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
+              "interpretation_kind": "possible_cause",
+              "key": "probe_geometry",
+              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
+              "missing_evidence": [
+                "q",
+                "h",
+                "baseline",
+                "reference",
+                "repeatability",
+                "snr_high"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -1298,13 +2123,13 @@
           },
           "profile_scores": {
             "integrity_risk": 1.0,
-            "local_artefact_risk": 0.0,
-            "noise_risk": 0.5,
-            "outlier_pressure": 0.0,
-            "reference_spread": 0.0,
-            "repeatability_risk": 0.0,
-            "shape_drift": 0.0,
-            "structure_complexity": 0.0
+            "local_artefact_risk": null,
+            "noise_risk": null,
+            "outlier_pressure": null,
+            "reference_spread": null,
+            "repeatability_risk": null,
+            "shape_drift": null,
+            "structure_complexity": null
           },
           "reference": {
             "affine_gain_median": null,
@@ -1359,7 +2184,10 @@
         "value_min": null,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [
@@ -1371,6 +2199,7 @@
       }
     }
   ],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -2878,7 +3707,7 @@
         "cv": 1.008111605389876,
         "is_normal": false,
         "kurtosis": 6.928403064630881,
-        "normality_p": 4.697882116111324e-207,
+        "normality_p": 4.6978821161113234e-207,
         "skewness": 2.34998328977972
       },
       "stats": {
@@ -3613,7 +4442,7 @@
         "cv": 0.567438568280855,
         "is_normal": false,
         "kurtosis": 0.769983848588875,
-        "normality_p": 4.7005114054337155e-46,
+        "normality_p": 4.700511405433716e-46,
         "skewness": 0.8717488515808469
       },
       "stats": {
@@ -4557,7 +5386,7 @@
         "top_classes": [
           {
             "count": 11,
-            "name": "6.19"
+            "name": "5.88"
           },
           {
             "count": 11,
@@ -4565,11 +5394,7 @@
           },
           {
             "count": 11,
-            "name": "5.88"
-          },
-          {
-            "count": 10,
-            "name": "6.42"
+            "name": "6.19"
           },
           {
             "count": 10,
@@ -4584,16 +5409,8 @@
             "name": "5.6"
           },
           {
-            "count": 9,
-            "name": "6.38"
-          },
-          {
-            "count": 9,
-            "name": "5.75"
-          },
-          {
-            "count": 9,
-            "name": "5.64"
+            "count": 10,
+            "name": "6.42"
           },
           {
             "count": 9,
@@ -4601,11 +5418,27 @@
           },
           {
             "count": 9,
-            "name": "6.13"
+            "name": "6.39"
           },
           {
             "count": 9,
-            "name": "6.39"
+            "name": "6.38"
+          },
+          {
+            "count": 9,
+            "name": "5.64"
+          },
+          {
+            "count": 9,
+            "name": "5.75"
+          },
+          {
+            "count": 9,
+            "name": "6.13"
+          },
+          {
+            "count": 8,
+            "name": "6.24"
           },
           {
             "count": 8,
@@ -4614,10 +5447,6 @@
           {
             "count": 8,
             "name": "5.4"
-          },
-          {
-            "count": 8,
-            "name": "5.22"
           },
           {
             "count": 8,
@@ -4633,7 +5462,7 @@
           },
           {
             "count": 8,
-            "name": "5.5"
+            "name": "5.22"
           }
         ]
       },
@@ -4870,11 +5699,264 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "name": "site_id",
+      "role": "metadata",
+      "stats": {
+        "n": 1904,
+        "n_classes": 0,
+        "n_missing": 1904,
+        "top_classes": []
+      },
+      "type": "identifier",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          95,
+          0,
+          64,
+          64,
+          96,
+          32,
+          32,
+          30,
+          77,
+          50,
+          32,
+          94,
+          0,
+          62,
+          32,
+          63,
+          186,
+          128,
+          265,
+          214,
+          159,
+          31,
+          0,
+          32
+        ],
+        "edges": [
+          -13.43299667,
+          -10.841767642083333,
+          -8.250538614166665,
+          -5.659309586249998,
+          -3.0680805583333317,
+          -0.47685153041666517,
+          2.114377497500003,
+          4.705606525416668,
+          7.296835553333336,
+          9.888064581250005,
+          12.47929360916667,
+          15.070522637083338,
+          17.661751665000004,
+          20.252980692916672,
+          22.844209720833334,
+          25.435438748750002,
+          28.02666777666667,
+          30.61789680458334,
+          33.20912583250001,
+          35.80035486041667,
+          38.39158388833334,
+          40.982812916250005,
+          43.57404194416667,
+          46.16527097208334,
+          48.7565
+        ]
+      },
+      "name": "longitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.7542936969612183,
+        "is_normal": false,
+        "kurtosis": -0.8306108246161696,
+        "normality_p": 6.904394457919433e-66,
+        "skewness": -0.6964711805205691
+      },
+      "stats": {
+        "max": 48.7565,
+        "mean": 22.3595092241975,
+        "median": 29.4126,
+        "min": -13.43299667,
+        "n": 1904,
+        "n_missing": 66,
+        "q1": 9.3390758335,
+        "q3": 35.503388335,
+        "std": 16.865636874958394
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "histogram": {
+        "counts": [
+          62,
+          32,
+          0,
+          64,
+          32,
+          61,
+          128,
+          159,
+          63,
+          125,
+          32,
+          62,
+          128,
+          32,
+          64,
+          64,
+          64,
+          0,
+          96,
+          96,
+          94,
+          127,
+          157,
+          96
+        ],
+        "edges": [
+          -29.9813,
+          -28.112098333333336,
+          -26.242896666666667,
+          -24.373695,
+          -22.504493333333333,
+          -20.635291666666667,
+          -18.76609,
+          -16.896888333333333,
+          -15.027686666666666,
+          -13.158484999999999,
+          -11.289283333333334,
+          -9.420081666666665,
+          -7.550879999999999,
+          -5.6816783333333305,
+          -3.812476666666665,
+          -1.9432749999999963,
+          -0.07407333333333099,
+          1.7951283333333343,
+          3.664330000000003,
+          5.533531666666672,
+          7.402733333333334,
+          9.271935000000003,
+          11.141136666666672,
+          13.01033833333334,
+          14.87954
+        ]
+      },
+      "name": "latitude",
+      "role": "metadata",
+      "shape": {
+        "cv": 2.640639256534905,
+        "is_normal": false,
+        "kurtosis": -1.2346108959847424,
+        "normality_p": 0.0,
+        "skewness": -0.08629963919293589
+      },
+      "stats": {
+        "max": 14.87954,
+        "mean": -4.904280381394994,
+        "median": -6.12214,
+        "min": -29.9813,
+        "n": 1904,
+        "n_missing": 66,
+        "q1": -16.06947333,
+        "q3": 8.132461249999999,
+        "std": 12.950435300165596
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_begin",
+      "role": "metadata",
+      "stats": {
+        "n": 1904,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1904,
+            "name": "2011-01-01"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "name": "campaign_date_end",
+      "role": "metadata",
+      "stats": {
+        "n": 1904,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1904,
+            "name": "2013-12-31"
+          }
+        ]
+      },
+      "type": "datetime",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "name": "location_error_m",
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 30.0,
+        "mean": 30.0,
+        "median": 30.0,
+        "min": 30.0,
+        "n": 1904,
+        "n_missing": 66,
+        "q1": 30.0,
+        "q3": 30.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": []
+  "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
+  ]
 }

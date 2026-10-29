@@ -12,7 +12,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Composition
 
 - **Alignment:** sample level; 2399 sample(s), 2399 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -43,7 +45,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top LMA_mg_cm2 (×2399) |
 | target_original_name | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top LMA (mg/cm2) (×2399) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top coastal grassland Belgium and Japan ITV spectra and traits (×2399) |
-| raw_label | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2090, top 8.548 (×4) |
+| raw_label | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2090, top 4.456 (×4) |
 | reference_value | metadata | numeric | *Not specified.* | n=2399, missing=0, range 1.525–13.89, mean 6.221 ± 2.649 |
 | class_index | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
@@ -69,7 +71,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -80,7 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 1 fields, measurements: 3 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +103,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `e993056cb0ae7873016805a7335b758b6b8e91597058fb05a7e65d8a4be15d4e`
-- **Processing hash:** `95eb71b380dc6a1c72994e86d8e9308b19ac97cf53e1b820f095bdd049ad731d` | **metadata hash:** `e0d015d7a7100eaa2f4f39b359dc899690a57fa98febeacc839d142313fbf363`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `6c6902af95d36407139ba27e4334c92a738adfe69ac0126718cee6cdeb2fc23b`
+- **Processing hash:** `dd8b2cb5a72e9e2544a61d3f6bb04d171964f8c3222dc1853ff9d632127b54d8` | **metadata hash:** `2f6e05925432f63951d1241adc2f111718f512282ee2d72ce504fcc5e801c7b4`

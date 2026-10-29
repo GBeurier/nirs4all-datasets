@@ -11,27 +11,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 50000 sample(s), 100000 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 100000 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X1 | IR | Gaussian09 computed spectra | MIR | 1–291 index | 50000 | 291 |
-| X2 | Raman | Gaussian09 computed spectra | Raman | 1–291 index | 50000 | 291 |
+| X1 | IR | Gaussian09 computed spectra | MIR | 0–4000 index | 50000 | 512 |
+| X2 | Raman | Gaussian09 computed spectra | Raman | 0–4000 index | 50000 | 512 |
 
 ### Variables (Y / metadata)
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
 | chembl_id | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
-| compound_name | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
+| compound_name | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
 | molecular_formula | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
-| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top CCCCCCCCCCCCC/C=C/[C@H]([C@@H](NC(=O)C)CO)O (×2) |
+| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top CSc1nc(c([nH]1)c1ccnc(c1)N[C@@H](c1ccccc1)C)c1ccc(cc1)F (×2) |
 | inchi | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
 | inchikey | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
-| compound_class | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
+| compound_class | target | categorical | *Not specified.* | n=50000, missing=0, classes=1, top ChEMBL molecule (×50000) |
 | band_gap | target | numeric | *Not specified.* | n=50000, missing=0, range 0.00043–0.3228, mean 0.09778 ± 0.0265 |
 | dipole_moment_total | target | numeric | *Not specified.* | n=50000, missing=0, range 0–20.74, mean 5.178 ± 2.536 |
 | isotropic_polarizability | target | numeric | *Not specified.* | n=50000, missing=0, range 12.4–2030, mean 264.9 ± 73.84 |
@@ -40,21 +42,25 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | electronic_ext | target | numeric | *Not specified.* | n=50000, missing=0, range 44.98–1.401e+05, mean 1.622e+04 ± 9913 |
 | heat_capacity | target | numeric | *Not specified.* | n=50000, missing=0, range 6.201–233.7, mean 94.55 ± 25.54 |
 | molecule_id | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top 1 (×1) |
+| spectroscopy_type | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top ir_raman_multiblock (×50000) |
+| signal_type | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top computed_ir_and_raman (×50000) |
+| axis_unit | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top cm-1 (×50000) |
+| axis_min | metadata | numeric | *Not specified.* | n=50000, missing=0, range 0–0, mean 0 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=50000, missing=0, range 4000–4000, mean 4000 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=50000, missing=0, range 512–512, mean 512 ± 0 |
+| preprocessing_original | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top local common-grid Lorentz-fitted export from source SQLite, no additional interpolation in nirs_db_vf (×50000) |
+| data_source | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top Raman-ChEMBL Figshare SQLite/local processed exports (×50000) |
+| publication_doi | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top 10.1038/s41597-025-05289-x (×50000) |
+| citation | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top Liang et al. 2025, A Dataset of Raman and Infrared Spectra as an Extension to the ChEMBL, Scientific Data 12, 939 (×50000) |
+| license | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top private_use_only pending ChEMBL/Figshare rights packaging review (×50000) |
+| rights_status | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top manual_review_needed (×50000) |
+| usage_scope | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top private_use_only (×50000) |
+| notes | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top Converted from local processed ChEMBL IR/Raman export with row limit and no project resampling (×50000) |
 | sdf_name | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100.xyz.sdf (×1) |
 | n_atoms | metadata | numeric | *Not specified.* | n=50000, missing=0, range 3–99, mean 47.36 ± 13.29 |
 | n_modes_total | metadata | numeric | *Not specified.* | n=50000, missing=0, range 3–291, mean 136.1 ± 39.87 |
 | n_modes_positive | metadata | numeric | *Not specified.* | n=50000, missing=0, range 3–291, mean 136 ± 39.88 |
-| has_negative_freq | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=2, top False (×48370) |
-| mode_frequencies_cm1 | metadata | text | *Not specified.* | *Not specified.* |
-| database_tag | metadata | text | *Not specified.* | *Not specified.* |
-| xyz_name | metadata | text | *Not specified.* | *Not specified.* |
-| Rx | metadata | numeric | *Not specified.* | n=50000, missing=0, range 0–2099, mean 0.5385 ± 10.03 |
-| Ry | metadata | numeric | *Not specified.* | n=50000, missing=0, range 0.00704–245, mean 0.1237 ± 1.123 |
-| Rz | metadata | numeric | *Not specified.* | n=50000, missing=0, range 0.0067–133.7, mean 0.1011 ± 0.6348 |
-| Dx | metadata | numeric | *Not specified.* | n=50000, missing=0, range -18.43–20.22, mean 0.001568 ± 3.956 |
-| Dy | metadata | numeric | *Not specified.* | n=50000, missing=0, range -16.42–17.82, mean 0.2724 ± 3.442 |
-| Dz | metadata | numeric | *Not specified.* | n=50000, missing=0, range -12.14–13.12, mean 0.1111 ± 2.38 |
-| origin_url | metadata | text | *Not specified.* | *Not specified.* |
+| has_negative_freq | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=2, top no (×48370) |
 
 ## Statistics — splits
 
@@ -65,7 +71,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.
+- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +103,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 2.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `374b18cfad8ccfd9fe8dc5b8559f919eefcab3c85a316d88d80253ba206f2fec`
-- **Processing hash:** `2325b1cab4c9fc13af1a8145e9008ba78d73559f1b79207f70a9001247b921d4` | **metadata hash:** `6f4533875fa8a85e0a78cefefdd100f94f842ef0e802589a967372c93d069eef`
+- **Content version:** 2.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `36f66e057516b1a10594cc1e7721bf3bc6fe6a4c53674f73d5c3e83cc15feec8`
+- **Processing hash:** `ccc0c842f4b21c52c74e5c26ed0aafe265422c79dd4ecc693d79d0df9c7fca87` | **metadata hash:** `99e6ff1f2f4b3c0b56bab0988ba5a29e0dad1941e573f3751fd3a5a8433b47e5`

@@ -70,21 +70,24 @@ variables:
 ids:
   observation_id: observation_id
   sample_id: sample_id
-  sample_id_available: false
-alignment_level: observation
+  sample_id_available: true
+alignment_level: sample
 splits:
 - name: original
   kind: train_test
   applied: false
 tier: private
 versions:
-  content: 1.0.0
+  content: 1.1.0
   schema_protocol: '2.0'
 provenance:
   contributor: timeseries_classif_nirs_database
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  warnings: []
+  ingest_reader_version: 0.3.13+curation.1
+  conversion_status: partial
+  warnings:
+  - 'Curation identity contract: Identifiant échantillon déclaré dans M'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: timeseries_classif_nirs_database
@@ -116,6 +119,12 @@ origin_sources:
 publications: []
 dataverse:
   instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  canonical_hosted: false
+  routes: []
+  blockers: []
 reproducibility:
   source_accessibility: local_export_available
   license_status: manual_review_needed
@@ -142,6 +151,6 @@ reproducibility:
 generation:
   managed: true
   generator: bootstrap-v2
-  generator_version: '1'
-  source_relpath: v2.0/timeseries_boeuf_classe_adulteration_ts
-  source_fingerprint: 978283b1ee953eb82dfb0c796b291ab90b90944ef10d61e185221599765b55f8
+  generator_version: '2'
+  source_relpath: standardized_datasets/timeseries_boeuf_classe_adulteration_ts
+  source_fingerprint: b837282b2608035fb67f89ca57fba17c9244faadba432d828dd366da85c5a455

@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1065 sample(s), 1065 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** observation level; *Not specified.* sample(s), 1065 observation(s) total; sample_id available: False.
+- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -62,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -71,7 +73,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 10 fields, Y: 1 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,6 +94,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `330a639c121d7827d624b87550d37c8d39097f9ea216dcc6d29dd98ce3df01d1`
-- **Processing hash:** `0087443d4f35a5bb14eff592a7ca05f588419933a7f81b81e3bee4163107f706` | **metadata hash:** `79c836d34371ba3a66ecab315bbf6b139dd41c7212aaeecc374038df966179dc`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `8be5ae8c60baca4fd91033996ec65abfc44c824ba68a63eba067cb6370252f39`
+- **Processing hash:** `a1fc305f67e6686ff1b453e08dfd72612a9e85e2a47fc3f94c492fb8413656cc` | **metadata hash:** `f79dd22730ce0f88cc7d30e26aa813547f7a29d4d3e2279e41c6c6adb4d7ad33`

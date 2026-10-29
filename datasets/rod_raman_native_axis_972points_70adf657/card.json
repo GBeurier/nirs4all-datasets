@@ -1,6 +1,7 @@
 {
   "alignment": {
-    "level": "observation",
+    "identity_status": "available",
+    "level": "sample",
     "n_observations_total": 13,
     "n_samples": 13,
     "profile_scores": {
@@ -9,7 +10,7 @@
       "noise_risk": 0.01323720503270598,
       "outlier_pressure": 1.0,
       "reference_spread": 1.0,
-      "repeatability_risk": 0.0,
+      "repeatability_risk": null,
       "shape_drift": 0.9771577330736674,
       "structure_complexity": 1.0
     },
@@ -18,13 +19,197 @@
       "mean": 1.0,
       "min": 1
     },
-    "sample_id_available": true
+    "sample_id_available": true,
+    "technical_repetitions": null,
+    "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
   },
   "assets": {
     "sources": {},
     "variables": []
   },
-  "generated_at": "2026-10-28T12:52:35.037757+00:00",
+  "curation": {
+    "contract_sha256": "007a863974b58e888245953bdc6d1294bcfce528d51c98602a4cffb2f68ed5ab",
+    "dataset_id": "rod_raman_native_axis_972points_70adf657",
+    "enrichments": [],
+    "grain": "observation",
+    "identity": {
+      "conclusion": "Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 13,
+      "n_samples": 13,
+      "observations_per_unit": {
+        "1": 13
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicit\u00e9 de l\u2019identifiant d\u00e9clar\u00e9 ; protocole non \u00e9tabli"
+    },
+    "mapping": "canonical/curation/mapping.json",
+    "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
+    "schema_version": "1.0",
+    "source_hashes": {
+      "M.csv": "ea2013990625e3dc70ed1381fba4a1793ff473594859b25b1f2ad0036cdd869b",
+      "Y.csv": "33ab8be221ca6f89e3f2fb1b6954e7b65d62c67af8967bbcc5d798888410d6f3"
+    },
+    "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
+    "variables": [
+      {
+        "grain": "observation",
+        "name": "chemical_name_mineral",
+        "source_columns": [
+          {
+            "name": "chemical_name_mineral",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 92.3076923076923,
+          "imbalance_ratio": 1.0,
+          "n_missing": 1,
+          "n_present": 12,
+          "n_rows": 13,
+          "n_unique": 12,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "chemical_name_systematic",
+        "source_columns": [
+          {
+            "name": "chemical_name_systematic",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 13,
+          "n_rows": 13,
+          "n_unique": 13,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "chemical_formula_structural",
+        "source_columns": [
+          {
+            "name": "chemical_formula_structural",
+            "resource": "M.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 13,
+          "n_rows": 13,
+          "n_unique": 13,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "M"
+      },
+      {
+        "grain": "observation",
+        "name": "mineral_name",
+        "source_columns": [
+          {
+            "name": "mineral_name",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 13,
+          "n_rows": 13,
+          "n_unique": 13,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      },
+      {
+        "grain": "observation",
+        "name": "chemical_formula_sum",
+        "source_columns": [
+          {
+            "name": "chemical_formula_sum",
+            "resource": "Y.csv"
+          }
+        ],
+        "stats": {
+          "completeness_pct": 100.0,
+          "imbalance_ratio": 1.0,
+          "n_missing": 0,
+          "n_present": 13,
+          "n_rows": 13,
+          "n_unique": 13,
+          "type": "categorical"
+        },
+        "unit": null,
+        "view": "Y"
+      }
+    ],
+    "views": {
+      "M": [
+        "chemical_name_mineral",
+        "chemical_name_systematic",
+        "chemical_formula_structural"
+      ],
+      "Y": [
+        "mineral_name",
+        "chemical_formula_sum"
+      ],
+      "measurements": [],
+      "passport": [
+        "compound_source",
+        "rod_database_code",
+        "dataset_id",
+        "source_sample_id",
+        "file",
+        "url",
+        "axis_digest",
+        "axis_unit",
+        "axis_min",
+        "axis_max",
+        "n_points_original",
+        "spectroscopy_type",
+        "axis_status",
+        "interpolation_applied",
+        "chemical_formula_sum",
+        "chemical_compound_source",
+        "raman_measurement_range_min",
+        "raman_measurement_range_max",
+        "publ_section_title",
+        "journal_paper_doi",
+        "journal_year",
+        "m_chemical_name_common",
+        "m_raman_measurement_device_model",
+        "m_raman_measurement_device_company",
+        "m_raman_measurement_device_excitation_laser_wavelength"
+      ]
+    },
+    "warnings": [
+      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
+    ]
+  },
+  "generated_at": "2026-10-29T12:38:41.034068+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -45,15 +230,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "15eb7fdd8ab30dbff08696ada0bbbb8a6448b57f4a869748876f05d91b13ac94",
+    "content_hash": "6a0484944927d139482dff75fca2a64a42a5bea2f27e0ad9381b39c6ef7f9407",
     "manifest": "manifest.json",
-    "metadata_hash": "98fd70d2a84d13eb783e5a2d28c2798644232423130ef7610de885e3e5c5a47f",
-    "processing_hash": "6299594cdc9bcc11f7d9fcc05c69bd0bc4f19033bba4b64c09fbe51679f48092"
+    "metadata_hash": "87c11c3f752250567c6a70ecb9e7c7e90082ac11b806afda3468ceb3e58f619d",
+    "processing_hash": "78c57c216ceceee634232cf768bb74d06bb7bce477dc8fb3cff6e126c3454709"
   },
-  "protocol_version": "5",
+  "protocol_version": "6",
   "provenance": {
     "contributor": "Raman Open Database",
-    "conversion_status": null,
+    "conversion_status": "partial",
     "origin_sources": [
       {
         "access": "open",
@@ -73,7 +258,8 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified."
+      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
     ]
   },
   "schema_version": "2.0",
@@ -1089,31 +1275,15 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": 0.9990611484075849,
-          "effective_rank": 3.13,
-          "n_components_95": 4,
-          "n_components_99": 7
+          "cumulative_top10": null,
+          "effective_rank": null,
+          "n_components_95": null,
+          "n_components_99": null
         },
         "mean_max": 8559.62158203125,
         "mean_min": 430.6687988868126,
-        "n_outliers": 4,
-        "pca": {
-          "explained_variance_ratio": [
-            0.6150884292088734,
-            0.20559201684714556,
-            0.11835096243019864,
-            0.028369867253535738,
-            0.013795319113950412,
-            0.007444177480649621,
-            0.004031169768622956,
-            0.003209697546408969,
-            0.0017463256522760916,
-            0.0014331831059235095,
-            0.0006268953383662739,
-            0.00031195625404890643
-          ],
-          "n_components": 12
-        },
+        "n_outliers": null,
+        "pca": null,
         "profile": {
           "amplitude": {
             "area_under_curve": 2985314.9301699153,
@@ -1130,6 +1300,8 @@
           },
           "diagnostics": [
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1148,17 +1320,24 @@
                   "signal": "SNR non d\u00e9grad\u00e9"
                 },
                 {
-                  "level": 0.7084007936339111,
+                  "level": 0.7084007936339105,
                   "signal": "PCA Q"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
               "key": "splice",
               "label": "Splice / raccord d\u00e9tecteurs",
-              "score": 0.8770655545266802,
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.87706555452668,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1177,17 +1356,24 @@
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.7084007936339111,
+                  "level": 0.7084007936339105,
                   "signal": "PCA Q"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
-              "score": 0.8187860432968743,
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.8187860432968742,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1202,17 +1388,24 @@
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.7084007936339111,
+                  "level": 0.7084007936339105,
                   "signal": "PCA Q"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
-              "score": 0.7771193766302077,
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.7771193766302075,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1227,119 +1420,109 @@
                   "signal": "Structure PCA"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
               "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.74,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Spike rate"
-                },
                 {
                   "level": 1.0,
                   "signal": "Jump rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.7084007936339111,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.7203617853000137,
-              "strength": "forte"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Spike rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Jump rate"
-                },
-                {
-                  "level": 0.986762794967294,
-                  "signal": "Noise RMS faible"
-                },
-                {
-                  "level": 0.9522453512732534,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
-                },
-                {
-                  "level": 0.7084007936339111,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.6907117056978321,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
                   "level": 0.9771577330736674,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.7084007936339111,
+                  "level": 0.7084007936339105,
                   "signal": "PCA Q"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.6741206285218881,
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "interpretation_kind": "possible_cause",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4634428227837441,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "Structure PCA"
+                  "signal": "Spike rate"
                 },
                 {
                   "level": 1.0,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
                 },
                 {
-                  "level": 1.0,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.7084007936339111,
+                  "level": 0.7084007936339105,
                   "signal": "PCA Q"
                 }
               ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.6733441269814258,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.3891458672832204,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 0.7084007936339105,
+                  "signal": "PCA Q"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "interpretation_kind": "possible_cause",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.1416801587267821,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.9,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
+              "key": "normal",
+              "label": "Spectre normal",
+              "missing_evidence": [
+                "repeatability"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -1359,18 +1542,18 @@
             "worst_band_index": 460
           },
           "outliers": {
-            "hotelling_t2_max": 11.058269626062355,
-            "hotelling_t2_median": 0.5814135726060154,
-            "hotelling_t2_p95": 11.042150756119046,
-            "hotelling_t2_ratio": 18.991904001528294,
-            "mahalanobis_h_max": 3.3253976643496874,
-            "mahalanobis_h_median": 0.7625048016937437,
-            "mahalanobis_h_p95": 3.3229725902364504,
-            "mahalanobis_h_ratio": 4.35796939619943,
-            "pca_q_max": 1976486990.1051385,
-            "pca_q_median": 264483535.16027993,
-            "pca_q_p95": 1498882769.6851578,
-            "pca_q_ratio": 5.6672063490712885
+            "hotelling_t2_max": 11.058269626062353,
+            "hotelling_t2_median": 0.5814135726060148,
+            "hotelling_t2_p95": 11.042150756119044,
+            "hotelling_t2_ratio": 18.99190400152831,
+            "mahalanobis_h_max": 3.325397664349687,
+            "mahalanobis_h_median": 0.7625048016937432,
+            "mahalanobis_h_p95": 3.32297259023645,
+            "mahalanobis_h_ratio": 4.357969396199432,
+            "pca_q_max": 1976486990.105139,
+            "pca_q_median": 264483535.16028008,
+            "pca_q_p95": 1498882769.6851575,
+            "pca_q_ratio": 5.667206349071284
           },
           "profile_scores": {
             "integrity_risk": 0.0,
@@ -1378,7 +1561,7 @@
             "noise_risk": 0.01323720503270598,
             "outlier_pressure": 1.0,
             "reference_spread": 1.0,
-            "repeatability_risk": 0.0,
+            "repeatability_risk": null,
             "shape_drift": 0.9771577330736674,
             "structure_complexity": 1.0
           },
@@ -1393,7 +1576,7 @@
             "rms_to_mean_spectrum": 1896.9156333489238,
             "rms_to_mean_spectrum_p95": 7472.5007061806255,
             "sam_to_mean_spectrum": 0.7999159201595437,
-            "sam_to_mean_spectrum_p95": 1.3117094292978708,
+            "sam_to_mean_spectrum_p95": 1.3117094292978706,
             "xcorr_lag_p95_axis": 92.81999999999132,
             "xcorr_lag_p95_features": 47.599999999999994
           },
@@ -1411,10 +1594,10 @@
             "edge_noise_ratio": 2.13828185039312
           },
           "structure": {
-            "density_cv": 1.3414374089651528,
+            "density_cv": 1.3414374089651524,
             "isolation_forest_score_p95": 0.626173830938007,
-            "local_outlier_factor_p95": 15.64333814264938,
-            "pca_score_density": 5.946772634361732e-05
+            "local_outlier_factor_p95": 15.643338142649329,
+            "pca_score_density": 5.946772634361715e-05
           }
         },
         "quality": {
@@ -1425,61 +1608,61 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.6150884292088734,
-            0.20559201684714556
+            0.6150884292088732,
+            0.20559201684714554
           ],
           "points": [
             {
-              "x": -52324.91290798484,
-              "y": -2674.4899817393757
+              "x": -52324.912907984784,
+              "y": -2674.489981739403
             },
             {
-              "x": 258502.81074092432,
-              "y": -86890.02887436919
+              "x": 258502.81074092418,
+              "y": -86890.02887436915
             },
             {
-              "x": -49914.96044494426,
-              "y": -4535.564513781635
+              "x": -49914.960444944234,
+              "y": -4535.564513781644
             },
             {
-              "x": -56591.624041433904,
-              "y": -8887.29350716988
+              "x": -56591.62404143388,
+              "y": -8887.293507169927
             },
             {
-              "x": -50806.61593453091,
-              "y": -6154.229790300308
+              "x": -50806.61593453086,
+              "y": -6154.229790300304
             },
             {
-              "x": -32137.42372375788,
-              "y": -19201.35180457069
+              "x": -32137.423723757853,
+              "y": -19201.351804570662
             },
             {
-              "x": -28470.31651277067,
-              "y": -12068.844024162738
+              "x": -28470.316512770656,
+              "y": -12068.844024162727
             },
             {
-              "x": -45053.35911472707,
-              "y": -3205.0618955605696
+              "x": -45053.359114727056,
+              "y": -3205.061895560564
             },
             {
-              "x": -52590.76645028447,
-              "y": -4444.917556132765
+              "x": -52590.76645028446,
+              "y": -4444.917556132753
             },
             {
-              "x": -31199.17141361235,
+              "x": -31199.171413612337,
               "y": -5492.204719741242
             },
             {
-              "x": 70690.03115346209,
-              "y": -3265.468860836863
+              "x": 70690.03115346203,
+              "y": -3265.4688608368997
             },
             {
-              "x": 118416.48964819007,
-              "y": 165385.50608977288
+              "x": 118416.48964818999,
+              "y": 165385.50608977283
             },
             {
-              "x": -48520.180998530195,
-              "y": -8566.050561407705
+              "x": -48520.18099853016,
+              "y": -8566.05056140769
             }
           ]
         },
@@ -1495,10 +1678,14 @@
         "value_min": 20.5,
         "xy": []
       },
-      "warnings": []
+      "warnings": [
+        "x-outlier detection failed: ModuleNotFoundError",
+        "signal-type detection failed: ModuleNotFoundError"
+      ]
     }
   ],
   "splits": [],
+  "variable_join_key": "sample_id",
   "variables": [
     {
       "assets": [],
@@ -2510,11 +2697,14 @@
     }
   ],
   "versions": {
-    "content": "1.0.0",
+    "content": "1.1.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
+    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
     "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "conversion: variables: dropped duplicate columns ['chemical_formula_sum'] (kept the first source's values)."
+    "conversion: variables: dropped duplicate columns ['chemical_formula_sum'] (kept the first source's values).",
+    "source X: x-outlier detection failed: ModuleNotFoundError",
+    "source X: signal-type detection failed: ModuleNotFoundError"
   ]
 }

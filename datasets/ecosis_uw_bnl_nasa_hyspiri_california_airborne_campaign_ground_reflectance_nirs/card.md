@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 64 sample(s), 64 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 64 sample(s), 64 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -62,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -71,7 +73,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 8 fields, Y: 1 fields, measurements: 1 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,6 +94,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `a8bcbd2b7c640fc37f5f405484b1c856b3a41c0328bba17b2e044b058eae7b20`
-- **Processing hash:** `6b50faf596d46ea9dc684b0e569481d8aebb5fe857b7995c8a5bb1d65104fb93` | **metadata hash:** `2c6172f4051cd9171ee694773c0652e78c33d6dc542e8b73525ea0471201ed31`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `ef96422f7e64e225fe01c1af227e8809a1bb09db8368798e1382a4c4cd6b9ae2`
+- **Processing hash:** `d77a55b312e3a10c4a0bfbbfe2f38a69fb549cd6e23b2c39e741d4f0f842e9c0` | **metadata hash:** `23937eebd6ecdd1091f884c2d5cc32c79740b3cddd01a4c9b1b44646315b9e56`

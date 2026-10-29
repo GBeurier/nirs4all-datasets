@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 87 sample(s), 87 observation(s) total; sample_id available: True.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 87 sample(s), 87 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -27,7 +29,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | USDA_Species_Code | target | categorical | *Not specified.* | n=87, missing=0, classes=2, top PODE3 (×50) |
 | Geo_Species_Info | target | categorical | *Not specified.* | n=87, missing=0, classes=5, top WCW (×45) |
 | House_Num | target | numeric | *Not specified.* | n=87, missing=0, range 1–6, mean 3.586 ± 1.702 |
-| Plant_Number | target | categorical | *Not specified.* | n=87, missing=0, classes=46, top 20 (×5) |
+| Plant_Number | target | categorical | *Not specified.* | n=87, missing=0, classes=46, top 32 (×5) |
 | LI6400_Measurement_Temperature_degC | target | numeric | *Not specified.* | n=87, missing=33, range 20.39–30.95, mean 25.86 ± 3.842 |
 | PLSR_Leaf_Temp_degC | target | numeric | *Not specified.* | n=87, missing=0, range 17.47–32.47, mean 24.54 ± 3.701 |
 | Ev | target | numeric | *Not specified.* | n=87, missing=0, range 49.43–61.33, mean 54.49 ± 5.917 |
@@ -74,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -83,7 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M Champs d’index examinés : source_Rep. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 3 fields, Y: 12 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,6 +112,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `935957d7978854a5b6e56c6d85236e31d92cbc6de498411b28c26208eead1524`
-- **Processing hash:** `7e9a3c3de278719426a6c329eaee5633934eb87ea9e4065ce8d2948fb1e6c79b` | **metadata hash:** `6095476b3702f8cdc60430dc099d808c1db4e0a41bc29033fc3aa9383e195190`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `abd22215f45d3669ea39d09433db16fba2240c308968a594ea1eb8f145afd3d1`
+- **Processing hash:** `e251f2be6e0af48bcb4b6db609b99e93823b1882d9d1aabb8f8fc0b2dd3ba60b` | **metadata hash:** `77244c591eaab6d6d1182e7b6a735130202011757517eb2b27eae150bb803717`

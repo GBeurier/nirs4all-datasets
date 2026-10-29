@@ -11,8 +11,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 ## Composition
 
-- **Alignment:** observation level; 1578 sample(s), 1578 observation(s) total; sample_id available: False.
-- **Repetitions per sample:** 1–1 (mean 1).
+- **Alignment:** sample level; 1578 sample(s), 1578 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
+- **Documented technical repetitions:** *Not specified.*.
+- **Variable grain / join key:** sample_id.
 
 ### Sources (X)
 
@@ -101,7 +103,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | texture_class | metadata | categorical | *Not specified.* | n=1578, missing=1578, classes=0, — |
 | pedon_taxa | metadata | categorical | *Not specified.* | n=1578, missing=1578, classes=0, — |
 | horizon_designation | metadata | categorical | *Not specified.* | n=1578, missing=1578, classes=0, — |
-| raw_label | metadata | categorical | *Not specified.* | n=1578, missing=0, classes=1340, top 0.08 (×10) |
+| raw_label | metadata | categorical | *Not specified.* | n=1578, missing=0, classes=1340, top 0.07 (×10) |
 | reference_value | metadata | numeric | *Not specified.* | n=1578, missing=0, range 0.01091–1.502, mean 0.1561 ± 0.1475 |
 | class_index | metadata | categorical | *Not specified.* | n=1578, missing=1578, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=1578, missing=1578, classes=0, — |
@@ -110,6 +112,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | wavelength_note | metadata | categorical | *Not specified.* | n=1578, missing=0, classes=1, top ossl_visnir_350_2500_nm_step_2 (×1578) |
 | active_status | metadata | categorical | *Not specified.* | n=1578, missing=0, classes=1, top active (×1578) |
 | replaces_dataset_id | metadata | categorical | *Not specified.* | n=1578, missing=0, classes=1, top ossl_soil_clay_tot_usda_a334_w_pct_cassl_nirs_ossl \| ossl_soil_n_tot_usda_a623_w_pct_cassl_nirs_ossl \| ossl_soil_ph_h2o_usda_a268_index_cassl_nirs_ossl (×1578) |
+| site_id | metadata | identifier | *Not specified.* | *Not specified.* |
+| longitude | metadata | numeric | *Not specified.* | n=1578, missing=0, range 21.84–30.37, mean 25.28 ± 3.281 |
+| latitude | metadata | numeric | *Not specified.* | n=1578, missing=0, range -11.61–0.8277, mean -1.238 ± 3.22 |
+| campaign_date_begin | metadata | datetime | *Not specified.* | *Not specified.* |
+| campaign_date_end | metadata | datetime | *Not specified.* | *Not specified.* |
+| location_error_m | metadata | numeric | *Not specified.* | n=1578, missing=0, range 30–1000, mean 78.56 ± 211.6 |
 
 ## Statistics — splits
 
@@ -120,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** *Not specified.*
+- **Conversion status:** partial
 
 ### Origin sources (where the bytes live)
 
@@ -131,7 +139,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** *Not specified.*
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 7 fields, Y: 14 fields, measurements: 1 fields, passport: 80 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -151,6 +160,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.0.0 | **schema/protocol:** 2.0
-- **Content hash:** `9822a34f3e5bee80e1b452a32addf9f24add732ef9d584c354621d4aee6ae691`
-- **Processing hash:** `fcb764fcca3dd579092c3711c073384026f4723ca4d8181e277118dbcb0c543c` | **metadata hash:** `4be2288913d055eff36e4e0497f568add2b44b3d7cd58e1a18b0b448821c5c34`
+- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content hash:** `3741637ea0eb7fd3fde6a106f3420b6cc0c5772f7a9fc72956a43089a750738a`
+- **Processing hash:** `9bda62a9e91f1054919593192100e743dc0f092e72ad45648412a884cd0ac41c` | **metadata hash:** `8b9822a2566130c3ac65cc65cf367c63e46f34de97746abd5c29e1558eea22fb`

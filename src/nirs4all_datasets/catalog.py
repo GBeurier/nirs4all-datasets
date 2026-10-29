@@ -119,6 +119,9 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
     }
     if health is not None:
         entry["health"] = health
+    curation = card.get("curation") if card_fresh else None
+    if curation and curation.get("views"):
+        entry.update({"n_curated_metadata": len(curation["views"].get("M", [])), "n_curated_targets": len(curation["views"].get("Y", [])), "curated_metadata": curation["views"].get("M", []), "curated_targets": curation["views"].get("Y", []), "identity_status": alignment.get("identity_status"), "technical_repetitions": alignment.get("technical_repetitions")})
     return entry
 
 
