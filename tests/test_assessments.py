@@ -211,3 +211,19 @@ def test_native_parameters_are_part_of_identity_but_never_overwrite_scalar_slots
     numeric = [metric | {"metric_id": "integrity.missing_cells"} for metric in factors]
     with pytest.raises(ValueError, match="ambiguous shared metric slot"):
         intrinsic_profile(report | {"metrics": numeric})
+
+
+def test_opaque_native_context_preserves_denominators_and_cannot_bypass_identity(tmp_path):
+    _, _, report = prepared(tmp_path)
+    base = {"metric_id": "domain_shift.design", "protocol_version": "1", "value": None, "availability": "not_applicable", "reason_code": "INSUFFICIENT_DATA"}
+    first = base | {"metric_context_id": "sha256:" + "1" * 64, "native_metric": {"parameters": {"factor": "instrument"}, "denominators": {"n_units": 2}}}
+    second = base | {"metric_context_id": "sha256:" + "2" * 64, "native_metric": {"parameters": {"factor": "instrument"}, "denominators": {"n_units": 3}}}
+    assert len(Assessment.model_validate(report | {"metrics": [first, second]}).metrics) == 2
+    with pytest.raises(ValidationError, match="duplicate metric"):
+        Assessment.model_validate(report | {"metrics": [first, first | {"metric_context_id": second["metric_context_id"]}]})
+    with pytest.raises(ValidationError, match="distinct native parameters/denominators"):
+        Assessment.model_validate(report | {"metrics": [first, second | {"metric_context_id": first["metric_context_id"]}]})
+    with pytest.raises(ValidationError, match="preserved native context"):
+        Assessment.model_validate(report | {"metrics": [base | {"metric_context_id": first["metric_context_id"]}]})
+    with pytest.raises(ValidationError):
+        Assessment.model_validate(report | {"metrics": [first | {"metric_context_id": "arbitrary"}]})

@@ -129,7 +129,15 @@ intrinsic metric/view evidence and a sidecar reference plus canonical-JSON SHA-2
 They never embed the unfiltered report. Native metric source, target, view,
 population and protocol identities must agree with the selected envelope.
 
-Metric identity includes exact native parameters (strict canonical sorted JSON),
+Metric identity includes exact native parameters and denominators (strict canonical sorted JSON),
 so instrument and campaign factors can coexist under one metric ID. Projection
 refuses two measurements targeting the same legacy scalar slot in a selected view;
 it never chooses by order or silently replaces one protocol/parameter context.
+
+The optional producer `metric_context_id` is an opaque `sha256:<64hex>` identity
+bound by the producer to its canonical parameter/denominator object. Legacy
+reports without it remain valid. The consumer retains the exact native context
+alongside that ID: changing an opaque ID cannot bypass duplicate detection, and
+reusing one ID for two different native contexts is rejected. The consumer does
+not invent a cross-language hash serialization or claim to revalidate the
+producer's digest from a different floating-point JSON formatter.
