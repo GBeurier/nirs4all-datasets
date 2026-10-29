@@ -153,3 +153,9 @@ No unmapped value invokes a legacy numerical kernel.
 Task assessments belong to Domains and require distinct declared fit/evaluation
 populations. Preflight and Methods evidence cannot be relabelled as an independently
 fitted task assessment by adding target/split strings.
+
+The committed fleet was explicitly migrated with
+`python scripts/migrate_card_protocol7.py --root .`: protocol-7 presentation,
+historical raw calculation protocol 6, unchanged raw fields/manifests/dates.
+The same command is idempotent. This does not relabel existing canonical curation
+1.0 caches as 1.1; rebuilding an import applies the newer curation rules.

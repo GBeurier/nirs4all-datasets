@@ -265,7 +265,7 @@
     "metadata_hash": "05d7e47214b8af4a56712425da36c361fe831f030c2f53480a9a28c74676eb6c",
     "processing_hash": "da505e014fb27b3ba3acd279155f0e52b38c7764c3d49f4b1263b7fb406ea8d6"
   },
-  "protocol_version": "6",
+  "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
     "conversion_status": "partial",
@@ -309,6 +309,17 @@
       "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
       "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M ; les fr\u00e9quences de cet identifiant d\u00e9crivent les lignes export\u00e9es, sans \u00e9tablir des r\u00e9p\u00e9titions techniques. La cl\u00e9 est le num\u00e9ro de sp\u00e9cimen source ; pr\u00e9parations, g\u00e9om\u00e9tries et instruments peuvent diff\u00e9rer. Aucun regroupement par nom de mat\u00e9riau."
     ]
+  },
+  "qualification_provenance": {
+    "assessment_mode": "legacy",
+    "diagnostic_domain": null,
+    "interpretation": "uncalibrated_heuristic_signature",
+    "legacy_calculation_protocol": "6",
+    "migration": {
+      "from_protocol": "6",
+      "raw_kernels_recomputed": false,
+      "to_protocol": "7"
+    }
   },
   "schema_version": "2.0",
   "sources": [
@@ -1364,11 +1375,18 @@
               "interpretation": "Positionnement, op\u00e9rateur ou protocole instable; investiguer les r\u00e9p\u00e9titions intra-ID.",
               "interpretation_kind": "possible_cause",
               "key": "poor_repeatability",
-              "label": "Mauvaise r\u00e9p\u00e9tabilit\u00e9 d'acquisition",
+              "label": "Dispersion entre observations d\u2019une m\u00eame unit\u00e9",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.741906420140955,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.741906420140955,
               "strength": "forte"
             },
             {
@@ -1377,11 +1395,11 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "signal": "RMS/SAM au spectre moyen"
                 },
                 {
                   "level": 1.0,
-                  "signal": "SNR non d\u00e9grad\u00e9"
+                  "signal": "Proxy rugosit\u00e9 S/N non d\u00e9grad\u00e9"
                 },
                 {
                   "level": 0.809289232934553,
@@ -1400,11 +1418,18 @@
               "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
               "interpretation_kind": "possible_cause",
               "key": "splice",
-              "label": "Splice / raccord d\u00e9tecteurs",
+              "label": "Signature compatible avec un raccord spectral",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.7095104368593008,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.7095104368593008,
               "strength": "moyenne"
             },
             {
@@ -1413,7 +1438,7 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "signal": "RMS/SAM au spectre moyen"
                 },
                 {
                   "level": 0.9105373219777942,
@@ -1438,9 +1463,16 @@
               "key": "multi_regime",
               "label": "Dataset multi-r\u00e9gimes",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6699772876743955,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.6699772876743955,
               "strength": "moyenne"
             },
             {
@@ -1449,43 +1481,7 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.809289232934553,
-                  "signal": "Jump rate"
-                },
-                {
-                  "level": 0.7822731384677069,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.4600729595133172,
-                  "signal": "Mahalanobis / T2"
-                },
-                {
-                  "level": 0.25886124520942416,
-                  "signal": "Spike rate"
-                }
-              ],
-              "evidence_coverage": 1.0,
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "interpretation_kind": "possible_cause",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "missing_evidence": [],
-              "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.6522676014998026,
-              "score_kind": "heuristic_signature",
-              "strength": "moyenne"
-            },
-            {
-              "availability": "available",
-              "confidence_status": "unvalidated",
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "signal": "RMS/SAM au spectre moyen"
                 },
                 {
                   "level": 0.9105373219777942,
@@ -1508,11 +1504,18 @@
               "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
               "interpretation_kind": "possible_cause",
               "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
+              "label": "Signature compatible avec un changement de g\u00e9om\u00e9trie",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.628181991331686,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.628181991331686,
               "strength": "moyenne"
             },
             {
@@ -1521,7 +1524,7 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "signal": "RMS/SAM au spectre moyen"
                 },
                 {
                   "level": 0.9105373219777942,
@@ -1544,11 +1547,18 @@
               "interpretation": "Couverture partielle du spot; contribution du fond ou du support.",
               "interpretation_kind": "possible_cause",
               "key": "partial_coverage",
-              "label": "M\u00e9lange feuille + fond",
+              "label": "Signature compatible avec une couverture partielle",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.5444957225768972,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.5444957225768972,
               "strength": "moyenne"
             },
             {
@@ -1557,11 +1567,11 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
+                  "signal": "Proxy rugosit\u00e9 S/N \u00e9lev\u00e9"
                 },
                 {
                   "level": 0.9904285589493989,
-                  "signal": "Noise RMS faible"
+                  "signal": "Proxy rugosit\u00e9 \u03c3 faible"
                 },
                 {
                   "level": 0.809289232934553,
@@ -1580,11 +1590,18 @@
               "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
               "interpretation_kind": "possible_cause",
               "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
+              "label": "Signature compatible avec un r\u00e9\u00e9chantillonnage",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.5368951182509717,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.5368951182509717,
               "strength": "moyenne"
             },
             {
@@ -1593,7 +1610,7 @@
               "evidence": [
                 {
                   "level": 1.0,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                  "signal": "RMS/SAM au spectre moyen"
                 },
                 {
                   "level": 0.8096871668004818,
@@ -1614,9 +1631,59 @@
               "key": "out_of_domain",
               "label": "Signature compatible avec un \u00e9cart de population",
               "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
               "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.5355275405704838,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
               "score_kind": "heuristic_signature",
+              "signal_strength": 0.5355275405704838,
+              "strength": "moyenne"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "RMS/SAM au spectre moyen"
+                },
+                {
+                  "level": 0.809289232934553,
+                  "signal": "artefacts locaux"
+                },
+                {
+                  "level": 0.7822731384677069,
+                  "signal": "PCA Q"
+                },
+                {
+                  "level": 0.4600729595133172,
+                  "signal": "Mahalanobis / T2"
+                },
+                {
+                  "level": 0.3278880563087967,
+                  "signal": "Baseline/mean/area"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
+              "key": "white_calibration",
+              "label": "D\u00e9calage compatible avec une r\u00e9f\u00e9rence blanche diff\u00e9rente",
+              "missing_evidence": [],
+              "recommended_verifications": [
+                "Contr\u00f4ler la r\u00e9f\u00e9rence blanche/noire r\u00e9ellement acquise et ses m\u00e9tadonn\u00e9es.",
+                "V\u00e9rifier instrument, sonde, g\u00e9om\u00e9trie, campagne et journal de traitement/r\u00e9\u00e9chantillonnage.",
+                "V\u00e9rifier le protocole de r\u00e9p\u00e9tition avant d'interpr\u00e9ter une dispersion intra-ID."
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.5342015668097712,
+              "score_explanation": "Une signature \u00e0 0.78 n'est pas une probabilit\u00e9 causale de 78 %.",
+              "score_kind": "heuristic_signature",
+              "signal_strength": 0.5342015668097712,
               "strength": "moyenne"
             }
           ],
@@ -1627,10 +1694,23 @@
             "zero_column_ratio": 0.0,
             "zero_ratio": 0.0
           },
+          "legacy_metric_aliases": {
+            "noise.bandwise_snr_median": "noise.bandwise_roughness_signal_to_noise_proxy_median",
+            "noise.bandwise_snr_min": "noise.bandwise_roughness_signal_to_noise_proxy_min",
+            "noise.noise_rms": "noise.roughness_sigma_proxy",
+            "noise.snr": "noise.roughness_signal_to_noise_proxy",
+            "noise.snr_db": "noise.roughness_signal_to_noise_proxy_db",
+            "structure.local_outlier_factor_p95": "structure.knn_distance_ratio_p95"
+          },
           "noise": {
+            "bandwise_roughness_signal_to_noise_proxy_median": 1846.473298587097,
+            "bandwise_roughness_signal_to_noise_proxy_min": 263.3485862400377,
             "bandwise_snr_median": 1846.473298587097,
             "bandwise_snr_min": 263.3485862400377,
             "noise_rms": 0.025993795204326327,
+            "roughness_sigma_proxy": 0.025993795204326327,
+            "roughness_signal_to_noise_proxy": 2089.5495144635493,
+            "roughness_signal_to_noise_proxy_db": 66.40105333494357,
             "snr": 2089.5495144635493,
             "snr_db": 66.40105333494357,
             "worst_band_axis": 2.499,
@@ -1688,9 +1768,16 @@
             "d1_rms": 0.09593150737592132,
             "edge_noise_ratio": 0.9836641689263901
           },
+          "signature_metadata": {
+            "domain_context": null,
+            "presentation_protocol": "7",
+            "raw_kernels_recomputed": false,
+            "source_protocol": "6"
+          },
           "structure": {
             "density_cv": 0.6527906632337985,
             "isolation_forest_score_p95": 0.5577073790459739,
+            "knn_distance_ratio_p95": 2.4290615004014455,
             "local_outlier_factor_p95": 2.4290615004014455,
             "pca_score_density": 0.008894465140937717
           }
