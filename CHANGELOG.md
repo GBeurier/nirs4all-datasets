@@ -5,6 +5,21 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.16] - 2026-10-29
+
+- Honor explicitly reviewed numeric/categorical descriptor types over CSV storage
+  schemas in curated views. UCPH API references remain numeric; categorical codes
+  retain their spelling and immutable source tables remain available.
+- Preserve underscore-containing numeric source codes as invalid tokens instead
+  of treating Python digit separators as measured values.
+- Advance the unified package and converter version so rebuilding detects the
+  corrected curation recipe. Preserve the 0.3.15 tag and published artifacts.
+- Include the Windows ARM64 and WebR build fixes merged after 0.3.15: honor the
+  target triple, use LLVM unwind libraries for gnullvm, and link the actual
+  Emscripten target output while retaining offline builds.
+- Keep UCPH keyless Y row pairing explicitly assumed. The supplied converted
+  source archive adds no independent original-MAT alignment proof.
+
 ## [0.3.11] - 2026-10-06
 
 - Integrate the published 0.3.10 release history with main maintenance fixes.
