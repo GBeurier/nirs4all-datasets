@@ -89,6 +89,16 @@ def test_makevars_reuses_configured_rwasm_wrappers_without_version(tmp_path: Pat
     shutil.copy2(MAKEVARS, src / "Makevars")
     (src / "rust").mkdir()
     bindir = _rwasm_toolchain(tmp_path)
+    # The mock remains unversioned, but now produces the artifact at Cargo's
+    # explicitly selected target so the test also verifies the link-path contract.
+    (bindir / "cargo").write_text(
+        "#!/bin/sh\n"
+        "if [ \"${1:-}\" = \"--version\" ]; then exit 42; fi\n"
+        "printf '%s\\n' \"$@\" > \"$CARGO_ARGUMENTS_LOG\"\n"
+        "mkdir -p \"$CARGO_TARGET_DIR/wasm32-unknown-emscripten/release\"\n"
+        "printf 'recording fixture, not compiled code' > \"$CARGO_TARGET_DIR/wasm32-unknown-emscripten/release/libnirs4all_datasets_capi.a\"\n",
+        encoding="utf-8",
+    )
     (src / "n4ds-rust-toolchain.mk").write_text(
         "\n".join(
             [
@@ -101,11 +111,14 @@ def test_makevars_reuses_configured_rwasm_wrappers_without_version(tmp_path: Pat
         encoding="utf-8",
     )
 
-    statlib = tmp_path / "tmp" / "n4ds-r-target" / "release" / "libnirs4all_datasets_capi.a"
+    temporary = tmp_path / "tmp"
+    temporary.mkdir()
+    statlib = temporary / "n4ds-r-target" / "wasm32-unknown-emscripten" / "release" / "libnirs4all_datasets_capi.a"
+    arguments = tmp_path / "cargo-arguments.log"
     result = subprocess.run(
         ["make", "-f", "Makevars", str(statlib)],
         cwd=src,
-        env=_env(tmp_path, bindir) | {"TMPDIR": str(tmp_path / "tmp")},
+        env=_env(tmp_path, bindir) | {"TMPDIR": str(temporary), "CARGO_ARGUMENTS_LOG": str(arguments)},
         text=True,
         capture_output=True,
         check=False,
@@ -116,3 +129,5 @@ def test_makevars_reuses_configured_rwasm_wrappers_without_version(tmp_path: Pat
     assert "accepting R-universe/rwasm rustc wrapper" in result.stderr
     assert "cargo rwasm-wrapper" in result.stderr
     assert "rustc rwasm-wrapper" in result.stderr
+    assert "--target=wasm32-unknown-emscripten" in arguments.read_text(encoding="utf-8").splitlines()
+    assert statlib.is_file()
