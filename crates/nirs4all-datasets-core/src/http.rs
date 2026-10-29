@@ -66,7 +66,7 @@ pub trait HttpClient {
 // ---------------------------------------------------------------------------
 // Real client (ureq + rustls), behind the default `net` feature.
 // ---------------------------------------------------------------------------
-#[cfg(feature = "net")]
+#[cfg(all(feature = "net", not(target_os = "emscripten")))]
 mod ureq_client {
     use std::time::Duration;
 
@@ -147,6 +147,62 @@ mod ureq_client {
                 content_range,
                 body: Box::new(resp.into_reader()),
             })
+        }
+    }
+}
+
+// A blocking socket client cannot run on WebR's browser event loop. Retain the
+// acquisition/cache contracts and fail before attempting a request; callers may
+// stage authenticated bytes with the host transport, then verify/prepare locally.
+#[cfg(all(feature = "net", target_os = "emscripten"))]
+mod ureq_client {
+    use super::{HttpClient, HttpResponse};
+    use crate::error::{Error, Result};
+
+    /// Network-unavailable client for WebR; never sends requests or credentials.
+    #[derive(Default)]
+    pub struct UreqClient;
+
+    impl UreqClient {
+        /// Keep the native constructor contract; WebR has no socket timeout.
+        pub fn new(_timeout_secs: u64) -> Self {
+            Self
+        }
+    }
+
+    impl HttpClient for UreqClient {
+        fn get(
+            &self,
+            _url: &str,
+            _headers: &[(String, String)],
+            _follow_redirects: bool,
+            _range_start: Option<u64>,
+        ) -> Result<HttpResponse> {
+            Err(Error::Http(
+                "blocking HTTP is unavailable in WebR; stage files with the host transport, then verify or prepare them locally".into(),
+            ))
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn refuses_network_without_echoing_credentials() {
+            let error = UreqClient::new(1)
+                .get(
+                    "https://example.invalid/?token=private-query",
+                    &[("X-Dataverse-key".into(), "private-header".into())],
+                    true,
+                    Some(1),
+                )
+                .err()
+                .expect("WebR must refuse native HTTP");
+            let message = error.to_string();
+            assert!(message.contains("blocking HTTP is unavailable in WebR"));
+            assert!(!message.contains("private-query"));
+            assert!(!message.contains("private-header"));
         }
     }
 }
