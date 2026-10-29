@@ -203,10 +203,9 @@ def test_bank_summary_aggregates(fleet: tuple[Path, dict[str, DatasetDescriptor]
     assert summary["license_mix"]["CC-BY-4.0"] == 1
     assert summary["total_sources"] == 4  # 2 + 1 + 1
 
-    # samples distribution: every dataset has 2 samples.
-    # The X-only dataset has no documented sample identity: observations are
-    # not silently counted as physical samples.
+    # Soil has only observation IDs: it cannot establish physical sample counts.
     assert summary["samples"] == {"min": 2, "median": 2, "max": 2, "total": 4}
+    assert summary["n_unknown_sample_identity"] == 1
 
 
 def test_bank_summary_empty() -> None:

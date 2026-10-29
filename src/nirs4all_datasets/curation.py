@@ -17,7 +17,10 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, cast
 
+import numpy as np
 import pandas as pd
+
+from nirs4all_datasets.schema import DatasetDescriptor, Variable
 
 CURATION_VERSION = "1.0"
 _OBS = "observation_id"
@@ -133,6 +136,12 @@ def identity_view(dataset_id: str, metadata: pd.DataFrame) -> tuple[pd.DataFrame
     method = contract.get("method")
     if not method:
         aliases = [c for c in metadata if canonical_name(c) in {"sample_id", "id_sample", "sampleid"}]
+        if len(aliases) > 1:
+            first = normalize_missing(metadata[aliases[0]], identifier=True)
+            for alias in aliases[1:]:
+                other = normalize_missing(metadata[alias], identifier=True)
+                if not (first.eq(other) | (first.isna() & other.isna())).fillna(False).all():
+                    raise ValueError("ambiguous sample identity aliases; provide an explicit source mapping")
         columns = aliases[:1]
         method = "column" if columns else "unavailable"
     result = metadata[[_OBS]].copy()
@@ -154,6 +163,8 @@ def identity_view(dataset_id: str, metadata: pd.DataFrame) -> tuple[pd.DataFrame
                 raise ValueError(f"{dataset_id}: labels do not satisfy the documented vial.scan contract")
             if parsed.duplicated().any():
                 raise ValueError(f"{dataset_id}: duplicate vial/scan keys")
+            if parsed.groupby("vial")["scan"].agg(lambda values: set(values) != {"0", "1", "2"} or len(values) != 3).any():
+                raise ValueError(f"{dataset_id}: incomplete documented vial.scan triplicates")
             sample = parsed["vial"].astype("string")
             result["acquisition_index"] = parsed["scan"].astype("string")
         else:
@@ -163,11 +174,11 @@ def identity_view(dataset_id: str, metadata: pd.DataFrame) -> tuple[pd.DataFrame
         normalized = canonical_name(name)
         if name != _OBS and (normalized in _GROUPING or normalized in _ACQUISITION or name in columns):
             if normalized == _SAMPLE:
-                normalized = "source_sample_id"
+                normalized = "original_sample_id" if "source_sample_id" in metadata else "source_sample_id"
             if normalized not in result:
                 result[normalized] = metadata[name].astype("string")
     counts = sample.dropna().value_counts()
-    report = {"method": method, "source_columns": columns, "sample_id_available": bool(sample.notna().any()), "status": "unavailable" if sample.isna().all() else ("partial" if sample.isna().any() else "available"), "n_samples": int(len(counts)) if len(counts) else None, "n_observations_with_identity": int(sample.notna().sum()), "n_missing_identity": int(sample.isna().sum()), "observations_per_unit": {str(k): int(v) for k, v in counts.value_counts().sort_index().items()}, "technical_repetitions": contract.get("technical_repetitions"), "unit": contract.get("unit", "Source-declared unit; biological independence not established"), "conclusion": contract.get("conclusion"), "missing_source_columns": missing_columns, "evidence": contract.get("evidence", [])}
+    report = {"method": method, "source_columns": columns, "sample_id_available": bool(len(sample) and sample.notna().all()), "status": "unavailable" if sample.isna().all() else ("partial" if sample.isna().any() else "available"), "n_samples": int(len(counts)) if len(counts) else None, "n_observations_with_identity": int(sample.notna().sum()), "n_missing_identity": int(sample.isna().sum()), "observations_per_unit": {str(k): int(v) for k, v in counts.value_counts().sort_index().items()}, "technical_repetitions": contract.get("technical_repetitions"), "unit": contract.get("unit", "Source-declared unit; biological independence not established"), "conclusion": contract.get("conclusion"), "missing_source_columns": missing_columns, "evidence": contract.get("evidence", [])}
     return result, report
 
 
@@ -377,9 +388,9 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
         matching_targets = [target for target in outputs["Y"] if name == target]
         if matching_targets:
             outputs["passport"][f"metadata_{name}"] = outputs["M"].pop(name)
-    for output in outputs.values():
+    for view, output in outputs.items():
         output.insert(0, _SAMPLE, structure.set_index(_OBS)[_SAMPLE].reindex(universe))
-        output.reset_index(inplace=True)
+        outputs[view] = output.reset_index()
     report = {"schema_version": CURATION_VERSION, "dataset_id": dataset_id, "contract_sha256": contract_hash(dataset_id), "grain": "observation", "identity": identity, "views": {name: [column for column in output if column not in {_OBS, _SAMPLE}] for name, output in outputs.items()}, "mapping": entries, "variables": variable_sections, "enrichments": enrichments, "warnings": warnings, "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.", "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible."}
     return CuratedTables(outputs["M"], outputs["Y"], structure, outputs["passport"], outputs["measurements"], report, metadata, originals[0], originals[1], warnings)
 
@@ -522,3 +533,148 @@ def curate_tree(source_tree: Path, output: Path, *, soilsite: Path | None = None
             summary["errors"].append({"dataset_id": dataset_id, "error": str(exc)})
     (output / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     return summary
+
+
+# Descriptor-driven adapters preserve typed original-name/dialect contracts.
+CURATION_PROTOCOL = "1"
+_ID_ALIASES = ("sample_id", "id_sample", "ID_sample", "SampleID", "source_sample_id")
+_DESCRIPTOR_PASSPORT = frozenset({"dataset_id", "observation_id", "sample_id", "notes", "note", "license", "license_id", "license_url", "rights_status", "usage_scope", "source_file", "source_file_spectra", "source_file_metadata", "source_dataset_title", "source_dataset_url", "source_dataset_doi", "source_package_url", "source_resource", "source_relative_dir", "source_root", "source_grouped_y_exports", "source_member", "source_subset", "target_file", "source_url", "source_page", "sample_id_available", "public_release_allowed", "n_points_original", "axis_unit", "axis_min", "axis_max", "official_source_url", "official_data_url", "official_package_url", "standardization_batch", "ecosis_resource_id", "dataset", "dataset_slug", "dataset_title", "dataset_owner", "task_type", "trait_header", "trait_header_original", "target_original_name", "spectroscopy_type", "signal_type", "dimensions", "wavelength_note", "source_label", "split_original", "split_source", "original_split"})
+
+
+def is_provenance_column(name: str) -> bool:
+    """Known passport fields only; source_temperature remains experimental context."""
+    lower = name.lower()
+    return lower in _DESCRIPTOR_PASSPORT or lower.startswith(("manual_download", "license_", "doi_"))
+
+
+def semantic_role(name: str, *, target: bool = False) -> str:
+    """Classify known plumbing exactly; scientific API/reference names stay measured."""
+    lower = name.lower()
+    if target:
+        return "measured_trait"
+    if is_provenance_column(name):
+        return "provenance"
+    if lower.endswith("_id") or lower.endswith("_identifier") or lower in {"spectralrep", "class_index", "replicate", "compound_rep_index", "batch_number", "pot_number", "acquisition_index"}:
+        return "identifier"
+    return "experimental_context"
+
+
+def normalize_variable(values: pd.Series, variable: Variable) -> tuple[pd.Series, dict[str, Any]]:
+    """Apply only declared missing/dialect rules, retaining per-row raw tokens and reasons."""
+    raw = values.astype("string")
+    text = raw.str.strip()
+    missing = values.isna() | text.eq("").fillna(False)
+    declared = {token.casefold() for token in variable.missing_values}
+    missing |= text.str.casefold().isin(declared)
+    reasons = pd.Series("", index=values.index, dtype="string")
+    reasons.loc[missing] = "not_reported"
+    censored = text.str.match(r"^(?:[<>]=?\s*[-+]?\d|below\s+(?:lod|loq))", case=False, na=False)
+    normalized = values.copy()
+    normalized.loc[missing] = None
+    invalid = pd.Series(False, index=values.index)
+    if variable.type.value == "numeric":
+        numeric_text = text
+        if variable.thousands_separator:
+            numeric_text = numeric_text.str.replace(variable.thousands_separator, "", regex=False)
+        if variable.decimal_separator != ".":
+            numeric_text = numeric_text.str.replace(variable.decimal_separator, ".", regex=False)
+        parsed = pd.to_numeric(numeric_text.mask(missing | censored), errors="coerce")
+        sentinel = parsed.isin(variable.numeric_sentinels)
+        missing |= sentinel
+        reasons.loc[sentinel] = "declared_sentinel"
+        invalid = ~missing & ~censored & (parsed.isna() | ~np.isfinite(parsed))
+        reasons.loc[invalid] = "invalid"
+        reasons.loc[censored] = "censored"
+        normalized = parsed.mask(missing | censored | invalid)
+    audit: dict[str, Any] = {
+        "protocol_version": CURATION_PROTOCOL, "original_name": variable.original_name or variable.name,
+        "name": variable.name, "total": len(values), "present": int((~missing & ~invalid & ~censored).sum()),
+        "missing": int(missing.sum()), "invalid": int(invalid.sum()), "censored": int(censored.sum()),
+        "distinct": int(normalized.nunique(dropna=True)), "unit": variable.unit,
+        "missing_values": list(variable.missing_values), "numeric_sentinels": list(variable.numeric_sentinels),
+        "decimal_separator": variable.decimal_separator, "thousands_separator": variable.thousands_separator,
+        "rows": [{"raw": None if pd.isna(value) else str(value), "status": str(reason)} for value, reason in zip(values, reasons, strict=True)],
+    }
+    for row in audit["rows"]:
+        if row["status"] != "censored":
+            continue
+        match = re.fullmatch(r"([<>]=?)\s*([-+]?\d+(?:[.,]\d+)?)", row["raw"].strip())
+        row["censoring"] = {"operator": match.group(1) if match else "below_detection_limit", "bound": float(match.group(2).replace(",", ".")) if match else None, "unit": variable.unit}
+    return normalized, audit
+
+
+def consumer_views(frame: pd.DataFrame, descriptor: DatasetDescriptor, *, targets: list[str] | None = None) -> dict[str, Any]:
+    """Build explicit Y/M/structure/passport views while keeping every original column.
+
+    Only declared targets are default Y. Scientific names containing API/reference
+    are not passport evidence. Target aliases/copies/declared derivations stay out of M.
+    """
+    target_names = targets if targets is not None else [v.name for v in descriptor.targets]
+    unknown = set(target_names) - {v.name for v in descriptor.variables}
+    if unknown:
+        raise ValueError(f"unknown target variables: {sorted(unknown)}")
+    y = [name for name in target_names if name in frame]
+    m, structure, passport = [], ["sample_id"] if "sample_id" in frame else [], []
+    decisions = []
+    for variable in descriptor.variables:
+        name = variable.name
+        if name not in frame or name in y:
+            continue
+        role = variable.semantic_role or semantic_role(name, target=variable.role.value == "target")
+        if role in {"provenance", "governance"}:
+            passport.append(name)
+            reason = role
+        elif role in {"identifier", "acquisition_index"}:
+            structure.append(name)
+            reason = role
+        elif set(variable.derived_from) & set(y) or variable.equivalent_to in y:
+            reason = "target_copy_or_declared_derivation"
+        elif descriptor.id.startswith("ucph_granules_") and "api_reference_percent_w_w" in y and name == "api_concentration_design_percent":
+            reason = "target_design_information"
+        elif frame[name].nunique(dropna=True) < 2:
+            reason = "empty_or_constant"
+        elif role != "experimental_context":
+            reason = "not_experimental_context"
+        else:
+            m.append(name)
+            reason = "experimental_context"
+        decisions.append({"name": name, "role": role, "reason": reason})
+    def select(names: list[str]) -> pd.DataFrame:
+        keys = ["sample_id"] if "sample_id" in frame and "sample_id" not in names else []
+        return frame[keys + names].copy()
+    return {"protocol_version": CURATION_PROTOCOL, "Y": select(y), "M": select(m), "structure": select(structure), "passport": select(passport), "decisions": decisions, "original": frame.copy()}
+
+
+LUCAS_SOILSITE_FIELDS = {key: {"campaign_date_begin": "campaign_start_date", "campaign_date_end": "campaign_end_date", "location_error_m": "coordinate_uncertainty_m"}.get(value, value) for key, value in _SOILSITE_MAPPING.items()}
+
+
+def identity_frame(dataset_id: str, metadata: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Adapt the shared identity contract for legacy descriptor consumers."""
+    structure, report = identity_view(dataset_id, metadata)
+    out = metadata.copy()
+    if "sample_id" in out:
+        out["source_sample_id_raw"] = out["sample_id"]
+    for column in structure:
+        if column != _OBS:
+            out[column] = structure[column]
+    missing = out[_SAMPLE].isna()
+    out.loc[missing, _SAMPLE] = out.loc[missing, _OBS]
+    aliases = [name for name in _ID_ALIASES if name in metadata]
+    report = {**report, "protocol_version": CURATION_PROTOCOL, "dataset_id": dataset_id,
+              "sample_id_available": report["status"] == "available", "n_units": report["n_samples"] if report["status"] == "available" else None,
+              "n_observations": len(metadata), "rule": report["method"], "independence": "unknown",
+              "identity_columns": {name: {"distinct": int(metadata[name].nunique(dropna=True)), "role": "hierarchical_source_identifier" if name == "source_sample_id" else "sample_identity_alias"} for name in aliases}}
+    return out, report
+
+
+def enrich_lucas_metadata(metadata: pd.DataFrame, soilsite_path: str) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Compatibility projection over the owner OSSL join; no second join implementation."""
+    enriched, evidence, warnings = enrich_ossl("ossl_lucas_visnir_soil_all_y", metadata, Path(soilsite_path))
+    if warnings:
+        raise ValueError("; ".join(warnings))
+    enriched = enriched.rename(columns={value: LUCAS_SOILSITE_FIELDS[key] for key, value in _SOILSITE_MAPPING.items()})
+    from nirs4all_datasets.manifest import sha256_file
+    report = {"protocol_version": CURATION_PROTOCOL, "source_sha256": sha256_file(soilsite_path), "field_mapping": LUCAS_SOILSITE_FIELDS,
+              "derived": {"campaign_year": "source period start year; not individual collection date"},
+              "n_sites": int(enriched["site_id"].nunique()), "evidence": evidence}
+    return enriched, report

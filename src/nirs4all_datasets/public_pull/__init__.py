@@ -130,8 +130,10 @@ def _pull(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None,
         declared = {v.name for v in runtime.variables}
         numeric = _v2_numeric_columns(m_path, default_numeric=False)
         structural = {"dataset_id", "observation_id", "sample_id", "split_original", "split_source", "source_sample_index"}
+        from nirs4all_datasets.curation import is_provenance_column
+
         for name in m_cols:
-            if name not in declared and name not in structural and not name.startswith("source_"):
+            if name not in declared and name not in structural and not is_provenance_column(name):
                 runtime.variables.append(Variable(name=name, role=VariableRole.METADATA, type=VarType.NUMERIC if numeric.get(name) else VarType.CATEGORICAL))
         from nirs4all_datasets.curation import identity_view
 
@@ -139,8 +141,7 @@ def _pull(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None,
         _, identity = identity_view(runtime.id, metadata)
         runtime.ids.sample_id = "sample_id"
         runtime.ids.sample_id_available = identity["sample_id_available"]
-        if runtime.ids.sample_id_available:
-            runtime.alignment_level = AlignmentLevel.SAMPLE
+        runtime.alignment_level = AlignmentLevel.SAMPLE if runtime.ids.sample_id_available else AlignmentLevel.OBSERVATION
         output = directory / "output"
         result = build_canonical(leaf, runtime, output)
         if result.status is ConversionStatus.FAILED:

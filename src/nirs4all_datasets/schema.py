@@ -354,6 +354,22 @@ class Variable(BaseModel):
     type: VarType = VarType.NUMERIC
     unit: str | None = None
     classes: list[str] | None = None  # ordered class names for a categorical variable
+    semantic_role: str | None = Field(default=None, pattern=r"^(experimental_context|measured_trait|identifier|acquisition_index|provenance|governance|derived)$")
+    original_name: str | None = None
+    equivalent_to: str | None = None
+    derived_from: list[str] = Field(default_factory=list)
+    missing_values: list[str] = Field(default_factory=list)
+    numeric_sentinels: list[float] = Field(default_factory=list)
+    decimal_separator: str = ","  # existing comma-decimal behavior, explicitly recorded
+    thousands_separator: str | None = None
+
+    @model_validator(mode="after")
+    def _check_dialect(self) -> Variable:
+        if self.decimal_separator not in {".", ","}:
+            raise ValueError("decimal_separator must be . or ,")
+        if self.thousands_separator is not None and (len(self.thousands_separator) != 1 or self.thousands_separator == self.decimal_separator):
+            raise ValueError("thousands separator must be one distinct character")
+        return self
 
 
 class SplitRef(BaseModel):

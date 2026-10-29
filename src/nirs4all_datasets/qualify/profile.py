@@ -112,7 +112,11 @@ def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[i
     return {
         "level": config.get("alignment_level"),
         "sample_id_available": available,
-        "n_samples": identity.get("n_samples") if identity else (len(sample_ids) if available else None),
+        "identity": identity,
+        "n_observation_groups": len(sample_ids),
+        "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
+        "n_samples": identity.get("n_samples") if identity and available else (len(sample_ids) if available else None),
+        "n_known_sample_units": identity.get("n_samples") if identity else None,
         "n_observations_total": n_observations_total,
         "reps_per_sample": reps if available else None,
         "technical_repetitions": identity.get("technical_repetitions") if identity else None,
@@ -155,7 +159,7 @@ def _dimensionality(pca: dict[str, Any] | None) -> dict[str, Any]:
     return {"effective_rank": round(effective_rank, 2), "n_components_95": n95, "n_components_99": n99, "cumulative_top10": float(cum[min(9, len(cum) - 1)])}
 
 
-def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool, compute_curve: bool = False) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
+def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnings: list[str], *, compute_pca: bool, compute_curve: bool = False, shared_profile: dict[str, Any] | None = None, shared: bool = False) -> tuple[dict[str, Any], pd.DataFrame, set[str]]:
     """Build one ``sources[]`` card entry from a source Parquet; return ``(section, frame, sample_ids)``.
 
     Reads the Parquet, computes the registered ``value_range``/``spectral_quality`` source metrics and
@@ -173,8 +177,8 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
 
     source_metrics = registry.metrics_for("source")
     value_range = source_metrics["value_range"](spectra)
-    n_outliers = _x_outliers(spectra, src_warnings)
-    pca = _source_pca(spectra, src_warnings) if compute_pca else None
+    n_outliers = None if shared else _x_outliers(spectra, src_warnings)
+    pca = _source_pca(spectra, src_warnings) if compute_pca and not shared else None
 
     from nirs4all_datasets.qualify import metrics
 
@@ -186,17 +190,17 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "mean_max": value_range["mean_max"],
         "n_outliers": n_outliers,
         "pca": pca,
-        "quality": metrics.spectral_quality(spectra),
+        "quality": None if shared else metrics.spectral_quality(spectra),
         "spacing": metrics.wavelength_spacing(axis),
         "dimensionality": _dimensionality(pca),
-        "profile": source_metrics["spectral_profile"](spectra, axis, sample_ids=sample_id_rows),
+        "profile": shared_profile if shared else source_metrics["spectral_profile"](spectra, axis, sample_ids=sample_id_rows),
         "xy": [],
     }
     if compute_curve and spectral_cols:
         curve = metrics.spectral_curve(spectra, axis)
         if curve is not None:
             spectral["curve"] = curve
-        score_plot = metrics.pca_score_plot(spectra)
+        score_plot = None if shared else metrics.pca_score_plot(spectra)
         if score_plot is not None:
             spectral["score_plot"] = score_plot
     signal_type, signal_conf = _detect_signal_type(spectral_cols, spectra, src_warnings)
@@ -465,7 +469,7 @@ def card_metadata_fresh(card_path_or_dir: str | Path, descriptor: DatasetDescrip
 # =============================================================================
 # Card assembly
 # =============================================================================
-def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, compute_pca: bool = True) -> dict[str, Any]:
+def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, compute_assets: bool = True, compute_pca: bool = True, assessment_mode: str = "legacy") -> dict[str, Any]:
     """Build the identity card for a dataset directory from its canonical Parquet.
 
     Reads ``canonical/dataset.json`` (via :func:`resolve_config`) and each source/variables/splits
@@ -481,6 +485,17 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     """
     dataset_dir = Path(dataset_dir)
     config = resolve_config(dataset_dir)
+    if assessment_mode not in {"legacy", "shared"}:
+        raise ValueError("assessment_mode must be legacy or shared")
+    from nirs4all_datasets.qualify.assessments import intrinsic_profile, read_assessments
+
+    reports = read_assessments(dataset_dir, descriptor.id) if assessment_mode == "shared" else []
+    intrinsic = [r for r in reports if r["scope"] == "intrinsic"]
+    by_source: dict[str, dict[str, Any]] = {}
+    for report in intrinsic:
+        if report["source_id"] in by_source:
+            raise ValueError("select exactly one intrinsic assessment context per source")
+        by_source[report["source_id"]] = intrinsic_profile(report)
     warnings: list[str] = []
     manifest_path = dataset_dir / "manifest.json"
     if manifest_path.exists():
@@ -496,7 +511,7 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
     all_sample_ids: set[str] = set()
     reps_counts: list[int] = []
     for entry in config.get("sources", []):
-        section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca, compute_curve=compute_assets)
+        section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca, compute_curve=compute_assets, shared_profile=by_source.get(entry["source_id"]), shared=assessment_mode == "shared")
         source_sections.append(section)
         source_frames.append(df)
         profile = (section.get("spectral") or {}).get("profile")
@@ -519,7 +534,18 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
             continue
         variable_sections.append(_variable_section(var, variables_df[var.name], warnings, compute_histogram=compute_assets))  # type: ignore[index]
 
-    _attach_xy_metrics(source_sections, source_frames, variable_sections, variables_df)
+    curation_path = dataset_dir / "canonical" / "curation.json"
+    if curation_path.exists():
+        curation = json.loads(curation_path.read_text(encoding="utf-8"))
+        by_name = {item["name"]: item for item in curation.get("variables", [])}
+        for section in variable_sections:
+            if section["name"] in by_name:
+                section["normalization"] = {k: v for k, v in by_name[section["name"]].items() if k != "rows"}
+                section["denominator"] = "canonical_sample_units"
+    if assessment_mode == "legacy":
+        _attach_xy_metrics(source_sections, source_frames, variable_sections, variables_df)
+    else:
+        warnings.append("shared assessment mode: unavailable metrics are not recomputed by legacy kernels")
 
     # Visuals are inline SVG on the site, rendered from the card's own data (per-source spectral
     # quantile curves + per-variable histogram bins) — no matplotlib PNG assets. The ``assets`` block
@@ -544,6 +570,9 @@ def build_card(dataset_dir: str | Path, descriptor: DatasetDescriptor, *, comput
         "assets": assets,
         "warnings": warnings,
     }
+    if assessment_mode == "shared":
+        card["assessments"] = reports
+        card["assessment_mode"] = "shared"
     sanitized: dict[str, Any] = _jsonify(card)
     return sanitized
 

@@ -644,16 +644,16 @@ def _combined_diagnostics(profiles: list[tuple[str, dict[str, Any]]]) -> list[di
     by_key: dict[str, dict[str, Any]] = {}
     for source_id, profile in profiles:
         for diag in profile.get("diagnostics") or []:
-            if not isinstance(diag, dict) or not _isnum(diag.get("score")):
+            if not isinstance(diag, dict):
                 continue
             key = str(diag.get("key") or diag.get("label"))
             current = by_key.get(key)
-            if current is None or float(diag["score"]) > float(current.get("score") or 0.0):
+            if current is None or (_isnum(diag.get("score")) and (not _isnum(current.get("score")) or float(diag["score"]) > float(current["score"]))):
                 item = dict(diag)
                 item["source_id"] = source_id
                 by_key[key] = item
     rows = list(by_key.values())
-    rows.sort(key=lambda d: -float(d.get("score") or 0.0))
+    rows.sort(key=lambda d: (not _isnum(d.get("score")), -float(d.get("score") or 0.0)))
     return rows[:10]
 
 
@@ -671,18 +671,19 @@ def _profile_panel(view: DatasetView) -> str:
     for d in diagnostics[:8]:
         evidence = ", ".join(f'{esc(e.get("signal"))} {float(e.get("level") or 0):.2f}' for e in (d.get("evidence") or [])[:3] if isinstance(e, dict))
         source = f'<small>{esc(d.get("source_id"))}</small>' if d.get("source_id") else ""
+        coverage = f'{num(100 * d["evidence_coverage"])} %' if _isnum(d.get("evidence_coverage")) else "non renseignée"
         diag_rows.append(
             f'<tr><th>{esc(d.get("label"))}{source}</th><td class="score-col">{_score_cell(d.get("score"))}</td>'
-            f'<td>{esc(d.get("strength"))}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td></tr>'
+            f'<td>{esc(d.get("strength"))}</td><td>{coverage}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td></tr>'
         )
     diag_table = (
-        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force</th><th>Signaux</th><th>Interprétation probable</th></tr></thead>'
+        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force heuristique</th><th>Couverture des preuves</th><th>Signaux</th><th>Cause possible</th></tr></thead>'
         f'<tbody>{"".join(diag_rows)}</tbody></table></div>'
         if diag_rows else '<p class="dl-note">No diagnostic hypothesis available for this card.</p>'
     )
     score_rows = "".join(
-        f'<tr><th>{esc(QMETRICS.profile_score_labels().get(k, k))}</th><td>{float(v):.2f}</td></tr>'
-        for k, v in scores.items()
+        f'<tr><th>{esc(label)}</th><td>{format(scores[k], ".2f") if k in scores else "non calculable"}</td></tr>'
+        for k, label in QMETRICS.profile_score_labels().items()
     )
     score_table = f'<div class="stat-card"><h4>Profile axes</h4><table class="stat-table">{score_rows}</table></div>' if score_rows else ""
     score_vals = [(k, float(v)) for k, v in scores.items() if _isnum(v)]
@@ -705,6 +706,7 @@ def _profile_panel(view: DatasetView) -> str:
         f'<div>{radar}{score_table}</div>'
         f'<div>{diag_chart}</div>'
         '</div>'
+        '<p class="dl-note">Scores de signatures heuristiques, non calibrés en probabilités de causes physiques. Les preuves absentes restent non calculables. RMS/SAM décrivent la dispersion autour de la moyenne du dataset, sans référence externe indépendante.</p>'
         f'{diag_table}'
     )
     return f'<section class="panel wide"><h2>Dataset property explorer</h2><div class="panel-body">{body}</div></section>'

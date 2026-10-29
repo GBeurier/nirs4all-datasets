@@ -157,3 +157,15 @@ def test_observation_ids_are_opaque_and_preserve_significant_source_spelling():
     result = curate_tables("synthetic", m)
     assert result.structure["observation_id"].tolist() == ["FeSi0043 ", "FeSi0043"]
     assert result.report["identity"]["n_samples"] == 2
+
+
+def test_partial_identity_preserves_known_units_without_claiming_complete_sample_alignment():
+    source = pd.DataFrame({"observation_id": ["a", "b", "c"], "sample_id": ["001", "", "001"]})
+    structure, report = identity_view("synthetic", source)
+    assert report["status"] == "partial"
+    assert report["sample_id_available"] is False
+    assert report["n_samples"] == 1
+    assert report["n_missing_identity"] == 1
+    assert structure["sample_id"].tolist()[0] == "001"
+    assert pd.isna(structure["sample_id"].iloc[1])
+    assert source["sample_id"].iloc[1] == ""

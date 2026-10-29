@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
-- **Curated views:** M: 4 fields, Y: 8 fields, passport: 45 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 8 fields, measurements: 1 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Identifiant unique source incluant expérience et date ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
-- **Curated views:** M: 12 fields, Y: 5 fields, passport: 31 fields, measurements: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 12 fields, Y: 5 fields, measurements: 6 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

@@ -66,7 +66,7 @@ RESOLVED_REPO=""
 
 # Cargo.lock is format 4 (Cargo >= 1.78), and the bundled closure contains
 # Edition 2024 manifests (Cargo >= 1.85). The highest declared rust-version in
-# the current resolved vendor closure is 1.88.0: zip 8.6.0 is a direct reader
+# the current resolved vendor closure is 1.88.0: zip 9.1.0 is a direct reader
 # dependency and time 0.3.53 declares the same floor. The vendoring path verifies
 # this Rust floor from cargo metadata below so dependency refreshes cannot make
 # these install-time checks silently stale.
@@ -331,7 +331,7 @@ IO_REPO="$RESOLVED_REPO"
 #    committed header) and abi/ (the ld version script, unused once build.rs is
 #    gone). The datasets core pulls in NO include_str! data dirs. These plain dirs
 #    ship in the tarball as-is.
-rm -rf "$VENDORED" "$VENDOR_ARCHIVE" "$RUST/vendor" "$RUST/.cargo" "$RUST/Cargo.lock"
+rm -rf "$VENDORED" "$VENDOR_ARCHIVE" "$RUST/vendor" "$RUST/patched-readers" "$RUST/.cargo" "$RUST/Cargo.lock"
 mkdir -p "$VENDORED"
 
 copy_crate() {
@@ -360,6 +360,18 @@ done
 for c in $IO_CRATES; do
     copy_crate "$IO_REPO/crates/$c" "$c"
 done
+
+# Formats owns these distinctly named, licensed security backports. Preserve
+# its exact sources/provenance and rewrite only assembly-relative paths.
+mkdir -p "$RUST/patched-readers"
+for reader in hdf5-reader netcdf-reader; do
+    mkdir -p "$RUST/patched-readers/$reader"
+    for item in Cargo.toml UPSTREAM-Cargo.toml UPSTREAM-VCS.json README.md PROVENANCE.json LICENSE-MIT LICENSE-APACHE src tests; do
+        cp -R "$FORMATS_REPO/vendor/$reader/$item" "$RUST/patched-readers/$reader/$item"
+    done
+done
+sed 's|../../vendor/|../../patched-readers/|g' "$VENDORED/nirs4all-formats/Cargo.toml" > "$VENDORED/nirs4all-formats/Cargo.toml.tmp"
+mv "$VENDORED/nirs4all-formats/Cargo.toml.tmp" "$VENDORED/nirs4all-formats/Cargo.toml"
 
 # 1a. The capi crate ships a build.rs whose only jobs are (a) regenerate the
 #     committed header via cbindgen and (b) wire a GNU ld --version-script onto
@@ -573,6 +585,7 @@ cat > "$RUST/Cargo.toml" <<TOML
 # monorepo). src/Makevars builds \`-p nirs4all-datasets-capi --offline\` to produce
 # the staticlib (libnirs4all_datasets_capi.a), which the C shim (src/n4ds.c) links.
 [workspace]
+exclude = ["patched-readers/hdf5-reader", "patched-readers/netcdf-reader"]
 resolver = "2"
 members = [
     "vendored/nirs4all-datasets-core",
@@ -606,7 +619,7 @@ sha2 = "0.10"
 hex = "0.4"
 directories = "5"
 ureq = "2"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.1", default-features = false, features = ["deflate"] }
 regex = "1.10"
 toml = "0.8"
 indexmap = { version = "2.2", features = ["serde"] }

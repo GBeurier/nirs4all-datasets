@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 274 chaînes ID pour 333 lignes ; ID1/ID2 peuvent entrer en collision après concaténation. Identité des moustiques et réacquisitions non établies par le script de reconstruction disponible.
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 13 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 1 fields, passport: 13 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

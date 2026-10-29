@@ -69,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Chaque couple trial × pot_number est unique. replicate=1…5 est la répétition biologique du plan génotype × sel. Les trois lectures au chloridomètre sont analytiques dans Y ; aucune n’est une répétition spectrale.
-- **Curated views:** M: 4 fields, Y: 4 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 4 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 

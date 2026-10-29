@@ -10,7 +10,7 @@
       "noise_risk": 0.0007826007336816355,
       "outlier_pressure": 0.6043794439284533,
       "reference_spread": 0.9222131142966646,
-      "repeatability_risk": 0.0,
+      "repeatability_risk": null,
       "shape_drift": 0.856131171351003,
       "structure_complexity": 0.8142151805141956
     },
@@ -1539,6 +1539,8 @@
           },
           "diagnostics": [
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1561,13 +1563,20 @@
                   "signal": "PCA Q"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Rupture aux jonctions de d\u00e9tecteurs, calibration locale ou sonde diff\u00e9rente.",
+              "interpretation_kind": "possible_cause",
               "key": "splice",
               "label": "Splice / raccord d\u00e9tecteurs",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.8452715556010026,
+              "score_kind": "heuristic_signature",
               "strength": "forte"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 1.0,
@@ -1590,71 +1599,20 @@
                   "signal": "Mahalanobis / T2"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "D\u00e9calage syst\u00e9matique entre campagnes, instruments ou r\u00e9f\u00e9rence blanche.",
+              "interpretation_kind": "possible_cause",
               "key": "white_calibration",
               "label": "Erreur calibration / r\u00e9f\u00e9rence blanche",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6881471995979201,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Spike rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Jump rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "SNR normal/\u00e9lev\u00e9"
-                },
-                {
-                  "level": 0.9992173992663184,
-                  "signal": "Noise RMS faible"
-                },
-                {
-                  "level": 0.6043794439284533,
-                  "signal": "PCA Q"
-                }
-              ],
-              "interpretation": "Artefacts num\u00e9riques ou traitement spectral incorrect.",
-              "key": "resampling_error",
-              "label": "Erreur interpolation / r\u00e9\u00e9chantillonnage",
-              "score": 0.665469903916671,
-              "strength": "moyenne"
-            },
-            {
-              "evidence": [
-                {
-                  "level": 1.0,
-                  "signal": "Spike rate"
-                },
-                {
-                  "level": 1.0,
-                  "signal": "Jump rate"
-                },
-                {
-                  "level": 0.9222131142966646,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.6043794439284533,
-                  "signal": "PCA Q"
-                },
-                {
-                  "level": 0.4857547095148517,
-                  "signal": "Mahalanobis / T2"
-                }
-              ],
-              "interpretation": "Combinaison possible changement de sonde + splice, amplifi\u00e9e par g\u00e9om\u00e9trie, fond ou calibration.",
-              "key": "vera25_like",
-              "label": "Signature VERA25-like",
-              "score": 0.6351440312516554,
-              "strength": "moyenne"
-            },
-            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 0.9222131142966646,
@@ -1673,17 +1631,52 @@
                   "signal": "Mahalanobis / T2"
                 }
               ],
+              "evidence_coverage": 1.0,
               "interpretation": "Effet syst\u00e9matique du support, blanc/noir, transflectance ou environnement de mesure.",
+              "interpretation_kind": "possible_cause",
               "key": "background_shift",
               "label": "Fond diff\u00e9rent",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
               "score": 0.6207682684069961,
+              "score_kind": "heuristic_signature",
               "strength": "moyenne"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
                   "level": 0.9222131142966646,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
+                },
+                {
+                  "level": 0.8142151805141956,
+                  "signal": "Structure PCA"
+                },
+                {
+                  "level": 0.4857547095148517,
+                  "signal": "Mahalanobis / T2"
+                }
+              ],
+              "evidence_coverage": 1.0,
+              "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
+              "interpretation_kind": "possible_cause",
+              "key": "out_of_domain",
+              "label": "Signature compatible avec un \u00e9cart de population",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.492734631937261,
+              "score_kind": "heuristic_signature",
+              "strength": "moyenne"
+            },
+            {
+              "availability": "available",
+              "confidence_status": "unvalidated",
+              "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Jump rate"
                 },
                 {
                   "level": 0.856131171351003,
@@ -1692,63 +1685,83 @@
                 {
                   "level": 0.6043794439284533,
                   "signal": "PCA Q"
-                },
-                {
-                  "level": 0.4857547095148517,
-                  "signal": "Mahalanobis / T2"
                 }
               ],
-              "interpretation": "Modification de l'illumination, collecte, angle ou distance sonde-\u00e9chantillon.",
-              "key": "probe_geometry",
-              "label": "Diff\u00e9rence de sonde / g\u00e9om\u00e9trie",
-              "score": 0.5597826341558533,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "D\u00e9tecteur satur\u00e9 ou dynamique insuffisante.",
+              "interpretation_kind": "possible_cause",
+              "key": "clipping",
+              "label": "Spectre satur\u00e9 / clipping",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.4122326213145551,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
+                {
+                  "level": 1.0,
+                  "signal": "Spike rate"
+                },
                 {
                   "level": 0.9222131142966646,
                   "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.8142151805141956,
-                  "signal": "Structure PCA"
                 },
                 {
                   "level": 0.6043794439284533,
                   "signal": "PCA Q"
-                },
-                {
-                  "level": 0.4857547095148517,
-                  "signal": "Mahalanobis / T2"
                 }
               ],
-              "interpretation": "M\u00e9lange de campagnes, op\u00e9rateurs, lots, setups ou sous-populations spectrales.",
-              "key": "multi_regime",
-              "label": "Dataset multi-r\u00e9gimes",
-              "score": 0.5217071235131009,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Faible signal, probl\u00e8me d\u00e9tecteur, lampe ou acquisition instable.",
+              "interpretation_kind": "possible_cause",
+              "key": "very_noisy",
+              "label": "Spectre tr\u00e8s bruit\u00e9",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.3598787523289692,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
             },
             {
+              "availability": "available",
+              "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.9222131142966646,
-                  "signal": "RMS/SAM r\u00e9f\u00e9rence"
-                },
-                {
-                  "level": 0.8142151805141956,
-                  "signal": "Structure PCA"
-                },
-                {
-                  "level": 0.4857547095148517,
-                  "signal": "Mahalanobis / T2"
+                  "level": 0.6043794439284533,
+                  "signal": "PCA Q"
                 }
               ],
-              "interpretation": "Vari\u00e9t\u00e9, esp\u00e8ce, lot ou condition diff\u00e9rente mais physiquement plausible.",
-              "key": "out_of_domain",
-              "label": "Spectre hors domaine valide",
-              "score": 0.492734631937261,
-              "strength": "moyenne"
+              "evidence_coverage": 1.0,
+              "interpretation": "Mauvais contact, \u00e9chantillon absent, mesure d\u00e9grad\u00e9e ou dynamique tr\u00e8s faible.",
+              "interpretation_kind": "possible_cause",
+              "key": "flat_low_signal",
+              "label": "Spectre plat / signal faible",
+              "missing_evidence": [],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": 0.12087588878569067,
+              "score_kind": "heuristic_signature",
+              "strength": "faible"
+            },
+            {
+              "availability": "partial",
+              "confidence_status": "unvalidated",
+              "evidence": [],
+              "evidence_coverage": 0.9,
+              "interpretation": "Faibles signatures sur les m\u00e9triques disponibles ; ne certifie ni la validit\u00e9 physique ni l\u2019absence de d\u00e9faut.",
+              "interpretation_kind": "descriptive_signature",
+              "key": "normal",
+              "label": "Spectre normal",
+              "missing_evidence": [
+                "repeatability"
+              ],
+              "reference_scope": "dataset_mean_not_independent_reference",
+              "score": null,
+              "score_kind": "heuristic_signature",
+              "strength": "inconnue"
             }
           ],
           "integrity": {
@@ -1787,7 +1800,7 @@
             "noise_risk": 0.0007826007336816355,
             "outlier_pressure": 0.6043794439284533,
             "reference_spread": 0.9222131142966646,
-            "repeatability_risk": 0.0,
+            "repeatability_risk": null,
             "shape_drift": 0.856131171351003,
             "structure_complexity": 0.8142151805141956
           },

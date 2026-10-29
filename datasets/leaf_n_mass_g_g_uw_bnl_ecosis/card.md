@@ -150,7 +150,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : GE_Rep. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 19 fields, Y: 1 fields, passport: 51 fields, measurements: 38 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 19 fields, Y: 1 fields, measurements: 38 fields, passport: 51 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
