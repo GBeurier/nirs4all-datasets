@@ -4,6 +4,8 @@ The native R package compiles the acquisition core with its normal `net` and
 `prepare` features. HTTPS keeps the native ureq/rustls transport and certificate
 verification. Windows Rtools uses its declared Rust target; R-universe's
 `CARGO_BUILD_TARGET` is authoritative for ARM64 builds.
+The GNU Windows target retains `libgcc`; the LLVM gnullvm target links
+`libunwind`, matching Rust's target-specific native static-library contract.
 
 WebR (`wasm32-unknown-emscripten`) retains descriptor resolution, the virtual
 filesystem cache, SHA-256 verification and local raw-file preparation through the

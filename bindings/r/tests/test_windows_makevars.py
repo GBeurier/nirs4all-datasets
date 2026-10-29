@@ -60,7 +60,7 @@ def prepare(tmp_path: Path, *, service: bool, win: str, target: str, fail: bool 
     private = tmp_path / "private"
     private.mkdir()
     makefile = source / "witness.mk"
-    makefile.write_text(f'SHLIB = package.dll\ninclude {MAKEVARS}\n.PHONY: witness\nwitness: $(STATLIB)\n\t@test -f "$(STATLIB)"\n')
+    makefile.write_text(f'SHLIB = package.dll\ninclude {MAKEVARS}\n.PHONY: witness\nwitness: $(STATLIB)\n\t@test -f "$(STATLIB)"\n\t@printf \'%s\\n\' "PKG_LIBS=$(PKG_LIBS)"\n')
     env = os.environ.copy()
     for key in ["HOST_CARGO", "CARGO_BUILD_TARGET", "TARGET", "CARGO_TARGET_DIR", "MAKEFLAGS", "CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER"]:
         env.pop(key, None)
@@ -112,6 +112,15 @@ def test_recorded_artifact_is_the_library_used_by_r(tmp_path: Path, service: boo
     assert (Path(record["target_dir"]) / target / "release" / LIBRARY).is_file()
     assert not (source / "rust/target").exists()
     assert "unexpected-service-shim" not in result.stderr
+    # Independently measured rustc native-static-libs: LLVM gnullvm uses unwind,
+    # while the historical GNU target keeps gcc. Neither may borrow the other.
+    link_flags = next(line.split("=", 1)[1].split() for line in result.stdout.splitlines() if line.startswith("PKG_LIBS="))
+    if target.endswith("-windows-gnullvm"):
+        assert "-lunwind" in link_flags
+        assert "-lgcc" not in link_flags
+    else:
+        assert "-lgcc" in link_flags
+        assert "-lunwind" not in link_flags
 
 
 def test_cargo_failure_cannot_be_reported_as_a_successful_r_library(tmp_path: Path):
