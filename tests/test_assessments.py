@@ -130,3 +130,84 @@ def test_metric_identity_includes_the_view(tmp_path):
     assert len(Assessment.model_validate(two_views).metrics) == 2
     with pytest.raises(ValidationError, match="duplicate metric"):
         Assessment.model_validate(report | {"metrics": [metric, metric]})
+
+
+def test_historical_engine_versions_are_cached_without_silent_card_selection(tmp_path):
+    out, descriptor, report = prepared(tmp_path)
+    reports = []
+    for version, value in [("0.1.0", 2), ("0.1.1", 3)]:
+        metric = {"metric_id": "integrity.missing_cells", "protocol_version": "1", "value": value, "availability": "available"}
+        reports.append(report | {"engine_version": version, "metrics": [metric]})
+    write_assessments(out, descriptor.id, reports)
+    assert len(read_assessments(out, descriptor.id)) == 2
+    with pytest.raises(ValueError, match="exactly one intrinsic"):
+        build_card(out, descriptor, assessment_mode="shared")
+    selected = build_card(out, descriptor, assessment_mode="shared", assessment_selector={"engine_version": "0.1.1"})
+    profile = selected["sources"][0]["spectral"]["profile"]
+    assert profile["integrity"]["missing_cells"] == 3
+    assert profile["producer"]["population_id"] == "all_samples"
+    assert profile["producer"]["engine_version"] == "0.1.1"
+    assert len(selected["assessments"]) == 1
+
+
+def test_task_assessments_never_enter_an_intrinsic_card(tmp_path):
+    out, descriptor, report = prepared(tmp_path)
+    task = report | {"scope": "task", "target_id": "API_reference", "split_id": "test", "fit_population_id": "train", "evaluation_population_id": "test", "metrics": [
+        {"metric_id": "task.test_error", "protocol_version": "1", "value": 987654.321, "availability": "available"},
+    ]}
+    write_assessments(out, descriptor.id, [report, task])
+    card = build_card(out, descriptor, assessment_mode="shared")
+    assert "987654.321" not in json.dumps(card)
+    assert len(card["assessments"]) == 1
+    assert len(NirsDataset(out, descriptor).assessments()) == 2
+
+
+def test_boolean_is_not_coerced_to_a_measured_scalar(tmp_path):
+    _, _, report = prepared(tmp_path)
+    with pytest.raises(ValidationError, match="not boolean"):
+        Assessment.model_validate(report | {"metrics": [
+            {"metric_id": "x", "protocol_version": "1", "value": True, "availability": "available"},
+        ]})
+
+
+def test_explicit_selection_never_silently_matches_an_empty_context(tmp_path):
+    out, descriptor, report = prepared(tmp_path)
+    write_assessments(out, descriptor.id, [report])
+    with pytest.raises(ValueError, match="matches no intrinsic"):
+        build_card(out, descriptor, assessment_mode="shared", assessment_selector={"population_id": "missing"})
+    with pytest.raises(ValueError, match="matches no metric"):
+        build_card(out, descriptor, assessment_mode="shared", assessment_view="missing")
+
+
+def test_lossless_native_report_never_imports_test_targets_into_intrinsic_card(tmp_path):
+    out, descriptor, report = prepared(tmp_path)
+    report["report"] = {"metrics": [{"metric_id": "test_error", "target_id": "Y_test", "value": 987654.321}], "free_text": "private target evaluation marker"}
+    write_assessments(out, descriptor.id, [report])
+    card = build_card(out, descriptor, assessment_mode="shared")
+    assert "987654.321" not in json.dumps(card)
+    assert "private target evaluation marker" not in json.dumps(card)
+    assert "report" not in card["assessments"][0]
+    assert card["assessments"][0]["report_reference"] == "assessments.json"
+    assert len(card["assessments"][0]["report_json_sha256"]) == 64
+    assert NirsDataset(out, descriptor).assessments()[0]["report"] == report["report"]
+
+
+def test_native_metric_target_cannot_disagree_with_intrinsic_envelope(tmp_path):
+    _, _, report = prepared(tmp_path)
+    metric = report["metrics"][0] | {"native_metric": {"target_id": "Y_test"}}
+    with pytest.raises(ValidationError, match="native metric identity"):
+        Assessment.model_validate(report | {"metrics": [metric]})
+
+
+def test_native_parameters_are_part_of_identity_but_never_overwrite_scalar_slots(tmp_path):
+    _, _, report = prepared(tmp_path)
+    base = {"metric_id": "domain_shift.design", "protocol_version": "1", "value": None, "availability": "not_applicable", "reason_code": "FACTOR_NOT_DECLARED"}
+    factors = [base | {"native_metric": {"parameters": {"factor": factor, "protocol": "v2"}}} for factor in ["instrument", "campaign"]]
+    parsed = Assessment.model_validate(report | {"metrics": factors})
+    assert len(parsed.metrics) == 2
+    assert intrinsic_profile(parsed.model_dump(mode="json"))["integrity"] == {}
+    with pytest.raises(ValidationError, match="duplicate metric"):
+        Assessment.model_validate(report | {"metrics": [factors[0], factors[0]]})
+    numeric = [metric | {"metric_id": "integrity.missing_cells"} for metric in factors]
+    with pytest.raises(ValueError, match="ambiguous shared metric slot"):
+        intrinsic_profile(report | {"metrics": numeric})

@@ -478,8 +478,8 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
             ("Area", _f(p_amp.get("area_under_curve"), nd=4)),
             ("PTP", _f(p_amp.get("peak_to_peak"), nd=4)),
             ("Noise RMS", _f(p_noise.get("noise_rms"), nd=5)),
-            ("SNR", _f(p_noise.get("snr"), nd=2)),
-            ("SNR dB", _f(p_noise.get("snr_db") if p_noise else qual.get("noise_proxy_db"), nd=1, suffix=" dB")),
+            ("Roughness S/N proxy", _f(p_noise.get("snr"), nd=2)),
+            ("Roughness S/N proxy dB", _f(p_noise.get("snr_db") if p_noise else qual.get("noise_proxy_db"), nd=1, suffix=" dB")),
             ("Dynamic range", _f(qual.get("dynamic_range"), nd=3)),
             ("Smoothness", _f(qual.get("smoothness"), nd=4)),
             ("Saturated", _pct(qual.get("saturation_fraction"), nd=1)),
@@ -624,7 +624,7 @@ def _metric_scores_panel(profile: dict[str, Any]) -> str:
         )
     table = (
         '<div class="table-scroll metric-score-table"><table class="data"><thead><tr>'
-        '<th>Famille</th><th>Métrique calculée</th><th class="num">Valeur</th><th class="num">Score</th><th>Niveau</th><th>Interprétation dataset</th><th>Causes typiques</th><th>Calcul / scoring</th>'
+        '<th>Famille</th><th>Métrique calculée</th><th class="num">Valeur</th><th class="num">Score</th><th>Niveau heuristique</th><th>Interprétation descriptive</th><th>Causes possibles à vérifier</th><th>Calcul / scoring</th>'
         f'</tr></thead><tbody>{"".join(html_rows)}</tbody></table></div>'
     )
     summary_meta = f'<em>worst {worst:.2f}</em>' if worst is not None else ""
@@ -640,11 +640,14 @@ def _source_profiles(view: DatasetView) -> list[tuple[str, dict[str, Any]]]:
     return out
 
 
-def _combined_diagnostics(profiles: list[tuple[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+def _combined_diagnostics(profiles: list[tuple[str, dict[str, Any]]], *, domain_context: str | None = None) -> list[dict[str, Any]]:
     by_key: dict[str, dict[str, Any]] = {}
     for source_id, profile in profiles:
         for diag in profile.get("diagnostics") or []:
             if not isinstance(diag, dict):
+                continue
+            diag = QMETRICS.diagnostic_presentation(diag, domain_context=domain_context)
+            if diag is None:
                 continue
             key = str(diag.get("key") or diag.get("label"))
             current = by_key.get(key)
@@ -665,19 +668,20 @@ def _profile_panel(view: DatasetView) -> str:
     radar = ""
     if scores:
         radar = _zoom(charts.radar_profiles([{"label": view.name, "scores": scores}], title=f"{view.name} property profile", width=520), cls="profile-radar", max_w=520)
-    diagnostics = _combined_diagnostics(profiles)
+    diagnostics = _combined_diagnostics(profiles, domain_context=((view.card or {}).get("qualification_provenance") or {}).get("diagnostic_domain"))
     diag_chart = _zoom(charts.diagnostic_bars(diagnostics, width=520), cls="diag-chart", max_w=520) if diagnostics else ""
     diag_rows = []
     for d in diagnostics[:8]:
         evidence = ", ".join(f'{esc(e.get("signal"))} {float(e.get("level") or 0):.2f}' for e in (d.get("evidence") or [])[:3] if isinstance(e, dict))
         source = f'<small>{esc(d.get("source_id"))}</small>' if d.get("source_id") else ""
         coverage = f'{num(100 * d["evidence_coverage"])} %' if _isnum(d.get("evidence_coverage")) else "non renseignée"
+        checks = "<br>".join(esc(item) for item in d.get("recommended_verifications", []))
         diag_rows.append(
             f'<tr><th>{esc(d.get("label"))}{source}</th><td class="score-col">{_score_cell(d.get("score"))}</td>'
-            f'<td>{esc(d.get("strength"))}</td><td>{coverage}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td></tr>'
+            f'<td>{esc(d.get("strength"))}</td><td>{coverage}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td><td>{checks}</td></tr>'
         )
     diag_table = (
-        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force heuristique</th><th>Couverture des preuves</th><th>Signaux</th><th>Cause possible</th></tr></thead>'
+        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force heuristique</th><th>Couverture des preuves</th><th>Signaux</th><th>Cause possible</th><th>Vérifications externes nécessaires</th></tr></thead>'
         f'<tbody>{"".join(diag_rows)}</tbody></table></div>'
         if diag_rows else '<p class="dl-note">No diagnostic hypothesis available for this card.</p>'
     )
@@ -700,13 +704,25 @@ def _profile_panel(view: DatasetView) -> str:
             f'<div><span>Sources profiled</span><b>{len(profiles)}</b></div>'
             '</div>'
         )
+    provenance_rows = []
+    for source_id, profile in profiles:
+        producer = profile.get("producer")
+        if not isinstance(producer, dict):
+            continue
+        fields = [source_id, producer.get("name"), producer.get("engine_version"), producer.get("protocol_version"), producer.get("population_id"), producer.get("context_id"), producer.get("view_id")]
+        provenance_rows.append("<tr>" + "".join(f"<td>{esc(value)}</td>" for value in fields) + "</tr>")
+    provenance = (
+        '<div class="table-scroll"><table class="data assessment-context"><thead><tr><th>Source</th><th>Moteur</th><th>Version moteur</th><th>Protocole</th><th>Population</th><th>Contexte</th><th>Vue</th></tr></thead>'
+        f'<tbody>{"".join(provenance_rows)}</tbody></table></div>'
+        if provenance_rows else ""
+    )
     body = (
-        f'{summary}'
+        f'{summary}{provenance}'
         '<div class="explorer-grid">'
         f'<div>{radar}{score_table}</div>'
         f'<div>{diag_chart}</div>'
         '</div>'
-        '<p class="dl-note">Scores de signatures heuristiques, non calibrés en probabilités de causes physiques. Les preuves absentes restent non calculables. RMS/SAM décrivent la dispersion autour de la moyenne du dataset, sans référence externe indépendante.</p>'
+        '<p class="dl-note">Scores de signatures heuristiques, non calibrés en probabilités de causes physiques : 0.78 ne signifie pas 78 % de probabilité causale. Les preuves absentes restent non calculables. RMS/SAM décrivent la dispersion autour de la moyenne du dataset, sans référence externe indépendante.</p>'
         f'{diag_table}'
     )
     return f'<section class="panel wide"><h2>Dataset property explorer</h2><div class="panel-body">{body}</div></section>'

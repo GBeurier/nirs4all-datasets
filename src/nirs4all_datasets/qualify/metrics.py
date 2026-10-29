@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import math
 import warnings
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from copy import deepcopy
 from typing import Any, cast
 
@@ -68,6 +68,18 @@ _REFERENCE_KEYS = (
 )
 _REPEATABILITY_KEYS = ("n_repeat_groups", "rms_intra_id", "sam_intra_id", "cv_intra_id", "distance_to_centroid_p95")
 _STRUCTURE_KEYS = ("pca_score_density", "local_outlier_factor_p95", "isolation_forest_score_p95", "density_cv")
+# Explicit compatibility aliases: these are roughness/distance proxies, not
+# repeat-measured instrument SNR or the density-reachability Local Outlier Factor.
+LEGACY_METRIC_ALIASES = {
+    "noise.noise_rms": "noise.roughness_sigma_proxy",
+    "noise.snr": "noise.roughness_signal_to_noise_proxy",
+    "noise.snr_db": "noise.roughness_signal_to_noise_proxy_db",
+    "noise.bandwise_snr_min": "noise.bandwise_roughness_signal_to_noise_proxy_min",
+    "noise.bandwise_snr_median": "noise.bandwise_roughness_signal_to_noise_proxy_median",
+    "structure.local_outlier_factor_p95": "structure.knn_distance_ratio_p95",
+}
+
+
 _PROFILE_SCORE_KEYS = (
     "integrity_risk",
     "noise_risk",
@@ -85,12 +97,13 @@ _PROFILE_LABELS = {
     "local_artefact_risk": "Artefacts locaux",
     "shape_drift": "Baseline / forme",
     "outlier_pressure": "Outliers PCA",
-    "reference_spread": "Distance à la référence",
+    "reference_spread": "Distance au spectre moyen",
     "repeatability_risk": "Répétabilité",
     "structure_complexity": "Structure multi-régimes",
 }
 
 _METRIC_CATALOG: list[dict[str, str]] = [
+    {"family": "Intégrité des données", "metric": "Invalid/masked cell count (owner report)", "key": "integrity.missing_cells", "detects": "Cellules nulles ou masquées dans la population évaluée", "high": "À investiguer", "low": "Complet selon le masque déclaré", "causes": "Manque, masque de validité ; pas une cause d'acquisition démontrée"},
     {"family": "Intégrité des données", "metric": "NaN ratio", "key": "integrity.nan_ratio", "detects": "Données manquantes", "high": "Spectre corrompu", "low": "Spectre complet", "causes": "Erreur acquisition/export"},
     {"family": "Intégrité des données", "metric": "Inf count", "key": "integrity.inf_count", "detects": "Valeurs infinies", "high": "Corruption", "low": "Normal", "causes": "Calculs invalides"},
     {"family": "Intégrité des données", "metric": "Zero ratio", "key": "integrity.zero_ratio", "detects": "Colonnes ou cellules nulles", "high": "Spectre tronqué", "low": "Normal", "causes": "Export, saturation"},
@@ -98,9 +111,9 @@ _METRIC_CATALOG: list[dict[str, str]] = [
     {"family": "Amplitude globale", "metric": "Area under curve", "key": "amplitude.area_under_curve", "detects": "Intensité globale", "high": "Différence d'éclairement", "low": "Normal", "causes": "Distance sonde"},
     {"family": "Amplitude globale", "metric": "Peak-to-peak (PTP)", "key": "amplitude.peak_to_peak", "detects": "Dynamique", "high": "Variabilité forte", "low": "Spectre plat", "causes": "Saturation"},
     {"family": "Amplitude globale", "metric": "Variance", "key": "amplitude.variance", "detects": "Variabilité spectrale", "high": "Normal ou hétérogène", "low": "Spectre plat", "causes": "Mauvais contact"},
-    {"family": "Bruit", "metric": "Noise RMS", "key": "noise.noise_rms", "detects": "Bruit haute fréquence", "high": "Bruité", "low": "Stable", "causes": "Lampe, détecteur"},
-    {"family": "Bruit", "metric": "SNR", "key": "noise.snr", "detects": "Qualité signal", "high": "Bon signal", "low": "Mauvais signal", "causes": "Acquisition"},
-    {"family": "Bruit", "metric": "Bandwise SNR", "key": "noise.bandwise_snr_min", "detects": "Bruit localisé", "high": "Zone fiable", "low": "Zone problématique", "causes": "Détecteur"},
+    {"family": "Bruit", "metric": "Roughness sigma proxy", "key": "noise.noise_rms", "detects": "Bruit haute fréquence", "high": "Bruité", "low": "Stable", "causes": "Lampe, détecteur"},
+    {"family": "Bruit", "metric": "Roughness S/N proxy", "key": "noise.snr", "detects": "Qualité signal", "high": "Bon signal", "low": "Mauvais signal", "causes": "Acquisition"},
+    {"family": "Bruit", "metric": "Bandwise roughness S/N proxy", "key": "noise.bandwise_snr_min", "detects": "Bruit localisé", "high": "Zone fiable", "low": "Zone problématique", "causes": "Détecteur"},
     {"family": "Artefacts locaux", "metric": "Spike count", "key": "artefacts.spike_count", "detects": "Pics étroits", "high": "Artefacts", "low": "Spectre propre", "causes": "Cosmic rays, splice"},
     {"family": "Artefacts locaux", "metric": "Spike rate", "key": "artefacts.spike_rate", "detects": "Densité de pics", "high": "Spectre suspect", "low": "Normal", "causes": "Interpolation"},
     {"family": "Artefacts locaux", "metric": "Jump count", "key": "artefacts.jump_count", "detects": "Discontinuités", "high": "Raccord détecteur", "low": "Continu", "causes": "Splice"},
@@ -112,13 +125,13 @@ _METRIC_CATALOG: list[dict[str, str]] = [
     {"family": "Outliers multivariés", "metric": "PCA Q (SPE)", "key": "outliers.pca_q_ratio", "detects": "Non expliqué par PCA", "high": "Spectre atypique", "low": "Conforme", "causes": "Artefact, mélange"},
     {"family": "Outliers multivariés", "metric": "Hotelling T²", "key": "outliers.hotelling_t2_ratio", "detects": "Extrême dans PCA", "high": "Extrême mais cohérent", "low": "Central", "causes": "Variabilité naturelle"},
     {"family": "Outliers multivariés", "metric": "Mahalanobis H", "key": "outliers.mahalanobis_h_ratio", "detects": "Distance au nuage", "high": "Outlier global", "low": "Population normale", "causes": "Domaine différent"},
-    {"family": "Comparaison à référence", "metric": "RMS to mean spectrum", "key": "reference.rms_to_mean_spectrum_p95", "detects": "Distance moyenne", "high": "Spectre différent", "low": "Typique", "causes": "Domain shift"},
-    {"family": "Comparaison à référence", "metric": "Spectral Angle Mapper (SAM)", "key": "reference.sam_to_mean_spectrum_p95", "detects": "Différence de forme", "high": "Forme différente", "low": "Similaire", "causes": "Fond, géométrie"},
+    {"family": "Comparaison au spectre moyen", "metric": "RMS to mean spectrum", "key": "reference.rms_to_mean_spectrum_p95", "detects": "Distance moyenne", "high": "Spectre différent", "low": "Typique", "causes": "Domain shift"},
+    {"family": "Comparaison au spectre moyen", "metric": "Spectral Angle Mapper (SAM)", "key": "reference.sam_to_mean_spectrum_p95", "detects": "Différence de forme", "high": "Forme différente", "low": "Similaire", "causes": "Fond, géométrie"},
     {"family": "Répétabilité", "metric": "RMS intra-ID", "key": "repeatability.rms_intra_id", "detects": "Reproductibilité", "high": "Mauvaise répétabilité", "low": "Stable", "causes": "Positionnement"},
     {"family": "Répétabilité", "metric": "SAM intra-ID", "key": "repeatability.sam_intra_id", "detects": "Variation de forme", "high": "Instable", "low": "Stable", "causes": "Acquisition"},
     {"family": "Répétabilité", "metric": "CV intra-ID", "key": "repeatability.cv_intra_id", "detects": "Variabilité interne", "high": "Mauvais contrôle", "low": "Stable", "causes": "Opérateur"},
     {"family": "Structure du dataset", "metric": "PCA score density", "key": "structure.pca_score_density", "detects": "Clusters", "high": "Sous-populations", "low": "Homogène", "causes": "Lots différents"},
-    {"family": "Structure du dataset", "metric": "Local Outlier Factor (LOF)", "key": "structure.local_outlier_factor_p95", "detects": "Anomalie locale", "high": "Spectre isolé", "low": "Population normale", "causes": "Cas rares"},
+    {"family": "Structure du dataset", "metric": "kNN distance ratio (not LOF)", "key": "structure.local_outlier_factor_p95", "detects": "Anomalie locale", "high": "Spectre isolé", "low": "Population normale", "causes": "Cas rares"},
     {"family": "Structure du dataset", "metric": "Isolation Forest score", "key": "structure.isolation_forest_score_p95", "detects": "Anomalie globale", "high": "Spectre atypique", "low": "Normal", "causes": "Diverses causes"},
 ]
 
@@ -152,7 +165,7 @@ _BUG_METHODS: list[dict[str, str]] = [
     {"family": "Mélange de lignes / mauvais appariement X-M-Y", "methods": "Vérification index, hash des lignes, duplication ID, distance spectrale intra-ID, labels incohérents", "detects": "Lignes mélangées, metadata mal alignées, Y attribué au mauvais spectre", "status": "Partiellement couvert par répétabilité intra-ID; checks index/hash à ajouter au pipeline canonical."},
     {"family": "Fuite d'information / répétitions mal splitées", "methods": "GroupKFold par sample_id vs StratifiedKFold random; audit des partitions par sample_id", "detects": "Performance artificiellement bonne due aux répétitions", "status": "Nécessite splits et benchmark modèle; non calculé par la carte descriptive."},
     {"family": "Label bugs", "methods": "Échantillons proches en X mais Y différents, confident learning, erreurs systématiques FP/FN", "detects": "Y inversés, erreurs de saisie, classes ambiguës", "status": "Nécessite Y et/ou modèle; recommandé pour l'explorateur supervisé."},
-    {"family": "Sous-domaines cachés", "methods": "PCA/UMAP/t-SNE + clustering non supervisé + association avec dataset/Y/date/operator", "detects": "Lots, campagnes, sondes, backgrounds non renseignés", "status": "Partiellement calculé par structure PCA/LOF; UMAP/t-SNE hors carte statique."},
+    {"family": "Sous-domaines cachés", "methods": "PCA/UMAP/t-SNE + clustering non supervisé + association avec dataset/Y/date/operator", "detects": "Lots, campagnes, sondes, backgrounds non renseignés", "status": "Partiellement calculé par PCA et ratio de distances kNN (pas LOF); UMAP/t-SNE hors carte statique."},
     {"family": "Artefacts localisés inconnus", "methods": "Carte wavelength x dataset: différence moyenne, différence variance, KS par longueur d'onde", "detects": "Régions spectrales anormales non anticipées", "status": "À calculer au niveau banque quand plusieurs datasets partagent un axe spectral."},
     {"family": "Ruptures instrumentales", "methods": "Discontinuités dans dérivées, changepoint detection", "detects": "Splice, raccord détecteur, saut local non prévu", "status": "Calculé par jump/spike rates; changepoint plus avancé à ajouter."},
     {"family": "Mélange / contamination spectrale", "methods": "NMF / unmixing / reconstruction par convex hull", "detects": "Composante externe: fond, plastique, sol", "status": "Non calculé automatiquement; nécessite hypothèses de composants ou grande bibliothèque."},
@@ -160,6 +173,7 @@ _BUG_METHODS: list[dict[str, str]] = [
 ]
 
 _METRIC_FORMULAS: dict[str, str] = {
+    "integrity.missing_cells": "Native Preflight count of cells unavailable under x/null and valid_mask; denominator stays in native_metric.denominators.n_cells. Not legacy NaN ratio.",
     "integrity.nan_ratio": "count(isnan(X)) / X.size",
     "integrity.inf_count": "count(isinf(X))",
     "integrity.zero_ratio": "count(X == 0) / count(finite X)",
@@ -187,7 +201,7 @@ _METRIC_FORMULAS: dict[str, str] = {
     "repeatability.sam_intra_id": "median SAM to repeated-sample centroid",
     "repeatability.cv_intra_id": "median within-ID band CV",
     "structure.pca_score_density": "1 / median kNN distance in PCA score space",
-    "structure.local_outlier_factor_p95": "p95 approximate LOF from PCA-score kNN distances",
+    "structure.local_outlier_factor_p95": "p95(mean kNN distance / median population mean kNN distance) in PCA-score space; not LOF",
     "structure.isolation_forest_score_p95": "p95 IsolationForest anomaly score on PCA scores",
 }
 
@@ -219,7 +233,7 @@ _METRIC_SCORE_NOTES: dict[str, str] = {
     "repeatability.sam_intra_id": "alert = min(1, SAM_intra_ID / 0.15 rad)",
     "repeatability.cv_intra_id": "alert = min(1, CV_intra_ID / 0.25)",
     "structure.pca_score_density": "alert follows density_cv/profile structure complexity, not raw density alone",
-    "structure.local_outlier_factor_p95": "alert = min(1, max(0, LOF_p95 - 1) / 2)",
+    "structure.local_outlier_factor_p95": "alert = min(1, max(0, kNN_distance_ratio_p95 - 1) / 2)",
     "structure.isolation_forest_score_p95": "alert follows structure complexity; raw score is implementation-dependent",
 }
 
@@ -500,10 +514,10 @@ def spectral_amplitude(x: object, axis: object | None = None) -> dict[str, objec
 
 
 def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:
-    """High-frequency noise proxies: RMS noise, global SNR and local bandwise SNR."""
+    """Second-difference roughness proxies; no repeat-measured instrument SNR."""
     arr = _finite_matrix(x)
     if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:
-        return _nulls(_NOISE_KEYS)
+        return _proxy_fields("noise", _nulls(_NOISE_KEYS))
     second = np.diff(arr, n=2, axis=1)
     row_med = np.asarray(_safe_nanpercentile(second, 50, axis=1), dtype="float64")[:, None]
     row_mad = np.asarray(_safe_nanpercentile(np.abs(second - row_med), 50, axis=1), dtype="float64")
@@ -528,7 +542,7 @@ def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:
         if np.isfinite(full).any():
             worst_idx = int(np.nanargmin(full))
             worst_axis = float(_axis(axis, arr.shape[1])[worst_idx])
-    return {
+    return _proxy_fields("noise", {
         "noise_rms": noise_rms,
         "snr": float(snr) if snr is not None and math.isfinite(snr) else None,
         "snr_db": float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None,
@@ -536,7 +550,7 @@ def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:
         "bandwise_snr_median": float(np.median(band_snr)) if band_snr.size else None,
         "worst_band_index": worst_idx,
         "worst_band_axis": worst_axis,
-    }
+    })
 
 
 def spectral_artefacts(x: object) -> dict[str, object]:
@@ -704,14 +718,20 @@ def repeatability_metrics(x: object, sample_ids: Iterable[object] | None = None)
     arr = _finite_matrix(x)
     if arr.ndim != 2 or arr.shape[0] < 2 or arr.shape[1] < 2 or sample_ids is None:
         return {**_nulls(_REPEATABILITY_KEYS), "n_repeat_groups": 0}
-    labels = np.asarray([str(s) for s in sample_ids], dtype=object)
-    if labels.size != arr.shape[0]:
+    labels = list(sample_ids)
+    if len(labels) != arr.shape[0]:
         return {**_nulls(_REPEATABILITY_KEYS), "n_repeat_groups": 0}
     # Build memberships once. Re-scanning all labels for every unique soil ID
     # is quadratic and cannot reveal any repeatability in singleton groups.
     memberships: dict[str, list[int]] = {}
     for index, label in enumerate(labels):
-        memberships.setdefault(str(label), []).append(index)
+        if label is None or type(label).__name__ in {"NAType", "NaTType"}:
+            continue
+        if isinstance(label, (float, np.floating)) and not np.isfinite(label):
+            continue
+        key = str(label)
+        if key.strip():
+            memberships.setdefault(key, []).append(index)
     repeated = [np.asarray(indices) for indices in memberships.values() if len(indices) > 1]
     if not repeated:
         return {**_nulls(_REPEATABILITY_KEYS), "n_repeat_groups": 0}
@@ -745,13 +765,13 @@ def repeatability_metrics(x: object, sample_ids: Iterable[object] | None = None)
 
 
 def dataset_structure_metrics(x: object, *, pca: dict[str, Any] | None = None) -> dict[str, object]:
-    """Unsupervised structure metrics from PCA scores: density, approximate LOF and optional IsolationForest."""
+    """PCA-score density, kNN distance ratio (not LOF), and optional IsolationForest."""
     pca = pca or _basic_pca(x, max_components=6, variance_threshold=0.95)
     if pca is None:
-        return _nulls(_STRUCTURE_KEYS)
+        return _proxy_fields("structure", _nulls(_STRUCTURE_KEYS))
     scores = np.asarray(pca["scores"], dtype="float64")
     if scores.shape[0] < 4:
-        return _nulls(_STRUCTURE_KEYS)
+        return _proxy_fields("structure", _nulls(_STRUCTURE_KEYS))
     if scores.shape[0] > 800:
         idx = np.sort(np.random.RandomState(0).choice(scores.shape[0], 800, replace=False))
         scores = scores[idx]
@@ -773,12 +793,12 @@ def dataset_structure_metrics(x: object, *, pca: dict[str, Any] | None = None) -
         isolation_p95 = float(np.percentile(raw[np.isfinite(raw)], 95)) if np.isfinite(raw).any() else None
     except Exception:  # noqa: BLE001 - optional dependency / degenerate data
         isolation_p95 = None
-    return {
+    return _proxy_fields("structure", {
         "pca_score_density": density,
         "local_outlier_factor_p95": float(np.percentile(lof, 95)) if lof.size else None,
         "isolation_forest_score_p95": isolation_p95,
         "density_cv": float(np.std(finite_knn) / np.mean(finite_knn)) if finite_knn.size and np.mean(finite_knn) > 0 else None,
-    }
+    })
 
 
 def aggregate_profile_scores(profiles: Iterable[dict[str, Any]]) -> dict[str, float | None] | None:
@@ -840,6 +860,9 @@ def metric_catalog() -> list[dict[str, str]]:
         row["formula"] = _METRIC_FORMULAS.get(key, "")
         row["score_note"] = _METRIC_SCORE_NOTES.get(key, "")
         row["risk_when"] = _METRIC_RISK_WHEN.get(key, "high")
+        if key in LEGACY_METRIC_ALIASES:
+            row["legacy_key"] = key
+            row["key"] = LEGACY_METRIC_ALIASES[key]
     return rows
 
 
@@ -854,12 +877,62 @@ def bug_method_catalog() -> list[dict[str, str]]:
 
 
 def _metric_value(profile: dict[str, Any], key: str) -> Any:
-    value: Any = profile
-    for part in key.split("."):
-        if not isinstance(value, dict):
-            return None
-        value = value.get(part)
-    return value
+    for candidate in (LEGACY_METRIC_ALIASES.get(key, key), key):
+        value: Any = profile
+        for part in candidate.split("."):
+            if not isinstance(value, dict) or part not in value:
+                break
+            value = value[part]
+        else:
+            return value
+    return None
+
+
+def _proxy_fields(section: str, values: Mapping[str, object]) -> dict[str, object]:
+    result = dict(values)
+    for old, new in LEGACY_METRIC_ALIASES.items():
+        family, old_name = old.split(".")
+        if family == section and old_name in values:
+            result.setdefault(new.split(".")[1], values[old_name])
+    return result
+
+
+def with_metric_semantics(profile: dict[str, Any]) -> dict[str, Any]:
+    """Add truthful proxy names without deleting or changing historical values.
+
+    This is a metadata migration, not a scientific recomputation. Existing canonical
+    names are never overwritten by a legacy alias from a different producer.
+    """
+    result = deepcopy(profile)
+    for old, new in LEGACY_METRIC_ALIASES.items():
+        section, old_name = old.split(".")
+        new_name = new.split(".")[1]
+        values = result.get(section)
+        if isinstance(values, dict) and old_name in values and new_name not in values:
+            values[new_name] = values[old_name]
+    result["legacy_metric_aliases"] = dict(LEGACY_METRIC_ALIASES)
+    return result
+
+
+def migrate_profile_metadata(profile: dict[str, Any], *, from_protocol: str, domain_context: str | None = None) -> dict[str, Any]:
+    """Explicit, idempotent protocol6→7 labels/signatures migration; no raw kernel runs.
+
+    Historical raw numeric fields stay under their old names. New proxy names are
+    additive compatibility aliases. This does not equate legacy definitions with
+    a different producer's scientific protocol.
+    """
+    if from_protocol not in {"6", "7"}:
+        raise ValueError("metadata migration requires the explicit protocol6 or protocol7 input")
+    result = with_metric_semantics(profile)
+    result["diagnostics"] = diagnostic_hypotheses(result, top_k=8, domain_context=domain_context)
+    prior = result.get("signature_metadata") or {}
+    result["signature_metadata"] = {
+        "source_protocol": prior.get("source_protocol", from_protocol),
+        "presentation_protocol": "7",
+        "raw_kernels_recomputed": False,
+        "domain_context": domain_context,
+    }
+    return result
 
 
 def _signal_scale(profile: dict[str, Any]) -> float | None:
@@ -981,10 +1054,14 @@ def metric_score_rows(profile: dict[str, Any]) -> list[dict[str, Any]]:
         score_f = float(max(0.0, min(1.0, score))) if isinstance(score, (int, float)) and not isinstance(score, bool) and math.isfinite(float(score)) else None
         rows.append({
             **item,
+            "key": LEGACY_METRIC_ALIASES.get(item["key"], item["key"]),
+            "legacy_key": item["key"] if item["key"] in LEGACY_METRIC_ALIASES else None,
             "value": value,
             "score": score_f,
             "level": _score_level(score_f),
             "interpretation": _score_interpretation(item, score_f),
+            "interpretation_kind": "descriptive_alert",
+            "causal_confidence_status": "unvalidated",
             "formula": _METRIC_FORMULAS.get(item["key"], ""),
             "score_note": _METRIC_SCORE_NOTES.get(item["key"], ""),
             "risk_when": _METRIC_RISK_WHEN.get(item["key"], "high"),
@@ -1052,6 +1129,13 @@ def _diagnostic_row(key: str, label: str, score: float | None, interpretation: s
         "key": key, "label": label, "score": score,
         "strength": "inconnue" if score is None else "forte" if score >= 0.72 else "moyenne" if score >= 0.42 else "faible",
         "score_kind": "heuristic_signature", "confidence_status": "unvalidated",
+        "signal_strength": score,
+        "score_explanation": "Une signature à 0.78 n'est pas une probabilité causale de 78 %.",
+        "recommended_verifications": [
+            "Contrôler la référence blanche/noire réellement acquise et ses métadonnées.",
+            "Vérifier instrument, sonde, géométrie, campagne et journal de traitement/rééchantillonnage.",
+            "Vérifier le protocole de répétition avant d'interpréter une dispersion intra-ID.",
+        ],
         "availability": "available" if score is not None else "partial" if available else "unavailable",
         "evidence_coverage": len(available) / len(evidence) if evidence else 0.0,
         "missing_evidence": [name for name, value in evidence if value is None],
@@ -1062,30 +1146,32 @@ def _diagnostic_row(key: str, label: str, score: float | None, interpretation: s
     }
 
 
-def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None) -> list[dict[str, Any]]:
+def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None, domain_context: str | None = None) -> list[dict[str, Any]]:
     """Automatic interpretation layer for a spectral profile.
 
     The rules mirror the diagnostic matrix used by the site. They intentionally return hypotheses
     ranked by evidence instead of hard labels; several physical causes can share the same metric
     signature.
     """
+    if domain_context is not None and domain_context.casefold() != "vera25":
+        raise ValueError("supported diagnostic domain_context is VERA25; omit it for generic hypotheses")
     s = _diagnostic_signals(profile)
     normal_bad = _max_score(s["q"], s["h"], s["spike"], s["jump"], s["clip"], s["noise"], s["baseline"], s["reference"], s["repeatability"], s["structure"])
     rows = [
-        _diagnostic_row("normal", "Spectre normal", _low(normal_bad), "Faibles signatures sur les métriques disponibles ; ne certifie ni la validité physique ni l’absence de défaut.", [("faibles anomalies", _low(normal_bad))]),
-        _diagnostic_row("very_noisy", "Spectre très bruité", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], _scale_score(s["reference"], 0.6)), "Faible signal, problème détecteur, lampe ou acquisition instable.", [("PCA Q", s["q"]), ("Noise RMS", s["noise"]), ("SNR bas", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM référence", s["reference"])]),
-        _diagnostic_row("splice", "Splice / raccord détecteurs", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], _sum_score(_scale_score(s["snr_high"], 0.4), _scale_score(_low(s["noise"]), 0.3))), "Rupture aux jonctions de détecteurs, calibration locale ou sonde différente.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"]), ("SNR non dégradé", s["snr_high"])]),
-        _diagnostic_row("partial_coverage", "Mélange feuille + fond", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], _scale_score(s["repeatability"], 0.65), _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.55)), "Couverture partielle du spot; contribution du fond ou du support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("background_shift", "Fond différent", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.45)), "Effet systématique du support, blanc/noir, transflectance ou environnement de mesure.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"])]),
-        _diagnostic_row("out_of_domain", "Signature compatible avec un écart de population", _mean_score(s["h"], s["h"], s["reference"], _scale_score(s["structure"], 0.7), _low(_max_score(s["noise"], s["spike"], s["jump"]))), "Variété, espèce, lot ou condition différente mais physiquement plausible.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM référence", s["reference"]), ("Structure PCA", s["structure"]), ("artefacts faibles", _low(_max_score(s["noise"], s["spike"], s["jump"])))]),
-        _diagnostic_row("white_calibration", "Erreur calibration / référence blanche", _mean_score(s["q"], _scale_score(s["h"], 0.7), s["baseline"], s["baseline"], s["reference"], _scale_score(_max_score(s["spike"], s["jump"]), 0.55)), "Décalage systématique entre campagnes, instruments ou référence blanche.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("artefacts locaux", _max_score(s["spike"], s["jump"]))]),
-        _diagnostic_row("probe_geometry", "Différence de sonde / géométrie", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], _scale_score(_max_score(s["spike"], s["jump"]), 0.7), _scale_score(s["snr_high"], 0.35)), "Modification de l'illumination, collecte, angle ou distance sonde-échantillon.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM référence", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("clipping", "Spectre saturé / clipping", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], _scale_score(s["jump"], 0.6)), "Détecteur saturé ou dynamique insuffisante.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
-        _diagnostic_row("resampling_error", "Erreur interpolation / rééchantillonnage", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.6), _scale_score(s["snr_high"], 0.5), _scale_score(_low(s["repeatability"]), 0.35)), "Artefacts numériques ou traitement spectral incorrect.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Noise RMS faible", _low(s["noise"])), ("SNR normal/élevé", s["snr_high"])]),
-        _diagnostic_row("flat_low_signal", "Spectre plat / signal faible", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.5)), "Mauvais contact, échantillon absent, mesure dégradée ou dynamique très faible.", [("PCA Q", s["q"]), ("SNR bas", s["snr_low"]), ("Variance très faible", s["flat"]), ("artefacts faibles", _low(_max_score(s["spike"], s["jump"])))]),
-        _diagnostic_row("poor_repeatability", "Mauvaise répétabilité d'acquisition", _mean_score(s["repeatability"], s["repeatability"], _scale_score(_max_score(s["noise"], s["spike"], s["jump"]), 0.5)), "Positionnement, opérateur ou protocole instable; investiguer les répétitions intra-ID.", [("RMS/SAM intra-ID", s["repeatability"]), ("Bruit/artefacts variables", _max_score(s["noise"], s["spike"], s["jump"]))]),
-        _diagnostic_row("multi_regime", "Dataset multi-régimes", _mean_score(s["structure"], s["reference"], _scale_score(s["q"], 0.8), _scale_score(s["h"], 0.8), _scale_score(s["repeatability"], 0.6)), "Mélange de campagnes, opérateurs, lots, setups ou sous-populations spectrales.", [("Structure PCA", s["structure"]), ("RMS/SAM référence", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("vera25_like", "Signature VERA25-like", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.55), _scale_score(s["snr_high"], 0.55), s["reference"], _scale_score(s["repeatability"], 0.75)), "Combinaison possible changement de sonde + splice, amplifiée par géométrie, fond ou calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM référence", s["reference"])]),
+        _diagnostic_row("normal", "Faibles signatures observées", _low(normal_bad), "Faibles signatures sur les métriques disponibles ; ne certifie ni la validité physique ni l’absence de défaut.", [("faibles anomalies", _low(normal_bad))]),
+        _diagnostic_row("very_noisy", "Signature de rugosité spectrale élevée", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], _scale_score(s["reference"], 0.6)), "Faible signal, problème détecteur, lampe ou acquisition instable.", [("PCA Q", s["q"]), ("Proxy rugosité σ", s["noise"]), ("Proxy rugosité S/N faible", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM au spectre moyen", s["reference"])]),
+        _diagnostic_row("splice", "Signature compatible avec un raccord spectral", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], _sum_score(_scale_score(s["snr_high"], 0.4), _scale_score(_low(s["noise"]), 0.3))), "Rupture aux jonctions de détecteurs, calibration locale ou sonde différente.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Proxy rugosité S/N non dégradé", s["snr_high"])]),
+        _diagnostic_row("partial_coverage", "Signature compatible avec une couverture partielle", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], _scale_score(s["repeatability"], 0.65), _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.55)), "Couverture partielle du spot; contribution du fond ou du support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("background_shift", "Signature compatible avec un fond différent", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.45)), "Effet systématique du support, blanc/noir, transflectance ou environnement de mesure.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"])]),
+        _diagnostic_row("out_of_domain", "Signature compatible avec un écart de population", _mean_score(s["h"], s["h"], s["reference"], _scale_score(s["structure"], 0.7), _low(_max_score(s["noise"], s["spike"], s["jump"]))), "Variété, espèce, lot ou condition différente mais physiquement plausible.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Structure PCA", s["structure"]), ("artefacts faibles", _low(_max_score(s["noise"], s["spike"], s["jump"])))]),
+        _diagnostic_row("white_calibration", "Décalage compatible avec une référence blanche différente", _mean_score(s["q"], _scale_score(s["h"], 0.7), s["baseline"], s["baseline"], s["reference"], _scale_score(_max_score(s["spike"], s["jump"]), 0.55)), "Décalage systématique entre campagnes, instruments ou référence blanche.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("artefacts locaux", _max_score(s["spike"], s["jump"]))]),
+        _diagnostic_row("probe_geometry", "Signature compatible avec un changement de géométrie", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], _scale_score(_max_score(s["spike"], s["jump"]), 0.7), _scale_score(s["snr_high"], 0.35)), "Modification de l'illumination, collecte, angle ou distance sonde-échantillon.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("clipping", "Signature compatible avec un écrêtage", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], _scale_score(s["jump"], 0.6)), "Détecteur saturé ou dynamique insuffisante.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
+        _diagnostic_row("resampling_error", "Signature compatible avec un rééchantillonnage", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.6), _scale_score(s["snr_high"], 0.5), _scale_score(_low(s["repeatability"]), 0.35)), "Artefacts numériques ou traitement spectral incorrect.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Proxy rugosité σ faible", _low(s["noise"])), ("Proxy rugosité S/N élevé", s["snr_high"])]),
+        _diagnostic_row("flat_low_signal", "Spectre plat / signal faible", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.5)), "Mauvais contact, échantillon absent, mesure dégradée ou dynamique très faible.", [("PCA Q", s["q"]), ("Proxy rugosité S/N faible", s["snr_low"]), ("Variance très faible", s["flat"]), ("artefacts faibles", _low(_max_score(s["spike"], s["jump"])))]),
+        _diagnostic_row("poor_repeatability", "Dispersion entre observations d’une même unité", _mean_score(s["repeatability"], s["repeatability"], _scale_score(_max_score(s["noise"], s["spike"], s["jump"]), 0.5)), "Positionnement, opérateur ou protocole instable; investiguer les répétitions intra-ID.", [("RMS/SAM intra-ID", s["repeatability"]), ("Bruit/artefacts variables", _max_score(s["noise"], s["spike"], s["jump"]))]),
+        _diagnostic_row("multi_regime", "Dataset multi-régimes", _mean_score(s["structure"], s["reference"], _scale_score(s["q"], 0.8), _scale_score(s["h"], 0.8), _scale_score(s["repeatability"], 0.6)), "Mélange de campagnes, opérateurs, lots, setups ou sous-populations spectrales.", [("Structure PCA", s["structure"]), ("RMS/SAM au spectre moyen", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Répétabilité", s["repeatability"])]),
+        _diagnostic_row("vera25_like", "Motif exploratoire VERA25 (spécificité non validée)", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.55), _scale_score(s["snr_high"], 0.55), s["reference"], _scale_score(s["repeatability"], 0.75)), "Combinaison possible changement de sonde + splice, amplifiée par géométrie, fond ou calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM au spectre moyen", s["reference"])]),
     ]
     required = {
         "normal": ["q", "h", "spike", "jump", "clip", "noise", "baseline", "reference", "repeatability", "structure"],
@@ -1103,7 +1189,12 @@ def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None) 
         "multi_regime": ["structure", "reference", "q", "h", "repeatability"],
         "vera25_like": ["q", "h", "spike", "jump", "noise", "snr_high", "reference", "repeatability"],
     }
+    if domain_context is None:
+        rows = [row for row in rows if row["key"] != "vera25_like"]
     for row in rows:
+        if row["key"] == "vera25_like":
+            row["domain_context"] = "VERA25"
+            row["specificity_status"] = "unvalidated"
         signals = required[row["key"]]
         missing = [name for name in signals if s[name] is None]
         row["missing_evidence"] = missing
@@ -1115,7 +1206,32 @@ def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None) 
     return rows
 
 
-def spectral_profile(x: object, axis: object | None = None, *, sample_ids: Iterable[object] | None = None) -> dict[str, Any]:
+def diagnostic_presentation(row: dict[str, Any], *, domain_context: str | None = None) -> dict[str, Any] | None:
+    """Present a historical hypothesis honestly without changing its stored score.
+
+    Original cards remain untouched. The display uses current terminology and
+    explicitly unvalidated interpretation metadata; a private/domain-specific
+    VERA25 suggestion is suppressed unless the caller opts into that context.
+    """
+    templates = {item["key"]: item for item in diagnostic_hypotheses({}, domain_context=domain_context)}
+    key = row.get("key")
+    if key == "vera25_like" and domain_context is None:
+        return None
+    result = deepcopy(row)
+    template = templates.get(key)
+    if template is not None:
+        for field in ("label", "score_kind", "confidence_status", "score_explanation", "recommended_verifications", "reference_scope", "interpretation_kind", "domain_context", "specificity_status"):
+            if field in template:
+                result[field] = template[field]
+    result["signal_strength"] = result.get("score")
+    for evidence in result.get("evidence") or []:
+        if isinstance(evidence, dict) and isinstance(evidence.get("signal"), str):
+            evidence["signal"] = evidence["signal"].replace("RMS/SAM référence", "RMS/SAM au spectre moyen")
+            evidence["signal"] = evidence["signal"].replace("Noise RMS", "Proxy rugosité σ").replace("SNR", "Proxy rugosité S/N")
+    return result
+
+
+def spectral_profile(x: object, axis: object | None = None, *, sample_ids: Iterable[object] | None = None, domain_context: str | None = None) -> dict[str, Any]:
     """Full source-level property profile for a spectral matrix ``X``.
 
     The profile is intentionally descriptive, not a pass/fail QC gate. ``profile_scores`` are heuristic
@@ -1136,8 +1252,8 @@ def spectral_profile(x: object, axis: object | None = None, *, sample_ids: Itera
         "structure": dataset_structure_metrics(arr, pca=pca),
     }
     profile["profile_scores"] = _profile_scores(profile)
-    profile["diagnostics"] = diagnostic_hypotheses(profile, top_k=8)
-    return profile
+    profile["diagnostics"] = diagnostic_hypotheses(profile, top_k=8, domain_context=domain_context)
+    return with_metric_semantics(profile)
 
 
 def wavelength_spacing(wavelengths: object) -> dict[str, object]:
