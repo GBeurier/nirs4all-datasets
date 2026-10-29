@@ -41,12 +41,12 @@ def test_missing_rules_are_column_scoped_and_preserve_censoring_and_raw_tokens()
     codes = pd.Series(["NA", "none", "ND", "001", ""])
     kept, _ = normalize_variable(codes, Variable(name="code", type="categorical"))
     assert kept.iloc[:4].tolist() == ["NA", "none", "ND", "001"]
-    values = pd.Series(["NA", "no data", "-999", "0", "-2", "<0.1", "inf", "1.234,5"])
+    values = pd.Series(["NA", "no data", "-999", "0", "-2", "<0,1", "inf", "1.234,5"])
     normalized, audit = normalize_variable(values, Variable(name="measured", missing_values=["NA", "no data"], numeric_sentinels=[-999], decimal_separator=",", thousands_separator="."))
     assert normalized.iloc[3:5].tolist() == [0.0, -2.0]
     assert normalized.iloc[7] == 1234.5
     assert (audit["missing"], audit["censored"], audit["invalid"]) == (3, 1, 1)
-    assert audit["rows"][5]["raw"] == "<0.1"
+    assert audit["rows"][5]["raw"] == "<0,1"
     assert audit["rows"][5]["status"] == "censored"
     assert audit["rows"][5]["censoring"] == {"operator": "<", "bound": 0.1, "unit": None}
     assert values.iloc[2] == "-999"
@@ -227,3 +227,23 @@ def test_equal_values_alone_do_not_exclude_an_independent_scientific_covariate(t
     descriptor.variables.append(Variable(name="temperature"))
     frame = pd.DataFrame({"sample_id": ["a", "b"], "protein": [20., 22.], "temperature": [20., 22.]})
     assert consumer_views(frame, descriptor)["M"]["temperature"].tolist() == [20., 22.]
+
+
+def test_card_variable_denominator_tracks_actual_observation_grain(tmp_path):
+    from conftest import make_v2_leaf
+
+    from nirs4all_datasets.bootstrap import build_descriptor_from_card
+    from nirs4all_datasets.canonical import build_canonical
+    from nirs4all_datasets.qualify.profile import build_card
+
+    leaf = make_v2_leaf(tmp_path / "grain_fixture", block_obs={"X": ["o1", "o2", "o3"]}, sample_of={"o1": "s1", "o2": "s1", "o3": "s2"}, targets={"response": "numeric"})
+    (leaf / "Y.csv").write_text("observation_id;response\no1;1\no2;2\no3;3\n")
+    descriptor, _ = build_descriptor_from_card(leaf)
+    out = tmp_path / "out"
+    build_canonical(leaf, descriptor, out)
+    card = build_card(out, descriptor, assessment_mode="shared", compute_assets=False, compute_pca=False)
+    section = next(v for v in card["variables"] if v["name"] == "response")
+    assert card["variable_join_key"] == "observation_id"
+    assert section["denominator"] == "canonical_observations"
+    assert section["normalization"]["total"] == 3
+    assert card["alignment"]["n_samples"] == 2

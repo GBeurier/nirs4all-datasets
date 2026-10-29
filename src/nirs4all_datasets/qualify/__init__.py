@@ -15,6 +15,8 @@ _EXPORTS = {
     "card_metadata_fresh": "nirs4all_datasets.qualify.profile",
     "class_balance": "nirs4all_datasets.qualify.metrics",
     "diagnostic_hypotheses": "nirs4all_datasets.qualify.metrics",
+    "migrate_profile_metadata": "nirs4all_datasets.qualify.metrics",
+    "migration_inventory": "nirs4all_datasets.qualify.registry",
     "distribution_shape": "nirs4all_datasets.qualify.metrics",
     "metric_catalog": "nirs4all_datasets.qualify.metrics",
     "metric_score_rows": "nirs4all_datasets.qualify.metrics",
