@@ -141,3 +141,15 @@ alongside that ID: changing an opaque ID cannot bypass duplicate detection, and
 reusing one ID for two different native contexts is rejected. The consumer does
 not invent a cross-language hash serialization or claim to revalidate the
 producer's digest from a different floating-point JSON formatter.
+
+Only explicit `(producer, metric_id, metric_protocol)` bindings can populate a
+historical scalar slot. The initial qualified binding is Preflight
+`integrity.missing_cells` protocol `0.1.0`; its native count/mask/denominator were
+compared independently. A matching name under another protocol or producer is
+not equivalent. Unmapped values stay lossless and consultable under their real
+identities in assessments; projection provenance lists the bindings actually used.
+No unmapped value invokes a legacy numerical kernel.
+
+Task assessments belong to Domains and require distinct declared fit/evaluation
+populations. Preflight and Methods evidence cannot be relabelled as an independently
+fitted task assessment by adding target/split strings.
