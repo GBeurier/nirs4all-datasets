@@ -752,7 +752,10 @@ fn extract_if_requested(
         if file.is_dir() {
             continue;
         }
-        let name = file.name().to_string();
+        let name = file
+            .name()
+            .map_err(|e| Error::InvalidArgument(format!("could not decode ZIP member {i}: {e}")))?
+            .into_owned();
         if !wanted.is_empty() && !wanted.contains(name.as_str()) {
             continue;
         }

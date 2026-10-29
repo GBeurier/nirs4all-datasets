@@ -25,6 +25,7 @@ from urllib.parse import urlparse
 
 import yaml
 
+from nirs4all_datasets.curation import is_provenance_column
 from nirs4all_datasets.manifest import metadata_hash
 from nirs4all_datasets.schema import (
     _OPEN_LICENSES,
@@ -296,7 +297,7 @@ def _metadata_aliases(leaf_dir: Path) -> dict[str, str]:
     """
     y_path, m_path = leaf_dir / "Y.csv", leaf_dir / "M.csv"
     y_header, m_header = _csv_header(y_path), _csv_header(m_path)
-    overlaps = [c for c in m_header if c in y_header and c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not c.startswith("source_")]
+    overlaps = [c for c in m_header if c in y_header and c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not (c.startswith("source_") and is_provenance_column(c))]
     if not overlaps:
         return {}
     import pandas as pd
@@ -346,7 +347,7 @@ def _sample_conflicts(leaf_dir: Path) -> list[str]:
     if not repeated.any():
         return []
     m = pd.read_csv(m_path, sep=";", dtype=str)
-    cols = [c for c in m.columns if c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not c.startswith("source_")]
+    cols = [c for c in m.columns if c not in _ID_COLUMNS and c not in _M_STRUCTURAL and not (c.startswith("source_") and is_provenance_column(c))]
     if "split_original" in m.columns:
         cols.append("split_original")
     data = m.loc[repeated, ["sample_id", *cols]]
@@ -467,7 +468,8 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
         if name in _ID_COLUMNS or name in seen:
             continue
         seen.add(name)
-        variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name)))
+        scientific_unit = "% m/m" if str(card.get("dataset_id", "")).startswith("ucph_granules_") and name == "api_reference_percent_w_w" else None
+        variables.append(Variable(name=name, role=VariableRole.TARGET, type=_vartype(name), unit=scientific_unit))
 
     m_header = _csv_header(leaf_dir / "M.csv")
     aliases = _metadata_aliases(leaf_dir)
@@ -477,7 +479,7 @@ def _build_variables(card: dict[str, Any], leaf_dir: Path) -> list[Variable]:
     for name in m_fields:
         # Only declare a metadata variable that is actually a column in M.csv (no phantom "absent" vars);
         # skip id/structural plumbing + the standardization script's source_* provenance-tracking columns.
-        if name in _ID_COLUMNS or name in _M_STRUCTURAL or (name in seen and name not in aliases) or name.startswith("source_"):
+        if name in _ID_COLUMNS or name in _M_STRUCTURAL or (name in seen and name not in aliases) or (name.startswith("source_") and is_provenance_column(name)):
             continue
         if name not in m_header:  # a metadata variable must be a real M.csv column (none if M.csv is absent)
             continue
@@ -617,6 +619,29 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
         alignment_level = AlignmentLevel.SAMPLE if len(sources) > 1 else AlignmentLevel.OBSERVATION
     else:
         ids = IdentitySpec(sample_id_available=sample_id_available)
+
+    # Source-specific, evidence-backed unit definitions supersede acquisition labels.
+    # Values varying within those units are retained separately by canonical.py.
+    if (leaf_dir / "M.csv").exists() and "observation_id" in m_header:
+        import pandas as pd
+
+        from nirs4all_datasets.curation import identity_frame
+
+        raw_metadata = pd.read_csv(leaf_dir / "M.csv", sep=";", dtype=str, keep_default_na=False, na_values=[""])
+        _, identity_report = identity_frame(did, raw_metadata)
+        if identity_report["rule"] != "declared_identity":
+            ids = IdentitySpec(sample_id_available=bool(identity_report["sample_id_available"]))
+            alignment_level = AlignmentLevel.SAMPLE if ids.sample_id_available else AlignmentLevel.OBSERVATION
+            warnings.append(f"Identity protocol {identity_report['protocol_version']}: {identity_report['rule']}; unit={identity_report['unit']}; independence={identity_report['independence']}.")
+        if did in {"ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y"}:
+            from nirs4all_datasets.curation import LUCAS_SOILSITE_FIELDS
+
+            known = {variable.name for variable in variables}
+            for name in list(LUCAS_SOILSITE_FIELDS.values()) + ["campaign_year"]:
+                if name in known:
+                    continue
+                kind = VarType.IDENTIFIER if name == "site_id" else VarType.DATETIME if name.endswith("_date") else VarType.NUMERIC
+                variables.append(Variable(name=name, role=VariableRole.METADATA, type=kind, semantic_role="identifier" if name == "site_id" else "experimental_context", decimal_separator="."))
 
     split_summary = card.get("split_summary") or {}
     if not isinstance(split_summary, dict):

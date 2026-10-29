@@ -162,6 +162,7 @@ def bank_summary(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "license_mix": _counter(e["license"] for e in entries),
         "origin_kinds": _counter(k for e in entries for k in e.get("origin_kinds", [])),
         "samples": _distribution([e["n_samples"] for e in entries if e.get("n_samples")]),
+        "n_unknown_sample_identity": sum(e.get("n_samples") is None for e in entries),
         "features": _distribution([e["n_features_total"] for e in entries if e.get("n_features_total")]),
         "total_sources": sum(e.get("n_sources") or 0 for e in entries),
         "total_targets": sum(e.get("n_targets") or 0 for e in entries),

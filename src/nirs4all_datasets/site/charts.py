@@ -683,11 +683,13 @@ def radar_profiles(profiles: list[dict[str, Any]], *, title: str = "Dataset prof
     rows = []
     for p in profiles[:8]:
         scores = p.get("scores") or {}
-        vals = [float(scores.get(k) or 0.0) for k, _ in axes]
-        if any(v > 0 for v in vals):
-            rows.append((str(p.get("label") or "dataset"), vals, str(p.get("color") or "")))
+        # A missing axis is not a measured zero at the center of the radar.
+        if not all(_ok(scores.get(k)) for k, _ in axes):
+            continue
+        vals = [float(scores[k]) for k, _ in axes]
+        rows.append((str(p.get("label") or "dataset"), vals, str(p.get("color") or "")))
     if not rows:
-        return _empty(width, 300, title, "profile unavailable")
+        return _empty(width, 300, title, "profile incomplete; consult the metric table")
     height = round(width * 0.80)
     cx, cy = width * 0.40, height * 0.5
     rmax = min(width * 0.24, height * 0.34)
