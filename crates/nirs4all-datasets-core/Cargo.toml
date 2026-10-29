@@ -28,10 +28,15 @@ thiserror = { workspace = true }
 sha2 = { workspace = true }
 hex = { workspace = true }
 directories = { workspace = true, optional = true }
-ureq = { workspace = true, optional = true }
 zip = { workspace = true, optional = true }
 nirs4all-formats = { workspace = true, optional = true }
 nirs4all-io = { workspace = true, optional = true }
+
+# WebR has a virtual filesystem but no blocking native socket transport. Keep
+# cache/verification/preparation without linking a native TLS crypto provider.
+# Native targets retain ureq's original defaults, including TLS verification.
+[target.'cfg(not(target_os = "emscripten"))'.dependencies]
+ureq = { workspace = true, optional = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
