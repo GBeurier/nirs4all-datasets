@@ -75,8 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Parcelle × année source ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
-- **Curated views:** M: 3 fields, Y: 3 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Source plot × year; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
+- **Curated views:** M: 3 fields, Y: 3 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,4 +99,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `1b8fca999363823e7d89d151e0c70f7877943fef1ce278cceca0911235a3c5f1`
-- **Processing hash:** `46c299f6954444784a2ac8ed30f99c53fda7158e4a40a93b3a3568e0cb2b4b8d` | **metadata hash:** `9ce2c3a20b41eb59c4dcfd95269a65f48315af5fb7fbf574fbf0cc663513921f`
+- **Processing hash:** `46c299f6954444784a2ac8ed30f99c53fda7158e4a40a93b3a3568e0cb2b4b8d` | **metadata hash:** `ff3ec508076da66a99a3b9fd4df3e7b6cc4fa151585e81b2c5a9a6551c385864`

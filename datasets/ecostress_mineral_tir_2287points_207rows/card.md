@@ -79,8 +79,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
-- **Curated views:** M: 2 fields, Y: 5 fields, passport: 50 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
+- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 2 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,4 +103,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `507294b4099b7e8ab5559067ebd2ed4348619a49e49be02f28a1f4c3015ab39f`
-- **Processing hash:** `ef9a382de5adabafa83ffe56ee633053a9eb1511b6e87ecaf1aa2b4e39911f89` | **metadata hash:** `b55557cd7ab3998b790a6f2da6188b2a1c51e5ec31caeddeebf45e0581b08028`
+- **Processing hash:** `ef9a382de5adabafa83ffe56ee633053a9eb1511b6e87ecaf1aa2b4e39911f89` | **metadata hash:** `2b53ba7c8707148bef99d01af4763e4dbcbb2448a24f8b1559d41813d340cc06`

@@ -78,8 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
-- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
+- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,4 +102,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `080e7e48d05a435e229639b2434289f0f8583264ebf285676e217c29719ca715`
-- **Processing hash:** `6fbe0847938cf970a79e3e9ecc5aa31217e14d43d03b6bd7294fb65944716807` | **metadata hash:** `2d3702a88d0c742a4f695d9495b38a022fd62cad6321ca5020aa20910894026f`
+- **Processing hash:** `6fbe0847938cf970a79e3e9ecc5aa31217e14d43d03b6bd7294fb65944716807` | **metadata hash:** `836dd9016a3675fe5dfa817da3739f0ad446b295dcee828fe7cf206382358a2d`

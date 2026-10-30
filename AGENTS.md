@@ -38,6 +38,8 @@ Never commit tokens or heavy raw/canonical dataset bytes. Use `NIRS4ALL_DATAVERS
 
 All application and project content must be in English, including UI text, subtitles, tooltips, errors, documentation, comments and docstrings, test and fixture prose, reports, pull requests, commits, and generated content. Conversation with the maintainer may be in French. Preserve proper names, identifiers, filenames, source quotations, and historical or provenance records where translation would change their meaning or provenance.
 
+Correct authored narrative text in its source contracts and descriptors, then verify regenerated cards. Translating stored cards alone allows later regeneration to restore obsolete wording.
+
 ## GitHub Identity
 
 Use `GBeurier` for commits and pushes, with `95907737+GBeurier@users.noreply.github.com`.

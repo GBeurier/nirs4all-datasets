@@ -88,8 +88,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 285 identifiants spectraux et 285 couples (sample_name, sample_date). Les 111 libellés sont réutilisés à 1–3 dates distinctes ; replicate est constant au sein de chaque libellé, donc ce ne sont pas 1–3 réacquisitions du même échantillon daté. Le statut de répétition technique n’est pas documenté.
-- **Curated views:** M: 9 fields, Y: 5 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 285 spectral identifiers and 285 (sample_name, sample_date) pairs. The 111 labels are reused on 1–3 distinct dates; replicate is constant within each label, so these are not 1–3 reacquisitions of the same dated sample. Technical replicate status is undocumented.
+- **Curated views:** M: 9 fields, Y: 5 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -111,4 +111,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `e3d541feada837da1429f6f3f808cfccdc79f80789998cf1037eb68d661c3918`
-- **Processing hash:** `2aead2f444bcf4b3ed839cdd65f68be726428a0c889e287a6ff4fe04fbcaa67c` | **metadata hash:** `1850fcf13bd84c0d3452c8ced2bef2afef75f7fb80b75c6078cb8229a450aa15`
+- **Processing hash:** `2aead2f444bcf4b3ed839cdd65f68be726428a0c889e287a6ff4fe04fbcaa67c` | **metadata hash:** `b8183c83f44d4127a466c4f59f0e4ad333bb5aa514a9eb3e9892087a4dbbf750`

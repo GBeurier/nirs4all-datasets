@@ -78,8 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Identifiant unique source incluant expérience et date ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
-- **Curated views:** M: 14 fields, Y: 5 fields, passport: 31 fields, measurements: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Unique source identifier including experiment and date; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
+- **Curated views:** M: 14 fields, Y: 5 fields, measurements: 6 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `8aa3828226b9eb66b55ca20c50c1d2a110849921c55e25f836c8e07e3106e288`
-- **Processing hash:** `2daba47ec9f480d3e73e037f4d392fb24bed370f651ef2658b1c6a62658d96e4` | **metadata hash:** `28ce14a82acadf245cf51faa8aa186016a41747b44b593320c5b8a1a7cbb84d7`
+- **Processing hash:** `2daba47ec9f480d3e73e037f4d392fb24bed370f651ef2658b1c6a62658d96e4` | **metadata hash:** `d8300f0e82601460836f4adcfe47ca9a76271e9ae116f02b70b1eba273b3962f`

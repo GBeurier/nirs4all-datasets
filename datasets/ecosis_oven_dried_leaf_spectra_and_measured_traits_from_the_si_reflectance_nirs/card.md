@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : source_replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 7 fields, Y: 15 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: source_replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
+- **Curated views:** M: 7 fields, Y: 15 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,4 +108,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `ebc561c23f07f56ef140f21a40d42e2608e6cc6b530a0b815c9e2767a28b9d3f`
-- **Processing hash:** `d24f5c6b3775022b31717fb28720625161216e7c753b9a0880e2528b092ba463` | **metadata hash:** `76419ae1afd7f2f3127160d01ebde0099176c8e93d03ecff3e8d857b1a3bfd32`
+- **Processing hash:** `d24f5c6b3775022b31717fb28720625161216e7c753b9a0880e2528b092ba463` | **metadata hash:** `fe3033dafa7f5fcf5c8a35a45ec5f828a64c1c21c73f2ccc2f1db99d173941ef`

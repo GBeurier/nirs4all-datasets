@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Feuille × date, alignée entre les quatre blocs ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
-- **Curated views:** M: 4 fields, Y: 28 fields, passport: 10 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Leaf × date, aligned across the four blocks; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
+- **Curated views:** M: 4 fields, Y: 28 fields, measurements: 0 fields, passport: 10 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,4 +108,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `a179d6405b62f608462d219f96be4e5a5a571a0c80a593e7018c20a57aa74618`
-- **Processing hash:** `4fa8a6e88eb6ec7ea2134308e751e43e93bb7826b18a596ba57992b19b12f221` | **metadata hash:** `310339cc6543506b6a5d89e1167e429e9ef4babf0535c4c9dba86726353a42fa`
+- **Processing hash:** `4fa8a6e88eb6ec7ea2134308e751e43e93bb7826b18a596ba57992b19b12f221` | **metadata hash:** `6ae74c902ba26f618aceb75dc8e49a224c4169290d62eaebff293e20145bbb69`

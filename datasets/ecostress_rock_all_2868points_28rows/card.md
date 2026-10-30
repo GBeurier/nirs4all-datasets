@@ -77,8 +77,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
-- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `a867e1c9873d417ccf47c3772cddc2b49d24752a51bd3c7a263a5d4168e1b784`
-- **Processing hash:** `2b784f9a83fbcc19dbe3761033c63d9e6e97018ff50f354a56c3d8cedc1f0213` | **metadata hash:** `ab04ccd94710bb58b9c3e40fc0985990051c41bbc4476174eee3fb66d7727873`
+- **Processing hash:** `2b784f9a83fbcc19dbe3761033c63d9e6e97018ff50f354a56c3d8cedc1f0213` | **metadata hash:** `1e5a84fb3833ab499b4ae6b6462e3cb3b609342939a8d9f5b8be2be02dc1010c`

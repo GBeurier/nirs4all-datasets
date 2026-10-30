@@ -82,8 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Non déterminé
-- **Curated views:** M: 0 fields, Y: 8 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Undetermined
+- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,4 +105,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 2.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `8e00f3b3cf7e53fdb75ffa731a2de2f556d40af29b3ebed66f3d35b36378fc0c`
-- **Processing hash:** `75baac490bff8b06ab8e5a387b383940b75631764f95ff743d246653f63b20b3` | **metadata hash:** `99e6ff1f2f4b3c0b56bab0988ba5a29e0dad1941e573f3751fd3a5a8433b47e5`
+- **Processing hash:** `75baac490bff8b06ab8e5a387b383940b75631764f95ff743d246653f63b20b3` | **metadata hash:** `f02a660623dd5a938dcbcbbc7304baa0324242ef165b5467486f62197fdc2a4e`

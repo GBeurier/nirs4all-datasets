@@ -74,8 +74,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
-- **Curated views:** M: 11 fields, Y: 2 fields, passport: 34 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name; frequencies of this identifier describe exported rows without establishing technical replicates.
+- **Curated views:** M: 11 fields, Y: 2 fields, measurements: 1 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,4 +98,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `95dad6ec5c795398dc3be46ab4b5e6bda06826c3cf22d3ccfe0201c71d93db2e`
-- **Processing hash:** `bdabf780cf590008980be8cba75601aab698c1ee9b60bbf5950c389522c9653e` | **metadata hash:** `f384b2447813dd8c5df603bb617bee363304e733e6068a578ad0010ffe923c0a`
+- **Processing hash:** `bdabf780cf590008980be8cba75601aab698c1ee9b60bbf5950c389522c9653e` | **metadata hash:** `411aa5a7211ae23f7c7dd151dd39fb447e4c2cf5597e27abe3445a2b004629a2`

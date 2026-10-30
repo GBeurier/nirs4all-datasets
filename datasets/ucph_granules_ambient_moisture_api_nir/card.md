@@ -68,8 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Le NIR sample ID est un lot/une combinaison du plan ; le flacon est identifié par _vN et chaque acquisition par .0/.1/.2. 216 flacons × 3 acquisitions. Les 64 scans instrumentaux sont moyennés dans chaque acquisition.
-- **Curated views:** M: 3 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: The NIR sample ID is a batch/design combination; the vial is identified by _vN and each acquisition by .0/.1/.2. 216 vials × 3 acquisitions. The 64 instrument scans are averaged within each acquisition.
+- **Curated views:** M: 3 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `b6a04c3c45a6efd86da73db7d1a9135af75197848eb66ebb6f191ebafa281ef5`
-- **Processing hash:** `506ad6ef76d284740c33b225d4f7973bb9bee4fd240d07d57e463aba878321ef` | **metadata hash:** `345789039bf86fccfa72c71426cebe076e9e32cf755ac2564cc1f9d0cb289d30`
+- **Processing hash:** `506ad6ef76d284740c33b225d4f7973bb9bee4fd240d07d57e463aba878321ef` | **metadata hash:** `61d8102d6879f08f68c15323291b20c45ffd4ee30f4c8c178286123371203f3a`

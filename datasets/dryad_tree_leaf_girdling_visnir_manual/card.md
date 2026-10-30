@@ -53,8 +53,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 2722 codes sources pour 2731 lignes. Les 9 codes répétés ont chacun deux vecteurs spectraux strictement identiques ; ce ne sont pas des réacquisitions démontrées. Aucun retrait de ligne dans les sources.
-- **Curated views:** M: 1 fields, Y: 0 fields, passport: 9 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 2722 source codes for 2731 rows. Each of the 9 repeated codes has two strictly identical spectral vectors; these are not demonstrated reacquisitions. No rows were removed from the sources.
+- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 9 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `86ce3a659f027e8b39fbac661c7d5228c74f2918dfa865353be233aa8dbde378`
-- **Processing hash:** `9517aacfbe7ae25e8f803eed0024d8e0c87224c77be3625b2de2f573c594c8b2` | **metadata hash:** `65762de220571e90eb9ac8142bde579e7d058cb743b727ba4ebda2f7a98f2651`
+- **Processing hash:** `9517aacfbe7ae25e8f803eed0024d8e0c87224c77be3625b2de2f573c594c8b2` | **metadata hash:** `70c8465c71817e1cb57bc17c8e689db73e46b2a201d03d884efd95045952907c`

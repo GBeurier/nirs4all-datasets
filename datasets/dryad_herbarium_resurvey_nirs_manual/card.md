@@ -50,8 +50,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: 1229 identifiants source et 1229 vecteurs spectraux distincts pour 2718 lignes : chaque spectre est copié dans 2–3 dossiers calibration/prédiction. Les 1489 lignes supplémentaires ne prouvent aucune répétition d’acquisition.
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 1229 source identifiers and 1229 distinct spectral vectors for 2718 rows: each spectrum is copied into 2–3 calibration/prediction folders. The 1489 additional rows do not demonstrate repeated acquisitions.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -73,4 +73,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `9b8533048cb69f7df080f5786981249c67e6b992a5c75a3fa28730b6df9b5b99`
-- **Processing hash:** `ae304d81793bae1ce134dd4a760936d09d44bf8aefd69dfdba36adb4948cda87` | **metadata hash:** `5bf3fa69ecad1caead0b281dfd3b8baf8f6b5f650f995069f91f18564971e28f`
+- **Processing hash:** `ae304d81793bae1ce134dd4a760936d09d44bf8aefd69dfdba36adb4948cda87` | **metadata hash:** `c9544881b6639ad4a1ffbc93e8436de1198ebfbc498190bff23f865ede2820dd`

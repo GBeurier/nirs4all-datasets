@@ -55,8 +55,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
-- **Curated views:** M: 4 fields, Y: 0 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
+- **Curated views:** M: 4 fields, Y: 0 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,4 +78,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `04fbc37161383fa1589a5cedb6b5ebe2a4b206e2871b6e7a4ff8ec5be1fefde5`
-- **Processing hash:** `c69d379440daf962e426104cd68aaae5822d9b5cd1db30af4b9c9fe63d22b621` | **metadata hash:** `08a607ee6511e44c6785aac4d92ff70d90e97d2c611256426f751a445151bb63`
+- **Processing hash:** `c69d379440daf962e426104cd68aaae5822d9b5cd1db30af4b9c9fe63d22b621` | **metadata hash:** `cb5b76e4b43b434c99e31708628344683d7477a85e649c3877f76f3bdf6f5d9a`

@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M Champs d’index examinés : source_Rep. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 4 fields, Y: 13 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
+- **Curated views:** M: 4 fields, Y: 13 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -110,4 +110,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `de80b48a4156d1dbe836bcaf16381373f61b8d09a82ff938c16dbb8949042ece`
-- **Processing hash:** `4653d6cb36dc5f6a5aa90b865ed19a90abaeae8f8352f6ceca47ff59e231fb74` | **metadata hash:** `fdb4b1cb5d4c67d6094402143e94b0e3f32308572bce29d08683b040f0e92ea1`
+- **Processing hash:** `4653d6cb36dc5f6a5aa90b865ed19a90abaeae8f8352f6ceca47ff59e231fb74` | **metadata hash:** `d9cab7979cacc5aa01ff90319d70ce76fc0d9971287774db3b942959d56b883a`

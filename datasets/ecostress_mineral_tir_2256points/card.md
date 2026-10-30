@@ -77,8 +77,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
-- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `fada0b2a2c42e90316962d368ebe25e45be6e8e11ebcc0de3cdb6f5e5f315883`
-- **Processing hash:** `a82511b1c79111dc267bbfcf84621829ca1055c71f43ecfb625f4e658a848e72` | **metadata hash:** `49081e5be9bbd0bb07a353ab83a8d231c1c6794cc3b66fd68e4383e1602a16a4`
+- **Processing hash:** `a82511b1c79111dc267bbfcf84621829ca1055c71f43ecfb625f4e658a848e72` | **metadata hash:** `313b287bb77fb4093437aa7350c64e7de6cc3980fa17970bbe9d1ceca5d935af`
