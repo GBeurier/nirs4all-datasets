@@ -59,8 +59,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Date/column-index-like identifier, physical identity not established; literal counting is rejected. Each label is reused in 9 different Y classes; the former 9/11 values did not describe replicates of the same milk.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant de type date/indice de colonne, identité physique non établie ; le comptage littéral est rejeté. Chaque libellé est réutilisé dans 9 classes Y différentes ; les anciennes valeurs 9/11 ne décrivaient pas des répétitions du même lait.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,5 +81,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `0d9819ce817697938a694a0b30fdae65d35f999c96ce3e9cb49c72ab201f2456`
-- **Processing hash:** `8e2e2bb56291931ade520c4a012a02a5dbff730857a6810706f9eda8f935f530` | **metadata hash:** `0768f0aa426a93fe9f363d5a2447435f818445eb29ca778fce49ab8e1f0e5113`
+- **Content hash:** `d2c2c2371456639e9436aff3939ce90a96f11620cdc06a8ac418d0bac170a7a3`
+- **Processing hash:** `a617133d4ee8a04de6f698e470fb443fe578653ebdbcb6cd0538143ec49a2c48` | **metadata hash:** `0768f0aa426a93fe9f363d5a2447435f818445eb29ca778fce49ab8e1f0e5113`

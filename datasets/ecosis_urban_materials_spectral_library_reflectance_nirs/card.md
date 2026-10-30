@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 4 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,5 +84,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `e4721da319a73998b45952c3ce92d8f78b7cb099324db03f64ff4ba861c4bc37`
-- **Processing hash:** `084d748415ccb5300fb0db5d888b15c13ddf6d81a61f6fa455e58bc75323e3e0` | **metadata hash:** `a3ddeaa81851a7e76531b1b3c619d5e0567c889c416de93e0e53b8a54d951e4d`
+- **Content hash:** `a82ff49df33da7106fc428460ce8508f2e75d7893b43b04606b4fc133994194c`
+- **Processing hash:** `349015ca032594125466db16e599b4bb91d39e00d59dcea25f45ba30f28a6346` | **metadata hash:** `a3ddeaa81851a7e76531b1b3c619d5e0567c889c416de93e0e53b8a54d951e4d`

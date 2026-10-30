@@ -38,7 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 91, train: 138
+- **original** (documented, not applied): train: 138, test: 91
 
 ## Collection process
 
@@ -52,8 +52,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: 138 ID strings for 229 rows; ID1/ID2 may collide after concatenation. Mosquito identity and reacquisitions are not established by the available reconstruction script.
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 13 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 138 chaînes ID pour 229 lignes ; ID1/ID2 peuvent entrer en collision après concaténation. Identité des moustiques et réacquisitions non établies par le script de reconstruction disponible.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 13 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,5 +74,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `9bc87ce4942fcde8b3c21f062701a19b76d16cc595f953b808607df570d65918`
-- **Processing hash:** `6a44a6fe22449b3200d5ef6ab5e7f30de4414e365a9cfa5643054b762a81688c` | **metadata hash:** `74d3a63e747035d80636f6f03291362c697540e6bf4a45336bc93831cbfd447f`
+- **Content hash:** `0a55c2566652e45af7bab9b31444fa0b7d915a0ddc9259decdb3cf77191e62c6`
+- **Processing hash:** `63d147a8d7967498f09b16ccd62ea4223a8d5fd9458543248e95e209b5b5085c` | **metadata hash:** `74d3a63e747035d80636f6f03291362c697540e6bf4a45336bc93831cbfd447f`

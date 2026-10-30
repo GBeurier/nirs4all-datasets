@@ -28,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | LMA_value_g_m2 | target | numeric | *Not specified.* | n=363, missing=0, range 37.36–306.3, mean 132.6 ± 71.95 |
 | SpectralRep | metadata | numeric | *Not specified.* | n=363, missing=0, range 1–1, mean 1 ± 0 |
-| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00005 (×28) |
+| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00004 (×28) |
 | foreoptic_type | metadata | categorical | *Not specified.* | n=363, missing=0, classes=2, top LC (×294) |
 | individualspectra_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=363, top CA2023_005_LC_00002 (×1) |
 | sampling_date | metadata | categorical | *Not specified.* | n=363, missing=0, classes=8, top 7/7/2023 (×100) |
@@ -97,8 +97,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 11 fields, Y: 1 fields, measurements: 11 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 11 fields, Y: 1 fields, passport: 33 fields, measurements: 11 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -119,5 +119,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8a486aee64f334547484ff70cea1a5075b83bdb2eb6e16d0c627830757630007`
-- **Processing hash:** `fa4cc69ed0f946be08201013b5d59df287c9bfce7bdfc6b16f1ba759dc09558d` | **metadata hash:** `5941b3cea9ca4b745ee85b45dc4c0ec6592e56e01512584a398064db7f172715`
+- **Content hash:** `227581a08a728f2b0394493ff932f01e701afecbdbc793cdd8ecc57bf4b8dd2b`
+- **Processing hash:** `37ce018617dcd23e065707ed5ac87d9333231537a2e7255e2e14da9c980213d6` | **metadata hash:** `5941b3cea9ca4b745ee85b45dc4c0ec6592e56e01512584a398064db7f172715`

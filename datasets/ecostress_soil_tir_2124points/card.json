@@ -1,7 +1,28 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 17,
+      "n_samples": 17,
+      "observations_per_unit": {
+        "1": 17
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicity of the declared identifier; protocol not established"
+    },
     "identity_status": "available",
     "level": "sample",
+    "n_known_sample_units": 17,
+    "n_observation_groups": 17,
     "n_observations_total": 17,
     "n_samples": 17,
     "profile_scores": {
@@ -12,8 +33,9 @@
       "reference_spread": 1.0,
       "repeatability_risk": null,
       "shape_drift": 1.0,
-      "structure_complexity": 0.8318316948675201
+      "structure_complexity": 0.8318316948675196
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -28,7 +50,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "7867b31462ae69fa6a99515010831a54791b8a5950e4dd693f015b00838d8077",
+    "contract_sha256": "a8a718ea79ce7d0f31c1715ec75b15679c3d2cb95fc5f746f077b33fe66b871b",
     "dataset_id": "ecostress_soil_tir_2124points",
     "enrichments": [],
     "grain": "observation",
@@ -53,10 +75,10 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "def628311ebee0764e66cc9bbb45a8719a735daf751e774d7f015b9c8e635c9e",
-      "Y.csv": "d51df2dd72ce17984d6344ebfaca93926e0de701a3fb26f794689150e58ba339"
+      "Y.csv": "918b91d17a43501f094d32cfafb9a1ba02786619cafdf3b583e25c1d1554b848"
     },
     "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
     "variables": [
@@ -190,11 +212,9 @@
         "m_sample_type"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-29T12:28:33.721097+00:00",
+  "generated_at": "2026-10-30T15:49:06.325402+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -215,10 +235,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "d863d59d67e4824060e499a05262c46d16910dc592bd7627072c97213417dc6a",
+    "content_hash": "5ca563c2d6b5bff55a98497926e83ddb55a5b864b1282084bf7367b10779caa4",
     "manifest": "manifest.json",
     "metadata_hash": "9e13fa50adc5686f1d2abebb1ecbc65a146d0024b2c6ff904ebc56415e6b515d",
-    "processing_hash": "3ad3385081eb6ecefcdc6cb11dc50a6dcdfe40c94a6970149ce8b9a9c87f6a78"
+    "processing_hash": "30cebe1978d2750354fbb6e49cd70c74a35ab8db16037c758501afe35730e8e1"
   },
   "protocol_version": "7",
   "provenance": {
@@ -262,19 +282,14 @@
     "reference_method": null,
     "warnings": [
       "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
-      "Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name."
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M La cl\u00e9 est le num\u00e9ro de sp\u00e9cimen source ; pr\u00e9parations, g\u00e9om\u00e9tries et instruments peuvent diff\u00e9rer. Aucun regroupement par nom de mat\u00e9riau."
     ]
   },
   "qualification_provenance": {
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -1296,7 +1311,7 @@
         },
         "mean_max": 28.890118206248562,
         "mean_min": 0.7104823501671061,
-        "n_outliers": null,
+        "n_outliers": 5,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1330,7 +1345,7 @@
                   "signal": "RMS/SAM to mean spectrum"
                 },
                 {
-                  "level": 0.8755829244700637,
+                  "level": 0.8755829244700633,
                   "signal": "Mahalanobis / T2"
                 }
               ],
@@ -1346,10 +1361,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.8834390346571541,
+              "score": 0.883439034657154,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.8834390346571541,
+              "signal_strength": 0.883439034657154,
               "strength": "strong"
             },
             {
@@ -1365,11 +1380,11 @@
                   "signal": "weak artifacts"
                 },
                 {
-                  "level": 0.8755829244700637,
+                  "level": 0.8755829244700633,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.8318316948675201,
+                  "level": 0.8318316948675196,
                   "signal": "PCA structure"
                 }
               ],
@@ -1385,10 +1400,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.8556012886129721,
+              "score": 0.855601288612972,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.8556012886129721,
+              "signal_strength": 0.855601288612972,
               "strength": "strong"
             },
             {
@@ -1408,7 +1423,7 @@
                   "signal": "RMS/SAM to mean spectrum"
                 },
                 {
-                  "level": 0.8755829244700637,
+                  "level": 0.8755829244700633,
                   "signal": "Mahalanobis / T2"
                 }
               ],
@@ -1604,6 +1619,14 @@
             "bandwise_snr_median": 2817.06795515649,
             "bandwise_snr_min": 24.729502676925517,
             "noise_rms": 0.009683600736093855,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 0.009683600736093855,
             "roughness_signal_to_noise_proxy": 2068.385035408138,
             "roughness_signal_to_noise_proxy_db": 66.31262774054657,
@@ -1613,18 +1636,18 @@
             "worst_band_index": 6
           },
           "outliers": {
-            "hotelling_t2_max": 3.964715080797692,
-            "hotelling_t2_median": 0.4195976193994634,
+            "hotelling_t2_max": 3.9647150807976903,
+            "hotelling_t2_median": 0.4195976193994636,
             "hotelling_t2_p95": 2.939140085555671,
-            "hotelling_t2_ratio": 7.00466339576051,
-            "mahalanobis_h_max": 1.9911592303976324,
-            "mahalanobis_h_median": 0.6477635520770394,
+            "hotelling_t2_ratio": 7.004663395760506,
+            "mahalanobis_h_max": 1.991159230397632,
+            "mahalanobis_h_median": 0.6477635520770396,
             "mahalanobis_h_p95": 1.7085591546238101,
-            "mahalanobis_h_ratio": 2.637627802838479,
-            "pca_q_max": 2969.767749532209,
-            "pca_q_median": 302.3692021161801,
+            "mahalanobis_h_ratio": 2.637627802838478,
+            "pca_q_max": 2969.7677495322087,
+            "pca_q_median": 302.3692021161803,
             "pca_q_p95": 2455.7363167755266,
-            "pca_q_ratio": 8.121648301442926
+            "pca_q_ratio": 8.121648301442919
           },
           "profile_scores": {
             "integrity_risk": 0.0,
@@ -1634,7 +1657,7 @@
             "reference_spread": 1.0,
             "repeatability_risk": null,
             "shape_drift": 1.0,
-            "structure_complexity": 0.8318316948675201
+            "structure_complexity": 0.8318316948675196
           },
           "reference": {
             "affine_gain_median": 1.0100629020398595,
@@ -1659,23 +1682,17 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": -36.19863557982379,
+            "baseline_slope": -36.198635579823765,
             "curvature_rms": 0.028886927558795975,
             "d1_rms": 0.03671715373280373,
             "edge_noise_ratio": 1.2247378304802001
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
-            "density_cv": 0.4554950314809578,
+            "density_cv": 0.45549503148095766,
             "isolation_forest_score_p95": 0.6608983799459632,
-            "knn_distance_ratio_p95": 2.49549508460256,
-            "local_outlier_factor_p95": 2.49549508460256,
-            "pca_score_density": 0.008604159555731513
+            "knn_distance_ratio_p95": 2.4954950846025588,
+            "local_outlier_factor_p95": 2.4954950846025588,
+            "pca_score_density": 0.00860415955573151
           }
         },
         "quality": {
@@ -1687,76 +1704,76 @@
         "score_plot": {
           "explained_variance_ratio": [
             0.990385445547724,
-            0.006903392268335205
+            0.006903392268335208
           ],
           "points": [
             {
-              "x": -168.9062049648937,
-              "y": 14.089623117176043
+              "x": -168.90620496489373,
+              "y": 14.08962311717607
             },
             {
               "x": -523.3217556675372,
-              "y": -9.573673978296119
+              "y": -9.573673978296094
             },
             {
-              "x": -11.969151634732919,
-              "y": 11.911980621261652
+              "x": -11.969151634732922,
+              "y": 11.911980621261653
             },
             {
-              "x": -114.8031061204024,
-              "y": 16.97197331648984
+              "x": -114.80310612040246,
+              "y": 16.971973316489848
             },
             {
-              "x": -170.24693663635367,
-              "y": 46.7662228232427
+              "x": -170.24693663635375,
+              "y": 46.76622282324273
             },
             {
-              "x": -419.4908243193532,
-              "y": -8.108428903096023
+              "x": -419.4908243193533,
+              "y": -8.108428903096051
             },
             {
-              "x": -273.0706970141163,
-              "y": -27.454249761892118
+              "x": -273.0706970141164,
+              "y": -27.45424976189212
             },
             {
-              "x": -80.21412877166185,
-              "y": 14.014627280157569
+              "x": -80.21412877166186,
+              "y": 14.01462728015758
             },
             {
-              "x": 430.47962785827485,
-              "y": -23.913404981208995
+              "x": 430.47962785827497,
+              "y": -23.913404981208988
             },
             {
-              "x": 321.7660566208292,
-              "y": -1.4107483357831763
+              "x": 321.7660566208293,
+              "y": -1.4107483357831683
             },
             {
-              "x": 201.77662827272977,
-              "y": 8.332934737618194
+              "x": 201.7766282727298,
+              "y": 8.33293473761818
             },
             {
-              "x": 111.4673909470964,
+              "x": 111.46739094709642,
               "y": -10.888216181206927
             },
             {
-              "x": 285.9890622254262,
-              "y": 11.480495695531307
+              "x": 285.98906222542627,
+              "y": 11.480495695531333
             },
             {
-              "x": -46.15124654498432,
-              "y": -52.99108951211688
+              "x": -46.15124654498433,
+              "y": -52.99108951211689
             },
             {
               "x": 151.00269869653314,
-              "y": 4.54988525277611
+              "y": 4.549885252776113
             },
             {
-              "x": 89.18650126112286,
-              "y": -1.3016970734938804
+              "x": 89.1865012611229,
+              "y": -1.301697073493882
             },
             {
-              "x": 216.5060857920233,
-              "y": 7.523765882840671
+              "x": 216.50608579202336,
+              "y": 7.523765882840662
             }
           ]
         },
@@ -1772,10 +1789,7 @@
         "value_min": 0.35040000081062317,
         "xy": []
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -1790,7 +1804,24 @@
         "n_classes": 17,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 17,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "material_name",
+        "numeric_sentinels": [],
+        "original_name": "material_name",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 17,
@@ -1879,7 +1910,24 @@
         "n_classes": 3,
         "normalized_entropy": 0.9603948809345496
       },
+      "denominator": "canonical_sample_units",
       "name": "subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "subclass",
+        "numeric_sentinels": [],
+        "original_name": "subclass",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 17,
@@ -1912,7 +1960,24 @@
         "n_classes": 17,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "ecostress_resource_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 17,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "ecostress_resource_id",
+        "numeric_sentinels": [],
+        "original_name": "ecostress_resource_id",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2001,7 +2066,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "category",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "category",
+        "numeric_sentinels": [],
+        "original_name": "category",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2026,7 +2108,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "material_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "material_type",
+        "numeric_sentinels": [],
+        "original_name": "material_type",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2044,7 +2143,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "site",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "site",
+        "numeric_sentinels": [],
+        "original_name": "site",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2064,7 +2180,24 @@
         "n_classes": 4,
         "normalized_entropy": 0.8672608323898757
       },
+      "denominator": "canonical_sample_units",
       "name": "location",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "location",
+        "numeric_sentinels": [],
+        "original_name": "location",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2094,7 +2227,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "country",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "country",
+        "numeric_sentinels": [],
+        "original_name": "country",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2107,7 +2257,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "latitude",
+        "numeric_sentinels": [],
+        "original_name": "latitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2120,7 +2287,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "longitude",
+        "numeric_sentinels": [],
+        "original_name": "longitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2133,7 +2317,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "year",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "year",
+        "numeric_sentinels": [],
+        "original_name": "year",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2153,7 +2354,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "date",
+        "numeric_sentinels": [],
+        "original_name": "date",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2171,7 +2389,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "species",
+        "numeric_sentinels": [],
+        "original_name": "species",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2184,7 +2419,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "genus",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "genus",
+        "numeric_sentinels": [],
+        "original_name": "genus",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2197,7 +2449,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "family",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 17,
+        "missing_values": [],
+        "name": "family",
+        "numeric_sentinels": [],
+        "original_name": "family",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2217,7 +2486,24 @@
         "n_classes": 17,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "sample_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 17,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "sample_description",
+        "numeric_sentinels": [],
+        "original_name": "sample_description",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2306,7 +2592,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "instrument",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "instrument",
+        "numeric_sentinels": [],
+        "original_name": "instrument",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2331,7 +2634,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "acquisition_mode",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "acquisition_mode",
+        "numeric_sentinels": [],
+        "original_name": "acquisition_mode",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2356,7 +2676,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "signal_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "signal_type",
+        "numeric_sentinels": [],
+        "original_name": "signal_type",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2381,7 +2718,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "axis_unit",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_unit",
+        "numeric_sentinels": [],
+        "original_name": "axis_unit",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2399,7 +2753,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_min",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_min",
+        "numeric_sentinels": [],
+        "original_name": "axis_min",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2424,7 +2795,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_max",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_max",
+        "numeric_sentinels": [],
+        "original_name": "axis_max",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2449,7 +2837,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2481,7 +2886,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "publication_doi",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "publication_doi",
+        "numeric_sentinels": [],
+        "original_name": "publication_doi",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2506,7 +2928,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "citation",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "citation",
+        "numeric_sentinels": [],
+        "original_name": "citation",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2531,7 +2970,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2556,7 +3012,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2581,7 +3054,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2606,7 +3096,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 17,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 17,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 17,
@@ -2627,10 +3134,5 @@
     "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError"
-  ]
+  "warnings": []
 }

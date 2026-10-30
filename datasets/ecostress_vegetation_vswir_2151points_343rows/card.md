@@ -76,8 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 7 fields, Y: 3 fields, measurements: 3 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 7 fields, Y: 3 fields, passport: 43 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,5 +99,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `7b1ff0f0508574f083bc11ad851d5b6b680972bd65c4e14ca2df9dcf6d82bbdf`
-- **Processing hash:** `83ee04d4fa855be539fa1fe662a0724947625fc8950bed0d161db4a0c785715d` | **metadata hash:** `1ff6bad411d36d70b8352fb53f6085b8b5d284d17dcc287d474e6d4e01ee03a1`
+- **Content hash:** `3820c056b80228f7201aca3f295abeb9989b3f198c6ddca45934ec8862ae927a`
+- **Processing hash:** `3ac8ea4a3fcc7f855c18cf69efef62016a923577c6561315a07d9a29560bde62` | **metadata hash:** `1ff6bad411d36d70b8352fb53f6085b8b5d284d17dcc287d474e6d4e01ee03a1`

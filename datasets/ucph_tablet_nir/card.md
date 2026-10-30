@@ -51,8 +51,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: source_sample_id includes batch and tablet number; the ten numbers do not demonstrate ten reacquisitions of the same tablet.
-- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Le source_sample_id inclut lot et numéro de comprimé ; les dix numéros ne démontrent pas dix réacquisitions du même comprimé.
+- **Curated views:** M: 2 fields, Y: 2 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -73,5 +73,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f59aa9a7ab078438d3d73170553aeba2eb63d729e6194508390d1c61834061d2`
-- **Processing hash:** `870b4ea7b8f066ca9c8a4becf372cb90ad3da700554f72154420d3b7bc12f845` | **metadata hash:** `302656a3202577d15b7129c9adb272bdd6d0231df90f0f80bbaab8050d6d6dc1`
+- **Content hash:** `2d969385e06373dda01ad9072d9ab2e22471fc13c14f27c2c8cf4f043025352f`
+- **Processing hash:** `34e1eb630302d6a76735899eaf273289da614fe183d34b280ed74f9d819bc916` | **metadata hash:** `302656a3202577d15b7129c9adb272bdd6d0231df90f0f80bbaab8050d6d6dc1`

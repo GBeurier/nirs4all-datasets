@@ -35,7 +35,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): calibration: 155, test: 460, validation: 40
+- **original** (documented, not applied): test: 460, calibration: 155, validation: 40
 
 ## Collection process
 
@@ -49,8 +49,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,5 +71,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a0d4dac5fa5b447697909b08f721641dc7fb3876876461effb7a7cf4784d9ea2`
-- **Processing hash:** `4656db723fbf5493f4c966e16758b3b043870b6617e5ffc1c0686bd9bfdf86b0` | **metadata hash:** `5157fc5b496e9f3a0c973b336403226477ee3d2b6e77a7e239e446d261c14672`
+- **Content hash:** `8bf761389f9add3754cc1c37cb318f8dcdd84d5e5d4c4957606b3c4e7cd7e9ce`
+- **Processing hash:** `1b6fc3331e576bc476f43ad5ba53cbf80b0efe0459b0d43de30b353e2af59cc4` | **metadata hash:** `5157fc5b496e9f3a0c973b336403226477ee3d2b6e77a7e239e446d261c14672`

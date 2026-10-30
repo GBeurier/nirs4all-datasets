@@ -28,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | material_name | target | categorical | *Not specified.* | n=57, missing=0, classes=57, top ALH 84007 (×1) |
 | class_label | target | categorical | *Not specified.* | n=57, missing=0, classes=6, top Ordinary Chondrite (×19) |
-| subclass | target | categorical | *Not specified.* | n=57, missing=0, classes=22, top CO (×5) |
+| subclass | target | categorical | *Not specified.* | n=57, missing=0, classes=22, top CM2 (×5) |
 | ecostress_resource_id | metadata | categorical | *Not specified.* | n=57, missing=0, classes=57, top meteorites.achondrite.aubrite.fine.tir.alh84007.jhu.becknic.spectrum (×1) |
 | category | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top meteorites (×57) |
 | material_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Meteorites (×57) |
@@ -76,8 +76,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. La clé est le numéro de spécimen source ; préparations, géométries et instruments peuvent différer. Aucun regroupement par nom de matériau.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,5 +99,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `c634a6652e821ddd2e78376ecee9c52084afc5a2a87771b21b7654a5d067cff0`
-- **Processing hash:** `06c9246a8be3c5a909cb9c7d11a42107c0562f1adaa4bab1fc8fe74a5d0485b5` | **metadata hash:** `30ebc5a6ed0e49ce095d61b3a48b58978282d0ed9af577878a9e0d3f3c9415ab`
+- **Content hash:** `ed2b00489957bbd76c3cb207f956beb347a24230b4d12b9f42479773e5c46b7b`
+- **Processing hash:** `055aef6243db1b6de813987c78b45fcaf15f662ccebf69ddbcc0a351d3351bcd` | **metadata hash:** `30ebc5a6ed0e49ce095d61b3a48b58978282d0ed9af577878a9e0d3f3c9415ab`

@@ -66,8 +66,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Corrected inherited sample_temperature_C target to film_thickness_um: original files are Transmissivity_50µm_UV-Vis-NIR.xlsx and Transmissivity_73µm_UV-Vis-NIR.xlsx; their sheets contain no temperature measurement.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Corrected inherited sample_temperature_C target to film_thickness_um: original files are Transmissivity_50µm_UV-Vis-NIR.xlsx and Transmissivity_73µm_UV-Vis-NIR.xlsx; their sheets contain no temperature measurement.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,5 +88,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `efd5ab6fef329941d8e19d0f1e54d632b73acfdd6d951aacc24a04ff3b27455e`
-- **Processing hash:** `3cbdffb39be185e00a6ac46c4ba6b668a4d4b79fe6f91cf3f52380f2666c60df` | **metadata hash:** `4ce705e98c9dd2a01b842c369d4ba4df4df930c8eddf228992171e2785e2f4c6`
+- **Content hash:** `e5e2cf96120f2f20091459ef4970569907c487f159eb49db0eda47d5d5bbc087`
+- **Processing hash:** `b2a533870bcc8b5e197600de7719f6ca80e22f6f5ea27246db7b01472ca2ace0` | **metadata hash:** `4ce705e98c9dd2a01b842c369d4ba4df4df930c8eddf228992171e2785e2f4c6`

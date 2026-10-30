@@ -14,7 +14,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 - **Alignment:** sample level; 35 sample(s), 363 observation(s) total; sample_id available: True.
 - **Exported observations per source unit:** 9–16 (mean 10.37).
 - **Documented technical repetitions:** *Not specified.*.
-- **Variable grain / join key:** sample_id.
+- **Variable grain / join key:** observation_id.
 
 ### Sources (X)
 
@@ -26,44 +26,44 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| foreoptic_type | target | categorical | *Not specified.* | n=35, missing=0, classes=2, top LC (×28) |
-| sample_number | target | numeric | *Not specified.* | n=35, missing=0, range 5–76, mean 43.8 ± 20.92 |
-| family | target | categorical | *Not specified.* | n=35, missing=0, classes=10, top Fagaceae (×9) |
-| genus | target | categorical | *Not specified.* | n=35, missing=1, classes=9, top Quercus (×9) |
-| species | target | categorical | *Not specified.* | n=35, missing=7, classes=13, top kelloggii (×5) |
-| plant_functional_type | target | categorical | *Not specified.* | n=35, missing=0, classes=3, top Shrub (×23) |
-| tree_DBH_cm | target | numeric | *Not specified.* | n=35, missing=25, range 21.4–88.8, mean 49.53 ± 24.8 |
-| NS_crown_width_m | target | numeric | *Not specified.* | n=35, missing=27, range 6.75–19.9, mean 13.04 ± 4.135 |
-| WE_crown_width_m | target | numeric | *Not specified.* | n=35, missing=25, range 8.5–19.4, mean 12.58 ± 3.243 |
-| tree_height_m | target | numeric | *Not specified.* | n=35, missing=25, range 4.5–15.96, mean 9.117 ± 3.319 |
-| crown_length_m | target | numeric | *Not specified.* | n=35, missing=25, range 3.875–13.52, mean 8.243 ± 2.68 |
-| LMA_value_g/m2 | target | numeric | *Not specified.* | n=35, missing=0, range 37.36–306.3, mean 130.6 ± 71.97 |
-| leaf_water_content_percent | target | numeric | *Not specified.* | n=35, missing=0, range 40.16–75.69, mean 55.67 ± 8.039 |
-| chlorophyll__mg/m2 | target | numeric | *Not specified.* | n=35, missing=0, range 293–835, mean 462.9 ± 107.3 |
-| ecosis_resource_id | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top 56f8a7af-5e0d-42dd-8368-2c953940855f (×35) |
-| site | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| location | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Sierra Nevada of California (×35) |
-| country | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top source-provided coordinates when available (×35) |
-| year | metadata | numeric | *Not specified.* | n=35, missing=0, range 2023–2023, mean 2023 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| plant_part | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Leaf (×35) |
-| canopy_or_leaf | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top leaf (×35) |
-| instrument | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Spectral Evolution PSR-3500+ (×35) |
-| acquisition_mode | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Contact (×35) |
-| signal_type | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top reflectance (×35) |
-| axis_unit | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top nm (×35) |
-| axis_min | metadata | numeric | *Not specified.* | n=35, missing=0, range 350–350, mean 350 ± 0 |
-| axis_max | metadata | numeric | *Not specified.* | n=35, missing=0, range 2500–2500, mean 2500 ± 0 |
-| n_points_original | metadata | numeric | *Not specified.* | n=35, missing=0, range 2151–2151, mean 2151 ± 0 |
-| publication_doi | metadata | categorical | *Not specified.* | n=35, missing=35, classes=0, — |
-| citation | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Cecilia Vanden Heuvel, Natalie Queally, Ting Zheng, Laura Berman, Zach Breuer, Joel Cryer, Callan Lapinskas, Annabelle Majerus, Elliott Marsh and Philip Townsend. 2023. Fresh Leaf Spectra and Measured Traits from the Sierra Nevada (CA) in July 2023. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×35) |
-| license | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top Open Data Commons Open Database License (ODbL) (×35) |
-| rights_status | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top explicit_open (×35) |
-| usage_scope | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top public_reuse_possible (×35) |
-| notes | metadata | categorical | *Not specified.* | n=35, missing=0, classes=1, top EcoSIS package fresh-leaf-spectra-and-measured-traits-from-the-sierra-nevada--ca--in-july-2023, no interpolation applied by project. (×35) |
+| foreoptic_type | target | categorical | *Not specified.* | n=363, missing=0, classes=2, top LC (×294) |
+| sample_number | target | numeric | *Not specified.* | n=363, missing=0, range 5–76, mean 43.53 ± 21.2 |
+| family | target | categorical | *Not specified.* | n=363, missing=0, classes=10, top Fagaceae (×89) |
+| genus | target | categorical | *Not specified.* | n=363, missing=10, classes=9, top Quercus (×89) |
+| species | target | categorical | *Not specified.* | n=363, missing=80, classes=13, top kelloggii (×50) |
+| plant_functional_type | target | categorical | *Not specified.* | n=363, missing=0, classes=3, top Shrub (×243) |
+| tree_DBH_cm | target | numeric | *Not specified.* | n=363, missing=263, range 21.4–88.8, mean 49.53 ± 23.65 |
+| NS_crown_width_m | target | numeric | *Not specified.* | n=363, missing=283, range 6.75–19.9, mean 13.04 ± 3.892 |
+| WE_crown_width_m | target | numeric | *Not specified.* | n=363, missing=263, range 8.5–19.4, mean 12.58 ± 3.092 |
+| tree_height_m | target | numeric | *Not specified.* | n=363, missing=263, range 4.5–15.96, mean 9.117 ± 3.164 |
+| crown_length_m | target | numeric | *Not specified.* | n=363, missing=263, range 3.875–13.52, mean 8.243 ± 2.555 |
+| LMA_value_g/m2 | target | numeric | *Not specified.* | n=363, missing=0, range 37.36–306.3, mean 132.6 ± 71.95 |
+| leaf_water_content_percent | target | numeric | *Not specified.* | n=363, missing=0, range 40.16–75.69, mean 55.78 ± 7.858 |
+| chlorophyll__mg/m2 | target | numeric | *Not specified.* | n=363, missing=0, range 293–835, mean 459.1 ± 106.3 |
+| ecosis_resource_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top 56f8a7af-5e0d-42dd-8368-2c953940855f (×363) |
+| site | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| location | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Sierra Nevada of California (×363) |
+| country | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| latitude | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| longitude | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| coordinate_precision_notes | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top source-provided coordinates when available (×363) |
+| year | metadata | numeric | *Not specified.* | n=363, missing=0, range 2023–2023, mean 2023 ± 0 |
+| date | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| plant_part | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Leaf (×363) |
+| canopy_or_leaf | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top leaf (×363) |
+| instrument | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Spectral Evolution PSR-3500+ (×363) |
+| acquisition_mode | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Contact (×363) |
+| signal_type | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top reflectance (×363) |
+| axis_unit | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top nm (×363) |
+| axis_min | metadata | numeric | *Not specified.* | n=363, missing=0, range 350–350, mean 350 ± 0 |
+| axis_max | metadata | numeric | *Not specified.* | n=363, missing=0, range 2500–2500, mean 2500 ± 0 |
+| n_points_original | metadata | numeric | *Not specified.* | n=363, missing=0, range 2151–2151, mean 2151 ± 0 |
+| publication_doi | metadata | categorical | *Not specified.* | n=363, missing=363, classes=0, — |
+| citation | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Cecilia Vanden Heuvel, Natalie Queally, Ting Zheng, Laura Berman, Zach Breuer, Joel Cryer, Callan Lapinskas, Annabelle Majerus, Elliott Marsh and Philip Townsend. 2023. Fresh Leaf Spectra and Measured Traits from the Sierra Nevada (CA) in July 2023. Data set. Available on-line [http://ecosis.org] from the Ecological Spectral Information System (EcoSIS) (×363) |
+| license | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top Open Data Commons Open Database License (ODbL) (×363) |
+| rights_status | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top explicit_open (×363) |
+| usage_scope | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top public_reuse_possible (×363) |
+| notes | metadata | categorical | *Not specified.* | n=363, missing=0, classes=1, top EcoSIS package fresh-leaf-spectra-and-measured-traits-from-the-sierra-nevada--ca--in-july-2023, no interpolation applied by project. (×363) |
 
 ## Statistics — splits
 
@@ -83,8 +83,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: source_replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 6 fields, Y: 13 fields, measurements: 2 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : source_replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 6 fields, Y: 13 fields, passport: 35 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,5 +105,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b7ad044524a670edae509ba9d2b03052a7887914723ac352d2941a3eb658aabc`
-- **Processing hash:** `8f3dc4605bf4d6b92b23a43670d2179ed675a9b056b3ff6f2685e79d64f656ff` | **metadata hash:** `1964dd9d8bc3c42c43c9963a886fd22f7319dca4d690505c40f029625cf6258f`
+- **Content hash:** `be3c59e771673189a7069eab37c35b6ef757f02397550b207e12b25c01155a56`
+- **Processing hash:** `aa2f3a8c852b660bcbbd9cdc6c8c30cc19a60b004c5468ba193b584e521b24a7` | **metadata hash:** `1964dd9d8bc3c42c43c9963a886fd22f7319dca4d690505c40f029625cf6258f`

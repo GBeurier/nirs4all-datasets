@@ -1,19 +1,42 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 14,
+      "n_samples": 10,
+      "observations_per_unit": {
+        "1": 6,
+        "2": 4
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiple spectra exported per identifier; nature not established"
+    },
     "identity_status": "available",
     "level": "sample",
+    "n_known_sample_units": 10,
+    "n_observation_groups": 10,
     "n_observations_total": 14,
     "n_samples": 10,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.006032880475091546,
-      "outlier_pressure": 0.4165479064477737,
+      "outlier_pressure": 0.4165479064477736,
       "reference_spread": 1.0,
       "repeatability_risk": 1.0,
-      "shape_drift": 0.48861690818619763,
+      "shape_drift": 0.4886169081861968,
       "structure_complexity": 1.0
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": {
       "max": 2,
       "mean": 1.4,
@@ -28,7 +51,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "6122f4f467bfa00e8938eab88babeac1f6fc28c9f62abf417075701ec45b9d59",
+    "contract_sha256": "8a7e9aa103bc15c21caf51c222bc4498465f65c69c2be2c02a0c5699adb7eaee",
     "dataset_id": "ecostress_mineral_tir_2287points_14rows",
     "enrichments": [],
     "grain": "observation",
@@ -54,10 +77,10 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "10ae972fa0610cc4254a34e58d9c7d108af38b864963a275a54ff766bf916e50",
-      "Y.csv": "8444553df7d7275fa4d6b2eff1c4927939085df196c4df280afd2ac87977a8bf"
+      "Y.csv": "ca55fb90f3cb098c47743a19af8ae90810d2a4330b4fa304f8a11fc28e4d75be"
     },
     "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
     "variables": [
@@ -278,11 +301,9 @@
         "m_sample_type"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-29T12:27:19.872763+00:00",
+  "generated_at": "2026-10-30T15:49:00.616227+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -303,10 +324,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "ba6c0c112abc4fa0f00fb055c9ba982f3870c6c694ed6659d2ecc0f16fc28fd4",
+    "content_hash": "f5a3cd9eccc191111ab0ab0b454b7f0a89a3e5a57a55f58997be52706e04e94d",
     "manifest": "manifest.json",
     "metadata_hash": "e5bae7458c862795f700b74ea7a717560e474046b7a17bdaae81831b6b8ce7bb",
-    "processing_hash": "4b131d5a131b36a761687358a1ccab365331589676cdde402f2d33b6bb98c961"
+    "processing_hash": "eb13634fff27d5454df77967832244439965485426a3f8d54ce59c02b2447cc9"
   },
   "protocol_version": "7",
   "provenance": {
@@ -350,19 +371,14 @@
     "reference_method": null,
     "warnings": [
       "X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.",
-      "Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name."
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M ; les fr\u00e9quences de cet identifiant d\u00e9crivent les lignes export\u00e9es, sans \u00e9tablir des r\u00e9p\u00e9titions techniques. La cl\u00e9 est le num\u00e9ro de sp\u00e9cimen source ; pr\u00e9parations, g\u00e9om\u00e9tries et instruments peuvent diff\u00e9rer. Aucun regroupement par nom de mat\u00e9riau."
     ]
   },
   "qualification_provenance": {
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -1384,7 +1400,7 @@
         },
         "mean_max": 18.996071027857916,
         "mean_min": 3.1451500420059477,
-        "n_outliers": null,
+        "n_outliers": 4,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1453,7 +1469,7 @@
                   "signal": "Undegraded roughness S/N proxy"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1469,10 +1485,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.8196148158858984,
+              "score": 0.8196148158858978,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.8196148158858984,
+              "signal_strength": 0.8196148158858978,
               "strength": "strong"
             },
             {
@@ -1492,11 +1508,11 @@
                   "signal": "Repeatability"
                 },
                 {
-                  "level": 0.4165479064477737,
+                  "level": 0.4165479064477736,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1512,10 +1528,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.6506290960031669,
+              "score": 0.6506290960031665,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.6506290960031669,
+              "signal_strength": 0.6506290960031665,
               "strength": "medium"
             },
             {
@@ -1531,15 +1547,15 @@
                   "signal": "Repeatability"
                 },
                 {
-                  "level": 0.48861690818619763,
+                  "level": 0.4886169081861968,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.4165479064477737,
+                  "level": 0.4165479064477736,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1555,10 +1571,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.6221498226008558,
+              "score": 0.6221498226008554,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.6221498226008558,
+              "signal_strength": 0.6221498226008554,
               "strength": "medium"
             },
             {
@@ -1582,7 +1598,7 @@
                   "signal": "Low roughness sigma proxy"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1598,10 +1614,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.556592594122712,
+              "score": 0.5565925941227113,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.556592594122712,
+              "signal_strength": 0.5565925941227113,
               "strength": "medium"
             },
             {
@@ -1617,15 +1633,15 @@
                   "signal": "local artifacts"
                 },
                 {
-                  "level": 0.48861690818619763,
+                  "level": 0.4886169081861968,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.4165479064477737,
+                  "level": 0.4165479064477736,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1641,10 +1657,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.5364502157429761,
+              "score": 0.5364502157429754,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.5364502157429761,
+              "signal_strength": 0.5364502157429754,
               "strength": "medium"
             },
             {
@@ -1660,7 +1676,7 @@
                   "signal": "PCA structure"
                 },
                 {
-                  "level": 0.4165479064477737,
+                  "level": 0.4165479064477736,
                   "signal": "Mahalanobis / T2"
                 }
               ],
@@ -1676,10 +1692,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.5066191625791095,
+              "score": 0.5066191625791094,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.5066191625791095,
+              "signal_strength": 0.5066191625791094,
               "strength": "medium"
             },
             {
@@ -1695,15 +1711,15 @@
                   "signal": "Repeatability"
                 },
                 {
-                  "level": 0.48861690818619763,
+                  "level": 0.4886169081861968,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.4165479064477737,
+                  "level": 0.4165479064477736,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.39988394357201934,
+                  "level": 0.39988394357201723,
                   "signal": "PCA Q"
                 }
               ],
@@ -1719,10 +1735,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.4925081263676651,
+              "score": 0.49250812636766467,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.4925081263676651,
+              "signal_strength": 0.49250812636766467,
               "strength": "medium"
             }
           ],
@@ -1747,6 +1763,14 @@
             "bandwise_snr_median": 1593.7347578351475,
             "bandwise_snr_min": 86.99439410287236,
             "noise_rms": 0.0047813355863882585,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 0.0047813355863882585,
             "roughness_signal_to_noise_proxy": 1844.4893001443406,
             "roughness_signal_to_noise_proxy_db": 65.31752280468287,
@@ -1756,27 +1780,27 @@
             "worst_band_index": 1
           },
           "outliers": {
-            "hotelling_t2_max": 9.36595824840407,
+            "hotelling_t2_max": 9.365958248404072,
             "hotelling_t2_median": 2.8141368944998364,
-            "hotelling_t2_p95": 7.826479699587378,
-            "hotelling_t2_ratio": 2.781129700862828,
-            "mahalanobis_h_max": 3.0603853104477006,
+            "hotelling_t2_p95": 7.826479699587375,
+            "hotelling_t2_ratio": 2.781129700862827,
+            "mahalanobis_h_max": 3.060385310447701,
             "mahalanobis_h_median": 1.6748192071606942,
-            "mahalanobis_h_p95": 2.7905697376852294,
-            "mahalanobis_h_ratio": 1.6661916257910947,
-            "pca_q_max": 14458.985632877293,
-            "pca_q_median": 2971.7264979542642,
-            "pca_q_p95": 9506.76568975534,
-            "pca_q_ratio": 3.1990715485761547
+            "mahalanobis_h_p95": 2.790569737685229,
+            "mahalanobis_h_ratio": 1.6661916257910945,
+            "pca_q_max": 14458.985632877251,
+            "pca_q_median": 2971.7264979542733,
+            "pca_q_p95": 9506.76568975532,
+            "pca_q_ratio": 3.199071548576138
           },
           "profile_scores": {
             "integrity_risk": 0.0,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.006032880475091546,
-            "outlier_pressure": 0.4165479064477737,
+            "outlier_pressure": 0.4165479064477736,
             "reference_spread": 1.0,
             "repeatability_risk": 1.0,
-            "shape_drift": 0.48861690818619763,
+            "shape_drift": 0.4886169081861968,
             "structure_complexity": 1.0
           },
           "reference": {
@@ -1802,23 +1826,17 @@
             "sam_intra_id": 0.24683941751933675
           },
           "shape": {
-            "baseline_slope": 3.872514002005352,
+            "baseline_slope": 3.8725140020053455,
             "curvature_rms": 0.03550732603500131,
             "d1_rms": 0.09115720186891343,
             "edge_noise_ratio": 1.4191304583143727
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
             "density_cv": 0.6820609438224282,
             "isolation_forest_score_p95": 0.5875829972627312,
-            "knn_distance_ratio_p95": 3.264071012583378,
-            "local_outlier_factor_p95": 3.264071012583378,
-            "pca_score_density": 0.005614803043881648
+            "knn_distance_ratio_p95": 3.264071012583379,
+            "local_outlier_factor_p95": 3.264071012583379,
+            "pca_score_density": 0.005614803043881651
           }
         },
         "quality": {
@@ -1835,59 +1853,59 @@
           "points": [
             {
               "x": -180.37917334111526,
-              "y": -2.8869501279259704
+              "y": -2.8869501279259446
             },
             {
-              "x": -148.16536639144573,
-              "y": 43.17580943051496
+              "x": -148.1653663914457,
+              "y": 43.175809430515024
             },
             {
-              "x": -95.29182055222134,
-              "y": 127.21803945928934
+              "x": -95.2918205522213,
+              "y": 127.21803945928936
             },
             {
               "x": 823.767712104993,
-              "y": 113.21774836252735
+              "y": 113.21774836252743
             },
             {
               "x": 332.29720048872736,
               "y": -191.0596985509114
             },
             {
-              "x": -118.54057644338098,
-              "y": 35.889443602887
+              "x": -118.54057644338096,
+              "y": 35.889443602886935
             },
             {
-              "x": 114.19576982360176,
-              "y": -59.41878006462455
+              "x": 114.19576982360175,
+              "y": -59.418780064624684
             },
             {
-              "x": 16.09682570568348,
-              "y": -100.9409380677763
+              "x": 16.096825705683468,
+              "y": -100.94093806777641
             },
             {
-              "x": -140.54740920938758,
-              "y": 113.60056181005834
+              "x": -140.54740920938755,
+              "y": 113.60056181005832
             },
             {
-              "x": 396.82600646911715,
-              "y": -17.621046593161736
+              "x": 396.826006469117,
+              "y": -17.621046593161857
             },
             {
-              "x": -248.73091811126855,
-              "y": -47.19584619144286
+              "x": -248.7309181112685,
+              "y": -47.1958461914429
             },
             {
-              "x": -218.0127295036964,
-              "y": 82.98336126479623
+              "x": -218.01272950369636,
+              "y": 82.98336126479619
             },
             {
-              "x": -246.59122154606948,
-              "y": 58.952489191555046
+              "x": -246.59122154606942,
+              "y": 58.952489191555024
             },
             {
-              "x": -286.924299493538,
-              "y": -155.9141935257855
+              "x": -286.92429949353794,
+              "y": -155.9141935257853
             }
           ]
         },
@@ -1903,10 +1921,7 @@
         "value_min": 0.13279999792575836,
         "xy": []
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -1921,7 +1936,24 @@
         "n_classes": 10,
         "normalized_entropy": 0.9741108952988199
       },
+      "denominator": "canonical_observations",
       "name": "material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "material_name",
+        "numeric_sentinels": [],
+        "original_name": "material_name",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 14,
@@ -1938,11 +1970,11 @@
           },
           {
             "count": 2,
-            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
+            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
           },
           {
             "count": 2,
-            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
+            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
           },
           {
             "count": 1,
@@ -1954,11 +1986,11 @@
           },
           {
             "count": 1,
-            "name": "Clinochlore (Mg,Fe+2)5Al(Si3Al)O10(OH)8"
+            "name": "Diopside CaMgSi2O6"
           },
           {
             "count": 1,
-            "name": "Diopside CaMgSi2O6"
+            "name": "Clinochlore (Mg,Fe+2)5Al(Si3Al)O10(OH)8"
           },
           {
             "count": 1,
@@ -1982,7 +2014,24 @@
         "n_classes": 2,
         "normalized_entropy": 0.3712323266408757
       },
+      "denominator": "canonical_observations",
       "name": "class_label",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "class_label",
+        "numeric_sentinels": [],
+        "original_name": "class_label",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 14,
@@ -2011,7 +2060,24 @@
         "n_classes": 5,
         "normalized_entropy": 0.9285249215482251
       },
+      "denominator": "canonical_observations",
       "name": "subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "subclass",
+        "numeric_sentinels": [],
+        "original_name": "subclass",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 14,
@@ -2052,7 +2118,24 @@
         "n_classes": 3,
         "normalized_entropy": 0.817581733764401
       },
+      "denominator": "canonical_observations",
       "name": "particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "particle_size",
+        "numeric_sentinels": [],
+        "original_name": "particle_size",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 14,
@@ -2085,7 +2168,24 @@
         "n_classes": 2,
         "normalized_entropy": 0.3712323266408757
       },
+      "denominator": "canonical_observations",
       "name": "measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "measurement",
+        "numeric_sentinels": [],
+        "original_name": "measurement",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 14,
@@ -2114,7 +2214,24 @@
         "n_classes": 14,
         "normalized_entropy": 0.9999999999999998
       },
+      "denominator": "canonical_observations",
       "name": "ecostress_resource_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 14,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "ecostress_resource_id",
+        "numeric_sentinels": [],
+        "original_name": "ecostress_resource_id",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2191,7 +2308,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "category",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "category",
+        "numeric_sentinels": [],
+        "original_name": "category",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2216,7 +2350,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "material_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "material_type",
+        "numeric_sentinels": [],
+        "original_name": "material_type",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2234,7 +2385,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "site",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "site",
+        "numeric_sentinels": [],
+        "original_name": "site",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2254,7 +2422,24 @@
         "n_classes": 10,
         "normalized_entropy": 0.9741108952988199
       },
+      "denominator": "canonical_observations",
       "name": "location",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "location",
+        "numeric_sentinels": [],
+        "original_name": "location",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2271,11 +2456,11 @@
           },
           {
             "count": 2,
-            "name": "Donated by W. J. Ehmann , Sample #7 from Castle Creek,Idaho."
+            "name": "Sample from Baja California, Mexico via Smithsonian (sampleno. NMNH 112513-2."
           },
           {
             "count": 2,
-            "name": "Sample from Baja California, Mexico via Smithsonian (sampleno. NMNH 112513-2."
+            "name": "Donated by W. J. Ehmann , Sample #7 from Castle Creek,Idaho."
           },
           {
             "count": 1,
@@ -2287,11 +2472,11 @@
           },
           {
             "count": 1,
-            "name": "The Smithsonian (NMNH 83369), donated by Jim Crowley(USGS). Sample originally from Tilly Foster Mine, Brewster, New York."
+            "name": "Sample from St. Lawrence Co., New York via the Smithsonian(sample no. NMNH C2393)."
           },
           {
             "count": 1,
-            "name": "Sample from St. Lawrence Co., New York via the Smithsonian(sample no. NMNH C2393)."
+            "name": "The Smithsonian (NMNH 83369), donated by Jim Crowley(USGS). Sample originally from Tilly Foster Mine, Brewster, New York."
           },
           {
             "count": 1,
@@ -2308,7 +2493,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "country",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "country",
+        "numeric_sentinels": [],
+        "original_name": "country",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2321,7 +2523,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "latitude",
+        "numeric_sentinels": [],
+        "original_name": "latitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2334,7 +2553,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "longitude",
+        "numeric_sentinels": [],
+        "original_name": "longitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2347,7 +2583,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "year",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "year",
+        "numeric_sentinels": [],
+        "original_name": "year",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2367,7 +2620,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "date",
+        "numeric_sentinels": [],
+        "original_name": "date",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2385,7 +2655,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "species",
+        "numeric_sentinels": [],
+        "original_name": "species",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2398,7 +2685,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "genus",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "genus",
+        "numeric_sentinels": [],
+        "original_name": "genus",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2411,7 +2715,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "family",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 14,
+        "missing_values": [],
+        "name": "family",
+        "numeric_sentinels": [],
+        "original_name": "family",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2431,7 +2752,24 @@
         "n_classes": 14,
         "normalized_entropy": 0.9999999999999998
       },
+      "denominator": "canonical_observations",
       "name": "sample_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 14,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "sample_description",
+        "numeric_sentinels": [],
+        "original_name": "sample_description",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2508,7 +2846,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "instrument",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "instrument",
+        "numeric_sentinels": [],
+        "original_name": "instrument",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2533,7 +2888,24 @@
         "n_classes": 2,
         "normalized_entropy": 0.3712323266408757
       },
+      "denominator": "canonical_observations",
       "name": "acquisition_mode",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "acquisition_mode",
+        "numeric_sentinels": [],
+        "original_name": "acquisition_mode",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2562,7 +2934,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "signal_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "signal_type",
+        "numeric_sentinels": [],
+        "original_name": "signal_type",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2587,7 +2976,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "axis_unit",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_unit",
+        "numeric_sentinels": [],
+        "original_name": "axis_unit",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2605,7 +3011,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "axis_min",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_min",
+        "numeric_sentinels": [],
+        "original_name": "axis_min",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2630,7 +3053,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "axis_max",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_max",
+        "numeric_sentinels": [],
+        "original_name": "axis_max",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2655,7 +3095,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_observations",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2687,7 +3144,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "publication_doi",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "publication_doi",
+        "numeric_sentinels": [],
+        "original_name": "publication_doi",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2712,7 +3186,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "citation",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "citation",
+        "numeric_sentinels": [],
+        "original_name": "citation",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2737,7 +3228,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2762,7 +3270,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2787,7 +3312,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_observations",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2812,7 +3354,24 @@
         "n_classes": 13,
         "normalized_entropy": 0.9902871167541443
       },
+      "denominator": "canonical_observations",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 13,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 14,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 14,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 14,
@@ -2825,6 +3384,10 @@
           },
           {
             "count": 1,
+            "name": "mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
             "name": "mineral.silicate.inosilicate.coarse.tir.hornblen_3.jhu.nicolet.ancillary.txt"
           },
           {
@@ -2834,10 +3397,6 @@
           {
             "count": 1,
             "name": "mineral.silicate.inosilicate.solid.tir.diopside_1.jhu.nicolet.ancillary.txt"
-          },
-          {
-            "count": 1,
-            "name": "mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.ancillary.txt"
           },
           {
             "count": 1,
@@ -2882,14 +3441,14 @@
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: column 'particle_size' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'ecostress_resource_id' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'sample_description' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'notes' varies within a sample_id; retained at observation grain.",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError",
+    "conversion: variables: column 'source_particle_size' varies within a sample_id; retained at observation grain.",
+    "conversion: variables: column 'source_description' varies within a sample_id; retained at observation grain.",
+    "conversion: variables: column 'source_additional_information' varies within a sample_id; retained at observation grain.",
+    "conversion: variables: column 'source_source_file_name' varies within a sample_id; retained at observation grain.",
     "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
   ]
 }

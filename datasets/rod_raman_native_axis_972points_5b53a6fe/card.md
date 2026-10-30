@@ -28,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | mineral_name | target | categorical | *Not specified.* | n=30, missing=0, classes=30, top Boron trioxide (×1) |
 | chemical_formula_sum | target | categorical | *Not specified.* | n=30, missing=0, classes=29, top O2 Ti (×2) |
-| compound_source | target | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial Alfa Aesar 99% (×3) |
+| compound_source | target | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial powder Alfa Aesar 99.9% (×3) |
 | rod_database_code | target | categorical | *Not specified.* | n=30, missing=0, classes=30, top 3500179 (×1) |
 | axis_digest | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top 5b53a6fecfabbeea (×30) |
 | axis_unit | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top cm^-1 (×30) |
@@ -42,7 +42,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | chemical_name_common | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | chemical_name_systematic | metadata | categorical | *Not specified.* | n=30, missing=1, classes=29, top Boron trioxide (×1) |
 | chemical_formula_structural | metadata | categorical | *Not specified.* | n=30, missing=0, classes=29, top O2 Ti (×2) |
-| chemical_compound_source | metadata | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial Alfa Aesar 99% (×3) |
+| chemical_compound_source | metadata | categorical | *Not specified.* | n=30, missing=0, classes=23, top commercial powder Alfa Aesar 99.9% (×3) |
 | raman_measurement_device_model | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | raman_measurement_device_company | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
 | raman_measurement_device_excitation_laser_wavelength | metadata | categorical | *Not specified.* | n=30, missing=30, classes=0, — |
@@ -70,8 +70,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 2 fields, measurements: 0 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 2 fields, passport: 25 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,5 +92,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `64af0e67074e2cee157382335da1899e4f47551bf5366a2186f2e0354ccf3a90`
-- **Processing hash:** `d8f8adeef3a594bb7bd50b8235c1b562f9b61cc6a1afc85d4267feab8fc5a37d` | **metadata hash:** `775fa455517c86ce29c327050e0843ff57ab9551f3fc453ea80cbfd6db114f07`
+- **Content hash:** `91c59338257b64876d3e65e8a50c9736bbc884cec0897a670af9beebf7db28a8`
+- **Processing hash:** `a012191e6a3f320b981dc06abaf7e57fbf251bc227139ef33d84d2a5a9526dac` | **metadata hash:** `775fa455517c86ce29c327050e0843ff57ab9551f3fc453ea80cbfd6db114f07`
