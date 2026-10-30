@@ -70,8 +70,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
-- **Curated views:** M: 3 fields, Y: 2 fields, passport: 25 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 3 fields, Y: 2 fields, measurements: 0 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,4 +93,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `4183814e328508d5ccb50d24fdeb06959915092bf32b864b2eb9f71cb7f1519f`
-- **Processing hash:** `fd4a4d840f5b431b56dfbf78025a2e21e1bc904bb19a78ae25ed222e9b38bc2d` | **metadata hash:** `e15b32b1f6f1149069c0fea84c4f8e82fdd262038047a1c83d2f640cccea5d6c`
+- **Processing hash:** `fd4a4d840f5b431b56dfbf78025a2e21e1bc904bb19a78ae25ed222e9b38bc2d` | **metadata hash:** `cc7ab06753bb26eb14d571ab65c87151f0fa02a67dbcf765c328c59c7c0d6e4c`

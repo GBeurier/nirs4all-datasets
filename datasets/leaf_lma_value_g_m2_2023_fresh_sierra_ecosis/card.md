@@ -97,8 +97,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 11 fields, Y: 1 fields, passport: 33 fields, measurements: 11 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
+- **Curated views:** M: 11 fields, Y: 1 fields, measurements: 11 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -120,4 +120,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `227581a08a728f2b0394493ff932f01e701afecbdbc793cdd8ecc57bf4b8dd2b`
-- **Processing hash:** `37ce018617dcd23e065707ed5ac87d9333231537a2e7255e2e14da9c980213d6` | **metadata hash:** `5941b3cea9ca4b745ee85b45dc4c0ec6592e56e01512584a398064db7f172715`
+- **Processing hash:** `37ce018617dcd23e065707ed5ac87d9333231537a2e7255e2e14da9c980213d6` | **metadata hash:** `36974db071ab0b032c286fabd68c35b9226bab7cb4658a5008d82964ac566d23`

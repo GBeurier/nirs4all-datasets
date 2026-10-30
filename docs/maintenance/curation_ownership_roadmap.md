@@ -101,3 +101,9 @@ and 8 Rust generic binding tests. Dataset validation passed with and without the
 native provider; the completion report records the final test counts. Package
 publication of the bandwise extension and a clean-install smoke remain the
 release gate. Precomputed site profiles are bound to the exact tested binary.
+
+English narrative text is now maintained in the source contracts and descriptor
+warnings. Seven contracts with translated unit/evidence labels were rebuilt;
+the remaining provenance updates changed descriptive metadata only. All numeric
+card values were preserved. The final language audit reviewed all 53 unique
+provenance warnings and 76 identity narratives across the 297 regenerated cards.

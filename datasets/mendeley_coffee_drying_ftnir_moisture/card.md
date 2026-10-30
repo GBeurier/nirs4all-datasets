@@ -68,8 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groupes M 1…M 20 alignés aux références d’humidité ; 1–5 spectres indexés par groupe, 73 au total. Le suffixe est explicitement traité comme répétition par le convertisseur. Le caractère strictement technique plutôt que préparation indépendante reste non documenté.
-- **Curated views:** M: 1 fields, Y: 1 fields, passport: 21 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groups M 1…M 20 aligned with moisture references; 1–5 indexed spectra per group, 73 in total. The converter explicitly treats the suffix as a replicate. Whether it is strictly technical rather than an independent preparation remains undocumented.
+- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 2 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c3b77c320d1e2ebb12e900b661d4c54e0866f5cd0b9f54da4371157e2e9cbdfa`
-- **Processing hash:** `d690212cdb28b7874295a8b24fcc3ecfe8efa14d820bb64d08707476f32b8cce` | **metadata hash:** `1c55db5fff3233a314a5c8834af2f7fc7ee40dd6852c2547b8947486e33f3b32`
+- **Processing hash:** `d690212cdb28b7874295a8b24fcc3ecfe8efa14d820bb64d08707476f32b8cce` | **metadata hash:** `6a0790012b5b20e186efa7689ab6fa59e5162309942297fe2c72ae3760628d0a`

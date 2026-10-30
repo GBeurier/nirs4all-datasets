@@ -67,6 +67,7 @@ def test_granules_api_is_a_reference_target_and_scans_group_by_vial(dataset):
     assert result.report["identity"]["n_samples"] == 2
     assert result.report["identity"]["observations_per_unit"] == {"3": 2}
     assert result.report["identity"]["technical_repetitions"] == 3
+    assert result.report["identity"]["unit"] == "Three acquisitions per vial"
     assert next(v for v in result.report["variables"] if v["name"] == "api_reference_percent_w_w")["unit"] == "% w/w"
     m.loc[0, "sample_id"] = "invalid_suffix"
     with pytest.raises(ValueError, match="vial.scan"):

@@ -79,8 +79,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Suivi de dessiccation : les observations répétées couvrent des états hydriques/temps différents.
-- **Curated views:** M: 1 fields, Y: 9 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Drying follow-up: repeated observations cover different water states/times.
+- **Curated views:** M: 1 fields, Y: 9 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,4 +102,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `d81c196ae8cc9b37f613026545474078c4d35e365e5a8623df0574d1b0142622`
-- **Processing hash:** `039a1dbf625d4a0475984c664cddecf2cd3c958441a9754ca1719026d9dd447e` | **metadata hash:** `5ce3bfd573dea1d9f891714fb01beb4131abc970545c5d8d80fa2233d4a3094b`
+- **Processing hash:** `039a1dbf625d4a0475984c664cddecf2cd3c958441a9754ca1719026d9dd447e` | **metadata hash:** `79007806eb3f96d9b9432646a2a971f643449cc2d4829b6511b0e84556f1fb98`

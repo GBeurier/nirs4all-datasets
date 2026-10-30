@@ -97,8 +97,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate_id. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
-- **Curated views:** M: 11 fields, Y: 1 fields, passport: 33 fields, measurements: 11 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
+- **Curated views:** M: 11 fields, Y: 1 fields, measurements: 11 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -120,4 +120,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `2a61c75c6e8028cf5392507d6af2bc7c54ba35f1c8a072f5d234a10be48f0f27`
-- **Processing hash:** `0f19aff2dc53292224d98eb22fca1044fc2f480f51c0cf1149d1e4bf077a5592` | **metadata hash:** `7ad081c3733ab50551eadb237d43649af625cd8ddcc3d0fdb86d517aa8207e07`
+- **Processing hash:** `0f19aff2dc53292224d98eb22fca1044fc2f480f51c0cf1149d1e4bf077a5592` | **metadata hash:** `263b9017642a80d5a94f0def4177b5bb6e0ac674836bf04bc0ee636bb4dec1bf`

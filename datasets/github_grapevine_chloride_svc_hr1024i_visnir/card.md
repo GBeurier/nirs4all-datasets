@@ -68,8 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Chaque couple trial × pot_number est unique. replicate=1…5 est la répétition biologique du plan génotype × sel. Les trois lectures au chloridomètre sont analytiques dans Y ; aucune n’est une répétition spectrale.
-- **Curated views:** M: 4 fields, Y: 4 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Each trial × pot_number pair is unique. replicate=1…5 is the biological replicate of the genotype × salt design. The three chloridometer readings are analytical measurements in Y; none is a spectral replicate.
+- **Curated views:** M: 4 fields, Y: 4 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `f96504152a54bbe79d3d2403fc0b4a1149a948e5e598e7f02bc6f23c1277afbd`
-- **Processing hash:** `a113e0228f322d1cf81712f497747f745fdbb3d1c40b11f6799cd3df97f942be` | **metadata hash:** `ed4d739ac2173dc21c0f3efbfe59ff33aedc042ee7a8cbccb23240d32843de85`
+- **Processing hash:** `a113e0228f322d1cf81712f497747f745fdbb3d1c40b11f6799cd3df97f942be` | **metadata hash:** `0ffb7a175c4d540d590ea6adf198f7ca6956e2f1673d01a1817cc448f58721dc`
