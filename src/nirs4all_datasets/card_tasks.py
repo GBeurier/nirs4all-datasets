@@ -35,7 +35,8 @@ def project_card_tasks(card: dict[str, Any]) -> dict[str, Any]:
         histogram = variable.get("histogram") or {}
         counts, edges = histogram.get("counts") or [], histogram.get("edges") or []
         if len(counts) >= 2 and len(edges) == len(counts) + 1 and edges[0] == 0 and edges[-1] == 1 and not any(counts[1:-1]) and sum(counts) == (stats.get("n") or 0) - (stats.get("n_missing") or 0):
-            variable["class_stats"] = {"n": stats.get("n"), "n_missing": stats.get("n_missing"), "n_classes": 2, "top_classes": [{"name": "0", "count": counts[0]}, {"name": "1", "count": counts[-1]}]}
+            top_classes = sorted([{"name": "0", "count": counts[0]}, {"name": "1", "count": counts[-1]}], key=lambda item: item["count"], reverse=True)
+            variable["class_stats"] = {"n": stats.get("n"), "n_missing": stats.get("n_missing"), "n_classes": 2, "top_classes": top_classes}
     return result
 
 
