@@ -52,7 +52,10 @@ def test_existing_many_target_card_and_ambiguous_evidence() -> None:
     variables = [v for v in projected["variables"] if v["role"] == "target"]
     assert len(variables) == 100
     assert all(v.get("task_type") == "classification" for v in variables)
-    assert variables[0]["class_stats"]["top_classes"] == [{"name": "0", "count": 23}, {"name": "1", "count": 81}]
+    assert variables[0]["class_stats"]["top_classes"] == [{"name": "1", "count": 81}, {"name": "0", "count": 23}]
+    for variable in variables:
+        class_counts = [item["count"] for item in variable["class_stats"]["top_classes"]]
+        assert class_counts == sorted(class_counts, reverse=True)
     assert "task_type" not in original["variables"][0]
     unavailable = copy.deepcopy(original)
     unavailable["variables"][0]["task_type"] = "unavailable"
@@ -62,6 +65,8 @@ def test_existing_many_target_card_and_ambiguous_evidence() -> None:
     assert view.entry["task"] == "classification"
     html = _variable_card(view, view.card["variables"][0])
     assert "classification" in html and "Classes" in html
+    top_class_row = html.split("Top class", 1)[1].split("</tr>", 1)[0]
+    assert "<td>1 (81)</td>" in top_class_row
 
     uncertain = copy.deepcopy(original)
     uncertain["curation"]["variables"] = []
