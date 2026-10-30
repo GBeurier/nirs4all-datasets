@@ -43,7 +43,11 @@ def test_spectral_quality_smooth_vs_noisy() -> None:
     noisy = smooth + rng.normal(scale=0.2, size=smooth.shape)
     q_smooth = m.spectral_quality(smooth)
     q_noisy = m.spectral_quality(noisy)
-    assert q_smooth["noise_proxy_db"] > q_noisy["noise_proxy_db"]  # type: ignore[operator]
+    if q_smooth["noise_proxy_db"] is None:
+        assert m.spectral_noise(smooth)["availability"] == "unavailable"
+        assert q_noisy["noise_proxy_db"] is None
+    else:
+        assert q_smooth["noise_proxy_db"] > q_noisy["noise_proxy_db"]  # type: ignore[operator]
     assert q_smooth["smoothness"] < q_noisy["smoothness"]  # type: ignore[operator]
     assert m.spectral_quality(np.zeros((1, 2)))["noise_proxy_db"] is None  # too few features
 
@@ -68,7 +72,10 @@ def test_spectral_profile_contains_requested_metric_families() -> None:
 
     assert profile["integrity"]["nan_ratio"] == 0.0
     assert profile["amplitude"]["peak_to_peak"] > 0
-    assert profile["noise"]["snr"] is not None
+    if profile["noise"].get("availability") == "unavailable":
+        assert "nirs4all-methods" in profile["noise"]["unavailable_reason"]
+    else:
+        assert profile["noise"]["snr"] is not None
     assert profile["artefacts"]["spike_count"] >= 1
     assert profile["artefacts"]["jump_count"] >= 1
     assert profile["outliers"]["pca_q_ratio"] is not None

@@ -49,6 +49,17 @@ def canonical_name(name: str) -> str:
     return re.sub(r"[^\w]+", "_", text.casefold(), flags=re.UNICODE).strip("_") or "unnamed"
 
 
+def _target_dependents(dependencies: dict[str, set[str]], targets: set[str]) -> set[str]:
+    """Close declared variable dependencies without inferring links from measured values."""
+    related = set(targets)
+    while True:
+        additions = {name for name, parents in dependencies.items() if parents & related}
+        expanded = related | additions
+        if expanded == related:
+            return related
+        related = expanded
+
+
 @lru_cache(maxsize=1)
 def _contracts() -> dict[str, Any]:
     return cast(dict[str, Any], json.loads(Path(__file__).with_name("curation_contracts.json").read_text(encoding="utf-8"))["datasets"])
@@ -304,9 +315,28 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     missing_rules = missing_rules or {}
     source_fields = source_fields or {}
     target_identities = {canonical_name(name) for name in targets.columns if name != _OBS}
+    dependencies: dict[str, set[str]] = {}
+    alias_names: dict[str, set[str]] = {}
+    for role, source in [("M", metadata), ("Y", targets)]:
+        for original in source.columns:
+            rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
+            alias_names.setdefault(canonical_name(original), set()).add(canonical_name(rule.get("name") or original))
+    for role, source in [("M", metadata), ("Y", targets)]:
+        for original in source.columns:
+            rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
+            name = canonical_name(rule.get("name") or original)
+            parents = [*rule.get("derived_from", []), *([rule["equivalent_to"]] if rule.get("equivalent_to") else [])]
+            dependencies.setdefault(name, set()).update(canonical_name(parent) for parent in parents)
+            if rule.get("equivalent_to"):
+                dependencies.setdefault(canonical_name(rule["equivalent_to"]), set()).add(name)
+            original_name = canonical_name(original)
+            if name != original_name and len(alias_names[original_name]) == 1:
+                dependencies.setdefault(name, set()).add(original_name)
+                dependencies.setdefault(original_name, set()).add(name)
     for original in targets.columns:
         declared = {**policy.get("fields", {}).get("Y", {}).get(original, {}), **source_fields.get(f"Y:{original}", {})}
         target_identities.add(canonical_name(declared.get("name") or original))
+    target_dependents = _target_dependents(dependencies, target_identities)
     # Y first ensures M copies/aliases cannot shadow the selected response.
     for role, source in [("Y", targets), ("M", metadata)]:
         frame = source.set_index(_OBS).reindex(universe)
@@ -314,20 +344,20 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
             rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
             name = str(rule.get("name") or canonical_name(original))
             # Harmonize identifiers/case even when a historical mapping used a source spelling.
-            name = canonical_name(name)
+            name = name if rule.get("descriptor_name") else canonical_name(name)
             semantic = _semantic_role(original, role, rule)
             if dataset_id in _API_DATASETS and original == "api_reference_percent_w_w":
                 semantic, name = "measured_trait", original
             if dataset_id in _API_DATASETS and original == "api_concentration_design_percent":
                 semantic = "target_copy"
-            declared_responses = [*rule.get("derived_from", []), *([rule["equivalent_to"]] if rule.get("equivalent_to") else [])]
-            if role == "M" and any(canonical_name(reference) in target_identities for reference in declared_responses):
+            if role == "M" and canonical_name(name) in target_dependents:
                 semantic = "target_copy"
             missing = dict(rule.get("missing_rule") or {})
             missing.update(missing_rules.get(f"{role}:{original}", {}))
             if missing.get("sentinels") and not missing.get("confirmed"):
                 raise ValueError(f"{role}:{original}: numeric sentinel rules require explicit source confirmation")
-            values = normalize_missing(frame[original], tokens=missing.get("tokens"), sentinels=missing.get("sentinels"), identifier=semantic == "identifier")
+            normalization = rule.get("normalization")
+            values = frame[original].copy() if normalization is not None else normalize_missing(frame[original], tokens=missing.get("tokens"), sentinels=missing.get("sentinels"), identifier=semantic == "identifier")
             numeric = original in numeric_names or name in numeric_names
             categorical = semantic in {"identifier", "acquisition_index"} or original in categorical_names or name in categorical_names or rule.get("statistical_type") == "categorical"
             if categorical:
@@ -338,10 +368,11 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
                 nonempty = values.dropna()
                 numeric = bool(len(nonempty)) and all(_finite_float(value) is not None or _CENSORED.fullmatch(str(value)) for value in nonempty)
             dialect_audit: dict[str, Any] | None = None
-            if numeric and ("decimal_separator" in rule or "thousands_separator" in rule):
+            if normalization is not None or (numeric and ("decimal_separator" in rule or "thousands_separator" in rule)):
                 # Reuse the canonical normalizer. Preserve textual censored/invalid
                 # forms in these source views; typed model values live in variables.parquet.
-                specification = Variable(name=name, unit=rule.get("unit"), decimal_separator=rule.get("decimal_separator", ","), thousands_separator=rule.get("thousands_separator"))
+                specification = Variable(**normalization) if normalization is not None else Variable(name=name, unit=rule.get("unit"), decimal_separator=rule.get("decimal_separator", ","), thousands_separator=rule.get("thousands_separator"))
+                specification.type = VarType.NUMERIC if numeric else VarType.CATEGORICAL
                 normalized, dialect_audit = normalize_variable(values, specification)
                 values = pd.Series([
                     original_value if record["status"] in {"invalid", "censored"} else None if pd.isna(value) else str(value)
@@ -467,6 +498,27 @@ def write_curated(tables: CuratedTables, directory: Path) -> dict[str, Any]:
     return {"schema_version": CURATION_VERSION, "grain": "observation", "join_key": _OBS, "tables": paths, "mapping": str(directory / "mapping.json")}
 
 
+def catalog_curation_report(report: dict[str, Any], *, anonymized: bool = False) -> dict[str, Any]:
+    """Return the tracked report without publishing per-observation issue values."""
+    from collections import Counter
+    from copy import deepcopy
+
+    if anonymized:
+        return {
+            "schema_version": report["schema_version"],
+            "dataset_id": report["dataset_id"],
+            "view_counts": {name: len(columns) for name, columns in report["views"].items()},
+            "mapping": "withheld for anonymized tier",
+        }
+    public = deepcopy(report)
+    for entry in public.get("mapping", []):
+        if "value_issues" in entry:
+            issues = entry.pop("value_issues")
+            entry["value_issue_counts"] = dict(sorted(Counter(str(issue.get("status", "unknown")) for issue in issues).items()))
+            entry["value_issue_detail"] = "Retained in local canonical/curation/mapping.json"
+    return public
+
+
 def _source_fields(leaf: Path) -> dict[str, dict[str, Any]]:
     """Read author-declared units/missing tokens; never infer numerical sentinels."""
     path = leaf / "datapackage.json"
@@ -511,12 +563,18 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
     if m.empty and not y.empty:
         m = y[[_OBS]].copy()
     fields = _source_fields(leaf)
+    policy = contract_for(dataset_id)
     for variable in variable_specs or []:
         original = variable.original_name or variable.name
         for role, frame in [("M", m), ("Y", y)]:
             if original not in frame:
                 continue
+            preferred = "Y" if variable.role.value == "target" else "M"
+            if original in m and original in y and role != preferred:
+                continue
             field_rule = fields.setdefault(f"{role}:{original}", {})
+            if variable.original_name and variable.name != variable.original_name:
+                field_rule.update(name=variable.name, descriptor_name=True)
             # The curated descriptor carries the reviewed scientific type. Source
             # CSV schemas can label measured numbers as strings (UCPH Granules).
             if "type" in variable.model_fields_set and variable.type in {VarType.NUMERIC, VarType.CATEGORICAL}:
@@ -528,6 +586,22 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
             for key in ["decimal_separator", "thousands_separator"]:
                 if key in variable.model_fields_set:
                     field_rule[key] = getattr(variable, key)
+            # Apply the same declared missing-value contract as variables.parquet.
+            source_rule = policy.get("fields", {}).get(role, {}).get(original, {})
+            missing = {**source_rule.get("missing_rule", {}), **field_rule.get("missing_rule", {})}
+            if "missing_values" in variable.model_fields_set or variable.missing_values:
+                missing["tokens"] = list(variable.missing_values)
+            if "numeric_sentinels" in variable.model_fields_set or variable.numeric_sentinels:
+                missing.update(sentinels=[str(value) for value in variable.numeric_sentinels], confirmed=True)
+            field_rule["missing_rule"] = missing
+            specification = variable.model_dump(mode="json")
+            specification.update(
+                missing_values=list(missing.get("tokens") or []),
+                numeric_sentinels=[float(value) for value in missing.get("sentinels") or []],
+                decimal_separator=field_rule.get("decimal_separator", variable.decimal_separator),
+                thousands_separator=field_rule.get("thousands_separator", variable.thousands_separator),
+            )
+            field_rule["normalization"] = specification
     result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields)
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
@@ -685,6 +759,14 @@ def consumer_views(frame: pd.DataFrame, descriptor: DatasetDescriptor, *, target
     if unknown:
         raise ValueError(f"unknown target variables: {sorted(unknown)}")
     y = [name for name in target_names if name in frame]
+    aliases = {variable.original_name: variable.name for variable in descriptor.variables if variable.original_name}
+    dependencies: dict[str, set[str]] = {}
+    for variable in descriptor.variables:
+        parents = [*variable.derived_from, *([variable.equivalent_to] if variable.equivalent_to else [])]
+        dependencies.setdefault(variable.name, set()).update(aliases.get(parent, parent) for parent in parents)
+        if variable.equivalent_to:
+            dependencies.setdefault(aliases.get(variable.equivalent_to, variable.equivalent_to), set()).add(variable.name)
+    target_dependents = _target_dependents(dependencies, set(target_names))
     m, structure, passport = [], ["sample_id"] if "sample_id" in frame else [], []
     decisions = []
     for variable in descriptor.variables:
@@ -698,7 +780,7 @@ def consumer_views(frame: pd.DataFrame, descriptor: DatasetDescriptor, *, target
         elif role in {"identifier", "acquisition_index"}:
             structure.append(name)
             reason = role
-        elif set(variable.derived_from) & set(y) or variable.equivalent_to in y:
+        elif name in target_dependents:
             reason = "target_copy_or_declared_derivation"
         elif descriptor.id.startswith("ucph_granules_") and "api_reference_percent_w_w" in y and name == "api_concentration_design_percent":
             reason = "target_design_information"

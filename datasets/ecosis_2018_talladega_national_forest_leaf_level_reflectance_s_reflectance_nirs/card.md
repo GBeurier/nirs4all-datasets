@@ -40,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | longitude | metadata | numeric | *Not specified.* | n=156, missing=0, range 3.645e+06–3.648e+06, mean 3.646e+06 ± 876.4 |
 | coordinate_precision_notes | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top source-provided coordinates when available (×156) |
 | year | metadata | numeric | *Not specified.* | n=156, missing=0, range 2018–2018, mean 2018 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180514 (×24) |
+| date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180512 (×24) |
 | species | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top falcate (×18) |
 | genus | metadata | categorical | *Not specified.* | n=156, missing=0, classes=5, top Quercus (×63) |
 | family | metadata | categorical | *Not specified.* | n=156, missing=156, classes=0, — |
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 6 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 6 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,5 +101,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `216bc8d216de3fab94cf2b72b3a9f912fd974184955c1a7f4323d6460b21dcf5`
-- **Processing hash:** `ab7a1f80c22f609afa92a8bb340ecb77aed732e22911528925c1ba58f6b4aabb` | **metadata hash:** `8e59798902eb92f138b41f233a50949cf7b86267ada78888a67c8adda2054579`
+- **Content hash:** `9e412c1aa78b02608b5ac2a1c3f39437a35604817a4e80a0722be47e2230b782`
+- **Processing hash:** `049131914b7883ed388b0456aa31a3d448ffde93a1f3f2822549d745e4fa16ef` | **metadata hash:** `ac5adc2b57a242f032deecc1aa5bed340329e5644e00151884cebbf64855bea8`

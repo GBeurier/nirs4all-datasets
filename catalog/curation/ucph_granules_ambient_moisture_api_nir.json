@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset_id": "ucph_granules_ambient_moisture_api_nir",
-  "contract_sha256": "5978f1f525e2370354c0bc20ec32b451056e5b949e5c0cdd3c1e52ab65df7507",
+  "contract_sha256": "b5fbd15022c7c29dfa51a7e18efb9344c9d70f4e00217535129d0ec3a0f23470",
   "grain": "observation",
   "identity": {
     "method": "granule_vial",
@@ -17,7 +17,7 @@
       "3": 216
     },
     "technical_repetitions": 3,
-    "unit": "Trois acquisitions par flacon",
+    "unit": "Three acquisitions per vial",
     "conclusion": "The NIR sample ID is a batch/design combination; the vial is identified by _vN and each acquisition by .0/.1/.2. 216 vials × 3 acquisitions. The 64 instrument scans are averaged within each acquisition.",
     "missing_source_columns": [],
     "evidence": [
@@ -35,7 +35,7 @@
       },
       {
         "url": "https://ucphchemometrics.com/granulesnir/",
-        "section": "description du plan et des triplicats"
+        "section": "design and triplicate description"
       }
     ]
   },
@@ -86,9 +86,9 @@
       "operation": "identity",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
-      "unit": null,
+      "unit": "% w/w",
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -119,7 +119,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:api_reference_percent_w_w",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -130,6 +138,8 @@
       "view": "structure",
       "operation": "assumed_row_pairing_to_Y",
       "grain": "observation",
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:observation_id",
+      "mapping_version": "1.1",
       "target_resource": "Y.csv",
       "independently_verified_target_ids": false,
       "M_X_order_checked": true
@@ -146,7 +156,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -160,7 +170,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:dataset_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -174,7 +186,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -188,7 +200,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:source_sample_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -202,7 +216,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -232,7 +246,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:m_measurement_state",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -246,7 +268,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -274,7 +296,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:measurement_datetime_serial",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -288,7 +318,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -316,7 +346,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:file",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -330,7 +362,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -358,7 +390,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:target_file",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -372,7 +412,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -400,7 +440,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:url",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -414,7 +456,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -444,7 +486,9 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:m_page",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -458,7 +502,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -486,7 +530,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:license",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -500,7 +552,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -528,7 +580,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:rights_status",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -542,7 +602,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -570,7 +630,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:usage_scope",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -584,7 +652,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -612,7 +680,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:public_release_allowed",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -626,7 +702,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -654,7 +730,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:spectroscopy_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -668,7 +752,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -696,7 +780,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:axis_unit",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -710,7 +802,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -741,7 +833,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:axis_min",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -755,7 +855,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -786,7 +886,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:axis_max",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -800,7 +908,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -831,7 +939,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:n_points_original",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -845,7 +961,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -873,7 +989,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:notes",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -887,7 +1011,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -915,7 +1039,15 @@
         "type": "categorical",
         "imbalance_ratio": null
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:original_split",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -929,7 +1061,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -943,7 +1075,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:nir_sample_id",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -957,7 +1097,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -990,7 +1130,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:m_relative_humidity_percent",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1004,7 +1152,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1035,7 +1183,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:api_concentration_design_percent",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1049,7 +1205,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1080,7 +1236,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:riblet_mass_g",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1094,7 +1258,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1125,7 +1289,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:solid_fraction",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1139,7 +1311,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1169,7 +1341,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:m_desiccator",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1183,7 +1363,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -1197,7 +1377,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:batch_number",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1207,7 +1395,9 @@
       "semantic_role": "identifier",
       "view": "structure",
       "operation": "identity",
-      "grain": "observation"
+      "grain": "observation",
+      "variable_id": "ucph_granules_ambient_moisture_api_nir:observation_id",
+      "mapping_version": "1.1"
     }
   ],
   "variables": [

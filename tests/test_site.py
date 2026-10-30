@@ -339,7 +339,13 @@ def test_partial_profile_from_computed_scores_is_rendered_with_values(tmp_path: 
     out = build_site(root, tmp_path / "site")
     detail = (out / "dataset" / "corn_oil.html").read_text()
     bank = (out / "index.html").read_text()
-    assert 'Corn — oil — noise:' in detail
+    assert 'Corn — oil — integrity:' in detail
+    assert 'Corn — oil — artefacts:' in detail
+    assert 'Corn — oil — baseline:' in detail
+    if scores["noise_risk"] is None:
+        assert 'Corn — oil — noise:' not in detail
+    else:
+        assert 'Corn — oil — noise:' in detail
     assert 'Corn — oil profile</title>' not in detail
     assert 'unavailable</td>' in detail
     assert 'View profile values' in bank

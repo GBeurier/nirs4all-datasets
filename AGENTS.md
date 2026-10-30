@@ -22,6 +22,10 @@ Python targets 3.11+, uses Ruff with a 220-character line length, and follows ty
 
 Add focused pytest coverage in `tests/`, reusing fixtures from `tests/conftest.py`. Mark live-origin checks with `@pytest.mark.network` so CI can exclude them. For Rust changes, include crate-level tests where practical and run the workspace test command. Binding changes should include the relevant smoke test, such as `node bindings/wasm/tests/node_smoke.cjs` after a WASM build.
 
+## Curation and native ownership
+
+Read [the curation ownership roadmap](docs/maintenance/curation_ownership_roadmap.md) before curation, cache, qualification, or native-boundary work. The current user constraint permits no changes to `dag-ml` or `dag-ml-data`; the roadmap records future work there without authorizing it.
+
 ## Commit & Pull Request Guidelines
 
 Recent history uses Conventional Commit-style subjects, for example `fix(packaging): ...`, `ci: ...`, and `chore(release): ...`; dataset additions commonly use `data(<id>): add <name>`. Keep commits scoped and include regenerated catalog files when commands change them. Pull requests should describe the behavior or dataset change, list the validation commands run, link related issues, and include screenshots only for visible site or documentation changes.
@@ -33,3 +37,12 @@ Never commit tokens or heavy raw/canonical dataset bytes. Use `NIRS4ALL_DATAVERS
 ## Language Policy
 
 All application and project content must be in English, including UI text, subtitles, tooltips, errors, documentation, comments and docstrings, test and fixture prose, reports, pull requests, commits, and generated content. Conversation with the maintainer may be in French. Preserve proper names, identifiers, filenames, source quotations, and historical or provenance records where translation would change their meaning or provenance.
+
+Correct authored narrative text in its source contracts and descriptors, then verify regenerated cards. Translating stored cards alone allows later regeneration to restore obsolete wording.
+
+## GitHub Identity
+
+Use `GBeurier` for commits and pushes, with `95907737+GBeurier@users.noreply.github.com`.
+Use only `/home/delete/nirs4all/github_token` for this workspace's publication and verify
+that it authenticates as `GBeurier` before writing. The Windows `dunk_token` credential
+belongs to another account and must not be used for publication here. Never expose tokens.

@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | treatment | target | categorical | *Not specified.* | n=216, missing=0, classes=3, top c (×80) |
 | par_condition | target | categorical | *Not specified.* | n=216, missing=0, classes=2, top PAR1000 (×108) |
-| day_after_stress | target | categorical | *Not specified.* | n=216, missing=0, classes=4, top 7 (×72) |
+| day_after_stress | target | categorical | *Not specified.* | n=216, missing=0, classes=4, top 4 (×72) |
 | replicate | metadata | categorical | *Not specified.* | n=216, missing=0, classes=7, top r5 (×42) |
 | leaf_sample | metadata | categorical | *Not specified.* | n=216, missing=0, classes=6, top L2 (×104) |
 | doi_dataset | metadata | categorical | *Not specified.* | n=216, missing=0, classes=1, top 10.5281/zenodo.12800065 (×216) |
@@ -89,5 +89,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8362b35070da503794d9f98544a4ef92bd25943bd025d5857d268ee8f9d3f745`
-- **Processing hash:** `88b9b6ad69b9f7622297c4e47f059fa8c647f709f5efc1fcbe08fc4d9da4f3f4` | **metadata hash:** `97e33bccb951b62f92c59487198f5b6d3737504b2a88c916dca0e6dca905b23a`
+- **Content hash:** `579615f13c9ea5ee881508fe62c16649565d9deefbec604bb3c8777ac7ec9911`
+- **Processing hash:** `7c66029f565a3176b51b1d06fdbc2c6ec76fa659063b4f57611e14ea24e0d37c` | **metadata hash:** `e77c00e33f38da58f6d97c50febf1fa1678abcb1310256f8556eb6a7f9d35d67`

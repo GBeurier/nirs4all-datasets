@@ -62,19 +62,34 @@
       "source_file": "src/nirs4all_datasets/qualify/metrics.py",
       "symbol": "spectral_noise",
       "arguments": "x: object, axis: object | None=None",
-      "definition": "Second-difference roughness proxies; no repeat-measured instrument SNR.",
-      "implementation_sha256": "a6041067bd7bd686b84a8a2cb1d045136b1623c9070027ab09de66eaef3d1d48",
+      "definition": "Delegate second-difference MAD roughness to the existing Methods procedure.\n\nSignal-to-roughness ratios are descriptive proxies, not instrument SNR.\nNative support is optional; unavailable support stays explicit and no Python\nnumerical fallback runs. Axis coordinates are attached as catalog metadata.",
+      "implementation_sha256": "ee4a91e7b1fc5e98db950e4cae8ff72ff059eb91695710caab6680db8733f478",
       "local_helper_implementations": {
         "_as_2d_float": "def _as_2d_float(x: object) -> np.ndarray:\n    arr = np.asarray(x, dtype=\"float64\")\n    if arr.ndim != 2:\n        return np.empty((0, 0), dtype=\"float64\")\n    return arr",
         "_axis": "def _axis(axis: object, n_features: int) -> np.ndarray:\n    ax = np.asarray(axis, dtype=\"float64\").ravel() if axis is not None else np.arange(n_features, dtype=\"float64\")\n    if ax.size != n_features or not np.isfinite(ax).all():\n        return np.arange(n_features, dtype=\"float64\")\n    return ax",
+        "_finite_float": "def _finite_float(value: Any) -> float | None:\n    if isinstance(value, bool) or not isinstance(value, (int, float)):\n        return None\n    value_f = float(value)\n    return value_f if math.isfinite(value_f) else None",
         "_finite_matrix": "def _finite_matrix(x: object) -> np.ndarray:\n    arr = _as_2d_float(x).copy()\n    if arr.size:\n        arr[~np.isfinite(arr)] = np.nan\n    return arr",
         "_nulls": "def _nulls(keys: tuple[str, ...]) -> dict[str, object]:\n    return dict.fromkeys(keys, None)",
         "_proxy_fields": "def _proxy_fields(section: str, values: Mapping[str, object]) -> dict[str, object]:\n    result = dict(values)\n    for old, new in LEGACY_METRIC_ALIASES.items():\n        family, old_name = old.split(\".\")\n        if family == section and old_name in values:\n            result.setdefault(new.split(\".\")[1], values[old_name])\n    return result",
-        "_safe_nanmean": "def _safe_nanmean(arr: np.ndarray, axis: int | None = None) -> np.ndarray | float:\n    with warnings.catch_warnings():\n        warnings.simplefilter(\"ignore\", RuntimeWarning)\n        return cast(np.ndarray | float, np.nanmean(arr, axis=axis))",
-        "_safe_nanpercentile": "def _safe_nanpercentile(arr: np.ndarray, q: float, axis: int | None = None) -> np.ndarray | float:\n    with warnings.catch_warnings():\n        warnings.simplefilter(\"ignore\", RuntimeWarning)\n        return cast(np.ndarray | float, np.nanpercentile(arr, q, axis=axis))",
-        "spectral_noise": "def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:\n    \"\"\"Second-difference roughness proxies; no repeat-measured instrument SNR.\"\"\"\n    arr = _finite_matrix(x)\n    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:\n        return _proxy_fields(\"noise\", _nulls(_NOISE_KEYS))\n    second = np.diff(arr, n=2, axis=1)\n    row_med = np.asarray(_safe_nanpercentile(second, 50, axis=1), dtype=\"float64\")[:, None]\n    row_mad = np.asarray(_safe_nanpercentile(np.abs(second - row_med), 50, axis=1), dtype=\"float64\")\n    noise_per_row = row_mad * 1.4826 / np.sqrt(6.0)\n    finite_noise = noise_per_row[np.isfinite(noise_per_row)]\n    noise_rms = float(np.median(finite_noise)) if finite_noise.size else None\n    signal = float(np.nanmean(np.abs(arr))) if np.isfinite(arr).any() else None\n    snr = signal / noise_rms if (signal is not None and noise_rms is not None and signal > 0 and noise_rms > 0) else None\n\n    mean_spectrum = np.asarray(_safe_nanmean(arr, axis=0), dtype=\"float64\")\n    col_noise = np.asarray(_safe_nanpercentile(np.abs(second - np.asarray(_safe_nanpercentile(second, 50, axis=0), dtype=\"float64\")), 50, axis=0), dtype=\"float64\")\n    col_noise = col_noise * 1.4826 / np.sqrt(6.0)\n    with np.errstate(divide=\"ignore\", invalid=\"ignore\"):\n        band_snr = np.abs(mean_spectrum[1:-1]) / col_noise\n    band_snr = band_snr[np.isfinite(band_snr) & (band_snr >= 0)]\n    worst_idx = None\n    worst_axis = None\n    if band_snr.size:\n        full = np.full(arr.shape[1], np.nan, dtype=\"float64\")\n        with np.errstate(divide=\"ignore\", invalid=\"ignore\"):\n            full[1:-1] = np.abs(mean_spectrum[1:-1]) / col_noise\n        if np.isfinite(full).any():\n            worst_idx = int(np.nanargmin(full))\n            worst_axis = float(_axis(axis, arr.shape[1])[worst_idx])\n    return _proxy_fields(\"noise\", {\n        \"noise_rms\": noise_rms,\n        \"snr\": float(snr) if snr is not None and math.isfinite(snr) else None,\n        \"snr_db\": float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None,\n        \"bandwise_snr_min\": float(np.min(band_snr)) if band_snr.size else None,\n        \"bandwise_snr_median\": float(np.median(band_snr)) if band_snr.size else None,\n        \"worst_band_index\": worst_idx,\n        \"worst_band_axis\": worst_axis,\n    })"
+        "spectral_noise": "def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:\n    \"\"\"Delegate second-difference MAD roughness to the existing Methods procedure.\n\n    Signal-to-roughness ratios are descriptive proxies, not instrument SNR.\n    Native support is optional; unavailable support stays explicit and no Python\n    numerical fallback runs. Axis coordinates are attached as catalog metadata.\n    \"\"\"\n    arr = _finite_matrix(x)\n    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:\n        return _proxy_fields(\"noise\", _nulls(_NOISE_KEYS))\n    try:\n        from n4m import abi_version, version\n        from n4m.roles import SpectralNoiseProxy\n    except (ImportError, OSError, RuntimeError) as exc:\n        return _proxy_fields(\"noise\", {\n            **_nulls(_NOISE_KEYS),\n            \"availability\": \"unavailable\",\n            \"unavailable_reason\": f\"Second-difference MAD roughness requires nirs4all-methods >= 1.3.10 with ABI >= 2.20 and SpectralNoiseProxy ({type(exc).__name__}).\",\n        })\n    # The public native procedure takes a finite DTO plus an explicit validity\n    # mask. Zero-fill is transport only; excluded cells never enter the kernel.\n    valid = np.isfinite(arr)\n    parameters = {} if valid.all() else {\"valid_mask\": valid.astype(np.int64).ravel().tolist()}\n    result = SpectralNoiseProxy(**parameters).run(np.where(valid, arr, 0.0))\n\n    def measured(key: str) -> float | None:\n        state = result.get(key + \"_status\")\n        if state is None or int(np.asarray(state).ravel()[0]) != 0:\n            return None\n        return _finite_float(result.get(key))\n\n    index = measured(\"worst_band_index\")\n    worst_index = int(index) if index is not None else None\n    band_support = \"bandwise_min_status\" in result\n    return _proxy_fields(\"noise\", {\n        \"noise_rms\": measured(\"global_noise_sigma\"),\n        \"snr\": measured(\"global_signal_noise_ratio\"),\n        \"snr_db\": measured(\"global_signal_noise_db\"),\n        \"bandwise_snr_min\": measured(\"bandwise_min\"),\n        \"bandwise_snr_median\": measured(\"bandwise_median\"),\n        \"worst_band_index\": worst_index,\n        \"worst_band_axis\": float(_axis(axis, arr.shape[1])[worst_index]) if worst_index is not None else None,\n        \"producer\": {\n            \"name\": \"nirs4all-methods\", \"engine_version\": version(),\n            \"abi_version\": \".\".join(str(part) for part in abi_version()),\n            \"operation\": \"diagnostics.spectral_noise_proxy\", \"protocol_version\": \"spectral-second-difference-mad-index.v1\",\n        },\n        **({} if band_support else {\n            \"availability\": \"partial\",\n            \"unavailable_reason\": \"Installed Methods provides global roughness but lacks the bandwise output extension; bandwise values are unavailable.\",\n        }),\n    })"
       },
-      "missing_data_and_population_rules": "Exact executable preconditions, finite handling, imputation, sampling, grouping and denominators are retained in the source above; no native equivalence is inferred."
+      "missing_data_and_population_rules": "Exact executable preconditions, finite handling, imputation, sampling, grouping and denominators are retained in the source above; no native equivalence is inferred.",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "ownership": "Methods native roughness kernel; Datasets axis, provenance and compatibility alias adapter."
     },
     "metrics.spectral_artefacts": {
       "source_file": "src/nirs4all_datasets/qualify/metrics.py",
@@ -210,12 +225,19 @@
       "symbol": "spectral_quality",
       "arguments": "x: object",
       "definition": "Smoothness/noise/range proxies for a 2D spectra block ``(n_samples, n_features)``.",
-      "implementation_sha256": "0243c577f2c888e90be5855af758c285998ace715c75f946280a9d2b4d3e9744",
+      "implementation_sha256": "ce70a99ed9f902bbaed8added21cd9158d2a21bcb42a8c15eb4e4f7faee1983b",
       "local_helper_implementations": {
+        "_as_2d_float": "def _as_2d_float(x: object) -> np.ndarray:\n    arr = np.asarray(x, dtype=\"float64\")\n    if arr.ndim != 2:\n        return np.empty((0, 0), dtype=\"float64\")\n    return arr",
+        "_axis": "def _axis(axis: object, n_features: int) -> np.ndarray:\n    ax = np.asarray(axis, dtype=\"float64\").ravel() if axis is not None else np.arange(n_features, dtype=\"float64\")\n    if ax.size != n_features or not np.isfinite(ax).all():\n        return np.arange(n_features, dtype=\"float64\")\n    return ax",
+        "_finite_float": "def _finite_float(value: Any) -> float | None:\n    if isinstance(value, bool) or not isinstance(value, (int, float)):\n        return None\n    value_f = float(value)\n    return value_f if math.isfinite(value_f) else None",
+        "_finite_matrix": "def _finite_matrix(x: object) -> np.ndarray:\n    arr = _as_2d_float(x).copy()\n    if arr.size:\n        arr[~np.isfinite(arr)] = np.nan\n    return arr",
         "_nulls": "def _nulls(keys: tuple[str, ...]) -> dict[str, object]:\n    return dict.fromkeys(keys, None)",
-        "spectral_quality": "def spectral_quality(x: object) -> dict[str, object]:\n    \"\"\"Smoothness/noise/range proxies for a 2D spectra block ``(n_samples, n_features)``.\"\"\"\n    arr = np.asarray(x, dtype=float)\n    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:\n        return _nulls(_QUALITY_KEYS)\n    mean_spectrum = np.nanmean(arr, axis=0)\n    signal = float(np.mean(np.abs(mean_spectrum)))\n    second_diff = np.diff(arr, n=2, axis=1)\n    # Robust noise floor: median over samples of the normal-scaled MAD of the 2nd difference,\n    # divided by sqrt(6) to undo the variance inflation of differencing white noise twice.\n    mad = stats.median_abs_deviation(second_diff, axis=1, scale=1.0)\n    noise = float(np.median(mad) * 1.4826 / np.sqrt(6.0))\n    noise_proxy_db = float(20.0 * np.log10(signal / noise)) if (noise > 0 and signal > 0) else None\n    vmax = float(np.nanmax(arr))\n    return {\n        \"noise_proxy_db\": noise_proxy_db,\n        \"smoothness\": float(np.mean(np.sqrt(np.mean(second_diff**2, axis=1)))),\n        \"dynamic_range\": float(np.nanmax(mean_spectrum) - np.nanmin(mean_spectrum)),\n        \"saturation_fraction\": float(np.mean(arr >= vmax)) if np.isfinite(vmax) else None,\n    }"
+        "_proxy_fields": "def _proxy_fields(section: str, values: Mapping[str, object]) -> dict[str, object]:\n    result = dict(values)\n    for old, new in LEGACY_METRIC_ALIASES.items():\n        family, old_name = old.split(\".\")\n        if family == section and old_name in values:\n            result.setdefault(new.split(\".\")[1], values[old_name])\n    return result",
+        "spectral_noise": "def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:\n    \"\"\"Delegate second-difference MAD roughness to the existing Methods procedure.\n\n    Signal-to-roughness ratios are descriptive proxies, not instrument SNR.\n    Native support is optional; unavailable support stays explicit and no Python\n    numerical fallback runs. Axis coordinates are attached as catalog metadata.\n    \"\"\"\n    arr = _finite_matrix(x)\n    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:\n        return _proxy_fields(\"noise\", _nulls(_NOISE_KEYS))\n    try:\n        from n4m import abi_version, version\n        from n4m.roles import SpectralNoiseProxy\n    except (ImportError, OSError, RuntimeError) as exc:\n        return _proxy_fields(\"noise\", {\n            **_nulls(_NOISE_KEYS),\n            \"availability\": \"unavailable\",\n            \"unavailable_reason\": f\"Second-difference MAD roughness requires nirs4all-methods >= 1.3.10 with ABI >= 2.20 and SpectralNoiseProxy ({type(exc).__name__}).\",\n        })\n    # The public native procedure takes a finite DTO plus an explicit validity\n    # mask. Zero-fill is transport only; excluded cells never enter the kernel.\n    valid = np.isfinite(arr)\n    parameters = {} if valid.all() else {\"valid_mask\": valid.astype(np.int64).ravel().tolist()}\n    result = SpectralNoiseProxy(**parameters).run(np.where(valid, arr, 0.0))\n\n    def measured(key: str) -> float | None:\n        state = result.get(key + \"_status\")\n        if state is None or int(np.asarray(state).ravel()[0]) != 0:\n            return None\n        return _finite_float(result.get(key))\n\n    index = measured(\"worst_band_index\")\n    worst_index = int(index) if index is not None else None\n    band_support = \"bandwise_min_status\" in result\n    return _proxy_fields(\"noise\", {\n        \"noise_rms\": measured(\"global_noise_sigma\"),\n        \"snr\": measured(\"global_signal_noise_ratio\"),\n        \"snr_db\": measured(\"global_signal_noise_db\"),\n        \"bandwise_snr_min\": measured(\"bandwise_min\"),\n        \"bandwise_snr_median\": measured(\"bandwise_median\"),\n        \"worst_band_index\": worst_index,\n        \"worst_band_axis\": float(_axis(axis, arr.shape[1])[worst_index]) if worst_index is not None else None,\n        \"producer\": {\n            \"name\": \"nirs4all-methods\", \"engine_version\": version(),\n            \"abi_version\": \".\".join(str(part) for part in abi_version()),\n            \"operation\": \"diagnostics.spectral_noise_proxy\", \"protocol_version\": \"spectral-second-difference-mad-index.v1\",\n        },\n        **({} if band_support else {\n            \"availability\": \"partial\",\n            \"unavailable_reason\": \"Installed Methods provides global roughness but lacks the bandwise output extension; bandwise values are unavailable.\",\n        }),\n    })",
+        "spectral_quality": "def spectral_quality(x: object) -> dict[str, object]:\n    \"\"\"Smoothness/noise/range proxies for a 2D spectra block ``(n_samples, n_features)``.\"\"\"\n    arr = np.asarray(x, dtype=float)\n    if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:\n        return _nulls(_QUALITY_KEYS)\n    mean_spectrum = np.nanmean(arr, axis=0)\n    signal = float(np.mean(np.abs(mean_spectrum)))\n    second_diff = np.diff(arr, n=2, axis=1)\n    # Preserve this older aggregate's strict missing-data contract: its previous\n    # row-MAD/median chain was undefined if any input cell was nonfinite. The\n    # source roughness metric separately supports incomplete observations.\n    noise = _finite_float(spectral_noise(arr).get(\"noise_rms\")) if np.isfinite(arr).all() else None\n    noise_proxy_db = float(20.0 * np.log10(signal / noise)) if (noise is not None and noise > 0 and signal > 0) else None\n    vmax = float(np.nanmax(arr))\n    return {\n        \"noise_proxy_db\": noise_proxy_db,\n        \"smoothness\": float(np.mean(np.sqrt(np.mean(second_diff**2, axis=1)))),\n        \"dynamic_range\": float(np.nanmax(mean_spectrum) - np.nanmin(mean_spectrum)),\n        \"saturation_fraction\": float(np.mean(arr >= vmax)) if np.isfinite(vmax) else None,\n    }"
       },
-      "missing_data_and_population_rules": "Exact executable preconditions, finite handling, imputation, sampling, grouping and denominators are retained in the source above; no native equivalence is inferred."
+      "missing_data_and_population_rules": "Exact executable preconditions, finite handling, imputation, sampling, grouping and denominators are retained in the source above; no native equivalence is inferred.",
+      "noise_component": "Consumes Methods native second-difference MAD roughness through the Datasets adapter; quality remains a Datasets aggregate."
     },
     "metrics.wavelength_spacing": {
       "source_file": "src/nirs4all_datasets/qualify/metrics.py",
@@ -1492,15 +1514,31 @@
       "legacy_key": "noise.bandwise_snr_median",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "float(np.median(band_snr)) if band_snr.size else None",
-      "return_expression": "float(np.median(band_snr)) if band_snr.size else None",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
+      "scientific_definition": "measured('bandwise_median')",
+      "return_expression": "measured('bandwise_median')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "replace",
       "replacement_kind": "truthful name; same historical proxy definition, not a different algorithm",
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "noise.bandwise_roughness_signal_to_noise_proxy_min",
@@ -1508,47 +1546,111 @@
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "min(abs(mean_spectrum) / local second-derivative noise)",
-      "return_expression": "float(np.min(band_snr)) if band_snr.size else None",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
+      "return_expression": "measured('bandwise_min')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "replace",
       "replacement_kind": "truthful name; same historical proxy definition, not a different algorithm",
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "noise.bandwise_snr_median",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "float(np.median(band_snr)) if band_snr.size else None",
-      "current_owner": "Datasets compatibility reader",
-      "target_owner": "Preflight",
+      "scientific_definition": "measured('bandwise_median')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "deprecated",
       "replaced_by": "noise.bandwise_roughness_signal_to_noise_proxy_median",
-      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR"
+      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
     },
     {
       "metric_id": "noise.bandwise_snr_min",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "min(abs(mean_spectrum) / local second-derivative noise)",
-      "current_owner": "Datasets compatibility reader",
-      "target_owner": "Preflight",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "deprecated",
       "replaced_by": "noise.bandwise_roughness_signal_to_noise_proxy_min",
-      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR"
+      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
     },
     {
       "metric_id": "noise.noise_rms",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "median MAD(second derivative) * 1.4826 / sqrt(6)",
-      "current_owner": "Datasets compatibility reader",
-      "target_owner": "Preflight",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "deprecated",
       "replaced_by": "noise.roughness_sigma_proxy",
-      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR"
+      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
     },
     {
       "metric_id": "noise.roughness_sigma_proxy",
@@ -1556,14 +1658,30 @@
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "median MAD(second derivative) * 1.4826 / sqrt(6)",
-      "return_expression": "noise_rms",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
+      "return_expression": "measured('global_noise_sigma')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "replace",
       "replacement_kind": "truthful name; same historical proxy definition, not a different algorithm",
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "noise.roughness_signal_to_noise_proxy",
@@ -1571,81 +1689,177 @@
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "mean(abs(X)) / noise_rms",
-      "return_expression": "float(snr) if snr is not None and math.isfinite(snr) else None",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
+      "return_expression": "measured('global_signal_noise_ratio')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "replace",
       "replacement_kind": "truthful name; same historical proxy definition, not a different algorithm",
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "noise.roughness_signal_to_noise_proxy_db",
       "legacy_key": "noise.snr_db",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None",
-      "return_expression": "float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
+      "scientific_definition": "measured('global_signal_noise_db')",
+      "return_expression": "measured('global_signal_noise_db')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "replace",
       "replacement_kind": "truthful name; same historical proxy definition, not a different algorithm",
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "noise.snr",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
       "scientific_definition": "mean(abs(X)) / noise_rms",
-      "current_owner": "Datasets compatibility reader",
-      "target_owner": "Preflight",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "deprecated",
       "replaced_by": "noise.roughness_signal_to_noise_proxy",
-      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR"
+      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
     },
     {
       "metric_id": "noise.snr_db",
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None",
-      "current_owner": "Datasets compatibility reader",
-      "target_owner": "Preflight",
+      "scientific_definition": "measured('global_signal_noise_db')",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
       "transition": "deprecated",
       "replaced_by": "noise.roughness_signal_to_noise_proxy_db",
-      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR"
+      "native_equivalence": "alias_only_not_LOF_or_repeat_measured_SNR",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
     },
     {
       "metric_id": "noise.worst_band_axis",
       "legacy_key": null,
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "worst_axis",
-      "return_expression": "worst_axis",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
-      "transition": "migrate",
+      "scientific_definition": "float(_axis(axis, arr.shape[1])[worst_index]) if worst_index is not None else None",
+      "return_expression": "float(_axis(axis, arr.shape[1])[worst_index]) if worst_index is not None else None",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
+      "transition": "delegate",
       "replacement_kind": null,
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Datasets axis coordinate for Methods worst-band index"
     },
     {
       "metric_id": "noise.worst_band_index",
       "legacy_key": null,
       "scope": "source",
       "definition_id": "metrics.spectral_noise",
-      "scientific_definition": "worst_idx",
-      "return_expression": "worst_idx",
-      "current_owner": "Datasets legacy Python",
-      "target_owner": "Preflight",
-      "transition": "migrate",
+      "scientific_definition": "worst_index",
+      "return_expression": "worst_index",
+      "current_owner": "Methods native kernel; Datasets axis, provenance and aliases",
+      "target_owner": "Methods with Datasets adapter",
+      "transition": "delegate",
       "replacement_kind": null,
-      "current_protocol": "6 (unchanged raw definition; presentation7)",
+      "current_protocol": "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7",
       "population": "Input source/variable population; observation count is not a claim of physical independence",
-      "native_equivalence": "not_assumed"
+      "native_equivalence": "not_assumed",
+      "native_binding": {
+        "engine": "nirs4all-methods",
+        "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": [
+          "name",
+          "engine_version",
+          "abi_version",
+          "operation",
+          "protocol_version"
+        ]
+      },
+      "native_semantics": "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
     },
     {
       "metric_id": "numeric_stats.max",

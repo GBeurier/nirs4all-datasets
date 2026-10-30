@@ -1,5 +1,8 @@
 # Scientific curation and source traceability
 
+For the current fixes, cache rebuild requirements, and future ownership boundaries,
+see the [curation ownership roadmap](maintenance/curation_ownership_roadmap.md).
+
 The raw variable collection remains available. Curation adds separate,
 observation-level **M**, **Y**, **structure**, **passport** and **measurements**
 views. It does not remove source columns, average repeated measurements, invent
@@ -147,6 +150,9 @@ Class codes retain their declared categorical type and leading zeros. Aliases
 are coalesced only when overlapping values are compatible and declared units do
 not conflict; conflicting homonyms stay separate. Completeness and constant
 checks happen after alias coalescing. Mapping entries cover every input column.
+Published catalog mappings summarize invalid and censored value counts. Detailed
+per-observation issue values remain in the local
+`canonical/curation/mapping.json`, alongside the unchanged original tables.
 
 ## Reproduce the review and migration
 

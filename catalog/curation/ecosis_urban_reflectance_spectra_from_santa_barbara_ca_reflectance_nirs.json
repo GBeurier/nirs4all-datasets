@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs",
-  "contract_sha256": "1fd58124e1755499976f399d8766f6e81831fb9bb5d6b257c90d6fc614c9f135",
+  "contract_sha256": "d5d535f9be2d5a00eddc02c4aa9d3c100fa629553c83646e44a2a073bdb07e11",
   "grain": "observation",
   "identity": {
     "method": "column",
@@ -31,11 +31,11 @@
       "level_4",
       "level_5",
       "level_6",
-      "level_7"
+      "level_7",
+      "latitude_2",
+      "longitude_2"
     ],
-    "Y": [
-      "time"
-    ],
+    "Y": [],
     "passport": [
       "dataset_id",
       "source_sample_id",
@@ -70,7 +70,8 @@
       "m_instrument",
       "m_acquisition_mode",
       "m_sampling_unit",
-      "m_scale"
+      "m_scale",
+      "y_time"
     ],
     "measurements": []
   },
@@ -78,16 +79,16 @@
     {
       "source_resource": "Y.csv",
       "original_name": "Time",
-      "canonical_name": "time",
+      "canonical_name": "y_time",
       "original_role": "Y",
       "semantic_role": "measured_trait",
-      "view": "Y",
+      "view": "passport",
       "operation": "rename",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -111,24 +112,38 @@
         "n_present": 1065,
         "n_missing": 0,
         "completeness_pct": 100.0,
-        "n_unique": 153,
-        "type": "categorical",
-        "imbalance_ratio": 12.0
+        "n_unique": 0,
+        "type": "numeric",
+        "min": null,
+        "max": null,
+        "n_censored": 0,
+        "n_invalid": 1065
       },
-      "reasons": []
+      "reasons": [
+        "empty"
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:y_time",
+      "mapping_version": "1.1",
+      "value_issue_counts": {
+        "invalid": 1065
+      },
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
-      "source_resource": "M.csv",
+      "source_resource": "Y.csv",
       "original_name": "observation_id",
       "canonical_name": "observation_id",
       "original_role": "Y",
       "semantic_role": "identifier",
       "view": "structure",
-      "operation": "assumed_row_pairing_to_Y",
+      "operation": "identity",
       "grain": "observation",
-      "target_resource": "Y.csv",
-      "independently_verified_target_ids": false,
-      "M_X_order_checked": true
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:observation_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -142,7 +157,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -156,7 +171,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:dataset_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -170,7 +187,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -184,7 +201,9 @@
         "type": "categorical",
         "imbalance_ratio": null
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:source_sample_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -198,7 +217,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -226,7 +245,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:ecosis_resource_id",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -240,7 +267,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -268,7 +295,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:file",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -282,7 +311,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -310,7 +339,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:url",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -324,7 +355,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -354,7 +385,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_site",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -368,7 +407,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -398,7 +437,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_location",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -412,7 +459,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -442,7 +489,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_country",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -456,7 +511,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -487,7 +542,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:latitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -501,7 +564,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -532,7 +595,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:longitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -546,7 +617,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -574,7 +645,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:coordinate_precision_notes",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -588,7 +667,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -621,7 +700,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_year",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -635,7 +722,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -663,7 +750,15 @@
         "type": "categorical",
         "imbalance_ratio": 15.181818181818182
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:date",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -677,7 +772,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -707,7 +802,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_species",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -721,7 +824,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -751,7 +854,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_genus",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -765,7 +876,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -795,7 +906,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_family",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -809,7 +928,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -839,7 +958,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_plant_part",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -853,7 +980,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -883,7 +1010,15 @@
       },
       "reasons": [
         "empty"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_canopy_or_leaf",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -897,7 +1032,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -927,7 +1062,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_instrument",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -941,7 +1084,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -971,7 +1114,15 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_acquisition_mode",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -985,7 +1136,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1013,7 +1164,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:signal_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1027,7 +1186,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1055,7 +1214,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:axis_unit",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1069,7 +1236,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1100,7 +1267,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:axis_min",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1114,7 +1289,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1145,7 +1320,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:axis_max",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1159,7 +1342,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1190,7 +1373,15 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:n_points_original",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1204,7 +1395,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1232,7 +1423,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:publication_doi",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1246,7 +1445,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1274,7 +1473,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:citation",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1288,7 +1495,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1316,7 +1523,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:license",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1330,7 +1545,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1358,7 +1573,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:rights_status",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1372,7 +1595,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1400,7 +1623,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:usage_scope",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1414,7 +1645,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1442,7 +1673,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:notes",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1456,7 +1695,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1484,7 +1723,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:name",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1498,7 +1739,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -1512,7 +1753,9 @@
         "type": "categorical",
         "imbalance_ratio": 13.25
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:polygon_unit_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1526,7 +1769,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1556,7 +1799,9 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_sampling_unit",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1570,7 +1815,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1598,7 +1843,9 @@
         "type": "categorical",
         "imbalance_ratio": 5.016949152542373
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_1",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1612,7 +1859,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1640,7 +1887,9 @@
         "type": "categorical",
         "imbalance_ratio": 10.574468085106384
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_2",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1654,7 +1903,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1682,7 +1931,9 @@
         "type": "categorical",
         "imbalance_ratio": 176.5
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_3",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1696,7 +1947,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1724,7 +1975,9 @@
         "type": "categorical",
         "imbalance_ratio": 80.5
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_4",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1738,7 +1991,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1766,7 +2019,9 @@
         "type": "categorical",
         "imbalance_ratio": 106.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_5",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1780,7 +2035,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1808,7 +2063,9 @@
         "type": "categorical",
         "imbalance_ratio": 486.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_6",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1822,7 +2079,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1850,21 +2107,23 @@
         "type": "categorical",
         "imbalance_ratio": 176.5
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:level_7",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_Lat",
-      "canonical_name": "latitude",
+      "canonical_name": "latitude_2",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "coalesce_compatible_aliases",
+      "operation": "keep_conflicting_homonyms_separate",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1889,27 +2148,28 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 24,
-        "type": "numeric",
-        "min": 34.0131,
-        "max": 34.4574,
-        "n_censored": 0,
-        "n_invalid": 0
+        "type": "categorical",
+        "imbalance_ratio": 13.25
       },
-      "reasons": []
+      "reasons": [
+        "conflicting aliases; no overwrite"
+      ],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:latitude_2",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_Long",
-      "canonical_name": "longitude",
+      "canonical_name": "longitude_2",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "coalesce_compatible_aliases",
+      "operation": "keep_conflicting_homonyms_separate",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1934,13 +2194,14 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 28,
-        "type": "numeric",
-        "min": -119.8927,
-        "max": 119.8927,
-        "n_censored": 0,
-        "n_invalid": 0
+        "type": "categorical",
+        "imbalance_ratio": 106.0
       },
-      "reasons": []
+      "reasons": [
+        "conflicting aliases; no overwrite"
+      ],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:longitude_2",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1954,7 +2215,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -1982,7 +2243,9 @@
         "type": "categorical",
         "imbalance_ratio": 15.181818181818182
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:date",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -1996,7 +2259,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -2026,7 +2289,9 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:m_scale",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -2040,7 +2305,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -2068,7 +2333,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:source",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -2082,7 +2349,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -2110,7 +2377,9 @@
         "type": "categorical",
         "imbalance_ratio": 977.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:photo",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -2120,7 +2389,9 @@
       "semantic_role": "identifier",
       "view": "structure",
       "operation": "identity",
-      "grain": "observation"
+      "grain": "observation",
+      "variable_id": "ecosis_urban_reflectance_spectra_from_santa_barbara_ca_reflectance_nirs:observation_id",
+      "mapping_version": "1.1"
     }
   ],
   "variables": [
@@ -2145,10 +2416,6 @@
         {
           "resource": "M.csv",
           "name": "latitude"
-        },
-        {
-          "resource": "M.csv",
-          "name": "source_Lat"
         }
       ]
     },
@@ -2173,10 +2440,6 @@
         {
           "resource": "M.csv",
           "name": "longitude"
-        },
-        {
-          "resource": "M.csv",
-          "name": "source_Long"
         }
       ]
     },
@@ -2353,8 +2616,8 @@
       ]
     },
     {
-      "name": "time",
-      "view": "Y",
+      "name": "latitude_2",
+      "view": "M",
       "grain": "observation",
       "unit": null,
       "stats": {
@@ -2362,26 +2625,45 @@
         "n_present": 1065,
         "n_missing": 0,
         "completeness_pct": 100.0,
-        "n_unique": 153,
+        "n_unique": 24,
         "type": "categorical",
-        "imbalance_ratio": 12.0
+        "imbalance_ratio": 13.25
       },
       "source_columns": [
         {
-          "resource": "Y.csv",
-          "name": "Time"
+          "resource": "M.csv",
+          "name": "source_Lat"
+        }
+      ]
+    },
+    {
+      "name": "longitude_2",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 1065,
+        "n_present": 1065,
+        "n_missing": 0,
+        "completeness_pct": 100.0,
+        "n_unique": 28,
+        "type": "categorical",
+        "imbalance_ratio": 106.0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "source_Long"
         }
       ]
     }
   ],
   "enrichments": [],
-  "warnings": [
-    "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-  ],
+  "warnings": [],
   "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
   "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
   "source_hashes": {
     "M.csv": "fcb563de50b3607d304b58cb90fc04f29510698b8158b790feb85771bed45a4c",
-    "Y.csv": "a2ca030b9b946dfd229ffaea062b104e84a876d3a2ae71202a053c52603381ed"
+    "Y.csv": "d09997c68ce0074aab6712c3a413b9a231709e1329d9296ba291e49e58e7d7a5"
   }
 }

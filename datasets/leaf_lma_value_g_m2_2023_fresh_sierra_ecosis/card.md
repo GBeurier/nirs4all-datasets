@@ -28,7 +28,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | --- | --- | --- | --- | --- |
 | LMA_value_g_m2 | target | numeric | *Not specified.* | n=363, missing=0, range 37.36–306.3, mean 132.6 ± 71.95 |
 | SpectralRep | metadata | numeric | *Not specified.* | n=363, missing=0, range 1–1, mean 1 ± 0 |
-| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00005 (×28) |
+| replicate_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=34, top LC_00004 (×28) |
 | foreoptic_type | metadata | categorical | *Not specified.* | n=363, missing=0, classes=2, top LC (×294) |
 | individualspectra_id | metadata | categorical | *Not specified.* | n=363, missing=0, classes=363, top CA2023_005_LC_00002 (×1) |
 | sampling_date | metadata | categorical | *Not specified.* | n=363, missing=0, classes=8, top 7/7/2023 (×100) |
@@ -119,5 +119,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8a486aee64f334547484ff70cea1a5075b83bdb2eb6e16d0c627830757630007`
-- **Processing hash:** `fa4cc69ed0f946be08201013b5d59df287c9bfce7bdfc6b16f1ba759dc09558d` | **metadata hash:** `5941b3cea9ca4b745ee85b45dc4c0ec6592e56e01512584a398064db7f172715`
+- **Content hash:** `227581a08a728f2b0394493ff932f01e701afecbdbc793cdd8ecc57bf4b8dd2b`
+- **Processing hash:** `37ce018617dcd23e065707ed5ac87d9333231537a2e7255e2e14da9c980213d6` | **metadata hash:** `36974db071ab0b032c286fabd68c35b9226bab7cb4658a5008d82964ac566d23`
