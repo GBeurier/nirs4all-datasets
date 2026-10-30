@@ -24,6 +24,7 @@ from typing import Any, cast
 
 import numpy as np
 from scipy import stats
+from scipy.integrate import trapezoid
 from scipy.spatial.distance import jensenshannon
 
 _CLASS_KEYS = ("n_classes", "normalized_entropy", "imbalance_ratio", "gini_simpson", "minority_fraction")
@@ -501,7 +502,7 @@ def spectral_amplitude(x: object, axis: object | None = None) -> dict[str, objec
     ax = _axis(axis, arr.shape[1])
     if finite_mean.sum() >= 2:
         order = np.argsort(ax[finite_mean])
-        area = float(np.trapezoid(mean_spectrum[finite_mean][order], ax[finite_mean][order]))
+        area = float(trapezoid(mean_spectrum[finite_mean][order], ax[finite_mean][order]))
     else:
         area = None
     vals = _finite_values(arr)

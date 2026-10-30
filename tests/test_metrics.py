@@ -80,6 +80,15 @@ def test_spectral_profile_contains_requested_metric_families() -> None:
     assert profile["diagnostics"]
 
 
+def test_profile_supports_numpy_without_trapezoid(monkeypatch: pytest.MonkeyPatch) -> None:
+    # NumPy 1.24 is supported but does not expose np.trapezoid.
+    monkeypatch.delattr(np, "trapezoid", raising=False)
+    spectra = np.tile([1.0, 2.0, 3.0, 4.0], (6, 1))
+    profile = m.spectral_profile(spectra, np.array([4.0, 3.0, 2.0, 1.0]))
+    assert profile["amplitude"]["area_under_curve"] == pytest.approx(7.5)
+    assert profile["profile_scores"]["repeatability_risk"] is None
+
+
 def test_diagnostic_hypotheses_rank_splice_like_signature() -> None:
     profile = {
         "profile_scores": {

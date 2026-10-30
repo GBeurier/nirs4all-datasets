@@ -373,6 +373,24 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, 
         "stats": stats,
         "assets": [],
     }
+    if var.role is VariableRole.TARGET and effective_type is VarType.NUMERIC:
+        # Task inference is per target; the descriptor's numeric storage type remains intact.
+        finite = numeric.to_numpy(dtype="float64")
+        finite = finite[np.isfinite(finite)]
+        if finite.size >= 3 and set(finite.tolist()) == {0.0, 1.0}:
+            try:
+                from nirs4all_io.infer.detectors import detect_task_type
+
+                if detect_task_type(finite)[0] == "binary":
+                    section["task_type"] = "classification"
+                    finite_values = numeric.where(np.isfinite(numeric))
+                    section["class_stats"] = variable_metrics["categorical_stats"](finite_values)
+                    section["balance"] = _class_balance(finite_values)
+            except ImportError:
+                section["task_type"] = "unavailable"
+                warning = "numeric target task inference unavailable (install nirs4all-io)"
+                if warning not in warnings:
+                    warnings.append(warning)
     if histogram is not None:
         section["histogram"] = histogram
     if shape is not None:

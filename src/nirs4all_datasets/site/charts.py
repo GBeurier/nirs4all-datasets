@@ -10,6 +10,7 @@ escaping helpers — no nirs4all / pandas / matplotlib.
 from __future__ import annotations
 
 import math
+import textwrap
 from typing import Any
 
 from .escape import esc, num
@@ -684,12 +685,12 @@ def radar_profiles(profiles: list[dict[str, Any]], *, title: str = "Dataset prof
     for p in profiles[:8]:
         scores = p.get("scores") or {}
         # A missing axis is not a measured zero at the center of the radar.
-        if not all(_ok(scores.get(k)) for k, _ in axes):
+        if sum(_ok(scores.get(k)) for k, _ in axes) < 3:
             continue
-        vals = [float(scores[k]) for k, _ in axes]
+        vals = [float(scores[k]) if _ok(scores.get(k)) else None for k, _ in axes]
         rows.append((str(p.get("label") or "dataset"), vals, str(p.get("color") or "")))
     if not rows:
-        return _empty(width, 300, title, "profile incomplete; consult the metric table")
+        return _empty(width, 300, title, "fewer than three profile axes available; consult the metric table")
     height = round(width * 0.80)
     cx, cy = width * 0.40, height * 0.5
     rmax = min(width * 0.24, height * 0.34)
@@ -720,45 +721,63 @@ def radar_profiles(profiles: list[dict[str, Any]], *, title: str = "Dataset prof
         label, vals, color = rows[i]
         color = color or _ramp(i)
         primary = i == 0
-        pts = " ".join(f"{point(j, v)[0]:.1f},{point(j, v)[1]:.1f}" for j, v in enumerate(vals))
-        parts.append(
-            f'<polygon points="{pts}" fill="{color}" fill-opacity="{0.22 if primary else 0.09}" '
-            f'stroke="{color}" stroke-width="{2.2 if primary else 1.3}" stroke-linejoin="round"><title>{esc(label)} profile</title></polygon>'
-        )
-        if single or primary:
-            for j, (_k, axlabel) in enumerate(axes):
-                vx, vy = point(j, vals[j])
-                parts.append(f'<circle cx="{vx:.1f}" cy="{vy:.1f}" r="2.4" fill="{color}"><title>{esc(axlabel)}: {vals[j]:.2f}</title></circle>')
+        if all(v is not None for v in vals):
+            pts = " ".join(f"{point(j, v)[0]:.1f},{point(j, v)[1]:.1f}" for j, v in enumerate(vals) if v is not None)
+            parts.append(
+                f'<polygon points="{pts}" fill="{color}" fill-opacity="{0.22 if primary else 0.09}" '
+                f'stroke="{color}" stroke-width="{2.2 if primary else 1.3}" stroke-linejoin="round"><title>{esc(label)} profile</title></polygon>'
+            )
+        else:
+            for j, v in enumerate(vals):
+                next_v = vals[(j + 1) % n_ax]
+                if v is not None and next_v is not None:
+                    x1, y1 = point(j, v)
+                    x2, y2 = point((j + 1) % n_ax, next_v)
+                    parts.append(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{color}" stroke-width="{2.2 if primary else 1.3}"></line>')
+        for j, (_k, axlabel) in enumerate(axes):
+            value = vals[j]
+            if value is not None and (single or primary or any(v is None for v in vals)):
+                vx, vy = point(j, value)
+                parts.append(f'<circle cx="{vx:.1f}" cy="{vy:.1f}" r="2.4" fill="{color}"><title>{esc(label)} — {esc(axlabel)}: {value:.2f}</title></circle>')
     parts.append(_legend_panel([("box", color or _ramp(i), _clip(label, 16)) for i, (label, _vals, color) in enumerate(rows)], right=width - 8, top=12))
     parts.append(f'<text x="{cx:.1f}" y="{height - 8:.0f}" text-anchor="middle" font-size="{FS_AXIS}" fill="{FAINT}">0 center · 1 outer ring · outward = stronger anomaly / heterogeneity signal</text>')
     return _svg(width, height, "".join(parts), title=title)
 
 
 def diagnostic_bars(diagnostics: list[dict[str, Any]], *, title: str = "Diagnostic hypotheses", width: float = 520, top_n: int = 8) -> str:
-    """Ranked diagnostic hypothesis bars, where score is 0..1."""
+    """Ranked 0..1 hypothesis bars with full, wrapped labels and room for every line."""
     rows = [(str(d.get("label") or d.get("key") or "diagnostic"), float(d.get("score") or 0.0)) for d in diagnostics[:top_n] if _ok(d.get("score"))]
     if not rows:
         return _empty(width, 180, title, "no diagnostic")
-    height = 46 + len(rows) * 32
-    label_w = min(width * 0.42, 220)
+    label_w = min(width * 0.48, 250)
     bar_w = width - label_w - 56
+    line_h = 17
+    label_chars = max(8, int((label_w - 24) / (FS_LABEL * 0.65)))
+    wrapped = [textwrap.wrap(label, width=label_chars) or [label] for label, _score in rows]
+    row_heights = [max(34, len(lines) * line_h + 12) for lines in wrapped]
+    height = 40 + sum(row_heights) + 8
     parts: list[str] = []
     axis_y = 26
     for tick in (0.0, 0.25, 0.5, 0.75, 1.0):
         x = label_w + tick * bar_w
         parts.append(f'<line x1="{x:.0f}" y1="{axis_y}" x2="{x:.0f}" y2="{height - 10:.0f}" stroke="{GRID_SOFT}"></line>')
         parts.append(f'<text x="{x:.0f}" y="13" text-anchor="middle" font-size="{FS_TICK}" fill="{MUTED}" class="numt">{tick:.2g}</text>')
-    parts.append(f'<text x="{label_w + bar_w:.0f}" y="30" text-anchor="end" font-size="{FS_AXIS}" fill="{FAINT}">hypothesis score</text>')
-    for i, (label, score) in enumerate(rows):
-        y = 36 + i * 32
+    parts.append(f'<text x="{label_w + bar_w:.0f}" y="30" text-anchor="end" font-size="{FS_AXIS}" fill="{MUTED}">hypothesis score</text>')
+    row_y = 40
+    for (label, score), lines, row_h in zip(rows, wrapped, row_heights, strict=True):
+        cy = row_y + row_h / 2
+        y = cy - 10
+        label_y = cy - (len(lines) - 1) * line_h / 2 + 4
+        spans = " ".join(f'<tspan x="{label_w - 12:.0f}" y="{label_y + j * line_h:.1f}">{esc(line)}</tspan>' for j, line in enumerate(lines))
         w = max(2.0, max(0.0, min(1.0, score)) * bar_w)
         color = _risk_color(score)
         parts.append(
-            f'<text x="{label_w - 10:.0f}" y="{y + 16:.0f}" text-anchor="end" font-size="{FS_LABEL}" fill="{INK}">{esc(_clip(label, 30))}</text>'
+            f'<text text-anchor="end" font-size="{FS_LABEL}" fill="{INK}">{spans}</text>'
             f'<rect x="{label_w:.0f}" y="{y:.0f}" width="{bar_w:.0f}" height="20" rx="4" fill="{GRID_SOFT}" stroke="{GRID}" stroke-width="1"></rect>'
             f'<rect x="{label_w:.0f}" y="{y:.0f}" width="{w:.1f}" height="20" rx="4" fill="{color}"><title>{esc(label)}: {score:.2f}</title></rect>'
             f'<text x="{label_w + bar_w + 8:.0f}" y="{y + 15:.0f}" font-size="{FS_VALUE}" fill="{MUTED}" class="numt">{score:.2f}</text>'
         )
+        row_y += row_h
     return _svg(width, height, "".join(parts), title=title)
 
 

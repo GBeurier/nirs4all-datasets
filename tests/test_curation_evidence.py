@@ -162,8 +162,18 @@ def test_unknown_profile_axes_are_not_plotted_at_zero():
     from nirs4all_datasets.site.charts import radar_profiles
 
     svg = radar_profiles([{"label": "partial", "scores": {"noise_risk": 0.8}}])
-    assert "incomplete" in svg
+    assert "fewer than three profile axes available" in svg
     assert "partial profile" not in svg
+
+
+def test_partial_profile_draws_only_available_axes():
+    from nirs4all_datasets.site.charts import radar_profiles
+
+    svg = radar_profiles([{"label": "partial", "scores": {"integrity_risk": 0.0, "noise_risk": 0.8, "shape_drift": 0.3}}])
+    assert "partial — integrity: 0.00" in svg
+    assert "partial — noise: 0.80" in svg
+    assert "partial — repeatability" not in svg
+    assert "partial profile</title>" not in svg  # no filled polygon across missing axes
 
 
 def test_lucas_source_context_is_content_addressed_and_regenerated(tmp_path):
