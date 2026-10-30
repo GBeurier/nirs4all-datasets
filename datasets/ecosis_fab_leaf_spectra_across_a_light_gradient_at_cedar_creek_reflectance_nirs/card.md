@@ -77,7 +77,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,5 +99,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f231b2c4cff7bd73d521875833cc71f1f82c62362cc34178feeb8c936cff776d`
-- **Processing hash:** `2d079f5eb0af8c3431c4a106b2252b0fad710a4bbdaa49b7759069fcc396d9b8` | **metadata hash:** `5a79e2d352b04c02a807bcd7be164b7039f167320a1edf81d25daa3fef80f202`
+- **Content hash:** `64fdba49c9f6081c1369f9800767293d47c576c600ee4633999b513ebcdab8f2`
+- **Processing hash:** `e334a1732c8a2c61cc30fece3bc65c5206edff4a80f6f86a49ab90cca41b7a61` | **metadata hash:** `913899ca7697760a88e3b7a71790b1b5eb825cbf2d32c14c280ae702caac4f8e`

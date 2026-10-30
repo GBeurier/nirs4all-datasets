@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset_id": "dryad_guava_leaf_infestation_visnir_manual",
-  "contract_sha256": "7630ae9756341533d616733ad2a8989a63c228599aaa0c49860c68e43f09177c",
+  "contract_sha256": "14c080ea75d3692da9b630cd5123f6e6da2f4d2af74c4db2c51b683f76f5e9f5",
   "grain": "observation",
   "identity": {
     "method": "column",
@@ -24,9 +24,7 @@
   },
   "views": {
     "M": [],
-    "Y": [
-      "infestation_status"
-    ],
+    "Y": [],
     "passport": [
       "source_sample_id",
       "infestation_status",
@@ -34,7 +32,8 @@
       "manual_download_source_dir",
       "manual_download_file",
       "official_source_url",
-      "standardization_batch"
+      "standardization_batch",
+      "y_infestation_status"
     ],
     "measurements": []
   },
@@ -42,16 +41,16 @@
     {
       "source_resource": "Y.csv",
       "original_name": "infestation_status",
-      "canonical_name": "infestation_status",
+      "canonical_name": "y_infestation_status",
       "original_role": "Y",
       "semantic_role": "measured_trait",
-      "view": "Y",
+      "view": "passport",
       "operation": "identity",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -75,11 +74,26 @@
         "n_present": 15,
         "n_missing": 0,
         "completeness_pct": 100.0,
-        "n_unique": 3,
-        "type": "categorical",
-        "imbalance_ratio": 1.0
+        "n_unique": 0,
+        "type": "numeric",
+        "min": null,
+        "max": null,
+        "n_censored": 0,
+        "n_invalid": 15
       },
-      "reasons": []
+      "reasons": [
+        "empty"
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:y_infestation_status",
+      "mapping_version": "1.1",
+      "value_issue_counts": {
+        "invalid": 15
+      },
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -90,6 +104,8 @@
       "view": "structure",
       "operation": "assumed_row_pairing_to_Y",
       "grain": "observation",
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:observation_id",
+      "mapping_version": "1.1",
       "target_resource": "Y.csv",
       "independently_verified_target_ids": false,
       "M_X_order_checked": true
@@ -106,7 +122,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -120,7 +136,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:source_sample_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -134,7 +152,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -162,7 +180,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:infestation_status",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -176,7 +196,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -204,7 +224,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:manual_download",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -218,7 +246,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -246,7 +274,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:manual_download_source_dir",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -260,7 +296,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -288,7 +324,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:manual_download_file",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -302,7 +346,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -330,7 +374,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:official_source_url",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -344,7 +396,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -372,7 +424,15 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:standardization_batch",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -382,32 +442,12 @@
       "semantic_role": "identifier",
       "view": "structure",
       "operation": "identity",
-      "grain": "observation"
-    }
-  ],
-  "variables": [
-    {
-      "name": "infestation_status",
-      "view": "Y",
       "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 15,
-        "n_present": 15,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 3,
-        "type": "categorical",
-        "imbalance_ratio": 1.0
-      },
-      "source_columns": [
-        {
-          "resource": "Y.csv",
-          "name": "infestation_status"
-        }
-      ]
+      "variable_id": "dryad_guava_leaf_infestation_visnir_manual:observation_id",
+      "mapping_version": "1.1"
     }
   ],
+  "variables": [],
   "enrichments": [],
   "warnings": [
     "Y/M row pairing explicitly assumed; not independently verified by target identifiers."

@@ -29,7 +29,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Variety | target | categorical | *Not specified.* | n=1991, missing=0, classes=5, top SW (×1139) |
 | Days in Room Temp | target | numeric | *Not specified.* | n=1991, missing=27, range 1–8, mean 4.596 ± 2.733 |
 | harvest_date | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=6, top 2023-05-29 00:00:00 (×956) |
-| nir_date | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=13, top 2023-06-14 00:00:00 (×239) |
+| nir_date | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=13, top 2023-06-07 00:00:00 (×239) |
 | instrument_context | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top Felix_F750_handheld_2023 (×1991) |
 | manual_download_source_dir | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\advocado (×1991) |
 | manual_download_file | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top Felix_2nd_ave.xlsx (×1991) |
@@ -76,5 +76,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `17b560fb77192110b947f7ea3ff4c361077263ca5d103483d872ec3da3e712ec`
-- **Processing hash:** `da3b1ac4fb01384c1f19e245d96eb3006e045b7ba1817fcaecb6875961147b4f` | **metadata hash:** `91d2e2e757ac0605c6faba62a2869b837d77d9af879ff751d0e66cb3ed74d3c6`
+- **Content hash:** `de2bcd22617ea626b5224f4e8c562dbb87b315029c275cc0afba870c377d2d6b`
+- **Processing hash:** `5501c04cbc6c5d7e6363cbe2f8e8254cb7aa45bf4ce5cd9096e9adff7b67c479` | **metadata hash:** `25be654bb710c25426add5ed413a08855c10d149ae1fc80da691286064e67034`

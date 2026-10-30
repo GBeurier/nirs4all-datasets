@@ -45,7 +45,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top EWT_mg_cm2 (×2399) |
 | target_original_name | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top EWT (mg/cm2) (×2399) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top coastal grassland Belgium and Japan ITV spectra and traits (×2399) |
-| raw_label | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2270, top 9.283 (×3) |
+| raw_label | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2270, top 16.132 (×3) |
 | reference_value | metadata | numeric | *Not specified.* | n=2399, missing=0, range 5.474–42.72, mean 18.44 ± 7.05 |
 | class_index | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
@@ -104,5 +104,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `bbd032e1be5349139594cb2aeb1ef8f666b5dd36568feb2e11c5d6c2cb055f14`
-- **Processing hash:** `18fadb5fecd13a21f4042eb50cac6411bb17dc8054207416a960415e6497b0d7` | **metadata hash:** `c42aa63c1e30ea54db6de7d7d5446da09c54c57b53aa6c4c3ddb0448d7652b4a`
+- **Content hash:** `413d15f38bea82cfc37415059a3ee22edc6b01f6081df110620bbe8b2a4b6a9a`
+- **Processing hash:** `8c0e1c1ffebce561ba5aca41947d23efae7d7beec1ba2d90b90555ebc2cd650c` | **metadata hash:** `8cef160c798a6b00fe59f0c0f4985094efdeef2c30e4add5262225805e81dbb9`

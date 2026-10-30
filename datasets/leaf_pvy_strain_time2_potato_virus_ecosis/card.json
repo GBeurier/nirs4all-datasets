@@ -1,7 +1,28 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "Sample identifier declared in M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 80,
+      "n_samples": 80,
+      "observations_per_unit": {
+        "1": 80
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicity of the declared identifier; protocol not established"
+    },
     "identity_status": "available",
     "level": "sample",
+    "n_known_sample_units": 80,
+    "n_observation_groups": 80,
     "n_observations_total": 80,
     "n_samples": 80,
     "profile_scores": {
@@ -11,9 +32,10 @@
       "outlier_pressure": 0.3843063842759074,
       "reference_spread": 0.12197344934408855,
       "repeatability_risk": null,
-      "shape_drift": 0.8066454549178168,
-      "structure_complexity": 0.6179470775525501
+      "shape_drift": 0.8066454549178155,
+      "structure_complexity": 0.6179470775525499
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -28,7 +50,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "0e572439f27b5b5d16a70445be1d18e66c226ea4baf56c7a3f029fd3ddb97669",
+    "contract_sha256": "7cfb86ecae7dc23e4a748460bae097a42f1c0e925faa516bd6a44052ac279632",
     "dataset_id": "leaf_pvy_strain_time2_potato_virus_ecosis",
     "enrichments": [],
     "grain": "observation",
@@ -53,7 +75,7 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "5e50caa5ad9ccf0ca1034b5f73beb0a23807fe323f4f5b74279950d6e8e66df9",
       "Y.csv": "5c89ca9ed33773e3b981541fc3c4784bcd62c71d0c7cda8f4c3c24a36ccb663d"
@@ -71,12 +93,15 @@
         ],
         "stats": {
           "completeness_pct": 100.0,
-          "imbalance_ratio": 1.0,
+          "max": 3.0,
+          "min": 0.0,
+          "n_censored": 0,
+          "n_invalid": 0,
           "n_missing": 0,
           "n_present": 80,
           "n_rows": 80,
           "n_unique": 4,
-          "type": "categorical"
+          "type": "numeric"
         },
         "unit": null,
         "view": "Y"
@@ -128,7 +153,7 @@
       "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
     ]
   },
-  "generated_at": "2026-10-29T12:30:28.078757+00:00",
+  "generated_at": "2026-10-30T15:48:52.467173+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -149,10 +174,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "858cf853ce684d7170291f0dfaefa72b48b2a04fe13b1587668c23a514b2bd51",
+    "content_hash": "fe5a6a5d6c15a9022cafb6b6cbed1b1255f6c73611b5f5943cddac48639fbb2d",
     "manifest": "manifest.json",
-    "metadata_hash": "591cfb897ab8b94bcc0a92e23505c8afbdfb8ccde224760a42b74c6df3d44697",
-    "processing_hash": "633a4d1edff5f25e7152a12e7e999e0e39d6df6c58eae3955a031fcc2f586fc2"
+    "metadata_hash": "99c24404fa305e7726df08888bf2506bc789dcb6b6d8adae953f1d79239b51a4",
+    "processing_hash": "7ee3a0f7dbc9f84cde8e9d273dac83e8531f2e5326c84d0ab513c47eef1bae50"
   },
   "protocol_version": "7",
   "provenance": {
@@ -199,12 +224,7 @@
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -218,8 +238,8 @@
       "n_observations": 80,
       "n_variables": 2151,
       "name": "plantlevel_means_df_PID_Time2",
-      "signal_type": null,
-      "signal_type_confidence": 0.0,
+      "signal_type": "absorbance",
+      "signal_type_confidence": 0.6,
       "source_id": "X",
       "spectral": {
         "curve": {
@@ -1226,7 +1246,7 @@
         },
         "mean_max": 0.5131362486630678,
         "mean_min": 0.025243750005029143,
-        "n_outliers": null,
+        "n_outliers": 28,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1291,7 +1311,7 @@
                   "signal": "local artifacts"
                 },
                 {
-                  "level": 0.8066454549178168,
+                  "level": 0.8066454549178155,
                   "signal": "Baseline/mean/area"
                 },
                 {
@@ -1315,10 +1335,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.4840030150416905,
+              "score": 0.4840030150416901,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.4840030150416905,
+              "signal_strength": 0.4840030150416901,
               "strength": "medium"
             },
             {
@@ -1326,7 +1346,7 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.8066454549178168,
+                  "level": 0.8066454549178155,
                   "signal": "Baseline/mean/area"
                 },
                 {
@@ -1350,10 +1370,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.4115516675888193,
+              "score": 0.41155166758881884,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.4115516675888193,
+              "signal_strength": 0.41155166758881884,
               "strength": "weak"
             },
             {
@@ -1365,7 +1385,7 @@
                   "signal": "Jump rate"
                 },
                 {
-                  "level": 0.8066454549178168,
+                  "level": 0.8066454549178155,
                   "signal": "Baseline/mean/area"
                 },
                 {
@@ -1385,10 +1405,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.3556934938406755,
+              "score": 0.3556934938406752,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.3556934938406755,
+              "signal_strength": 0.3556934938406752,
               "strength": "weak"
             },
             {
@@ -1396,7 +1416,7 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.6179470775525501,
+                  "level": 0.6179470775525499,
                   "signal": "PCA structure"
                 },
                 {
@@ -1416,10 +1436,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.2646298344365377,
+              "score": 0.26462983443653765,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.2646298344365377,
+              "signal_strength": 0.26462983443653765,
               "strength": "weak"
             },
             {
@@ -1526,6 +1546,14 @@
             "bandwise_snr_median": 5694.092778742783,
             "bandwise_snr_min": 25.249758299325894,
             "noise_rms": 6.052340652155405e-05,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 6.052340652155405e-05,
             "roughness_signal_to_noise_proxy": 3789.234619577236,
             "roughness_signal_to_noise_proxy_db": 71.57102992990298,
@@ -1535,17 +1563,17 @@
             "worst_band_index": 1
           },
           "outliers": {
-            "hotelling_t2_max": 11.38987989076328,
-            "hotelling_t2_median": 2.6443008033781883,
+            "hotelling_t2_max": 11.389879890763288,
+            "hotelling_t2_median": 2.644300803378188,
             "hotelling_t2_p95": 6.248214612701478,
-            "hotelling_t2_ratio": 2.3628985797376614,
-            "mahalanobis_h_max": 3.3748896116411395,
+            "hotelling_t2_ratio": 2.362898579737662,
+            "mahalanobis_h_max": 3.3748896116411404,
             "mahalanobis_h_median": 1.6260721115253505,
             "mahalanobis_h_p95": 2.49963957500879,
             "mahalanobis_h_ratio": 1.5372255371036296,
             "pca_q_max": 0.23410845394240945,
-            "pca_q_median": 0.003014165818417995,
-            "pca_q_p95": 0.008433377032896698,
+            "pca_q_median": 0.003014165818417993,
+            "pca_q_p95": 0.008433377032896693,
             "pca_q_ratio": 2.797914096618285
           },
           "profile_scores": {
@@ -1555,8 +1583,8 @@
             "outlier_pressure": 0.3843063842759074,
             "reference_spread": 0.12197344934408855,
             "repeatability_risk": null,
-            "shape_drift": 0.8066454549178168,
-            "structure_complexity": 0.6179470775525501
+            "shape_drift": 0.8066454549178155,
+            "structure_complexity": 0.6179470775525499
           },
           "reference": {
             "affine_gain_median": 0.9972734894077584,
@@ -1581,23 +1609,17 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": -0.19677813326550198,
+            "baseline_slope": -0.19677813326550164,
             "curvature_rms": 0.0005147136352003145,
             "d1_rms": 0.0018428018093586177,
             "edge_noise_ratio": 0.1550897923460171
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
-            "density_cv": 0.3473876031086845,
+            "density_cv": 0.3473876031086844,
             "isolation_forest_score_p95": 0.5805635744982451,
-            "knn_distance_ratio_p95": 1.8538412326576503,
-            "local_outlier_factor_p95": 1.8538412326576503,
-            "pca_score_density": 6.062527202845739
+            "knn_distance_ratio_p95": 1.8538412326576494,
+            "local_outlier_factor_p95": 1.8538412326576494,
+            "pca_score_density": 6.062527202845734
           }
         },
         "quality": {
@@ -1608,329 +1630,329 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.5566989103920869,
-            0.3124744509904875
+            0.556698910392087,
+            0.31247445099048715
           ],
           "points": [
             {
-              "x": -0.40867001839254263,
-              "y": 0.0909544246852139
+              "x": -0.40867001839254297,
+              "y": 0.0909544246852138
             },
             {
-              "x": -0.03792012236369593,
-              "y": -0.05895536314905159
+              "x": -0.037920122363696074,
+              "y": -0.058955363149052385
             },
             {
-              "x": -0.00594220078077349,
-              "y": -0.16475449717690416
+              "x": -0.0059422007807733955,
+              "y": -0.16475449717690407
             },
             {
-              "x": -0.4358071665511173,
-              "y": 0.18047958646770246
+              "x": -0.4358071665511175,
+              "y": 0.18047958646770224
             },
             {
-              "x": 0.018950703189780288,
-              "y": 0.050999521340171196
+              "x": 0.018950703189780257,
+              "y": 0.05099952134017112
             },
             {
-              "x": 0.1278720765292176,
+              "x": 0.12787207652921748,
               "y": 0.4163892604050235
             },
             {
-              "x": 0.4001438970563426,
-              "y": -0.3408700381696324
+              "x": 0.4001438970563429,
+              "y": -0.34087003816963213
             },
             {
-              "x": 0.18403392269753996,
-              "y": -0.0711717348068386
+              "x": 0.1840339226975401,
+              "y": -0.07117173480683854
             },
             {
-              "x": 0.015718715085546196,
-              "y": -0.1574427153705234
+              "x": 0.01571871508554625,
+              "y": -0.15744271537052337
             },
             {
-              "x": 0.29045366768092024,
-              "y": -0.14265974475776577
+              "x": 0.2904536676809204,
+              "y": -0.14265974475776566
             },
             {
-              "x": 0.2148455386340725,
-              "y": -0.18885060169591142
+              "x": 0.2148455386340727,
+              "y": -0.18885060169591122
             },
             {
               "x": 0.09693519998403535,
-              "y": 0.07913701767642763
+              "y": 0.07913701767642752
             },
             {
-              "x": 0.4236527709180163,
-              "y": -0.1589510766254021
+              "x": 0.42365277091801645,
+              "y": -0.15895107662540198
             },
             {
               "x": 0.2926062724672924,
-              "y": 0.20119856808570513
+              "y": 0.20119856808570524
             },
             {
-              "x": -0.3849075928945615,
-              "y": 0.023942002144391485
+              "x": -0.38490759289456156,
+              "y": 0.023942002144391357
             },
             {
-              "x": -0.07508994328390926,
-              "y": -0.00021610941124448123
+              "x": -0.07508994328390929,
+              "y": -0.00021610941124470867
             },
             {
-              "x": -0.05858682231494359,
-              "y": 0.15241742594708071
+              "x": -0.05858682231494367,
+              "y": 0.15241742594708063
             },
             {
-              "x": -0.22257814187381977,
+              "x": -0.2225781418738201,
               "y": 0.3978530896766267
             },
             {
-              "x": -0.16855454386689964,
-              "y": -0.34364243891020463
+              "x": -0.1685545438668996,
+              "y": -0.3436424389102046
             },
             {
-              "x": 0.010511498437413551,
-              "y": -0.08533544240360433
+              "x": 0.010511498437413577,
+              "y": -0.08533544240360431
             },
             {
-              "x": -0.40767431799079745,
-              "y": 0.02056763904521206
+              "x": -0.4076743179907976,
+              "y": 0.020567639045212013
             },
             {
-              "x": -0.6487327950995794,
-              "y": 0.5130492452995008
+              "x": -0.6487327950995798,
+              "y": 0.5130492452995005
             },
             {
-              "x": -0.2495958974526026,
-              "y": -0.22405668477138385
+              "x": -0.24959589745260258,
+              "y": -0.22405668477138382
             },
             {
-              "x": 0.4485914553542433,
-              "y": -0.23622598476968765
+              "x": 0.44859145535424355,
+              "y": -0.23622598476968742
             },
             {
-              "x": 0.1657837848066866,
-              "y": -0.10751087512873629
+              "x": 0.1657837848066867,
+              "y": -0.10751087512873621
             },
             {
-              "x": -0.6764553614594201,
-              "y": -0.03650455316854328
+              "x": -0.6764553614594202,
+              "y": -0.03650455316854346
             },
             {
-              "x": 0.09830539550662361,
-              "y": 0.008666832864985199
+              "x": 0.09830539550662365,
+              "y": 0.008666832864985279
             },
             {
-              "x": 0.17941300670302573,
-              "y": -0.21328342354858384
+              "x": 0.17941300670302593,
+              "y": -0.2132834235485838
             },
             {
-              "x": 0.24276955171136802,
-              "y": -0.04961863075282046
+              "x": 0.24276955171136816,
+              "y": -0.04961863075282035
             },
             {
-              "x": 0.13881524258354044,
-              "y": 0.3663733814289984
+              "x": 0.13881524258354042,
+              "y": 0.36637338142899845
             },
             {
               "x": -0.2664855799081882,
-              "y": -0.09242596885224999
+              "y": -0.09242596885225014
             },
             {
-              "x": -0.42897793354497354,
-              "y": -0.2475727843799027
+              "x": -0.4289779335449737,
+              "y": -0.24757278437990288
             },
             {
-              "x": -0.19812663496185753,
-              "y": 0.01636693851956439
+              "x": -0.1981266349618576,
+              "y": 0.016366938519564334
             },
             {
-              "x": -0.6455984667730553,
-              "y": 0.11185729107365829
+              "x": -0.6455984667730557,
+              "y": 0.11185729107365805
             },
             {
-              "x": 0.4816450762106442,
-              "y": 0.2786682579886977
+              "x": 0.4816450762106441,
+              "y": 0.2786682579886979
             },
             {
-              "x": 0.2066288426754744,
-              "y": 0.03151649809689964
+              "x": 0.2066288426754745,
+              "y": 0.03151649809689975
             },
             {
-              "x": -0.20132189002588016,
-              "y": -0.06420453089990277
+              "x": -0.2013218900258802,
+              "y": -0.06420453089990283
             },
             {
-              "x": -0.5359916639384348,
-              "y": 0.1338305148637902
+              "x": -0.5359916639384349,
+              "y": 0.13383051486379005
             },
             {
-              "x": -0.19989534731834882,
-              "y": -0.40192255371323043
+              "x": -0.1998953473183487,
+              "y": -0.4019225537132303
             },
             {
-              "x": 0.15497479025466251,
-              "y": -0.14038461300726648
+              "x": 0.15497479025466265,
+              "y": -0.1403846130072663
             },
             {
-              "x": -0.01754773476557184,
-              "y": 0.2636522515947403
+              "x": -0.01754773476557199,
+              "y": 0.26365225159474015
             },
             {
-              "x": 0.14266576347709897,
-              "y": -0.1422780915709927
+              "x": 0.14266576347709914,
+              "y": -0.14227809157099258
             },
             {
-              "x": 0.05119899234373289,
-              "y": -0.0669322134727503
+              "x": 0.05119899234373295,
+              "y": -0.06693221347275023
             },
             {
-              "x": -0.009497471604792964,
-              "y": -0.18907509232970277
+              "x": -0.00949747160479287,
+              "y": -0.1890750923297027
             },
             {
-              "x": 0.23162495731196725,
-              "y": -0.12497223331502903
+              "x": 0.23162495731196742,
+              "y": -0.12497223331502899
             },
             {
-              "x": 0.2540045637558349,
-              "y": 0.42467789643781173
+              "x": 0.25400456375583486,
+              "y": 0.4246778964378118
             },
             {
-              "x": -0.4562502432303449,
-              "y": -0.007315102615388442
+              "x": -0.4562502432303451,
+              "y": -0.007315102615388615
             },
             {
-              "x": 0.47866677490384807,
-              "y": -0.20163779241862073
+              "x": 0.4786667749038483,
+              "y": -0.20163779241862054
             },
             {
               "x": -0.10276922885813898,
-              "y": -0.17483429356203894
+              "y": -0.1748342935620389
             },
             {
-              "x": -0.23981258425005883,
-              "y": -0.26681635541132337
+              "x": -0.2398125842500588,
+              "y": -0.2668163554113232
             },
             {
-              "x": 0.17721216592503009,
-              "y": -0.25440876625253206
+              "x": 0.17721216592503025,
+              "y": -0.25440876625253195
             },
             {
-              "x": -0.037601242229133955,
-              "y": 0.1298494807609773
+              "x": -0.037601242229134066,
+              "y": 0.12984948076097713
             },
             {
-              "x": 0.1383820924102945,
-              "y": -0.23104768754442834
+              "x": 0.13838209241029462,
+              "y": -0.23104768754442823
             },
             {
-              "x": -0.22505625074920702,
-              "y": 0.003066493440471488
+              "x": -0.22505625074920707,
+              "y": 0.003066493440471484
             },
             {
-              "x": 0.4247585683269401,
-              "y": 0.34873426035767346
+              "x": 0.42475856832694003,
+              "y": 0.34873426035767335
             },
             {
-              "x": 0.13700886976768162,
-              "y": -0.17369855651197103
+              "x": 0.13700886976768178,
+              "y": -0.17369855651197086
             },
             {
               "x": -0.12502318801047782,
-              "y": -0.07107775715857828
+              "y": -0.0710777571585784
             },
             {
-              "x": -0.04997945107603649,
+              "x": -0.04997945107603636,
               "y": -0.3291564221766772
             },
             {
-              "x": 0.15036963985535343,
+              "x": 0.15036963985535332,
               "y": 0.33711307569430915
             },
             {
-              "x": -0.07074560009123164,
-              "y": 0.03199683744889289
+              "x": -0.07074560009123167,
+              "y": 0.03199683744889286
             },
             {
-              "x": 0.2700080786979835,
-              "y": 0.07012953503473186
+              "x": 0.27000807869798343,
+              "y": 0.07012953503473188
             },
             {
-              "x": 0.44623295325066414,
-              "y": 0.16946603291199444
+              "x": 0.44623295325066425,
+              "y": 0.16946603291199452
             },
             {
-              "x": -0.19072234441382035,
-              "y": -0.1185917376097774
+              "x": -0.19072234441382027,
+              "y": -0.1185917376097773
             },
             {
-              "x": 0.3151380392588405,
-              "y": -0.06550788984038342
+              "x": 0.31513803925884076,
+              "y": -0.06550788984038335
             },
             {
-              "x": 0.120244045137883,
-              "y": 0.2844770809083353
+              "x": 0.12024404513788296,
+              "y": 0.2844770809083354
             },
             {
-              "x": -0.0002832257702402731,
-              "y": 0.17624169428157394
+              "x": -0.0002832257702403814,
+              "y": 0.17624169428157385
             },
             {
-              "x": 0.22795959372236338,
+              "x": 0.2279595937223636,
               "y": -0.13450695868003257
             },
             {
-              "x": -0.26002380621224414,
-              "y": -0.1443322870323924
+              "x": -0.2600238062122441,
+              "y": -0.14433228703239237
             },
             {
-              "x": 0.12230987558089336,
-              "y": 0.007721442285448382
+              "x": 0.12230987558089346,
+              "y": 0.007721442285448374
             },
             {
-              "x": 0.04374976845554988,
-              "y": -0.001333459506370635
+              "x": 0.04374976845554992,
+              "y": -0.0013334595063705641
             },
             {
-              "x": 0.23776025916190963,
-              "y": 0.16256464650219257
+              "x": 0.23776025916190968,
+              "y": 0.16256464650219252
             },
             {
-              "x": -0.3198432327878173,
-              "y": 0.14892041657896063
+              "x": -0.3198432327878174,
+              "y": 0.14892041657896046
             },
             {
-              "x": -0.29688481351722795,
-              "y": -0.00995845575217973
+              "x": -0.296884813517228,
+              "y": -0.009958455752179804
             },
             {
               "x": -0.3507792595001823,
-              "y": -0.13933626018994055
+              "y": -0.13933626018994058
             },
             {
-              "x": 0.2755681634658832,
-              "y": 0.4651826220752586
+              "x": 0.27556816346588303,
+              "y": 0.4651826220752585
             },
             {
-              "x": -0.015511634934262794,
-              "y": 0.34784962744273257
+              "x": -0.015511634934262879,
+              "y": 0.3478496274427324
             },
             {
-              "x": 0.2967063715552864,
-              "y": -0.1357243840220395
+              "x": 0.2967063715552865,
+              "y": -0.13572438402203943
             },
             {
-              "x": -0.12055650291040972,
-              "y": -0.26455400725857153
+              "x": -0.12055650291040963,
+              "y": -0.2645540072585715
             },
             {
-              "x": 0.2771914337600987,
-              "y": 0.23511568587667928
+              "x": 0.2771914337600988,
+              "y": 0.23511568587667933
             },
             {
-              "x": 0.13438787709502037,
-              "y": 0.09262959445868088
+              "x": 0.13438787709502034,
+              "y": 0.0926295944586809
             }
           ]
         },
@@ -2383,10 +2405,7 @@
           }
         ]
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -2394,6 +2413,7 @@
   "variables": [
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           20,
@@ -2450,6 +2470,22 @@
         ]
       },
       "name": "PVY_Strain",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "PVY_Strain",
+        "numeric_sentinels": [],
+        "original_name": "PVY_Strain",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.7500586006173493,
@@ -2474,7 +2510,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "SpectralRep",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "SpectralRep",
+        "numeric_sentinels": [],
+        "original_name": "SpectralRep",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2506,7 +2559,24 @@
         "n_classes": 80,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "Plant_ID",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 80,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Plant_ID",
+        "numeric_sentinels": [],
+        "original_name": "Plant_ID",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2607,7 +2677,24 @@
         "n_classes": 80,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "idstr",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 80,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "idstr",
+        "numeric_sentinels": [],
+        "original_name": "idstr",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2708,7 +2795,24 @@
         "n_classes": 4,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "metadata_PVY_Strain",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "metadata_PVY_Strain",
+        "numeric_sentinels": [],
+        "original_name": "metadata_PVY_Strain",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2745,7 +2849,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dataset",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dataset",
+        "numeric_sentinels": [],
+        "original_name": "dataset",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2770,7 +2891,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dataset_slug",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dataset_slug",
+        "numeric_sentinels": [],
+        "original_name": "dataset_slug",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2795,7 +2933,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "task_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "task_type",
+        "numeric_sentinels": [],
+        "original_name": "task_type",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2820,7 +2975,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "trait_header",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "trait_header",
+        "numeric_sentinels": [],
+        "original_name": "trait_header",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2845,7 +3017,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "target_original_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "target_original_name",
+        "numeric_sentinels": [],
+        "original_name": "target_original_name",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2870,7 +3059,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "measurement_hint",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "measurement_hint",
+        "numeric_sentinels": [],
+        "original_name": "measurement_hint",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2895,7 +3101,24 @@
         "n_classes": 4,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "raw_label",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "raw_label",
+        "numeric_sentinels": [],
+        "original_name": "raw_label",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2932,7 +3155,24 @@
         "n_classes": 4,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "reference_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "reference_value",
+        "numeric_sentinels": [],
+        "original_name": "reference_value",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -2969,7 +3209,24 @@
         "n_classes": 4,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "class_index",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "class_index",
+        "numeric_sentinels": [],
+        "original_name": "class_index",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3006,7 +3263,24 @@
         "n_classes": 4,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "class_label",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "class_label",
+        "numeric_sentinels": [],
+        "original_name": "class_label",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3036,7 +3310,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -3068,7 +3359,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dimensions",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dimensions",
+        "numeric_sentinels": [],
+        "original_name": "dimensions",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3093,7 +3401,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "axis_note",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_note",
+        "numeric_sentinels": [],
+        "original_name": "axis_note",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3118,7 +3443,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "official_data_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "official_data_url",
+        "numeric_sentinels": [],
+        "original_name": "official_data_url",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3143,7 +3485,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "official_package_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "official_package_url",
+        "numeric_sentinels": [],
+        "original_name": "official_package_url",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3168,7 +3527,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3186,7 +3562,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "license_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 80,
+        "missing_values": [],
+        "name": "license_url",
+        "numeric_sentinels": [],
+        "original_name": "license_url",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3206,7 +3599,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3231,7 +3641,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3256,7 +3683,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "public_release_allowed",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "public_release_allowed",
+        "numeric_sentinels": [],
+        "original_name": "public_release_allowed",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3274,7 +3718,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "parent_standardized_dataset_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 80,
+        "missing_values": [],
+        "name": "parent_standardized_dataset_id",
+        "numeric_sentinels": [],
+        "original_name": "parent_standardized_dataset_id",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3294,7 +3755,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 80,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 80,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 80,
@@ -3317,8 +3795,6 @@
   },
   "warnings": [
     "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError"
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
   ]
 }

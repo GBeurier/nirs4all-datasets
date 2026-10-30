@@ -96,7 +96,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Litter_Fodder | metadata | categorical | *Not specified.* | n=1000, missing=782, classes=2, top no (×209) |
 | Sample_type | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=7, top Composite (×858) |
 | Composted/Non_conposted | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=2, top nc (×894) |
-| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 3650 (×7) |
+| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 1825 (×7) |
 | OR_Stage | metadata | categorical | *Not specified.* | n=1000, missing=976, classes=3, top mature (×11) |
 
 ## Statistics — splits
@@ -141,5 +141,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `e0e9cfaf3a4029dcf3391e0dcda12e74cbe927c1f6a0298db2288173f699e8e3`
-- **Processing hash:** `0b715d12b7460ef7b5c4d8208a0ef56e75658c2a3217c75783f27ab784b01935` | **metadata hash:** `4e41c8c7579794b6e20bd0cea96d2147d0f42d0383d9df7c6e32baeb2cb9d432`
+- **Content hash:** `d9ef48d3d47b86cafcf71a9a5a1d774d5e4c72f15bae4406417afaa263665ce8`
+- **Processing hash:** `7d47f4d0a866ddf5d4552accfaf354537ba22b3a0e87552b0779d34ebab7532b` | **metadata hash:** `873ddb48940d7181e4fb9ee95c97e8a6ed1593fd2a5b10d3f34e85a8e102adcd`

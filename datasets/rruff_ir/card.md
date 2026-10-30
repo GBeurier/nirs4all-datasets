@@ -37,7 +37,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=347, missing=0, range 4000–4000, mean 4000 ± 4.554e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=347, missing=0, range 1868–1868, mean 1868 ± 0 |
 | sample_description | metadata | categorical | *Not specified.* | n=347, missing=0, classes=321, top White massive (×4) |
-| metadata_chemistry | metadata | categorical | *Not specified.* | n=347, missing=0, classes=342, top Ca_1.000_ F_2.000_ (×2) |
+| metadata_chemistry | metadata | categorical | *Not specified.* | n=347, missing=0, classes=342, top (Al_1.99_Fe^3+^_0.01_)Si_1.00_O_5_ (×2) |
 | locality | metadata | categorical | *Not specified.* | n=347, missing=0, classes=288, top unknown (×8) |
 | laser_wavelength | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
 | instrument | metadata | categorical | *Not specified.* | n=347, missing=347, classes=0, — |
@@ -89,5 +89,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `64b14476975997931a990e85177d00e9b85604e7df5a264b8f38b1696ab5d461`
-- **Processing hash:** `e85f9240cd572685df6d384f5022099e572f41776cef4b7ce97d794530db2bc8` | **metadata hash:** `49424639ade54aa280fd13cd72d57c71f8b96cc8234241d57a230fcfd5274883`
+- **Content hash:** `2d9ae258deb50e1bdf33b78a04c109dafde2a14ff6036e08f3c8f499fdc0a8da`
+- **Processing hash:** `515a97dd6e7d572a6fe3bca27ee30d8032a666c33aeecd18348b156cafaf2a3a` | **metadata hash:** `358ecece4343a3b305f0299ca4b142be37194131eec83b920a92775fc6455be0`

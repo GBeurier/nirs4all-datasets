@@ -26,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| condition | target | categorical | *Not specified.* | n=137, missing=0, classes=4, top 15C (×60) |
+| condition | target | numeric | *Not specified.* | n=137, missing=137, range —, mean *Not specified.* ± *Not specified.* |
 | animal_id | metadata | categorical | *Not specified.* | n=137, missing=0, classes=12, top M11 (×12) |
 | body_region | metadata | categorical | *Not specified.* | n=137, missing=0, classes=5, top Beard (×45) |
 | experiment | metadata | categorical | *Not specified.* | n=137, missing=0, classes=2, top temperature_dependent (×114) |
@@ -55,7 +55,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Undetermined
-- **Curated views:** M: 2 fields, Y: 1 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 0 fields, measurements: 0 fields, passport: 9 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,5 +76,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `6c3491ac66e019626fef8cc0748e1164ad2312a7adeceddd58678c54f130b29d`
-- **Processing hash:** `4765efa3efe1823f18ed1cc54a64f9671d976a319e9f7443d9a8a82609403eb5` | **metadata hash:** `3c59244c1444c8b6b067d26b811d37583e65e35aafde19e77c8e93c6e5fb276c`
+- **Content hash:** `acec4eb434919eef1b9b9bf67de7ef21ee8f2eadea68b01b2261f43339557738`
+- **Processing hash:** `55e4040d4190af52fb070817bafede8b75b1a9228dd1dc35dfac2f1bd2b28ade` | **metadata hash:** `6731327dc2609fe7b11f64f094da78471b5afb0822a242f504e7361e6341b5b8`

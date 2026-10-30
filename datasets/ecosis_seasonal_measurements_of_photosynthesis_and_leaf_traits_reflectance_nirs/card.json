@@ -1,19 +1,41 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "Sample identifier declared in M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 48,
+      "n_samples": 48,
+      "observations_per_unit": {
+        "1": 48
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicity of the declared identifier; protocol not established"
+    },
     "identity_status": "available",
     "level": "sample",
+    "n_known_sample_units": 48,
+    "n_observation_groups": 48,
     "n_observations_total": 48,
     "n_samples": 48,
     "profile_scores": {
       "integrity_risk": 0.0,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.0014053357543138073,
-      "outlier_pressure": 0.5848736835513725,
+      "outlier_pressure": 0.5848736835513786,
       "reference_spread": 0.35980013814585393,
       "repeatability_risk": null,
-      "shape_drift": 0.7785421150267909,
-      "structure_complexity": 0.7404256508552282
+      "shape_drift": 0.7785421150267906,
+      "structure_complexity": 0.7404256508552285
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -28,7 +50,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "e61265f48b96205e47894c537a55fb81751970b18a1b0154fff9359a36c1fe84",
+    "contract_sha256": "81ab203e8a7e7e8d8a9465d2b9ee380dbb27d6a7d1dcb83487fc14ab707d1a5a",
     "dataset_id": "ecosis_seasonal_measurements_of_photosynthesis_and_leaf_traits_reflectance_nirs",
     "enrichments": [],
     "grain": "observation",
@@ -53,10 +75,10 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "0b530b7ee69eed1c60778e09778fa8cf323229c29783f366d39c32c57f3ee431",
-      "Y.csv": "48f4bb07aaac30dff449ed2d03e1dba62c604c44d847ced93cbcf2059ed347f9"
+      "Y.csv": "146ee29853893157e655034a92b2193a3b831b81c45fd0dfe439cfa3d52d241b"
     },
     "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
     "variables": [
@@ -92,15 +114,12 @@
         ],
         "stats": {
           "completeness_pct": 100.0,
-          "max": 20191030.0,
-          "min": 20190529.0,
-          "n_censored": 0,
-          "n_invalid": 0,
+          "imbalance_ratio": 1.0,
           "n_missing": 0,
           "n_present": 48,
           "n_rows": 48,
           "n_unique": 8,
-          "type": "numeric"
+          "type": "categorical"
         },
         "unit": null,
         "view": "M"
@@ -599,11 +618,9 @@
         "m_location_2"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-29T12:26:29.322233+00:00",
+  "generated_at": "2026-10-30T15:48:54.828857+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -624,10 +641,10 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "cfa948a174995fd85f9ee18badb8e5e14d4056841d45a7d7fe35bb39efb9fe64",
+    "content_hash": "f2706f3d482ddd13b954a9d87f2b9444a8039006f74a52ff306896d702dc6115",
     "manifest": "manifest.json",
-    "metadata_hash": "d2d2623a8e63fe9fda92b8ecee986c3162070726ad034673e00790b482e1e327",
-    "processing_hash": "a5b657effeec3fadce9cf2c1e9ba3bffccdac72508998b0db05035f42038d341"
+    "metadata_hash": "f6ec8d76fba041e47b303373db8c791ef1f3990f8e3614b148186f9dd4672a6d",
+    "processing_hash": "4494c84637a00e883c2af55124d5fd166cf4823b4b41bdbcfedbe600997d9480"
   },
   "protocol_version": "7",
   "provenance": {
@@ -670,12 +687,7 @@
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -1697,7 +1709,7 @@
         },
         "mean_max": 0.4161536612858375,
         "mean_min": 0.02267634210875258,
-        "n_outliers": null,
+        "n_outliers": 14,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1731,7 +1743,7 @@
                   "signal": "Undegraded roughness S/N proxy"
                 },
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 },
                 {
@@ -1751,10 +1763,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.7288504441941864,
+              "score": 0.7288504441941877,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.7288504441941864,
+              "signal_strength": 0.7288504441941877,
               "strength": "strong"
             },
             {
@@ -1766,15 +1778,15 @@
                   "signal": "local artifacts"
                 },
                 {
-                  "level": 0.7785421150267909,
+                  "level": 0.7785421150267906,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.47399927721265234,
+                  "level": 0.4739992772126524,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1794,10 +1806,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.5639262576332774,
+              "score": 0.5639262576332783,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.5639262576332774,
+              "signal_strength": 0.5639262576332783,
               "strength": "medium"
             },
             {
@@ -1805,15 +1817,15 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.7785421150267909,
+                  "level": 0.7785421150267906,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 },
                 {
-                  "level": 0.47399927721265234,
+                  "level": 0.4739992772126524,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1833,10 +1845,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.49595955482724347,
+              "score": 0.49595955482724435,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.49595955482724347,
+              "signal_strength": 0.49595955482724435,
               "strength": "medium"
             },
             {
@@ -1848,11 +1860,11 @@
                   "signal": "Jump rate"
                 },
                 {
-                  "level": 0.7785421150267909,
+                  "level": 0.7785421150267906,
                   "signal": "Baseline/mean/area"
                 },
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 }
               ],
@@ -1868,10 +1880,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.39345799312644936,
+              "score": 0.39345799312645047,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.39345799312644936,
+              "signal_strength": 0.39345799312645047,
               "strength": "weak"
             },
             {
@@ -1879,11 +1891,11 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.7404256508552282,
+                  "level": 0.7404256508552285,
                   "signal": "PCA structure"
                 },
                 {
-                  "level": 0.47399927721265234,
+                  "level": 0.4739992772126524,
                   "signal": "Mahalanobis / T2"
                 },
                 {
@@ -1918,7 +1930,7 @@
                   "signal": "Spike rate"
                 },
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 },
                 {
@@ -1938,10 +1950,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.300594072991252,
+              "score": 0.30059407299125307,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.300594072991252,
+              "signal_strength": 0.30059407299125307,
               "strength": "weak"
             },
             {
@@ -1949,7 +1961,7 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.5848736835513725,
+                  "level": 0.5848736835513786,
                   "signal": "PCA Q"
                 }
               ],
@@ -1965,10 +1977,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.1169747367102745,
+              "score": 0.11697473671027572,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.1169747367102745,
+              "signal_strength": 0.11697473671027572,
               "strength": "weak"
             },
             {
@@ -2017,6 +2029,14 @@
             "bandwise_snr_median": 5526.389361335286,
             "bandwise_snr_min": 83.91211204951934,
             "noise_rms": 2.764838725755517e-05,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 2.764838725755517e-05,
             "roughness_signal_to_noise_proxy": 7466.10782065877,
             "roughness_signal_to_noise_proxy_db": 77.46188514866353,
@@ -2026,28 +2046,28 @@
             "worst_band_index": 113
           },
           "outliers": {
-            "hotelling_t2_max": 16.815275589195647,
-            "hotelling_t2_median": 2.20402870269493,
-            "hotelling_t2_p95": 7.922211375279182,
-            "hotelling_t2_ratio": 3.5944229608228166,
-            "mahalanobis_h_max": 4.100643314066178,
-            "mahalanobis_h_median": 1.4845180226867951,
-            "mahalanobis_h_p95": 2.8146418790507868,
-            "mahalanobis_h_ratio": 1.8959971088506093,
-            "pca_q_max": 0.305394223900891,
-            "pca_q_median": 0.023931586047646336,
-            "pca_q_p95": 0.11197563907930835,
-            "pca_q_ratio": 4.67898946841098
+            "hotelling_t2_max": 16.815275589195643,
+            "hotelling_t2_median": 2.2040287026949272,
+            "hotelling_t2_p95": 7.922211375279175,
+            "hotelling_t2_ratio": 3.594422960822818,
+            "mahalanobis_h_max": 4.100643314066177,
+            "mahalanobis_h_median": 1.4845180226867942,
+            "mahalanobis_h_p95": 2.8146418790507854,
+            "mahalanobis_h_ratio": 1.8959971088506096,
+            "pca_q_max": 0.3053942239008909,
+            "pca_q_median": 0.02393158604764615,
+            "pca_q_p95": 0.11197563907930864,
+            "pca_q_ratio": 4.678989468411029
           },
           "profile_scores": {
             "integrity_risk": 0.0,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.0014053357543138073,
-            "outlier_pressure": 0.5848736835513725,
+            "outlier_pressure": 0.5848736835513786,
             "reference_spread": 0.35980013814585393,
             "repeatability_risk": null,
-            "shape_drift": 0.7785421150267909,
-            "structure_complexity": 0.7404256508552282
+            "shape_drift": 0.7785421150267906,
+            "structure_complexity": 0.7404256508552285
           },
           "reference": {
             "affine_gain_median": 1.0094380121323447,
@@ -2072,23 +2092,17 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": -0.15316933214359968,
+            "baseline_slope": -0.15316933214359962,
             "curvature_rms": 0.0003277198622802113,
             "d1_rms": 0.0016473617895071658,
             "edge_noise_ratio": 0.32393993205476496
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
-            "density_cv": 0.6632450443434741,
+            "density_cv": 0.6632450443434739,
             "isolation_forest_score_p95": 0.600620563329648,
-            "knn_distance_ratio_p95": 2.2212769525656846,
-            "local_outlier_factor_p95": 2.2212769525656846,
-            "pca_score_density": 2.5345355298168273
+            "knn_distance_ratio_p95": 2.2212769525656855,
+            "local_outlier_factor_p95": 2.2212769525656855,
+            "pca_score_density": 2.534535529816828
           }
         },
         "quality": {
@@ -2099,201 +2113,201 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.8045899496859209,
-            0.10308065634986846
+            0.8045899496859207,
+            0.10308065634986854
           ],
           "points": [
             {
-              "x": -0.17792582393510473,
-              "y": -0.03379870570268322
+              "x": -0.17792582393510267,
+              "y": -0.0337987057026836
             },
             {
-              "x": 0.36538939432289597,
-              "y": 0.0931945902600291
+              "x": 0.3653893943228963,
+              "y": 0.09319459026002884
             },
             {
-              "x": 0.7250563811032102,
-              "y": 0.3162677581563427
+              "x": 0.7250563811032105,
+              "y": 0.3162677581563426
             },
             {
-              "x": 1.3082275047032836,
-              "y": -0.0406543948284551
+              "x": 1.308227504703284,
+              "y": -0.04065439482845487
             },
             {
-              "x": 0.22225529781640296,
+              "x": 0.2222552978164034,
               "y": 0.1525678596091764
             },
             {
-              "x": 0.6662573324547215,
-              "y": -0.4411366504720527
+              "x": 0.6662573324547217,
+              "y": -0.44113665047205297
             },
             {
-              "x": -1.151168397621595,
-              "y": 0.16630712296468877
+              "x": -1.1511683976215945,
+              "y": 0.16630712296468866
             },
             {
               "x": 0.26972989376249146,
-              "y": 0.13048518147218383
+              "y": 0.1304851814721837
             },
             {
-              "x": 0.12499393583546002,
-              "y": 0.8055093166908132
+              "x": 0.12499393583546008,
+              "y": 0.8055093166908129
             },
             {
-              "x": 0.19552338731669142,
+              "x": 0.1955233873166914,
               "y": 0.5540942234428903
             },
             {
-              "x": -0.23212242822326457,
+              "x": -0.23212242822326432,
               "y": 0.3603132196286506
             },
             {
-              "x": 0.719422047586513,
-              "y": 0.5185787257839437
+              "x": 0.7194220475865125,
+              "y": 0.5185787257839438
             },
             {
-              "x": -0.7025540992109247,
-              "y": 0.27644742392714095
+              "x": -0.7025540992109245,
+              "y": 0.2764474239271409
             },
             {
-              "x": 0.6179557551530416,
-              "y": 0.030175415994626194
+              "x": 0.6179557551530411,
+              "y": 0.030175415994626045
             },
             {
               "x": 0.26116489872256393,
-              "y": 0.057188499603382174
+              "y": 0.05718849960338212
             },
             {
-              "x": 0.529493035230881,
-              "y": 0.4869305934014459
+              "x": 0.5294930352308806,
+              "y": 0.48693059340144595
             },
             {
-              "x": -0.13016658079009288,
-              "y": -0.21578324215245917
+              "x": -0.13016658079009305,
+              "y": -0.21578324215245923
             },
             {
-              "x": 1.0199598070357025,
-              "y": 0.4271595434356447
+              "x": 1.0199598070357017,
+              "y": 0.4271595434356448
             },
             {
-              "x": -1.6715100356237658,
-              "y": -0.24395303869802562
+              "x": -1.6715100356237647,
+              "y": -0.24395303869802565
             },
             {
-              "x": -1.03023562248155,
-              "y": -0.6572232010892997
+              "x": -1.0302356224815497,
+              "y": -0.6572232010893
             },
             {
-              "x": -0.2245194504722431,
-              "y": -0.07878455468182091
+              "x": -0.22451945047224345,
+              "y": -0.07878455468182094
             },
             {
-              "x": -0.9721992470675841,
-              "y": 0.046291620435559136
+              "x": -0.9721992470675834,
+              "y": 0.046291620435559164
             },
             {
-              "x": -0.1567280199055312,
-              "y": 0.15508208665620196
+              "x": -0.15672801990553162,
+              "y": 0.15508208665620205
             },
             {
-              "x": 0.2623357642304697,
-              "y": 0.35031749609467694
+              "x": 0.262335764230469,
+              "y": 0.35031749609467705
             },
             {
-              "x": 0.6934803183215474,
-              "y": 0.16624029730203388
+              "x": 0.6934803183215466,
+              "y": 0.16624029730203393
             },
             {
-              "x": -0.8887849485340533,
-              "y": 0.1986118819476725
+              "x": -0.8887849485340535,
+              "y": 0.1986118819476723
             },
             {
-              "x": -1.2818911993422506,
-              "y": 0.06065986500217756
+              "x": -1.2818911993422497,
+              "y": 0.060659865002177286
             },
             {
-              "x": -0.22799949883571177,
-              "y": -0.19524459778947242
+              "x": -0.227999498835712,
+              "y": -0.19524459778947229
             },
             {
-              "x": -0.7902438350791556,
-              "y": -0.09051560714234616
+              "x": -0.7902438350791555,
+              "y": -0.09051560714234613
             },
             {
-              "x": -0.6190733083511507,
-              "y": -0.04934516604545573
+              "x": -0.6190733083511508,
+              "y": -0.0493451660454557
             },
             {
-              "x": 0.34289826370062804,
-              "y": -0.16259091236662987
+              "x": 0.3428982637006279,
+              "y": -0.16259091236662968
             },
             {
               "x": -0.20183378556182677,
-              "y": -0.21904154222714067
+              "y": -0.21904154222714078
             },
             {
-              "x": 3.2330062201458856,
-              "y": -0.4472306343924997
+              "x": 3.2330062201458842,
+              "y": -0.4472306343925005
             },
             {
-              "x": 1.8727843659840084,
-              "y": -0.3610773780840068
+              "x": 1.8727843659840075,
+              "y": -0.3610773780840071
             },
             {
-              "x": 0.10935266570977001,
-              "y": 0.061905784574901056
+              "x": 0.10935266570976963,
+              "y": 0.06190578457490108
             },
             {
-              "x": 0.1595203626961676,
-              "y": -0.2673955838259558
+              "x": 0.15952036269616723,
+              "y": -0.26739558382595574
             },
             {
-              "x": -0.8864447679846298,
-              "y": -0.1435320140222011
+              "x": -0.8864447679846301,
+              "y": -0.14353201402220123
             },
             {
-              "x": -0.8757454465678594,
+              "x": -0.8757454465678592,
               "y": -0.5686449814278512
             },
             {
-              "x": -0.7480386244553819,
-              "y": -0.09282280888493752
+              "x": -0.7480386244553814,
+              "y": -0.09282280888493769
             },
             {
-              "x": -0.5174227804163276,
-              "y": 0.4282431399834748
+              "x": -0.5174227804163277,
+              "y": 0.42824313998347463
             },
             {
-              "x": -0.5316710563533855,
-              "y": -0.18864612695068866
+              "x": -0.5316710563533856,
+              "y": -0.18864612695068864
             },
             {
-              "x": 0.21645102733075944,
+              "x": 0.2164510273307593,
               "y": 0.17730529639632966
             },
             {
-              "x": -0.5951036064177037,
-              "y": -0.2512019386557362
+              "x": -0.595103606417703,
+              "y": -0.2512019386557364
             },
             {
-              "x": -1.0686614005291808,
-              "y": -0.36294556042443904
+              "x": -1.06866140052918,
+              "y": -0.36294556042443965
             },
             {
-              "x": -0.3884309217680131,
-              "y": 0.0935787493021576
+              "x": -0.38843092176801247,
+              "y": 0.0935787493021575
             },
             {
-              "x": 0.7165205692896216,
-              "y": -0.26421001523731136
+              "x": 0.7165205692896222,
+              "y": -0.26421001523731114
             },
             {
               "x": 1.3333179876667962,
-              "y": -0.5442182195653644
+              "y": -0.5442182195653643
             },
             {
-              "x": 0.10537866940877666,
-              "y": -0.193458817399307
+              "x": 0.10537866940877694,
+              "y": -0.1934588173993072
             }
           ]
         },
@@ -10158,10 +10172,7 @@
           }
         ]
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -10176,7 +10187,24 @@
         "n_classes": 6,
         "normalized_entropy": 0.9999999999999999
       },
+      "denominator": "canonical_sample_units",
       "name": "Tree_ID",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Tree_ID",
+        "numeric_sentinels": [],
+        "original_name": "Tree_ID",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "stats": {
         "n": 48,
@@ -10214,6 +10242,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -10270,6 +10299,22 @@
         ]
       },
       "name": "LMA",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 48,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "LMA",
+        "numeric_sentinels": [],
+        "original_name": "LMA",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.16488443203405115,
@@ -10294,6 +10339,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           5,
@@ -10350,6 +10396,22 @@
         ]
       },
       "name": "RWC",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 42,
+        "invalid": 6,
+        "missing": 0,
+        "missing_values": [],
+        "name": "RWC",
+        "numeric_sentinels": [],
+        "original_name": "RWC",
+        "present": 42,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.10670701789857188,
@@ -10374,6 +10436,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -10430,6 +10493,22 @@
         ]
       },
       "name": "Nmass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 35,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Nmass",
+        "numeric_sentinels": [],
+        "original_name": "Nmass",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.15381500779120932,
@@ -10454,6 +10533,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -10510,6 +10590,22 @@
         ]
       },
       "name": "Narea",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 48,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Narea",
+        "numeric_sentinels": [],
+        "original_name": "Narea",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.23419440932620983,
@@ -10534,6 +10630,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -10590,6 +10687,22 @@
         ]
       },
       "name": "ChlNDI",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 48,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "ChlNDI",
+        "numeric_sentinels": [],
+        "original_name": "ChlNDI",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.1543570243462742,
@@ -10614,6 +10727,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -10670,6 +10784,22 @@
         ]
       },
       "name": "PRI",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 48,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "PRI",
+        "numeric_sentinels": [],
+        "original_name": "PRI",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.8583288540825147,
@@ -10694,6 +10824,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -10750,6 +10881,22 @@
         ]
       },
       "name": "Asat",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Asat",
+        "numeric_sentinels": [],
+        "original_name": "Asat",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.3988478906762983,
@@ -10774,6 +10921,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -10830,12 +10978,28 @@
         ]
       },
       "name": "gs",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "gs",
+        "numeric_sentinels": [],
+        "original_name": "gs",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.4869749773084628,
         "is_normal": true,
         "kurtosis": -0.010799590910854917,
-        "normality_p": 0.1819552904949526,
+        "normality_p": 0.18195529049495257,
         "skewness": 0.6809976112853893
       },
       "stats": {
@@ -10854,6 +11018,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -10910,6 +11075,22 @@
         ]
       },
       "name": "WUEi",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "WUEi",
+        "numeric_sentinels": [],
+        "original_name": "WUEi",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.28520592655469296,
@@ -10934,6 +11115,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -10990,6 +11172,22 @@
         ]
       },
       "name": "CiCa",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 35,
+        "invalid": 13,
+        "missing": 0,
+        "missing_values": [],
+        "name": "CiCa",
+        "numeric_sentinels": [],
+        "original_name": "CiCa",
+        "present": 35,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.16836342256285283,
@@ -11014,6 +11212,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -11070,6 +11269,22 @@
         ]
       },
       "name": "Tleaf",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Tleaf",
+        "numeric_sentinels": [],
+        "original_name": "Tleaf",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.09004331221467556,
@@ -11094,6 +11309,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -11150,6 +11366,22 @@
         ]
       },
       "name": "VcmaxT",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "VcmaxT",
+        "numeric_sentinels": [],
+        "original_name": "VcmaxT",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.377095872679607,
@@ -11174,6 +11406,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -11230,6 +11463,22 @@
         ]
       },
       "name": "JmaxT",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 38,
+        "invalid": 10,
+        "missing": 0,
+        "missing_values": [],
+        "name": "JmaxT",
+        "numeric_sentinels": [],
+        "original_name": "JmaxT",
+        "present": 38,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.27470219955979164,
@@ -11254,6 +11503,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -11310,6 +11560,22 @@
         ]
       },
       "name": "Vcmax25",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Vcmax25",
+        "numeric_sentinels": [],
+        "original_name": "Vcmax25",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.3416831027921222,
@@ -11334,6 +11600,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -11390,6 +11657,22 @@
         ]
       },
       "name": "Jmax25",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 38,
+        "invalid": 10,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Jmax25",
+        "numeric_sentinels": [],
+        "original_name": "Jmax25",
+        "present": 38,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.27788410662139384,
@@ -11414,6 +11697,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -11470,6 +11754,22 @@
         ]
       },
       "name": "NUE",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 41,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "NUE",
+        "numeric_sentinels": [],
+        "original_name": "NUE",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.32938750807618106,
@@ -11494,6 +11794,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           1,
@@ -11550,6 +11851,22 @@
         ]
       },
       "name": "Modelled_A",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 38,
+        "invalid": 10,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Modelled_A",
+        "numeric_sentinels": [],
+        "original_name": "Modelled_A",
+        "present": 38,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.4091092489329748,
@@ -11574,6 +11891,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           6,
@@ -11630,6 +11948,22 @@
         ]
       },
       "name": "g1",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 7,
+        "invalid": 7,
+        "missing": 0,
+        "missing_values": [],
+        "name": "g1",
+        "numeric_sentinels": [],
+        "original_name": "g1",
+        "present": 41,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.2771461833050816,
@@ -11661,7 +11995,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "ecosis_resource_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "ecosis_resource_id",
+        "numeric_sentinels": [],
+        "original_name": "ecosis_resource_id",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11679,7 +12030,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "site",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "site",
+        "numeric_sentinels": [],
+        "original_name": "site",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11699,7 +12067,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "location",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "location",
+        "numeric_sentinels": [],
+        "original_name": "location",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11717,7 +12102,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "country",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "country",
+        "numeric_sentinels": [],
+        "original_name": "country",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11730,7 +12132,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "latitude",
+        "numeric_sentinels": [],
+        "original_name": "latitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11743,7 +12162,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "longitude",
+        "numeric_sentinels": [],
+        "original_name": "longitude",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11763,7 +12199,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "coordinate_precision_notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "coordinate_precision_notes",
+        "numeric_sentinels": [],
+        "original_name": "coordinate_precision_notes",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11781,7 +12234,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "year",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "year",
+        "numeric_sentinels": [],
+        "original_name": "year",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -11813,7 +12283,24 @@
         "n_classes": 8,
         "normalized_entropy": 1.0
       },
+      "denominator": "canonical_sample_units",
       "name": "date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 8,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "date",
+        "numeric_sentinels": [],
+        "original_name": "date",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11866,7 +12353,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "species",
+        "numeric_sentinels": [],
+        "original_name": "species",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11884,7 +12388,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "genus",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "genus",
+        "numeric_sentinels": [],
+        "original_name": "genus",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11897,7 +12418,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "family",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 48,
+        "missing_values": [],
+        "name": "family",
+        "numeric_sentinels": [],
+        "original_name": "family",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11917,7 +12455,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "plant_part",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "plant_part",
+        "numeric_sentinels": [],
+        "original_name": "plant_part",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11942,7 +12497,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "canopy_or_leaf",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "canopy_or_leaf",
+        "numeric_sentinels": [],
+        "original_name": "canopy_or_leaf",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11967,7 +12539,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "instrument",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "instrument",
+        "numeric_sentinels": [],
+        "original_name": "instrument",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -11992,7 +12581,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "acquisition_mode",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "acquisition_mode",
+        "numeric_sentinels": [],
+        "original_name": "acquisition_mode",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12017,7 +12623,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "signal_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "signal_type",
+        "numeric_sentinels": [],
+        "original_name": "signal_type",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12042,7 +12665,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "axis_unit",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_unit",
+        "numeric_sentinels": [],
+        "original_name": "axis_unit",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12060,7 +12700,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_min",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_min",
+        "numeric_sentinels": [],
+        "original_name": "axis_min",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -12085,7 +12742,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_max",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_max",
+        "numeric_sentinels": [],
+        "original_name": "axis_max",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -12110,7 +12784,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -12142,7 +12833,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "publication_doi",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "publication_doi",
+        "numeric_sentinels": [],
+        "original_name": "publication_doi",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12167,7 +12875,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "citation",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "citation",
+        "numeric_sentinels": [],
+        "original_name": "citation",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12192,7 +12917,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12217,7 +12959,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12242,7 +13001,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12267,7 +13043,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 48,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 48,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 48,
@@ -12288,10 +13081,5 @@
     "content": "1.1.0",
     "schema_protocol": "2.0"
   },
-  "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError"
-  ]
+  "warnings": []
 }

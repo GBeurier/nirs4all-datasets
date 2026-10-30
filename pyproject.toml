@@ -60,6 +60,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Native roughness qualification uses the existing SpectralNoiseProxy procedure.
+# Import/runtime capability is checked explicitly; catalog rendering stays import-light.
+methods = ["nirs4all-methods>=1.3.10", "scikit-learn>=1.3"]
 # The nirs4all bridge: NirsDataset.to_nirs4all() + nirs4all-powered card metrics (PCA, outlier filter).
 # The catalog, get()/NirsDataset readers (numpy/pandas), and the site all work WITHOUT this extra — the
 # nirs4all imports are lazy and degrade gracefully (PCA -> None + a card warning; to_nirs4all -> a clear

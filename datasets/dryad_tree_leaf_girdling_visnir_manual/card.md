@@ -26,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| treatment | target | categorical | *Not specified.* | n=2722, missing=0, classes=2, top control (×1551) |
+| treatment | target | numeric | *Not specified.* | n=2722, missing=2722, range —, mean *Not specified.* ± *Not specified.* |
 | leaf_code | metadata | categorical | *Not specified.* | n=2722, missing=0, classes=2722, top CON_001_JAN21_L100000 (×1) |
 | camera | metadata | categorical | *Not specified.* | n=2722, missing=0, classes=5, top Cam02 (×700) |
 | manual_download | metadata | categorical | *Not specified.* | n=2722, missing=0, classes=1, top True (×2722) |
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 2722 source codes for 2731 rows. Each of the 9 repeated codes has two strictly identical spectral vectors; these are not demonstrated reacquisitions. No rows were removed from the sources.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 9 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,5 +75,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `cab3a3eefbc30909366a8d5ef5a60968a4522b1055e161a72c2dfd9aa24d07b6`
-- **Processing hash:** `ec7626759c3e25f39accd19ac933fe436c85a046e4d27a8fbdb9bba94382f736` | **metadata hash:** `65762de220571e90eb9ac8142bde579e7d058cb743b727ba4ebda2f7a98f2651`
+- **Content hash:** `86ce3a659f027e8b39fbac661c7d5228c74f2918dfa865353be233aa8dbde378`
+- **Processing hash:** `9517aacfbe7ae25e8f803eed0024d8e0c87224c77be3625b2de2f573c594c8b2` | **metadata hash:** `70c8465c71817e1cb57bc17c8e689db73e46b2a201d03d884efd95045952907c`

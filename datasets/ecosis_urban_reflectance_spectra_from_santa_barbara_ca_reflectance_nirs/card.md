@@ -26,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| Time | target | categorical | *Not specified.* | n=1065, missing=0, classes=153, top 21_37 (×24) |
+| Time | target | numeric | *Not specified.* | n=1065, missing=1065, range —, mean *Not specified.* ± *Not specified.* |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top 25463d25-37e8-4675-b339-8c05048d5561 (×1065) |
 | site | metadata | categorical | *Not specified.* | n=1065, missing=1065, classes=0, — |
 | location | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top Santa Barbara, California (×1065) |
@@ -74,7 +74,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 10 fields, Y: 1 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 12 fields, Y: 0 fields, measurements: 0 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,5 +95,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8be5ae8c60baca4fd91033996ec65abfc44c824ba68a63eba067cb6370252f39`
-- **Processing hash:** `a1fc305f67e6686ff1b453e08dfd72612a9e85e2a47fc3f94c492fb8413656cc` | **metadata hash:** `f79dd22730ce0f88cc7d30e26aa813547f7a29d4d3e2279e41c6c6adb4d7ad33`
+- **Content hash:** `b6c350f796c24e716656ca326e9cfe8b560a1a18f94d099c504e57050bdfff4c`
+- **Processing hash:** `9047b3bf96985213bd2e3f72df43dca6a3fe4e45f3c50fe47f3ca06169c12ea8` | **metadata hash:** `cc35fbc0dd727735e789f24c40cfe31098eca817fea7bcea6d3fe34f7a0bacec`

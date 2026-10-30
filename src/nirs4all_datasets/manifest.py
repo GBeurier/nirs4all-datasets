@@ -23,10 +23,8 @@ from pathlib import Path
 from nirs4all_datasets.schema import ConversionStatus, DatasetDescriptor, FileEntry, FileRole, Manifest
 
 _CHUNK = 1 << 20
-# The PROCESSING hash includes only fields that determine the canonical BYTES (the X source structure,
-# the id keying, the alignment level, native splits, and the content version). Everything else is
-# descriptive/displayed and is excluded -- so editing a name, a tier, a variable's role, the origin
-# sources, changing retrieval routes, or bumping the metric protocol never triggers a canonical rebuild.
+# Processing includes canonical structure plus the variable directives consumed by curation.
+# Descriptive dataset metadata and the metric protocol do not change canonical output.
 _PROCESSING_EXCLUDE: dict = {
     "name": True, "description": True, "domain": True, "keywords": True, "citation": True,
     "variables": True, "tier": True, "governance": True, "provenance": True,
@@ -56,21 +54,20 @@ def sha256_bytes(data: bytes) -> str:
 
 
 def processing_hash(descriptor: DatasetDescriptor) -> str:
-    """Stable hash of the descriptor fields that determine the canonical BYTES (drives rebuild).
+    """Hash descriptor inputs that can change canonical and curated output.
 
-    Independent of YAML formatting, of publish-assigned Dataverse identifiers, of all descriptive
-    metadata (name/variables/tier/governance/origin sources/retrieval routes/...), and of the
-    metric-protocol version (``versions.schema_protocol``). Editing those must not rebuild canonical
-    Parquet.
+    Variable names, roles, types and curation directives participate because they
+    determine output columns, views, values and the curation report. Explicit type
+    and dialect declarations are distinct from defaults: they can override source
+    schema rules. Descriptive dataset metadata and the metric protocol are excluded.
     """
     data = descriptor.model_dump(mode="json", exclude=_PROCESSING_EXCLUDE)
-    # Normalization directives affect bytes; descriptive roles/units still do not.
-    transforms = []
-    for variable in descriptor.variables:
-        if variable.original_name or variable.missing_values or variable.numeric_sentinels or variable.thousands_separator or variable.decimal_separator != ",":
-            transforms.append({"name": variable.name, "original_name": variable.original_name, "missing_values": variable.missing_values, "numeric_sentinels": variable.numeric_sentinels, "decimal_separator": variable.decimal_separator, "thousands_separator": variable.thousands_separator})
-    if transforms:
-        data["variable_normalization"] = transforms
+    if descriptor.variables:
+        directives = []
+        for variable in descriptor.variables:
+            directive = variable.model_dump(mode="json", exclude={"classes"})
+            directives.append(directive)
+        data["variable_curation"] = directives
     return sha256_bytes(json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 
@@ -79,13 +76,15 @@ def metadata_hash(descriptor: DatasetDescriptor) -> str:
 
     Includes ``variables``, ``tier``, ``governance``, ``origin_sources``, ``publications``, citations;
     excludes volatile publish/bootstrap identifiers and retrieval routes. Editing card-displayed
-    metadata bumps this (the card refreshes) without changing :func:`processing_hash` (canonical Parquet
-    is not rebuilt).
+    metadata bumps this (the card refreshes); byte-affecting variable edits also change
+    :func:`processing_hash`.
     """
     data = descriptor.model_dump(mode="json", exclude=_METADATA_EXCLUDE)
     # Additive curation defaults preserve historical descriptor/card identities.
     defaults: dict[str, object] = {"semantic_role": None, "original_name": None, "equivalent_to": None, "derived_from": [], "missing_values": [], "numeric_sentinels": [], "decimal_separator": ",", "thousands_separator": None}
     for variable in data.get("variables", []):
+        # Type has historically been included even when its default was implicit.
+        variable.setdefault("type", "numeric")
         for key, value in defaults.items():
             if variable.get(key) == value:
                 variable.pop(key, None)

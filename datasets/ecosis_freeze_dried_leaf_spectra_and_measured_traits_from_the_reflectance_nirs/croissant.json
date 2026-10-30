@@ -52,7 +52,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "e493e2043b93d41309f4377c6f20663bbd0952c28147d29ed7929411779c2d0f"
+      "sha256": "c7b9881699662b53fd76e490bd5849fc71e22a07eda09f52b7588a966f7b57d0"
     }
   ],
   "keywords": [
@@ -120,17 +120,17 @@
     {
       "@id": "variables",
       "@type": "cr:RecordSet",
-      "description": "Target and metadata variables keyed by sample_id.",
+      "description": "Target and metadata variables keyed by observation_id.",
       "field": [
         {
-          "@id": "variables/sample_id",
+          "@id": "variables/observation_id",
           "@type": "cr:Field",
           "dataType": "sc:Text",
           "description": "Sample identity (join key).",
-          "name": "sample_id",
+          "name": "observation_id",
           "source": {
             "extract": {
-              "column": "sample_id"
+              "column": "observation_id"
             },
             "fileObject": {
               "@id": "file/variables.parquet"
@@ -739,7 +739,7 @@
         }
       ],
       "key": {
-        "@id": "variables/sample_id"
+        "@id": "variables/observation_id"
       },
       "name": "variables"
     }

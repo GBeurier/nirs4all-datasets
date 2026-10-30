@@ -5,6 +5,24 @@ numerical kernels, Preflight owns intrinsic assessment, and Domains owns task/sp
 its fitted reference. Python-only legacy cards remain supported during this transition. Installing
 Datasets does not require an unpublished native provider.
 
+Second-difference MAD roughness delegates to the existing
+`n4m.roles.SpectralNoiseProxy` procedure (`diagnostics.spectral_noise_proxy`),
+through the generic `n4m_procedure_run` C ABI. Its protocol is
+`spectral-second-difference-mad-index.v1`. Datasets transports finite zero-filled
+values with an explicit validity mask, attaches axis coordinates, compatibility
+names and producer/engine/ABI provenance, and preserves the stricter missing-data
+contract of the quality aggregate. No Python numerical fallback runs; unavailable
+native results remain null with a reason, and older cards remain readable.
+
+Methods 1.3.10 already provides the global procedure and ABI 2.20. The bandwise
+outputs are an extension to that procedure under development, without a new ABI
+entry point or ABI bump. An older native library can return global values with
+bandwise values explicitly unavailable. Before rollout of the extension, release
+and verify an artifact containing it in a clean installation. The Datasets
+`methods` extra requires Methods 1.3.10 or newer and scikit-learn.
+See the [curation ownership roadmap](maintenance/curation_ownership_roadmap.md)
+for the completed extraction and deferred IO/DAG work.
+
 ## Reading the dataset cards
 
 The catalog's [reading guide](https://datasets.nirs4all.org/guide.html) explains source access,
