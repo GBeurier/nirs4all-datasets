@@ -211,9 +211,11 @@ def explained_label(label: str, description: str | None = None) -> str:
     )
 
 
-def panel_intro(title: str, *, rel: str = "../") -> str:
-    text = PANEL_HELP.get(title)
-    return f'<p class="panel-intro">{esc(text)} <a href="{rel}guide.html">Reading guide</a></p>' if text else ""
+def panel_intro(title: str, *, rel: str = "../", text: str | None = None, guide: bool = True) -> str:
+    """Visible panel purpose, with optional context and a link to further guidance."""
+    text = text or PANEL_HELP.get(title)
+    link = f' <a href="{rel}guide.html">Reading guide</a>' if guide else ""
+    return f'<p class="panel-intro">{esc(text)}{link}</p>' if text else ""
 
 
 def section_head(eyebrow: str, title_html: str, sub: str = "", *, centered: bool = True) -> str:
@@ -227,7 +229,7 @@ def viz_card(title: str, sub: str, svg: str, *, wide: bool = False) -> str:
     on small screens (keeping their labels legible) instead of being squashed to an unreadable size."""
     return (
         f'<div class="viz-card{" wide" if wide else ""}">'
-        f'<div class="viz-h">{esc(title)}</div><div class="viz-sub">{esc(sub)}</div>'
+        f'<h3 class="viz-h">{esc(title)}</h3><p class="viz-sub">{esc(sub)}</p>'
         f'<div class="viz-canvas">{svg}</div></div>'
     )
 
@@ -286,6 +288,7 @@ def dataset_card(view: DatasetView) -> str:
 <article class="ds-card" style="--tier:{tier_var}" {data_attrs}>
   <h3><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a></h3>
   <div class="ds-domain">{esc(domain)} &middot; {esc(family)}</div>
+  {panel_intro("Dataset summary", text="Compare source, sample and target counts; open this card for variables, provenance and access instructions.", guide=False)}
   {icons_html}
   <div class="ds-meta">
     <div>Samples <b>{num(n_samples) if n_samples is not None else "—"}</b></div>

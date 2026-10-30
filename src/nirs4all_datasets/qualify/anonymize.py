@@ -191,6 +191,9 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
             continue
         var.pop("normalization", None)  # original names/raw parsing rules belong to private provenance
         var.pop("histogram", None)  # the raw-value histogram would leak the real distribution/range
+        if var.get("type") == "numeric":
+            var.pop("class_stats", None)
+            var.pop("balance", None)
         if "assets" in var:
             var["assets"] = _mask_variable_assets(var.get("assets") or [], name_map)
         original = str(var.get("name"))

@@ -75,6 +75,12 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
     # task type from the target dtypes (categorical/text -> classification, else regression)
     _class_types = {VarType.CATEGORICAL, VarType.TEXT, VarType.IDENTIFIER}
     task_kinds = sorted({("classification" if t.type in _class_types else "regression") for t in targets})
+    if card_fresh and not card_meta_stale:
+        from nirs4all_datasets.card_tasks import card_task_kinds, project_card_tasks
+
+        observed = card_task_kinds(project_card_tasks(card), [t.name for t in targets])
+        if observed is not None:
+            task_kinds = sorted(observed)
     task = "+".join(task_kinds) if task_kinds else None
     # detected spectral signal type(s) (absorbance/reflectance/…), from a fresh card, kept only when confident
     signal_types = sorted({s["signal_type"] for s in (card.get("sources") or []) if card_fresh and s.get("signal_type") and (s.get("signal_type_confidence") or 0) >= 0.5}) if card_fresh else []

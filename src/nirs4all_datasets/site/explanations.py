@@ -17,6 +17,12 @@ PANEL_HELP = {
     "Provenance &amp; citation": "Where the original data and publications come from. Follow these links to obtain the source and cite its authors.",
     "Governance &amp; integrity": "Source license, redistribution conditions, content version and identity hashes. Redistribution tier and original-source availability are separate.",
     "Load this dataset": "Use the appropriate route below: an assembled dataset, original raw resources, or the documented access procedure.",
+    "Profile axes": "Dimensionless scores from 0 to 1 summarize each property; larger values indicate stronger signals. Unavailable axes are not zero.",
+    "Metric catalog": "Look up each measured quantity, its calculation and the heuristic alert mapping before interpreting a high or low value.",
+    "Technology-specific extensions": "Find measurement-specific checks and acquisition context that can help interpret a source's spectral patterns.",
+    "Bug-hunting / supervised audits": "Review suggested follow-up methods for suspected data issues and whether their results are available in this explorer.",
+    "Constant metadata": "Fields with one recorded value provide context for every observation; they have no distribution to compare.",
+    "Identity card pending": "Review the catalog metadata below while computed source and variable statistics are unavailable.",
 }
 
 METRIC_HELP = {
@@ -80,6 +86,41 @@ METRIC_HELP = {
     "Top class": "Most frequent recorded category and its observation count.",
     "Imbalance ratio": "Largest class count divided by smallest class count; 1 indicates equal counts.",
     "Minority": "Fraction of observations in the least frequent class.",
+}
+
+# Reuse the card glossary, with explicit definitions for differently named rows.
+# Keys follow the documented metric catalog, including its legacy proxy keys.
+COMPUTED_METRIC_HELP = {
+    "integrity.missing_cells": "Count of cells reported unavailable by the native owner under its null or validity mask. This count is distinct from the historical NaN ratio; consult the recorded population and denominator.",
+    "integrity.nan_ratio": METRIC_HELP["NaN ratio"],
+    "integrity.inf_count": METRIC_HELP["Inf count"],
+    "integrity.zero_ratio": METRIC_HELP["Zero ratio"],
+    "amplitude.mean_reflectance": METRIC_HELP["Mean level"],
+    "amplitude.area_under_curve": METRIC_HELP["Area"],
+    "amplitude.peak_to_peak": METRIC_HELP["PTP"],
+    "amplitude.variance": "Variance of all finite spectral cells, in squared signal units. It combines variation across observations and channels; a small value can describe a flat signal.",
+    "noise.noise_rms": METRIC_HELP["Noise RMS"],
+    "noise.snr": METRIC_HELP["Roughness S/N proxy"],
+    "noise.bandwise_snr_min": "Minimum channel-wise ratio of absolute mean signal to local second-difference roughness. A smaller ratio identifies a weak or rough spectral region; genuine narrow bands and near-zero signal can also lower it. This is not certified instrument SNR.",
+    "artefacts.spike_count": METRIC_HELP["Spike count"],
+    "artefacts.spike_rate": METRIC_HELP["Spike rate"],
+    "artefacts.jump_count": METRIC_HELP["Jump count"],
+    "artefacts.jump_rate": METRIC_HELP["Jump rate"],
+    "artefacts.clip_fraction": METRIC_HELP["Clip fraction"],
+    "shape.baseline_slope": METRIC_HELP["Baseline slope"],
+    "shape.curvature_rms": METRIC_HELP["Curvature RMS"],
+    "shape.d1_rms": METRIC_HELP["D1 RMS"],
+    "outliers.pca_q_ratio": METRIC_HELP["PCA Q p95/median"],
+    "outliers.hotelling_t2_ratio": METRIC_HELP["Hotelling T2 p95/median"],
+    "outliers.mahalanobis_h_ratio": METRIC_HELP["Mahalanobis H p95/median"],
+    "reference.rms_to_mean_spectrum_p95": METRIC_HELP["RMS p95"],
+    "reference.sam_to_mean_spectrum_p95": METRIC_HELP["SAM p95"],
+    "repeatability.rms_intra_id": METRIC_HELP["RMS intra-ID"] + " Repeated IDs require documentation before this spread can be called technical repeatability.",
+    "repeatability.sam_intra_id": METRIC_HELP["SAM intra-ID"] + " Repeated IDs require documentation before this spread can be called technical repeatability.",
+    "repeatability.cv_intra_id": METRIC_HELP["CV intra-ID"] + " Repeated IDs require documentation before this spread can be called technical repeatability.",
+    "structure.pca_score_density": "Inverse median distance to nearby observations in retained PCA-score space. Larger raw values mean more closely spaced observations; scale depends on the PCA representation. The alert uses density variation, so raw density alone does not establish an anomaly.",
+    "structure.local_outlier_factor_p95": "95th percentile of mean k-nearest-neighbor distance divided by the population median of that distance, in PCA-score space. Values above 1 indicate an upper tail with more isolated observations; valid rare spectra can also be isolated. This distance ratio is not the Local Outlier Factor algorithm.",
+    "structure.isolation_forest_score_p95": "95th percentile of the negated Isolation Forest score in retained PCA-score space. Larger raw scores indicate easier isolation under that model; the scale is implementation-dependent. The displayed alert reuses structure complexity rather than directly mapping this raw score.",
 }
 
 PROFILE_HELP = {

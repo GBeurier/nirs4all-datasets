@@ -426,6 +426,7 @@ table.data td { overflow-wrap: anywhere; }
 .chart-spectra { background: linear-gradient(180deg, #fff, #fbfdff); border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-bottom: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.85); }
 
 .explorer-grid { display: grid; grid-template-columns: minmax(300px, 520px) minmax(300px, 1fr); gap: 18px; align-items: start; margin-bottom: 18px; }
+.explorer-grid > div { min-width: 0; }
 @media (max-width: 860px) { .explorer-grid { grid-template-columns: 1fr; } }
 .profile-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
 .profile-summary div { border: 1px solid var(--border); border-radius: 10px; background: linear-gradient(180deg, #fff, var(--bg-alt)); padding: 10px 12px; min-width: 0; }
@@ -434,6 +435,9 @@ table.data td { overflow-wrap: anywhere; }
 @media (max-width: 760px) { .profile-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 460px) { .profile-summary { grid-template-columns: 1fr; } }
 .profile-radar, .diag-chart, .pca-score-chart, .xy-corr-chart { background: linear-gradient(180deg, #fff, #fbfdff); border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-bottom: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,.85); }
+.diagnostic-scroll { max-width: 100%; overflow-x: auto; padding: 4px; }
+.diagnostic-scroll .diag-chart { min-width: 520px; }
+.diagnostic-scroll:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
 .source-viz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; align-items: start; margin-top: 14px; }
 .diag-table { min-width: 820px; }
 .diag-table th:first-child { min-width: 190px; }
@@ -444,9 +448,11 @@ table.data td { overflow-wrap: anywhere; }
 .metric-ref td:first-child { font-weight: 600; color: var(--text-2); min-width: 150px; }
 .metric-ref code { color: var(--teal-d); background: rgba(13,148,136,.07); border: 1px solid rgba(13,148,136,.18); border-radius: 6px; padding: 2px 6px; white-space: nowrap; }
 .metric-scores { margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 4px 14px 14px; }
-.metric-scores summary { cursor: pointer; font-family: var(--display); font-size: .92rem; font-weight: 600; padding: 10px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.metric-scores summary span { font-size: .7rem; font-family: var(--mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; color: var(--text-2); }
-.metric-scores summary em { font-style: normal; font-family: var(--mono); font-size: .72rem; color: var(--text-3); margin-left: auto; }
+.metric-scores > summary { cursor: pointer; font-family: var(--display); font-size: .92rem; font-weight: 600; padding: 10px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.metric-scores > summary span { font-size: .7rem; font-family: var(--mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; color: var(--text-2); }
+.metric-scores > summary em { font-style: normal; font-family: var(--mono); font-size: .72rem; color: var(--text-3); margin-left: auto; }
+.metric-score-table .metric-help summary { display: inline-grid; place-items: center; min-width: 24px; min-height: 24px; padding: 0; }
+.metric-score-table .metric-help[open] span { min-width: 0; max-width: 36ch; }
 .metric-score-table table.data { min-width: 1120px; }
 .metric-score-table td:first-child { min-width: 150px; font-weight: 600; color: var(--text-2); }
 .metric-score-table code { color: var(--teal-d); background: rgba(13,148,136,.07); border: 1px solid rgba(13,148,136,.18); border-radius: 6px; padding: 2px 6px; white-space: nowrap; }

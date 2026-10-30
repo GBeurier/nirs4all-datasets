@@ -10,10 +10,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any
+from xml.etree import ElementTree
 
 import yaml
 
 from nirs4all_datasets.site import build_site, charts, pages
+from nirs4all_datasets.site import components as C
 from nirs4all_datasets.site.model import DatasetView
 
 
@@ -173,11 +175,54 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert ">320<" in index or "320" in index  # total samples KPI value
     # multiple inline SVG charts, each accessible
     assert index.count('role="img"') >= 5
-    for label in ("Datasets by domain", "Datasets by access tier", "Wavelength coverage by family", "Samples versus features"):
+    for label in ("Datasets by domain", "Datasets by access tier", "Datasets by wavelength coverage", "Samples versus features"):
         assert f'aria-label="{label}"' in index
     assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
     assert '<link rel="canonical" href="https://datasets.nirs4all.org/">' in index
     assert '"@type":"DataCatalog"' in index
+
+
+def test_index_provenance_follows_hero_before_bank_statistics(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    index = (out / "index.html").read_text(encoding="utf-8")
+    assert index.count("Built to be <em>cited</em>") == 1
+    assert index.index(C.HERO_MARKUP) < index.index("Built to be <em>cited</em>") < index.index("The bank at a glance")
+
+
+def test_wavelength_coverage_uses_all_sources_and_declared_units() -> None:
+    def view(*sources: dict[str, Any]) -> DatasetView:
+        return DatasetView(_entry("example"), "public", {"sources": list(sources)}, True, True, True, False, True, "example")
+
+    def source(lo: Any, hi: Any, unit: str, modality: str = "NIR") -> dict[str, Any]:
+        return {"axis_min": lo, "axis_max": hi, "axis_unit": unit, "modality": modality}
+
+    nir = source(1000, 2000, "nm")
+    mir_wavenumber = source(400, 4000, "cm-1", "MIR")
+    assert pages._wavelength_range_nm(mir_wavenumber) == (2500, 25000)
+    assert pages._wavelength_range_nm(source(10000, 5000, "cm^-1")) == (1000, 2000)
+    assert pages._wavelength_coverage([
+        view(nir),
+        view(mir_wavenumber),
+        view(nir, mir_wavenumber),
+        view(source(2499, 2501, "nm")),
+        view(source(780, 2500, "nm")),
+        view(source(400, 700, "nm")),
+        view(source(1, 2, "none")),
+        view(nir, source(1, 2, "index")),
+        view(source(400, 4000, "cm-1", "Raman")),
+        view(source(0, 1000, "cm-1")),
+        view(source(float("nan"), 1000, "nm")),
+        view(),
+    ]) == {"NIR": 2, "MIR": 1, "Mixed": 2, "Other": 1, "Unclassified": 6}
+
+
+def test_wavelength_coverage_has_visible_equivalent_data(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    index = (out / "index.html").read_text(encoding="utf-8")
+    assert "View wavelength coverage data" in index
+    assert '<th scope="row">NIR</th><td>3</td><td>75.0%</td>' in index
+    assert '<th scope="row">Unclassified</th><td>1</td><td>25.0%</td>' in index
+    assert "Wavenumbers are converted to nm" in index
 
 
 def test_catalog_lists_all_datasets_with_tier_badges(tmp_path: Path) -> None:
@@ -276,6 +321,31 @@ def test_public_full_with_downloads(tmp_path: Path) -> None:
     assert not (out / "assets").exists()
 
 
+def test_partial_profile_from_computed_scores_is_rendered_with_values(tmp_path: Path) -> None:
+    import numpy as np
+
+    from nirs4all_datasets.qualify import metrics
+
+    spectra = np.random.default_rng(4).normal(0.5, 0.1, (30, 20))
+    profile = metrics.spectral_profile(spectra, sample_ids=[f"s{i}" for i in range(30)])
+    scores = metrics.aggregate_profile_scores([profile])
+    assert scores is not None and scores["repeatability_risk"] is None
+    root = _build_fixture(tmp_path)
+    card_path = root / "datasets" / "corn_oil" / "card.json"
+    card = json.loads(card_path.read_text())
+    card["alignment"]["profile_scores"] = scores
+    card["sources"][0]["spectral"]["profile"] = profile
+    card_path.write_text(json.dumps(card))
+    out = build_site(root, tmp_path / "site")
+    detail = (out / "dataset" / "corn_oil.html").read_text()
+    bank = (out / "index.html").read_text()
+    assert 'Corn — oil — noise:' in detail
+    assert 'Corn — oil profile</title>' not in detail
+    assert 'unavailable</td>' in detail
+    assert 'View profile values' in bank
+    assert 'unavailable</td>' in bank
+
+
 def test_private_no_byte_download_but_full_metadata(tmp_path: Path) -> None:
     out = build_site(_build_fixture(tmp_path), tmp_path / "site")
     page = (out / "dataset" / "wheat_protein.html").read_text(encoding="utf-8")
@@ -309,7 +379,70 @@ def test_cardless_renders_card_pending(tmp_path: Path) -> None:
     page = (out / "dataset" / "nocard.html").read_text(encoding="utf-8")
     assert "card pending" in page.lower()
     assert "soil" in page  # descriptor metadata still rendered
+    assert page.index('<h2>Provenance &amp; citation</h2>') < page.index('<h2>Governance &amp; integrity</h2>') < page.index('<h2>Identity card pending</h2>')
+    assert "https://doi.org/10.5281/zenodo.1" in page
+    assert "LicenseRef-not-cleared" in page
+    assert "Detailed origin and publication records are unavailable" in page
+    assert "Detailed policies and integrity hashes are unavailable" in page
     assert not (out / "data" / "nocard.card.json").exists()  # no fake download
+
+
+def test_panel_purposes_cover_overview_catalog_and_nested_detail_cards(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    index = (out / "index.html").read_text()
+    assert '<h3 class="viz-h">Sample-size distribution</h3><p class="viz-sub">' in index
+    assert "logarithmic bins" in index
+    catalog = (out / "catalog.html").read_text()
+    assert "Compare source, sample and target counts" in catalog
+    assert '<h3>No matching datasets</h3><p>Reset the filters' in catalog
+    for dataset_id in ("corn_oil", "wheat_protein", "grass_secret"):
+        detail = (out / "dataset" / f"{dataset_id}.html").read_text()
+        assert "Read the signal and variation summaries for this source." in detail
+        assert "Dimensionless scores from 0 to 1 summarize each property" in detail
+        assert "Look up each measured quantity" in detail
+        assert "Find measurement-specific checks" in detail
+        assert "Review suggested follow-up methods" in detail
+        if dataset_id == "grass_secret":
+            assert "Review observation and missing-value counts; numeric values are unavailable" in detail
+        else:
+            assert "Read the recorded value distribution and summary statistics" in detail
+    assert "summary statistics in %." in (out / "dataset" / "corn_oil.html").read_text()
+    assert "Review the catalog metadata below" in (out / "dataset" / "nocard.html").read_text()
+
+
+def test_empty_source_and_variable_panels_keep_purpose_and_availability(tmp_path: Path) -> None:
+    root = _build_fixture(tmp_path)
+    card_path = root / "datasets" / "corn_oil" / "card.json"
+    card = json.loads(card_path.read_text())
+    card.update(sources=[{"source_id": "X1", "spectral": {}}], variables=[], alignment={}, splits=[], provenance={})
+    card_path.write_text(json.dumps(card))
+    out = build_site(root, tmp_path / "site")
+    detail = (out / "dataset" / "corn_oil.html").read_text()
+    for title in ("Sampling", "Signal &amp; quality", "Integrity &amp; artefacts", "Shape &amp; reference", "Outliers &amp; repeatability", "Dimensionality (PCA)"):
+        assert f'<h4>{title}</h4><p class="panel-intro">' in detail
+    assert detail.count("No values are available for this source") == 6
+    assert "A spectral summary plot is unavailable" in detail
+    assert "A usable two-component observation projection is unavailable" in detail
+    assert "Per-component explained variance is unavailable" in detail
+    assert "No target or metadata variable summaries are recorded" in detail
+    assert "Observation-to-sample alignment is not recorded" in detail
+    assert "No original partition summaries are recorded" in detail
+    assert "Property scores and diagnostic evidence are unavailable" in detail
+    assert "Origin and citation details are not recorded" in detail
+    assert "metadata-only (no declared prediction targets)" not in detail
+
+
+def test_empty_bank_and_missing_source_lists_keep_titled_explanations(tmp_path: Path) -> None:
+    assert '<h3 class="viz-h">Bank statistics unavailable</h3><p class="viz-sub">' in pages._dataviz({}, [])
+    root = _build_fixture(tmp_path)
+    card_path = root / "datasets" / "corn_oil" / "card.json"
+    card = json.loads(card_path.read_text())
+    card["sources"] = []
+    card_path.write_text(json.dumps(card))
+    out = build_site(root, tmp_path / "site")
+    detail = (out / "dataset" / "corn_oil.html").read_text()
+    assert '<h2>Spectral sources</h2><div class="panel-body"><p class="panel-intro">' in detail
+    assert "No spectral source summaries are recorded" in detail
 
 
 def test_no_dataset_bytes_written(tmp_path: Path) -> None:
@@ -337,7 +470,30 @@ def test_stale_card_renders_as_pending(tmp_path: Path) -> None:
     out = build_site(root, tmp_path / "site")
     page = (out / "dataset" / "corn_oil.html").read_text(encoding="utf-8")
     assert "card pending" in page.lower()  # a stale card is treated as no card (never shows wrong stats)
+    assert page.index('<h2>Provenance &amp; citation</h2>') < page.index('<h2>Governance &amp; integrity</h2>') < page.index('<h2>Identity card pending</h2>')
+    assert "https://doi.org/10.5281/zenodo.1" in page
+    assert "Secret Lab" not in page  # never use stale card provenance
     assert not (out / "data" / "corn_oil.card.json").exists()
+
+
+def test_anonymized_pending_provenance_uses_no_identifying_card_details(tmp_path: Path) -> None:
+    root = _build_fixture(tmp_path)
+    catalog_path = root / "catalog" / "datasets.yaml"
+    catalog = yaml.safe_load(catalog_path.read_text())
+    for entry in catalog["datasets"]:
+        if entry["id"] == "grass_secret":
+            entry["is_stale"] = True
+    catalog_path.write_text(yaml.safe_dump(catalog))
+    card_path = root / "datasets" / "grass_secret" / "card.json"
+    card_path.write_text(json.dumps(_card("grass_secret", name="SECRETNAME", description="Secret description", target_name="SECRET_TARGET")))
+    out = build_site(root, tmp_path / "site")
+    page = (out / "dataset" / "grass_secret.html").read_text()
+    for text in ("SECRETNAME", "Secret description", "SECRET_TARGET", "Secret Lab", "Kjeldahl", "Origin title"):
+        assert text not in page
+    assert page.count('<h2>Provenance &amp; citation</h2>') == 1
+    assert page.count('<h2>Governance &amp; integrity</h2>') == 1
+    assert "Detailed origin and publication records are unavailable" in page
+    assert not (out / "data" / "grass_secret.card.json").exists()
 
 
 def test_intrinsic_profile_renders_external_checks_and_exact_provider_context():
@@ -349,6 +505,24 @@ def test_intrinsic_profile_renders_external_checks_and_exact_provider_context():
     assert "white/black reference actually acquired" in html
     assert "intrinsic/masked/v1" in html and "development_real" in html and "nirs4all-preflight" in html
     assert "0.78 does not mean a 78%" in html
+
+
+def test_diagnostic_chart_keeps_full_real_labels_separate_and_inside_canvas() -> None:
+    from nirs4all_datasets.qualify import metrics
+
+    diagnostics = metrics.diagnostic_hypotheses({}, domain_context="VERA25")
+    for item in diagnostics:
+        item["score"] = 0.62
+    svg = ElementTree.fromstring(charts.diagnostic_bars(diagnostics, top_n=len(diagnostics)))
+    height = float(svg.attrib["viewBox"].split()[3])
+    labels = [text for text in svg.findall("text") if text.find("tspan") is not None]
+    assert ["".join(text.itertext()) for text in labels] == [item["label"] for item in diagnostics]
+    previous_bottom = 30.0
+    for text in labels:
+        positions = [float(span.attrib["y"]) for span in text.findall("tspan")]
+        assert min(positions) - previous_bottom >= 17
+        assert max(positions) < height - 8
+        previous_bottom = max(positions)
 
 
 def test_dataset_explanations_order_and_legacy_diagnostic_language(tmp_path: Path) -> None:
@@ -364,6 +538,58 @@ def test_dataset_explanations_order_and_legacy_diagnostic_language(tmp_path: Pat
     for text in ('raccord détecteurs', 'Rupture aux jonctions', 'moyenne', 'Interprétation', 'Famille'):
         assert text not in html
     assert 'different probe' in html
+    assert 'class="diagnostic-scroll" role="region" aria-label="Diagnostic hypotheses chart, horizontally scrollable" tabindex="0"' in html
+    assert 'On narrow screens, scroll the chart horizontally.' in html
+    assert '<caption>Diagnostic hypotheses and supporting evidence</caption>' in html
+    assert '<th>Signature compatible with a spectral splice<small>X1</small></th>' in html
+    assert '.explorer-grid > div { min-width: 0; }' in html
+    assert '.diagnostic-scroll { max-width: 100%; overflow-x: auto;' in html
+    assert '.diagnostic-scroll .diag-chart { min-width: 520px; }' in html
+
+
+def test_pca_score_panel_interprets_saved_variance_and_source_scope() -> None:
+    source = _card("corn", name="Corn", description="Corn spectra", target_name="oil")["sources"][0]
+    source["name"] = "Instrument <one>"
+    # Adjacent scree values describe a separate projection and must not supply this summary.
+    source["spectral"]["pca"]["explained_variance_ratio"] = [0.2, 0.1]
+    html = pages._pca_score_panel(source)
+    assert "Source Instrument &lt;one&gt;: 3 of 80 source observations are plotted." in html
+    assert "PC1 captures 80.0% and PC2 15.0%" in html
+    assert "95.0% together; 5.0% remains outside this view." in html
+    assert "horizontal PC1 axis" in html and "vertical PC2" in html
+    assert "not wavelengths or target values" in html
+    assert "separate groups or isolated dots are leads to inspect" in html
+    assert "cannot identify groups" in html
+    assert "selection method are not supplied" in html
+    assert "at most 800" not in html
+    assert '<caption>Plotted observation positions (not original sample IDs)</caption>' in html
+    assert '<td>1</td><td>-1</td><td>0.2</td>' in html
+
+
+def test_pca_score_panel_handles_unavailable_variance_without_inventing_coverage() -> None:
+    source = _card("corn", name="Corn", description="Corn spectra", target_name="oil")["sources"][0]
+    source.pop("n_observations")
+    for ev in ([], [0.8], [0.8, None], [float("nan"), 0.1], [-0.1, 0.2], [0.8, 0.5], [True, 0]):
+        source["spectral"]["score_plot"]["explained_variance_ratio"] = ev
+        html = pages._pca_score_panel(source)
+        assert "Source X1: 3 plotted observations." in html
+        assert "Explained variance is unavailable" in html
+        assert "together;" not in html
+        assert "PC1 (" not in html and "PC2 (" not in html
+        assert "View plotted PCA coordinates" in html
+
+
+def test_pca_score_panel_filters_invalid_coordinates_and_omits_unusable_clouds() -> None:
+    source = _card("corn", name="Corn", description="Corn spectra", target_name="oil")["sources"][0]
+    points = source["spectral"]["score_plot"]["points"]
+    points.extend([None, {"x": float("nan"), "y": 0}, {"x": 1, "y": True}])
+    html = pages._pca_score_panel(source)
+    assert "3 of 80 source observations" in html
+    assert html.count('<circle ') == 3
+    points.pop(0)
+    assert pages._pca_score_panel(source) == ""
+    source["spectral"].pop("score_plot")
+    assert pages._pca_score_panel(source) == ""
 
 
 def test_guide_is_linked_and_documents_missing_scores_and_pca(tmp_path: Path) -> None:
@@ -376,6 +602,45 @@ def test_guide_is_linked_and_documents_missing_scores_and_pca(tmp_path: Path) ->
     assert 'A dash or “unavailable”' in guide
     assert '<loc>https://datasets.nirs4all.org/guide.html</loc>' in (out / 'sitemap.xml').read_text()
     assert 'href="../guide.html"' in (out / 'dataset' / 'corn_oil.html').read_text()
+
+
+def test_computed_metric_help_covers_every_row_and_preserves_native_disclosure() -> None:
+    from nirs4all_datasets.qualify import metrics
+    from nirs4all_datasets.site.explanations import COMPUTED_METRIC_HELP
+
+    panel = ElementTree.fromstring(pages._metric_scores_panel({}))
+    rows = panel.findall(".//tbody/tr")
+    catalog = metrics.metric_catalog()
+    assert len(rows) == len(catalog) > 0
+    for row, metric in zip(rows, catalog, strict=True):
+        key = metric.get("legacy_key") or metric["key"]
+        assert key in COMPUTED_METRIC_HELP
+        help_control = row.find("td[2]/details[@class='metric-help']")
+        assert help_control is not None and "open" not in help_control.attrib
+        trigger = help_control.find("summary")
+        assert trigger is not None and trigger.text == "?"
+        assert trigger.attrib["aria-label"] == f'Explain {metric["metric"]}'
+        explanation = help_control.find("span")
+        assert explanation is not None and explanation.text
+        assert COMPUTED_METRIC_HELP[key] in explanation.text
+        assert (metric["score_note"].rstrip(".") or "No alert mapping is defined") in explanation.text
+        assert "not a fault probability" in explanation.text
+        assert "A dash means unavailable" in explanation.text
+        assert "aria-hidden" not in explanation.attrib
+
+
+def test_computed_metric_help_escapes_content(monkeypatch: Any) -> None:
+    from nirs4all_datasets.qualify import metrics
+
+    row = metrics.metric_score_rows({})[0]
+    row.update(metric='<img src=x onerror="alert(1)">', score_note='a "quoted" rule: X < 1 & X > 0')
+    monkeypatch.setattr(metrics, "metric_score_rows", lambda _: [row])
+    panel = ElementTree.fromstring(pages._metric_scores_panel({}))
+    trigger = panel.find(".//details[@class='metric-help']/summary")
+    assert trigger is not None and trigger.attrib["aria-label"] == f'Explain {row["metric"]}'
+    assert panel.find(".//img") is None
+    explanation = panel.find(".//details[@class='metric-help']/span")
+    assert explanation is not None and 'X < 1 & X > 0' in (explanation.text or "")
 
 
 def test_private_tier_with_open_source_uses_raw_retrieval_without_token(tmp_path: Path) -> None:

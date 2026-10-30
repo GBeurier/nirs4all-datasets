@@ -116,6 +116,14 @@ def _dataset_view(root: Path, entry: dict[str, Any]) -> DatasetView:
     asset_id = ""
     if fresh_card:
         card = _read_json(dataset_dir / "card.json")
+        if card is not None:
+            from nirs4all_datasets.card_tasks import card_task_kinds, project_card_tasks
+
+            if tier != ANONYMIZED:
+                card = project_card_tasks(card)
+            tasks = card_task_kinds(card, entry.get("targets") or [])
+            if tasks is not None:
+                entry = {**entry, "task": "+".join(sorted(tasks)) or None}
         asset_id = dataset_id if (card is not None and tier != ANONYMIZED) else ""
 
     return DatasetView(
