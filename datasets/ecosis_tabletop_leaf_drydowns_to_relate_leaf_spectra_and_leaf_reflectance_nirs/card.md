@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Suivi de dessiccation : les observations répétées couvrent des états hydriques/temps différents.
+- **Conversion warnings:** Curation identity contract: Drying follow-up: repeated observations cover different water states/times.
 - **Curated views:** M: 1 fields, Y: 9 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

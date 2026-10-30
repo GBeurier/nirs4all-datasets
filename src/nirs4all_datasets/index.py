@@ -190,15 +190,6 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
             + [f"missing shared conversion script: {name}" for name in missing_converters],
         }
 
-    if descriptor.tier.value in {"private", "anonymized"}:
-        return {
-            **data,
-            "status": "token_required",
-            "public_retrievable": False,
-            "public_redistributable": False,
-            "blockers": ["no open machine-actionable raw route; use token-gated Dataverse fallback"],
-        }
-
     manual_origins = [origin for origin in descriptor.origin_sources if origin.access.value == "manual" and origin.kind.value != "script"]
     if manual_origins:
         manual_routes = [
@@ -215,6 +206,15 @@ def _retrieval(root: str | Path, descriptor: DatasetDescriptor) -> dict[str, Any
             "public_redistributable": False,
             "blockers": ["only manual/click-through origins are declared"]
             + [f"missing shared conversion script: {name}" for name in missing_converters],
+        }
+
+    if descriptor.tier.value in {"private", "anonymized"}:
+        return {
+            **data,
+            "status": "token_required",
+            "public_retrievable": False,
+            "public_redistributable": False,
+            "blockers": ["no open machine-actionable raw route; use token-gated Dataverse fallback"],
         }
 
     if missing_converters:

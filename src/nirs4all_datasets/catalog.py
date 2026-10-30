@@ -104,6 +104,8 @@ def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: di
         "n_samples": alignment.get("n_samples"),
         "doi": pub.dataverse.doi,
         "retrieval_status": retrieval.get("status"),
+        "retrieval_public_retrievable": retrieval.get("public_retrievable"),
+        "retrieval_public_redistributable": retrieval.get("public_redistributable"),
         "retrieval_canonical_hosted": bool(retrieval.get("canonical_hosted")),
         "retrieval_route_count": len(retrieval.get("routes") or []),
         "origin_kinds": sorted({s.kind.value for s in pub.origin_sources}),

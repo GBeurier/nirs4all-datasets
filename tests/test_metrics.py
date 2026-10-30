@@ -126,7 +126,7 @@ def test_metric_score_rows_join_values_scores_and_interpretation() -> None:
     q = next(row for row in rows if row["key"] == "outliers.pca_q_ratio")
     assert q["value"] == profile["outliers"]["pca_q_ratio"]
     assert q["score"] is not None
-    assert q["level"] in {"faible", "moyen", "fort"}
+    assert q["level"] in {"weak", "medium", "strong"}
     assert q["interpretation"]
     assert q["formula"] and q["score_note"]
 

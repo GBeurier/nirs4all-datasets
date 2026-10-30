@@ -50,7 +50,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: 1229 identifiants source et 1229 vecteurs spectraux distincts pour 2718 lignes : chaque spectre est copié dans 2–3 dossiers calibration/prédiction. Les 1489 lignes supplémentaires ne prouvent aucune répétition d’acquisition.
+- **Conversion warnings:** Curation identity contract: 1229 source identifiers and 1229 distinct spectral vectors for 2718 rows: each spectrum is copied into 2–3 calibration/prediction folders. The 1489 additional rows do not demonstrate repeated acquisitions.
 - **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

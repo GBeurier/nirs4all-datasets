@@ -33,11 +33,13 @@ def test_state_origin_distribution() -> None:
 
 
 def test_dataset_status_combines_state_and_validation() -> None:
-    s = status.dataset_status(_entry(tier="private"), {"validation": "approved"})
+    s = status.dataset_status(_entry(tier="private", retrieval_status="raw_reproducible"), {"validation": "approved"})
     assert s["state"] == "qualified" and s["materialized"] is True and s["origin"] == "verified"
     assert s["distribution"] == "upload_pending" and s["validation"] == "approved"
+    assert s["retrieval"] == "raw_reproducible"
     # default validation when no record
     assert status.dataset_status(_entry(), None)["validation"] == "pending"
+    assert status.dataset_status(_entry(), None)["retrieval"] == "unknown"
 
 
 def test_validation_registry_init_and_preserve(registry: Path) -> None:
@@ -68,5 +70,16 @@ def test_build_reports(registry: Path) -> None:
     assert paths["status"].exists() and paths["private"].exists()
     status_md = paths["status"].read_text(encoding="utf-8")
     assert "# Dataset status" in status_md and "`corn`" in status_md and "qualified" in status_md
-    # corn is public -> it appears in the status report but NOT in the upload-pending list
+    # corn is public -> it appears in the status report but not the governance inventory
     assert "`corn`" not in paths["private"].read_text(encoding="utf-8")
+
+
+def test_private_report_distinguishes_governance_and_retrieval(registry: Path) -> None:
+    descriptor = registry / "catalog" / "datasets" / "corn.yaml"
+    rows = [status.dataset_status(_entry(id="corn", tier="private", retrieval_status="missing_delegate"), None)]
+    report = status.render_private_md(registry, rows)
+    assert descriptor.exists()
+    assert "`missing_delegate`" in report
+    assert "does not imply that the original source is inaccessible" in report
+    assert "needs a delegate for canonical assembly" in report
+    assert "cannot `get()` their bytes" not in report

@@ -15,7 +15,7 @@ def test_heuristic_strength_is_never_a_causal_probability_and_mean_is_explicit()
     assert rows
     assert all(row["confidence_status"] == "unvalidated" for row in rows)
     assert all(row["score_kind"] == "heuristic_signature" for row in rows)
-    assert all("0.78" in row["score_explanation"] and "78 %" in row["score_explanation"] for row in rows)
+    assert all("0.78" in row["score_explanation"] and "78%" in row["score_explanation"] for row in rows)
     assert all(row["recommended_verifications"] for row in rows)
     assert "RMS/SAM référence" not in json.dumps(rows, ensure_ascii=False)
     assert all(row["score"] is None for row in rows)
@@ -87,7 +87,7 @@ def test_old_card_display_preserves_score_and_hides_domain_hypothesis_by_default
     assert presented[0]["score"] == 0.78
     assert "compatible" in presented[0]["label"]
     assert presented[0]["confidence_status"] == "unvalidated"
-    assert presented[0]["evidence"][0]["signal"] == "RMS/SAM au spectre moyen"
+    assert presented[0]["evidence"][0]["signal"] == "RMS/SAM to mean spectrum"
     assert len(_combined_diagnostics([("X", old)], domain_context="VERA25")) == 2
 
 

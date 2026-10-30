@@ -37,7 +37,7 @@ _ENTRY_KEYS = {
     "id", "name", "domain", "tier", "license", "content_version", "schema_protocol",
     "spectro_family", "modalities", "n_sources", "source_ids", "n_features_total",
     "alignment_level", "n_targets", "targets", "task", "signal_types", "profile_scores", "n_metadata", "has_split", "splits",
-    "n_samples", "doi", "retrieval_status", "retrieval_canonical_hosted", "retrieval_route_count", "origin_kinds", "origin_access", "n_publications",
+    "n_samples", "doi", "retrieval_status", "retrieval_public_retrievable", "retrieval_public_redistributable", "retrieval_canonical_hosted", "retrieval_route_count", "origin_kinds", "origin_access", "n_publications",
     "card_protocol", "content_hash", "processing_hash", "has_card", "has_manifest",
     "is_stale", "publishable",
     "n_curated_metadata", "n_curated_targets", "curated_metadata", "curated_targets", "identity_status", "technical_repetitions",

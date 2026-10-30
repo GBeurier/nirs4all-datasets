@@ -547,8 +547,9 @@ def test_manifest_file_url_preferred_and_missing_required_file_is_reported(tmp_p
     assert resources[0]["sha256"] == "a" * 64
 
 
-def test_manual_origin_produces_explicit_manual_route(tmp_path):
-    desc = _descriptor(origin_sources=[{"kind": "manual", "mode": "raw", "locator": "https://example.test/request", "access": "manual"}], retrieval={})
+@pytest.mark.parametrize("tier", ["public", "private"])
+def test_manual_origin_produces_explicit_manual_route(tmp_path, tier):
+    desc = _descriptor(tier=tier, origin_sources=[{"kind": "manual", "mode": "raw", "locator": "https://example.test/request", "access": "manual"}], retrieval={})
     manifest = _manifest("demo", file_id=678)
     manifest["processing_hash"] = processing_hash(desc)
     _write_dataset(tmp_path, desc, manifest)

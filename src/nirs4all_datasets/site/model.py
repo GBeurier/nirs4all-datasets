@@ -56,6 +56,16 @@ class DatasetView:
         return bool(self.entry.get("is_stale"))
 
     @property
+    def has_open_retrieval(self) -> bool:
+        """Original-source availability is independent of redistribution tier."""
+        if self.tier == ANONYMIZED:
+            return False
+        declared = self.entry.get("retrieval_public_retrievable")
+        if isinstance(declared, bool):
+            return declared
+        return self.entry.get("retrieval_status") in {"raw_reproducible", "canonical_verified"}
+
+    @property
     def description(self) -> str:
         """Description, gated: anonymized never prints the original description."""
         if self.tier == ANONYMIZED or not self.card:
