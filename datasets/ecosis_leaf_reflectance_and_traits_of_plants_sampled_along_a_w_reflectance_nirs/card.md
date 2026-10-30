@@ -85,7 +85,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Identifiant échantillon déclaré dans M
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
 - **Curated views:** M: 2 fields, Y: 12 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

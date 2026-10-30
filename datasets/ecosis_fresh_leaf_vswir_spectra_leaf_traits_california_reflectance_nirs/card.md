@@ -88,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 285 identifiants spectraux et 285 couples (sample_name, sample_date). Les 111 libellés sont réutilisés à 1–3 dates distinctes ; replicate est constant au sein de chaque libellé, donc ce ne sont pas 1–3 réacquisitions du même échantillon daté. Le statut de répétition technique n’est pas documenté.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 285 spectral identifiers and 285 (sample_name, sample_date) pairs. The 111 labels are reused on 1–3 distinct dates; replicate is constant within each label, so these are not 1–3 reacquisitions of the same dated sample. Technical replicate status is undocumented.
 - **Curated views:** M: 9 fields, Y: 5 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

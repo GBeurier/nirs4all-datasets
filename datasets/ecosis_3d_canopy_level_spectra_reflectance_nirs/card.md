@@ -75,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Parcelle × année source ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
+- **Conversion warnings:** Curation identity contract: Source plot × year; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
 - **Curated views:** M: 2 fields, Y: 3 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

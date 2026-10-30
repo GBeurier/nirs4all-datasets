@@ -15,6 +15,7 @@ from nirs4all_datasets.qualify import metrics as QMETRICS
 from . import charts
 from . import components as C
 from .escape import esc, locator_link, num
+from .explanations import METRIC_HELP, PROFILE_HELP
 from .model import Catalog, DatasetView
 from .theme import SITE_URL, page
 
@@ -34,8 +35,8 @@ def _index_kpis(summary: dict[str, Any], datasets: list[DatasetView]) -> list[tu
         (num(samples) if samples else "—", "total samples"),
         (num(summary.get("total_sources") or 0), "spectral sources"),
         (num(domains), "domains"),
-        (num(n_retrievable), "retrievable"),
-        (num(n_public), "public-tier"),
+        (num(n_retrievable), "reproducible routes"),
+        (num(n_public), "open redistribution"),
     ]
 
 
@@ -96,7 +97,7 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
         ))
     if by_tier:
         cards.append(C.viz_card(
-            "Access tier", "Governance tier: public / private / anonymized",
+            "Redistribution tier", "Rights classification, independent of whether original-source downloads are open",
             charts.donut_chart(list(by_tier.items()), title="Datasets by access tier", width=HALF),
         ))
     if by_retrieval:
@@ -209,7 +210,7 @@ def _bank_profile_radar(datasets: list[DatasetView]) -> list[dict[str, Any]]:
 def render_index(catalog: Catalog) -> str:
     summary = catalog.summary
     datasets = catalog.datasets
-    sample_id = datasets[0].id if datasets else "corn_oil"
+    sample_id = next((v.id for v in datasets if v.tier == "public" and v.has_open_retrieval), "corn_oil")
     get_title = 'One <em>call</em>, fully reproducible'
     body = f"""
 {C.nav("", "index")}
@@ -222,7 +223,7 @@ def render_index(catalog: Catalog) -> str:
 </section>
 <section class="section section-aurora">
   <div class="container">
-    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Computed once at build time and rendered as inline SVG — no trackers, no runtime chart library.")}
+    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Compare dataset sizes, spectral coverage and available property profiles. Missing statistics are omitted; redistribution tier does not determine source availability.")}
     {_dataviz(summary, datasets)}
   </div>
 </section>
@@ -231,7 +232,7 @@ def render_index(catalog: Catalog) -> str:
     {C.section_head("Use it in one line", get_title, "Datasets download on demand by their pinned DOI, are checksum-verified, and cached locally.")}
     <div style="max-width:760px;margin:0 auto">
       {C.load_snippet(sample_id, "public")}
-      <p class="dl-note" style="margin-top:16px">Public datasets fetch openly; private/anonymized datasets need a Dataverse token. The bytes always live at their licensed origin — this catalog never redistributes them.</p>
+      <p class="dl-note" style="margin-top:16px">Open origin routes can also exist for datasets with restricted redistribution. Use each card's loading example and source links. <a href="guide.html#access">Understand access and rights</a>.</p>
     </div>
   </div>
 </section>
@@ -305,7 +306,8 @@ def render_catalog(catalog: Catalog) -> str:
   <div class="container">
     <div class="controls">
       <input id="q" type="search" placeholder="Search name, id, domain, target…" aria-label="Search datasets">
-      <select id="f-tier" aria-label="Filter by tier"><option value="">all tiers</option>{opts(tiers)}</select>
+      <select id="f-access" aria-label="Filter by source access"><option value="">any source access</option><option value="open">open original source</option><option value="conditional">manual, token or undocumented</option></select>
+      <select id="f-tier" aria-label="Filter by redistribution tier"><option value="">all redistribution tiers</option>{''.join(f'<option value="{esc(t)}">{esc({"public": "open redistribution", "private": "restricted redistribution", "anonymized": "anonymized"}.get(t, t))}</option>' for t in tiers)}</select>
       <select id="f-family" aria-label="Filter by family"><option value="">all families</option>{opts(families)}</select>
       <select id="f-domain" aria-label="Filter by domain"><option value="">all domains</option>{opts(domains)}</select>
       <select id="f-target" aria-label="Filter by target"><option value="">target or not</option><option value="yes">has target</option><option value="no">metadata-only</option></select>
@@ -314,6 +316,7 @@ def render_catalog(catalog: Catalog) -> str:
       <button class="btn-reset" id="reset">reset</button>
       <span class="count" id="count"></span>
     </div>
+    <p class="panel-intro">Source access tells you whether original data can be retrieved. Redistribution tier records rights: a restricted tier does not necessarily require a token. Assembly may still need a converter. <a href="guide.html#access">Access explained</a>.</p>
     {_icon_legend()}
     <div class="cards" id="cards">{cards}</div>
     <div class="empty hidden" id="empty">No dataset matches these filters.</div>
@@ -345,7 +348,7 @@ _CATALOG_JS = """
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.ds-card'));
   var q=document.getElementById('q'),count=document.getElementById('count'),empty=document.getElementById('empty'),grid=document.getElementById('cards');
-  var f={tier:document.getElementById('f-tier'),family:document.getElementById('f-family'),domain:document.getElementById('f-domain'),target:document.getElementById('f-target'),multi:document.getElementById('f-multi')};
+  var f={access:document.getElementById('f-access'),tier:document.getElementById('f-tier'),family:document.getElementById('f-family'),domain:document.getElementById('f-domain'),target:document.getElementById('f-target'),multi:document.getElementById('f-multi')};
   var sort=document.getElementById('f-sort');
   function apply(){
     var t=(q.value||'').trim().toLowerCase();var n=0;
@@ -353,6 +356,7 @@ _CATALOG_JS = """
       var ok=true;
       if(t&&c.getAttribute('data-name').indexOf(t)<0)ok=false;
       if(f.tier.value&&c.getAttribute('data-tier')!==f.tier.value)ok=false;
+      if(f.access.value&&c.getAttribute('data-access')!==f.access.value)ok=false;
       if(f.family.value&&c.getAttribute('data-family')!==f.family.value)ok=false;
       if(f.domain.value&&c.getAttribute('data-domain')!==f.domain.value)ok=false;
       if(f.target.value&&c.getAttribute('data-target')!==f.target.value)ok=false;
@@ -414,8 +418,13 @@ def _pct(v: Any, nd: int = 0) -> str | None:
 
 def _stat_table(title: str, pairs: list[tuple[str, str | None]]) -> str:
     """A compact key→value stat panel; rows whose value is None are dropped."""
-    rows = "".join(f'<tr><th>{esc(label)}</th><td>{value}</td></tr>' for label, value in pairs if value is not None)
-    return f'<div class="stat-card"><h4>{esc(title)}</h4><table class="stat-table">{rows}</table></div>' if rows else ""
+    rows = "".join(f'<tr><th>{C.explained_label(label)}</th><td>{value}</td></tr>' for label, value in pairs if value is not None)
+    return f'<div class="stat-card"><h4>{esc(title)}</h4>{C.panel_intro(title)}<table class="stat-table">{rows}</table></div>' if rows else ""
+
+
+def _chart_reading(title: str, explanation: str, svg: str, *, values: str = "") -> str:
+    """Keep chart purpose, limitations and any exact data next to the visual."""
+    return f'<figure class="chart-reading"><figcaption><h4>{esc(title)}</h4><p>{esc(explanation)}</p></figcaption>{svg}{values}</figure>'
 
 
 def _zoom(svg: str, *, cls: str = "", max_w: int | None = None) -> str:
@@ -459,9 +468,17 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         chart = ""
         if view.show_variable_plots and curve and curve.get("axis"):
             chart = _zoom(charts.spectra_quantile(curve, title=f'{s.get("name") or s.get("source_id")} spectra', unit=unit, width=860), cls="chart-spectra", max_w=860)
+            chart = _chart_reading("Spectral signal summary", "The mean and median describe the typical signal at each channel; shaded bands show the 25th–75th and 5th–95th percentiles across observations. A wider band means greater variation, which can be biological or instrumental.", chart)
         score_plot = ""
         if view.show_variable_plots and spec.get("score_plot"):
             score_plot = _zoom(charts.pca_score_scatter(spec["score_plot"], title=f'{s.get("source_id")} PCA score plot', width=520), cls="pca-score-chart", max_w=520)
+            points = spec["score_plot"].get("points") or []
+            ev = spec["score_plot"].get("explained_variance_ratio") or []
+            valid_ev = [float(v) for v in ev[:2] if _isnum(v)]
+            explained = f" Together these axes explain {sum(valid_ev) * 100:.1f}% of variation in the plotted sample." if len(valid_ev) == 2 else ""
+            point_rows = [[str(i + 1), num(p.get("x"), nd=5), num(p.get("y"), nd=5)] for i, p in enumerate(points) if isinstance(p, dict) and _isnum(p.get("x")) and _isnum(p.get("y"))]
+            values = '<details class="chart-values"><summary>View plotted PCA coordinates</summary>' + C.data_table("Plotted observation positions (not original sample IDs)", ["Point", "PC1", "PC2"], point_rows) + '</details>'
+            score_plot = _chart_reading("PCA score plot — why it is here", f"Principal component analysis (PCA) summarizes differences between spectra without using targets. Each dot is one plotted observation; nearby dots have similar projections, while separated groups can suggest batches or subpopulations. {len(point_rows)} observations are shown (at most 800; large sources are sampled)." + explained + " PC1/PC2 can hide variation in other dimensions; separated points do not prove a defect or prediction accuracy.", score_plot, values=values)
 
         rng = f'{num(s.get("axis_min"))}–{num(s.get("axis_max"))} {esc(unit)}' if (_isnum(s.get("axis_min")) and _isnum(s.get("axis_max"))) else None
         sampling = _stat_table("Sampling", [
@@ -527,6 +544,9 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
         evr = pca.get("explained_variance_ratio") or []
         if view.show_variable_plots and evr:
             scree = _zoom(charts.scree([float(x) for x in evr if _isnum(x)], width=420), max_w=420)
+            scree_rows = [[f"PC{i + 1}", f"{float(v) * 100:.2f}%"] for i, v in enumerate(evr[:10]) if _isnum(v)]
+            values = '<details class="chart-values"><summary>View explained variance values</summary>' + C.data_table("Variance per displayed principal component", ["Component", "Spectral variance"], scree_rows) + '</details>'
+            scree = _chart_reading("PCA explained variance — how many dimensions?", "Each bar reports the share of spectral variance explained by a component. Concentration in the first components indicates correlated wavelengths. This is not variance explained in the prediction target. This projection may use a different observation sample from the score plot.", scree, values=values)
         xy_panel = _xy_panel(s, view)
         metric_scores = _metric_scores_panel(profile)
         secondary_charts = f'<div class="source-viz-grid">{score_plot}{scree}</div>' if (score_plot or scree) else ""
@@ -535,7 +555,7 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
             f'<div class="source-card">{head}{chart}'
             f'<div class="stat-grid">{sampling}{signal}{integrity}{shape_ref}{outlier_table}{dimensionality}</div>{metric_scores}{secondary_charts}{xy_panel}</div>'
         )
-    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{"".join(blocks)}</div></section>'
+    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{C.panel_intro("Spectral sources")}{"".join(blocks)}</div></section>'
 
 
 def _xy_panel(source: dict[str, Any], view: DatasetView) -> str:
@@ -559,7 +579,7 @@ def _xy_panel(source: dict[str, Any], view: DatasetView) -> str:
         '<div class="table-scroll xy-table"><table class="data"><thead><tr><th>Target</th><th class="num">max |r|</th><th class="num">axis @ max</th><th class="num">mean |r|</th><th class="num">|r| ≥ .5</th></tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table></div>'
     )
-    return f'<details class="xy-panel" open><summary>X-Y spectral correlation <span>{len(rows)}</span></summary><div class="xy-charts">{"".join(charts_html)}</div>{table}</details>'
+    return f'<details class="xy-panel" open><summary>X-Y spectral correlation <span>{len(rows)}</span></summary><p class="panel-intro">Pearson r measures the linear association between each spectral channel (X) and a numeric target (Y), from −1 to +1. The table reports peak and average absolute correlation and the share of channels with |r| ≥ 0.5. These are in-dataset associations, not validation scores or proof of causation.</p><div class="xy-charts">{"".join(charts_html)}</div>{table}</details>'
 
 
 _PERCENT_METRIC_KEYS = {
@@ -614,7 +634,7 @@ def _metric_scores_panel(profile: dict[str, Any]) -> str:
         bucket = _score_bucket(row.get("score"))
         html_rows.append(
             f'<tr class="score-row-{bucket}"><td>{esc(row.get("family"))}</td>'
-            f'<td><code>{esc(row.get("metric"))}</code><small>{esc(row.get("key"))}</small></td>'
+            f'<td>{C.explained_label(str(row.get("metric")), str(row.get("detects")) + ". " + str(row.get("formula")))}<small>{esc(row.get("key"))}</small></td>'
             f'<td class="numt">{_metric_value_cell(row)}</td>'
             f'<td class="score-col">{_score_cell(row.get("score"))}</td>'
             f'<td>{esc(row.get("level"))}</td>'
@@ -624,11 +644,12 @@ def _metric_scores_panel(profile: dict[str, Any]) -> str:
         )
     table = (
         '<div class="table-scroll metric-score-table"><table class="data"><thead><tr>'
-        '<th>Famille</th><th>Métrique calculée</th><th class="num">Valeur</th><th class="num">Score</th><th>Niveau heuristique</th><th>Interprétation descriptive</th><th>Causes possibles à vérifier</th><th>Calcul / scoring</th>'
+        '<th>Family</th><th>Computed metric</th><th class="num">Value</th><th class="num">Alert score</th><th>Heuristic level</th><th>Descriptive interpretation</th><th>Possible causes to verify</th><th>Calculation / scoring</th>'
         f'</tr></thead><tbody>{"".join(html_rows)}</tbody></table></div>'
     )
-    summary_meta = f'<em>worst {worst:.2f}</em>' if worst is not None else ""
-    return f'<details class="metric-scores" open><summary>Computed metric scores <span>{len(rows)}</span>{summary_meta}</summary>{table}</details>'
+    summary_meta = f'<em>highest alert {worst:.2f}</em>' if worst is not None else ""
+    intro = '<p class="panel-intro">Value is the measured quantity; alert score is its heuristic mapping to 0–1. Levels are weak below 0.42, medium from 0.42, and strong from 0.72. These are display bands, not calibrated acceptance thresholds. A dash means unavailable, never zero. Possible causes are suggestions to investigate.</p>'
+    return f'<details class="metric-scores"><summary>Computed metric scores <span>{len(rows)}</span>{summary_meta}</summary>{intro}{table}</details>'
 
 
 def _source_profiles(view: DatasetView) -> list[tuple[str, dict[str, Any]]]:
@@ -668,25 +689,28 @@ def _profile_panel(view: DatasetView) -> str:
     radar = ""
     if scores:
         radar = _zoom(charts.radar_profiles([{"label": view.name, "scores": scores}], title=f"{view.name} property profile", width=520), cls="profile-radar", max_w=520)
+        radar = _chart_reading("How to read the profile", "The center is 0 and the outer ring is 1. Larger values indicate stronger anomaly or heterogeneity signals on that axis. Compare individual axes using the table; this is not an overall quality grade. Incomplete profiles are not drawn as complete polygons.", radar)
     diagnostics = _combined_diagnostics(profiles, domain_context=((view.card or {}).get("qualification_provenance") or {}).get("diagnostic_domain"))
     diag_chart = _zoom(charts.diagnostic_bars(diagnostics, width=520), cls="diag-chart", max_w=520) if diagnostics else ""
+    if diag_chart:
+        diag_chart = _chart_reading("Possible explanations to investigate", "Bars rank heuristic signatures from 0 to 1. They do not estimate the probability of a physical fault. Read evidence coverage, possible causes and required external checks in the table below.", diag_chart)
     diag_rows = []
     for d in diagnostics[:8]:
         evidence = ", ".join(f'{esc(e.get("signal"))} {float(e.get("level") or 0):.2f}' for e in (d.get("evidence") or [])[:3] if isinstance(e, dict))
         source = f'<small>{esc(d.get("source_id"))}</small>' if d.get("source_id") else ""
-        coverage = f'{num(100 * d["evidence_coverage"])} %' if _isnum(d.get("evidence_coverage")) else "non renseignée"
+        coverage = f'{num(100 * d["evidence_coverage"])} %' if _isnum(d.get("evidence_coverage")) else "not reported"
         checks = "<br>".join(esc(item) for item in d.get("recommended_verifications", []))
         diag_rows.append(
             f'<tr><th>{esc(d.get("label"))}{source}</th><td class="score-col">{_score_cell(d.get("score"))}</td>'
             f'<td>{esc(d.get("strength"))}</td><td>{coverage}</td><td>{esc(evidence)}</td><td>{esc(d.get("interpretation"))}</td><td>{checks}</td></tr>'
         )
     diag_table = (
-        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Force heuristique</th><th>Couverture des preuves</th><th>Signaux</th><th>Cause possible</th><th>Vérifications externes nécessaires</th></tr></thead>'
+        '<div class="table-scroll"><table class="data diag-table"><thead><tr><th>Diagnostic</th><th class="num">Score</th><th>Heuristic strength</th><th>Evidence coverage</th><th>Signals</th><th>Possible cause</th><th>Required external checks</th></tr></thead>'
         f'<tbody>{"".join(diag_rows)}</tbody></table></div>'
         if diag_rows else '<p class="dl-note">No diagnostic hypothesis available for this card.</p>'
     )
     score_rows = "".join(
-        f'<tr><th>{esc(label)}</th><td>{format(scores[k], ".2f") if k in scores else "non calculable"}</td></tr>'
+        f'<tr><th>{C.explained_label(label, PROFILE_HELP.get(k))}</th><td>{format(scores[k], ".2f") if k in scores else "unavailable"}</td></tr>'
         for k, label in QMETRICS.profile_score_labels().items()
     )
     score_table = f'<div class="stat-card"><h4>Profile axes</h4><table class="stat-table">{score_rows}</table></div>' if score_rows else ""
@@ -698,7 +722,7 @@ def _profile_panel(view: DatasetView) -> str:
         worst_label = QMETRICS.profile_score_labels().get(worst_key, worst_key)
         summary = (
             '<div class="profile-summary">'
-            f'<div><span>Mean profile risk</span><b>{mean_score:.2f}</b></div>'
+            f'<div><span>Mean available profile score</span><b>{mean_score:.2f}</b></div>'
             f'<div><span>Highest axis</span><b>{esc(worst_label)} · {worst_score:.2f}</b></div>'
             f'<div><span>Diagnostics</span><b>{len(diagnostics)}</b></div>'
             f'<div><span>Sources profiled</span><b>{len(profiles)}</b></div>'
@@ -712,7 +736,7 @@ def _profile_panel(view: DatasetView) -> str:
         fields = [source_id, producer.get("name"), producer.get("engine_version"), producer.get("protocol_version"), producer.get("population_id"), producer.get("context_id"), producer.get("view_id")]
         provenance_rows.append("<tr>" + "".join(f"<td>{esc(value)}</td>" for value in fields) + "</tr>")
     provenance = (
-        '<div class="table-scroll"><table class="data assessment-context"><thead><tr><th>Source</th><th>Moteur</th><th>Version moteur</th><th>Protocole</th><th>Population</th><th>Contexte</th><th>Vue</th></tr></thead>'
+        '<div class="table-scroll"><table class="data assessment-context"><thead><tr><th>Source</th><th>Engine</th><th>Engine version</th><th>Protocol</th><th>Population</th><th>Context</th><th>View</th></tr></thead>'
         f'<tbody>{"".join(provenance_rows)}</tbody></table></div>'
         if provenance_rows else ""
     )
@@ -722,10 +746,10 @@ def _profile_panel(view: DatasetView) -> str:
         f'<div>{radar}{score_table}</div>'
         f'<div>{diag_chart}</div>'
         '</div>'
-        '<p class="dl-note">Scores de signatures heuristiques, non calibrés en probabilités de causes physiques : 0.78 ne signifie pas 78 % de probabilité causale. Les preuves absentes restent non calculables. RMS/SAM décrivent la dispersion autour de la moyenne du dataset, sans référence externe indépendante.</p>'
+        '<p class="dl-note">Heuristic signature scores are not calibrated probabilities of physical causes: 0.78 does not mean a 78% causal probability. Missing evidence remains unavailable. RMS/SAM describe dispersion around the dataset mean, without an independent external reference.</p>'
         f'{diag_table}'
     )
-    return f'<section class="panel wide"><h2>Dataset property explorer</h2><div class="panel-body">{body}</div></section>'
+    return f'<section class="panel wide"><h2>Dataset property explorer</h2><div class="panel-body">{C.panel_intro("Dataset property explorer")}{body}</div></section>'
 
 
 def _metric_reference_panel() -> str:
@@ -747,21 +771,64 @@ def _metric_reference_panel() -> str:
             f'<tr><td>{esc(item["family"])}</td><td>{esc(item["methods"])}</td><td>{esc(item["detects"])}</td><td>{esc(item["status"])}</td></tr>'
         )
     table = (
-        '<div class="table-scroll"><table class="data metric-ref"><thead><tr><th>Famille</th><th>Métrique</th><th>Ce qu’elle détecte</th><th>Forte valeur =</th><th>Faible valeur =</th><th>Causes typiques</th><th>Calcul / score</th></tr></thead>'
+        '<div class="table-scroll"><table class="data metric-ref"><thead><tr><th>Family</th><th>Metric</th><th>What it measures</th><th>Higher values suggest</th><th>Lower values suggest</th><th>Possible causes</th><th>Calculation / score</th></tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table></div>'
     )
     catalog = f'<details class="reference-guidance"><summary>Metric catalog <span>{len(rows)}</span></summary>{table}</details>'
     tech = (
         '<details class="tech-guidance"><summary>Technology-specific extensions</summary>'
-        '<div class="table-scroll"><table class="data"><thead><tr><th>Technologie</th><th>Adaptations / métriques</th><th>Anomalies ciblées</th><th>Commentaire pratique</th></tr></thead>'
+        '<div class="table-scroll"><table class="data"><thead><tr><th>Technology</th><th>Adaptations / metrics</th><th>Target anomalies</th><th>Practical guidance</th></tr></thead>'
         f'<tbody>{"".join(tech_rows)}</tbody></table></div></details>'
     )
     bug = (
         '<details class="tech-guidance"><summary>Bug-hunting / supervised audits</summary>'
-        '<div class="table-scroll"><table class="data"><thead><tr><th>Famille de bug potentiel</th><th>Méthodes à ajouter</th><th>Ce que ça détecte</th><th>État dans l’explorateur</th></tr></thead>'
+        '<div class="table-scroll"><table class="data"><thead><tr><th>Potential issue family</th><th>Suggested methods</th><th>What it detects</th><th>Explorer availability</th></tr></thead>'
         f'<tbody>{"".join(bug_rows)}</tbody></table></div></details>'
     )
-    return f'<section class="panel wide"><h2>Metric interpretation reference</h2><div class="panel-body">{catalog}{tech}{bug}</div></section>'
+    return f'<section class="panel wide"><h2>Metric interpretation reference</h2><div class="panel-body">{C.panel_intro("Metric interpretation reference")}{catalog}{tech}{bug}</div></section>'
+
+
+def render_guide() -> str:
+    """A linked, self-contained reading guide using the same definitions as the inline help."""
+    glossary = "".join(f'<tr><th scope="row">{esc(label)}</th><td>{esc(text)}</td></tr>' for label, text in METRIC_HELP.items())
+    body = f"""
+{C.nav('', 'guide')}
+<section class="section section-paper" style="padding-top:84px"><div class="container">
+  {C.section_head('Reading guide', 'Understand the <em>dataset cards</em>', 'What each section answers, how to interpret the charts, and what the scores can and cannot tell you.')}
+  <nav class="guide-links" aria-label="Guide sections"><a href="#access">Access and rights</a><a href="#pca">Why PCA?</a><a href="#scores">Scores and missing evidence</a><a href="#glossary">Metric glossary</a></nav>
+</div></section>
+<section class="section"><div class="container"><div class="panel-grid">
+  <section class="panel wide" id="access"><h2>Access and rights are separate</h2><div class="panel-body">
+    <p>Start with provenance and governance at the top of a card. Provenance links to the original resources and publications. Governance records the license, redistribution conditions and content identity.</p>
+    <p><strong>Open source access</strong> means an open original-source route is recorded. <strong>Restricted redistribution</strong> is the display label for the catalog's private tier: rights are restricted or not cleared for redistribution. It does not mean that the original source is necessarily private.</p>
+    <p><strong>Raw reproducible</strong> identifies a retrieval route. <strong>Assembly incomplete</strong> means raw resources can be available while dataset-specific conversion is missing. The loading example uses <code>retrieve(id, prepare=False)</code> for these raw downloads; it returns resource metadata rather than X/Y arrays. A complete original-source recipe uses <code>get(id)</code>. Two Harvard datasets require explicit guestbook answers.</p>
+    <p><strong>Token required</strong> means no open automatic route is recorded. A Dataverse token works only once the canonical data have a configured hosted DOI. <strong>Manual access</strong> requires the original provider's documented steps. Availability labels describe the catalog routes, not a fresh live check of every URL.</p>
+  </div></section>
+  <section class="panel wide" id="pca"><h2>Why is PCA on a dataset card?</h2><div class="panel-body">
+    <p>Spectra have many correlated wavelengths. Principal component analysis (PCA) compresses their variation into a few orthogonal directions, called principal components (PCs). It is an exploratory summary of X, calculated without using the target Y.</p>
+    <p><strong>The score plot</strong> places each plotted observation on PC1 and PC2. Nearby dots have similar projections; groups can reveal batches, instruments or natural subpopulations. Axis percentages show explained spectral variance. Large sources are sampled to at most 800 observations. Similar positions in two dimensions do not guarantee similar full spectra; an isolated dot does not prove an acquisition fault.</p>
+    <p><strong>The scree plot</strong> reports spectral variance per component, helping you see whether variation is concentrated in a few dimensions. It is not explained target variance or predictive accuracy. The scree projection and score-plot projection may use different row samples; their percentages need not match.</p>
+    <p><strong>Q / SPE</strong> measures residual variation outside the retained PCA subspace. <strong>Hotelling T²</strong> measures an observation's scaled distance within that subspace; <strong>Mahalanobis H</strong> summarizes PCA-space distance. The displayed p95/median ratios compare the distribution's upper tail with its center, without an absolute rejection threshold.</p>
+    <p>Historical profiles replace missing cells with column medians before PCA, center channels, and use bounded row/component counts. Loadings and distances depend on signal units and preprocessing. Compare compatible sources and inspect the original spectra before acting.</p>
+  </div></section>
+  <section class="panel wide" id="scores"><h2>Scores, evidence and missing values</h2><div class="panel-body">
+    <p>Read measured values first. An alert score maps selected metrics to a heuristic 0–1 scale. The display bands are weak below 0.42, medium from 0.42 to below 0.72, and strong from 0.72. They are not universally validated pass/fail thresholds.</p>
+    <p>The radar's center is 0 and its outer ring is 1: outward means a stronger anomaly or heterogeneity signal for that axis. Its table gives exact values and explains each axis. An incomplete profile is not drawn as if missing axes were zero. The mean profile score averages only available axes and is not an overall quality grade.</p>
+    <p>Diagnostic bars rank possible explanations from heuristic signatures. A score of 0.78 does not mean a 78% causal probability. Evidence coverage is the proportion of required signals available, not confidence in the cause. A dash or “unavailable” means the quantity could not be computed; zero is an actual recorded value.</p>
+    <p>RMS (root mean square distance) and SAM (Spectral Angle Mapper, in radians) use this dataset's mean spectrum as their reference. They do not compare with an independently acquired white or dark reference. Repeated IDs require a documented protocol before within-ID spread can be called technical repeatability.</p>
+    <p>X–Y plots show Pearson correlation within this dataset. They identify linear associations; they are not cross-validated predictions and do not establish causal relationships. Targets, metadata, observation counts and physical sample counts have different meanings.</p>
+  </div></section>
+  <section class="panel wide" id="glossary"><h2>Metric glossary</h2><div class="panel-body">
+    <p>The same explanations appear beside values through the question-mark controls. Hover for a short hint, or expand a control with touch, Enter or Space. p95 means the 95th percentile; SD means standard deviation; CV means coefficient of variation.</p>
+    <div class="table-scroll"><table class="data"><caption>Source and variable statistics</caption><thead><tr><th>Metric</th><th>Meaning and limitations</th></tr></thead><tbody>{glossary}</tbody></table></div>
+  </div></section>
+  {_metric_reference_panel()}
+</div></div></section>
+{C.footer('')}
+"""
+    # Reference panel links normally resolve from dataset/, but the guide lives at the root.
+    body = body.replace('href="../guide.html"', 'href="guide.html"')
+    return page(title="Reading guide - nirs4all-datasets", rel="", body=body, active="guide", path="guide.html", description="Understand dataset access, PCA plots, property metrics and heuristic diagnostic scores.")
 
 
 def _var_has_data(v: dict[str, Any]) -> bool:
@@ -819,7 +886,7 @@ def _variable_card(view: DatasetView, v: dict[str, Any]) -> str:
             ("Top class", f'{esc(top.get("name"))} ({num(top.get("count"))})' if top.get("name") is not None else None),
         ]
 
-    body = "".join(f'<tr><th>{esc(label)}</th><td>{value}</td></tr>' for label, value in rows if value is not None)
+    body = "".join(f'<tr><th>{C.explained_label(label)}</th><td>{value}</td></tr>' for label, value in rows if value is not None)
     chart_html = _zoom(chart, cls="var-chart", max_w=440) if chart else ""
     return (
         f'<div class="var-card"><div class="var-card-head"><h4>{esc(name)}</h4>'
@@ -839,7 +906,7 @@ def _curation_panel(view: DatasetView) -> str:
     counts = report["views"]
     summary = f'{len(counts.get("M", []))} experimental metadata fields (M) · {len(counts.get("Y", []))} informative targets (Y).'
     table = '<table><thead><tr><th>Variable</th><th>Role</th><th>Distinct values</th><th>Complete</th><th>Range / balance</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table>'
-    return '<section class="panel wide"><h2>Curated scientific variables</h2><div class="panel-body"><p>' + esc(summary) + '</p>' + table + '<p class="dl-note">Identifiers and sampling groups remain available separately. Statistics count exported observations.</p></div></section>'
+    return '<section class="panel wide"><h2>Curated scientific variables</h2><div class="panel-body">' + C.panel_intro("Curated scientific variables") + '<p>' + esc(summary) + '</p>' + table + '<p class="dl-note">Identifiers and sampling groups remain available separately. Statistics count exported observations.</p></div></section>'
 
 
 def _variables_panel(view: DatasetView, rel: str) -> str:
@@ -847,7 +914,7 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
     variables = card.get("variables") or []
     if not variables:
         note = "This dataset is metadata-only (no declared prediction targets)." if view.has_card else ""
-        return f'<section class="panel"><h2>Variables</h2><div class="panel-body"><p class="dl-note">{esc(note or "No variables present.")}</p></div></section>' if note else ""
+        return f'<section class="panel"><h2>Variables</h2><div class="panel-body">{C.panel_intro("Variables")}<p class="dl-note">{esc(note or "No variables present.")}</p></div></section>' if note else ""
 
     usable = [v for v in variables if _var_has_data(v)]
     omitted = len(variables) - len(usable)
@@ -871,7 +938,7 @@ def _variables_panel(view: DatasetView, rel: str) -> str:
         blocks.append(f'<p class="dl-note">{omitted} variable(s) omitted (no recorded values).</p>')
     if not targets and not meta and not constant:
         blocks.append('<p class="dl-note">No variable carries recorded values.</p>')
-    return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{"".join(blocks)}</div></section>'
+    return f'<section class="panel wide"><h2>Variables</h2><div class="panel-body">{C.panel_intro("Variables")}{"".join(blocks)}</div></section>'
 
 
 def _is_constant(v: dict[str, Any]) -> bool:
@@ -911,7 +978,7 @@ def _alignment_panel(view: DatasetView) -> str:
         rows.append(("Identity status", al["identity_status"]))
         rows.append(("Documented technical repetitions", al.get("technical_repetitions") if al.get("technical_repetitions") is not None else "ND"))
         rows.append(("Source unit", al.get("unit")))
-    return f'<section class="panel"><h2>Alignment</h2><div class="panel-body">{_kv(rows)}</div></section>'
+    return f'<section class="panel"><h2>Alignment</h2><div class="panel-body">{C.panel_intro("Alignment")}{_kv(rows)}</div></section>'
 
 
 def _splits_panel(view: DatasetView) -> str:
@@ -924,7 +991,7 @@ def _splits_panel(view: DatasetView) -> str:
         parts = s.get("partitions") or {}
         parts_str = ", ".join(f"{esc(k)}: {num(val)}" for k, val in parts.items()) or "—"
         items.append(f'<tr><th>{esc(s.get("name"))}</th><td>{parts_str} <span class="badge neutral" style="margin-left:6px">documented · not applied</span></td></tr>')
-    return f'<section class="panel"><h2>Splits</h2><div class="panel-body"><table class="kv"><tbody>{"".join(items)}</tbody></table></div></section>'
+    return f'<section class="panel"><h2>Splits</h2><div class="panel-body">{C.panel_intro("Splits")}<table class="kv"><tbody>{"".join(items)}</tbody></table></div></section>'
 
 
 def _provenance_panel(view: DatasetView) -> str:
@@ -949,7 +1016,7 @@ def _provenance_panel(view: DatasetView) -> str:
             rows.append(f'<tr><th>Publication</th><td>{locator_link(pub.get("doi"))}{t}{yr}</td></tr>')
     if not rows:
         return ""
-    return f'<section class="panel wide"><h2>Provenance &amp; citation</h2><div class="panel-body"><table class="kv"><tbody>{"".join(rows)}</tbody></table></div></section>'
+    return f'<section class="panel wide"><h2>Provenance &amp; citation</h2><div class="panel-body">{C.panel_intro("Provenance &amp; citation")}<table class="kv"><tbody>{"".join(rows)}</tbody></table></div></section>'
 
 
 def _governance_integrity_panel(view: DatasetView) -> str:
@@ -973,16 +1040,23 @@ def _governance_integrity_panel(view: DatasetView) -> str:
         val = integ.get(key)
         if val:
             rows.append((label, f'<code style="font-size:.78rem">{esc(str(val)[:16])}…</code>'))
-    return f'<section class="panel"><h2>Governance &amp; integrity</h2><div class="panel-body">{_kv(rows)}</div></section>'
+    return f'<section class="panel wide"><h2>Governance &amp; integrity</h2><div class="panel-body">{C.panel_intro("Governance &amp; integrity")}{_kv(rows)}</div></section>'
 
 
 def _tier_note(view: DatasetView) -> str:
     if view.tier == "private":
+        if view.has_open_retrieval:
+            return (
+                '<div class="tier-note"><div><strong>Original source available without a Dataverse token.</strong> '
+                'The catalog uses the private tier for restricted or uncleared redistribution rights. '
+                'You can obtain original resources from the source; their license still applies. '
+                'Raw retrieval and automatic assembly are separate; use the loading example below.</div></div>'
+            )
         return (
             '<div class="tier-note private"><span class="ico">&#128274;</span><div>'
-            "<strong>Private dataset.</strong> Full metadata and metrics are shown, but the bytes are not "
-            "redistributed here — exporting the data requires a Dataverse token. The identity card carries "
-            "no spectra, only descriptive statistics.</div></div>"
+            "<strong>No automatic open retrieval route is recorded.</strong> Full metadata and metrics are shown. "
+            "Check the origin links for manual access. A hosted canonical download needs a configured "
+            "Dataverse DOI and token; a token alone cannot make an unhosted dataset available.</div></div>"
         )
     if view.tier == "anonymized":
         return (
@@ -1016,6 +1090,8 @@ def render_dataset(view: DatasetView) -> str:
     family = e.get("spectro_family") or ""
 
     badges = [C.tier_badge(view.tier)]
+    if view.has_open_retrieval:
+        badges.insert(0, C.badge("Open source access", "info"))
     rb = C.retrieval_badge(e.get("retrieval_status"))
     if rb:
         badges.append(rb)
@@ -1044,6 +1120,8 @@ def render_dataset(view: DatasetView) -> str:
             (esc(family or "—"), "family"),
         ])
         panels = "".join([
+            _provenance_panel(view),
+            _governance_integrity_panel(view),
             _profile_panel(view),
             _sources_panel(view, rel),
             _metric_reference_panel(),
@@ -1051,8 +1129,6 @@ def render_dataset(view: DatasetView) -> str:
             _variables_panel(view, rel),
             _alignment_panel(view),
             _splits_panel(view),
-            _provenance_panel(view),
-            _governance_integrity_panel(view),
         ])
         content = f'<div class="panel-grid">{panels}</div>'
     else:
@@ -1109,7 +1185,7 @@ def render_dataset(view: DatasetView) -> str:
   <div class="container">
     {kpis}
     <div style="margin-top:26px">{content}</div>
-    <section class="panel wide" style="margin-top:20px"><h2>Load this dataset</h2><div class="panel-body">{C.load_snippet(view.id, view.tier)}<div style="margin-top:16px">{_downloads(view, rel)}</div></div></section>
+    <section class="panel wide" style="margin-top:20px"><h2>Load this dataset</h2><div class="panel-body">{C.panel_intro("Load this dataset")}{C.load_snippet(view.id, view.tier, open_retrieval=view.has_open_retrieval, retrieval_status=e.get("retrieval_status"), raw_route_available=bool(e.get("retrieval_route_count")))}<div style="margin-top:16px">{_downloads(view, rel)}</div></div></section>
   </div>
 </section>
 {C.footer(rel)}

@@ -198,7 +198,7 @@ def test_dataset_page_per_dataset(tmp_path: Path) -> None:
     assert "Corn — oil" in public
     assert "Dataset property explorer" in public and "Spectral sources" in public and "Provenance" in public
     assert "Metric interpretation reference" in public and "PCA Q (SPE)" in public
-    assert "Computed metric scores" in public and "Interprétation descriptive" in public and "Causes possibles à vérifier" in public
+    assert "Computed metric scores" in public and "Descriptive interpretation" in public and "Possible causes to verify" in public
     assert "count(isnan(X)) / X.size" in public
     assert "Bug-hunting / supervised audits" in public and "Label bugs" in public
     assert "X-Y spectral correlation" in public and "PCA score plot" in public
@@ -346,6 +346,60 @@ def test_intrinsic_profile_renders_external_checks_and_exact_provider_context():
     profile = {"diagnostics": metrics.diagnostic_hypotheses({}), "producer": {"name": "nirs4all-preflight", "engine_version": "0.1.0", "protocol_version": "1", "population_id": "development_real", "context_id": "intrinsic/masked/v1", "view_id": "native"}}
     view = DatasetView(entry={"id": "d"}, tier="public", card={"sources": [{"source_id": "X", "spectral": {"profile": profile}}]}, has_card=True, show_value_stats=True, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=True, asset_dataset_id="d")
     html = pages._profile_panel(view)
-    assert "référence blanche/noire réellement acquise" in html
+    assert "white/black reference actually acquired" in html
     assert "intrinsic/masked/v1" in html and "development_real" in html and "nirs4all-preflight" in html
-    assert "0.78 ne signifie pas 78 %" in html
+    assert "0.78 does not mean a 78%" in html
+
+
+def test_dataset_explanations_order_and_legacy_diagnostic_language(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    html = (out / "dataset" / "corn_oil.html").read_text()
+    assert html.index('<h2>Provenance &amp; citation</h2>') < html.index('<h2>Governance &amp; integrity</h2>') < html.index('<h2>Dataset property explorer</h2>')
+    assert 'aria-label="Explain PCA Q p95/median"' in html
+    assert 'View plotted PCA coordinates' in html
+    assert 'View explained variance values' in html
+    assert 'Principal component analysis (PCA)' in html
+    assert 'without using targets' in html
+    # The fixture deliberately contains old French diagnostics; display must use current English.
+    for text in ('raccord détecteurs', 'Rupture aux jonctions', 'moyenne', 'Interprétation', 'Famille'):
+        assert text not in html
+    assert 'different probe' in html
+
+
+def test_guide_is_linked_and_documents_missing_scores_and_pca(tmp_path: Path) -> None:
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    guide = (out / 'guide.html').read_text()
+    for anchor in ('access', 'pca', 'scores', 'glossary'):
+        assert f'id="{anchor}"' in guide
+    assert 'different row samples' in guide
+    assert 'does not mean a 78% causal probability' in guide
+    assert 'A dash or “unavailable”' in guide
+    assert '<loc>https://datasets.nirs4all.org/guide.html</loc>' in (out / 'sitemap.xml').read_text()
+    assert 'href="../guide.html"' in (out / 'dataset' / 'corn_oil.html').read_text()
+
+
+def test_private_tier_with_open_source_uses_raw_retrieval_without_token(tmp_path: Path) -> None:
+    root = _build_fixture(tmp_path)
+    catalog_path = root / 'catalog' / 'datasets.yaml'
+    catalog = yaml.safe_load(catalog_path.read_text())
+    entry = next(e for e in catalog['datasets'] if e['id'] == 'wheat_protein')
+    entry.update(retrieval_status='missing_delegate', retrieval_public_retrievable=True, retrieval_public_redistributable=False, retrieval_route_count=1)
+    catalog_path.write_text(yaml.safe_dump(catalog))
+    out = build_site(root, root / 'site')
+    html = (out / 'dataset' / 'wheat_protein.html').read_text()
+    assert 'Original source available without a Dataverse token' in html
+    assert 'retrieve(&quot;wheat_protein&quot;, prepare=False)' in html
+    assert 'get(&quot;wheat_protein&quot;, token=' not in html
+    assert 'raw source available · assembly incomplete' in html
+    assert 'data-access="open"' in (out / 'catalog.html').read_text()
+    # Source availability must never publish restricted card downloads or change the recorded tier.
+    assert not (out / 'data' / 'wheat_protein.card.json').exists()
+    assert entry['tier'] == 'private'
+
+
+def test_open_origin_without_raw_route_does_not_advertise_implemented_download() -> None:
+    from nirs4all_datasets.site.components import load_snippet
+
+    html = load_snippet('d', 'private', open_retrieval=True, retrieval_status='missing_delegate', raw_route_available=False)
+    assert 'Automatic retrieval is not implemented' in html
+    assert 'retrieve(' not in html and 'token=' not in html

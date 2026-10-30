@@ -402,6 +402,18 @@ table.data td { overflow-wrap: anywhere; }
   border: 1px solid var(--border); color: var(--text-3); font-size: .82rem; opacity: 0; transition: opacity .15s;
 }
 .chart:hover::after, .chart:focus::after { opacity: 1; }
+.panel-intro, .chart-reading figcaption p { color: var(--text-2); font-size: .86rem; line-height: 1.65; margin: 0 0 16px; }
+.chart-reading { margin: 12px 0 20px; min-width: 0; }
+.chart-reading h4 { margin: 0 0 8px; font-size: .95rem; }
+.chart-values { margin: 8px 0; font-size: .8rem; }
+.chart-values summary { cursor: pointer; padding: 8px 0; color: var(--teal-d); }
+.guide-links { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: center; }
+.metric-help { display: inline; font-weight: 400; text-transform: none; letter-spacing: normal; }
+.metric-help summary { display: inline-block; cursor: pointer; border: 1px solid var(--border); border-radius: 50%; width: 1.25em; text-align: center; font-size: .78rem; color: var(--teal-d); list-style: none; }
+.metric-help summary::-webkit-details-marker { display: none; }
+.metric-help[open] { display: block; }
+.metric-help[open] span { display: block; background: var(--bg-alt); padding: 10px; margin: 6px 0; border-left: 3px solid var(--teal); font-size: .8rem; line-height: 1.6; min-width: 160px; }
+.metric-help summary:focus-visible, .chart:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
 
 /* ── Dataset-page: spectral source cards + per-variable cards ── */
 .source-card {
@@ -610,10 +622,12 @@ GOATCOUNTER = """<script data-goatcounter="https://nirs4all.goatcounter.com/coun
 
 
 # Chart zoom: clicking any `.chart` clones its SVG into a centred lightbox (Esc / backdrop to close).
-LIGHTBOX = """<div id="lb" class="lightbox" aria-hidden="true"><span class="lb-close" aria-label="close">×</span><div class="lb-panel"></div></div>
-<script>(function(){var lb=document.getElementById('lb'),p=lb.querySelector('.lb-panel');
-function close(){lb.classList.remove('open');p.innerHTML='';}
-document.addEventListener('click',function(e){var c=e.target.closest('.chart');
-  if(c){var s=c.querySelector('svg');if(s){p.innerHTML=s.outerHTML;lb.classList.add('open');}return;}
-  if(e.target===lb||e.target.closest('.lb-close'))close();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>"""
+LIGHTBOX = """<div id="lb" class="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged chart" aria-hidden="true"><button type="button" class="lb-close" aria-label="Close enlarged chart">×</button><div class="lb-panel"></div></div>
+<script>(function(){var lb=document.getElementById('lb'),p=lb.querySelector('.lb-panel'),b=lb.querySelector('.lb-close'),origin;
+function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');p.innerHTML='';if(origin)origin.focus();}
+function open(c){var s=c.querySelector('svg');if(!s)return;origin=c;p.innerHTML=s.outerHTML;lb.classList.add('open');lb.setAttribute('aria-hidden','false');b.focus();}
+document.addEventListener('click',function(e){var c=e.target.closest('.chart');if(c){open(c);return;}if(e.target===lb||e.target.closest('.lb-close'))close();});
+document.addEventListener('keydown',function(e){
+  if(lb.classList.contains('open')){if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='Tab'){e.preventDefault();b.focus();}return;}
+  var c=e.target.closest('.chart');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open(c);}
+});})();</script>"""

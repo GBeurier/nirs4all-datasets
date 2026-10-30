@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 50 ligaments mesurés en cinq sites chacun, dans deux blocs alignés ; 5 positions spatiales, pas cinq préparations indépendantes.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 50 ligaments measured at five sites each, in two aligned blocks; 5 spatial positions, not five independent preparations.
 - **Curated views:** M: 2 fields, Y: 28 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

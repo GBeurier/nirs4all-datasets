@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Le RRUFFID identifie le spécimen ; le suffixe de sample_name distingue des configurations. En Raman : 12 spécimens, 30 libellés/configurations et 85 acquisitions avec orientations variées. Ne pas transformer ces orientations en répétitions techniques identiques.
+- **Conversion warnings:** Curation identity contract: RRUFFID identifies the specimen; the sample_name suffix distinguishes configurations. In Raman: 12 specimens, 30 labels/configurations and 85 acquisitions with varied orientations. Do not treat these orientations as identical technical replicates.
 - **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
