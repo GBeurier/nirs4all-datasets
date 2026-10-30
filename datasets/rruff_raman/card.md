@@ -67,8 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: RRUFFID identifies the specimen; the sample_name suffix distinguishes configurations. In Raman: 12 specimens, 30 labels/configurations and 85 acquisitions with varied orientations. Do not treat these orientations as identical technical replicates.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Le RRUFFID identifie le spécimen ; le suffixe de sample_name distingue des configurations. En Raman : 12 spécimens, 30 libellés/configurations et 85 acquisitions avec orientations variées. Ne pas transformer ces orientations en répétitions techniques identiques.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,5 +89,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `fca1c66c300ed137e7d3b12e281a2defbb24179dea61c4dc01a2b0d04d352892`
-- **Processing hash:** `1179462b7342e924a5e83f6198436ab36ccec8fe2520bfc0b15cb5ec2e9e9382` | **metadata hash:** `8df3df737f8ba6abecb1d8e1d8e25d6eefacbd28c51249da9e82b2f9e0c9ded1`
+- **Content hash:** `99b572db59f207c6bdbc72b45f894a16a96cd520ded3cd4e855896b896c3cad4`
+- **Processing hash:** `f221ccd23c8b3ebe202c22edc3f6a4fdb3eb5c08b4a07310929494185ccbe549` | **metadata hash:** `8df3df737f8ba6abecb1d8e1d8e25d6eefacbd28c51249da9e82b2f9e0c9ded1`

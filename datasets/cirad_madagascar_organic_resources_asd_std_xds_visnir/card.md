@@ -96,7 +96,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Litter_Fodder | metadata | categorical | *Not specified.* | n=1000, missing=782, classes=2, top no (×209) |
 | Sample_type | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=7, top Composite (×858) |
 | Composted/Non_conposted | metadata | categorical | *Not specified.* | n=1000, missing=0, classes=2, top nc (×894) |
-| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 3650 (×7) |
+| OR_age(days) | metadata | categorical | *Not specified.* | n=1000, missing=956, classes=13, top 1825 (×7) |
 | OR_Stage | metadata | categorical | *Not specified.* | n=1000, missing=976, classes=3, top mature (×11) |
 
 ## Statistics — splits
@@ -119,8 +119,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 30 fields, Y: 20 fields, measurements: 0 fields, passport: 26 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 30 fields, Y: 20 fields, passport: 26 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -141,5 +141,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `d3649d2a542180d1819ef45daadb99699670da1c382aec0c948e00ea0a82f8c1`
-- **Processing hash:** `1573e79929cd55499e47a924062597c16caed0afdfc2ace66d5d4741860ee5e4` | **metadata hash:** `1d7aa535670127c511580c2adb97b56abf6597cc5640a1fdee5f592184b944a6`
+- **Content hash:** `450ae627d227f4bd0c2b9d62132958215da9dd42471262e53330339c5459f749`
+- **Processing hash:** `df9b0c0b193c22360bc154b9b6734414c7b3995508928cacb82e8a2cec331ac5` | **metadata hash:** `1d7aa535670127c511580c2adb97b56abf6597cc5640a1fdee5f592184b944a6`

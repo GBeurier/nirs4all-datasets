@@ -27,7 +27,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
 | Moisture_WB | target | numeric | *Not specified.* | n=73, missing=0, range 8.5–52.49, mean 32.29 ± 17.63 |
-| sample_group | metadata | categorical | *Not specified.* | n=73, missing=0, classes=20, top M 20 (×5) |
+| sample_group | metadata | categorical | *Not specified.* | n=73, missing=0, classes=20, top M 10 (×5) |
 | replicate | metadata | numeric | *Not specified.* | n=73, missing=0, range 1–5, mean 2.438 ± 1.178 |
 | api_url | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/snapshot/1 (×73) |
 | files_api_url | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/files?folder_id=root&version=1&$start=0&$limit=1000 (×73) |
@@ -68,8 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groups M 1…M 20 aligned with moisture references; 1–5 indexed spectra per group, 73 in total. The converter explicitly treats the suffix as a replicate. Whether it is strictly technical rather than an independent preparation remains undocumented.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 2 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groupes M 1…M 20 alignés aux références d’humidité ; 1–5 spectres indexés par groupe, 73 au total. Le suffixe est explicitement traité comme répétition par le convertisseur. Le caractère strictement technique plutôt que préparation indépendante reste non documenté.
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 21 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,5 +90,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `f2278cd58a496a321aa16cc9a36a40d1f99949d17a15dcc582a413320b1d8932`
-- **Processing hash:** `e24131ec5767c006a367dbd3677e98dbaaada1bdf715964c48a868cb62e6b94a` | **metadata hash:** `1c55db5fff3233a314a5c8834af2f7fc7ee40dd6852c2547b8947486e33f3b32`
+- **Content hash:** `c3b77c320d1e2ebb12e900b661d4c54e0866f5cd0b9f54da4371157e2e9cbdfa`
+- **Processing hash:** `d690212cdb28b7874295a8b24fcc3ecfe8efa14d820bb64d08707476f32b8cce` | **metadata hash:** `1c55db5fff3233a314a5c8834af2f7fc7ee40dd6852c2547b8947486e33f3b32`

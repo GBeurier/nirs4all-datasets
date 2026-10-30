@@ -30,11 +30,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | SpectralRep | metadata | numeric | *Not specified.* | n=74, missing=0, range 1–1, mean 1 ± 0 |
 | Unique_Sample_ID | metadata | categorical | *Not specified.* | n=74, missing=0, classes=74, top CVARS_Plot1_CAAN4_L1T1N_LC_RG_41430 (×1) |
 | Spectra_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=74, top CVARS_Plot1_CAAN4_L1T1N_LC_RG (×1) |
-| Sample_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=71, top SJER_Tower_QUDO_L1T1 (×2) |
+| Sample_Name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=71, top MCON_Tower_QUKE_L1T1 (×2) |
 | Site | metadata | categorical | *Not specified.* | n=74, missing=0, classes=7, top SJER (×24) |
 | Site_Long | metadata | categorical | *Not specified.* | n=74, missing=0, classes=7, top San Joaquin Experimental Range (×24) |
 | Sample_Date | metadata | categorical | *Not specified.* | n=74, missing=0, classes=20, top 3/26/13 (×9) |
-| USDA_Species_Code | metadata | categorical | *Not specified.* | n=74, missing=0, classes=18, top CECU (×7) |
+| USDA_Species_Code | metadata | categorical | *Not specified.* | n=74, missing=0, classes=18, top QUDO (×7) |
 | Latitude | metadata | numeric | *Not specified.* | n=74, missing=1, range 33.52–37.12, mean 35.52 ± 1.688 |
 | Longitude | metadata | numeric | *Not specified.* | n=74, missing=1, range -119.7–-116.2, mean -118.4 ± 1.373 |
 | Instrument | metadata | categorical | *Not specified.* | n=74, missing=0, classes=3, top ASD_FS3 (×42) |
@@ -112,7 +112,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top SLA_cm2_g_DW (×74) |
 | target_original_name | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top SLA_cm2_g_DW (×74) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=74, missing=0, classes=1, top UW-BNL_NASA_HyspIRI_Airborne_Campaign_Compiled_Leaf_and_Canopy_Spectra (×74) |
-| raw_label | metadata | categorical | *Not specified.* | n=74, missing=0, classes=66, top 120.2147859 (×2) |
+| raw_label | metadata | categorical | *Not specified.* | n=74, missing=0, classes=66, top 104.5244216 (×2) |
 | reference_value | metadata | numeric | *Not specified.* | n=74, missing=0, range 25.45–273.5, mean 91.57 ± 60.06 |
 | class_index | metadata | categorical | *Not specified.* | n=74, missing=74, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=74, missing=74, classes=0, — |
@@ -149,8 +149,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 20 fields, Y: 1 fields, measurements: 38 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 20 fields, Y: 1 fields, passport: 50 fields, measurements: 38 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -171,5 +171,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `1b3cf1f9bc7bedf4a846daa99da177bf2943c65594db3d0a5d9a4a15e713cb4d`
-- **Processing hash:** `964579ed9b93bc86d8eb15f5c1b39ef914861664f0999864f2e88b3f3f475e8e` | **metadata hash:** `829ef5f88985cc0106847e49b0ab79f334eb6eea8915b3ae1888eb00f15ef2e3`
+- **Content hash:** `10c39e70c9f93e238b78d83ce8bb927505eed9b0a2ee2d9f41fd024ca4d9b414`
+- **Processing hash:** `fc688d5a05b24122123543ff50722f14c4833904dedc578c2534b085d00031ee` | **metadata hash:** `829ef5f88985cc0106847e49b0ab79f334eb6eea8915b3ae1888eb00f15ef2e3`

@@ -26,7 +26,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
-| infestation_status | target | categorical | *Not specified.* | n=15, missing=0, classes=3, top infested_l1 (×5) |
+| infestation_status | target | numeric | *Not specified.* | n=15, missing=15, range —, mean *Not specified.* ± *Not specified.* |
 | manual_download | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top True (×15) |
 | manual_download_source_dir | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top D:\VS projects\nirs_db_vf\manual_download\guava leaf (×15) |
 | manual_download_file | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top doi_10_5061_dryad_tx95x6bbn__v20260304.zip::Dataset-Spectral.zip::Dataset/Data-global.csv (×15) |
@@ -51,8 +51,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon original conservé sous un nom préfixé/équivalent
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -73,5 +73,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `cfbbeb064d831a8f614ea1319055614b85b683ac42a1c5c2eb196201565b8eb6`
-- **Processing hash:** `68002d3e2ccd971b94a1cd8a5f7ee9b9590e56f76aaa2fd73e4e4a738999b023` | **metadata hash:** `417349046d5458fa4dc9185b1deabbbb8685d88c20e74c763ed9d4e654291282`
+- **Content hash:** `94b77af45aa8391a4a9983a328d9bb830ccf07b803a0c5373738efeb400bbbcb`
+- **Processing hash:** `7510048caadad9117bac0681ca8877115e3d19379a20398296d15dfa014e1b31` | **metadata hash:** `417349046d5458fa4dc9185b1deabbbb8685d88c20e74c763ed9d4e654291282`

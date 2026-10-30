@@ -1,7 +1,35 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "The upstream converter selected date: 27 and 79 rows on two dates. The 106 ASD files and times are distinct, with 7 plots; the date is not a sample identifier and the file identifies an acquisition.",
+      "evidence": [
+        {
+          "lines": [
+            283,
+            305,
+            577,
+            1122,
+            1127
+          ],
+          "script": "nirs_datasets_ready/ecosis_nirs_database/get_datasets.py"
+        }
+      ],
+      "method": "unavailable",
+      "missing_source_columns": [],
+      "n_missing_identity": 106,
+      "n_observations_with_identity": 0,
+      "n_samples": null,
+      "observations_per_unit": {},
+      "sample_id_available": false,
+      "source_columns": [],
+      "status": "unavailable",
+      "technical_repetitions": null,
+      "unit": "Physical unit undetermined"
+    },
     "identity_status": "unavailable",
     "level": "observation",
+    "n_known_sample_units": null,
+    "n_observation_groups": 106,
     "n_observations_total": 106,
     "n_samples": null,
     "profile_scores": {
@@ -14,6 +42,7 @@
       "shape_drift": 1.0,
       "structure_complexity": 1.0
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": null,
     "sample_id_available": false,
     "technical_repetitions": null,
@@ -24,7 +53,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "9a108cc082053169569fcac7f2f03de5ae4543f18e1db0caf6e770c6ebbbf2cf",
+    "contract_sha256": "57244a2c16505f4849e663774db8bd353f247fc77f1300137dca848358ce98ce",
     "dataset_id": "soil_elevation_2024_lake_fire_ecosis",
     "enrichments": [],
     "grain": "observation",
@@ -56,7 +85,7 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "478ba958bb87da1e2fa2be94dbdcf4791c3f9ee61fa18c52a63e8b05a0b02e03",
       "Y.csv": "45f67faca05bdc46bc864251a4d8b0c71c98b4c00ebffb346b41c766cb803b30"
@@ -296,7 +325,7 @@
       "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
     ]
   },
-  "generated_at": "2026-10-29T12:38:48.581372+00:00",
+  "generated_at": "2026-10-30T15:48:58.325628+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -317,10 +346,10 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "b5ad69e093dcec8f450505d63856d08dda1a4b675d5171f1423319ac4fd89c0b",
+    "content_hash": "4b0edcc6820027d5304374390b7343e2ef312b537ec0059f1c8181092c448e9b",
     "manifest": "manifest.json",
     "metadata_hash": "b2306149320727147b36c2e767ee7d84567bb798f112dfbcc61f8eb4e70f26aa",
-    "processing_hash": "d133929ea04ea757ebef1ee6bf84005d1a25a9f191268a1363555e9877ba488f"
+    "processing_hash": "f3512933a607c282ae79086066c1047b65f490da9c2a2428f1445b965712d8ee"
   },
   "protocol_version": "7",
   "provenance": {
@@ -360,19 +389,14 @@
     "reference_method": null,
     "warnings": [
       "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
-      "Curation identity contract: The upstream converter selected date: 27 and 79 rows on two dates. The 106 ASD files and times are distinct, with 7 plots; the date is not a sample identifier and the file identifies an acquisition."
+      "Curation identity contract: Le convertisseur amont a choisi date : 27 et 79 lignes sur deux dates. Les 106 fichiers ASD et heures sont distincts, avec 7 parcelles ; la date n\u2019est pas un identifiant d\u2019\u00e9chantillon et le fichier identifie une acquisition."
     ]
   },
   "qualification_provenance": {
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -1394,7 +1418,7 @@
         },
         "mean_max": 0.26802565825154195,
         "mean_min": 0.04491298055091767,
-        "n_outliers": null,
+        "n_outliers": 53,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1714,6 +1738,14 @@
             "bandwise_snr_median": 15885.591376957043,
             "bandwise_snr_min": 25.66276133248831,
             "noise_rms": 1.560210533588754e-05,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 1.560210533588754e-05,
             "roughness_signal_to_noise_proxy": 13014.112213735852,
             "roughness_signal_to_noise_proxy_db": 82.28829094206489,
@@ -1723,18 +1755,18 @@
             "worst_band_index": 2
           },
           "outliers": {
-            "hotelling_t2_max": 18.717794659705202,
-            "hotelling_t2_median": 1.0226208546248157,
-            "hotelling_t2_p95": 8.56485657997457,
-            "hotelling_t2_ratio": 8.375397921174695,
-            "mahalanobis_h_max": 4.326406668322478,
-            "mahalanobis_h_median": 1.0112429598367094,
-            "mahalanobis_h_p95": 2.926357102447607,
-            "mahalanobis_h_ratio": 2.8938219781724275,
-            "pca_q_max": 23.087117920948995,
-            "pca_q_median": 0.44411832780878513,
-            "pca_q_p95": 5.662919381784594,
-            "pca_q_ratio": 12.750924758553897
+            "hotelling_t2_max": 18.71779465970519,
+            "hotelling_t2_median": 1.0226208546248148,
+            "hotelling_t2_p95": 8.564856579974565,
+            "hotelling_t2_ratio": 8.375397921174697,
+            "mahalanobis_h_max": 4.326406668322477,
+            "mahalanobis_h_median": 1.011242959836709,
+            "mahalanobis_h_p95": 2.9263571024476063,
+            "mahalanobis_h_ratio": 2.893821978172428,
+            "pca_q_max": 23.087117920948984,
+            "pca_q_median": 0.4441183278087848,
+            "pca_q_p95": 5.662919381784587,
+            "pca_q_ratio": 12.75092475855389
           },
           "profile_scores": {
             "integrity_risk": 0.0,
@@ -1769,23 +1801,17 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": 0.15463603557139802,
+            "baseline_slope": 0.15463603557139813,
             "curvature_rms": 0.000432380372413771,
             "d1_rms": 0.00043423384842163786,
             "edge_noise_ratio": 0.7854046343513825
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
-            "density_cv": 1.2355001141885136,
+            "density_cv": 1.2355001141885131,
             "isolation_forest_score_p95": 0.6265892885620603,
-            "knn_distance_ratio_p95": 6.950834008527349,
-            "local_outlier_factor_p95": 6.950834008527349,
-            "pca_score_density": 1.3751072458013427
+            "knn_distance_ratio_p95": 6.950834008527347,
+            "local_outlier_factor_p95": 6.950834008527347,
+            "pca_score_density": 1.375107245801343
           }
         },
         "quality": {
@@ -1801,427 +1827,427 @@
           ],
           "points": [
             {
-              "x": -4.833755462446002,
-              "y": 2.935772010657066
+              "x": -4.833755462445988,
+              "y": 2.9357720106570744
             },
             {
-              "x": -22.105067522824243,
-              "y": -2.8731609856643225
+              "x": -22.105067522824235,
+              "y": -2.8731609856643185
             },
             {
-              "x": -2.574856500756105,
-              "y": 2.1173317309312947
+              "x": -2.5748565007561024,
+              "y": 2.117331730931295
             },
             {
-              "x": -11.691584093982394,
-              "y": -4.405520664332876
+              "x": -11.691584093982392,
+              "y": -4.405520664332879
             },
             {
-              "x": -2.2508016803643094,
-              "y": 0.5076662147142351
+              "x": -2.2508016803643085,
+              "y": 0.5076662147142369
             },
             {
-              "x": -1.766654924045613,
-              "y": 3.7729224452352064
+              "x": -1.7666549240456102,
+              "y": 3.772922445235207
             },
             {
-              "x": -7.530139060972461,
-              "y": 3.0182033722216173
+              "x": -7.530139060972454,
+              "y": 3.0182033722216195
             },
             {
-              "x": -0.23700237199249863,
-              "y": 0.06727924088042829
+              "x": -0.23700237199249832,
+              "y": 0.06727924088042918
             },
             {
-              "x": 2.353893124032861,
-              "y": -0.5508682636604072
+              "x": 2.35389312403286,
+              "y": -0.5508682636604081
             },
             {
-              "x": 3.7820275938722094,
-              "y": -0.5780095433547342
+              "x": 3.782027593872208,
+              "y": -0.5780095433547343
             },
             {
-              "x": -16.182586276249086,
-              "y": 0.38422257574484725
+              "x": -16.18258627624908,
+              "y": 0.3842225757448377
             },
             {
               "x": -16.021077080425243,
-              "y": 1.285921295204382
+              "y": 1.2859212952043735
             },
             {
               "x": 3.2841516477922252,
-              "y": 2.1600832934020495
+              "y": 2.1600832934020477
             },
             {
-              "x": 5.072108291263298,
-              "y": 0.7316534571730456
+              "x": 5.072108291263297,
+              "y": 0.7316534571730452
             },
             {
-              "x": 5.931271716342827,
-              "y": -0.3781115778131876
+              "x": 5.931271716342822,
+              "y": -0.3781115778131887
             },
             {
-              "x": 6.85247428977893,
-              "y": -0.927528735505443
+              "x": 6.852474289778924,
+              "y": -0.9275287355054413
             },
             {
-              "x": 6.643250226972326,
-              "y": -0.27057776242329185
+              "x": 6.643250226972323,
+              "y": -0.27057776242329334
             },
             {
-              "x": -3.423902063296688,
-              "y": 1.1260540542620885
+              "x": -3.4239020632966857,
+              "y": 1.1260540542620898
             },
             {
-              "x": -3.4745422825265737,
-              "y": 0.8513252444751255
+              "x": -3.474542282526572,
+              "y": 0.8513252444751284
             },
             {
-              "x": -0.24647548468010935,
-              "y": 0.27468362621626935
+              "x": -0.24647548468010902,
+              "y": 0.27468362621627007
             },
             {
-              "x": 0.18855718227192345,
-              "y": 0.7511767247463084
+              "x": 0.18855718227192414,
+              "y": 0.7511767247463093
             },
             {
-              "x": -1.1334598915247716,
-              "y": 1.201799735095529
+              "x": -1.1334598915247698,
+              "y": 1.2017997350955296
             },
             {
-              "x": 6.499832907423403,
-              "y": -0.4421560921695519
+              "x": 6.499832907423398,
+              "y": -0.4421560921695526
             },
             {
-              "x": 5.1903413130398945,
-              "y": 0.37485886001494256
+              "x": 5.190341313039891,
+              "y": 0.3748588600149421
             },
             {
-              "x": 5.5882677147962285,
-              "y": 0.4263927245207154
+              "x": 5.588267714796228,
+              "y": 0.4263927245207128
             },
             {
-              "x": 5.0810993482580145,
-              "y": 0.5230561364009492
+              "x": 5.081099348258014,
+              "y": 0.523056136400949
             },
             {
-              "x": 6.603093134342292,
-              "y": -0.5219192209605009
+              "x": 6.603093134342289,
+              "y": -0.5219192209605035
             },
             {
-              "x": -3.080971781448873,
-              "y": -1.1993063301908549
+              "x": -3.080971781448871,
+              "y": -1.1993063301908526
             },
             {
-              "x": -6.219776710468663,
-              "y": 0.9709314114197283
+              "x": -6.219776710468659,
+              "y": 0.9709314114197326
             },
             {
-              "x": -9.378659747091264,
-              "y": -1.668157381875857
+              "x": -9.378659747091259,
+              "y": -1.668157381875852
             },
             {
-              "x": -2.2494870879893347,
-              "y": -1.0787591464475
+              "x": -2.2494870879893343,
+              "y": -1.0787591464474975
             },
             {
-              "x": -1.4956576851173584,
-              "y": 0.5106833437532683
+              "x": -1.4956576851173573,
+              "y": 0.5106833437532695
             },
             {
-              "x": -3.8019025389324255,
-              "y": 1.6064802563639546
+              "x": -3.8019025389324224,
+              "y": 1.6064802563639538
             },
             {
-              "x": -2.301064203954811,
-              "y": 1.511878647844609
+              "x": -2.301064203954809,
+              "y": 1.5118786478446091
             },
             {
-              "x": -0.007563405187606442,
-              "y": 0.3532471691108825
+              "x": -0.007563405187606205,
+              "y": 0.3532471691108822
             },
             {
-              "x": -1.6642195698160802,
-              "y": 0.6006422313579874
+              "x": -1.664219569816079,
+              "y": 0.6006422313579877
             },
             {
-              "x": -1.322082258998315,
-              "y": 0.37097582900750087
+              "x": -1.322082258998314,
+              "y": 0.370975829007501
             },
             {
-              "x": 4.742094371545096,
-              "y": 0.5439020908233532
+              "x": 4.742094371545094,
+              "y": 0.5439020908233507
             },
             {
-              "x": 6.784608463345621,
-              "y": -1.0698582880291305
+              "x": 6.7846084633456165,
+              "y": -1.069858288029133
             },
             {
-              "x": 6.453726177726175,
-              "y": -0.726574606947626
+              "x": 6.453726177726172,
+              "y": -0.7265746069476273
             },
             {
-              "x": 7.619034083561873,
-              "y": -1.3394171692354906
+              "x": 7.619034083561867,
+              "y": -1.3394171692354901
             },
             {
-              "x": 7.164993219359924,
-              "y": -0.9654551523502085
+              "x": 7.16499321935992,
+              "y": -0.9654551523502101
             },
             {
-              "x": 8.090504860988856,
-              "y": -1.4284738982369503
+              "x": 8.090504860988853,
+              "y": -1.4284738982369511
             },
             {
-              "x": -5.367647717572503,
-              "y": 1.612010888059711
+              "x": -5.367647717572501,
+              "y": 1.6120108880597106
             },
             {
-              "x": 1.0432867569550504,
-              "y": -0.5468166583044328
+              "x": 1.0432867569550492,
+              "y": -0.5468166583044334
             },
             {
-              "x": -3.8488762853699314,
+              "x": -3.848876285369929,
               "y": 1.4174374477435807
             },
             {
-              "x": -2.630330529133569,
-              "y": 1.0938604970273462
+              "x": -2.630330529133567,
+              "y": 1.0938604970273467
             },
             {
-              "x": -0.5864936988646082,
-              "y": 1.0421456600838033
+              "x": -0.5864936988646076,
+              "y": 1.0421456600838035
             },
             {
-              "x": 5.9426453333465155,
-              "y": -0.756483078949408
+              "x": 5.942645333346514,
+              "y": -0.7564830789494088
             },
             {
-              "x": 7.361235414427094,
-              "y": -1.2029391741105893
+              "x": 7.361235414427089,
+              "y": -1.2029391741105915
             },
             {
-              "x": 6.759443994735226,
-              "y": -1.5262493751315243
+              "x": 6.759443994735223,
+              "y": -1.5262493751315263
             },
             {
-              "x": 8.202931941855075,
-              "y": -1.59115975628781
+              "x": 8.202931941855072,
+              "y": -1.5911597562878121
             },
             {
-              "x": 6.338650820507297,
-              "y": -0.9733809129358059
+              "x": 6.3386508205072944,
+              "y": -0.9733809129358068
             },
             {
-              "x": -0.47411723904401865,
-              "y": -0.4359513575573043
+              "x": -0.47411723904401876,
+              "y": -0.4359513575573033
             },
             {
-              "x": 2.278750071080962,
-              "y": -1.5820372982151267
+              "x": 2.27875007108096,
+              "y": -1.5820372982151258
             },
             {
-              "x": -4.417733997911125,
-              "y": 1.9850853577922147
+              "x": -4.417733997911122,
+              "y": 1.9850853577922178
             },
             {
-              "x": -5.506293561578316,
-              "y": -4.439646357518407
+              "x": -5.506293561578317,
+              "y": -4.439646357518406
             },
             {
-              "x": -4.350820488282212,
-              "y": -0.19092440130841884
+              "x": -4.35082048828221,
+              "y": -0.19092440130841745
             },
             {
-              "x": -3.058565758185721,
-              "y": 0.8222975730304167
+              "x": -3.0585657581857184,
+              "y": 0.822297573030417
             },
             {
-              "x": -3.8965421986943114,
-              "y": 1.148837027482495
+              "x": -3.896542198694307,
+              "y": 1.1488370274824957
             },
             {
-              "x": -2.86981151689485,
-              "y": 0.7363656210185605
+              "x": -2.8698115168948486,
+              "y": 0.7363656210185611
             },
             {
-              "x": -4.321261122579629,
+              "x": -4.321261122579626,
               "y": 0.5394977792692365
             },
             {
-              "x": 0.5760032686529659,
-              "y": 0.2488134422168131
+              "x": 0.5760032686529658,
+              "y": 0.2488134422168132
             },
             {
-              "x": -2.9715234740959966,
-              "y": -0.39337937054600747
+              "x": -2.971523474095996,
+              "y": -0.3933793705460082
             },
             {
-              "x": 1.382829305359612,
-              "y": -0.21786704073343588
+              "x": 1.3828293053596108,
+              "y": -0.21786704073343738
             },
             {
               "x": 4.151695386693505,
-              "y": 0.6720340099148366
+              "y": 0.6720340099148374
             },
             {
-              "x": 3.915622906165687,
-              "y": 0.6014787469929329
+              "x": 3.915622906165684,
+              "y": 0.601478746992933
             },
             {
               "x": 4.70325710168372,
               "y": 1.5527016403971305
             },
             {
-              "x": 3.8845491222854966,
-              "y": 1.408661845681481
+              "x": 3.884549122285496,
+              "y": 1.408661845681483
             },
             {
-              "x": 4.892907492167215,
-              "y": 0.7606641507993149
+              "x": 4.892907492167214,
+              "y": 0.7606641507993136
             },
             {
-              "x": -10.830518407383886,
+              "x": -10.830518407383883,
               "y": 2.8393913005211795
             },
             {
-              "x": -5.180596941474037,
-              "y": 0.7787349409631115
+              "x": -5.180596941474032,
+              "y": 0.7787349409631111
             },
             {
-              "x": -5.274200363946944,
-              "y": 0.7808904958355338
+              "x": -5.274200363946941,
+              "y": 0.7808904958355355
             },
             {
-              "x": 0.6087432352060478,
-              "y": -0.14237287623639752
+              "x": 0.6087432352060476,
+              "y": -0.1423728762363963
             },
             {
-              "x": -14.46199817584075,
-              "y": -4.797821826992223
+              "x": -14.461998175840748,
+              "y": -4.797821826992227
             },
             {
-              "x": -0.9822372826471738,
-              "y": -5.854525605958582
+              "x": -0.9822372826471769,
+              "y": -5.854525605958579
             },
             {
               "x": 0.6778670832670538,
-              "y": 0.6353199650471366
+              "y": 0.6353199650471367
             },
             {
-              "x": 0.757975607958455,
-              "y": 0.4037563977000576
+              "x": 0.7579756079584549,
+              "y": 0.4037563977000575
             },
             {
-              "x": 2.1592019737264825,
-              "y": 0.06783612011465472
+              "x": 2.159201973726482,
+              "y": 0.06783612011465426
             },
             {
-              "x": -0.1720485530040498,
-              "y": 0.2770441992439269
+              "x": -0.17204855300404973,
+              "y": 0.27704419924392676
             },
             {
-              "x": 0.7167353787176157,
-              "y": 0.3918265345392397
+              "x": 0.7167353787176155,
+              "y": 0.3918265345392396
             },
             {
-              "x": -1.7610355246538327,
-              "y": -0.12902444228455465
+              "x": -1.7610355246538323,
+              "y": -0.12902444228455598
             },
             {
-              "x": -1.9954523066700047,
-              "y": -0.772535714257001
+              "x": -1.995452306670004,
+              "y": -0.7725357142570031
             },
             {
-              "x": 3.9798182784599176,
-              "y": 2.074912218235202
+              "x": 3.9798182784599168,
+              "y": 2.074912218235201
             },
             {
-              "x": 5.442010253776188,
-              "y": 0.2593644202013324
+              "x": 5.4420102537761865,
+              "y": 0.259364420201332
             },
             {
-              "x": 6.203876133606173,
-              "y": -0.2677623022248279
+              "x": 6.203876133606168,
+              "y": -0.26776230222482916
             },
             {
-              "x": -8.50904450305393,
-              "y": 0.476783132046257
+              "x": -8.509044503053927,
+              "y": 0.47678313204625644
             },
             {
-              "x": 3.32883304548724,
-              "y": -1.6804825761024287
+              "x": 3.3288330454872384,
+              "y": -1.680482576102428
             },
             {
-              "x": 0.9492948492262558,
-              "y": -1.8410252148122452
+              "x": 0.9492948492262545,
+              "y": -1.8410252148122443
             },
             {
-              "x": 3.7627549428542975,
+              "x": 3.7627549428542935,
               "y": -2.0071213209624346
             },
             {
-              "x": -7.66143411040808,
-              "y": -2.9287758781005366
+              "x": -7.661434110408078,
+              "y": -2.928775878100531
             },
             {
-              "x": 0.8857059050119995,
-              "y": 0.039290050139034784
+              "x": 0.8857059050119991,
+              "y": 0.03929005013903473
             },
             {
-              "x": 0.46189449270511496,
-              "y": 0.208774191085919
+              "x": 0.4618944927051146,
+              "y": 0.2087741910859189
             },
             {
-              "x": -1.2959417479224482,
-              "y": 1.0750485776137644
+              "x": -1.2959417479224467,
+              "y": 1.0750485776137655
             },
             {
-              "x": -1.1092638524310534,
-              "y": 1.0162230265614363
+              "x": -1.1092638524310516,
+              "y": 1.0162230265614367
             },
             {
-              "x": 2.333975373155806,
-              "y": 0.03185161987859913
+              "x": 2.333975373155804,
+              "y": 0.03185161987859924
             },
             {
-              "x": 2.5966016134035135,
-              "y": 0.1623190815416833
+              "x": 2.596601613403513,
+              "y": 0.1623190815416828
             },
             {
-              "x": 1.7254856812476398,
-              "y": 0.2456201597305688
+              "x": 1.7254856812476393,
+              "y": 0.24562015973056905
             },
             {
-              "x": 2.367586413879391,
-              "y": -0.4551345032520584
+              "x": 2.3675864138793896,
+              "y": -0.45513450325205823
             },
             {
-              "x": 1.8247722414111742,
-              "y": 0.37848002765270866
+              "x": 1.8247722414111738,
+              "y": 0.3784800276527091
             },
             {
-              "x": 3.1568800673331983,
-              "y": -0.7464875368672645
+              "x": 3.1568800673331956,
+              "y": -0.7464875368672665
             },
             {
-              "x": -0.9328226675014402,
-              "y": -0.23113028723459916
+              "x": -0.9328226675014395,
+              "y": -0.23113028723459994
             },
             {
-              "x": 3.498485249618806,
-              "y": -1.2915111220599806
+              "x": 3.4984852496188035,
+              "y": -1.291511122059982
             },
             {
-              "x": 5.581899632034788,
-              "y": 0.33582204743595556
+              "x": 5.5818996320347845,
+              "y": 0.3358220474359542
             },
             {
-              "x": 4.286131014655598,
-              "y": 1.0769865010713588
+              "x": 4.286131014655597,
+              "y": 1.0769865010713586
             },
             {
-              "x": 6.7942346608631,
+              "x": 6.794234660863093,
               "y": -0.7509096081045815
             }
           ]
@@ -2675,10 +2701,7 @@
           }
         ]
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -2686,6 +2709,7 @@
   "variables": [
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           4,
@@ -2742,6 +2766,22 @@
         ]
       },
       "name": "elevation",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 88,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "elevation",
+        "numeric_sentinels": [],
+        "original_name": "elevation",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.39723656617511455,
@@ -2766,7 +2806,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "SpectralRep",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "SpectralRep",
+        "numeric_sentinels": [],
+        "original_name": "SpectralRep",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -2798,7 +2855,24 @@
         "n_classes": 2,
         "normalized_entropy": 0.8186691181065503
       },
+      "denominator": "canonical_sample_units",
       "name": "date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "date",
+        "numeric_sentinels": [],
+        "original_name": "date",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -2827,7 +2901,24 @@
         "n_classes": 7,
         "normalized_entropy": 0.9856478278738736
       },
+      "denominator": "canonical_sample_units",
       "name": "plot_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 7,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "plot_name",
+        "numeric_sentinels": [],
+        "original_name": "plot_name",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -2840,19 +2931,19 @@
           },
           {
             "count": 17,
-            "name": "Spectral - 072"
-          },
-          {
-            "count": 17,
             "name": "Spectral - 077"
           },
           {
-            "count": 16,
-            "name": "Spectral - 071"
+            "count": 17,
+            "name": "Spectral - 072"
           },
           {
             "count": 16,
             "name": "Spectral - 075"
+          },
+          {
+            "count": 16,
+            "name": "Spectral - 071"
           },
           {
             "count": 10,
@@ -2876,7 +2967,24 @@
         "n_classes": 106,
         "normalized_entropy": 1.0000000000000002
       },
+      "denominator": "canonical_sample_units",
       "name": "file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 106,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "file_name",
+        "numeric_sentinels": [],
+        "original_name": "file_name",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -2977,7 +3085,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "line_num",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "line_num",
+        "numeric_sentinels": [],
+        "original_name": "line_num",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3002,7 +3127,24 @@
         "n_classes": 5,
         "normalized_entropy": 0.8235452491303189
       },
+      "denominator": "canonical_sample_units",
       "name": "level_1",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "level_1",
+        "numeric_sentinels": [],
+        "original_name": "level_1",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3043,7 +3185,24 @@
         "n_classes": 5,
         "normalized_entropy": 0.326389733537706
       },
+      "denominator": "canonical_sample_units",
       "name": "species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 72,
+        "missing_values": [],
+        "name": "species",
+        "numeric_sentinels": [],
+        "original_name": "species",
+        "present": 34,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3077,6 +3236,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           3,
@@ -3133,6 +3293,22 @@
         ]
       },
       "name": "file_num",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 21,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "file_num",
+        "numeric_sentinels": [],
+        "original_name": "file_num",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.10947134426530902,
@@ -3157,6 +3333,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           49,
@@ -3213,6 +3390,22 @@
         ]
       },
       "name": "longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 95,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "longitude",
+        "numeric_sentinels": [],
+        "original_name": "longitude",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 3.705411456165491e-05,
@@ -3237,6 +3430,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           26,
@@ -3293,12 +3487,28 @@
         ]
       },
       "name": "latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 96,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "latitude",
+        "numeric_sentinels": [],
+        "original_name": "latitude",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.00045321121176786233,
         "is_normal": false,
         "kurtosis": -0.7155125737902011,
-        "normality_p": 1.4860509496358557e-05,
+        "normality_p": 1.4860509496358558e-05,
         "skewness": 1.1327639129537228
       },
       "stats": {
@@ -3324,7 +3534,24 @@
         "n_classes": 106,
         "normalized_entropy": 1.0000000000000002
       },
+      "denominator": "canonical_sample_units",
       "name": "utc_time",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 106,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "utc_time",
+        "numeric_sentinels": [],
+        "original_name": "utc_time",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3425,7 +3652,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dataset",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dataset",
+        "numeric_sentinels": [],
+        "original_name": "dataset",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3450,7 +3694,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dataset_slug",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dataset_slug",
+        "numeric_sentinels": [],
+        "original_name": "dataset_slug",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3475,7 +3736,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "task_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "task_type",
+        "numeric_sentinels": [],
+        "original_name": "task_type",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3500,7 +3778,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "trait_header",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "trait_header",
+        "numeric_sentinels": [],
+        "original_name": "trait_header",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3525,7 +3820,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "target_original_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "target_original_name",
+        "numeric_sentinels": [],
+        "original_name": "target_original_name",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3550,7 +3862,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "measurement_hint",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "measurement_hint",
+        "numeric_sentinels": [],
+        "original_name": "measurement_hint",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3575,7 +3904,24 @@
         "n_classes": 88,
         "normalized_entropy": 0.9860666177110454
       },
+      "denominator": "canonical_sample_units",
       "name": "raw_label",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 88,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "raw_label",
+        "numeric_sentinels": [],
+        "original_name": "raw_label",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3588,10 +3934,6 @@
           },
           {
             "count": 2,
-            "name": "740.7"
-          },
-          {
-            "count": 2,
             "name": "732.0"
           },
           {
@@ -3600,15 +3942,7 @@
           },
           {
             "count": 2,
-            "name": "368.2"
-          },
-          {
-            "count": 2,
-            "name": "366.7"
-          },
-          {
-            "count": 2,
-            "name": "383.7"
+            "name": "740.7"
           },
           {
             "count": 2,
@@ -3616,7 +3950,7 @@
           },
           {
             "count": 2,
-            "name": "364.3"
+            "name": "383.7"
           },
           {
             "count": 2,
@@ -3624,7 +3958,7 @@
           },
           {
             "count": 2,
-            "name": "368.5"
+            "name": "366.7"
           },
           {
             "count": 2,
@@ -3632,7 +3966,15 @@
           },
           {
             "count": 2,
-            "name": "367.5"
+            "name": "368.5"
+          },
+          {
+            "count": 2,
+            "name": "368.2"
+          },
+          {
+            "count": 2,
+            "name": "364.3"
           },
           {
             "count": 2,
@@ -3647,20 +3989,24 @@
             "name": "367.2"
           },
           {
-            "count": 1,
-            "name": "737.9"
+            "count": 2,
+            "name": "367.5"
           },
           {
             "count": 1,
-            "name": "734.0"
+            "name": "735.8"
           },
           {
             "count": 1,
-            "name": "741.3"
+            "name": "731.5"
           },
           {
             "count": 1,
-            "name": "727.3"
+            "name": "741.4"
+          },
+          {
+            "count": 1,
+            "name": "739.9"
           }
         ]
       },
@@ -3669,6 +4015,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           4,
@@ -3725,6 +4072,22 @@
         ]
       },
       "name": "reference_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 88,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "reference_value",
+        "numeric_sentinels": [],
+        "original_name": "reference_value",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.39723656617511455,
@@ -3749,7 +4112,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "class_index",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 106,
+        "missing_values": [],
+        "name": "class_index",
+        "numeric_sentinels": [],
+        "original_name": "class_index",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3762,7 +4142,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "class_label",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 106,
+        "missing_values": [],
+        "name": "class_label",
+        "numeric_sentinels": [],
+        "original_name": "class_label",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3775,7 +4172,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -3807,7 +4221,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "dimensions",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "dimensions",
+        "numeric_sentinels": [],
+        "original_name": "dimensions",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3832,7 +4263,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "axis_note",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_note",
+        "numeric_sentinels": [],
+        "original_name": "axis_note",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3857,7 +4305,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "official_data_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "official_data_url",
+        "numeric_sentinels": [],
+        "original_name": "official_data_url",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3882,7 +4347,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "official_package_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "official_package_url",
+        "numeric_sentinels": [],
+        "original_name": "official_package_url",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3907,7 +4389,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3932,7 +4431,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license_url",
+        "numeric_sentinels": [],
+        "original_name": "license_url",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3957,7 +4473,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -3982,7 +4515,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -4007,7 +4557,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "public_release_allowed",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "public_release_allowed",
+        "numeric_sentinels": [],
+        "original_name": "public_release_allowed",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -4025,7 +4592,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "parent_standardized_dataset_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 0,
+        "invalid": 0,
+        "missing": 106,
+        "missing_values": [],
+        "name": "parent_standardized_dataset_id",
+        "numeric_sentinels": [],
+        "original_name": "parent_standardized_dataset_id",
+        "present": 0,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -4045,7 +4629,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 106,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 106,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 106,
@@ -4070,8 +4671,6 @@
     "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
     "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: dropped duplicate columns ['elevation'] (kept the first source's values).",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError",
     "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
   ]
 }

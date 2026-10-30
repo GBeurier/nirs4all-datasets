@@ -67,8 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques. Champs d’index examinés : replicate. Le nombre de niveaux d’un facteur Rep n’est pas utilisé comme nombre de spectres par échantillon.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,5 +89,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `504b712bebe2516ce86b721f73995526e9a2adaf51d4eba7be28436f6907bb2a`
-- **Processing hash:** `5b5316a167f51ac059aed1216df98be9f8a6a357ebbb72ce4fd8224fce3792ab` | **metadata hash:** `0061d2ada9c72f53133c9df327f45304cc19061c4f9c30f86c861e9605182dea`
+- **Content hash:** `6e02c483879b83a80b498bf6c8211ddc56887d877e1e80dc2d865190804dc957`
+- **Processing hash:** `7b0e9baf531e0136f1fe8b9f557d215ffc336b5d95e43f6cde1deb4afe46ad0f` | **metadata hash:** `0061d2ada9c72f53133c9df327f45304cc19061c4f9c30f86c861e9605182dea`

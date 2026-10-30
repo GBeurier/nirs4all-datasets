@@ -59,7 +59,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Qamb | target | numeric | *Not specified.* | n=2079, missing=1, range 114.5–1938, mean 947.9 ± 475 |
 | G | target | numeric | *Not specified.* | n=2079, missing=1, range -0.01938–0.9363, mean 0.1479 ± 0.1499 |
 | Species_code_grpStrat | target | categorical | *Not specified.* | n=2079, missing=536, classes=246, top V1576 (×13) |
-| Brix | target | categorical | *Not specified.* | n=2079, missing=0, classes=1, top not_available_in_grapevine_source (×2079) |
+| Brix | target | numeric | *Not specified.* | n=2079, missing=2079, range —, mean *Not specified.* ± *Not specified.* |
 | Leaf_ID | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2079, top 4005_20/07/21 (×1) |
 | Experiment | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top Greenhouse (×1543) |
 | Phenotyping_type | metadata | categorical | *Not specified.* | n=2079, missing=0, classes=2, top HT (×1972) |
@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Leaf × date, aligned across the four blocks; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 4 fields, Y: 28 fields, measurements: 0 fields, passport: 10 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Feuille × date, alignée entre les quatre blocs ; regroupement par la colonne source conservée dans M. La multiplicité exportée ne prouve pas le nombre de scans moyennés en amont.
+- **Curated views:** M: 4 fields, Y: 28 fields, passport: 10 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -107,5 +107,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `d64f6d15de560f592e506e1306ff32a45d69100a748512cd31e6848fea6f2ea1`
-- **Processing hash:** `f2bbba5dd565accd3a96913119a58078430a89bb9fe8bba289625f5ec14c486a` | **metadata hash:** `310339cc6543506b6a5d89e1167e429e9ef4babf0535c4c9dba86726353a42fa`
+- **Content hash:** `a179d6405b62f608462d219f96be4e5a5a571a0c80a593e7018c20a57aa74618`
+- **Processing hash:** `4fa8a6e88eb6ec7ea2134308e751e43e93bb7826b18a596ba57992b19b12f221` | **metadata hash:** `310339cc6543506b6a5d89e1167e429e9ef4babf0535c4c9dba86726353a42fa`

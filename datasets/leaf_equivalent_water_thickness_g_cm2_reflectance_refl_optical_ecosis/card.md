@@ -66,7 +66,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | trait_header | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Equivalent_Water_Thickness_g_cm2 (×330) |
 | target_original_name | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Equivalent Water Thickness (g/cm²) (×330) |
 | measurement_hint | metadata | categorical | *Not specified.* | n=330, missing=0, classes=1, top Lopex1993_Reflectance__Lopex_Refl (×330) |
-| raw_label | metadata | categorical | *Not specified.* | n=330, missing=0, classes=298, top 0.004951219512195122 (×3) |
+| raw_label | metadata | categorical | *Not specified.* | n=330, missing=0, classes=298, top 0.012292682926829269 (×3) |
 | reference_value | metadata | numeric | *Not specified.* | n=330, missing=0, range 0.0002927–0.05249, mean 0.01113 ± 0.006979 |
 | class_index | metadata | categorical | *Not specified.* | n=330, missing=330, classes=0, — |
 | class_label | metadata | categorical | *Not specified.* | n=330, missing=330, classes=0, — |
@@ -103,8 +103,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 1 fields, measurements: 23 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 3 fields, Y: 1 fields, passport: 35 fields, measurements: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -125,5 +125,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `3fe238dcdf929ae332157a39a6c258feae86e889d3947f6f53f656434b8a86df`
-- **Processing hash:** `723c67ba9c7ae2f6a944131adb590d8f4189e6cb150b59f7ee4667c3b98b30df` | **metadata hash:** `6210cae17dcc2b4257a8e5cf1df8b7cad9f68c255dde4e83728c476e0fb2db3c`
+- **Content hash:** `6cc67bad6b534b59af7f163ddb6eac57056f374e3fd7cbe64e3dc08ce1d5e72c`
+- **Processing hash:** `5002acdbfd1b8465943eaeb52dab360659c810122aae9ead7c3275ba71a16623` | **metadata hash:** `6210cae17dcc2b4257a8e5cf1df8b7cad9f68c255dde4e83728c476e0fb2db3c`

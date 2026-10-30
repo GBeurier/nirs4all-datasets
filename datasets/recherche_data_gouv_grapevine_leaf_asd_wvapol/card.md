@@ -57,8 +57,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | IDVar | metadata | categorical | *Not specified.* | n=2394, missing=833, classes=246, top V1576 (×15) |
 | Water_treatment | metadata | categorical | *Not specified.* | n=2394, missing=833, classes=3, top WW (×526) |
 | Date_leaf_measurement | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=23, top 03/06/2022 (×92) |
-| Nb_min_since_8am | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=1051, top 146.6 (×5) |
-| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2394, missing=991, classes=1259, top 1142.0 (×3) |
+| Nb_min_since_8am | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=1051, top 241.8 (×5) |
+| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2394, missing=991, classes=1259, top 1084.8 (×3) |
 | Temp_mean_arch | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=72, top 23.696739665618 (×92) |
 | Hr_mean_arch | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=72, top 68.1819247646913 (×92) |
 | PPFD_mean_arch | metadata | categorical | *Not specified.* | n=2394, missing=984, classes=72, top 232.279047090758 (×92) |
@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 13 fields, Y: 7 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M ; les fréquences de cet identifiant décrivent les lignes exportées, sans établir des répétitions techniques.
+- **Curated views:** M: 13 fields, Y: 7 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -107,5 +107,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `70660961d09a63903398d52a5fb3f1c7b767217c6adbb85b98ca98b93222e56a`
-- **Processing hash:** `9bbf59906a880470ff1cf07985d4ae5f360e5fda2ed90d9f62b46536aaf7c997` | **metadata hash:** `f26d23649f50b61dc92c5782b6d0761165a8d7ccebed465cdaeda8cb002b9299`
+- **Content hash:** `1c48ff196e1aedae2c7675802a969234bd7f6471653515035c80ccb90e29a0c2`
+- **Processing hash:** `cd7c8097c4eafec04cbeec03c8632dc82f585df54060fa5109898ead443b3a46` | **metadata hash:** `f26d23649f50b61dc92c5782b6d0761165a8d7ccebed465cdaeda8cb002b9299`

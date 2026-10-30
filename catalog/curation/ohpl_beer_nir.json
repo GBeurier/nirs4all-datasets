@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset_id": "ohpl_beer_nir",
-  "contract_sha256": "fa6dfa807f094f3c72e4e5d26c62088bf10a55c5ea12b90352547a78258c1168",
+  "contract_sha256": "a093d881d633dc453f1f47301fe39b2de09009eb0469fc52a8f25fe0b6980e49",
   "grain": "observation",
   "identity": {
     "method": "unavailable",
@@ -45,7 +45,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -76,20 +76,27 @@
         "n_censored": 0,
         "n_invalid": 0
       },
-      "reasons": []
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ohpl_beer_nir:original_extract",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
-      "source_resource": "M.csv",
+      "source_resource": "Y.csv",
       "original_name": "observation_id",
       "canonical_name": "observation_id",
       "original_role": "Y",
       "semantic_role": "identifier",
       "view": "structure",
-      "operation": "assumed_row_pairing_to_Y",
+      "operation": "identity",
       "grain": "observation",
-      "target_resource": "Y.csv",
-      "independently_verified_target_ids": false,
-      "M_X_order_checked": true
+      "variable_id": "ohpl_beer_nir:observation_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -103,7 +110,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           ""
         ]
@@ -117,7 +124,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ohpl_beer_nir:dataset_id",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -131,7 +140,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -159,7 +168,9 @@
         "type": "categorical",
         "imbalance_ratio": 1.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ohpl_beer_nir:url",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -173,7 +184,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -203,7 +214,9 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "variable_id": "ohpl_beer_nir:m_repository",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -217,7 +230,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -245,7 +258,9 @@
         "type": "categorical",
         "imbalance_ratio": 2.0
       },
-      "reasons": []
+      "reasons": [],
+      "variable_id": "ohpl_beer_nir:split_original",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -259,7 +274,7 @@
       "grain": "observation",
       "unit": null,
       "missing_rule": {
-        "rule_version": "1.0",
+        "rule_version": "1.1",
         "tokens": [
           "",
           "-",
@@ -289,7 +304,9 @@
       },
       "reasons": [
         "constant"
-      ]
+      ],
+      "variable_id": "ohpl_beer_nir:m_local_bacon_reference",
+      "mapping_version": "1.1"
     },
     {
       "source_resource": "M.csv",
@@ -299,7 +316,9 @@
       "semantic_role": "identifier",
       "view": "structure",
       "operation": "identity",
-      "grain": "observation"
+      "grain": "observation",
+      "variable_id": "ohpl_beer_nir:observation_id",
+      "mapping_version": "1.1"
     }
   ],
   "variables": [
@@ -329,13 +348,11 @@
     }
   ],
   "enrichments": [],
-  "warnings": [
-    "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-  ],
+  "warnings": [],
   "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
   "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
   "source_hashes": {
     "M.csv": "76e690dbc9de874a3c43233f9afca745cd86d1c52c31f0aa242cf4b8af5df7bf",
-    "Y.csv": "311369ddb91d242853a094c343393540d34e3689e06294b91218622eba701346"
+    "Y.csv": "995fa7d1529cb2817c68a1487d26202877ff83bae6aff430d00137adef3223cb"
   }
 }

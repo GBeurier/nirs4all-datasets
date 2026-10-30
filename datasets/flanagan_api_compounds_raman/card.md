@@ -66,8 +66,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: 32 products, each sampled in a vial; 100–145 manual acquisitions per product. The unique sample_id is created by adding a scan counter to the compound. The number of independent preparations per product is not established.
-- **Curated views:** M: 5 fields, Y: 3 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 32 produits, chacun échantillonné en flacon ; 100–145 acquisitions manuelles par produit. Le sample_id unique est créé en ajoutant un compteur de scan au composé. Le nombre de préparations indépendantes par produit n’est pas établi.
+- **Curated views:** M: 5 fields, Y: 3 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,5 +88,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a7be4dc236d33f440b043abc5d85ec2ca58b58cb34ae6b4c576026407d41bdd9`
-- **Processing hash:** `2da3de486bb3e52c1b0b1fe0a81b0fe146990d28cb6f490a3e4fdd9fdc453e9c` | **metadata hash:** `b8efc6445edfb16dbaa31c2d74d55d49de57c2849d5659986f56b756f74a0101`
+- **Content hash:** `1e39044801fe460edbd38bd2e9562f9df96fba20b2e2d5c59b6356aaaa2cf1b7`
+- **Processing hash:** `536ed61ebe49c6d0d6aacdc4d61bbef63a452ee92475e648f78e25dc741e8d96` | **metadata hash:** `b8efc6445edfb16dbaa31c2d74d55d49de57c2849d5659986f56b756f74a0101`

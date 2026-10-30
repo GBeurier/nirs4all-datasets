@@ -86,8 +86,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 32 products, each sampled in a vial; 100–145 manual acquisitions per product. The unique sample_id is created by adding a scan counter to the compound. The number of independent preparations per product is not established.
-- **Curated views:** M: 6 fields, Y: 1 fields, measurements: 3 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 32 produits, chacun échantillonné en flacon ; 100–145 acquisitions manuelles par produit. Le sample_id unique est créé en ajoutant un compteur de scan au composé. Le nombre de préparations indépendantes par produit n’est pas établi.
+- **Curated views:** M: 6 fields, Y: 1 fields, passport: 33 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,5 +108,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `e73b10d145dff77cdd4d7bb31125b35ded62c9542cbeeb76f602e1268b813967`
-- **Processing hash:** `c9cde3f9a6e84b8849e65989467d2e44238d825c10f58b3c09e56ae30eb2ec92` | **metadata hash:** `93395f9ae70bbb7803c3d46d0c136a28672f6686e5843f407569847ec57aa352`
+- **Content hash:** `95dc34688c629f7d9b2881f8e38ea198f3b24e003e053050d90a9c7b2663b497`
+- **Processing hash:** `9068b9b44a49527309b16d979918630dcf33ccef9e5ed03dce0f365cc79ec7a8` | **metadata hash:** `93395f9ae70bbb7803c3d46d0c136a28672f6686e5843f407569847ec57aa352`

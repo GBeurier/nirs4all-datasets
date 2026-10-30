@@ -68,8 +68,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: The NIR sample ID is a batch/design combination; the vial is identified by _vN and each acquisition by .0/.1/.2. 216 vials × 3 acquisitions. The 64 instrument scans are averaged within each acquisition.
-- **Curated views:** M: 5 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Le NIR sample ID est un lot/une combinaison du plan ; le flacon est identifié par _vN et chaque acquisition par .0/.1/.2. 216 flacons × 3 acquisitions. Les 64 scans instrumentaux sont moyennés dans chaque acquisition.
+- **Curated views:** M: 5 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,5 +90,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `6d75eee6d2e06f5af02c6f820e9430149a86705f5878a37b4eadfe3de73f1c69`
-- **Processing hash:** `543629f8dcdf552b9ffd66f24d194e328630b82076ef545d169c55a4a96848ca` | **metadata hash:** `2fc452d082490386e74070665b82013bd35fa284867d1d9c9d0f753a8702200f`
+- **Content hash:** `63905661a079541e892220bcf7cc8cf0d39fb0981ded862d04a8ac5661d47916`
+- **Processing hash:** `afbae82320a7a49796d90ea148f13f5921ff774a95c258e764b246921934f30f` | **metadata hash:** `2fc452d082490386e74070665b82013bd35fa284867d1d9c9d0f753a8702200f`

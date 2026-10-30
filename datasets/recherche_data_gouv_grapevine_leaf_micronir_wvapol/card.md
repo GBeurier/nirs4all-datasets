@@ -58,7 +58,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Water_treatment | metadata | categorical | *Not specified.* | n=2408, missing=849, classes=3, top WW (×525) |
 | Date_leaf_measurement | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=23, top 03/06/2022 (×92) |
 | Nb_min_since_8am | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=1051, top 241.8 (×5) |
-| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2408, missing=1005, classes=1259, top 1084.8 (×3) |
+| Nb_min_since_last_irrigation | metadata | categorical | *Not specified.* | n=2408, missing=1005, classes=1259, top 1100.6 (×3) |
 | Temp_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 23.696739665618 (×92) |
 | Hr_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 68.1819247646913 (×92) |
 | PPFD_mean_arch | metadata | categorical | *Not specified.* | n=2408, missing=998, classes=72, top 232.279047090758 (×92) |
@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 13 fields, Y: 7 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant échantillon déclaré dans M
+- **Curated views:** M: 13 fields, Y: 7 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -107,5 +107,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `06fcd933389770af7e4bacffb11106f7de5158c64c6813a7f93db9fc669d1c1d`
-- **Processing hash:** `f10e06773aedabcf5a30da0a0045377c48444486154ed6f6f8eb57fced0ae37d` | **metadata hash:** `6883b9db571e6245afffa33181175131867550e039f5a7b1ef5437621acb5d69`
+- **Content hash:** `13c8428012adb31153d737646299d0da485410c21e3f567fba8a0fc112594092`
+- **Processing hash:** `967184448cb4335d91d5a13cd6c948e2a6aceeaa134c898b5660a6093b95e75b` | **metadata hash:** `6883b9db571e6245afffa33181175131867550e039f5a7b1ef5437621acb5d69`

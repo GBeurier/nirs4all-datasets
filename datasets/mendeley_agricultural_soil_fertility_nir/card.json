@@ -1,19 +1,41 @@
 {
   "alignment": {
+    "identity": {
+      "conclusion": "Sample identifier declared in M",
+      "evidence": [],
+      "method": "column",
+      "missing_source_columns": [],
+      "n_missing_identity": 0,
+      "n_observations_with_identity": 40,
+      "n_samples": 40,
+      "observations_per_unit": {
+        "1": 40
+      },
+      "sample_id_available": true,
+      "source_columns": [
+        "sample_id"
+      ],
+      "status": "available",
+      "technical_repetitions": null,
+      "unit": "Multiplicity of the declared identifier; protocol not established"
+    },
     "identity_status": "available",
     "level": "sample",
+    "n_known_sample_units": 40,
+    "n_observation_groups": 40,
     "n_observations_total": 40,
     "n_samples": 40,
     "profile_scores": {
       "integrity_risk": 0.1926782273603083,
       "local_artefact_risk": 1.0,
       "noise_risk": 0.03254895236745747,
-      "outlier_pressure": 0.4048285642227091,
+      "outlier_pressure": 0.40482856422270874,
       "reference_spread": 0.7078992727428,
       "repeatability_risk": null,
       "shape_drift": 0.16713047005603268,
-      "structure_complexity": 0.4444208347379606
+      "structure_complexity": 0.4444208347379608
     },
+    "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": {
       "max": 1,
       "mean": 1.0,
@@ -28,7 +50,7 @@
     "variables": []
   },
   "curation": {
-    "contract_sha256": "0334ee41faf549a969f1ace11efc5ab89764a400531e42a4012603fc542101b7",
+    "contract_sha256": "976eecb039af9e051c1a3ca784dc5fdbb0882ec651e4f4316d443059dca318e8",
     "dataset_id": "mendeley_agricultural_soil_fertility_nir",
     "enrichments": [],
     "grain": "observation",
@@ -53,7 +75,7 @@
     },
     "mapping": "canonical/curation/mapping.json",
     "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source_hashes": {
       "M.csv": "aaf6965f5d8c5d26d7f90c51351ae94060e98e328a79dc5be13ec31fec58de61",
       "Y.csv": "e25cd749bae7ccebe1b8602f781392fd431269bf73a39724c93cfc28bec63ea7"
@@ -242,7 +264,7 @@
       "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
     ]
   },
-  "generated_at": "2026-10-29T12:30:48.538631+00:00",
+  "generated_at": "2026-10-30T15:49:09.486487+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -263,10 +285,10 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "7ae5c48e5a333d3691f4d838c5464093d8950d2f8be1b15e75ccb6d3485c87a9",
+    "content_hash": "334d5289ad69bc1c999483cde561fd92dc49a3d131410a676194d9bbbc5192f3",
     "manifest": "manifest.json",
     "metadata_hash": "f1bb2fc2c14b4dbd306025f586b2fa6992b763390eb7314f98cc46aa8c1b0ffd",
-    "processing_hash": "ccc51be1f97e6340e484226485a68e931e316307f093ad4dc9687bbb71631e8f"
+    "processing_hash": "2d0748d3762f4b20a95880ec652e0a171401637fcff403d90cceebbf3d9ac1c6"
   },
   "protocol_version": "7",
   "provenance": {
@@ -313,19 +335,14 @@
     "reference_method": null,
     "warnings": [
       "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
-      "Curation identity contract: Sample identifier declared in M"
+      "Curation identity contract: Identifiant \u00e9chantillon d\u00e9clar\u00e9 dans M"
     ]
   },
   "qualification_provenance": {
     "assessment_mode": "legacy",
     "diagnostic_domain": null,
     "interpretation": "uncalibrated_heuristic_signature",
-    "legacy_calculation_protocol": "6",
-    "migration": {
-      "from_protocol": "6",
-      "raw_kernels_recomputed": false,
-      "to_protocol": "7"
-    }
+    "legacy_calculation_protocol": "7"
   },
   "schema_version": "2.0",
   "sources": [
@@ -1347,7 +1364,7 @@
         },
         "mean_max": 0.00835895751370117,
         "mean_min": -0.00177597074653022,
-        "n_outliers": null,
+        "n_outliers": 12,
         "pca": null,
         "profile": {
           "amplitude": {
@@ -1385,7 +1402,7 @@
                   "signal": "Spike rate"
                 },
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1416,11 +1433,11 @@
                   "signal": "RMS/SAM to mean spectrum"
                 },
                 {
-                  "level": 0.4444208347379606,
+                  "level": 0.4444208347379608,
                   "signal": "PCA structure"
                 },
                 {
-                  "level": 0.4048285642227091,
+                  "level": 0.40482856422270874,
                   "signal": "Mahalanobis / T2"
                 }
               ],
@@ -1436,10 +1453,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.3657301971009581,
+              "score": 0.365730197100958,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.3657301971009581,
+              "signal_strength": 0.365730197100958,
               "strength": "weak"
             },
             {
@@ -1455,11 +1472,11 @@
                   "signal": "RMS/SAM to mean spectrum"
                 },
                 {
-                  "level": 0.4048285642227091,
+                  "level": 0.40482856422270874,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1490,11 +1507,11 @@
                   "signal": "RMS/SAM to mean spectrum"
                 },
                 {
-                  "level": 0.4048285642227091,
+                  "level": 0.40482856422270874,
                   "signal": "Mahalanobis / T2"
                 },
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1510,10 +1527,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.28395097703720923,
+              "score": 0.2839509770372091,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.28395097703720923,
+              "signal_strength": 0.2839509770372091,
               "strength": "weak"
             },
             {
@@ -1525,7 +1542,7 @@
                   "signal": "Jump rate"
                 },
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1541,10 +1558,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.20605403255607815,
+              "score": 0.20605403255607807,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.20605403255607815,
+              "signal_strength": 0.20605403255607807,
               "strength": "weak"
             },
             {
@@ -1560,7 +1577,7 @@
                   "signal": "Spike rate"
                 },
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1576,10 +1593,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.1920156432652471,
+              "score": 0.192015643265247,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.1920156432652471,
+              "signal_strength": 0.192015643265247,
               "strength": "weak"
             },
             {
@@ -1587,7 +1604,7 @@
               "confidence_status": "unvalidated",
               "evidence": [
                 {
-                  "level": 0.256717085145681,
+                  "level": 0.25671708514568053,
                   "signal": "PCA Q"
                 }
               ],
@@ -1603,10 +1620,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.05785320750262769,
+              "score": 0.0578532075026276,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.05785320750262769,
+              "signal_strength": 0.0578532075026276,
               "strength": "weak"
             },
             {
@@ -1655,6 +1672,14 @@
             "bandwise_snr_median": 78.08731601200421,
             "bandwise_snr_min": 0.0,
             "noise_rms": 1.2085978775186697e-05,
+            "producer": {
+              "abi_version": "2.20.0",
+              "engine_version": "1.3.10+abi.2.20.0",
+              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "name": "nirs4all-methods",
+              "operation": "diagnostics.spectral_noise_proxy",
+              "protocol_version": "spectral-second-difference-mad-index.v1"
+            },
             "roughness_sigma_proxy": 1.2085978775186697e-05,
             "roughness_signal_to_noise_proxy": 86.07996768099939,
             "roughness_signal_to_noise_proxy_db": 38.6980419053017,
@@ -1664,28 +1689,28 @@
             "worst_band_index": 2
           },
           "outliers": {
-            "hotelling_t2_max": 7.877339011777931,
-            "hotelling_t2_median": 2.500313528429024,
-            "hotelling_t2_p95": 6.555976552427963,
-            "hotelling_t2_ratio": 2.6220617846063328,
-            "mahalanobis_h_max": 2.8066597606011903,
-            "mahalanobis_h_median": 1.5809660420415703,
-            "mahalanobis_h_p95": 2.560080851538192,
-            "mahalanobis_h_ratio": 1.6193142568908363,
-            "pca_q_max": 8.103615238258444e-06,
-            "pca_q_median": 2.936917303375455e-06,
-            "pca_q_p95": 6.031654795491683e-06,
-            "pca_q_ratio": 2.053736681165448
+            "hotelling_t2_max": 7.8773390117779245,
+            "hotelling_t2_median": 2.5003135284290243,
+            "hotelling_t2_p95": 6.555976552427956,
+            "hotelling_t2_ratio": 2.6220617846063297,
+            "mahalanobis_h_max": 2.8066597606011894,
+            "mahalanobis_h_median": 1.5809660420415708,
+            "mahalanobis_h_p95": 2.5600808515381908,
+            "mahalanobis_h_ratio": 1.619314256890835,
+            "pca_q_max": 8.103615238258448e-06,
+            "pca_q_median": 2.9369173033754537e-06,
+            "pca_q_p95": 6.03165479549167e-06,
+            "pca_q_ratio": 2.0537366811654443
           },
           "profile_scores": {
             "integrity_risk": 0.1926782273603083,
             "local_artefact_risk": 1.0,
             "noise_risk": 0.03254895236745747,
-            "outlier_pressure": 0.4048285642227091,
+            "outlier_pressure": 0.40482856422270874,
             "reference_spread": 0.7078992727428,
             "repeatability_risk": null,
             "shape_drift": 0.16713047005603268,
-            "structure_complexity": 0.4444208347379606
+            "structure_complexity": 0.4444208347379608
           },
           "reference": {
             "affine_gain_median": 1.0000387543096836,
@@ -1710,23 +1735,17 @@
             "sam_intra_id": null
           },
           "shape": {
-            "baseline_slope": 0.0005829179420520904,
+            "baseline_slope": 0.00058291794205209,
             "curvature_rms": 5.172571069081661e-05,
             "d1_rms": 0.00010495216508504762,
             "edge_noise_ratio": 0.5013914101680981
           },
-          "signature_metadata": {
-            "domain_context": null,
-            "presentation_protocol": "7",
-            "raw_kernels_recomputed": false,
-            "source_protocol": "6"
-          },
           "structure": {
-            "density_cv": 0.24175218416517374,
+            "density_cv": 0.2417521841651737,
             "isolation_forest_score_p95": 0.5673545066224193,
-            "knn_distance_ratio_p95": 1.333262504213882,
-            "local_outlier_factor_p95": 1.333262504213882,
-            "pca_score_density": 156.9767717200028
+            "knn_distance_ratio_p95": 1.3332625042138824,
+            "local_outlier_factor_p95": 1.3332625042138824,
+            "pca_score_density": 156.97677172000283
           }
         },
         "quality": {
@@ -1737,169 +1756,169 @@
         },
         "score_plot": {
           "explained_variance_ratio": [
-            0.6685689973019757,
-            0.25612512365586754
+            0.6685689973019759,
+            0.25612512365586726
           ],
           "points": [
             {
-              "x": -0.001371099003924789,
-              "y": -0.001455898582312282
+              "x": -0.0013710990039247828,
+              "y": -0.0014558985823122771
             },
             {
-              "x": -0.005234828794264274,
-              "y": -0.00448419435000482
+              "x": -0.0052348287942642615,
+              "y": -0.004484194350004813
             },
             {
-              "x": -0.0033283322038643957,
-              "y": -0.010550475588628863
+              "x": -0.003328332203864398,
+              "y": -0.010550475588628849
             },
             {
-              "x": -0.008364650967338235,
-              "y": -0.008800559388748986
+              "x": -0.00836465096733823,
+              "y": -0.008800559388748977
             },
             {
-              "x": -0.005919270736390971,
-              "y": -0.006551113226465118
+              "x": -0.005919270736390974,
+              "y": -0.006551113226465111
             },
             {
-              "x": 0.003615145991538375,
-              "y": -0.004304378045345931
+              "x": 0.003615145991538374,
+              "y": -0.004304378045345929
             },
             {
-              "x": 0.009364801680010854,
-              "y": -0.0020915328774659112
+              "x": 0.009364801680010856,
+              "y": -0.00209153287746591
             },
             {
-              "x": 0.008292651565775366,
-              "y": -0.0025276787577944416
+              "x": 0.00829265156577537,
+              "y": -0.002527678757794441
             },
             {
-              "x": 0.014945018197651642,
-              "y": -0.005285332298440467
+              "x": 0.014945018197651648,
+              "y": -0.005285332298440463
             },
             {
-              "x": 0.01579362764493226,
+              "x": 0.015793627644932272,
               "y": -0.0006073867034701069
             },
             {
-              "x": -0.0014587268877664231,
-              "y": 0.007741861926391763
+              "x": -0.0014587268877664264,
+              "y": 0.007741861926391758
             },
             {
-              "x": -0.007017610021340076,
-              "y": 0.004086761615442771
+              "x": -0.00701761002134008,
+              "y": 0.004086761615442769
             },
             {
-              "x": -0.01160874204453862,
-              "y": 0.0019473854255011864
+              "x": -0.011608742044538628,
+              "y": 0.0019473854255011868
             },
             {
-              "x": -0.007735737808610808,
-              "y": 0.0016580131128256805
+              "x": -0.0077357378086108115,
+              "y": 0.0016580131128256788
             },
             {
-              "x": -0.009221733038116766,
-              "y": 0.001917183889222817
+              "x": -0.009221733038116771,
+              "y": 0.0019171838892228148
             },
             {
-              "x": -0.002670207736179123,
-              "y": 0.0051409732708324165
+              "x": -0.002670207736179124,
+              "y": 0.005140973270832414
             },
             {
-              "x": 0.003573505369163266,
-              "y": 0.007450798884922546
+              "x": 0.0035735053691632666,
+              "y": 0.00745079888492254
             },
             {
-              "x": 0.005675887402842662,
-              "y": 0.006713093411512846
+              "x": 0.0056758874028426665,
+              "y": 0.006713093411512841
             },
             {
-              "x": 0.010784357014426873,
-              "y": 0.007119984526094767
+              "x": 0.010784357014426876,
+              "y": 0.007119984526094759
             },
             {
-              "x": 0.013562901458244308,
-              "y": 0.007029248295605047
+              "x": 0.013562901458244314,
+              "y": 0.007029248295605044
             },
             {
-              "x": -0.009178061924164184,
-              "y": -0.00880951882424184
+              "x": -0.009178061924164194,
+              "y": -0.008809518824241833
             },
             {
-              "x": -0.007536122747135197,
-              "y": -0.006646182584414697
+              "x": -0.0075361227471352115,
+              "y": -0.006646182584414694
             },
             {
-              "x": -0.00045593623641853427,
-              "y": -0.003280592710187683
+              "x": -0.00045593623641854625,
+              "y": -0.003280592710187678
             },
             {
               "x": 0.006637913586021274,
-              "y": -0.008890406575028474
+              "y": -0.008890406575028473
             },
             {
-              "x": 0.005863243176922065,
-              "y": -0.0037019901403686547
+              "x": 0.005863243176922063,
+              "y": -0.0037019901403686486
             },
             {
-              "x": 0.012252014823542087,
-              "y": -0.0069996154342910075
+              "x": 0.012252014823542096,
+              "y": -0.006999615434291003
             },
             {
-              "x": 0.018117056844736874,
-              "y": -0.005949373074851644
+              "x": 0.01811705684473688,
+              "y": -0.005949373074851642
             },
             {
-              "x": 0.016764898560494394,
-              "y": -0.005380675076141006
+              "x": 0.0167648985604944,
+              "y": -0.005380675076141005
             },
             {
-              "x": -0.001630894475688838,
-              "y": 0.0070636865030679515
+              "x": -0.0016308944756888365,
+              "y": 0.007063686503067946
             },
             {
-              "x": -0.008231643076856057,
-              "y": 0.006041764266396528
+              "x": -0.008231643076856058,
+              "y": 0.0060417642663965244
             },
             {
               "x": -0.013527622755892619,
-              "y": -0.0037454494273184416
+              "y": -0.003745449427318438
             },
             {
-              "x": -0.012802235469668063,
-              "y": 0.0019952287445701086
+              "x": -0.012802235469668067,
+              "y": 0.001995228744570106
             },
             {
-              "x": -0.011039210154068045,
-              "y": 0.0025660124062898268
+              "x": -0.01103921015406805,
+              "y": 0.0025660124062898233
             },
             {
-              "x": -0.005245287333735829,
-              "y": 0.0027026745916209575
+              "x": -0.005245287333735831,
+              "y": 0.0027026745916209553
             },
             {
-              "x": -0.002793958509528089,
-              "y": 0.00831642921493374
+              "x": -0.002793958509528087,
+              "y": 0.008316429214933734
             },
             {
-              "x": 0.0034514446700248756,
-              "y": 0.006455233589306792
+              "x": 0.003451444670024881,
+              "y": 0.0064552335893067895
             },
             {
-              "x": 0.005844380504174099,
-              "y": 0.009534464982947355
+              "x": 0.005844380504174107,
+              "y": 0.009534464982947348
             },
             {
-              "x": 0.008287668262602063,
-              "y": 0.007105091558983913
+              "x": 0.008287668262602072,
+              "y": 0.007105091558983909
             },
             {
-              "x": -0.015470981766271808,
-              "y": -0.0024456534436011865
+              "x": -0.015470981766271815,
+              "y": -0.002445653443601185
             },
             {
-              "x": -0.010983623061341598,
-              "y": -7.78831073474375e-05
+              "x": -0.010983623061341605,
+              "y": -7.788310734743793e-05
             }
           ]
         },
@@ -4532,10 +4551,7 @@
           }
         ]
       },
-      "warnings": [
-        "x-outlier detection failed: ModuleNotFoundError",
-        "signal-type detection failed: ModuleNotFoundError"
-      ]
+      "warnings": []
     }
   ],
   "splits": [],
@@ -4543,6 +4559,7 @@
   "variables": [
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           9,
@@ -4599,6 +4616,22 @@
         ]
       },
       "name": "N_content_pct",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 37,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "N_content_pct",
+        "numeric_sentinels": [],
+        "original_name": "N_content_pct",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.9694279477835654,
@@ -4623,6 +4656,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           4,
@@ -4679,6 +4713,22 @@
         ]
       },
       "name": "P_ppm",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 39,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "P_ppm",
+        "numeric_sentinels": [],
+        "original_name": "P_ppm",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.7906456969671976,
@@ -4703,6 +4753,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           2,
@@ -4759,6 +4810,22 @@
         ]
       },
       "name": "K_cmol_kg",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 34,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "K_cmol_kg",
+        "numeric_sentinels": [],
+        "original_name": "K_cmol_kg",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.5842164294037735,
@@ -4783,6 +4850,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           3,
@@ -4839,6 +4907,22 @@
         ]
       },
       "name": "pH_KCl",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 38,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "pH_KCl",
+        "numeric_sentinels": [],
+        "original_name": "pH_KCl",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.3824745634002438,
@@ -4863,6 +4947,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           10,
@@ -4919,6 +5004,22 @@
         ]
       },
       "name": "Mg_cmol_kg",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 40,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Mg_cmol_kg",
+        "numeric_sentinels": [],
+        "original_name": "Mg_cmol_kg",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.7392062805777794,
@@ -4943,6 +5044,7 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "histogram": {
         "counts": [
           6,
@@ -4999,6 +5101,22 @@
         ]
       },
       "name": "Ca_cmol_kg",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 40,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "Ca_cmol_kg",
+        "numeric_sentinels": [],
+        "original_name": "Ca_cmol_kg",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "target",
       "shape": {
         "cv": 0.8598092487877416,
@@ -5030,7 +5148,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "api_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "api_url",
+        "numeric_sentinels": [],
+        "original_name": "api_url",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5055,7 +5190,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "files_api_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "files_api_url",
+        "numeric_sentinels": [],
+        "original_name": "files_api_url",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5080,7 +5232,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "doi_dataset",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "doi_dataset",
+        "numeric_sentinels": [],
+        "original_name": "doi_dataset",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5105,7 +5274,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license",
+        "numeric_sentinels": [],
+        "original_name": "license",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5130,7 +5316,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license_id",
+        "numeric_sentinels": [],
+        "original_name": "license_id",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5155,7 +5358,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "license_url",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "license_url",
+        "numeric_sentinels": [],
+        "original_name": "license_url",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5180,7 +5400,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "rights_status",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "rights_status",
+        "numeric_sentinels": [],
+        "original_name": "rights_status",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5205,7 +5442,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "usage_scope",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "usage_scope",
+        "numeric_sentinels": [],
+        "original_name": "usage_scope",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5230,7 +5484,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "public_release_allowed",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "public_release_allowed",
+        "numeric_sentinels": [],
+        "original_name": "public_release_allowed",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5255,7 +5526,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "spectroscopy_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "spectroscopy_type",
+        "numeric_sentinels": [],
+        "original_name": "spectroscopy_type",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5280,7 +5568,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "axis_unit",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_unit",
+        "numeric_sentinels": [],
+        "original_name": "axis_unit",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5298,7 +5603,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_min",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_min",
+        "numeric_sentinels": [],
+        "original_name": "axis_min",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -5323,7 +5645,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "axis_max",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "axis_max",
+        "numeric_sentinels": [],
+        "original_name": "axis_max",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -5348,7 +5687,24 @@
     },
     {
       "assets": [],
+      "denominator": "canonical_sample_units",
       "name": "n_points_original",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "n_points_original",
+        "numeric_sentinels": [],
+        "original_name": "n_points_original",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "shape": {
         "cv": 0.0,
@@ -5380,7 +5736,24 @@
         "n_classes": 1,
         "normalized_entropy": 0.0
       },
+      "denominator": "canonical_sample_units",
       "name": "notes",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "notes",
+        "numeric_sentinels": [],
+        "original_name": "notes",
+        "present": 40,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 40,
+        "unit": null
+      },
       "role": "metadata",
       "stats": {
         "n": 40,
@@ -5403,8 +5776,6 @@
   },
   "warnings": [
     "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "source X: x-outlier detection failed: ModuleNotFoundError",
-    "source X: signal-type detection failed: ModuleNotFoundError"
+    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
   ]
 }

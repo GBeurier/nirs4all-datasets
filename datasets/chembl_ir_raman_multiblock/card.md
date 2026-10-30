@@ -30,7 +30,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | chembl_id | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
 | compound_name | target | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
 | molecular_formula | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
-| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top CSc1nc(c([nH]1)c1ccnc(c1)N[C@@H](c1ccccc1)C)c1ccc(cc1)F (×2) |
+| smiles | target | categorical | *Not specified.* | n=50000, missing=0, classes=49979, top CCCCCCCCCCCCC/C=C/[C@H]([C@@H](NC(=O)C)CO)O (×2) |
 | inchi | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
 | inchikey | target | categorical | *Not specified.* | n=50000, missing=50000, classes=0, — |
 | compound_class | target | categorical | *Not specified.* | n=50000, missing=0, classes=1, top ChEMBL molecule (×50000) |
@@ -82,8 +82,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Non déterminé
+- **Curated views:** M: 0 fields, Y: 8 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,5 +104,5 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Maintenance
 
 - **Content version:** 2.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `36f66e057516b1a10594cc1e7721bf3bc6fe6a4c53674f73d5c3e83cc15feec8`
-- **Processing hash:** `ccc0c842f4b21c52c74e5c26ed0aafe265422c79dd4ecc693d79d0df9c7fca87` | **metadata hash:** `99e6ff1f2f4b3c0b56bab0988ba5a29e0dad1941e573f3751fd3a5a8433b47e5`
+- **Content hash:** `8e00f3b3cf7e53fdb75ffa731a2de2f556d40af29b3ebed66f3d35b36378fc0c`
+- **Processing hash:** `75baac490bff8b06ab8e5a387b383940b75631764f95ff743d246653f63b20b3` | **metadata hash:** `99e6ff1f2f4b3c0b56bab0988ba5a29e0dad1941e573f3751fd3a5a8433b47e5`
