@@ -92,84 +92,84 @@ _PROFILE_SCORE_KEYS = (
 )
 
 _PROFILE_LABELS = {
-    "integrity_risk": "Intégrité",
-    "noise_risk": "Bruit",
-    "local_artefact_risk": "Artefacts locaux",
-    "shape_drift": "Baseline / forme",
-    "outlier_pressure": "Outliers PCA",
-    "reference_spread": "Distance au spectre moyen",
-    "repeatability_risk": "Répétabilité",
-    "structure_complexity": "Structure multi-régimes",
+    "integrity_risk": "Integrity",
+    "noise_risk": "Noise",
+    "local_artefact_risk": "Local artifacts",
+    "shape_drift": "Baseline/shape",
+    "outlier_pressure": "PCA outliers",
+    "reference_spread": "Distance to average spectrum",
+    "repeatability_risk": "Repeatability",
+    "structure_complexity": "Multi-regime structure",
 }
 
 _METRIC_CATALOG: list[dict[str, str]] = [
-    {"family": "Intégrité des données", "metric": "Invalid/masked cell count (owner report)", "key": "integrity.missing_cells", "detects": "Cellules nulles ou masquées dans la population évaluée", "high": "À investiguer", "low": "Complet selon le masque déclaré", "causes": "Manque, masque de validité ; pas une cause d'acquisition démontrée"},
-    {"family": "Intégrité des données", "metric": "NaN ratio", "key": "integrity.nan_ratio", "detects": "Données manquantes", "high": "Spectre corrompu", "low": "Spectre complet", "causes": "Erreur acquisition/export"},
-    {"family": "Intégrité des données", "metric": "Inf count", "key": "integrity.inf_count", "detects": "Valeurs infinies", "high": "Corruption", "low": "Normal", "causes": "Calculs invalides"},
-    {"family": "Intégrité des données", "metric": "Zero ratio", "key": "integrity.zero_ratio", "detects": "Colonnes ou cellules nulles", "high": "Spectre tronqué", "low": "Normal", "causes": "Export, saturation"},
-    {"family": "Amplitude globale", "metric": "Mean reflectance", "key": "amplitude.mean_reflectance", "detects": "Niveau moyen", "high": "Trop clair / fond visible", "low": "Trop sombre", "causes": "Fond, géométrie"},
-    {"family": "Amplitude globale", "metric": "Area under curve", "key": "amplitude.area_under_curve", "detects": "Intensité globale", "high": "Différence d'éclairement", "low": "Normal", "causes": "Distance sonde"},
-    {"family": "Amplitude globale", "metric": "Peak-to-peak (PTP)", "key": "amplitude.peak_to_peak", "detects": "Dynamique", "high": "Variabilité forte", "low": "Spectre plat", "causes": "Saturation"},
-    {"family": "Amplitude globale", "metric": "Variance", "key": "amplitude.variance", "detects": "Variabilité spectrale", "high": "Normal ou hétérogène", "low": "Spectre plat", "causes": "Mauvais contact"},
-    {"family": "Bruit", "metric": "Roughness sigma proxy", "key": "noise.noise_rms", "detects": "Bruit haute fréquence", "high": "Bruité", "low": "Stable", "causes": "Lampe, détecteur"},
-    {"family": "Bruit", "metric": "Roughness S/N proxy", "key": "noise.snr", "detects": "Qualité signal", "high": "Bon signal", "low": "Mauvais signal", "causes": "Acquisition"},
-    {"family": "Bruit", "metric": "Bandwise roughness S/N proxy", "key": "noise.bandwise_snr_min", "detects": "Bruit localisé", "high": "Zone fiable", "low": "Zone problématique", "causes": "Détecteur"},
-    {"family": "Artefacts locaux", "metric": "Spike count", "key": "artefacts.spike_count", "detects": "Pics étroits", "high": "Artefacts", "low": "Spectre propre", "causes": "Cosmic rays, splice"},
-    {"family": "Artefacts locaux", "metric": "Spike rate", "key": "artefacts.spike_rate", "detects": "Densité de pics", "high": "Spectre suspect", "low": "Normal", "causes": "Interpolation"},
-    {"family": "Artefacts locaux", "metric": "Jump count", "key": "artefacts.jump_count", "detects": "Discontinuités", "high": "Raccord détecteur", "low": "Continu", "causes": "Splice"},
-    {"family": "Artefacts locaux", "metric": "Jump rate", "key": "artefacts.jump_rate", "detects": "Fréquence de sauts", "high": "Problème spectral", "low": "Normal", "causes": "Calibration"},
-    {"family": "Artefacts locaux", "metric": "Clip fraction", "key": "artefacts.clip_fraction", "detects": "Saturation", "high": "Clipping", "low": "Normal", "causes": "Détecteur saturé"},
-    {"family": "Forme spectrale", "metric": "Baseline slope", "key": "shape.baseline_slope", "detects": "Pente globale", "high": "Dérive", "low": "Stable", "causes": "Éclairement"},
-    {"family": "Forme spectrale", "metric": "Curvature RMS", "key": "shape.curvature_rms", "detects": "Courbure", "high": "Forme inhabituelle", "low": "Lisse", "causes": "Fond, splice"},
-    {"family": "Forme spectrale", "metric": "D1 RMS", "key": "shape.d1_rms", "detects": "Variabilité locale", "high": "Spectre structuré", "low": "Plat", "causes": "Biologie ou artefact"},
-    {"family": "Outliers multivariés", "metric": "PCA Q (SPE)", "key": "outliers.pca_q_ratio", "detects": "Non expliqué par PCA", "high": "Spectre atypique", "low": "Conforme", "causes": "Artefact, mélange"},
-    {"family": "Outliers multivariés", "metric": "Hotelling T²", "key": "outliers.hotelling_t2_ratio", "detects": "Extrême dans PCA", "high": "Extrême mais cohérent", "low": "Central", "causes": "Variabilité naturelle"},
-    {"family": "Outliers multivariés", "metric": "Mahalanobis H", "key": "outliers.mahalanobis_h_ratio", "detects": "Distance au nuage", "high": "Outlier global", "low": "Population normale", "causes": "Domaine différent"},
-    {"family": "Comparaison au spectre moyen", "metric": "RMS to mean spectrum", "key": "reference.rms_to_mean_spectrum_p95", "detects": "Distance moyenne", "high": "Spectre différent", "low": "Typique", "causes": "Domain shift"},
-    {"family": "Comparaison au spectre moyen", "metric": "Spectral Angle Mapper (SAM)", "key": "reference.sam_to_mean_spectrum_p95", "detects": "Différence de forme", "high": "Forme différente", "low": "Similaire", "causes": "Fond, géométrie"},
-    {"family": "Répétabilité", "metric": "RMS intra-ID", "key": "repeatability.rms_intra_id", "detects": "Reproductibilité", "high": "Mauvaise répétabilité", "low": "Stable", "causes": "Positionnement"},
-    {"family": "Répétabilité", "metric": "SAM intra-ID", "key": "repeatability.sam_intra_id", "detects": "Variation de forme", "high": "Instable", "low": "Stable", "causes": "Acquisition"},
-    {"family": "Répétabilité", "metric": "CV intra-ID", "key": "repeatability.cv_intra_id", "detects": "Variabilité interne", "high": "Mauvais contrôle", "low": "Stable", "causes": "Opérateur"},
-    {"family": "Structure du dataset", "metric": "PCA score density", "key": "structure.pca_score_density", "detects": "Clusters", "high": "Sous-populations", "low": "Homogène", "causes": "Lots différents"},
-    {"family": "Structure du dataset", "metric": "kNN distance ratio (not LOF)", "key": "structure.local_outlier_factor_p95", "detects": "Anomalie locale", "high": "Spectre isolé", "low": "Population normale", "causes": "Cas rares"},
-    {"family": "Structure du dataset", "metric": "Isolation Forest score", "key": "structure.isolation_forest_score_p95", "detects": "Anomalie globale", "high": "Spectre atypique", "low": "Normal", "causes": "Diverses causes"},
+    {"family": "Data integrity", "metric": "Invalid/masked cell count (owner report)", "key": "integrity.missing_cells", "detects": "Null or masked cells in the evaluated population", "high": "To investigate", "low": "Complete according to the declared mask", "causes": "Missing data or validity mask; not evidence of an acquisition cause"},
+    {"family": "Data integrity", "metric": "NaN ratio", "key": "integrity.nan_ratio", "detects": "Missing data", "high": "Corrupted spectrum", "low": "Full spectrum", "causes": "Acquisition/export error"},
+    {"family": "Data integrity", "metric": "Inf count", "key": "integrity.inf_count", "detects": "Infinite values", "high": "Corruption", "low": "Normal", "causes": "Invalid calculations"},
+    {"family": "Data integrity", "metric": "Zero ratio", "key": "integrity.zero_ratio", "detects": "Null columns or cells", "high": "Truncated spectrum", "low": "Normal", "causes": "Export, saturation"},
+    {"family": "Overall amplitude", "metric": "Mean reflectance", "key": "amplitude.mean_reflectance", "detects": "Average level", "high": "Too light / background visible", "low": "Too dark", "causes": "Background, geometry"},
+    {"family": "Overall amplitude", "metric": "Area under curve", "key": "amplitude.area_under_curve", "detects": "Overall intensity", "high": "Illumination difference", "low": "Normal", "causes": "Probe distance"},
+    {"family": "Overall amplitude", "metric": "Peak-to-peak (PTP)", "key": "amplitude.peak_to_peak", "detects": "Dynamic range", "high": "Strong variability", "low": "Flat spectrum", "causes": "Saturation"},
+    {"family": "Overall amplitude", "metric": "Variance", "key": "amplitude.variance", "detects": "Spectral variability", "high": "Normal or heterogeneous", "low": "Flat spectrum", "causes": "Bad contact"},
+    {"family": "Noise", "metric": "Roughness sigma proxy", "key": "noise.noise_rms", "detects": "High frequency noise", "high": "Noisy", "low": "Stable", "causes": "Lamp, detector"},
+    {"family": "Noise", "metric": "Roughness S/N proxy", "key": "noise.snr", "detects": "Signal quality", "high": "Good signal", "low": "Bad signal", "causes": "Acquisition"},
+    {"family": "Noise", "metric": "Bandwise roughness S/N proxy", "key": "noise.bandwise_snr_min", "detects": "Localized noise", "high": "Reliable zone", "low": "Problem area", "causes": "Detector"},
+    {"family": "Local artifacts", "metric": "Spike count", "key": "artefacts.spike_count", "detects": "Narrow peaks", "high": "Artifacts", "low": "Clean spectrum", "causes": "Cosmic rays, splice"},
+    {"family": "Local artifacts", "metric": "Spike rate", "key": "artefacts.spike_rate", "detects": "Peak density", "high": "Suspicious spectrum", "low": "Normal", "causes": "Interpolation"},
+    {"family": "Local artifacts", "metric": "Jump count", "key": "artefacts.jump_count", "detects": "Discontinuities", "high": "Detector connection", "low": "Continuous", "causes": "Splice"},
+    {"family": "Local artifacts", "metric": "Jump rate", "key": "artefacts.jump_rate", "detects": "Jump frequency", "high": "Spectral problem", "low": "Normal", "causes": "Calibration"},
+    {"family": "Local artifacts", "metric": "Clip fraction", "key": "artefacts.clip_fraction", "detects": "Saturation", "high": "Clipping", "low": "Normal", "causes": "Detector saturated"},
+    {"family": "Spectral form", "metric": "Baseline slope", "key": "shape.baseline_slope", "detects": "Overall slope", "high": "Drift", "low": "Stable", "causes": "Illumination"},
+    {"family": "Spectral form", "metric": "Curvature RMS", "key": "shape.curvature_rms", "detects": "Curvature", "high": "Unusual shape", "low": "Smooth", "causes": "Background, splice"},
+    {"family": "Spectral form", "metric": "D1 RMS", "key": "shape.d1_rms", "detects": "Local variability", "high": "Structured spectrum", "low": "Flat", "causes": "Biology or artifact"},
+    {"family": "Multivariate outliers", "metric": "PCA Q (SPE)", "key": "outliers.pca_q_ratio", "detects": "Not explained by PCA", "high": "Atypical spectrum", "low": "Compliant", "causes": "Artifact, mixture"},
+    {"family": "Multivariate outliers", "metric": "Hotelling T²", "key": "outliers.hotelling_t2_ratio", "detects": "Extreme in PCA", "high": "Extreme but consistent", "low": "Central", "causes": "Natural variability"},
+    {"family": "Multivariate outliers", "metric": "Mahalanobis H", "key": "outliers.mahalanobis_h_ratio", "detects": "Distance to cloud", "high": "Global outlier", "low": "Normal population", "causes": "Different domain"},
+    {"family": "Comparison to average spectrum", "metric": "RMS to mean spectrum", "key": "reference.rms_to_mean_spectrum_p95", "detects": "Average distance", "high": "Different spectrum", "low": "Typical", "causes": "Domain shift"},
+    {"family": "Comparison to average spectrum", "metric": "Spectral Angle Mapper (SAM)", "key": "reference.sam_to_mean_spectrum_p95", "detects": "Difference in shape", "high": "Different shape", "low": "Similar", "causes": "Background, geometry"},
+    {"family": "Repeatability", "metric": "RMS intra-ID", "key": "repeatability.rms_intra_id", "detects": "Reproducibility", "high": "Poor repeatability", "low": "Stable", "causes": "Positioning"},
+    {"family": "Repeatability", "metric": "SAM intra-ID", "key": "repeatability.sam_intra_id", "detects": "Shape variation", "high": "Unstable", "low": "Stable", "causes": "Acquisition"},
+    {"family": "Repeatability", "metric": "CV intra-ID", "key": "repeatability.cv_intra_id", "detects": "Internal variability", "high": "Bad control", "low": "Stable", "causes": "Operator"},
+    {"family": "Structure of the dataset", "metric": "PCA score density", "key": "structure.pca_score_density", "detects": "Clusters", "high": "Subpopulations", "low": "Homogeneous", "causes": "Different batches"},
+    {"family": "Structure of the dataset", "metric": "kNN distance ratio (not LOF)", "key": "structure.local_outlier_factor_p95", "detects": "Local anomaly", "high": "Isolated spectrum", "low": "Normal population", "causes": "Rare cases"},
+    {"family": "Structure of the dataset", "metric": "Isolation Forest score", "key": "structure.isolation_forest_score_p95", "detects": "Global anomaly", "high": "Atypical spectrum", "low": "Normal", "causes": "Various causes"},
 ]
 
 _TECHNOLOGY_GUIDANCE: list[dict[str, str]] = [
-    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Baseline, pente globale, dérive aux bords 300-350 et 900-1000; métriques par zones", "anomalies": "Lumière parasite, mauvais blanc, saturation, faible signal aux extrémités", "comment": "Les bords sont souvent instables; calculer aussi des scores edge/middle."},
-    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Saturation / clipping proche absorbance max ou réflectance max", "anomalies": "Signal écrêté", "comment": "Très important si absorption forte."},
-    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Red-edge, position de maximum, ratios de bandes si végétal", "anomalies": "Décalage biologique ou artefact optique", "comment": "Aide à distinguer changement réel et problème d'acquisition."},
-    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Smoothness / roughness index", "anomalies": "Bruit haute fréquence", "comment": "Souvent plus informatif que le SNR seul."},
-    {"technology": "MIR / ATR-FTIR", "adaptations": "ATR contact quality index: intensité globale, aire totale, profondeur des bandes clés", "anomalies": "Mauvais contact cristal-échantillon", "comment": "Crucial: beaucoup d'anomalies viennent du contact ATR."},
-    {"technology": "MIR / ATR-FTIR", "adaptations": "CO2 / H2O atmospheric bands", "anomalies": "Mauvaise correction atmosphérique", "comment": "Pics parasites fréquents."},
-    {"technology": "MIR / ATR-FTIR", "adaptations": "Baseline curvature / rubber-band residual", "anomalies": "Diffusion, contact, dérive baseline", "comment": "Très utile avant PCA."},
-    {"technology": "MIR / ATR-FTIR", "adaptations": "Peak position shift", "anomalies": "Mauvais alignement spectral / calibration", "comment": "Important en FTIR car de petits shifts comptent."},
-    {"technology": "MIR / ATR-FTIR", "adaptations": "Band area ratios sur bandes connues", "anomalies": "Spectre chimiquement incohérent", "comment": "À adapter par matrice: polysaccharides, protéines, lipides, etc."},
-    {"technology": "HS-MS", "adaptations": "Total Ion Current (TIC), Base Peak Intensity (BPI)", "anomalies": "Injection faible, ionisation instable", "comment": "Équivalent MS du niveau global spectral."},
-    {"technology": "HS-MS", "adaptations": "Nombre de pics détectés", "anomalies": "Spectre pauvre ou trop bruité", "comment": "Trop peu = mauvais signal; trop = bruit/contamination."},
-    {"technology": "HS-MS", "adaptations": "Mass accuracy / m/z drift", "anomalies": "Problème calibration masse", "comment": "Fondamental en HRMS."},
-    {"technology": "HS-MS", "adaptations": "Retention time drift si LC/GC-MS", "anomalies": "Dérive chromatographique", "comment": "À suivre sur standards/QC pools."},
-    {"technology": "HS-MS", "adaptations": "Blank contamination score", "anomalies": "Contaminants / carry-over", "comment": "Comparer échantillons vs blancs."},
-    {"technology": "HS-MS", "adaptations": "Internal standard CV", "anomalies": "Variabilité instrumentale", "comment": "Très robuste si standards disponibles."},
-    {"technology": "HS-MS", "adaptations": "Missingness par feature", "anomalies": "Instabilité de détection", "comment": "Crucial pour filtrer les variables."},
-    {"technology": "Avec répétitions", "adaptations": "RMS intra-échantillon", "anomalies": "Répétabilité globale", "comment": "Applicable à toutes les technologies."},
-    {"technology": "Avec répétitions", "adaptations": "SAM / corrélation intra-échantillon", "anomalies": "Répétabilité de forme", "comment": "Très utile pour spectres."},
-    {"technology": "Avec répétitions", "adaptations": "CV intra-échantillon par bande / feature", "anomalies": "Répétabilité locale", "comment": "Détecte les zones instables."},
-    {"technology": "Avec répétitions", "adaptations": "ICC ou variance components", "anomalies": "Part variance échantillon vs technique", "comment": "Très utile si plusieurs répétitions par sample."},
-    {"technology": "Avec répétitions", "adaptations": "Distance au centroïde intra-ID", "anomalies": "Répétition aberrante", "comment": "Permet de flagger la mauvaise répétition plutôt que le sample entier."},
+    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Baseline, overall slope, drift at edges 300-350 and 900-1000; metrics by zones", "anomalies": "Stray light, bad white, saturation, weak signal at the ends", "comment": "The edges are often unstable; also calculate edge/middle scores."},
+    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Saturation / clipping near max absorbance or max reflectance", "anomalies": "Signal clipped", "comment": "Very important if strong absorption."},
+    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Red-edge, peak position, band ratios for vegetation", "anomalies": "Biological shift or optical artifact", "comment": "Helps distinguish real change from acquisition problem."},
+    {"technology": "UV-Vis 300-1000 nm", "adaptations": "Smoothness / roughness index", "anomalies": "High frequency noise", "comment": "Often more informative than the SNR alone."},
+    {"technology": "MIR / ATR-FTIR", "adaptations": "ATR contact quality index: overall intensity, total area, depth of key bands", "anomalies": "Poor crystal-sample contact", "comment": "Crucial: many anomalies come from the ATR contact."},
+    {"technology": "MIR / ATR-FTIR", "adaptations": "CO2 / H2O atmospheric bands", "anomalies": "Bad atmospheric correction", "comment": "Frequent spurious peaks."},
+    {"technology": "MIR / ATR-FTIR", "adaptations": "Baseline curvature / rubber-band residual", "anomalies": "Diffusion, contact, baseline drift", "comment": "Very useful before PCA."},
+    {"technology": "MIR / ATR-FTIR", "adaptations": "Peak position shift", "anomalies": "Bad spectral alignment/calibration", "comment": "Important in FTIR because small shifts count."},
+    {"technology": "MIR / ATR-FTIR", "adaptations": "Band area ratios on known bands", "anomalies": "Chemically incoherent spectrum", "comment": "To be adapted by matrix: polysaccharides, proteins, lipids, etc."},
+    {"technology": "HS-MS", "adaptations": "Total Ion Current (TIC), Base Peak Intensity (BPI)", "anomalies": "Weak injection, unstable ionization", "comment": "MS equivalent of the global spectral level."},
+    {"technology": "HS-MS", "adaptations": "Number of peaks detected", "anomalies": "Poor or too noisy spectrum", "comment": "Too little = bad signal; too much = noise/contamination."},
+    {"technology": "HS-MS", "adaptations": "Mass accuracy / m/z drift", "anomalies": "Mass calibration problem", "comment": "Fundamental in HRMS."},
+    {"technology": "HS-MS", "adaptations": "Retention time drift if LC/GC-MS", "anomalies": "Chromatographic drift", "comment": "Monitor on standards/QC pools."},
+    {"technology": "HS-MS", "adaptations": "Blank contamination score", "anomalies": "Contaminants / carry-over", "comment": "Compare samples vs blanks."},
+    {"technology": "HS-MS", "adaptations": "Internal standard CV", "anomalies": "Instrumental variability", "comment": "Very robust if standards available."},
+    {"technology": "HS-MS", "adaptations": "Missingness by feature", "anomalies": "Detection instability", "comment": "Crucial for filtering variables."},
+    {"technology": "With repetitions", "adaptations": "Intra-sample RMS", "anomalies": "Overall repeatability", "comment": "Applicable to all technologies."},
+    {"technology": "With repetitions", "adaptations": "SAM / intra-sample correlation", "anomalies": "Shape repeatability", "comment": "Very useful for spectra."},
+    {"technology": "With repetitions", "adaptations": "Intra-sample CV per band / feature", "anomalies": "Local repeatability", "comment": "Detects unstable areas."},
+    {"technology": "With repetitions", "adaptations": "ICC or variance components", "anomalies": "Share of sample vs. technical variance", "comment": "Very useful if several repetitions per sample."},
+    {"technology": "With repetitions", "adaptations": "Distance to intra-ID centroid", "anomalies": "Aberrant repetition", "comment": "Allows you to flag the bad repetition rather than the entire sample."},
 ]
 
 _BUG_METHODS: list[dict[str, str]] = [
-    {"family": "Shift spectral global", "methods": "Corrélation spectre moyen inter-dataset, DTW, cross-correlation, comparaison positions de pics", "detects": "Décalage en longueur d'onde, mauvais alignement, interpolation différente", "status": "Partiellement calculé: cross-correlation lag et dispersion des positions de pics vs spectre moyen."},
-    {"family": "Baseline / offset / gain", "methods": "Régression chaque spectre vs spectre moyen: x = a + b ref + residual; suivi de a, b, RMS résiduel", "detects": "Offset additif, effet multiplicatif, dérive de baseline", "status": "Calculé dans reference.affine_*."},
-    {"family": "Mélange de lignes / mauvais appariement X-M-Y", "methods": "Vérification index, hash des lignes, duplication ID, distance spectrale intra-ID, labels incohérents", "detects": "Lignes mélangées, metadata mal alignées, Y attribué au mauvais spectre", "status": "Partiellement couvert par répétabilité intra-ID; checks index/hash à ajouter au pipeline canonical."},
-    {"family": "Fuite d'information / répétitions mal splitées", "methods": "GroupKFold par sample_id vs StratifiedKFold random; audit des partitions par sample_id", "detects": "Performance artificiellement bonne due aux répétitions", "status": "Nécessite splits et benchmark modèle; non calculé par la carte descriptive."},
-    {"family": "Label bugs", "methods": "Échantillons proches en X mais Y différents, confident learning, erreurs systématiques FP/FN", "detects": "Y inversés, erreurs de saisie, classes ambiguës", "status": "Nécessite Y et/ou modèle; recommandé pour l'explorateur supervisé."},
-    {"family": "Sous-domaines cachés", "methods": "PCA/UMAP/t-SNE + clustering non supervisé + association avec dataset/Y/date/operator", "detects": "Lots, campagnes, sondes, backgrounds non renseignés", "status": "Partiellement calculé par PCA et ratio de distances kNN (pas LOF); UMAP/t-SNE hors carte statique."},
-    {"family": "Artefacts localisés inconnus", "methods": "Carte wavelength x dataset: différence moyenne, différence variance, KS par longueur d'onde", "detects": "Régions spectrales anormales non anticipées", "status": "À calculer au niveau banque quand plusieurs datasets partagent un axe spectral."},
-    {"family": "Ruptures instrumentales", "methods": "Discontinuités dans dérivées, changepoint detection", "detects": "Splice, raccord détecteur, saut local non prévu", "status": "Calculé par jump/spike rates; changepoint plus avancé à ajouter."},
-    {"family": "Mélange / contamination spectrale", "methods": "NMF / unmixing / reconstruction par convex hull", "detects": "Composante externe: fond, plastique, sol", "status": "Non calculé automatiquement; nécessite hypothèses de composants ou grande bibliothèque."},
-    {"family": "Features instables mais prédictives", "methods": "Importance modèle vs instabilité QC par variable", "detects": "Modèle qui apprend un artefact plutôt qu'un signal biologique", "status": "Nécessite modèle supervisé; recommandé pour rapports de benchmark."},
+    {"family": "Global spectral shift", "methods": "Inter-dataset average spectrum correlation, DTW, cross-correlation, comparison of peak positions", "detects": "Wavelength shift, misalignment, different interpolation", "status": "Partially calculated: cross-correlation lag and dispersion of peak positions vs. average spectrum."},
+    {"family": "Baseline / offset / gain", "methods": "Regression each spectrum vs average spectrum: x = a + b ref + residual; followed by a, b, residual RMS", "detects": "Additive offset, multiplicative effect, baseline drift", "status": "Calculated in reference.affine_*."},
+    {"family": "Row mixing / X-M-Y mismatch", "methods": "Index check, row hash, ID duplication, intra-ID spectral distance, inconsistent labels", "detects": "Mixed up rows, misaligned metadata, Y assigned to wrong spectrum", "status": "Partially covered by intra-ID repeatability; checks index/hash to add to the canonical pipeline."},
+    {"family": "Information leak / poorly split repetitions", "methods": "GroupKFold by sample_id vs StratifiedKFold random; auditing partitions by sample_id", "detects": "Artificially good performance due to repetitions", "status": "Requires splits and benchmark model; not calculated by the descriptive card."},
+    {"family": "Label bugs", "methods": "Close samples in X but different Y, confident learning, systematic FP/FN errors", "detects": "Inverted Y, input errors, ambiguous classes", "status": "Requires Y and/or model; recommended for supervised explorer."},
+    {"family": "Hidden subdomains", "methods": "PCA/UMAP/t-SNE + unsupervised clustering + association with dataset/Y/date/operator", "detects": "Batches, campaigns, probes, backgrounds not provided", "status": "Partially calculated by PCA and distance ratio kNN (not LOF); UMAP/t-SNE outside the static card."},
+    {"family": "Unknown localized artifacts", "methods": "Wavelength x dataset map: mean difference, variance difference, KS per wavelength", "detects": "Unanticipated anomalous spectral regions", "status": "To be calculated at the bank level when several datasets share a spectral axis."},
+    {"family": "Instrumental breaks", "methods": "Discontinuities in derivatives, changepoint detection", "detects": "Splice, detector connection, local jump not provided", "status": "Calculated by jump/spike rates; more advanced changepoint to add."},
+    {"family": "Spectral mixing/contamination", "methods": "NMF / unmixing / reconstruction by convex hull", "detects": "External component: background, plastic, soil", "status": "Not calculated automatically; requires component assumptions or large library."},
+    {"family": "Unstable but predictive features", "methods": "Model importance vs. QC instability by variable", "detects": "Model that learns an artifact rather than a biological signal", "status": "Requires supervised model; recommended for benchmark reporting."},
 ]
 
 _METRIC_FORMULAS: dict[str, str] = {
@@ -853,7 +853,7 @@ def profile_score_labels() -> dict[str, str]:
 
 
 def metric_catalog() -> list[dict[str, str]]:
-    """The documented dataset-property metric table, in French, for UI/library consumers."""
+    """The documented dataset-property metric table, for UI/library consumers."""
     rows = deepcopy(_METRIC_CATALOG)
     for row in rows:
         key = row.get("key", "")
@@ -1015,23 +1015,23 @@ def _metric_alert_score(profile: dict[str, Any], key: str, value: Any) -> float 
 
 def _score_level(score: Any) -> str:
     if isinstance(score, bool) or not isinstance(score, (int, float)) or not math.isfinite(float(score)):
-        return "non calculable"
+        return "not calculable"
     if float(score) >= 0.72:
-        return "fort"
+        return "strong"
     if float(score) >= 0.42:
-        return "moyen"
-    return "faible"
+        return "medium"
+    return "weak"
 
 
 def _score_interpretation(item: dict[str, str], score: float | None) -> str:
     if score is None:
-        return "Pas assez d'information pour scorer cette métrique sur ce dataset."
+        return "Not enough information to score this metric on this dataset."
     if score >= 0.42:
         risk_when = _METRIC_RISK_WHEN.get(item["key"], "high")
         if risk_when == "low":
             return item["low"]
         if risk_when == "extreme":
-            return f"Valeur atypique: {item['high']} ou {item['low']}"
+            return f"Atypical value: {item['high']} or {item['low']}"
         if risk_when == "heterogeneous":
             return item["high"]
         return item["high"]
@@ -1041,7 +1041,7 @@ def _score_interpretation(item: dict[str, str], score: float | None) -> str:
 def metric_score_rows(profile: dict[str, Any]) -> list[dict[str, Any]]:
     """Calculated metric table for one spectral profile.
 
-    Each row joins the French documentation table with the dataset's actual value, a 0..1 alert score,
+    Each row joins the metric documentation table with the dataset's actual value, a 0..1 alert score,
     the formula/proxy used, and the automatic interpretation. Higher ``score`` means stronger anomaly
     evidence for that metric; it is a descriptive QC signal, not a pass/fail threshold.
     """
@@ -1127,14 +1127,14 @@ def _diagnostic_row(key: str, label: str, score: float | None, interpretation: s
     top.sort(key=lambda item: -item[1])
     return {
         "key": key, "label": label, "score": score,
-        "strength": "inconnue" if score is None else "forte" if score >= 0.72 else "moyenne" if score >= 0.42 else "faible",
+        "strength": "unknown" if score is None else "strong" if score >= 0.72 else "medium" if score >= 0.42 else "weak",
         "score_kind": "heuristic_signature", "confidence_status": "unvalidated",
         "signal_strength": score,
-        "score_explanation": "Une signature à 0.78 n'est pas une probabilité causale de 78 %.",
+        "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
         "recommended_verifications": [
-            "Contrôler la référence blanche/noire réellement acquise et ses métadonnées.",
-            "Vérifier instrument, sonde, géométrie, campagne et journal de traitement/rééchantillonnage.",
-            "Vérifier le protocole de répétition avant d'interpréter une dispersion intra-ID.",
+            "Check the white/black reference actually acquired and its metadata.",
+            "Check instrument, probe, geometry, campaign and processing/resampling log.",
+            "Check the repeat protocol before interpreting an intra-ID dispersion.",
         ],
         "availability": "available" if score is not None else "partial" if available else "unavailable",
         "evidence_coverage": len(available) / len(evidence) if evidence else 0.0,
@@ -1158,20 +1158,20 @@ def diagnostic_hypotheses(profile: dict[str, Any], *, top_k: int | None = None, 
     s = _diagnostic_signals(profile)
     normal_bad = _max_score(s["q"], s["h"], s["spike"], s["jump"], s["clip"], s["noise"], s["baseline"], s["reference"], s["repeatability"], s["structure"])
     rows = [
-        _diagnostic_row("normal", "Faibles signatures observées", _low(normal_bad), "Faibles signatures sur les métriques disponibles ; ne certifie ni la validité physique ni l’absence de défaut.", [("faibles anomalies", _low(normal_bad))]),
-        _diagnostic_row("very_noisy", "Signature de rugosité spectrale élevée", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], _scale_score(s["reference"], 0.6)), "Faible signal, problème détecteur, lampe ou acquisition instable.", [("PCA Q", s["q"]), ("Proxy rugosité σ", s["noise"]), ("Proxy rugosité S/N faible", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM au spectre moyen", s["reference"])]),
-        _diagnostic_row("splice", "Signature compatible avec un raccord spectral", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], _sum_score(_scale_score(s["snr_high"], 0.4), _scale_score(_low(s["noise"]), 0.3))), "Rupture aux jonctions de détecteurs, calibration locale ou sonde différente.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Proxy rugosité S/N non dégradé", s["snr_high"])]),
-        _diagnostic_row("partial_coverage", "Signature compatible avec une couverture partielle", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], _scale_score(s["repeatability"], 0.65), _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.55)), "Couverture partielle du spot; contribution du fond ou du support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("background_shift", "Signature compatible avec un fond différent", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.45)), "Effet systématique du support, blanc/noir, transflectance ou environnement de mesure.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"])]),
-        _diagnostic_row("out_of_domain", "Signature compatible avec un écart de population", _mean_score(s["h"], s["h"], s["reference"], _scale_score(s["structure"], 0.7), _low(_max_score(s["noise"], s["spike"], s["jump"]))), "Variété, espèce, lot ou condition différente mais physiquement plausible.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Structure PCA", s["structure"]), ("artefacts faibles", _low(_max_score(s["noise"], s["spike"], s["jump"])))]),
-        _diagnostic_row("white_calibration", "Décalage compatible avec une référence blanche différente", _mean_score(s["q"], _scale_score(s["h"], 0.7), s["baseline"], s["baseline"], s["reference"], _scale_score(_max_score(s["spike"], s["jump"]), 0.55)), "Décalage systématique entre campagnes, instruments ou référence blanche.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("artefacts locaux", _max_score(s["spike"], s["jump"]))]),
-        _diagnostic_row("probe_geometry", "Signature compatible avec un changement de géométrie", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], _scale_score(_max_score(s["spike"], s["jump"]), 0.7), _scale_score(s["snr_high"], 0.35)), "Modification de l'illumination, collecte, angle ou distance sonde-échantillon.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM au spectre moyen", s["reference"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("clipping", "Signature compatible avec un écrêtage", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], _scale_score(s["jump"], 0.6)), "Détecteur saturé ou dynamique insuffisante.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
-        _diagnostic_row("resampling_error", "Signature compatible avec un rééchantillonnage", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.6), _scale_score(s["snr_high"], 0.5), _scale_score(_low(s["repeatability"]), 0.35)), "Artefacts numériques ou traitement spectral incorrect.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Proxy rugosité σ faible", _low(s["noise"])), ("Proxy rugosité S/N élevé", s["snr_high"])]),
-        _diagnostic_row("flat_low_signal", "Spectre plat / signal faible", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.5)), "Mauvais contact, échantillon absent, mesure dégradée ou dynamique très faible.", [("PCA Q", s["q"]), ("Proxy rugosité S/N faible", s["snr_low"]), ("Variance très faible", s["flat"]), ("artefacts faibles", _low(_max_score(s["spike"], s["jump"])))]),
-        _diagnostic_row("poor_repeatability", "Dispersion entre observations d’une même unité", _mean_score(s["repeatability"], s["repeatability"], _scale_score(_max_score(s["noise"], s["spike"], s["jump"]), 0.5)), "Positionnement, opérateur ou protocole instable; investiguer les répétitions intra-ID.", [("RMS/SAM intra-ID", s["repeatability"]), ("Bruit/artefacts variables", _max_score(s["noise"], s["spike"], s["jump"]))]),
-        _diagnostic_row("multi_regime", "Dataset multi-régimes", _mean_score(s["structure"], s["reference"], _scale_score(s["q"], 0.8), _scale_score(s["h"], 0.8), _scale_score(s["repeatability"], 0.6)), "Mélange de campagnes, opérateurs, lots, setups ou sous-populations spectrales.", [("Structure PCA", s["structure"]), ("RMS/SAM au spectre moyen", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Répétabilité", s["repeatability"])]),
-        _diagnostic_row("vera25_like", "Motif exploratoire VERA25 (spécificité non validée)", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.55), _scale_score(s["snr_high"], 0.55), s["reference"], _scale_score(s["repeatability"], 0.75)), "Combinaison possible changement de sonde + splice, amplifiée par géométrie, fond ou calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM au spectre moyen", s["reference"])]),
+        _diagnostic_row("normal", "Weak signatures observed", _low(normal_bad), "Weak signatures on available metrics; does not certify either physical validity or the absence of defects.", [("slight anomalies", _low(normal_bad))]),
+        _diagnostic_row("very_noisy", "High spectral roughness signature", _mean_score(s["q"], s["noise"], s["noise"], s["snr_low"], s["spike"], _scale_score(s["reference"], 0.6)), "Weak signal, detector problem, lamp or unstable acquisition.", [("PCA Q", s["q"]), ("Roughness sigma proxy", s["noise"]), ("Low S/N roughness proxy", s["snr_low"]), ("Spike rate", s["spike"]), ("RMS/SAM to mean spectrum", s["reference"])]),
+        _diagnostic_row("splice", "Signature compatible with a spectral splice", _mean_score(s["q"], s["spike"], s["jump"], s["reference"], _sum_score(_scale_score(s["snr_high"], 0.4), _scale_score(_low(s["noise"]), 0.3))), "Break at detector junctions, local calibration or different probe.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM to mean spectrum", s["reference"]), ("Undegraded roughness S/N proxy", s["snr_high"])]),
+        _diagnostic_row("partial_coverage", "Signature compatible with partial coverage", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], _scale_score(s["repeatability"], 0.65), _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.55)), "Partial spot coverage; contribution from the background or support.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM to mean spectrum", s["reference"]), ("Repeatability", s["repeatability"])]),
+        _diagnostic_row("background_shift", "Signature compatible with a different background", _mean_score(s["q"], s["h"], s["baseline"], s["baseline"], s["reference"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.45)), "Systematic effect of support, white/black, transflectance or measurement environment.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM to mean spectrum", s["reference"])]),
+        _diagnostic_row("out_of_domain", "Signature compatible with a population shift", _mean_score(s["h"], s["h"], s["reference"], _scale_score(s["structure"], 0.7), _low(_max_score(s["noise"], s["spike"], s["jump"]))), "Different but physically plausible variety, species, batch or condition.", [("Mahalanobis / T2", s["h"]), ("RMS/SAM to mean spectrum", s["reference"]), ("PCA structure", s["structure"]), ("weak artifacts", _low(_max_score(s["noise"], s["spike"], s["jump"])))]),
+        _diagnostic_row("white_calibration", "Offset compatible with a different white reference", _mean_score(s["q"], _scale_score(s["h"], 0.7), s["baseline"], s["baseline"], s["reference"], _scale_score(_max_score(s["spike"], s["jump"]), 0.55)), "Systematic discrepancy between campaigns, instruments or white reference.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM to mean spectrum", s["reference"]), ("local artifacts", _max_score(s["spike"], s["jump"]))]),
+        _diagnostic_row("probe_geometry", "Signature compatible with a change in geometry", _mean_score(s["q"], s["h"], s["baseline"], s["reference"], s["repeatability"], _scale_score(_max_score(s["spike"], s["jump"]), 0.7), _scale_score(s["snr_high"], 0.35)), "Changing illumination, collection, angle or probe-sample distance.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Baseline/mean/area", s["baseline"]), ("RMS/SAM to mean spectrum", s["reference"]), ("Repeatability", s["repeatability"])]),
+        _diagnostic_row("clipping", "Signature compatible with clipping", _mean_score(s["clip"], s["clip"], s["q"], s["baseline"], _scale_score(s["jump"], 0.6)), "Detector saturated or insufficient dynamic range.", [("Clip fraction", s["clip"]), ("PCA Q", s["q"]), ("Baseline/mean/area", s["baseline"]), ("Jump rate", s["jump"])]),
+        _diagnostic_row("resampling_error", "Signature compatible with resampling", _mean_score(s["q"], s["q"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.6), _scale_score(s["snr_high"], 0.5), _scale_score(_low(s["repeatability"]), 0.35)), "Digital artifacts or incorrect spectral processing.", [("PCA Q", s["q"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("Low roughness sigma proxy", _low(s["noise"])), ("High S/N roughness proxy", s["snr_high"])]),
+        _diagnostic_row("flat_low_signal", "Flat spectrum/weak signal", _mean_score(s["q"], s["snr_low"], s["flat"], s["flat"], _scale_score(_low(_max_score(s["spike"], s["jump"])), 0.5)), "Bad contact, missing sample, degraded measurement or very low dynamic range.", [("PCA Q", s["q"]), ("Low S/N roughness proxy", s["snr_low"]), ("Very low variance", s["flat"]), ("weak artifacts", _low(_max_score(s["spike"], s["jump"])))]),
+        _diagnostic_row("poor_repeatability", "Dispersion between observations of the same unit", _mean_score(s["repeatability"], s["repeatability"], _scale_score(_max_score(s["noise"], s["spike"], s["jump"]), 0.5)), "Unstable positioning, operator or protocol; investigate intra-ID repetitions.", [("Intra-ID RMS/SAM", s["repeatability"]), ("Variable noise/artifacts", _max_score(s["noise"], s["spike"], s["jump"]))]),
+        _diagnostic_row("multi_regime", "Multi-regime dataset", _mean_score(s["structure"], s["reference"], _scale_score(s["q"], 0.8), _scale_score(s["h"], 0.8), _scale_score(s["repeatability"], 0.6)), "Mixture of campaigns, operators, batches, setups or spectral subpopulations.", [("PCA structure", s["structure"]), ("RMS/SAM to mean spectrum", s["reference"]), ("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Repeatability", s["repeatability"])]),
+        _diagnostic_row("vera25_like", "Exploratory VERA25 pattern (specificity not validated)", _mean_score(s["q"], s["q"], s["h"], s["spike"], s["jump"], _scale_score(_low(s["noise"]), 0.55), _scale_score(s["snr_high"], 0.55), s["reference"], _scale_score(s["repeatability"], 0.75)), "Possible combination of probe + splice change, amplified by geometry, background or calibration.", [("PCA Q", s["q"]), ("Mahalanobis / T2", s["h"]), ("Spike rate", s["spike"]), ("Jump rate", s["jump"]), ("RMS/SAM to mean spectrum", s["reference"])]),
     ]
     required = {
         "normal": ["q", "h", "spike", "jump", "clip", "noise", "baseline", "reference", "repeatability", "structure"],
@@ -1220,14 +1220,16 @@ def diagnostic_presentation(row: dict[str, Any], *, domain_context: str | None =
     result = deepcopy(row)
     template = templates.get(key)
     if template is not None:
-        for field in ("label", "score_kind", "confidence_status", "score_explanation", "recommended_verifications", "reference_scope", "interpretation_kind", "domain_context", "specificity_status"):
+        for field in ("label", "score_kind", "confidence_status", "score_explanation", "recommended_verifications", "reference_scope", "interpretation", "interpretation_kind", "domain_context", "specificity_status"):
             if field in template:
                 result[field] = template[field]
     result["signal_strength"] = result.get("score")
+    score = _finite_float(result.get("score"))
+    result["strength"] = "unknown" if score is None else "strong" if score >= 0.72 else "medium" if score >= 0.42 else "weak"
     for evidence in result.get("evidence") or []:
         if isinstance(evidence, dict) and isinstance(evidence.get("signal"), str):
-            evidence["signal"] = evidence["signal"].replace("RMS/SAM référence", "RMS/SAM au spectre moyen")
-            evidence["signal"] = evidence["signal"].replace("Noise RMS", "Proxy rugosité σ").replace("SNR", "Proxy rugosité S/N")
+            evidence["signal"] = evidence["signal"].replace("RMS/SAM référence", "RMS/SAM to mean spectrum")
+            evidence["signal"] = evidence["signal"].replace("Noise RMS", "Roughness sigma proxy").replace("SNR", "Roughness S/N proxy")
     return result
 
 

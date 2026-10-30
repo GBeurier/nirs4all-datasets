@@ -81,7 +81,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Le convertisseur amont a choisi Experiment=e244, code constant d’expérience. Les 205 parcelles, dates et heures décrivent plusieurs unités ; aucun identifiant de spécimen/répétition technique n’est établi.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: The upstream converter selected Experiment=e244, a constant experiment code. The 205 plots, dates, and times describe multiple units; no specimen identifier or technical replicate is established.
 - **Curated views:** M: 7 fields, Y: 1 fields, measurements: 1 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

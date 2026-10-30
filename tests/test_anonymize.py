@@ -68,7 +68,9 @@ def test_anonymize_variables_deterministic(canonical_dataset: Any) -> None:
 def test_anonymize_card_leaks_no_identifying_text(canonical_dataset: Any) -> None:
     """No original variable name, no dataset name, and no identifying free text survives anywhere in the
     serialized anonymized card."""
-    dataset_dir, desc = canonical_dataset("corn", blocks=("X1", "X2"), sample_of={"o1": "s1", "o2": "s2"})
+    # Distinctive identifiers avoid false positives from generic English diagnostic prose
+    # (e.g. a source variable named "variety" and a generic possible biological cause).
+    dataset_dir, desc = canonical_dataset("corn", blocks=("X1", "X2"), sample_of={"o1": "s1", "o2": "s2"}, targets={"SECRET_MOISTURE_83": "numeric", "SECRET_VARIETY_91": "categorical"})
     card = qualify(dataset_dir, desc, compute_assets=False, compute_pca=False)
 
     anon = anonymize_card(card)
@@ -94,7 +96,7 @@ def test_anonymize_card_leaks_no_identifying_text(canonical_dataset: Any) -> Non
 
     # Variable columns are renamed to opaque slots in order; the input card is not mutated.
     assert [v["name"] for v in anon["variables"]] == ["var_001", "var_002"]
-    assert [v["name"] for v in card["variables"]] == ["Moisture", "variety"]
+    assert [v["name"] for v in card["variables"]] == ["SECRET_MOISTURE_83", "SECRET_VARIETY_91"]
 
 
 def test_anonymize_card_numeric_stats_are_range_free(canonical_dataset: Any) -> None:

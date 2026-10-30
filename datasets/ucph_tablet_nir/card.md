@@ -51,7 +51,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Le source_sample_id inclut lot et numéro de comprimé ; les dix numéros ne démontrent pas dix réacquisitions du même comprimé.
+- **Conversion warnings:** Curation identity contract: source_sample_id includes batch and tablet number; the ten numbers do not demonstrate ten reacquisitions of the same tablet.
 - **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

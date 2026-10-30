@@ -59,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Identifiant de type date/indice de colonne, identité physique non établie ; le comptage littéral est rejeté. Chaque libellé est réutilisé dans 9 classes Y différentes ; les anciennes valeurs 9/11 ne décrivaient pas des répétitions du même lait.
+- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Date/column-index-like identifier, physical identity not established; literal counting is rejected. Each label is reused in 9 different Y classes; the former 9/11 values did not describe replicates of the same milk.
 - **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses

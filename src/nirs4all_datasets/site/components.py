@@ -9,11 +9,12 @@ from __future__ import annotations
 from typing import Any
 
 from .escape import esc, num
+from .explanations import METRIC_HELP, PANEL_HELP
 from .icons import icon, signal_icon_key
 from .model import DatasetView
 
 _TIERS = ("public", "private", "anonymized")
-_TIER_LABEL = {"public": "Public", "private": "Private", "anonymized": "Anonymized"}
+_TIER_LABEL = {"public": "Open redistribution", "private": "Restricted redistribution", "anonymized": "Anonymized"}
 
 
 # =============================================================================
@@ -29,6 +30,7 @@ def nav(rel: str, active: str = "") -> str:
   <div class="nav-links">
     <a href="{rel}index.html"{cls('index')}>Overview</a>
     <a href="{rel}catalog.html"{cls('catalog')}>Catalog</a>
+    <a href="{rel}guide.html"{cls('guide')}>Reading guide</a>
     <a href="https://nirs4all.org" target="_blank" rel="noopener">nirs4all.org</a>
     <a href="https://github.com/GBeurier/nirs4all-datasets" target="_blank" rel="noopener">GitHub</a>
   </div>
@@ -174,7 +176,8 @@ def kpi_strip(kpis: list[tuple[str, str]]) -> str:
 
 def tier_badge(tier: str) -> str:
     t = tier if tier in _TIERS else "public"
-    return f'<span class="badge tier-{t}"><span class="b-dot"></span>{esc(_TIER_LABEL.get(t, t))}</span>'
+    meaning = {"public": "Open redistribution under the stated source license.", "private": "Catalog tier: private. Redistribution is restricted or not cleared; original-source retrieval may still be open.", "anonymized": "Identifying metadata are withheld; access requires the documented authorization."}[t]
+    return f'<span class="badge tier-{t}" title="{esc(meaning)}"><span class="b-dot"></span>{esc(_TIER_LABEL[t])}</span>'
 
 
 def badge(text: str, kind: str = "neutral") -> str:
@@ -185,12 +188,32 @@ def retrieval_badge(status: str | None) -> str:
     labels = {
         "canonical_verified": ("canonical verified", "info"),
         "raw_reproducible": ("raw reproducible", "info"),
-        "token_required": ("token required", "warn"),
+        "token_required": ("token access / hosting pending", "warn"),
         "manual": ("manual retrieval", "warn"),
         "delegate": ("delegate", "neutral"),
+        "missing_delegate": ("raw source available · assembly incomplete", "warn"),
+        "blocked_parser": ("source available · parser needed", "warn"),
+        "manual_only": ("manual source access", "warn"),
+        "documented_only": ("retrieval not implemented", "neutral"),
     }
     label, kind = labels.get(str(status or ""), ("", "neutral"))
     return badge(label, kind) if label else ""
+
+
+def explained_label(label: str, description: str | None = None) -> str:
+    """Native hover hint plus an expandable explanation usable by keyboard and touch."""
+    description = description or METRIC_HELP.get(label)
+    if not description:
+        return esc(label)
+    return (
+        f'{esc(label)} <details class="metric-help"><summary title="{esc(description)}" '
+        f'aria-label="Explain {esc(label)}">?</summary><span>{esc(description)}</span></details>'
+    )
+
+
+def panel_intro(title: str, *, rel: str = "../") -> str:
+    text = PANEL_HELP.get(title)
+    return f'<p class="panel-intro">{esc(text)} <a href="{rel}guide.html">Reading guide</a></p>' if text else ""
 
 
 def section_head(eyebrow: str, title_html: str, sub: str = "", *, centered: bool = True) -> str:
@@ -234,6 +257,8 @@ def dataset_card(view: DatasetView) -> str:
     icons_html = f'<div class="ds-icons">{"".join(glyphs)}</div>' if glyphs else ""
 
     badges = [tier_badge(tier)]
+    if view.has_open_retrieval:
+        badges.insert(0, badge("Open source access", "info"))
     rb = retrieval_badge(e.get("retrieval_status"))
     if rb:
         badges.append(rb)
@@ -252,7 +277,7 @@ def dataset_card(view: DatasetView) -> str:
 
     data_attrs = (
         f'data-name="{esc(view.name.lower())} {esc(view.id)} {esc(domain.lower())} {esc(" ".join(str(t).lower() for t in e.get("targets") or []))}" '
-        f'data-tier="{esc(tier)}" data-family="{esc(family)}" data-domain="{esc(domain)}" '
+        f'data-tier="{esc(tier)}" data-access="{"open" if view.has_open_retrieval else "conditional"}" data-family="{esc(family)}" data-domain="{esc(domain)}" '
         f'data-target="{"yes" if n_targets > 0 else "no"}" data-multi="{"yes" if n_sources > 1 else "no"}" '
         f'data-samples="{n_samples if isinstance(n_samples, int) else 0}" '
         f'data-features="{n_features if isinstance(n_features, int) else 0}"'
@@ -285,8 +310,28 @@ def code_block(lines: list[tuple[str, str]]) -> str:
     return f'<div class="codeblock"><div class="topbar"><i></i><i></i><i></i></div><pre>{chr(10).join(rendered)}</pre></div>'
 
 
-def load_snippet(dataset_id: str, tier: str) -> str:
-    """A ``get("<id>")`` python snippet, with a token hint for non-public tiers."""
+def load_snippet(dataset_id: str, tier: str, *, open_retrieval: bool = False, retrieval_status: str | None = None, raw_route_available: bool = True) -> str:
+    """Choose assembled loading or raw retrieval independently of redistribution rights."""
+    if retrieval_status == "manual_only" and tier != "public":
+        return code_block([
+            ("c", "# Obtain the original files through the source links in Provenance & citation."),
+            ("c", "# This dataset has a manual route; no automatic assembly recipe is recorded."),
+            ("c", "# A Dataverse token is not required merely because redistribution is restricted."),
+        ])
+    if open_retrieval and (tier != "public" or retrieval_status == "missing_delegate"):
+        if not raw_route_available:
+            return code_block([
+                ("c", "# An open original source is documented in Provenance & citation."),
+                ("c", "# Automatic retrieval is not implemented for this source yet."),
+                ("c", "# Follow the original source links to obtain its files."),
+            ])
+        return code_block([
+            ("c", "# Download original raw resources; no Dataverse token required"),
+            ("", "from nirs4all_datasets import retrieve"),
+            ("", f'result = retrieve("{dataset_id}", prepare=False)'),
+            ("", 'print(result["resources"])'),
+            ("c", "# Raw resources may need dataset-specific assembly before analysis"),
+        ])
     lines: list[tuple[str, str]] = [
         ("c", "# pip install nirs4all-datasets"),
         ("", "from nirs4all_datasets import get"),
@@ -295,7 +340,7 @@ def load_snippet(dataset_id: str, tier: str) -> str:
     if tier == "public":
         lines.append(("", f'ds = get("{dataset_id}")            # DOI-pinned, checksum-verified, cached'))
     else:
-        lines.append(("c", f"# {tier} dataset — export requires a Dataverse token"))
+        lines.append(("c", "# Hosted canonical access requires a configured Dataverse DOI and token"))
         lines.append(("", f'ds = get("{dataset_id}", token="…")'))
     lines += [
         ("", "X, y = ds.x(), ds.y()"),

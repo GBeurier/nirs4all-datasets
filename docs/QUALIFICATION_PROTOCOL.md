@@ -5,6 +5,28 @@ numerical kernels, Preflight owns intrinsic assessment, and Domains owns task/sp
 its fitted reference. Python-only legacy cards remain supported during this transition. Installing
 Datasets does not require an unpublished native provider.
 
+## Reading the dataset cards
+
+The catalog's [reading guide](https://datasets.nirs4all.org/guide.html) explains source access,
+redistribution rights, PCA, metric units and score interpretation. Each card starts with provenance,
+citations, governance and integrity, followed by descriptive profiles and per-source statistics.
+Question-mark controls beside metrics provide a hover hint and a persistent explanation that opens
+with a click, tap, Enter or Space. Chart captions explain what question each plot answers; PCA plots
+also provide coordinate or variance tables.
+
+PCA summarizes variation in the spectra X without using the target Y. The score plot displays
+PC1/PC2 positions (at most 800 observations); the scree plot shows spectral variance per component.
+Their projections can use different row samples. Neither is a prediction model or a target-accuracy
+score. Q/SPE measures residual variation outside the retained subspace; Hotelling T² and Mahalanobis
+H describe distance within PCA space. The p95/median ratios describe the upper tail relative to the
+center, not a validated rejection threshold.
+
+Source availability and the catalog's redistribution tier are independent. A `private` entry can
+have an open original-source route. The catalog labels that tier “Restricted redistribution” and
+shows retrieval separately. A missing dataset-specific converter does not imply a token is needed
+to retrieve raw resources. Manual-origin procedures are retained as manual routes. A Dataverse token
+only enables a hosted canonical download when a DOI has actually been configured.
+
 ## Interpretation, measured values and possible causes
 
 A diagnostic signature is a weighted heuristic. **0.78 does not mean a 78% probability of a physical

@@ -21,7 +21,7 @@ def test_unavailable_diagnostic_evidence_never_becomes_zero_or_normal(bad):
     assert all(row["score"] is None for row in rows)
     assert all(row["confidence_status"] == "unvalidated" for row in rows)
     normal = next(row for row in rows if row["key"] == "normal")
-    assert normal["strength"] == "inconnue"
+    assert normal["strength"] == "unknown"
     assert normal["evidence_coverage"] == 0
     assert metrics._saturate(0.0) == 0.0
 

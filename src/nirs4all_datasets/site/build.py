@@ -44,6 +44,7 @@ def build_site(root: str | Path, out: str | Path) -> Path:
 
     (out / "index.html").write_text(pages.render_index(catalog), encoding="utf-8")
     (out / "catalog.html").write_text(pages.render_catalog(catalog), encoding="utf-8")
+    (out / "guide.html").write_text(pages.render_guide(), encoding="utf-8")
 
     for view in catalog.datasets:
         (out / "dataset" / f"{view.id}.html").write_text(pages.render_dataset(view), encoding="utf-8")
@@ -56,7 +57,7 @@ def build_site(root: str | Path, out: str | Path) -> Path:
 
 def _write_seo(catalog: Catalog, out: Path) -> None:
     """Emit crawl-discovery files for the public catalog."""
-    paths = ["", "catalog.html"] + [f"dataset/{view.id}.html" for view in catalog.datasets]
+    paths = ["", "catalog.html", "guide.html"] + [f"dataset/{view.id}.html" for view in catalog.datasets]
     urls = "\n".join(
         "  <url>\n"
         f"    <loc>{SITE_URL}/{path}</loc>\n"
