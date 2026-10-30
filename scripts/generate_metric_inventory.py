@@ -14,7 +14,7 @@ QUALIFY = ROOT / "src/nirs4all_datasets/qualify"
 FAMILIES = [
     ("integrity", "spectral_integrity", "_INTEGRITY_KEYS", "source", "migrate", "Preflight"),
     ("amplitude", "spectral_amplitude", "_AMPLITUDE_KEYS", "source", "delegate", "Methods via Preflight"),
-    ("noise", "spectral_noise", "_NOISE_KEYS", "source", "migrate", "Preflight"),
+    ("noise", "spectral_noise", "_NOISE_KEYS", "source", "delegate", "Methods with Datasets adapter"),
     ("artefacts", "spectral_artefacts", "_ARTEFACT_KEYS", "source", "migrate", "Preflight"),
     ("shape", "spectral_shape_metrics", "_SHAPE_SPECTRAL_KEYS", "source", "migrate", "Preflight"),
     ("outliers", "pca_outlier_metrics", "_PCA_OUTLIER_KEYS", "source", "migrate", "Preflight"),
@@ -136,6 +136,31 @@ def generate():
     for family, symbol, constant, scope, action, owner in FAMILIES:
         keys = modules["metrics"][2][constant] if isinstance(constant, str) else constant
         add("metrics", family, symbol, keys, scope, action, owner)
+    # Methods computes the roughness kernel; Datasets attaches axis coordinates,
+    # producer identity and compatibility aliases. Quality remains an aggregate.
+    native_binding = {
+        "engine": "nirs4all-methods", "minimum_abi": "2.20",
+        "operation": "diagnostics.spectral_noise_proxy",
+        "c_abi_entrypoint": "n4m_procedure_run",
+        "python_facade": "n4m.roles.SpectralNoiseProxy",
+        "protocol_version": "spectral-second-difference-mad-index.v1",
+        "producer_metadata": ["name", "engine_version", "abi_version", "operation", "protocol_version"],
+    }
+    definitions["metrics.spectral_noise"]["native_binding"] = native_binding
+    definitions["metrics.spectral_noise"]["ownership"] = "Methods native roughness kernel; Datasets axis, provenance and compatibility alias adapter."
+    for row in metrics:
+        if row["definition_id"] == "metrics.spectral_noise":
+            row["current_owner"] = "Methods native kernel; Datasets axis, provenance and aliases"
+            row["native_binding"] = native_binding
+            row["current_protocol"] = "Methods spectral-second-difference-mad-index.v1; Datasets presentation 7"
+            if row.get("transition") != "deprecated":
+                row["native_equivalence"] = "not_assumed"
+                row["native_semantics"] = (
+                    "Datasets axis coordinate for Methods worst-band index" if row["metric_id"] == "noise.worst_band_axis"
+                    else "Methods second-difference MAD roughness; parity with the historical calculation must be verified, not Savitzky–Golay residual noise or measured SNR"
+                )
+    definitions["metrics.spectral_quality"]["noise_component"] = "Consumes Methods native second-difference MAD roughness through the Datasets adapter; quality remains a Datasets aggregate."
+
     for family, symbol, scope, action, owner in REGISTRY_FAMILIES:
         add("registry", family, symbol, None, scope, action, owner)
     add("profile", "legacy_pca", "_source_pca", None, "source", "migrate", "Preflight")

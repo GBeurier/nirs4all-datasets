@@ -24,9 +24,15 @@ install — the `nirs4all` imports are lazy and degrade gracefully.
 
 ## Optional extras
 
-The base install browses the catalog and downloads public datasets. Two extras unlock the deeper
-integrations, both of which **delegate the NIRS modelling objects and file reads to the ecosystem
-libraries** rather than re-implementing them:
+The base install browses the catalog and downloads public datasets. Optional extras delegate
+numerical methods, modelling objects, and origin file reads to the ecosystem libraries:
+
+`methods`
+: Adds `nirs4all-methods>=1.3.10` and scikit-learn. Methods 1.3.10 supplies the
+  global second-difference roughness procedure. Its bandwise output extension is
+  still in development; an older native library reports unavailable bandwise values.
+  Missing native support is explicit and no Python numerical fallback runs. Existing
+  cards and catalog rendering remain available. See [qualification provenance](QUALIFICATION_PROTOCOL.md).
 
 `nirs4all`
 : ```bash
@@ -64,8 +70,10 @@ uv venv && uv pip install -e ".[dev]"
 
 ## Dataverse API token
 
-A token is **only** required to fetch **private/anonymized** datasets or to publish to a personal
-Dataverse. **Public datasets need no token.** Resolution order:
+A token is required for a protected hosted Dataverse route or to publish to a personal
+Dataverse. **Open original-source routes need no Dataverse token**, including those linked
+from restricted-redistribution catalog entries. A token does not create a hosted download
+for an entry with no configured DOI. Resolution order:
 
 1. the `NIRS4ALL_DATAVERSE_TOKEN` environment variable (recommended; required in CI);
 2. `~/.config/nirs4all-datasets/config.toml` (`chmod 600`):

@@ -20,6 +20,7 @@ import json
 import math
 import os
 from datetime import UTC, datetime
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -28,7 +29,7 @@ import pandas as pd
 
 from nirs4all_datasets.canonical import resolve_config
 from nirs4all_datasets.curation import card_curation
-from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes
+from nirs4all_datasets.manifest import metadata_hash, processing_hash, read_manifest, sha256_bytes, sha256_file
 from nirs4all_datasets.qualify import anonymize, croissant, datasheet, metrics, registry
 from nirs4all_datasets.schema import DatasetDescriptor, Variable, VariableRole, VarType
 
@@ -76,6 +77,12 @@ def _identity(descriptor: DatasetDescriptor) -> dict[str, Any]:
 
 def _versions(descriptor: DatasetDescriptor) -> dict[str, Any]:
     return {"content": descriptor.versions.content, "schema_protocol": descriptor.versions.schema_protocol}
+
+
+@lru_cache(maxsize=8)
+def _native_binary_hash(path: str, mtime_ns: int, size: int) -> str:
+    """Bind qualification to the loaded artifact, including local development builds."""
+    return sha256_file(path)
 
 
 def _governance(descriptor: DatasetDescriptor) -> dict[str, Any]:
@@ -196,6 +203,15 @@ def _source_section(entry: dict[str, Any], descriptor: DatasetDescriptor, warnin
         "profile": shared_profile if shared else source_metrics["spectral_profile"](spectra, axis, sample_ids=sample_id_rows),
         "xy": [],
     }
+    noise = ((spectral.get("profile") or {}).get("noise") or {})
+    if not shared and isinstance(noise.get("producer"), dict):
+        from n4m import library_path
+
+        binary = Path(library_path())
+        info = binary.stat()
+        noise["producer"]["library_sha256"] = _native_binary_hash(str(binary), info.st_mtime_ns, info.st_size)
+    if noise.get("availability") in {"unavailable", "partial"}:
+        src_warnings.append(str(noise["unavailable_reason"]))
     if compute_curve and spectral_cols:
         curve = metrics.spectral_curve(spectra, axis)
         if curve is not None:

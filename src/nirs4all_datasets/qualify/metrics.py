@@ -1,6 +1,7 @@
 """Descriptive metrics that fill the gaps nirs4all does not expose for a dataset card.
 
-Pure ``numpy``/``scipy`` functions (no nirs4all import, no I/O). Each returns a JSON-serializable
+Descriptive adapters and statistics (no nirs4all import or I/O). Roughness delegates lazily to
+Methods; unavailable native support remains explicit. Each returns a JSON-serializable
 dict with a stable key set (``None`` values for degenerate input), so the card schema is constant.
 
 Definitions are deliberately documented and conservative:
@@ -456,11 +457,11 @@ def spectral_quality(x: object) -> dict[str, object]:
     mean_spectrum = np.nanmean(arr, axis=0)
     signal = float(np.mean(np.abs(mean_spectrum)))
     second_diff = np.diff(arr, n=2, axis=1)
-    # Robust noise floor: median over samples of the normal-scaled MAD of the 2nd difference,
-    # divided by sqrt(6) to undo the variance inflation of differencing white noise twice.
-    mad = stats.median_abs_deviation(second_diff, axis=1, scale=1.0)
-    noise = float(np.median(mad) * 1.4826 / np.sqrt(6.0))
-    noise_proxy_db = float(20.0 * np.log10(signal / noise)) if (noise > 0 and signal > 0) else None
+    # Preserve this older aggregate's strict missing-data contract: its previous
+    # row-MAD/median chain was undefined if any input cell was nonfinite. The
+    # source roughness metric separately supports incomplete observations.
+    noise = _finite_float(spectral_noise(arr).get("noise_rms")) if np.isfinite(arr).all() else None
+    noise_proxy_db = float(20.0 * np.log10(signal / noise)) if (noise is not None and noise > 0 and signal > 0) else None
     vmax = float(np.nanmax(arr))
     return {
         "noise_proxy_db": noise_proxy_db,
@@ -515,42 +516,56 @@ def spectral_amplitude(x: object, axis: object | None = None) -> dict[str, objec
 
 
 def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:
-    """Second-difference roughness proxies; no repeat-measured instrument SNR."""
+    """Delegate second-difference MAD roughness to the existing Methods procedure.
+
+    Signal-to-roughness ratios are descriptive proxies, not instrument SNR.
+    Native support is optional; unavailable support stays explicit and no Python
+    numerical fallback runs. Axis coordinates are attached as catalog metadata.
+    """
     arr = _finite_matrix(x)
     if arr.ndim != 2 or arr.shape[0] < 1 or arr.shape[1] < 3:
         return _proxy_fields("noise", _nulls(_NOISE_KEYS))
-    second = np.diff(arr, n=2, axis=1)
-    row_med = np.asarray(_safe_nanpercentile(second, 50, axis=1), dtype="float64")[:, None]
-    row_mad = np.asarray(_safe_nanpercentile(np.abs(second - row_med), 50, axis=1), dtype="float64")
-    noise_per_row = row_mad * 1.4826 / np.sqrt(6.0)
-    finite_noise = noise_per_row[np.isfinite(noise_per_row)]
-    noise_rms = float(np.median(finite_noise)) if finite_noise.size else None
-    signal = float(np.nanmean(np.abs(arr))) if np.isfinite(arr).any() else None
-    snr = signal / noise_rms if (signal is not None and noise_rms is not None and signal > 0 and noise_rms > 0) else None
+    try:
+        from n4m import abi_version, version
+        from n4m.roles import SpectralNoiseProxy
+    except (ImportError, OSError, RuntimeError) as exc:
+        return _proxy_fields("noise", {
+            **_nulls(_NOISE_KEYS),
+            "availability": "unavailable",
+            "unavailable_reason": f"Second-difference MAD roughness requires nirs4all-methods >= 1.3.10 with ABI >= 2.20 and SpectralNoiseProxy ({type(exc).__name__}).",
+        })
+    # The public native procedure takes a finite DTO plus an explicit validity
+    # mask. Zero-fill is transport only; excluded cells never enter the kernel.
+    valid = np.isfinite(arr)
+    parameters = {} if valid.all() else {"valid_mask": valid.astype(np.int64).ravel().tolist()}
+    result = SpectralNoiseProxy(**parameters).run(np.where(valid, arr, 0.0))
 
-    mean_spectrum = np.asarray(_safe_nanmean(arr, axis=0), dtype="float64")
-    col_noise = np.asarray(_safe_nanpercentile(np.abs(second - np.asarray(_safe_nanpercentile(second, 50, axis=0), dtype="float64")), 50, axis=0), dtype="float64")
-    col_noise = col_noise * 1.4826 / np.sqrt(6.0)
-    with np.errstate(divide="ignore", invalid="ignore"):
-        band_snr = np.abs(mean_spectrum[1:-1]) / col_noise
-    band_snr = band_snr[np.isfinite(band_snr) & (band_snr >= 0)]
-    worst_idx = None
-    worst_axis = None
-    if band_snr.size:
-        full = np.full(arr.shape[1], np.nan, dtype="float64")
-        with np.errstate(divide="ignore", invalid="ignore"):
-            full[1:-1] = np.abs(mean_spectrum[1:-1]) / col_noise
-        if np.isfinite(full).any():
-            worst_idx = int(np.nanargmin(full))
-            worst_axis = float(_axis(axis, arr.shape[1])[worst_idx])
+    def measured(key: str) -> float | None:
+        state = result.get(key + "_status")
+        if state is None or int(np.asarray(state).ravel()[0]) != 0:
+            return None
+        return _finite_float(result.get(key))
+
+    index = measured("worst_band_index")
+    worst_index = int(index) if index is not None else None
+    band_support = "bandwise_min_status" in result
     return _proxy_fields("noise", {
-        "noise_rms": noise_rms,
-        "snr": float(snr) if snr is not None and math.isfinite(snr) else None,
-        "snr_db": float(20.0 * np.log10(snr)) if snr is not None and snr > 0 else None,
-        "bandwise_snr_min": float(np.min(band_snr)) if band_snr.size else None,
-        "bandwise_snr_median": float(np.median(band_snr)) if band_snr.size else None,
-        "worst_band_index": worst_idx,
-        "worst_band_axis": worst_axis,
+        "noise_rms": measured("global_noise_sigma"),
+        "snr": measured("global_signal_noise_ratio"),
+        "snr_db": measured("global_signal_noise_db"),
+        "bandwise_snr_min": measured("bandwise_min"),
+        "bandwise_snr_median": measured("bandwise_median"),
+        "worst_band_index": worst_index,
+        "worst_band_axis": float(_axis(axis, arr.shape[1])[worst_index]) if worst_index is not None else None,
+        "producer": {
+            "name": "nirs4all-methods", "engine_version": version(),
+            "abi_version": ".".join(str(part) for part in abi_version()),
+            "operation": "diagnostics.spectral_noise_proxy", "protocol_version": "spectral-second-difference-mad-index.v1",
+        },
+        **({} if band_support else {
+            "availability": "partial",
+            "unavailable_reason": "Installed Methods provides global roughness but lacks the bandwise output extension; bandwise values are unavailable.",
+        }),
     })
 
 

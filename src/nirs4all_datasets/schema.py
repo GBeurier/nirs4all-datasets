@@ -23,8 +23,9 @@ from __future__ import annotations
 
 import re
 from enum import StrEnum
+from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, SerializerFunctionWrapHandler, field_validator, model_serializer, model_validator
 
 SCHEMA_VERSION = "2.0"
 
@@ -362,6 +363,16 @@ class Variable(BaseModel):
     numeric_sentinels: list[float] = Field(default_factory=list)
     decimal_separator: str = ","  # existing comma-decimal behavior, explicitly recorded
     thousands_separator: str | None = None
+
+    @model_serializer(mode="wrap")
+    def _serialize_directives(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        """Preserve whether source-schema overrides were explicitly declared."""
+        data: dict[str, Any] = handler(self)
+        defaults: dict[str, Any] = {"type": VarType.NUMERIC, "decimal_separator": ",", "thousands_separator": None, "missing_values": [], "numeric_sentinels": []}
+        for key, default in defaults.items():
+            if key not in self.model_fields_set and getattr(self, key) == default:
+                data.pop(key, None)
+        return data
 
     @model_validator(mode="after")
     def _check_dialect(self) -> Variable:
