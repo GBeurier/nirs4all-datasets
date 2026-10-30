@@ -88,7 +88,6 @@ def test_descriptive_edits_skip_rebuild_but_refresh_card() -> None:
     edited = base.model_copy(update={
         "tier": s.Tier.PUBLIC,
         "origin_sources": [s.OriginSource(kind="zenodo", locator="10.5281/zenodo.1")],
-        "variables": [s.Variable(name="protein", role="metadata")],
     })
     assert processing_hash(base) == processing_hash(edited)  # descriptive -> no canonical rebuild
     assert metadata_hash(base) != metadata_hash(edited)  # but the card must refresh

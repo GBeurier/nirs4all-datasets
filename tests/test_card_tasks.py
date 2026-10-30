@@ -47,7 +47,10 @@ def test_many_mixed_targets_in_real_card(canonical_dataset, tmp_path: Path) -> N
 def test_existing_many_target_card_and_ambiguous_evidence() -> None:
     root = Path(__file__).resolve().parents[1]
     dataset_id = "dryad_grassland_hyspex_species_manual"
-    original = json.loads((root / "datasets" / dataset_id / "card.json").read_text(encoding="utf-8"))
+    original = copy.deepcopy(json.loads((root / "datasets" / dataset_id / "card.json").read_text(encoding="utf-8")))
+    for variable in original["variables"]:
+        variable.pop("task_type", None)
+        variable.pop("class_stats", None)
     projected = project_card_tasks(original)
     variables = [v for v in projected["variables"] if v["role"] == "target"]
     assert len(variables) == 100

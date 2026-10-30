@@ -25,6 +25,7 @@ import yaml
 from nirs4all_datasets.bootstrap import GENERATOR_VERSION, _dir_fingerprint, _write_descriptor, build_descriptor_from_card, find_v2_leaves, slugify
 from nirs4all_datasets.canonical import CONVERTER_VERSION
 from nirs4all_datasets.catalog import build_catalog
+from nirs4all_datasets.curation import catalog_curation_report
 from nirs4all_datasets.manifest import metadata_hash, read_manifest, sha256_file, write_manifest
 from nirs4all_datasets.organize import organize
 from nirs4all_datasets.qualify.profile import _integrity, _jsonify, _variable_section, card_metadata_fresh, qualify, write_card
@@ -54,9 +55,7 @@ def refresh_views(root: Path, leaf: Path) -> dict[str, Any]:
     manifest.files = [entry.model_copy(update={"sha256": sha256_file(updated_files[entry.path]), "size": updated_files[entry.path].stat().st_size}) if entry.path in updated_files else entry for entry in manifest.files]
     manifest.canonical_hashes = {Path(entry.path).name: entry.sha256 for entry in manifest.files if entry.role is FileRole.CANONICAL and entry.path.endswith(".parquet")}
     write_manifest(manifest, manifest_path)
-    tracked = result.report
-    if descriptor.tier is Tier.ANONYMIZED:
-        tracked = {"schema_version": result.report["schema_version"], "dataset_id": dataset_id, "view_counts": {name: len(columns) for name, columns in result.report["views"].items()}, "mapping": "withheld for anonymized tier"}
+    tracked = catalog_curation_report(result.report, anonymized=descriptor.tier is Tier.ANONYMIZED)
     (root / "catalog" / "curation" / f"{dataset_id}.json").write_text(json.dumps(tracked, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     card = json.loads((dataset_dir / "card.json").read_text(encoding="utf-8"))
     config = json.loads((canonical / "dataset.json").read_text(encoding="utf-8"))
@@ -121,9 +120,7 @@ def migrate_one(root: Path, leaf: Path, source_tree: Path, *, force: bool = Fals
         qualify(dataset_dir, descriptor, compute_assets=True, compute_pca=False)
     mapping_path = dataset_dir / "canonical" / "curation" / "mapping.json"
     report = json.loads(mapping_path.read_text(encoding="utf-8"))
-    tracked = report
-    if descriptor.tier is Tier.ANONYMIZED:
-        tracked = {"schema_version": report["schema_version"], "dataset_id": dataset_id, "view_counts": {name: len(columns) for name, columns in report["views"].items()}, "mapping": "withheld for anonymized tier"}
+    tracked = catalog_curation_report(report, anonymized=descriptor.tier is Tier.ANONYMIZED)
     (root / "catalog" / "curation" / f"{dataset_id}.json").write_text(json.dumps(tracked, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     identity = report["identity"]
     return {"dataset_id": dataset_id, "n_observations": len(pd.read_parquet(dataset_dir / "canonical" / "curation" / "structure.parquet")), "n_samples": identity["n_samples"], "identity_status": identity["status"], "observations_per_unit": identity["observations_per_unit"], "technical_repetitions": identity["technical_repetitions"], "n_M": len(report["views"]["M"]), "n_Y": len(report["views"]["Y"]), "M": report["views"]["M"], "Y": report["views"]["Y"], "warnings": result.conversion_warnings if descriptor.tier is not Tier.ANONYMIZED else [], "metadata_hash": metadata_hash(descriptor), "skipped": result.skipped}
@@ -163,7 +160,7 @@ def main() -> int:
     (root / "catalog" / "curation" / "summary.json").write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     with (root / "catalog" / "curation" / "datasets.csv").open("w", encoding="utf-8-sig", newline="") as stream:
         fields = ["dataset_id", "n_observations", "n_samples", "identity_status", "observations_per_unit", "technical_repetitions", "n_M", "n_Y", "M", "Y"]
-        writer = csv.DictWriter(stream, fieldnames=fields, delimiter=";", extrasaction="ignore")
+        writer = csv.DictWriter(stream, fieldnames=fields, delimiter=";", extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in report["processed"]:
             writer.writerow({**row, **{name: json.dumps(row[name], ensure_ascii=False) for name in ["observations_per_unit", "M", "Y"]}})
