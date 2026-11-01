@@ -642,6 +642,8 @@ def test_computed_metric_help_escapes_content(monkeypatch: Any) -> None:
     row.update(metric='<img src=x onerror="alert(1)">', score_note='a "quoted" rule: X < 1 & X > 0')
     monkeypatch.setattr(metrics, "metric_score_rows", lambda _: [row])
     panel = ElementTree.fromstring(pages._metric_scores_panel({}))
+    help_control = panel.find(".//details[@class='metric-help']")
+    assert help_control is not None and help_control.attrib["data-label"] == row["metric"]
     trigger = panel.find(".//details[@class='metric-help']/summary")
     assert trigger is not None and trigger.attrib["aria-label"] == f'Explain {row["metric"]}'
     assert panel.find(".//img") is None

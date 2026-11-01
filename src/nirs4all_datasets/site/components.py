@@ -201,12 +201,12 @@ def retrieval_badge(status: str | None) -> str:
 
 
 def explained_label(label: str, description: str | None = None) -> str:
-    """Native hover hint plus an expandable explanation usable by keyboard and touch."""
+    """An accessible help dialog trigger with a native disclosure fallback."""
     description = description or METRIC_HELP.get(label)
     if not description:
         return esc(label)
     return (
-        f'{esc(label)} <details class="metric-help"><summary title="{esc(description)}" '
+        f'{esc(label)} <details class="metric-help" data-label="{esc(label)}"><summary '
         f'aria-label="Explain {esc(label)}">?</summary><span>{esc(description)}</span></details>'
     )
 

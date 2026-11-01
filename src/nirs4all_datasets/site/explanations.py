@@ -133,3 +133,37 @@ PROFILE_HELP = {
     "repeatability_risk": "Dispersion among observations sharing an ID. Interpretation depends on the documented meaning of that ID.",
     "structure_complexity": "Variation in local density in PCA space. May reflect legitimate batches or subpopulations.",
 }
+
+
+# Shared documentation for the full guide and the metric-help dialog.
+GUIDE_SECTIONS = {
+    "access": (
+        "Access and rights are separate",
+        """
+<p>Start with provenance and governance at the top of a card. Provenance links to the original resources and publications. Governance records the license, redistribution conditions and content identity.</p>
+    <p><strong>Open source access</strong> means an open original-source route is recorded. <strong>Restricted redistribution</strong> is the display label for the catalog's private tier: rights are restricted or not cleared for redistribution. It does not mean that the original source is necessarily private.</p>
+    <p><strong>Raw reproducible</strong> identifies a retrieval route. <strong>Assembly incomplete</strong> means raw resources can be available while dataset-specific conversion is missing. The loading example uses <code>retrieve(id, prepare=False)</code> for these raw downloads; it returns resource metadata rather than X/Y arrays. A complete original-source recipe uses <code>get(id)</code>. Two Harvard datasets require explicit guestbook answers.</p>
+    <p><strong>Token required</strong> means no open automatic route is recorded. A Dataverse token works only once the canonical data have a configured hosted DOI. <strong>Manual access</strong> requires the original provider's documented steps. Availability labels describe the catalog routes, not a fresh live check of every URL.</p>
+""",
+    ),
+    "pca": (
+        "Why is PCA on a dataset card?",
+        """
+<p>Spectra have many correlated wavelengths. Principal component analysis (PCA) compresses their variation into a few orthogonal directions, called principal components (PCs). It is an exploratory summary of X, calculated without using the target Y.</p>
+    <p><strong>The score plot</strong> places each plotted observation on PC1 and PC2. Nearby dots have similar projections; groups can reveal batches, instruments or natural subpopulations. Axis percentages show explained spectral variance. Large sources are sampled to at most 800 observations. Similar positions in two dimensions do not guarantee similar full spectra; an isolated dot does not prove an acquisition fault.</p>
+    <p><strong>The scree plot</strong> reports spectral variance per component, helping you see whether variation is concentrated in a few dimensions. It is not explained target variance or predictive accuracy. The scree projection and score-plot projection may use different row samples; their percentages need not match.</p>
+    <p><strong>Q / SPE</strong> measures residual variation outside the retained PCA subspace. <strong>Hotelling T²</strong> measures an observation's scaled distance within that subspace; <strong>Mahalanobis H</strong> summarizes PCA-space distance. The displayed p95/median ratios compare the distribution's upper tail with its center, without an absolute rejection threshold.</p>
+    <p>Historical profiles replace missing cells with column medians before PCA, center channels, and use bounded row/component counts. Loadings and distances depend on signal units and preprocessing. Compare compatible sources and inspect the original spectra before acting.</p>
+""",
+    ),
+    "scores": (
+        "Scores, evidence and missing values",
+        """
+<p>Read measured values first. An alert score maps selected metrics to a heuristic 0–1 scale. The display bands are weak below 0.42, medium from 0.42 to below 0.72, and strong from 0.72. They are not universally validated pass/fail thresholds.</p>
+    <p>The radar's center is 0 and its outer ring is 1: outward means a stronger anomaly or heterogeneity signal for that axis. Its table gives values rounded to two decimals and explains each axis. Missing axes are left blank; partial profiles have no filled polygon. The mean profile score averages only available axes and is not an overall quality grade.</p>
+    <p>Diagnostic bars rank possible explanations from heuristic signatures. A score of 0.78 does not mean a 78% causal probability. Evidence coverage is the proportion of required signals available, not confidence in the cause. A dash or “unavailable” means the quantity could not be computed; zero is an actual recorded value.</p>
+    <p>RMS (root mean square distance) and SAM (Spectral Angle Mapper, in radians) use this dataset's mean spectrum as their reference. They do not compare with an independently acquired white or dark reference. Repeated IDs require a documented protocol before within-ID spread can be called technical repeatability.</p>
+    <p>X–Y plots show Pearson correlation within this dataset. They identify linear associations; they are not cross-validated predictions and do not establish causal relationships. Targets, metadata, observation counts and physical sample counts have different meanings.</p>
+""",
+    ),
+}

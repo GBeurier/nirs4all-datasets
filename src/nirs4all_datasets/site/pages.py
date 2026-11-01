@@ -15,7 +15,7 @@ from nirs4all_datasets.qualify import metrics as QMETRICS
 from . import charts
 from . import components as C
 from .escape import esc, locator_link, num
-from .explanations import COMPUTED_METRIC_HELP, METRIC_HELP, PROFILE_HELP
+from .explanations import COMPUTED_METRIC_HELP, GUIDE_SECTIONS, METRIC_HELP, PROFILE_HELP
 from .model import Catalog, DatasetView
 from .theme import SITE_URL, page
 
@@ -906,6 +906,10 @@ def _metric_reference_panel() -> str:
 def render_guide() -> str:
     """A linked, self-contained reading guide using the same definitions as the inline help."""
     glossary = "".join(f'<tr><th scope="row">{esc(label)}</th><td>{esc(text)}</td></tr>' for label, text in METRIC_HELP.items())
+    guidance = "".join(
+        f'<section class="panel wide" id="{key}"><h2>{title}</h2><div class="panel-body">{content}</div></section>'
+        for key, (title, content) in GUIDE_SECTIONS.items()
+    )
     body = f"""
 {C.nav('', 'guide')}
 <section class="section section-paper" style="padding-top:84px"><div class="container">
@@ -913,28 +917,9 @@ def render_guide() -> str:
   <nav class="guide-links" aria-label="Guide sections"><a href="#access">Access and rights</a><a href="#pca">Why PCA?</a><a href="#scores">Scores and missing evidence</a><a href="#glossary">Metric glossary</a></nav>
 </div></section>
 <section class="section"><div class="container"><div class="panel-grid">
-  <section class="panel wide" id="access"><h2>Access and rights are separate</h2><div class="panel-body">
-    <p>Start with provenance and governance at the top of a card. Provenance links to the original resources and publications. Governance records the license, redistribution conditions and content identity.</p>
-    <p><strong>Open source access</strong> means an open original-source route is recorded. <strong>Restricted redistribution</strong> is the display label for the catalog's private tier: rights are restricted or not cleared for redistribution. It does not mean that the original source is necessarily private.</p>
-    <p><strong>Raw reproducible</strong> identifies a retrieval route. <strong>Assembly incomplete</strong> means raw resources can be available while dataset-specific conversion is missing. The loading example uses <code>retrieve(id, prepare=False)</code> for these raw downloads; it returns resource metadata rather than X/Y arrays. A complete original-source recipe uses <code>get(id)</code>. Two Harvard datasets require explicit guestbook answers.</p>
-    <p><strong>Token required</strong> means no open automatic route is recorded. A Dataverse token works only once the canonical data have a configured hosted DOI. <strong>Manual access</strong> requires the original provider's documented steps. Availability labels describe the catalog routes, not a fresh live check of every URL.</p>
-  </div></section>
-  <section class="panel wide" id="pca"><h2>Why is PCA on a dataset card?</h2><div class="panel-body">
-    <p>Spectra have many correlated wavelengths. Principal component analysis (PCA) compresses their variation into a few orthogonal directions, called principal components (PCs). It is an exploratory summary of X, calculated without using the target Y.</p>
-    <p><strong>The score plot</strong> places each plotted observation on PC1 and PC2. Nearby dots have similar projections; groups can reveal batches, instruments or natural subpopulations. Axis percentages show explained spectral variance. Large sources are sampled to at most 800 observations. Similar positions in two dimensions do not guarantee similar full spectra; an isolated dot does not prove an acquisition fault.</p>
-    <p><strong>The scree plot</strong> reports spectral variance per component, helping you see whether variation is concentrated in a few dimensions. It is not explained target variance or predictive accuracy. The scree projection and score-plot projection may use different row samples; their percentages need not match.</p>
-    <p><strong>Q / SPE</strong> measures residual variation outside the retained PCA subspace. <strong>Hotelling T²</strong> measures an observation's scaled distance within that subspace; <strong>Mahalanobis H</strong> summarizes PCA-space distance. The displayed p95/median ratios compare the distribution's upper tail with its center, without an absolute rejection threshold.</p>
-    <p>Historical profiles replace missing cells with column medians before PCA, center channels, and use bounded row/component counts. Loadings and distances depend on signal units and preprocessing. Compare compatible sources and inspect the original spectra before acting.</p>
-  </div></section>
-  <section class="panel wide" id="scores"><h2>Scores, evidence and missing values</h2><div class="panel-body">
-    <p>Read measured values first. An alert score maps selected metrics to a heuristic 0–1 scale. The display bands are weak below 0.42, medium from 0.42 to below 0.72, and strong from 0.72. They are not universally validated pass/fail thresholds.</p>
-    <p>The radar's center is 0 and its outer ring is 1: outward means a stronger anomaly or heterogeneity signal for that axis. Its table gives values rounded to two decimals and explains each axis. Missing axes are left blank; partial profiles have no filled polygon. The mean profile score averages only available axes and is not an overall quality grade.</p>
-    <p>Diagnostic bars rank possible explanations from heuristic signatures. A score of 0.78 does not mean a 78% causal probability. Evidence coverage is the proportion of required signals available, not confidence in the cause. A dash or “unavailable” means the quantity could not be computed; zero is an actual recorded value.</p>
-    <p>RMS (root mean square distance) and SAM (Spectral Angle Mapper, in radians) use this dataset's mean spectrum as their reference. They do not compare with an independently acquired white or dark reference. Repeated IDs require a documented protocol before within-ID spread can be called technical repeatability.</p>
-    <p>X–Y plots show Pearson correlation within this dataset. They identify linear associations; they are not cross-validated predictions and do not establish causal relationships. Targets, metadata, observation counts and physical sample counts have different meanings.</p>
-  </div></section>
+  {guidance}
   <section class="panel wide" id="glossary"><h2>Metric glossary</h2><div class="panel-body">
-    <p>The same explanations appear beside values through the question-mark controls. Hover for a short hint, or expand a control with touch, Enter or Space. p95 means the 95th percentile; SD means standard deviation; CV means coefficient of variation.</p>
+    <p>The same explanations appear beside values through the question-mark controls. Activate a control with touch, Enter or Space to read its explanation and documentation in a window that fits your screen. p95 means the 95th percentile; SD means standard deviation; CV means coefficient of variation.</p>
     <div class="table-scroll"><table class="data"><caption>Source and variable statistics</caption><thead><tr><th>Metric</th><th>Meaning and limitations</th></tr></thead><tbody>{glossary}</tbody></table></div>
   </div></section>
   {_metric_reference_panel()}

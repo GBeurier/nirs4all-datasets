@@ -13,6 +13,7 @@ import json
 from typing import Any
 
 from .escape import esc
+from .explanations import GUIDE_SECTIONS
 
 SITE_URL = "https://datasets.nirs4all.org"
 DEFAULT_DESCRIPTION = "A citable, reproducible bank of raw NIRS reference datasets."
@@ -409,11 +410,35 @@ table.data td { overflow-wrap: anywhere; }
 .chart-values summary { cursor: pointer; padding: 8px 0; color: var(--teal-d); }
 .guide-links { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: center; }
 .metric-help { display: inline; font-weight: 400; text-transform: none; letter-spacing: normal; }
-.metric-help summary { display: inline-block; cursor: pointer; border: 1px solid var(--border); border-radius: 50%; width: 1.25em; text-align: center; font-size: .78rem; color: var(--teal-d); list-style: none; }
-.metric-help summary::-webkit-details-marker { display: none; }
+details.metric-help > summary { display: inline-grid; place-items: center; cursor: pointer; border: 1px solid var(--border); border-radius: 50%; min-width: 24px; min-height: 24px; padding: 0; text-align: center; font-size: .78rem; color: var(--teal-d); list-style: none; }
+details.metric-help > summary::-webkit-details-marker { display: none; }
 .metric-help[open] { display: block; }
-.metric-help[open] span { display: block; background: var(--bg-alt); padding: 10px; margin: 6px 0; border-left: 3px solid var(--teal); font-size: .8rem; line-height: 1.6; min-width: 160px; }
+.metric-help[open] > span { display: block; background: var(--bg-alt); padding: 10px; margin: 6px 0; border-left: 3px solid var(--teal); font-size: .875rem; line-height: 1.6; width: min(36ch, calc(100vw - 80px)); white-space: normal; overflow-wrap: anywhere; text-align: left; }
 .metric-help summary:focus-visible, .chart:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+body:has(.help-dialog[open]) { overflow: hidden; }
+.help-dialog {
+  position: fixed; inset: 0; margin: auto; width: min(680px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: 0;
+  border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+  color: var(--text); box-shadow: var(--shadow-lg); overflow: hidden;
+  font-size: 1rem; line-height: 1.7; text-align: left; white-space: normal; overflow-wrap: anywhere;
+}
+.help-dialog[open] { display: flex; flex-direction: column; }
+.help-dialog::backdrop { background: rgba(15,23,42,.5); }
+.help-dialog-header { display: flex; align-items: flex-start; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.help-dialog-header h2 { flex: 1; min-width: 0; font: 600 1.3rem/1.35 var(--display); }
+.help-dialog-close { flex-shrink: 0; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-alt); color: var(--text); font: inherit; font-size: 1.4rem; cursor: pointer; }
+.help-dialog-body { padding: 20px 24px; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.help-documentation { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+.help-documentation > summary { cursor: pointer; color: var(--teal-d); font-weight: 600; }
+.help-documentation h3 { font: 600 1.1rem/1.4 var(--display); margin: 20px 0 10px; }
+.help-documentation p { margin: 0 0 12px; }
+.help-dialog-footer { padding: 14px 24px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.help-dialog :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+@media (max-width: 460px) {
+  .help-dialog-header, .help-dialog-body { padding: 16px; }
+  .help-dialog-footer { padding: 12px 16px; }
+}
 
 /* ── Dataset-page: spectral source cards + per-variable cards ── */
 .source-card {
@@ -451,8 +476,6 @@ table.data td { overflow-wrap: anywhere; }
 .metric-scores > summary { cursor: pointer; font-family: var(--display); font-size: .92rem; font-weight: 600; padding: 10px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .metric-scores > summary span { font-size: .7rem; font-family: var(--mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; color: var(--text-2); }
 .metric-scores > summary em { font-style: normal; font-family: var(--mono); font-size: .72rem; color: var(--text-3); margin-left: auto; }
-.metric-score-table .metric-help summary { display: inline-grid; place-items: center; min-width: 24px; min-height: 24px; padding: 0; }
-.metric-score-table .metric-help[open] span { min-width: 0; max-width: 36ch; }
 .metric-score-table table.data { min-width: 1120px; }
 .metric-score-table td:first-child { min-width: 150px; font-weight: 600; color: var(--text-2); }
 .metric-score-table code { color: var(--teal-d); background: rgba(13,148,136,.07); border: 1px solid rgba(13,148,136,.18); border-radius: 6px; padding: 2px 6px; white-space: nowrap; }
@@ -617,6 +640,7 @@ def page(
 {body}
 {scripts}
 {LIGHTBOX}
+{metric_help_dialog(rel)}
 {GOATCOUNTER}
 </body>
 </html>
@@ -625,6 +649,48 @@ def page(
 
 # GoatCounter privacy-friendly analytics (no cookies), aggregated as one ecosystem page.
 GOATCOUNTER = """<script data-goatcounter="https://nirs4all.goatcounter.com/count" data-goatcounter-settings='{"path": "/datasets"}' async src="//gc.zgo.at/count.js"></script>"""
+
+
+def metric_help_dialog(rel: str) -> str:
+    """Keep explanations outside table layout, with shared documentation available offline."""
+    documentation = "".join(f'<section><h3>{title}</h3>{content}</section>' for title, content in GUIDE_SECTIONS.values())
+    return f"""<dialog id="metric-help-dialog" class="help-dialog" aria-labelledby="metric-help-title" aria-describedby="metric-help-description">
+  <header class="help-dialog-header"><h2 id="metric-help-title"></h2><button type="button" class="help-dialog-close" aria-label="Close help" autofocus>×</button></header>
+  <div class="help-dialog-body">
+    <p id="metric-help-description"></p>
+    <details class="help-documentation"><summary>Read the documentation</summary>{documentation}</details>
+  </div>
+  <div class="help-dialog-footer"><a href="{rel}guide.html">Open the full reading guide</a></div>
+</dialog>
+{METRIC_HELP_SCRIPT}"""
+
+
+# Native dialog supplies focus containment, Escape dismissal and an inert background.
+METRIC_HELP_SCRIPT = """<script>(function(){
+var dialog=document.getElementById('metric-help-dialog');
+if(!dialog||typeof dialog.showModal!=='function')return;
+var title=dialog.querySelector('#metric-help-title'),description=dialog.querySelector('#metric-help-description'),
+    body=dialog.querySelector('.help-dialog-body'),docs=dialog.querySelector('.help-documentation'),origin;
+document.querySelectorAll('.metric-help > summary').forEach(function(trigger){
+  trigger.setAttribute('aria-haspopup','dialog');
+  trigger.setAttribute('aria-controls',dialog.id);
+});
+document.addEventListener('click',function(e){
+  var trigger=e.target.closest('.metric-help > summary');
+  if(trigger){
+    e.preventDefault();origin=trigger;
+    title.textContent=trigger.parentElement.dataset.label;
+    description.textContent=trigger.parentElement.querySelector('span').textContent;
+    docs.open=false;dialog.showModal();body.scrollTop=0;return;
+  }
+  if(e.target.closest('.help-dialog-close'))dialog.close();
+  if(e.target===dialog){
+    var rect=dialog.getBoundingClientRect();
+    if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)dialog.close();
+  }
+});
+dialog.addEventListener('close',function(){if(origin)origin.focus({preventScroll:true});});
+})();</script>"""
 
 
 # Chart zoom: clicking any `.chart` clones its SVG into a centred lightbox (Esc / backdrop to close).
