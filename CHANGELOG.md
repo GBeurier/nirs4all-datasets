@@ -31,7 +31,8 @@ surface is stable in shape but may still change before `1.0`.
   them.
 - Site: explain metrics (question-mark help in a responsive dialog), PCA and score
   interpretation, and the difference between source access and the redistribution
-  tier; correct the spectral profiles and rank binary target classes by frequency.
+  tier; correct the spectral profiles, rank binary target classes by frequency and
+  escape the home provenance heading once.
 - Consume nirs4all-formats 0.2.14, which keeps delimited spectra with missing
   cells as NaN gaps. IO stays at 0.2.11.
 
