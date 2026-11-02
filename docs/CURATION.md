@@ -154,6 +154,15 @@ Published catalog mappings summarize invalid and censored value counts. Detailed
 per-observation issue values remain in the local
 `canonical/curation/mapping.json`, alongside the unchanged original tables.
 
+Declared derivations (`derived_from`, `equivalent_to`) exclude what is derived from a
+target, transitively, from the curated and consumer predictor views. A declared parent
+may name a variable or the source column it was renamed from, and a variable name wins
+over a homonymous source column. Curated tables compare names after normalization, so
+two variables whose names differ only in case or punctuation (`pH` and `p_h`) are
+merged for this purpose, and a metadata variable that shares its normalized name with a
+target stored outside Y is not excluded from the curated view; avoid such collisions in
+descriptors. The consumer views compare exact descriptor names.
+
 ## Reproduce the review and migration
 
 A metadata-only preview, without reading the spectral matrices:
