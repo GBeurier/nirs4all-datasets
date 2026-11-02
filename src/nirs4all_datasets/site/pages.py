@@ -270,7 +270,7 @@ def render_index(catalog: Catalog) -> str:
 {C.HERO_MARKUP}
 <section class="section">
   <div class="container" style="text-align:center">
-    {C.section_head("Provenance &amp; citation", "Built to be <em>cited</em>", "Each dataset carries its DataCite provenance, origin sources, and publication DOIs. Cite the dataset DOI and its origin publications; respect each dataset's own license.")}
+    {C.section_head("Provenance & citation", "Built to be <em>cited</em>", "Each dataset carries its DataCite provenance, origin sources, and publication DOIs. Cite the dataset DOI and its origin publications; respect each dataset's own license.")}
     <a class="btn btn-primary" href="catalog.html">Open the full catalog &rarr;</a>
   </div>
 </section>
