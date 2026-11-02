@@ -2,6 +2,7 @@
 asserts, but the card is built from a real canonical dataset)."""
 from __future__ import annotations
 
+import copy
 import json
 import math
 from typing import Any
@@ -123,7 +124,8 @@ def test_anonymize_card_redacts_alignment_identity() -> None:
         "status": "available", "method": "column", "n_samples": 4, "n_observations_with_identity": 9,
     }
     card = {"alignment": {"level": "sample", "unit": "Three acquisitions per SECRET_VIAL", "n_samples": 4, "identity": identity}}
+    snapshot = copy.deepcopy(card)
     anon = anonymize_card(card)
-    assert "SECRET" not in json.dumps(anon)
+    assert "secret" not in json.dumps(anon).lower()
     assert anon["alignment"]["identity"]["status"] == "available" and anon["alignment"]["identity"]["n_samples"] == 4
-    assert anon["alignment"]["n_samples"] == 4 and card["alignment"]["identity"] == identity
+    assert anon["alignment"]["n_samples"] == 4 and card == snapshot  # the input card is not mutated
