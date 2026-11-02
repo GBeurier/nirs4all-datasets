@@ -5,6 +5,36 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.17] - 2026-11-02
+
+- Align curated variable contracts with the descriptors: declared missing tokens,
+  numeric sentinels and renamed source columns now reach the curated views, and
+  predictors derived (transitively) from a declared target are excluded from the
+  curated and consumer views. The processing hash covers the variable curation
+  directives (type, role, unit, dependencies, explicit dialect overrides), so a
+  changed contract invalidates the affected caches. Published curation mappings
+  summarize invalid and censored values; per-observation detail stays in the local
+  canonical mappings.
+- Rebuild the 297 canonical caches and qualification cards from the verified
+  inputs under the updated contracts, with English provenance and identity
+  narratives. The 0.3.16 cards carried protocol-6 diagnostics migrated to
+  protocol 7 without recomputing the raw kernels; every card now holds protocol-7
+  values computed from the canonical data, so many PCA-based and shape metrics
+  differ from 0.3.16.
+- Delegate second-difference MAD roughness to nirs4all-methods
+  (`SpectralNoiseProxy` through the generic C ABI, no Python numerical fallback).
+  The new `methods` extra requires `nirs4all-methods>=1.3.11` (the first release
+  with the bandwise outputs) and scikit-learn; without it the roughness metrics
+  stay null with an explicit reason. The committed roughness profiles reproduce
+  exactly from the published Methods 1.3.11 and 1.3.13 artifacts (319 source
+  profiles, no mismatch); they still name the development library that produced
+  them.
+- Site: explain metrics (question-mark help in a responsive dialog), PCA and score
+  interpretation, and the difference between source access and the redistribution
+  tier; correct the spectral profiles and rank binary target classes by frequency.
+- Consume nirs4all-formats 0.2.14, which keeps delimited spectra with missing
+  cells as NaN gaps. IO stays at 0.2.11.
+
 ## [0.3.16] - 2026-10-29
 
 - Honor explicitly reviewed numeric/categorical descriptor types over CSV storage
