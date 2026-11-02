@@ -150,5 +150,6 @@ def test_matlab_release_archive_includes_exact_notices_reproducibly(tmp_path: Pa
         expected_time = list(time.gmtime(epoch)[:6])
         expected_time[-1] -= expected_time[-1] % 2  # ZIP's DOS timestamp resolution
         assert {entry.date_time for entry in archive.infolist()} == {tuple(expected_time)}
+        assert {entry.extra for entry in archive.infolist()} == {b""}  # no wall-clock extended timestamps
     subprocess.run(["bash", "-eu", "-c", command], cwd=tmp_path, env=env, check=True)
     assert path.read_bytes() == first

@@ -76,6 +76,7 @@ jobs:
               archive.comment = comment
               for entry, payload in entries:
                   entry.date_time = timestamp
+                  entry.extra = b""  # git archive adds an extended timestamp carrying the wall clock
                   archive.writestr(entry, payload, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
               for notice in notices:
                   entry = zipfile.ZipInfo(f"{prefix}/{notice.as_posix()}", date_time=timestamp)
