@@ -532,7 +532,7 @@ def spectral_noise(x: object, axis: object | None = None) -> dict[str, object]:
         return _proxy_fields("noise", {
             **_nulls(_NOISE_KEYS),
             "availability": "unavailable",
-            "unavailable_reason": f"Second-difference MAD roughness requires nirs4all-methods >= 1.3.10 with ABI >= 2.20 and SpectralNoiseProxy ({type(exc).__name__}).",
+            "unavailable_reason": f"Second-difference MAD roughness requires nirs4all-methods >= 1.3.11 with ABI >= 2.20 and SpectralNoiseProxy ({type(exc).__name__}).",
         })
     # The public native procedure takes a finite DTO plus an explicit validity
     # mask. Zero-fill is transport only; excluded cells never enter the kernel.

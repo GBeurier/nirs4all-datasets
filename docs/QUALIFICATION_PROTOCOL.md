@@ -14,12 +14,13 @@ names and producer/engine/ABI provenance, and preserves the stricter missing-dat
 contract of the quality aggregate. No Python numerical fallback runs; unavailable
 native results remain null with a reason, and older cards remain readable.
 
-Methods 1.3.10 already provides the global procedure and ABI 2.20. The bandwise
-outputs are an extension to that procedure under development, without a new ABI
-entry point or ABI bump. An older native library can return global values with
-bandwise values explicitly unavailable. Before rollout of the extension, release
-and verify an artifact containing it in a clean installation. The Datasets
-`methods` extra requires Methods 1.3.10 or newer and scikit-learn.
+Methods 1.3.10 provides the global procedure and ABI 2.20. Methods 1.3.11 extends
+that procedure with the bandwise outputs, without a new ABI entry point or ABI
+bump. An older native library can return global values with bandwise values
+explicitly unavailable. The Datasets `methods` extra requires Methods 1.3.11 or
+newer and scikit-learn. The committed cards reproduce exactly from the published
+1.3.11 artifact; see the
+[curation ownership roadmap](maintenance/curation_ownership_roadmap.md).
 See the [curation ownership roadmap](maintenance/curation_ownership_roadmap.md)
 for the completed extraction and deferred IO/DAG work.
 
