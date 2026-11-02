@@ -346,6 +346,7 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
         for original in source.columns:
             rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
             alias_names.setdefault(canonical_name(original), set()).add(canonical_name(rule.get("name") or original))
+    output_names = set().union(*alias_names.values()) if alias_names else set()
     for role, source in [("M", metadata), ("Y", targets)]:
         for original in source.columns:
             rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
@@ -355,7 +356,8 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
             if rule.get("equivalent_to"):
                 dependencies.setdefault(canonical_name(rule["equivalent_to"]), set()).add(name)
             original_name = canonical_name(original)
-            if name != original_name and len(alias_names[original_name]) == 1:
+            # A source column name that another variable already owns is a homonym, not an alias of this one.
+            if name != original_name and len(alias_names[original_name]) == 1 and original_name not in output_names:
                 dependencies.setdefault(name, set()).add(original_name)
                 dependencies.setdefault(original_name, set()).add(name)
     for original in targets.columns:
@@ -627,7 +629,10 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
                 thousands_separator=field_rule.get("thousands_separator", variable.thousands_separator),
             )
             field_rule["normalization"] = specification
-    declared = {canonical_name(name): {canonical_name(parent) for parent in parents} for name, parents in _declared_dependencies(variable_specs or []).items()}
+    declared: dict[str, set[str]] = {}
+    for name, parents in _declared_dependencies(variable_specs or []).items():
+        # Names that normalize identically cannot be told apart in the curated tables: merge their parents (the safe direction for leakage).
+        declared.setdefault(canonical_name(name), set()).update(canonical_name(parent) for parent in parents)
     result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields, declared_dependencies=declared)
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
