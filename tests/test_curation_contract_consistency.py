@@ -164,3 +164,16 @@ def test_renamed_metadata_does_not_inherit_a_homonymous_target_name(tmp_path: Pa
     ])
     roles = {item["original_name"]: item["semantic_role"] for item in result.report["mapping"] if item["source_resource"] == "M.csv"}
     assert roles["response"] != "target_copy" and roles["child"] != "target_copy"
+
+
+def test_declared_target_stored_in_metadata_still_excludes_its_descendants(tmp_path: Path) -> None:
+    (tmp_path / "M.csv").write_text("observation_id;raw_response;child;temperature\na;1;5;20\nb;2;6;21\nc;3;7;22\n")
+    (tmp_path / "Y.csv").write_text("observation_id\na\nb\nc\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[
+        Variable(name="response", original_name="raw_response", role="target"),
+        Variable(name="child", derived_from=["response"]),
+        Variable(name="temperature", semantic_role="experimental_context"),
+    ])
+    roles = {item["original_name"]: item["semantic_role"] for item in result.report["mapping"] if item["source_resource"] == "M.csv"}
+    assert roles["child"] == "target_copy" and "child" not in result.metadata
+    assert roles["raw_response"] != "target_copy" and "temperature" in result.metadata
