@@ -37,7 +37,9 @@ surface is stable in shape but may still change before `1.0`.
   tier; correct the spectral profiles, rank binary target classes by frequency and
   escape the home provenance heading once.
 - Consume nirs4all-formats 0.2.14, which keeps delimited spectra with missing
-  cells as NaN gaps. IO stays at 0.2.11.
+  cells as NaN gaps, and nirs4all-io 0.2.14 (native spreadsheet reader, missing
+  targets kept lossless as NaN). The raw-table summary uses IO only for delimited
+  text, which is unchanged.
 
 ## [0.3.16] - 2026-10-29
 
