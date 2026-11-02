@@ -112,3 +112,18 @@ def test_anonymize_card_numeric_stats_are_range_free(canonical_dataset: Any) -> 
         assert stats[field] is None
     assert stats["mean"] in (None, 0.0)
     assert stats["std"] in (None, 1.0)
+
+
+def test_anonymize_card_redacts_alignment_identity() -> None:
+    """Identity narratives and key columns quote authored text and raw column names."""
+    identity = {
+        "conclusion": "The unique sample_id of SECRET_PRODUCT_17 is created from SECRET_KEY_COLUMN.",
+        "unit": "Three acquisitions per SECRET_VIAL", "evidence": [{"script": "scripts/convert_secret.py", "lines": [3]}],
+        "source_columns": ["SECRET_KEY_COLUMN"], "missing_source_columns": ["SECRET_MISSING_COLUMN"],
+        "status": "available", "method": "column", "n_samples": 4, "n_observations_with_identity": 9,
+    }
+    card = {"alignment": {"level": "sample", "unit": "Three acquisitions per SECRET_VIAL", "n_samples": 4, "identity": identity}}
+    anon = anonymize_card(card)
+    assert "SECRET" not in json.dumps(anon)
+    assert anon["alignment"]["identity"]["status"] == "available" and anon["alignment"]["identity"]["n_samples"] == 4
+    assert anon["alignment"]["n_samples"] == 4 and card["alignment"]["identity"] == identity

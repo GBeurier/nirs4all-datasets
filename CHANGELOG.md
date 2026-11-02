@@ -14,7 +14,10 @@ surface is stable in shape but may still change before `1.0`.
   directives (type, role, unit, dependencies, explicit dialect overrides), so a
   changed contract invalidates the affected caches. Published curation mappings
   summarize invalid and censored values; per-observation detail stays in the local
-  canonical mappings.
+  canonical mappings. A declared derivation resolves descriptor names before
+  source-column aliases and is followed through variables that have no source
+  column; the `curate` command writes the same sanitized reports, and anonymized
+  cards mask the alignment identity narrative and key columns.
 - Rebuild the 297 canonical caches and qualification cards from the verified
   inputs under the updated contracts, with English provenance and identity
   narratives. The 0.3.16 cards carried protocol-6 diagnostics migrated to

@@ -29,8 +29,8 @@ for the completed extraction and deferred IO/DAG work.
 The catalog's [reading guide](https://datasets.nirs4all.org/guide.html) explains source access,
 redistribution rights, PCA, metric units and score interpretation. Each card starts with provenance,
 citations, governance and integrity, followed by descriptive profiles and per-source statistics.
-Question-mark controls beside metrics provide a hover hint and a persistent explanation that opens
-with a click, tap, Enter or Space. Chart captions explain what question each plot answers; PCA plots
+Question-mark controls beside metrics open a persistent explanation dialog with a click, tap,
+Enter or Space. Chart captions explain what question each plot answers; PCA plots
 also provide coordinate or variance tables.
 
 PCA summarizes variation in the spectra X without using the target Y. The score plot displays

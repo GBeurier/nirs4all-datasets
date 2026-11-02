@@ -151,6 +151,11 @@ def anonymize_card(card: dict[str, Any]) -> dict[str, Any]:
     if "curation" in out:
         report = out["curation"] or {}
         out["curation"] = {"schema_version": report.get("schema_version"), "grain": report.get("grain"), "view_counts": {name: len(columns) for name, columns in report.get("views", {}).items()}, "mapping": "withheld for anonymized tier"}
+    alignment = out.get("alignment")
+    if isinstance(alignment, dict) and isinstance(alignment.get("identity"), dict):
+        # Identity conclusions, units, evidence and key columns quote authored text and raw column names.
+        alignment["identity"].update(conclusion=_MASK, unit=_MASK, evidence=[], source_columns=[], missing_source_columns=[])
+        alignment["unit"] = _MASK
     if isinstance(out.get("qualification_provenance"), dict):
         out["qualification_provenance"]["diagnostic_domain"] = None
     out.pop("assessment_selection", None)  # Population/context selectors may identify private groups.

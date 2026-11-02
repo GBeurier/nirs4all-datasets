@@ -25,3 +25,24 @@ def test_public_report_summarizes_issues_without_mutating_local_report():
     assert catalog_curation_report(report, anonymized=True) == {
         "schema_version": "1.1", "dataset_id": "sample", "view_counts": {"M": 1, "Y": 0}, "mapping": "withheld for anonymized tier",
     }
+
+
+def test_curate_tree_writes_the_sanitized_report(tmp_path, monkeypatch):
+    import json
+    from types import SimpleNamespace
+
+    from nirs4all_datasets import curation
+
+    leaf = tmp_path / "leaf"
+    leaf.mkdir()
+    (leaf / "dataset_card.json").write_text(json.dumps({"dataset_id": "sample"}), encoding="utf-8")
+    report = {
+        "schema_version": "1.1", "dataset_id": "sample", "views": {"M": ["dose"], "Y": []}, "identity": {"n_samples": 1, "status": "available"},
+        "mapping": [{"original_name": "dose", "value_issues": [{"observation_id": "private-observation", "raw": "private-value", "status": "invalid"}]}],
+    }
+    monkeypatch.setattr(curation, "curate_bundle", lambda *args, **kwargs: SimpleNamespace(report=report, structure=[0], warnings=[]))
+    summary = curation.curate_tree(leaf, tmp_path / "out")
+    assert not summary["errors"]
+    written = json.loads((tmp_path / "out" / "sample.json").read_text(encoding="utf-8"))
+    assert written["mapping"][0]["value_issue_counts"] == {"invalid": 1}
+    assert "private-observation" not in json.dumps(written) and "private-value" not in json.dumps(written)

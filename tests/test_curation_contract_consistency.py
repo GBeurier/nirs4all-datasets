@@ -107,3 +107,35 @@ def test_homonymous_original_metadata_does_not_rename_or_taint_target(tmp_path: 
     context = pd.read_parquet(out / "canonical/curation/M.parquet")
     assert target["treatment"].tolist() == ["0", "1"]
     assert context["metadata_treatment"].tolist() == ["control", "treated"]
+
+
+def test_consumer_dependency_name_wins_over_homonymous_source_alias(tmp_path: Path) -> None:
+    leaf = make_v2_leaf(tmp_path / "alias", targets={"response": "numeric"})
+    descriptor, _ = build_descriptor_from_card(leaf)
+    descriptor.variables.extend([
+        Variable(name="metadata_response", original_name="response"),
+        Variable(name="derived", derived_from=["response"]),
+        Variable(name="temperature"),
+    ])
+    frame = pd.DataFrame({"response": [1, 2], "metadata_response": ["a", "b"], "derived": [3, 4], "temperature": [20, 21]})
+    views = consumer_views(frame, descriptor)
+    assert "derived" not in views["M"] and "temperature" in views["M"]
+    reasons = {row["name"]: row["reason"] for row in views["decisions"]}
+    assert reasons["derived"] == "target_copy_or_declared_derivation"
+
+
+def test_static_dependency_closure_through_absent_intermediate(tmp_path: Path) -> None:
+    leaf = make_v2_leaf(tmp_path / "absent", targets={"response": "numeric"}, extra_meta=["second", "temperature"])
+    metadata = pd.read_csv(leaf / "M.csv", sep=";")
+    metadata["second"], metadata["temperature"] = [3, 5], [20, 21]
+    metadata.to_csv(leaf / "M.csv", sep=";", index=False)
+    descriptor, _ = build_descriptor_from_card(leaf)
+    descriptor.variables.extend([Variable(name="first", derived_from=["response"])])
+    for variable in descriptor.variables:
+        if variable.name == "second":
+            variable.derived_from = ["first"]
+    assert "first" not in metadata  # the intermediate has no source column
+    out = tmp_path / "out"
+    build_canonical(leaf, descriptor, out)
+    columns = pd.read_parquet(out / "canonical/curation/M.parquet").columns
+    assert "second" not in columns and "temperature" in columns
