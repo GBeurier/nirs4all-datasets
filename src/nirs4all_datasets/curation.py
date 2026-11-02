@@ -12,6 +12,7 @@ import json
 import math
 import re
 import unicodedata
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -58,6 +59,28 @@ def _target_dependents(dependencies: dict[str, set[str]], targets: set[str]) -> 
         if expanded == related:
             return related
         related = expanded
+
+
+def _declared_dependencies(variables: Iterable[Variable]) -> dict[str, set[str]]:
+    """Declared derivation graph over descriptor names, read from every declaration.
+
+    A declared parent may name a variable or the source column a variable was renamed
+    from; a descriptor name always wins over a homonymous source column.
+    """
+    variables = list(variables)
+    names = {variable.name for variable in variables}
+    aliases = {variable.original_name: variable.name for variable in variables if variable.original_name}
+
+    def resolve(reference: str) -> str:
+        return reference if reference in names else aliases.get(reference, reference)
+
+    dependencies: dict[str, set[str]] = {}
+    for variable in variables:
+        parents = [*variable.derived_from, *([variable.equivalent_to] if variable.equivalent_to else [])]
+        dependencies.setdefault(variable.name, set()).update(resolve(parent) for parent in parents)
+        if variable.equivalent_to:
+            dependencies.setdefault(resolve(variable.equivalent_to), set()).add(variable.name)
+    return dependencies
 
 
 @lru_cache(maxsize=1)
@@ -284,12 +307,16 @@ class CuratedTables:
     warnings: list[str] = field(default_factory=list)
 
 
-def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame | None = None, *, soilsite: Path | None = None, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, missing_rules: dict[str, dict[str, Any]] | None = None, source_fields: dict[str, dict[str, Any]] | None = None) -> CuratedTables:
+def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame | None = None, *, soilsite: Path | None = None, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, missing_rules: dict[str, dict[str, Any]] | None = None, source_fields: dict[str, dict[str, Any]] | None = None, declared_dependencies: dict[str, set[str]] | None = None, declared_targets: set[str] | None = None) -> CuratedTables:
     """Build curated M/Y at observation grain; raw inputs are never edited or aggregated.
 
     ``missing_rules`` is keyed by ``M:<original_name>`` / ``Y:<original_name>``.
     Numeric sentinel rules must explicitly carry ``confirmed=True``. All rules,
     aliases, conflicts and exclusions are written into the mapping report.
+    ``declared_dependencies`` adds declared derivations of variables that have no
+    source column, so a chain through an absent intermediate still reaches the target.
+    ``declared_targets`` names descriptor targets stored outside Y: they stay where
+    the source put them, but what is derived from them is excluded like any target copy.
     """
     metadata = metadata.copy().reset_index(drop=True)
     targets = targets.copy().reset_index(drop=True) if targets is not None else pd.DataFrame(columns=[_OBS])
@@ -315,12 +342,13 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     missing_rules = missing_rules or {}
     source_fields = source_fields or {}
     target_identities = {canonical_name(name) for name in targets.columns if name != _OBS}
-    dependencies: dict[str, set[str]] = {}
+    dependencies: dict[str, set[str]] = {name: set(parents) for name, parents in (declared_dependencies or {}).items()}
     alias_names: dict[str, set[str]] = {}
     for role, source in [("M", metadata), ("Y", targets)]:
         for original in source.columns:
             rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
             alias_names.setdefault(canonical_name(original), set()).add(canonical_name(rule.get("name") or original))
+    output_names = set().union(*alias_names.values()) if alias_names else set()
     for role, source in [("M", metadata), ("Y", targets)]:
         for original in source.columns:
             rule = {**policy.get("fields", {}).get(role, {}).get(original, {}), **source_fields.get(f"{role}:{original}", {})}
@@ -330,13 +358,15 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
             if rule.get("equivalent_to"):
                 dependencies.setdefault(canonical_name(rule["equivalent_to"]), set()).add(name)
             original_name = canonical_name(original)
-            if name != original_name and len(alias_names[original_name]) == 1:
+            # A source column name that another variable already owns is a homonym, not an alias of this one.
+            if name != original_name and len(alias_names[original_name]) == 1 and original_name not in output_names:
                 dependencies.setdefault(name, set()).add(original_name)
                 dependencies.setdefault(original_name, set()).add(name)
     for original in targets.columns:
         declared = {**policy.get("fields", {}).get("Y", {}).get(original, {}), **source_fields.get(f"Y:{original}", {})}
         target_identities.add(canonical_name(declared.get("name") or original))
-    target_dependents = _target_dependents(dependencies, target_identities)
+    stored_elsewhere = {canonical_name(name) for name in (declared_targets or set())} - target_identities
+    target_dependents = _target_dependents(dependencies, target_identities | stored_elsewhere) - stored_elsewhere
     # Y first ensures M copies/aliases cannot shadow the selected response.
     for role, source in [("Y", targets), ("M", metadata)]:
         frame = source.set_index(_OBS).reindex(universe)
@@ -602,7 +632,11 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
                 thousands_separator=field_rule.get("thousands_separator", variable.thousands_separator),
             )
             field_rule["normalization"] = specification
-    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields)
+    declared: dict[str, set[str]] = {}
+    for name, parents in _declared_dependencies(variable_specs or []).items():
+        # Names that normalize identically cannot be told apart in the curated tables: merge their parents (the safe direction for leakage).
+        declared.setdefault(canonical_name(name), set()).update(canonical_name(parent) for parent in parents)
+    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields, declared_dependencies=declared, declared_targets={variable.name for variable in variable_specs or [] if variable.role.value == "target"})
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
     if any(warning.startswith("Y/M row pairing explicitly assumed;") for warning in warnings):
@@ -651,11 +685,9 @@ def curate_tree(source_tree: Path, output: Path, *, soilsite: Path | None = None
         if only and dataset_id not in only:
             continue
         try:
-            # Dataset cards explicitly marked anonymized must not publish raw mappings.
+            # Tracked reports never carry per-observation issue values; anonymized datasets publish no mapping.
             result = curate_bundle(leaf, dataset_id, soilsite=soilsite, assume_paired_y=assume_paired_y)
-            report = result.report
-            if str(card.get("tier", "")).casefold() == "anonymized":
-                report = {"schema_version": CURATION_VERSION, "dataset_id": dataset_id, "view_counts": {key: len(value) for key, value in result.report["views"].items()}, "mapping": "withheld for anonymized tier"}
+            report = catalog_curation_report(result.report, anonymized=str(card.get("tier", "")).casefold() == "anonymized")
             (output / f"{dataset_id}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
             summary["processed"].append({"dataset_id": dataset_id, "n_observations": len(result.structure), "n_samples": result.report["identity"]["n_samples"], "identity_status": result.report["identity"]["status"], "n_M": len(result.report["views"]["M"]), "n_Y": len(result.report["views"]["Y"]), "warnings": result.warnings})
         except (ValueError, KeyError, OSError) as exc:
@@ -759,14 +791,7 @@ def consumer_views(frame: pd.DataFrame, descriptor: DatasetDescriptor, *, target
     if unknown:
         raise ValueError(f"unknown target variables: {sorted(unknown)}")
     y = [name for name in target_names if name in frame]
-    aliases = {variable.original_name: variable.name for variable in descriptor.variables if variable.original_name}
-    dependencies: dict[str, set[str]] = {}
-    for variable in descriptor.variables:
-        parents = [*variable.derived_from, *([variable.equivalent_to] if variable.equivalent_to else [])]
-        dependencies.setdefault(variable.name, set()).update(aliases.get(parent, parent) for parent in parents)
-        if variable.equivalent_to:
-            dependencies.setdefault(aliases.get(variable.equivalent_to, variable.equivalent_to), set()).add(variable.name)
-    target_dependents = _target_dependents(dependencies, set(target_names))
+    target_dependents = _target_dependents(_declared_dependencies(descriptor.variables), set(target_names))
     m, structure, passport = [], ["sample_id"] if "sample_id" in frame else [], []
     decisions = []
     for variable in descriptor.variables:

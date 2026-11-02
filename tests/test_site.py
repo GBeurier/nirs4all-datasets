@@ -180,6 +180,7 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
     assert '<link rel="canonical" href="https://datasets.nirs4all.org/">' in index
     assert '"@type":"DataCatalog"' in index
+    assert "Provenance &amp; citation" in index and "&amp;amp;" not in index  # eyebrow escaped exactly once
 
 
 def test_index_provenance_follows_hero_before_bank_statistics(tmp_path: Path) -> None:

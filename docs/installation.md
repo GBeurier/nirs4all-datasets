@@ -28,9 +28,9 @@ The base install browses the catalog and downloads public datasets. Optional ext
 numerical methods, modelling objects, and origin file reads to the ecosystem libraries:
 
 `methods`
-: Adds `nirs4all-methods>=1.3.10` and scikit-learn. Methods 1.3.10 supplies the
-  global second-difference roughness procedure. Its bandwise output extension is
-  still in development; an older native library reports unavailable bandwise values.
+: Adds `nirs4all-methods>=1.3.11` and scikit-learn. Methods 1.3.11 supplies the
+  global and bandwise second-difference roughness procedure; an older native library
+  reports unavailable bandwise values.
   Missing native support is explicit and no Python numerical fallback runs. Existing
   cards and catalog rendering remain available. See [qualification provenance](QUALIFICATION_PROTOCOL.md).
 

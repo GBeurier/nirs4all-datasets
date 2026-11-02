@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_tracked_dependency_surfaces_are_consistent() -> None:
     result, _, upstream = release_train.check_tree(ROOT, enforce_contract=False)
     assert result.errors == []
-    assert upstream == {"nirs4all-formats": "0.2.13", "nirs4all-io": "0.2.11"}
+    assert upstream == {"nirs4all-formats": "0.2.14", "nirs4all-io": "0.2.14"}
     assert "pyproject.toml project.license = CECILL-2.1 OR AGPL-3.0-or-later" in result.checked
     assert "pyproject.toml commercial license packaging = True" in result.checked
 
@@ -53,7 +53,7 @@ def test_v1_contract_declares_final_dependency_train() -> None:
     assert result.errors == []
     assert f"release/train-v1.toml release_version = {workspace_version}" in result.checked
     assert contract["release_version"] == workspace_version
-    assert contract["dependencies"] == {"nirs4all-formats": "0.2.13", "nirs4all-io": "0.2.11"}
+    assert contract["dependencies"] == {"nirs4all-formats": "0.2.14", "nirs4all-io": "0.2.14"}
     assert contract["prerequisites"] == {"dag-ml-data": "0.2.13"}
 
 
@@ -150,5 +150,6 @@ def test_matlab_release_archive_includes_exact_notices_reproducibly(tmp_path: Pa
         expected_time = list(time.gmtime(epoch)[:6])
         expected_time[-1] -= expected_time[-1] % 2  # ZIP's DOS timestamp resolution
         assert {entry.date_time for entry in archive.infolist()} == {tuple(expected_time)}
+        assert {entry.extra for entry in archive.infolist()} == {b""}  # no wall-clock extended timestamps
     subprocess.run(["bash", "-eu", "-c", command], cwd=tmp_path, env=env, check=True)
     assert path.read_bytes() == first

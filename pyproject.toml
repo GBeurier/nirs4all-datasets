@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "nirs4all-datasets"
-version = "0.3.16"
+version = "0.3.17"
 description = "A citable, reproducible bank of raw NIRS reference datasets — multi-source/multi-target, tier-governed, with on-demand checksum-verified access from each dataset's origin."
 authors = [
     { name = "Gregory Beurier", email = "gregory.beurier@cirad.fr" },
@@ -62,7 +62,7 @@ dependencies = [
 [project.optional-dependencies]
 # Native roughness qualification uses the existing SpectralNoiseProxy procedure.
 # Import/runtime capability is checked explicitly; catalog rendering stays import-light.
-methods = ["nirs4all-methods>=1.3.10", "scikit-learn>=1.3"]
+methods = ["nirs4all-methods>=1.3.11", "scikit-learn>=1.3"]
 # The nirs4all bridge: NirsDataset.to_nirs4all() + nirs4all-powered card metrics (PCA, outlier filter).
 # The catalog, get()/NirsDataset readers (numpy/pandas), and the site all work WITHOUT this extra — the
 # nirs4all imports are lazy and degrade gracefully (PCA -> None + a card warning; to_nirs4all -> a clear
@@ -74,8 +74,8 @@ nirs4all = [
 # ecosystem readers (never re-implemented here): nirs4all-io owns assembly, nirs4all-formats the
 # vendor decoders. Needed only by the (opt-in) "reproduce from origin" acquisition path.
 io = [
-    "nirs4all-io>=0.2.11",
-    "nirs4all-formats>=0.2.13",
+    "nirs4all-io>=0.2.14",
+    "nirs4all-formats>=0.2.14",
 ]
 dev = [
     "pytest>=7.4.0",

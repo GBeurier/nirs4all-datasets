@@ -10,7 +10,7 @@ from conftest import make_v2_leaf
 
 from nirs4all_datasets.bootstrap import build_descriptor_from_card
 from nirs4all_datasets.canonical import build_canonical
-from nirs4all_datasets.curation import consumer_views
+from nirs4all_datasets.curation import consumer_views, curate_bundle
 from nirs4all_datasets.schema import Variable
 
 
@@ -107,3 +107,73 @@ def test_homonymous_original_metadata_does_not_rename_or_taint_target(tmp_path: 
     context = pd.read_parquet(out / "canonical/curation/M.parquet")
     assert target["treatment"].tolist() == ["0", "1"]
     assert context["metadata_treatment"].tolist() == ["control", "treated"]
+
+
+def test_consumer_dependency_name_wins_over_homonymous_source_alias(tmp_path: Path) -> None:
+    leaf = make_v2_leaf(tmp_path / "alias", targets={"response": "numeric"})
+    descriptor, _ = build_descriptor_from_card(leaf)
+    descriptor.variables.extend([
+        Variable(name="metadata_response", original_name="response"),
+        Variable(name="derived", derived_from=["response"]),
+        Variable(name="temperature"),
+    ])
+    frame = pd.DataFrame({"response": [1, 2], "metadata_response": ["a", "b"], "derived": [3, 4], "temperature": [20, 21]})
+    views = consumer_views(frame, descriptor)
+    assert "derived" not in views["M"] and "temperature" in views["M"]
+    reasons = {row["name"]: row["reason"] for row in views["decisions"]}
+    assert reasons["derived"] == "target_copy_or_declared_derivation"
+
+
+def test_static_dependency_closure_through_absent_intermediate(tmp_path: Path) -> None:
+    leaf = make_v2_leaf(tmp_path / "absent", targets={"response": "numeric"}, extra_meta=["second", "temperature"])
+    metadata = pd.read_csv(leaf / "M.csv", sep=";")
+    metadata["second"], metadata["temperature"] = [3, 5], [20, 21]
+    metadata.to_csv(leaf / "M.csv", sep=";", index=False)
+    descriptor, _ = build_descriptor_from_card(leaf)
+    descriptor.variables.extend([Variable(name="first", derived_from=["response"])])
+    for variable in descriptor.variables:
+        if variable.name == "second":
+            variable.derived_from = ["first"]
+    assert "first" not in metadata  # the intermediate has no source column
+    out = tmp_path / "out"
+    build_canonical(leaf, descriptor, out)
+    columns = pd.read_parquet(out / "canonical/curation/M.parquet").columns
+    assert "second" not in columns and "temperature" in columns
+
+
+def test_static_closure_survives_a_normalized_name_collision(tmp_path: Path) -> None:
+    (tmp_path / "M.csv").write_text("observation_id;p_h;second\na;5;1\nb;6;2\nc;7;3\n")
+    (tmp_path / "Y.csv").write_text("observation_id;response\na;10\nb;20\nc;30\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[
+        Variable(name="response", role="target"),
+        Variable(name="pH", derived_from=["response"]),  # absent from the sources; normalizes like the independent p_h
+        Variable(name="p_h"),
+        Variable(name="second", derived_from=["pH"]),
+    ])
+    roles = {item["original_name"]: item["semantic_role"] for item in result.report["mapping"] if item["source_resource"] == "M.csv"}
+    assert roles["second"] == "target_copy" and "second" not in result.metadata
+
+
+def test_renamed_metadata_does_not_inherit_a_homonymous_target_name(tmp_path: Path) -> None:
+    (tmp_path / "M.csv").write_text("observation_id;response;child\na;1;5\nb;2;6\nc;3;7\n")
+    (tmp_path / "Y.csv").write_text("observation_id;raw_target\na;10\nb;20\nc;30\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[
+        Variable(name="response", original_name="raw_target", role="target"),
+        Variable(name="metadata_response", original_name="response"),
+        Variable(name="child", derived_from=["metadata_response"]),
+    ])
+    roles = {item["original_name"]: item["semantic_role"] for item in result.report["mapping"] if item["source_resource"] == "M.csv"}
+    assert roles["response"] != "target_copy" and roles["child"] != "target_copy"
+
+
+def test_declared_target_stored_in_metadata_still_excludes_its_descendants(tmp_path: Path) -> None:
+    (tmp_path / "M.csv").write_text("observation_id;raw_response;child;temperature\na;1;5;20\nb;2;6;21\nc;3;7;22\n")
+    (tmp_path / "Y.csv").write_text("observation_id\na\nb\nc\n")
+    result = curate_bundle(tmp_path, "synthetic", variable_specs=[
+        Variable(name="response", original_name="raw_response", role="target"),
+        Variable(name="child", derived_from=["response"]),
+        Variable(name="temperature", semantic_role="experimental_context"),
+    ])
+    roles = {item["original_name"]: item["semantic_role"] for item in result.report["mapping"] if item["source_resource"] == "M.csv"}
+    assert roles["child"] == "target_copy" and "child" not in result.metadata
+    assert roles["raw_response"] != "target_copy" and "temperature" in result.metadata
