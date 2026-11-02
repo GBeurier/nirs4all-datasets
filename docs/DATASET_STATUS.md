@@ -7,7 +7,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 ## Summary
 - **297 datasets** — 162 private, 135 public
 - **Processing:** 297 qualified (qualified = metrics computed)
-- **Origin:** 1 degraded, 10 unreachable, 9 unverified, 277 verified
+- **Origin:** 10 unreachable, 9 unverified, 278 verified
 - **Validation (human):** 297 pending
 - **Distribution:** 135 public tier, 162 no personal DOI
 - **Retrieval:** 7 manual_only, 61 missing_delegate, 225 raw_reproducible, 4 token_required
@@ -294,7 +294,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `rod_raman_native_axis_977points_4244c525` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 31 |
 | `rruff_ir` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | 347 |
 | `rruff_raman` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | 12 |
-| `soil_elevation_2024_lake_fire_ecosis` | public | qualified | ✅ | ⚠️ | ⏳ pending | public tier | `raw_reproducible` | — |
+| `soil_elevation_2024_lake_fire_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
 | `timeseries_boeuf_classe_adulteration_ts` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 60 |
 | `timeseries_cafe_instantane_espece_cafe_ts` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 56 |
 | `timeseries_huile_olive_extra_vierge_origine_geographique_ts` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 60 |

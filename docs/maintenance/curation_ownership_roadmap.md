@@ -26,10 +26,10 @@ or `dag-ml-data` as part of this work.
   `diagnostics.spectral_noise_proxy` and the generic C ABI 2.20. Datasets uses
   `n4m.roles.SpectralNoiseProxy`, with an explicit validity mask and producer
   provenance. Bandwise output is an extension of this existing procedure
-  in [Methods PR #46](https://github.com/GBeurier/nirs4all-methods/pull/46);
-  it adds no C ABI entry point or ABI bump. Older native libraries
-  can supply global results while bandwise results remain unavailable. No release
-  or tag for the extension is implied. See the [review](2026-10-30-dcornet-review.md).
+  ([Methods PR #46](https://github.com/GBeurier/nirs4all-methods/pull/46)),
+  released in Methods 1.3.11; it adds no C ABI entry point or ABI bump. Older
+  native libraries can supply global results while bandwise results remain
+  unavailable. See the [review](2026-10-30-dcornet-review.md).
 
 Existing dataset PCA qualification stays in place until the native API is
 shown to match its complete protocol and satisfy its callers: missing-value
@@ -76,10 +76,9 @@ does not change either repository or claim to complete those integrations.
   outputs and requalify from the actual inputs before publishing regenerated
   artifacts. Never edit old manifests or hashes to make stale data appear
   current. A code change or a passing test alone does not rebuild the catalog.
-- Before a package rollout of bandwise results, release a Methods artifact containing the
-  extension and verify a clean install. The `methods` extra requires
-  `nirs4all-methods>=1.3.10` and scikit-learn; the existing global procedure is
-  already available in that Methods release.
+- The bandwise extension is published in Methods 1.3.11, and the `methods` extra
+  requires `nirs4all-methods>=1.3.11` and scikit-learn; the global procedure
+  alone is available since 1.3.10.
 
 ## Verified local reconstruction — 2026-10-30
 
@@ -98,9 +97,21 @@ mappings. No raw or canonical data payload is committed.
 
 Methods validation passed 30 CTest suites, 1,622 Python tests (7 optional skips)
 and 8 Rust generic binding tests. Dataset validation passed with and without the
-native provider; the completion report records the final test counts. Package
-publication of the bandwise extension and a clean-install smoke remain the
-release gate. Precomputed site profiles are bound to the exact tested binary.
+native provider; the completion report records the final test counts.
+Precomputed site profiles record the exact tested development binary.
+
+## Published-artifact verification — 2026-11-02
+
+The bandwise extension is published in nirs4all-methods 1.3.11 (PyPI). In a clean
+target directory holding only that wheel (`n4m` 1.3.11, ABI 2.20.0), the
+second-difference roughness section was recomputed from the canonical source
+Parquet of every one of the 319 source profiles and compared with the committed
+cards: all nine fields (`noise_rms`, `snr`, `snr_db`, bandwise minimum and median,
+worst-band index and axis, roughness proxy, availability) match, with zero
+mismatches at a relative tolerance of 1e-12. The cards therefore reproduce from
+the released artifact. They still name the development library
+(`1.3.10+abi.2.20.0`, SHA-256 `0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3`)
+that produced them, because no card was rewritten to simulate a rebuild.
 
 English narrative text is now maintained in the source contracts and descriptor
 warnings. Seven contracts with translated unit/evidence labels were rebuilt;
