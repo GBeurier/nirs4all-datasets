@@ -307,7 +307,7 @@ class CuratedTables:
     warnings: list[str] = field(default_factory=list)
 
 
-def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame | None = None, *, soilsite: Path | None = None, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, missing_rules: dict[str, dict[str, Any]] | None = None, source_fields: dict[str, dict[str, Any]] | None = None, declared_dependencies: dict[str, set[str]] | None = None) -> CuratedTables:
+def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame | None = None, *, soilsite: Path | None = None, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, missing_rules: dict[str, dict[str, Any]] | None = None, source_fields: dict[str, dict[str, Any]] | None = None, declared_dependencies: dict[str, set[str]] | None = None, declared_targets: set[str] | None = None) -> CuratedTables:
     """Build curated M/Y at observation grain; raw inputs are never edited or aggregated.
 
     ``missing_rules`` is keyed by ``M:<original_name>`` / ``Y:<original_name>``.
@@ -315,6 +315,8 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     aliases, conflicts and exclusions are written into the mapping report.
     ``declared_dependencies`` adds declared derivations of variables that have no
     source column, so a chain through an absent intermediate still reaches the target.
+    ``declared_targets`` names descriptor targets stored outside Y: they stay where
+    the source put them, but what is derived from them is excluded like any target copy.
     """
     metadata = metadata.copy().reset_index(drop=True)
     targets = targets.copy().reset_index(drop=True) if targets is not None else pd.DataFrame(columns=[_OBS])
@@ -363,7 +365,8 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     for original in targets.columns:
         declared = {**policy.get("fields", {}).get("Y", {}).get(original, {}), **source_fields.get(f"Y:{original}", {})}
         target_identities.add(canonical_name(declared.get("name") or original))
-    target_dependents = _target_dependents(dependencies, target_identities)
+    stored_elsewhere = {canonical_name(name) for name in (declared_targets or set())} - target_identities
+    target_dependents = _target_dependents(dependencies, target_identities | stored_elsewhere) - stored_elsewhere
     # Y first ensures M copies/aliases cannot shadow the selected response.
     for role, source in [("Y", targets), ("M", metadata)]:
         frame = source.set_index(_OBS).reindex(universe)
@@ -633,7 +636,7 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
     for name, parents in _declared_dependencies(variable_specs or []).items():
         # Names that normalize identically cannot be told apart in the curated tables: merge their parents (the safe direction for leakage).
         declared.setdefault(canonical_name(name), set()).update(canonical_name(parent) for parent in parents)
-    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields, declared_dependencies=declared)
+    result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields, declared_dependencies=declared, declared_targets={variable.name for variable in variable_specs or [] if variable.role.value == "target"})
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
     if any(warning.startswith("Y/M row pairing explicitly assumed;") for warning in warnings):
