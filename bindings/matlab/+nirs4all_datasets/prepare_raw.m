@@ -1,4 +1,4 @@
-% SPDX-License-Identifier: MIT
+% SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 function out = prepare_raw(request_json, opts_json)
   % Prepare already-retrieved raw resources with the Rust reader stack (JSON status string).
   if nargin < 2, opts_json = ''; end

@@ -24,6 +24,8 @@ from typing import Any
 
 _REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<version>[0-9A-Za-z.+-]+)$")
 _PROJECT_LICENSE = "CECILL-2.1 OR AGPL-3.0-or-later"
+_R_PROJECT_LICENSE = "CeCILL-2.1 | AGPL (>= 3)"
+_BINDING_MANIFESTS = ("bindings/python/Cargo.toml", "bindings/wasm/Cargo.toml")
 _REQUIRED_LICENSE_FILES = (
     "LICENSE",
     "LICENSES/AGPL-3.0-or-later.txt",
@@ -105,6 +107,11 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
     )
     for relative in _REQUIRED_LICENSE_FILES:
         result.expect(f"license file {relative}", (root / relative).is_file(), True)
+    for relative in _BINDING_MANIFESTS:
+        result.expect(f"{relative} package.license", _toml(root / relative)["package"].get("license"), _PROJECT_LICENSE)
+    description = (root / "bindings/r/nirs4alldatasets/DESCRIPTION").read_text(encoding="utf-8")
+    r_license = re.search(r"^License:\s*(.+)$", description, re.MULTILINE)
+    result.expect("R DESCRIPTION License", r_license.group(1).strip() if r_license else None, _R_PROJECT_LICENSE)
     result.expect(
         "Cargo.toml nirs4all-datasets-core dependency",
         _dependency_version(dependencies["nirs4all-datasets-core"], label="Cargo.toml nirs4all-datasets-core"),

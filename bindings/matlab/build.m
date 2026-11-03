@@ -1,4 +1,4 @@
-% SPDX-License-Identifier: MIT
+% SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 % Build the n4ds MEX against the prebuilt nirs4all-datasets-capi cdylib.
 % Set the env vars first (build_and_test.sh does this):
 %   N4DS_INCLUDE  -> dir containing nirs4all_datasets.h

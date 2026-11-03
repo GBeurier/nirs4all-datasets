@@ -5,6 +5,17 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.18] - 2026-11-03
+
+- Licensing metadata only, no code change: every published surface now declares the
+  ecosystem dual license `CECILL-2.1 OR AGPL-3.0-or-later`. The Python extension and
+  WASM binding crates (and so the npm `@nirs4all/datasets-wasm` package, previously
+  published as MIT) carry the dual SPDX expression and ship the AGPL-3.0-or-later and
+  CeCILL-2.1 texts; the R package declares `CeCILL-2.1 | AGPL (>= 3)` instead of
+  `AGPL-3`; the MATLAB/MEX sources and the generated C header drop their stale MIT
+  SPDX headers. `scripts/check_release_train.py` now fails on license drift in the
+  binding and R manifests.
+
 ## [0.3.17] - 2026-11-03
 
 - Align curated variable contracts with the descriptors: declared missing tokens,
