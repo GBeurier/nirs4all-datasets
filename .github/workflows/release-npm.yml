@@ -126,6 +126,8 @@ jobs:
             p.version = process.env.PKG_VER;
             p.publishConfig = { access: "public", provenance: true };
             p.repository = { type: "git", url: "https://github.com/GBeurier/nirs4all-datasets.git", directory: "bindings/wasm" };
+            // npm only auto-includes LICENSE; ship the CeCILL-2.1 text of the dual license too.
+            p.files = [...new Set([...(p.files || []), "LICENSE", "LICENSE-CeCILL-2.1"])];
             fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
             console.log("package.json ->", p.name, p.version);
           '

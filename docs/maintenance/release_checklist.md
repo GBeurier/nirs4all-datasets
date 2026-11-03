@@ -7,8 +7,7 @@ release permanently burns a version number. Branch pushes to `main` never publis
 ## Pre-release (do all before tagging)
 
 - [ ] Green gate + CI green on the release commit (see `quality_gates.md`).
-- [ ] `CHANGELOG.md` has a dated entry for the target version; **reconcile the `MIT` SPDX header vs the
-      `CeCILL/AGPL` license** first.
+- [ ] `CHANGELOG.md` has a dated entry for the target version.
 - [ ] Every cross-manifest version is in sync (`version-sync` green); the manifest is not ahead of the tag
       until the tag exists (`version-guard`).
 - [ ] **Dry-run each registry** via `workflow_dispatch` (`dry_run: true`) — `release-crates`, `release-python`,
