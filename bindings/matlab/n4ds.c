@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: MIT
+/* SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
  * MATLAB/Octave MEX glue for the nirs4all-datasets C ABI.
  *
  *   n4ds('resolve',       index_json, dataset_id)   -> char  (download contract)

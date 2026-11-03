@@ -1,4 +1,4 @@
-% SPDX-License-Identifier: MIT
+% SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 % Smoke test for the MATLAB/Octave binding (offline: resolve / verify / abi).
 % Assumes the `n4ds` mex is on the path (run from bindings/matlab after build.m).
 template = ['{`schema`:`1.0`,`n_datasets`:1,`datasets`:{`demo`:{' ...

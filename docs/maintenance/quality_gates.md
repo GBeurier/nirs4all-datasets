@@ -31,8 +31,8 @@ exception is `dtolnay/rust-toolchain@stable`, left floating **by design** (alway
 
 ## Known gaps / flags (deepest-hardening roadmap)
 
-- **License header mismatch:** `CHANGELOG.md` carries `SPDX-License-Identifier: MIT` while `pyproject.toml`
-  declares `CeCILL-2.1 OR AGPL-3.0-or-later`. **Left unchanged — license identity is a maintainer decision;
-  reconcile before release.**
+- **License identity (resolved in 0.3.18):** every published manifest and source header declares
+  `CECILL-2.1 OR AGPL-3.0-or-later`; `scripts/check_release_train.py` fails on drift in the root,
+  Python/WASM binding and R manifests.
 - No enforced coverage floor.
 - Release fleet is multi-registry to immutable stores — see `release_checklist.md`.
