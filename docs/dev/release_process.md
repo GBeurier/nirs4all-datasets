@@ -117,7 +117,7 @@ Run these before tagging or publishing anything:
    Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
    manifest all agree. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.17, Formats 0.2.14, and IO 0.2.14,
+   the current source train: Datasets 0.3.18, Formats 0.2.14, and IO 0.2.14,
    then verifies those exact crates plus IO's DMD 0.2.13 prerequisite on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not
@@ -326,8 +326,8 @@ without breaking existing pins. For npm, `npm deprecate`. For the GitHub Release
 
 - **crates.io requires a valid SPDX expression.** This repo uses
   **`CECILL-2.1 OR AGPL-3.0-or-later`** in `[workspace.package].license`, which
-  crates.io accepts verbatim. The R distribution selects `AGPL-3` from that
-  compatible dual licence for its statically linked source package.
+  crates.io accepts verbatim. Every binding manifest carries the same expression;
+  the R package spells it `CeCILL-2.1 | AGPL (>= 3)`.
 - **crates.io rate-limits NEW crates** (burst ~5, then throttled). Publishing the
   three new names at once can fail with `429 — too many new crates`; wait for the
   stated reset and re-run `release-crates` (already-uploaded crates skip; only the

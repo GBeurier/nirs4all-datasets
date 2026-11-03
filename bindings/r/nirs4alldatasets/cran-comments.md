@@ -40,8 +40,8 @@ Maintainer: Gregory Beurier (CIRAD) <gregory.beurier@cirad.fr>
   remaining bytes are required for an offline, self-contained CRAN build.
 * The release is submitted only after the exact source tarball has **0 ERRORs and
   0 WARNINGs** under `R CMD check --as-cran`, including the CRAN macOS builder.
-* License: `AGPL-3`; `inst/COPYRIGHTS` is generated from the exact vendored Cargo
-  dependency closure and records the bundled Rust licence/authorship inventory.
+* License: `CeCILL-2.1 | AGPL (>= 3)` (SPDX `CECILL-2.1 OR AGPL-3.0-or-later`);
+  `inst/COPYRIGHTS` is generated from the exact vendored Cargo dependency closure and records the bundled Rust licence/authorship inventory.
 * The same Rust core powers the project's Python (PyPI), JavaScript / WebAssembly
   (npm), and C-ABI consumers.
 

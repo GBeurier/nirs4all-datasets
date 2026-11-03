@@ -8,7 +8,7 @@
  * mirrors the latest build so downstream packagers can pin the header without
  * invoking cargo.
  *
- * SPDX-License-Identifier: MIT
+ * SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
  */
 
 #ifndef NIRS4ALL_DATASETS_H
