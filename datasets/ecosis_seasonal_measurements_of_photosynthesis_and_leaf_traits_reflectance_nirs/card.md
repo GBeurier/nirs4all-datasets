@@ -72,6 +72,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=48, missing=0, classes=1, top explicit_open (×48) |
 | usage_scope | metadata | categorical | *Not specified.* | n=48, missing=0, classes=1, top public_reuse_possible (×48) |
 | notes | metadata | categorical | *Not specified.* | n=48, missing=0, classes=1, top EcoSIS package seasonal-measurements-of-photosynthesis-and-leaf-traits-in-scarlet-oak, no interpolation applied by project. (×48) |
+| source_Sample_ID | metadata | categorical | *Not specified.* | n=48, missing=0, classes=48, top 15051 (×1) |
+| source_Measurement_Date | metadata | categorical | *Not specified.* | n=48, missing=0, classes=8, top 20190529 (×6) |
+| source_Species | metadata | categorical | *Not specified.* | n=48, missing=0, classes=1, top QUCO2 (×48) |
+| source_Location | metadata | categorical | *Not specified.* | n=48, missing=0, classes=1, top BNL_Forest (×48) |
 
 ## Statistics — splits
 
@@ -82,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -92,7 +96,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 18 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 18 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -113,6 +117,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f2706f3d482ddd13b954a9d87f2b9444a8039006f74a52ff306896d702dc6115`
-- **Processing hash:** `4494c84637a00e883c2af55124d5fd166cf4823b4b41bdbcfedbe600997d9480` | **metadata hash:** `f6ec8d76fba041e47b303373db8c791ef1f3990f8e3614b148186f9dd4672a6d`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `ad08132efa3c524192674415dd55b5ec33944e99b9d351a0c7e404dea05ae164`
+- **Processing hash:** `b5e89ad0238999e91e52aae22ea52274d859483fe4d7fcf37f60b9a3e90d6adc` | **metadata hash:** `ec649ad1b2a6ff5733eccadd7d6999a2853a5e17196e8167a9c83c33e09bd0ae`

@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top manual_review_needed (×6) |
 | usage_scope | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top private_use_only (×6) |
 | notes | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top none (×6) |
+| source_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Plate Window Glass (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top manmade (×6) |
+| source_class | metadata | categorical | *Not specified.* | n=6, missing=0, classes=2, top Roofing Material (×4) |
+| source_subclass | metadata | categorical | *Not specified.* | n=6, missing=0, classes=4, top Rubber (×3) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Solid (×6) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top 0796UUUGLS (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top National Photographic Interpretation Center (×6) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top All (×6) |
+| source_origin | metadata | categorical | *Not specified.* | n=6, missing=0, classes=2, top Spectra obtained from the Noncoventional Exploitation FactorsData System of the National Photographic Interpretation Center. (×5) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top N/A (×6) |
+| source_description | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Unweathered, transparent construction plate window glass. Original ASTER Spectral Library name was jhu.becknic.manmade.construction.glass.solid.0796uuu.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×6) |
+| source_first_column | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top X (×6) |
+| source_second_column | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Y (×6) |
+| source_x_units | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Wavelength (micrometers) (×6) |
+| source_y_units | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Reflectance (percent) (×6) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=6, missing=0, range 0.3–0.3, mean 0.3 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=6, missing=0, range 14–14, mean 14 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=6, missing=0, range 551–551, mean 551 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top none (×6) |
+| source_material_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Plate Window Glass (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top manmade (×6) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top manmade.generalconstructionmaterial.glas.solid.all.0796uuugls.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `670731f0ae058ac56b0ea4a3eeaf3993d6f9a0678091ebaab446a8b585f929c3`
-- **Processing hash:** `3ef63390e61ca402fef9674a0192c6e45da5626d7292f19c107d1e69f8c77bf1` | **metadata hash:** `f01a53249588f90f752403cdb12cc10641500b9b3dd55cb4474e36fa7ee60536`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `bec9f88ca773f4ba13f2ca2f8858717b8d3cbacb7858e8fdcfb3e68b9c07a6da`
+- **Processing hash:** `1b111ec8c3a082a06c6f416ac31b1e918fdc34491362b6aeee2de96e4ca0fc93` | **metadata hash:** `132cf87fe8470c5f67444b101a5cdd71c933d0103fb8ffe5f3bcf4bfd343504f`

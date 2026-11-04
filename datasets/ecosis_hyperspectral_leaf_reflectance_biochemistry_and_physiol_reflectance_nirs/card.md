@@ -55,6 +55,17 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top explicit_open (×118) |
 | usage_scope | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top public_reuse_possible (×118) |
 | notes | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top EcoSIS package hyperspectral-leaf-reflectance--biochemistry--and-physiology-of-droughted-and-watered-crops, no interpolation applied by project. (×118) |
+| source_uniquefield | metadata | categorical | *Not specified.* | n=118, missing=0, classes=118, top 2019-07-24_02_1_canopy (×1) |
+| source_Location | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top field (×118) |
+| source_Paired_Spectra | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top canopy (×118) |
+| source_Plant | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top NA (×118) |
+| source_Plot | metadata | numeric | *Not specified.* | n=118, missing=0, range 2–17, mean 8.331 ± 4.676 |
+| source_Rep | metadata | numeric | *Not specified.* | n=118, missing=0, range 1–3, mean 2 ± 0.8269 |
+| source_Species | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top CUPE (×118) |
+| source_Days_Into_Treatment | metadata | numeric | *Not specified.* | n=118, missing=0, range 19–35, mean 25.38 ± 5.304 |
+| source_Measurement_Date | metadata | categorical | *Not specified.* | n=118, missing=0, classes=5, top 8/2/19 (×33) |
+| source_Instrument | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top SE_PSR_Plus (×118) |
+| source_Pre_or_Post_Treatment | metadata | categorical | *Not specified.* | n=118, missing=0, classes=1, top post (×118) |
 
 ## Statistics — splits
 
@@ -65,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 5 fields, Y: 2 fields, measurements: 1 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 2 fields, passport: 35 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +108,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a5f229754fa46db03c1352e5fd96aeab2d86dc83b89a3cfd883e3c51e7fe16a2`
-- **Processing hash:** `22dc156d450a169d73f4a8db79a04d6a6896d7fa5894ce9d4b8c8534bdb0358f` | **metadata hash:** `6ae9f34a68e98eb1385c84463bc8aa63e37b788314cd0cfccc608149c2e8b894`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `066280ad6b8709c6ce0a629829bcc9a8e688aeb01d9325c0f7fa2fceb4a9b55e`
+- **Processing hash:** `b50532f4c3ee3258e6750145e591312e195de4126c54150b57e44f82738e2d68` | **metadata hash:** `37f07cc5ee11168f258d872abe3603b9efe1167e849f9de9bba5cb9e9d18f777`

@@ -46,6 +46,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 1139,
+      "in_one_source_only": 1139,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 1139
+      }
+    },
     "technical_repetitions": null,
     "unit": "Repeated measurements of the same fruit identifier"
   },
@@ -198,11 +207,9 @@
         "m_instrument_context"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:03.016044+00:00",
+  "generated_at": "2026-11-03T23:45:48.534720+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -223,10 +230,10 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "de2bcd22617ea626b5224f4e8c562dbb87b315029c275cc0afba870c377d2d6b",
+    "content_hash": "6a40f18b79490c36fa5e6bcac1a4fb609a04cae478e84b5e439b5ac15f12a4f8",
     "manifest": "manifest.json",
-    "metadata_hash": "25be654bb710c25426add5ed413a08855c10d149ae1fc80da691286064e67034",
-    "processing_hash": "5501c04cbc6c5d7e6363cbe2f8e8254cb7aa45bf4ce5cd9096e9adff7b67c479"
+    "metadata_hash": "74bff84224d264fef4d92b43db7194ddb5c8ff1a42792b7b9350461585b63d05",
+    "processing_hash": "e9a1d10cb3f916de254896126f8a966cc7df2a320213b73402c770eda9d92d0a"
   },
   "protocol_version": "7",
   "provenance": {
@@ -251,7 +258,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: Repeated measurements of the same fruit identifier; NIR dates vary over the follow-up."
     ]
   },
@@ -875,15 +881,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9994868646566595,
+          "effective_rank": 1.63,
+          "n_components_95": 2,
+          "n_components_99": 4
         },
         "mean_max": 0.0008978004706523941,
         "mean_min": -0.0004984861924184081,
         "n_outliers": 1009,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.8669616098453574,
+            0.10955414263317431,
+            0.01265953248621415,
+            0.004057717208894715,
+            0.0030966977930998833,
+            0.0017332488846545176,
+            0.0007879457196783939,
+            0.0003489570244289426,
+            0.00015828465930876748,
+            0.00012872840184836488,
+            0.00011814802944369078,
+            0.00011120993156184023,
+            7.73898381886078e-05,
+            6.633373400343756e-05,
+            2.5906445223795486e-05,
+            2.0032026221764185e-05,
+            1.6356003524305153e-05,
+            1.4666106594943648e-05,
+            8.726304423477148e-06,
+            7.465112613653074e-06,
+            5.8817950924609584e-06,
+            4.625690979273882e-06,
+            3.928327020017309e-06,
+            3.464119250003664e-06,
+            2.7754643103110642e-06,
+            2.7488586550010996e-06,
+            2.3303331653131547e-06,
+            2.1675109769829457e-06,
+            2.027986530438417e-06,
+            1.898108171230329e-06
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 0.023889728368366,
@@ -1243,8 +1283,8 @@
             "noise_rms": 3.1826244380222005e-06,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -5331,19 +5371,134 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9987081495055222,
+        "imbalance_ratio": 5.0,
+        "minority_fraction": 0.0005022601707684581,
+        "n_classes": 1139,
+        "normalized_entropy": 0.9719534713765011
+      },
+      "denominator": "canonical_observations",
+      "name": "source_sample_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1139,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_id",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_id",
+        "present": 1991,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 1991,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 1991,
+        "n_classes": 1139,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "1"
+          },
+          {
+            "count": 5,
+            "name": "2"
+          },
+          {
+            "count": 5,
+            "name": "3"
+          },
+          {
+            "count": 5,
+            "name": "4"
+          },
+          {
+            "count": 5,
+            "name": "5"
+          },
+          {
+            "count": 5,
+            "name": "6"
+          },
+          {
+            "count": 5,
+            "name": "7"
+          },
+          {
+            "count": 5,
+            "name": "8"
+          },
+          {
+            "count": 5,
+            "name": "9"
+          },
+          {
+            "count": 5,
+            "name": "10"
+          },
+          {
+            "count": 5,
+            "name": "11"
+          },
+          {
+            "count": 5,
+            "name": "12"
+          },
+          {
+            "count": 5,
+            "name": "13"
+          },
+          {
+            "count": 5,
+            "name": "14"
+          },
+          {
+            "count": 5,
+            "name": "15"
+          },
+          {
+            "count": 5,
+            "name": "16"
+          },
+          {
+            "count": 5,
+            "name": "17"
+          },
+          {
+            "count": 5,
+            "name": "18"
+          },
+          {
+            "count": 5,
+            "name": "19"
+          },
+          {
+            "count": 5,
+            "name": "20"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: column 'Variety' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'Days in Room Temp' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'harvest_date' varies within a sample_id; retained at observation grain.",
-    "conversion: variables: column 'nir_date' varies within a sample_id; retained at observation grain.",
-    "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
+    "conversion: variables: column 'nir_date' varies within a sample_id; retained at observation grain."
   ]
 }

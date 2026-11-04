@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top manual_review_needed (×6) |
 | usage_scope | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top private_use_only (×6) |
 | notes | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top soil.aridisol.camborthid.none.all.89p1772.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Light yellowish brown loamy sand (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top soil (×6) |
+| source_class | metadata | categorical | *Not specified.* | n=6, missing=0, classes=2, top Aridisol (×4) |
+| source_subclass | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Camborthid (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top none (×6) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top 89P1772 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top JHU (×6) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top All (×6) |
+| source_origin | metadata | categorical | *Not specified.* | n=6, missing=0, classes=4, top Kit Carson Co., Co. via USDA Soil Conservation service. (×3) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top N/A (×6) |
+| source_description | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top The parent material is alluvium material over eolian. Light yellowish brown loamy sand, (sandy, mixed, thermic typic camborthid). Original ASTER Spectral Library name was jhu.becknic.soil.aridisol.camborthid.coarse.89P1772.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×6) |
+| source_first_column | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top X (×6) |
+| source_second_column | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Y (×6) |
+| source_x_units | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Wavelength (micrometers) (×6) |
+| source_y_units | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top Reflectance (percent) (×6) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=6, missing=0, range 14.98–14.98, mean 14.98 ± 1.946e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=6, missing=0, range 0.4–0.4, mean 0.4 ± 6.081e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=6, missing=0, range 2868–2868, mean 2868 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top soil.aridisol.camborthid.none.all.89p1772.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top Light yellowish brown loamy sand (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=6, missing=0, classes=1, top soil (×6) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=6, missing=0, classes=6, top soil.aridisol.camborthid.none.all.89p1772.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `cd4dcb17df832623f03ace34b5e154b9b7b9e91b7b480b7348cf3b2b297882fb`
-- **Processing hash:** `148b2564269a9fa5a92784c3c4cacd019bf8b0799fd0291ca54bbaa92efdf12c` | **metadata hash:** `7c8c1093807de1a0af9f2eb6846dad56c0eb0e14db6a5349ce242c0f53ce8728`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `f1a5ccacdb3e4433c26e4e299f5b694868f6eddcb2e640d54c187d523402cb9b`
+- **Processing hash:** `28061a0ac280a484b627ac1546c0592704a979b907912eb518d56655dec53958` | **metadata hash:** `d92aba395138003babfed75733e0bb4c6df6122ef45d2681dae3f58c7accf7e8`

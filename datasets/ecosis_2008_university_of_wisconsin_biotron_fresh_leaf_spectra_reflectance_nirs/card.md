@@ -66,6 +66,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=87, missing=0, classes=1, top explicit_open (×87) |
 | usage_scope | metadata | categorical | *Not specified.* | n=87, missing=0, classes=1, top public_reuse_possible (×87) |
 | notes | metadata | categorical | *Not specified.* | n=87, missing=0, classes=1, top EcoSIS package 2008-university-of-wisconsin-biotron-fresh-leaf-spectra-and-gas-exchange-leaf-traits, no interpolation applied by project. (×87) |
+| source_Spectra | metadata | categorical | *Not specified.* | n=87, missing=0, classes=87, top BIOTRON_NASP_1-16REP1_LC_REFL (×1) |
+| source_Room_Temp | metadata | categorical | *Not specified.* | n=87, missing=0, classes=3, top 23/30 (×30) |
+| source_Rep | metadata | numeric | *Not specified.* | n=87, missing=0, range 1–2, mean 1.448 ± 0.5002 |
+| source_Measurement_Date | metadata | categorical | *Not specified.* | n=87, missing=0, classes=4, top 9/29/08 (×26) |
 
 ## Statistics — splits
 
@@ -76,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -86,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 3 fields, Y: 12 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 12 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -112,6 +116,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `9a5e84d9c32ee5fb0692096ed0c89542943597f75827f9ce440cf6c41bcda0e8`
-- **Processing hash:** `625f52368951ec7e60399d9f6059e754b1492278451d03f09ead792bf3ee08f7` | **metadata hash:** `ecf825b706e7e5d57bed7d0b92a50242fec55349bddd601a03b4eec0e4612efc`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `cf962f61f6a4dbafee6f3b95b6cd6a41f6d00af6251833948a827bcd2a205c07`
+- **Processing hash:** `4eb7aab30544b6c7109114de82e964d80f47b6724c0a371e3fdb2275087eb909` | **metadata hash:** `a7dab4a090e1c58001f4f8977ca7ca70840b3e93422606ed87e3b5721afdc3af`

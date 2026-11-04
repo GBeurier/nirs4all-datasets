@@ -45,6 +45,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=192, missing=0, range 4000–4000, mean 4000 ± 0 |
 | n_points_original | metadata | numeric | *Not specified.* | n=192, missing=0, range 2001–2001, mean 2001 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=192, missing=0, classes=1, top Aligned raw FT-NIR spectra for green and roasted coffee with roasted coffee sensory cup quality. (×192) |
+| source_file_green | metadata | categorical | *Not specified.* | n=192, missing=0, classes=1, top RawSpectra_GreenCoffee.xlsx (×192) |
+| source_file_roasted | metadata | categorical | *Not specified.* | n=192, missing=0, classes=1, top RawSpectra_RoastedCoffee.xlsx (×192) |
+| source_file_targets | metadata | categorical | *Not specified.* | n=192, missing=0, classes=1, top SensoryQuality_RoastedCoffee.xlsx (×192) |
 
 ## Statistics — splits
 
@@ -62,13 +65,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/nz2fr76trm/3`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/nz2fr76trm/snapshot/3`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/nz2fr76trm/files?folder_id=root&version=3&$start=0&$limit=1000`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate. The number of levels of a Rep factor is not used as the number of spectra per sample.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +90,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6e02c483879b83a80b498bf6c8211ddc56887d877e1e80dc2d865190804dc957`
-- **Processing hash:** `7b0e9baf531e0136f1fe8b9f557d215ffc336b5d95e43f6cde1deb4afe46ad0f` | **metadata hash:** `9721549272b093a156f8b1c5c31d96fcc7b45388c938e69e7991a03ab7eec586`
+- **Processing hash:** `fb7839a9d7ef225ab2b4a33d81009ef25e007c8ecc1d585fe27b47c4380633c0` | **metadata hash:** `771815ac74349db69ccf5dd4205fefc53a04bbb62352149d4cbd5c9d52118a11`

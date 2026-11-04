@@ -66,6 +66,15 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=325, missing=0, classes=1, top explicit_restricted (×325) |
 | usage_scope | metadata | categorical | *Not specified.* | n=325, missing=0, classes=1, top private_use_only (×325) |
 | notes | metadata | categorical | *Not specified.* | n=325, missing=0, classes=1, top EcoSIS package leaf-reflectance-and-tratis-of-floating-and-emergent-macrophytes, no interpolation applied by project. (×325) |
+| source_ID | metadata | categorical | *Not specified.* | n=325, missing=0, classes=325, top 1 (×1) |
+| source_code | metadata | categorical | *Not specified.* | n=325, missing=0, classes=231, top TNmA1 (×4) |
+| source_USDAsymbol | metadata | categorical | *Not specified.* | n=325, missing=0, classes=6, top TRNA (×154) |
+| source_year | metadata | numeric | *Not specified.* | n=325, missing=0, range 2016–2018, mean 2017 ± 0.7081 |
+| source_Lake1 | metadata | categorical | *Not specified.* | n=325, missing=0, classes=3, top Mantova (×225) |
+| source_code_aux | metadata | categorical | *Not specified.* | n=325, missing=0, classes=231, top TNmA1 (×4) |
+| source_USDAsymbol_aux | metadata | categorical | *Not specified.* | n=325, missing=0, classes=6, top TRNA (×154) |
+| source_year_aux | metadata | numeric | *Not specified.* | n=325, missing=0, range 2016–2018, mean 2017 ± 0.7081 |
+| source_Lake1_aux | metadata | categorical | *Not specified.* | n=325, missing=0, classes=3, top Mantova (×225) |
 
 ## Statistics — splits
 
@@ -76,7 +85,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -86,7 +95,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 13 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 13 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,6 +117,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8c3d99eb77af143533035dfd9ade88727c6bf5c2064637ed89d1b21a39cee4de`
-- **Processing hash:** `0e79bdd1a696f7adf5bec0b31a2245c4e43a24f5c49746a6ebb7908fa41e6df5` | **metadata hash:** `ea9ace553efb6df9fff8b188f77af31aa47b6fc62b16dbbfc45b99b9df06a51d`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `4dc0f214bd4f0f214a01b19ebe4d5cb9eb8e691503a8820c517ad11a4bd60c19`
+- **Processing hash:** `a8e1e8aa78d1e2148e3ffe2428347208e65e2401473a26265dc0c22a521f8a57` | **metadata hash:** `86258e5391447c7d2a1a9a7de8d495b8fbcc6a4b6e4345656029946e7730a968`

@@ -56,6 +56,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | notes | metadata | categorical | *Not specified.* | n=490, missing=0, classes=1, top Spectra original-format file is comma-separated with decimal comma, chemical original-format file is OOXML Excel under a .tab extension. (×490) |
 | LAT_WGS84 | metadata | numeric | *Not specified.* | n=490, missing=11, range 47.38–48.97, mean 48.03 ± 0.4279 |
 | LONG_WGS84 | metadata | numeric | *Not specified.* | n=490, missing=11, range -4.826–-1.129, mean -2.586 ± 0.8685 |
+| source_file_chemical | metadata | categorical | *Not specified.* | n=490, missing=0, classes=1, top chemical_analysis.tab (×490) |
 
 ## Statistics — splits
 
@@ -71,14 +72,13 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ### Origin sources (where the bytes live)
 
 - Portail Data INRAE — kind `dataverse`, access `open`, license *Not specified.*: `10.15454/E1JI8U`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://spdx.org/licenses/etalab-2.0.html`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://www.sciencedirect.com/science/article/pii/S2352340921007563`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 9 fields, measurements: 0 fields, passport: 24 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 2 fields, Y: 9 fields, passport: 24 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +98,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `5c4e49ef18f18b4a4f86e04109cde96168104074575e855b03f174cfb77d9daf`
-- **Processing hash:** `fe81b8186a260861959672ec7f26434217ca61ccac821e10382eba03fd5ef681` | **metadata hash:** `ffda83e9f116a9c0b81b66cf45d5ea0c5186d5decafc4f94ff0cf873ddb61597`
+- **Processing hash:** `c9a3f7f5e78cdc29f1801dc5320a296c4c0a47cbfcf32c9aca7e9d5b0918ef16` | **metadata hash:** `cfb9dffc67ca2e54a9754eed2724907306cddf8c54b7242b6d59e37358fc8b4b`

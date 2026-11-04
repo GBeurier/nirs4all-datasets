@@ -66,6 +66,16 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=492, missing=0, classes=1, top explicit_open (×492) |
 | usage_scope | metadata | categorical | *Not specified.* | n=492, missing=0, classes=1, top public_reuse_possible (×492) |
 | notes | metadata | categorical | *Not specified.* | n=492, missing=0, classes=1, top EcoSIS package freeze-dried-leaf-spectra-and-measured-traits-from-the-sierra-nevada--ca--in-july-2023, no interpolation applied by project. (×492) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=492, missing=0, classes=82, top CA2023_001 (×6) |
+| source_replicate_id | metadata | categorical | *Not specified.* | n=492, missing=0, classes=6, top FF_00000 (×82) |
+| source_individualspectra_id | metadata | categorical | *Not specified.* | n=492, missing=0, classes=492, top CA2023_001_FF_00000 (×1) |
+| source_sampling_date | metadata | categorical | *Not specified.* | n=492, missing=0, classes=9, top 7/7/2023 (×84) |
+| source_plot_name | metadata | categorical | *Not specified.* | n=492, missing=0, classes=57, top SL_023 (×18) |
+| source_latitude_of_plot | metadata | numeric | *Not specified.* | n=492, missing=0, range 37.03–37.95, mean 37.43 ± 0.3473 |
+| source_longitude_of_plot | metadata | numeric | *Not specified.* | n=492, missing=0, range -119.8–-119.1, mean -119.5 ± 0.2668 |
+| source_trimble_location_within_plot | metadata | categorical | *Not specified.* | n=492, missing=0, classes=5, top Center (×402) |
+| source_common_name | metadata | categorical | *Not specified.* | n=492, missing=0, classes=30, top Incense cedar (×54) |
+| source_needle_age | metadata | categorical | *Not specified.* | n=492, missing=294, classes=2, top O (×102) |
 
 ## Statistics — splits
 
@@ -86,7 +96,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: source_replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 7 fields, Y: 15 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 15 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,6 +116,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `964c9f3e9f079a9628a864b3e3daf2d329b7ff9dbb8a63de41a9c8e92b1e61fd`
-- **Processing hash:** `b0ec43d92c6eeef8c3eaf534d822b966ca954e82ce8b8cb8bc1a9b7286b82864` | **metadata hash:** `762a3c8ca62ffa7538e8248ef2d461a7f1801b1d2f6c08800430a585c922b555`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `3b6b5cfd30ce77de0f2d9c1f11746b415ef1623ecc96e0d7a3c999720c6e97af`
+- **Processing hash:** `9c18ae72dd693ae9e8fff73a358554c9b9a41d7ddd62bc42d9770569cf39e0d0` | **metadata hash:** `cab347503021dc937107b6331f9590823f0dab6a852992c23fb897d3d41b30a6`

@@ -49,6 +49,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=1, top manual_review_needed (×47393) |
 | usage_scope | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=1, top private_use_only (×47393) |
 | notes | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=1, top Compiled source CSV standardized as-is, no project interpolation, resampling, or historical split applied. (×47393) |
+| source_dataset_id | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=37, top Dataset#23 (×25968) |
+| source_dataset_name | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=36, top Leaf level spectra and LMA for a set of trees, forbs, vines and grasses collected in Madison, WI (×25968) |
+| source_site_id | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=101, top Site#33 (×26139) |
+| source_original_dataset_url | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=36, top https://data.ecosis.org/dataset/leaf-level-spectra-and-lma-for-a-set-of-trees--forbs--vines-and-grasses-collected-in-madison--wi (×25968) |
+| source_original_dataset_doi_or_url | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=36, top https://ecosis.org/package/7433af7d-fbbd-4617-8df4-4d892f0d4357 (×25968) |
+| source_compilation_file | metadata | categorical | *Not specified.* | n=47393, missing=0, classes=1, top Paired leaf traits and leaf spectra dataset.csv (×47393) |
 
 ## Statistics — splits
 
@@ -69,8 +75,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 9 fields, Y: 4 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 9 fields, Y: 4 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,6 +96,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `552bb08a2748f805d79862232e2dbb104cb0549edf94669e0f85fcab24d58a31`
-- **Processing hash:** `0f3b7abbf87b3804eb6b4ec8d7a3382363158cbf4cabd87c2959ba3bdfb6b0ef` | **metadata hash:** `20e1ab471f70da2d3353382fd2de6368f109b95ad55e20d867ceb3b5be6c17c7`
+- **Processing hash:** `4ddce625c6f6ea0373a42263872e5e9ce613a50ee90456b133b99af71f59c970` | **metadata hash:** `9f755ae2cf73ac58f716c44631984edd3f267d8d48622e93583fd4d5b1cf9ed6`

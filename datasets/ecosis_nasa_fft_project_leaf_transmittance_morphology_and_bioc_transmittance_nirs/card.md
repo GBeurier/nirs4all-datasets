@@ -66,6 +66,31 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top explicit_open (×765) |
 | usage_scope | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top public_reuse_possible (×765) |
 | notes | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top EcoSIS package nasa-fft-project-leaf-transmittance-morphology-and-biochemistry-for-northern-temperate-forests, no interpolation applied by project. (×765) |
+| source_SampleID | metadata | categorical | *Not specified.* | n=765, missing=0, classes=765, top BH02_ACRU_B_2008 (×1) |
+| source_Spectra_Name | metadata | categorical | *Not specified.* | n=765, missing=0, classes=765, top BH02_ACRU_B_IS_TRAN (×1) |
+| source_Site | metadata | categorical | *Not specified.* | n=765, missing=0, classes=10, top NC (×159) |
+| source_Site_Name | metadata | categorical | *Not specified.* | n=765, missing=0, classes=10, top Flambeau River SF / Cheq. NF (×159) |
+| source_State | metadata | categorical | *Not specified.* | n=765, missing=0, classes=3, top Wisconsin (×488) |
+| source_Plot | metadata | categorical | *Not specified.* | n=765, missing=0, classes=83, top NC14 (×24) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=765, missing=13, range 39.56–47.74, mean 44.12 ± 2.781 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=765, missing=13, range -92.83–-78.42, mean -87.9 ± 4.917 |
+| source_Height | metadata | categorical | *Not specified.* | n=765, missing=0, classes=3, top T (×294) |
+| source_Age | metadata | categorical | *Not specified.* | n=765, missing=0, classes=6, top NA (×462) |
+| source_Height_Age | metadata | categorical | *Not specified.* | n=765, missing=0, classes=16, top T (×177) |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top ASD_Integrating_Sphere (×765) |
+| source_Measurement | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Transmittance (×765) |
+| source_Sample_Name | metadata | categorical | *Not specified.* | n=765, missing=0, classes=765, top BH02_ACRU_B (×1) |
+| source_Sample_Year | metadata | numeric | *Not specified.* | n=765, missing=0, range 2008–2010, mean 2008 ± 0.4084 |
+| source_Sample_Type | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Vegetation (×765) |
+| source_Instrumentation | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top ASD FieldSpec 3 (×765) |
+| source_Calibration | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Spectralon Ratio (×765) |
+| source_Wavelengths | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Nanometers (×765) |
+| source_Column_Units | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Percent (×765) |
+| source_Project | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top NASA Forest Functional Types (×765) |
+| source_PI | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top Philip A. Townsend (×765) |
+| source_Affiliation | metadata | categorical | *Not specified.* | n=765, missing=0, classes=1, top FERST - University of Wisconsin Madison (×765) |
+| source_Comments | metadata | categorical | *Not specified.* | n=765, missing=763, classes=2, top LOW SAMPLE WEIGHT (×1) |
+| source_Comments_aux | metadata | categorical | *Not specified.* | n=765, missing=737, classes=13, top CHANGED FROM ACSA TO ACSM (×9) |
 
 ## Statistics — splits
 
@@ -76,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -87,7 +112,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 12 fields, Y: 11 fields, measurements: 2 fields, passport: 41 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 11 fields, passport: 41 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,6 +133,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `9e91db2fb0b65cdcae559df31fb496f3af112e18c01d183fea06274468457485`
-- **Processing hash:** `8720412fe9dd49091e500853fca1c53beff517cda3b198e98b799fe5c09a449e` | **metadata hash:** `457af755ea6ef511358258f39c8e03814793d3f1249b23c9812d5d7dfd3b88b4`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `9cf5ba7f83ad131c5fa11dac4ed6ad65acc9a1ec1e6bc9318461b08694b84091`
+- **Processing hash:** `deab7456cc14444041295b51d84ca1399205d246e4f40cdcf92285f63e4e5850` | **metadata hash:** `a428d4f9f6b724bbe0509dd82ca0aa0f7d6f76ce7e574d9e2f2aabe53d3c2c17`

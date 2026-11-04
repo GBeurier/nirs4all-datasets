@@ -110,6 +110,75 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_name
+  role: metadata
+  type: categorical
+- name: source_type
+  role: metadata
+  type: categorical
+- name: source_class
+  role: metadata
+  type: categorical
+- name: source_subclass
+  role: metadata
+  type: categorical
+- name: source_particle_size
+  role: metadata
+  type: categorical
+- name: source_sample_no
+  role: metadata
+  type: categorical
+- name: source_owner
+  role: metadata
+  type: categorical
+- name: source_wavelength_range
+  role: metadata
+  type: categorical
+- name: source_origin
+  role: metadata
+  type: categorical
+- name: source_collection_date
+  role: metadata
+  type: categorical
+- name: source_description
+  role: metadata
+  type: categorical
+- name: source_measurement
+  role: metadata
+  type: categorical
+- name: source_first_column
+  role: metadata
+  type: categorical
+- name: source_second_column
+  role: metadata
+  type: categorical
+- name: source_x_units
+  role: metadata
+  type: categorical
+- name: source_y_units
+  role: metadata
+  type: categorical
+- name: source_first_x_value
+  role: metadata
+  type: numeric
+- name: source_last_x_value
+  role: metadata
+  type: numeric
+- name: source_number_of_x_values
+  role: metadata
+  type: numeric
+- name: source_additional_information
+  role: metadata
+  type: categorical
+- name: source_material_name
+  role: metadata
+  type: categorical
+- name: source_sample_type
+  role: metadata
+  type: categorical
+- name: source_source_file_name
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -118,19 +187,21 @@ alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: ECOSTRESS Spectral Library
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
-  conversion_status: partial
+  ingest_reader_version: 0.3.17+curation.1
+  conversion_status: ok
   warnings:
   - 'X: native axis unit is ''Wavelength (micrometers)'' (micrometers), which is not
     supported by the axis unit enum; axis values remain in micrometers. Multiply by
     1000 to convert to nm.'
-  - "Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name."
+  - 'Curation identity contract: Sample identifier declared in M. The key is the source
+    specimen number; preparations, geometries, and instruments may differ. No grouping
+    by material name.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: ECOSTRESS Spectral Library
@@ -183,5 +254,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/ecostress_soil_tir_2223points
-  source_fingerprint: 083a80469153cbcbc81817686caba7202ef6a96d90702dd5c157c1c1af879a5d
+  source_relpath: v2.0/ecostress_soil_tir_2223points
+  source_fingerprint: b27ff095a4b3bc5b35c3216a2501d54a605ab03b186ea54a4e6d5d6fb48c0ed5

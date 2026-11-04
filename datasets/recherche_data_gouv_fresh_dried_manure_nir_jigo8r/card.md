@@ -57,6 +57,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | spectrometer | metadata | categorical | *Not specified.* | n=332, missing=0, classes=3, top NIRFlex LDAR (×156) |
 | township | metadata | categorical | *Not specified.* | n=332, missing=0, classes=114, top SAINT PAUL (×23) |
 | country | metadata | categorical | *Not specified.* | n=332, missing=0, classes=2, top mainland France (×252) |
+| source_file_chemical | metadata | categorical | *Not specified.* | n=332, missing=0, classes=1, top chemical_analysis.tab (×332) |
 
 ## Statistics — splits
 
@@ -72,14 +73,13 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ### Origin sources (where the bytes live)
 
 - Portail Data INRAE — kind `dataverse`, access `open`, license *Not specified.*: `10.15454/JIGO8R`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/publicdomain/zero/1.0/`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://www.sciencedirect.com/science/article/pii/S2352340920315274`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 8 fields, measurements: 0 fields, passport: 24 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 3 fields, Y: 8 fields, passport: 24 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c72a06102d2d8668d0488d9e9428854bf88b58bbd49e08d5a63deda3e78ebe0d`
-- **Processing hash:** `5c14a4d6cf5c9d6881082696183b51a73693b3cbaf6a2e0e546ba3df342cb986` | **metadata hash:** `1c50bd52d27a28cc0f914dadc10c25ebdb8b95f505a5c93d33fd8386caad4494`
+- **Processing hash:** `9ee7061d6cb278ac691176f417dd49015c8af202e32f73249157d88ad4f94667` | **metadata hash:** `d56276e91643817878c022f4a65e06caa224d88f3f4e1ca9f4b9cf27210bab3a`

@@ -79,16 +79,20 @@ def check_dataset(descriptor: DatasetDescriptor, *, session: HttpSession, timeou
 def run_health_check(root: str | Path, *, session: HttpSession | None = None, timeout: float = 10.0, only: list[str] | None = None, now: datetime | None = None) -> dict[str, Any]:
     """Probe every (or ``only``) descriptor's origins and write ``catalog/health.json``.
 
-    Returns ``{checked_at, n_datasets, n_degraded, datasets: {id: check_dataset(...)}}``.
+    With ``only``, the other datasets keep their previous probes; entries of datasets no longer in
+    the catalog are dropped. Returns ``{checked_at, n_datasets, n_degraded, datasets: {id: ...}}``.
     """
     root = Path(root)
     session = session or _default_session()
     checked_at = (now or datetime.now(UTC)).isoformat()
     paths = sorted((root / "catalog" / "datasets").glob("*.yaml"))
+    health_path = root / "catalog" / "health.json"
+    datasets: dict[str, Any] = {}
     if only is not None:
         wanted = set(only)
+        previous = json.loads(health_path.read_text(encoding="utf-8")).get("datasets", {}) if health_path.is_file() else {}
+        datasets = {p.stem: previous[p.stem] for p in paths if p.stem in previous and p.stem not in wanted}
         paths = [p for p in paths if p.stem in wanted]
-    datasets: dict[str, Any] = {}
     for path in paths:
         descriptor = DatasetDescriptor(**(yaml.safe_load(path.read_text(encoding="utf-8")) or {}))
         datasets[descriptor.id] = check_dataset(descriptor, session=session, timeout=timeout, now=now)
@@ -98,6 +102,6 @@ def run_health_check(root: str | Path, *, session: HttpSession | None = None, ti
         "n_degraded": sum(1 for d in datasets.values() if d["degraded"]),
         "datasets": datasets,
     }
-    (root / "catalog").mkdir(parents=True, exist_ok=True)
-    (root / "catalog" / "health.json").write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+    health_path.parent.mkdir(parents=True, exist_ok=True)
+    health_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
     return report

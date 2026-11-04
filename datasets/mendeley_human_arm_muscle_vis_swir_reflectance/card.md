@@ -58,6 +58,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | n_points_original | metadata | numeric | *Not specified.* | n=2000, missing=0, range 2051–2051, mean 2051 ± 0 |
 | decoder | metadata | categorical | *Not specified.* | n=2000, missing=0, classes=1, top pandas.read_csv for Eigenvector DataSet Object CSV export, matio.whosmat inspected MATLAB source (×2000) |
 | notes | metadata | categorical | *Not specified.* | n=2000, missing=0, classes=1, top No direct personal identifiers, subject IDs are source pseudonyms S1-S20. (×2000) |
+| source_id | metadata | categorical | *Not specified.* | n=2000, missing=0, classes=40, top S1 B (×50) |
 
 ## Statistics — splits
 
@@ -74,13 +75,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/24pg3ywxs5/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://pmc.ncbi.nlm.nih.gov/articles/PMC7683223/`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `http://creativecommons.org/licenses/by/4.0`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra each. The scan suffix of the exported sample_id is removed only for this verified contract.
-- **Curated views:** M: 5 fields, Y: 2 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra each. The scan suffix of the exported sample_id is removed only for this verified contract.
+- **Curated views:** M: 5 fields, Y: 2 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `885348b13af4d48f0d3a06e31751bab7097daf09160e504134fa93dc54864efa`
-- **Processing hash:** `6397e123d962068f0208d5bc2553c1927b2c0733f9dbbfbb1a2db27222ae4df3` | **metadata hash:** `d7858ef788a019c1142dd7570555c4cb83f527de2121dd44005dfbb8258767ee`
+- **Processing hash:** `bac1500428cfe509b4676e35baf604334c31d3015372ba3feb2d4ef51a6836e7` | **metadata hash:** `bf756b766eb707ce195ebfadd10c61877db1a3bca102f2cc1e792b44853da5fb`

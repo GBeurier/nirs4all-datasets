@@ -81,6 +81,14 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=200, missing=0, classes=1, top explicit_open (×200) |
 | usage_scope | metadata | categorical | *Not specified.* | n=200, missing=0, classes=1, top public_reuse_possible (×200) |
 | notes | metadata | categorical | *Not specified.* | n=200, missing=0, classes=1, top EcoSIS package dessain-project-reflectance-spectra, no interpolation applied by project. (×200) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=200, missing=0, classes=200, top 2017-05-26-jbmcb-P001 (×1) |
+| source_site | metadata | categorical | *Not specified.* | n=200, missing=0, classes=8, top ireqa (×48) |
+| source_DOI | metadata | categorical | *Not specified.* | n=200, missing=0, classes=2, top NA (×135) |
+| source_project | metadata | categorical | *Not specified.* | n=200, missing=0, classes=1, top 2017-Dessain-MSc (×200) |
+| source_latitude | metadata | numeric | *Not specified.* | n=200, missing=0, range 45.12–45.99, mean 45.66 ± 0.2072 |
+| source_longitude | metadata | numeric | *Not specified.* | n=200, missing=0, range -74.01–-72.65, mean -73.57 ± 0.3054 |
+| source_measurement.date | metadata | categorical | *Not specified.* | n=200, missing=0, classes=17, top 8/16/2017 (×21) |
+| source_order | metadata | categorical | *Not specified.* | n=200, missing=0, classes=24, top Fagales (×39) |
 
 ## Statistics — splits
 
@@ -101,7 +109,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 31 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 31 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -125,6 +133,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b2ca85d2170ebec79c0a0d740263f6f7b4111c7a68bf4c80fc28dfd9a5c735f1`
-- **Processing hash:** `394e28b2ea2da00d89d68908f86a4726ab852575fbe96134bc25101f7d434625` | **metadata hash:** `3e3cc705c4c28cb2704692346fa00cd3529494a51ba7ca72e53dd075eb753bee`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `b9e92da07b7bdb5d566db572131e851c94dc69e5ff7ac607a8059041df60f418`
+- **Processing hash:** `ee32c4f48ff76bc3ecbad5c4c1bed9dea1d4c81cff2ea840103647b5d3142366` | **metadata hash:** `5ee7532f67b284281b3785ac13a7ca471a8fca6612e9246c203c8cd2cce2b1f1`

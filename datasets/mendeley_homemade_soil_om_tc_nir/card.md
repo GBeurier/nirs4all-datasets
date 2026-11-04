@@ -44,6 +44,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=190, missing=0, range 1701–1701, mean 1701 ± 2.28e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=190, missing=0, range 228–228, mean 228 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=190, missing=0, classes=1, top Raw spectra and chemical OM/TC targets used, preprocessed sheets and model files are not standardized here. (×190) |
+| source_sheet | metadata | categorical | *Not specified.* | n=190, missing=0, classes=1, top Raw spectral + chemical (×190) |
 
 ## Statistics — splits
 
@@ -61,13 +62,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/yt78nwnhbd/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/yt78nwnhbd/snapshot/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/yt78nwnhbd/files?folder_id=root&version=1&$start=0&$limit=1000`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 0 fields, Y: 2 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -87,6 +87,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c72b565f0ecc2b559b2799e9a34b7e03ac163706d97ad147bc0010f47ef1737a`
-- **Processing hash:** `0154551d569fc55b3b33a965fff97beb91cd5e1216628347c3fe16a050410c68` | **metadata hash:** `b00fe17400dbc068a44d504a7f8621fa1e06eb2cd24aa901e5d77cff8cfb1058`
+- **Processing hash:** `a64bd9b268900eae41a824b20589bbddf189829b0f23e40aa08d6bab506b560b` | **metadata hash:** `12e8df32528768aa6335c224ef36325ed1a737b205a1d41f039cc9ce9345c766`

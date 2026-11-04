@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top manual_review_needed (×10) |
 | usage_scope | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top private_use_only (×10) |
 | notes | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh290.ucsb.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=10, missing=0, classes=6, top Calocedrus decrruens (×4) |
+| source_type | metadata | categorical | *Not specified.* | n=10, missing=0, classes=2, top non photosynthetic vegetation (×7) |
+| source_class | metadata | categorical | *Not specified.* | n=10, missing=0, classes=3, top flowers (×4) |
+| source_genus | metadata | categorical | *Not specified.* | n=10, missing=0, classes=3, top Calocedrus (×4) |
+| source_species | metadata | categorical | *Not specified.* | n=10, missing=0, classes=3, top decurrens (×4) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=10, missing=0, classes=7, top VH266 (×2) |
+| source_owner | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top UCSB (×10) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top TIR (×10) |
+| source_origin | metadata | categorical | *Not specified.* | n=10, missing=0, classes=2, top 37.0443, -119.3026, WGS84 (×7) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top 11/2/2013 (×10) |
+| source_description | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD. (×10) |
+| source_measurement | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Hemispherical reflectance (×10) |
+| source_first_column | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top X (×10) |
+| source_second_column | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Y (×10) |
+| source_x_units | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Wavelength (micrometers) (×10) |
+| source_y_units | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top Reflectance (percentage) (×10) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=10, missing=0, range 2.501–2.501, mean 2.501 ± 4.681e-16 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=10, missing=0, range 15.39–15.39, mean 15.39 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=10, missing=0, range 1737–1737, mean 1737 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh290.ucsb.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=10, missing=0, classes=6, top Calocedrus decrruens (×4) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=10, missing=0, classes=1, top nonphotosyntheticvegetation (×10) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=10, missing=0, classes=10, top nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh290.ucsb.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 5 fields, Y: 3 fields, measurements: 3 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 3 fields, passport: 45 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `546b171a2315f25bb4069e0eaca23108f7407d6e547851280784589117eab6ab`
-- **Processing hash:** `6922fa33cdeddfaa9cfd0b47a9dc81df5927f32fcee9b8b2e5a5c5c09d37e57a` | **metadata hash:** `ae834485581f665a7c407b15ff977c4693994dc090d0806ab23affa1f2e44212`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `ca77f8d56a933c7081a2240893f0463d459b7baf2866b71cedec6d1d84dc8edf`
+- **Processing hash:** `7e6fff9649767c6cebacfbde3a8e4d1b413a3adc8ca921285c04c1bbafc2b9d4` | **metadata hash:** `dc16011087c3beb62fccf33077c7de10c43c77ff397d748acbca5c9d75e5a444`

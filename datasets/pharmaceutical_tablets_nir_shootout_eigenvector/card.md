@@ -30,17 +30,19 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | weight | target | numeric | *Not specified.* | n=655, missing=0, range 363.9–391, mean 378.9 ± 4.748 |
 | hardness | target | numeric | *Not specified.* | n=655, missing=0, range 13.8–23.5, mean 19.38 ± 1.265 |
 | assay | target | numeric | *Not specified.* | n=655, missing=0, range 151.6–239.1, mean 189.9 ± 17.14 |
+| source_split | metadata | categorical | *Not specified.* | n=655, missing=0, classes=3, top test (×460) |
+| source_split_index | metadata | numeric | *Not specified.* | n=655, missing=0, range 1–460, mean 181.6 ± 136.7 |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): calibration: 155, test: 460, validation: 40
+- **original** (documented, not applied): test: 460, calibration: 155, validation: 40
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -50,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -70,6 +72,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8bf761389f9add3754cc1c37cb318f8dcdd84d5e5d4c4957606b3c4e7cd7e9ce`
-- **Processing hash:** `1b6fc3331e576bc476f43ad5ba53cbf80b0efe0459b0d43de30b353e2af59cc4` | **metadata hash:** `741dfa8a82a66387eb19dca70e175599e6753ee211dd8ea1e0fb2ed6c1fca67a`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `05a1df76bc03bee4e043088315c09b5710c4c0b29f3ae090a776a53ed50682ab`
+- **Processing hash:** `e2e606d825bcf1b6b09a349603a506ce1e5d807122e1ac3083c01a7fcaf4f101` | **metadata hash:** `645d98a621d79d4c21a01a7e547f32dadcda73396fc4389de74f66826141a213`

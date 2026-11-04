@@ -483,10 +483,12 @@ def curate_tables(dataset_id: str, metadata: pd.DataFrame, targets: pd.DataFrame
     return CuratedTables(outputs["M"], outputs["Y"], structure, outputs["passport"], outputs["measurements"], report, metadata, originals[0], originals[1], warnings)
 
 
-def read_bundle(leaf: Path, *, assume_paired_y: bool = False, allow_unaligned_y: bool = False, verify_spectral_order: bool = False) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
+def read_bundle(leaf: Path, *, assume_paired_y: bool = False, allow_unaligned_y: bool = False, verify_spectral_order: bool = False) -> tuple[pd.DataFrame, pd.DataFrame, list[str], bool]:
+    """Read M/Y; a keyless Y is paired to M by row, the normal layout when no key exists."""
     from nirs4all_datasets.canonical import _sniff_sep
 
     warnings = []
+    row_paired = False
     tables = {}
     for role in ["M", "Y"]:
         path = leaf / f"{role}.csv"
@@ -507,13 +509,13 @@ def read_bundle(leaf: Path, *, assume_paired_y: bool = False, allow_unaligned_y:
                     break
         if can_pair:
             y.insert(0, _OBS, m[_OBS].to_numpy())
-            warnings.append("Y/M row pairing explicitly assumed; not independently verified by target identifiers.")
+            row_paired = True
         elif allow_unaligned_y:
             y = pd.DataFrame(columns=[_OBS, *y.columns])
             warnings.append("Y alignment unavailable: keyless targets were excluded from aligned views; original Y retained unchanged.")
         else:
             raise ValueError("Y.csv has no observation_id; pass an explicit source pairing contract (--assume-paired-y) or supply keyed targets")
-    return m, y, warnings
+    return m, y, warnings, row_paired
 
 
 def write_curated(tables: CuratedTables, directory: Path) -> dict[str, Any]:
@@ -589,7 +591,7 @@ def _source_fields(leaf: Path) -> dict[str, dict[str, Any]]:
 
 
 def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, assume_paired_y: bool = False, numeric_names: set[str] | None = None, categorical_names: set[str] | None = None, allow_unaligned_y: bool = False, verify_spectral_order: bool = False, variable_specs: list[Variable] | None = None) -> CuratedTables:
-    m, y, warnings = read_bundle(leaf, assume_paired_y=assume_paired_y, allow_unaligned_y=allow_unaligned_y, verify_spectral_order=verify_spectral_order)
+    m, y, warnings, row_paired = read_bundle(leaf, assume_paired_y=assume_paired_y, allow_unaligned_y=allow_unaligned_y, verify_spectral_order=verify_spectral_order)
     if m.empty and not y.empty:
         m = y[[_OBS]].copy()
     fields = _source_fields(leaf)
@@ -639,7 +641,7 @@ def curate_bundle(leaf: Path, dataset_id: str, *, soilsite: Path | None = None, 
     result = curate_tables(dataset_id, m, y, soilsite=soilsite or (find_soilsite(leaf) if dataset_id.startswith("ossl_") else None), numeric_names=numeric_names, categorical_names=categorical_names, source_fields=fields, declared_dependencies=declared, declared_targets={variable.name for variable in variable_specs or [] if variable.role.value == "target"})
     result.warnings.extend(warnings)
     result.report["warnings"] = result.warnings
-    if any(warning.startswith("Y/M row pairing explicitly assumed;") for warning in warnings):
+    if row_paired:
         # Keep the original keyless Y schema intact. The added aligned key is a
         # derivation from M, not a column that existed in the source Y file.
         result.original_targets = result.original_targets.drop(columns=[_OBS])
@@ -670,11 +672,9 @@ def card_curation(report: dict[str, Any]) -> dict[str, Any]:
 
 def curate_tree(source_tree: Path, output: Path, *, soilsite: Path | None = None, assume_paired_y: bool = False, only: set[str] | None = None) -> dict[str, Any]:
     """Recompute small, reviewable curation reports without reading spectra or publishing data."""
-    if (source_tree / "dataset_card.json").is_file():
-        leaves = [source_tree]
-    else:
-        base = next((source_tree / name for name in ["v2.0", "standardized_datasets"] if (source_tree / name).is_dir()), source_tree)
-        leaves = sorted(path.parent for path in base.glob("*/dataset_card.json"))
+    from nirs4all_datasets.bootstrap import find_v2_leaves
+
+    leaves = [source_tree] if (source_tree / "dataset_card.json").is_file() else find_v2_leaves(source_tree)
     output.mkdir(parents=True, exist_ok=True)
     summary: dict[str, Any] = {"schema_version": CURATION_VERSION, "processed": [], "errors": [], "assume_paired_y": assume_paired_y}
     for leaf in leaves:
@@ -847,7 +847,7 @@ def identity_frame(dataset_id: str, metadata: pd.DataFrame) -> tuple[pd.DataFram
 
 def enrich_lucas_metadata(metadata: pd.DataFrame, soilsite_path: str) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Compatibility projection over the owner OSSL join; no second join implementation."""
-    enriched, evidence, warnings = enrich_ossl("ossl_lucas_visnir_soil_all_y", metadata, Path(soilsite_path))
+    enriched, evidence, warnings = enrich_ossl("ossl_lucas_soil_all_y", metadata, Path(soilsite_path))
     if warnings:
         raise ValueError("; ".join(warnings))
     enriched = enriched.rename(columns={value: LUCAS_SOILSITE_FIELDS[key] for key, value in _SOILSITE_MAPPING.items()})

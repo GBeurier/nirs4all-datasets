@@ -72,13 +72,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - Zenodo — kind `zenodo`, access `open`, license *Not specified.*: `https://zenodo.org/records/8263430`
 - Zenodo — kind `zenodo`, access `open`, license *Not specified.*: `https://zenodo.org/api/records/8263430/files/data_table.csv/content`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 6 fields, measurements: 1 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 6 fields, Y: 6 fields, passport: 21 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +97,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2703eb6925893974bec9db1f8690847706ebf18d3784456ee626d93bc15fe312`
-- **Processing hash:** `324332a210cee05050b56e461e5ad5444a1d395699b04cdd4f05beaa726990b0` | **metadata hash:** `6a52424cf87dafa1c3448977e053050d026db8ea05f20ec9b846e35af4d4daac`
+- **Processing hash:** `0c62b0c66ba6191998912a5412e1ee37149e8a1bed5be213c2aad4640869e583` | **metadata hash:** `3a88185f61ae73951196df5673a181da1379a7346788e5f31ce710edf3863c41`

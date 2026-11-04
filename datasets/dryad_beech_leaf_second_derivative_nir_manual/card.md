@@ -31,6 +31,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=449, missing=0, classes=1, top doi_10_5061_dryad_m37pvmdgv__v20260421.zip::Second_derivative_ANF.csv (×449) |
 | official_source_url | metadata | categorical | *Not specified.* | n=449, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.m37pvmdgv (×449) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=449, missing=0, classes=1, top v0.8.58 (×449) |
+| source_row_index | metadata | categorical | *Not specified.* | n=449, missing=0, classes=449, top 1 (×1) |
 
 ## Statistics — splits
 
@@ -51,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,6 +72,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a033ae94776b21427bb3774d1666dc1b2d7467b53e1002800b40e308f140705e`
-- **Processing hash:** `c96efb9362d40d94984acba2fe6233f4639981a044749ff39cc74902196f36c6` | **metadata hash:** `ead06c3a0a5e3bac537914c46af95f13b282e5007ff7ef37912a2b243ececca1`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `756b126fc5946af5cf3200d17d8b0f144692a1ff55b0da98d6b908f41227c91c`
+- **Processing hash:** `cbfb3c24d856406dad476ffb4e67b0ed28cb4a4a44ecafb492d7c425fe439c02` | **metadata hash:** `b927d9f44dbdf9264b1cac27276a44959d6c14ebb19f9153389a7094e6734bcc`

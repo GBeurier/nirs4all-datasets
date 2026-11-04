@@ -41,6 +41,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=1572, missing=0, range 3–3, mean 3 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=1572, missing=0, range 1751–1751, mean 1751 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top Axe spectral applique sur 226.0-1101.0 nm avec un pas de 0.5 nm, coherent avec 1751 variables. (×1572) |
+| source_zip | metadata | categorical | *Not specified.* | n=1572, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/EthanolConcentration.zip (×1572) |
 
 ## Statistics — splits
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `f1606edff0850c4105db431dba87cecaf7037f5536bbd7edb551080f0f8ba6e3`
-- **Processing hash:** `9415e818358c01a61fb83f2f0409224672e606421cc5be9c2054f69d58f00b13` | **metadata hash:** `0556d858ecd42b6d736625543fdf9a55aa7f418aac20edc07274dd7da8073d9a`
+- **Processing hash:** `67a511d198e2d41066aa29e30eded98154f3bb3974a3210c0ee742f37f318e0c` | **metadata hash:** `c30dfa672d9a0a249e196df16f1d306fe6c28ff9816773670ba0279f5ac36592`

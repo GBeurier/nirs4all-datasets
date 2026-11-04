@@ -62,6 +62,30 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top explicit_open (×1382) |
 | usage_scope | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top public_reuse_possible (×1382) |
 | notes | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top EcoSIS package nasa-fft-project-leaf-reflectance-morphology-and-biochemistry-for-northern-temperate-forests, no interpolation applied by project. (×1382) |
+| source_SampleID | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1382, top AK01_ACRU_B_2009 (×1) |
+| source_Spectra_Name | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1366, top DC05_PIRE_MN_LC_REFL (×2) |
+| source_Site | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=14, top DC (×190) |
+| source_Site_Name | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=14, top Madison / Dane County (×190) |
+| source_State | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=5, top Wisconsin (×742) |
+| source_Plot | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=142, top NC14 (×24) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=1382, missing=22, range 39.56–47.84, mean 44.36 ± 2.356 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=1382, missing=22, range -92.83–-73.74, mean -86.68 ± 6.227 |
+| source_Height | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=3, top T (×550) |
+| source_Age | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=7, top NA (×786) |
+| source_Height_Age | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=17, top T (×312) |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top ASD_LeafClip (×1382) |
+| source_Measurement | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Reflectance (×1382) |
+| source_Sample_Name | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1366, top DC05_PIRE_MN (×2) |
+| source_Sample_Year | metadata | numeric | *Not specified.* | n=1382, missing=0, range 2008–2010, mean 2009 ± 0.6663 |
+| source_Sample_Type | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Vegetation (×1382) |
+| source_Instrumentation | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top ASD FieldSpec 3 (×1382) |
+| source_Calibration | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Spectralon Ratio (×1382) |
+| source_Wavelengths | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Nanometers (×1382) |
+| source_Column_Units | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Fraction_0_to_1 (×1382) |
+| source_Project | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top NASA Forest Functional Types (×1382) |
+| source_PI | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top Philip A. Townsend (×1382) |
+| source_Affiliation | metadata | categorical | *Not specified.* | n=1382, missing=0, classes=1, top FERST - University of Wisconsin Madison (×1382) |
+| source_Comments | metadata | categorical | *Not specified.* | n=1382, missing=1287, classes=22, top FIRST ROUND OF SAMPLES (×20) |
 
 ## Statistics — splits
 
@@ -72,7 +96,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -83,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 12 fields, Y: 8 fields, measurements: 2 fields, passport: 41 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 8 fields, passport: 41 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,6 +128,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f82a8b8c6d2a569590765b2948672ad70719f09dc650ffbaca9d03ee772db182`
-- **Processing hash:** `a286d5238470a1e38e9bf3dd3bc7c4f1c40fae21e34fbf5e2e2a519084b7c916` | **metadata hash:** `fe71ac1e5aacd8b3db32a48b066d8fd60eebd5023245d72e15e16b5ecd2445ef`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `075fffc4a4f4a065519013046392614769c357e04dfb82fda0c184ec7c04e232`
+- **Processing hash:** `34f107150f38e748f7d34412fa8da73507f8f433fa87ef242d9f10ef08ec8631` | **metadata hash:** `22f140968adf43428957b81688f62fce44d5603da4c65c463d13a4b49b014e8b`

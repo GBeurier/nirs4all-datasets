@@ -61,6 +61,10 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | n_modes_total | metadata | numeric | *Not specified.* | n=50000, missing=0, range 3–291, mean 136.1 ± 39.87 |
 | n_modes_positive | metadata | numeric | *Not specified.* | n=50000, missing=0, range 3–291, mean 136 ± 39.88 |
 | has_negative_freq | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=2, top no (×48370) |
+| source_spectrum_id | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top CHEMBL100 (×1) |
+| source_sqlite_file | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top Raman-ChEMBL-part1.db (×50000) |
+| source_table | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=1, top molecule (×50000) |
+| source_row_id | metadata | categorical | *Not specified.* | n=50000, missing=0, classes=50000, top 1 (×1) |
 
 ## Statistics — splits
 
@@ -83,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 8 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 2.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8e00f3b3cf7e53fdb75ffa731a2de2f556d40af29b3ebed66f3d35b36378fc0c`
-- **Processing hash:** `75baac490bff8b06ab8e5a387b383940b75631764f95ff743d246653f63b20b3` | **metadata hash:** `f02a660623dd5a938dcbcbbc7304baa0324242ef165b5467486f62197fdc2a4e`
+- **Content version:** 2.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `77091fb87e550014ad12cdbc12ffa60aec8fdd7078d769e84b315f034796b784`
+- **Processing hash:** `98401db47c5c4c81025b581cbfe3884d2e4465cfcd898ab56084724bb5d95a96` | **metadata hash:** `283d679841f085b3c0572c91c8fa8de0a68804157e9f899bd29a11f33404a2b5`

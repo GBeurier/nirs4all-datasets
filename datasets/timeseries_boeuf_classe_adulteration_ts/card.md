@@ -41,17 +41,18 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=60, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=60, missing=0, range 470–470, mean 470 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: tous les spectres d'absorbance ont ete tronques sur 990-1895 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1895->990 sur 470 variables. (×60) |
+| source_zip | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/Beef.zip (×60) |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 30, train: 30
+- **original** (documented, not applied): train: 30, test: 30
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a4c87ab9ca50a0882b402540a715a60848b814b22f7b15ea9943cbbc1d172fd9`
-- **Processing hash:** `23630f458aad47a4dcc3d3ac5fd67a69480ff6680969b2cd04d9afe9a409a27d` | **metadata hash:** `6cacccc4d6a6365b8963516efcd1d7a37c9eea55eb7bc5c402e4ff9670deea13`
+- **Processing hash:** `55868fecefcfb38acad583cbee15af64955a45668745e086a970dff3134d163b` | **metadata hash:** `2bd0f9cc11acd345690ab8a994e1931d777a9e54c45e2bed25d86c89eec230ff`

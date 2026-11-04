@@ -84,6 +84,14 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top manual_review_needed (×69) |
 | usage_scope | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top private_use_only (×69) |
 | notes | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top EcoSIS package ngee-arctic-leaf-spectral-reflectance-utqiagvik--barrow--alaska-2013, no interpolation applied by project. (×69) |
+| source_Sample_ID | metadata | categorical | *Not specified.* | n=69, missing=0, classes=69, top 1236 (×1) |
+| source_A470 | metadata | numeric | *Not specified.* | n=69, missing=0, range -9999–-9999, mean -9999 ± 0 |
+| source_A470bc | metadata | numeric | *Not specified.* | n=69, missing=0, range -9999–-9999, mean -9999 ± 0 |
+| source_Carot_tot_L | metadata | numeric | *Not specified.* | n=69, missing=0, range -9999–-9999, mean -9999 ± 0 |
+| source_Carot_tot_area_L | metadata | numeric | *Not specified.* | n=69, missing=0, range -9999–-9999, mean -9999 ± 0 |
+| source_Sample_Date | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top 20130725 (×69) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top Analytical Spectral Devices (×69) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=69, missing=0, classes=1, top ASD_FieldSpec_3 (×69) |
 
 ## Statistics — splits
 
@@ -94,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -104,7 +112,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 31 fields, measurements: 0 fields, passport: 38 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 31 fields, passport: 38 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -126,6 +134,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `989c4c002ca8935ddc5a6b75587a698b7d644c957e70735b2b26d2bc155c2223`
-- **Processing hash:** `3b94514609823e8939afd2500e5b867152b78a3932ec15501aeaebab36a7ae47` | **metadata hash:** `0bff1e676b1812d8ed894f2e17b467989320d4ba2ed2307f927d01e604d4719e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `501c2d691e9c33715fbd337b2db95fa223a7a7305e8019dba24baac9e42eaece`
+- **Processing hash:** `2e32d49730cd5a02bc441b6fe116c724ca13371168e114df9aa134d48c036e68` | **metadata hash:** `ef2e9a9a1e75fa686795b13eb6865bdd70666a9d54c296bc0aa6e15c62e7d552`

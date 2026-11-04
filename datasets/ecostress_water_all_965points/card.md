@@ -57,6 +57,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top manual_review_needed (×4) |
 | usage_scope | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top private_use_only (×4) |
 | notes | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top none (×4) |
+| source_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Frost (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Water (×4) |
+| source_class | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top Snow (×3) |
+| source_subclass | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top None (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=4, missing=0, classes=3, top Fine (×2) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top FROST_SNW_ (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Dept. of Earth and Planetary Science, John Hopkins University (×4) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top All (×4) |
+| source_origin | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top Collected at John Hopkins University IR Spectroscopy Lab. (×3) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top N/A (×4) |
+| source_description | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Frost. The spectrum from 0.3 to 2.08 micrometers was modeled, while that from 2.08 to 14 micrometers was measured. The effective particle size was 10 micrometers (see Introductory text for details). Original filename FROST.SNW. Original ASTER Spectral Library name was jhu.becknic.water.frost.none.10um.frost.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×4) |
+| source_first_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top X (×4) |
+| source_second_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Y (×4) |
+| source_x_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Wavelength (micrometers) (×4) |
+| source_y_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Reflectance (percent) (×4) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 0.34–0.34, mean 0.34 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=4, missing=0, range 965–965, mean 965 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top none (×4) |
+| source_material_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Frost (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top water (×4) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top water.frost.none.fine.all.frost_snw_.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -67,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +122,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `18176c9144e0817f42c937f08cfb2870b30008d8446d7f9a2c71890e7ef10936`
-- **Processing hash:** `7b2ee84ba322e37b8e327a9cbfa8d078e6f2e968b315abd907c67af5afa9c160` | **metadata hash:** `72958411eff7e8b54482b0ce3ec34562a2d7d7dfa79d3867298414936d332166`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `c9cf40e197dbfd18bac74e223d6be41b84aedadad5b94b15a57695be3b72e4ca`
+- **Processing hash:** `a17cbdfd9cd3d2fa9aa144640e66946b32dc3ec5736e687700fa8e14de5220c0` | **metadata hash:** `27838a5a137935fb9c10f6eea935b4a55d2f19aaabe93553ca14b663790a6ac8`

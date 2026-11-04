@@ -128,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 14 fields, measurements: 1 fields, passport: 80 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 14 fields, passport: 80 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -160,6 +160,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6a76329244ad5f5f7e70df50f495ac5b9e38e394f17ebcc91b156e8782f671b9`
-- **Processing hash:** `3118807477248307b3e7a10d912da80706aaef89baf4c88ae92d20677f8f7365` | **metadata hash:** `c07b83c97f5852d11a8ff70d0a7d01b978e82de7401d3ac45a195481e1602140`
+- **Processing hash:** `460483ae0d55d8b4e3454f7a7be656515505694c10f6813eea1affd97f157233` | **metadata hash:** `7badb36182d01b20a3c90a5170671374fe2f72f083951e7b045d7701f3e1289a`

@@ -78,6 +78,12 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_spectral_sheet
+  role: metadata
+  type: categorical
+- name: source_target_sheet
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -86,19 +92,16 @@ alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: Enhanced Spectra dataset of NIRS in intact mangos
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: Sample identifier declared in M"
+  - 'Curation identity contract: Sample identifier declared in M'
 governance:
   license: CC-BY-4.0
   owner_steward: Enhanced Spectra dataset of NIRS in intact mangos
@@ -126,11 +129,6 @@ origin_sources:
   locator: https://data.mendeley.com/public-api/datasets/ph57ynng46/files?folder_id=root&version=1&$start=0&$limit=1000
   access: open
   expected_files: []
-- kind: url
-  mode: raw
-  locator: https://creativecommons.org/licenses/by/4.0/
-  access: open
-  expected_files: []
 - kind: script
   mode: raw
   locator: source_to_standard.py
@@ -155,5 +153,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/mendeley_intact_mango_ta_vitc_raw_nir
-  source_fingerprint: 33369f3788dd0814610733f247eaa6b32bac6b8017fd2617f6ff8551ed0cdda2
+  source_relpath: v2.0/mendeley_intact_mango_ta_vitc_raw_nir
+  source_fingerprint: f73dc00d696838f8ac8fb1d4a8da3929f659f6ebe393f90ba56e3530df583e4d

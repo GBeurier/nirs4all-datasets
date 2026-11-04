@@ -54,6 +54,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=288, missing=0, classes=1, top manual_review_needed (×288) |
 | usage_scope | metadata | categorical | *Not specified.* | n=288, missing=0, classes=1, top private_use_only (×288) |
 | notes | metadata | categorical | *Not specified.* | n=288, missing=0, classes=1, top EcoSIS package spectral-characterization-of-multiple-corn-varieties--west-madison-agricultural-station-2014, no interpolation applied by project. (×288) |
+| source_ID | metadata | categorical | *Not specified.* | n=288, missing=0, classes=288, top 1 (×1) |
+| source_rep | metadata | numeric | *Not specified.* | n=288, missing=0, range 1–6, mean 3.5 ± 1.711 |
 
 ## Statistics — splits
 
@@ -64,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +96,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a64bce4519c7b39dd62380270f03a7ce096e6382b103814ae03e3b4b28aa5d5d`
-- **Processing hash:** `aa9e96632391b34f9ba9638d92efd4e5477152e08d402216032c0de08283b9ed` | **metadata hash:** `1a5fdba22165dd0a0e5e6c09e64a01789a075d39c1bab89ffacff83337740372`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `d7b42836c14ec53af5062d07d23b5db8e5872f4aea89c492b3873dd4c4a5d90e`
+- **Processing hash:** `7173841d754bc9e7147a1a1d527a2217d7ab617ea399e907b145424f0022f8a9` | **metadata hash:** `4dc88caa090b119b655be08de7293da93dcb9b197bf17762516aa51749c9f324`

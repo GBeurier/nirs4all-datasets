@@ -149,6 +149,9 @@ def _is_float(value: str) -> bool:
         return False
 
 
+_LICENSE_HOSTS = ("creativecommons.org", "spdx.org", "opendatacommons.org")
+
+
 def _extract_doi(text: str) -> str | None:
     """Pull a bare DOI out of a ``doi:`` / ``https://doi.org/...`` / raw string; None if absent."""
     match = _DOI_IN_TEXT.search(str(text))
@@ -175,7 +178,11 @@ def _classify_origin(raw: Any) -> tuple[str, dict[str, Any] | str | None]:
             return ("source", {"kind": kind, "mode": "raw", "locator": doi, "access": "open", "title": repo})
         return ("paper", doi)  # any other DOI is a journal/publisher DOI -> publication, not a data source
     if text.lower().startswith("http"):
-        host = urlparse(text).netloc.lower()
+        parsed = urlparse(text)
+        host = parsed.netloc.lower()
+        # A licence deed or licence registry page states the terms; it is not where the data lives.
+        if any(h in host for h in _LICENSE_HOSTS) or "/licenses/" in parsed.path.lower():
+            return ("skip", None)
         if "zenodo.org" in host:
             return ("source", {"kind": "zenodo", "mode": "raw", "locator": text, "access": "open", "title": "Zenodo"})
         if "github.com" in host:
@@ -266,17 +273,30 @@ def _v2_numeric_columns(y_path: Path, sample_rows: int = 80, *, default_numeric:
     return numeric
 
 
-def find_v2_leaves(source_root: str | Path) -> list[Path]:
-    """v2.0 standardized leaves: dirs under ``v2.0/`` holding a ``dataset_card.json``.
-
-    Each is a Frictionless-style package (machine-readable card declaring targets/sources/license), so
-    the descriptor is authored from the card -- no free-text guessing.
-    """
+def base_leaves(source_root: str | Path) -> list[Path]:
+    """Upstream v2.0 leaves: dirs under ``v2.0/`` holding a ``dataset_card.json``, as delivered."""
     root = Path(source_root)
     base = next((root / name for name in ["v2.0", "standardized_datasets"] if (root / name).is_dir()), None)
     if base is None:
         return []
     return sorted(d for d in base.iterdir() if d.is_dir() and (d / "dataset_card.json").exists())
+
+
+def find_v2_leaves(source_root: str | Path) -> list[Path]:
+    """The leaves that become catalog datasets: one per origin database.
+
+    Each is a Frictionless-style package (machine-readable card declaring targets/sources/license), so
+    the descriptor is authored from the card -- no free-text guessing. Upstream leaves consumed by a
+    database (``consolidation.json``) are replaced by its composed leaf under ``consolidated/``.
+    """
+    from nirs4all_datasets.consolidate import CONSOLIDATED_DIR, consumed_ids
+
+    consumed = consumed_ids()
+    leaves = [d for d in base_leaves(source_root) if slugify(d.name) not in consumed]
+    composed = Path(source_root) / CONSOLIDATED_DIR
+    if composed.is_dir():
+        leaves.extend(d for d in composed.iterdir() if d.is_dir() and (d / "dataset_card.json").exists())
+    return sorted(leaves, key=lambda d: d.name)
 
 
 def _csv_header(path: Path) -> list[str]:
@@ -599,10 +619,6 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
     sources = _build_sources(card, warnings)
     variables = _build_variables(card, leaf_dir)
 
-    y_header = _csv_header(leaf_dir / "Y.csv")
-    if y_header and "observation_id" not in y_header:
-        warnings.append("Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.")
-
     org = card.get("spectral_organization") or {}
     raw_level = str(org.get("alignment_level") or "observation").strip().lower()
     alignment_level = AlignmentLevel.SAMPLE if raw_level == "sample" else AlignmentLevel.OBSERVATION
@@ -664,7 +680,11 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
     descriptor = DatasetDescriptor(
         id=did,
         name=dataset_name,
-        description=f"{dataset_name}. v2.0 standardized NIRS package: {len(sources)} spectral source(s), {n_targets} declared target(s). Auto-generated from dataset_card.json (verify before publication).",
+        description=(
+            f"{dataset_name}. Origin database composed from {len(card['consolidation']['members'])} standardized v2.0 leaves: {len(sources)} spectral source(s), {n_targets} declared target(s). Auto-generated from dataset_card.json (verify before publication)."
+            if isinstance(card.get("consolidation"), dict)
+            else f"{dataset_name}. v2.0 standardized NIRS package: {len(sources)} spectral source(s), {n_targets} declared target(s). Auto-generated from dataset_card.json (verify before publication)."
+        ),
         domain=family,
         keywords=[k for k in ["nir", "v2", family] if k],
         citation=f"https://doi.org/{publications[0].doi}" if publications and publications[0].doi else None,
@@ -694,6 +714,9 @@ def build_descriptor_from_card(leaf_dir: Path) -> tuple[DatasetDescriptor, list[
 def _write_descriptor(descriptor: DatasetDescriptor, path: Path) -> None:
     """Write a descriptor as clean YAML with an auto-generated banner."""
     data = descriptor.model_dump(mode="json", exclude_none=True)
+    for variable in data.get("variables", []):
+        if not variable.get("derived_from"):
+            variable.pop("derived_from", None)  # an undeclared derivation is the default, not data
     banner = "# AUTO-GENERATED by nirs4all-datasets `bootstrap`. Edit freely; set generation.managed: false to protect from regeneration.\n"
     path.write_text(banner + yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding="utf-8")
 
@@ -713,7 +736,10 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, force: bool 
     out_dir = Path(catalog_root) / "catalog" / "datasets"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    report: dict[str, Any] = {"created": [], "updated": [], "skipped": [], "errors": [], "ids": {}}
+    from nirs4all_datasets.consolidate import consolidate_tree
+
+    consolidation = consolidate_tree(source_root)
+    report: dict[str, Any] = {"created": [], "updated": [], "skipped": [], "errors": [{"leaf": f"consolidated/{db}", "error": error} for db, error in consolidation["errors"].items()], "ids": {}, "consolidation": consolidation}
 
     items: list[tuple[DatasetDescriptor, list[str], str]] = []
     for leaf_dir in find_v2_leaves(source_root):
@@ -798,6 +824,7 @@ def bootstrap(source_root: str | Path, catalog_root: str | Path, *, force: bool 
         "kept_human_orphans": report["kept_human_orphans"],
         "id_collisions": [e for e in report["errors"] if "collision" in e["error"]],
         "errors": [e for e in report["errors"] if "collision" not in e["error"]],
+        "consolidation_missing_members": consolidation["missing_members"],
     }
     (Path(catalog_root) / "catalog" / "reconciliation.json").write_text(json.dumps(recon, indent=2, sort_keys=True), encoding="utf-8")
     return report

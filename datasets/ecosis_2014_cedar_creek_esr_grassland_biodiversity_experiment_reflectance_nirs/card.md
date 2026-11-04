@@ -64,6 +64,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top manual_review_needed (×831) |
 | usage_scope | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top private_use_only (×831) |
 | notes | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top EcoSIS package 2014-cedar-creek-esr-grassland-biodiversity-experiment--leaf-level-contact-data--trait-predictions, no interpolation applied by project. (×831) |
+| source_guid | metadata | categorical | *Not specified.* | n=831, missing=0, classes=831, top bab9bb13-0f1c-49c8-ac5a-4b6fa01a428b (×1) |
+| source_Acquisition_Method | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top contact (×831) |
+| source_Div_level | metadata | categorical | *Not specified.* | n=831, missing=0, classes=2, top p (×612) |
+| source_Ecosystem_Type | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top grassland (×831) |
+| source_Foreoptic_Type | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top leaf clip (×831) |
+| source_ID | metadata | categorical | *Not specified.* | n=831, missing=0, classes=831, top 1 (×1) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top ASD (×831) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top FieldSpec3 (×831) |
+| source_Light_Source | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top lamp (×831) |
+| source_Measurement_Quantity | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top reflectance (×831) |
+| source_Measurement_Venue | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top outdoor (×831) |
+| source_Plot | metadata | numeric | *Not specified.* | n=831, missing=0, range 2–265, mean 56.56 ± 59.95 |
+| source_Processing_Averaged | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top yes (×831) |
+| source_Processing_Interpolated | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top yes (×831) |
+| source_Processing_Resampled | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top yes (×831) |
+| source_Rep | metadata | categorical | *Not specified.* | n=831, missing=0, classes=26, top 1 (×167) |
+| source_Sample_Collection_Date | metadata | categorical | *Not specified.* | n=831, missing=0, classes=3, top June (×384) |
+| source_Sample_Platform | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top handheld (×831) |
+| source_Target_Status | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top fresh (×831) |
+| source_Target_Type | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top leaf (×831) |
+| source_Theme | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top ecology (×831) |
+| source_USDA_Symbol | metadata | categorical | *Not specified.* | n=831, missing=0, classes=18, top liaas (×55) |
+| source_Wavelength_Units | metadata | categorical | *Not specified.* | n=831, missing=0, classes=1, top nm (×831) |
 
 ## Statistics — splits
 
@@ -74,7 +97,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -84,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 5 fields, Y: 11 fields, measurements: 0 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 11 fields, passport: 49 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,6 +127,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f83a8fc4c4435ae929c0fbe8772c336c85169b4f41ccae417a25a323862ad947`
-- **Processing hash:** `b227c37092f0b55c742d9a39af7422df79400f6b49e7175fa0e4545a535090d3` | **metadata hash:** `52a8dadabec6df949dac82f069ce57e7c4ac561270784391f4ccef78c8e2e58e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `6cc48a2b99e512de371687eedd1755fefdbbfc6e6e575dc03f0989a19b85cc22`
+- **Processing hash:** `5d65c4dbbaa2fa1a6cb9a0d3d9ab59f2c81f04d11f105344548d8e6da33eeb79` | **metadata hash:** `946fbb50832854e820413df34492dd9d36834092565c9caabf084b48721044ec`

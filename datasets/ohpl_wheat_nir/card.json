@@ -34,6 +34,15 @@
     "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": null,
     "sample_id_available": false,
+    "source_coverage": {
+      "in_all_sources": null,
+      "in_one_source_only": null,
+      "n_sources": 1,
+      "pairwise_shared": null,
+      "per_source": {
+        "X": 100
+      }
+    },
     "technical_repetitions": null,
     "unit": "Unit undetermined"
   },
@@ -111,7 +120,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:12.238609+00:00",
+  "generated_at": "2026-11-03T23:09:05.132472+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -134,13 +143,13 @@
   "integrity": {
     "content_hash": "bde5d9f6d916fbe6333d947137bc0c3224006f336a545bb916f1172a215bcd31",
     "manifest": "manifest.json",
-    "metadata_hash": "2181883a8e3fb4845adbad38535907e0000f1847b5d0a29e0b19e6bfd7803b4f",
-    "processing_hash": "6b0abe8a87198ac690ece75510806b91350649228b4b5eda86472f7f91f5119e"
+    "metadata_hash": "02e95463d7fd060b2641e1a0d72194c9483113e07160165959c32a00c81c74d6",
+    "processing_hash": "86276affcbb5e1fb5f978f29af75b3b9912af1e3f8b91d210decf065ba91e944"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "nanxstats/OHPL",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1188,15 +1197,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.99997449092999,
+          "effective_rank": 1.21,
+          "n_components_95": 1,
+          "n_components_99": 2
         },
         "mean_max": 1.0921330964565277,
         "mean_min": 0.32476090878248215,
         "n_outliers": 43,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9592496949988678,
+            0.03685402494710829,
+            0.0022114981215599324,
+            0.001324228344544792,
+            0.00022726809940217435,
+            3.812209010245259e-05,
+            2.9935782368369577e-05,
+            1.6184438858871538e-05,
+            1.3248793474780266e-05,
+            1.0285313702543186e-05,
+            8.488087007931944e-06,
+            5.198273335066627e-06,
+            2.6040023446775866e-06,
+            1.7811238585925831e-06,
+            1.6922554099234722e-06,
+            1.3942928256814635e-06,
+            8.853601739781987e-07,
+            7.222354753592711e-07,
+            5.252318648361965e-07,
+            4.20366290067082e-07,
+            3.2240105513879915e-07,
+            2.534321362518755e-07,
+            1.4475358679883008e-07,
+            1.2995178542206404e-07,
+            1.0168882477649993e-07,
+            9.096114313781111e-08,
+            7.290067560013375e-08,
+            5.587907575578627e-08,
+            4.178947231303335e-08,
+            3.714583571296756e-08
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 1026.235866432786,
@@ -1505,8 +1548,8 @@
             "noise_rms": 7.023258573628515e-05,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2552,10 +2595,94 @@
       },
       "type": "numeric",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_repository",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_repository",
+        "numeric_sentinels": [],
+        "original_name": "source_repository",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "nanxstats/OHPL"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_local_bacon_reference",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_local_bacon_reference",
+        "numeric_sentinels": [],
+        "original_name": "source_local_bacon_reference",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "D:\\R\\R projects\\DeLeTe_BACON"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

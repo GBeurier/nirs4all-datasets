@@ -9,16 +9,14 @@ retrievable once their private Dataverse DOI/version/file ids are added to the d
 For each dataset, upload the canonical files to the private Dataverse, restrict files as
 needed, then fill `dataverse.doi`, `dataverse.dataset_version`, and manifest `file_id`s.
 
-## Pending (9)
+## Pending (7)
 
 | dataset_id | tier | current origins | blockers |
 |------------|------|-----------------|----------|
 | `cgl_nir_grain_eigenvector` | private | url:manual, script:manual | requires token-gated hosted fallback or source credential |
 | `corn_eigenvector_nir` | private | url:manual, url:manual, url:manual, url:manual, script:manual | requires token-gated hosted fallback or source credential |
 | `diesel_fuels_nir_eigenvector` | private | url:manual, script:manual | requires token-gated hosted fallback or source credential |
-| `github_grapevine_chloride_nirsg1_nir` | private | script:manual | requires token-gated hosted fallback or source credential |
-| `github_grapevine_chloride_svc_hr1024i_visnir` | private | script:manual | requires token-gated hosted fallback or source credential |
+| `github_grapevine_chloride_nir` | private | none | requires token-gated hosted fallback or source credential |
 | `grapevine_leaftraits_multisensor_nir` | private | script:manual | requires token-gated hosted fallback or source credential |
-| `manure21_nir_all_y` | private | script:manual | requires token-gated hosted fallback or source credential |
 | `pharmaceutical_tablets_nir_shootout_eigenvector` | private | url:manual, script:manual | requires token-gated hosted fallback or source credential |
 | `ucph_tablet_nir` | private | url:manual, url:manual, script:manual | requires token-gated hosted fallback or source credential |

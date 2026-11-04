@@ -43,6 +43,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 7,
+      "in_one_source_only": 7,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 7
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiple spectra exported per identifier; nature not established"
   },
@@ -325,7 +334,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:08.655126+00:00",
+  "generated_at": "2026-11-03T23:46:11.078236+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -346,10 +355,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "546b171a2315f25bb4069e0eaca23108f7407d6e547851280784589117eab6ab",
+    "content_hash": "ca77f8d56a933c7081a2240893f0463d459b7baf2866b71cedec6d1d84dc8edf",
     "manifest": "manifest.json",
-    "metadata_hash": "ae834485581f665a7c407b15ff977c4693994dc090d0806ab23affa1f2e44212",
-    "processing_hash": "6922fa33cdeddfaa9cfd0b47a9dc81df5927f32fcee9b8b2e5a5c5c09d37e57a"
+    "metadata_hash": "dc16011087c3beb62fccf33077c7de10c43c77ff397d748acbca5c9d75e5a444",
+    "processing_hash": "7e6fff9649767c6cebacfbde3a8e4d1b413a3adc8ca921285c04c1bbafc2b9d4"
   },
   "protocol_version": "7",
   "provenance": {
@@ -1415,15 +1424,28 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999999999999999,
+          "effective_rank": 1.12,
+          "n_components_95": 1,
+          "n_components_99": 2
         },
         "mean_max": 14.42139983177185,
         "mean_min": 3.6800999879837035,
         "n_outliers": 3,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9791246275176636,
+            0.01829092150231407,
+            0.0012344537911320988,
+            0.0006131963872389268,
+            0.0003823823858818075,
+            0.00035441841443690207,
+            1.3324681010054427e-12,
+            6.349988674753738e-32,
+            3.0437988072439217e-33
+          ],
+          "n_components": 9
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 74.61839056068659,
@@ -1783,8 +1805,8 @@
             "noise_rms": 0.062343374803376775,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -3224,10 +3246,1144 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7599999999999999,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.1,
+        "n_classes": 6,
+        "normalized_entropy": 0.898244401703927
+      },
+      "denominator": "canonical_observations",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Calocedrus decrruens"
+          },
+          {
+            "count": 2,
+            "name": "Arctostaphylos glandulosa 5"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 1"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 2"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 3"
+          },
+          {
+            "count": 1,
+            "name": "Arctostaphylos glandulosa 4"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.42000000000000004,
+        "imbalance_ratio": 2.3333333333333335,
+        "minority_fraction": 0.3,
+        "n_classes": 2,
+        "normalized_entropy": 0.8812908992306927
+      },
+      "denominator": "canonical_observations",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 7,
+            "name": "non photosynthetic vegetation"
+          },
+          {
+            "count": 3,
+            "name": "vegetation"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.66,
+        "imbalance_ratio": 1.3333333333333333,
+        "minority_fraction": 0.3,
+        "n_classes": 3,
+        "normalized_entropy": 0.9911594714322187
+      },
+      "denominator": "canonical_observations",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "flowers"
+          },
+          {
+            "count": 3,
+            "name": "branches"
+          },
+          {
+            "count": 3,
+            "name": "Shrub"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.66,
+        "imbalance_ratio": 1.3333333333333333,
+        "minority_fraction": 0.3,
+        "n_classes": 3,
+        "normalized_entropy": 0.9911594714322187
+      },
+      "denominator": "canonical_observations",
+      "name": "source_genus",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_genus",
+        "numeric_sentinels": [],
+        "original_name": "source_genus",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Calocedrus"
+          },
+          {
+            "count": 3,
+            "name": "Salvia"
+          },
+          {
+            "count": 3,
+            "name": "Arctostaphylos"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.66,
+        "imbalance_ratio": 1.3333333333333333,
+        "minority_fraction": 0.3,
+        "n_classes": 3,
+        "normalized_entropy": 0.9911594714322187
+      },
+      "denominator": "canonical_observations",
+      "name": "source_species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_species",
+        "numeric_sentinels": [],
+        "original_name": "source_species",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "decurrens"
+          },
+          {
+            "count": 3,
+            "name": "leucophylla"
+          },
+          {
+            "count": 3,
+            "name": "glandulosa"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.84,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.1,
+        "n_classes": 7,
+        "normalized_entropy": 0.9695703501901249
+      },
+      "denominator": "canonical_observations",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 7,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 7,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "VH266"
+          },
+          {
+            "count": 2,
+            "name": "VH267"
+          },
+          {
+            "count": 2,
+            "name": "VH268"
+          },
+          {
+            "count": 1,
+            "name": "VH290"
+          },
+          {
+            "count": 1,
+            "name": "VH291"
+          },
+          {
+            "count": 1,
+            "name": "VH292"
+          },
+          {
+            "count": 1,
+            "name": "VH253"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "UCSB"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "TIR"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.42000000000000004,
+        "imbalance_ratio": 2.3333333333333335,
+        "minority_fraction": 0.3,
+        "n_classes": 2,
+        "normalized_entropy": 0.8812908992306927
+      },
+      "denominator": "canonical_observations",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 7,
+            "name": "37.0443, -119.3026, WGS84"
+          },
+          {
+            "count": 3,
+            "name": "34.698, -120.0477, WGS84"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "11/2/2013"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Hemispherical reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Reflectance (percentage)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_observations",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 1.871695838238945e-16,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2.501,
+        "mean": 2.5010000000000003,
+        "median": 2.501,
+        "min": 2.501,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 2.501,
+        "q3": 2.501,
+        "std": 4.681111291435602e-16
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_observations",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 15.387,
+        "mean": 15.387,
+        "median": 15.387,
+        "min": 15.387,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 15.387,
+        "q3": 15.387,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_observations",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 1737.0,
+        "mean": 1737.0,
+        "median": 1737.0,
+        "min": 1737.0,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 1737.0,
+        "q3": 1737.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.1,
+        "n_classes": 10,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_observations",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh290.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh291.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh292.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "vegetation.shrub.arctostaphylos.glandulosa.tir.vh266.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "vegetation.shrub.arctostaphylos.glandulosa.tir.vh267.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "vegetation.shrub.arctostaphylos.glandulosa.tir.vh268.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh253.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh266.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh267.ucsb.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh268.ucsb.nicolet.ancillary.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7599999999999999,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.1,
+        "n_classes": 6,
+        "normalized_entropy": 0.898244401703927
+      },
+      "denominator": "canonical_observations",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Calocedrus decrruens"
+          },
+          {
+            "count": 2,
+            "name": "Arctostaphylos glandulosa 5"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 1"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 2"
+          },
+          {
+            "count": 1,
+            "name": "Salvia leucophylla 3"
+          },
+          {
+            "count": 1,
+            "name": "Arctostaphylos glandulosa 4"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "nonphotosyntheticvegetation"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.1,
+        "n_classes": 10,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_observations",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh290.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh291.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.branches.salvia.leucophylla.tir.vh292.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decrruens.tir.vh266.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decrruens.tir.vh267.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decrruens.tir.vh268.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh253.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh266.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh267.ucsb.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "nonphotosyntheticvegetation.flowers.calocedrus.decurrens.tir.vh268.ucsb.nicolet.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
@@ -3245,7 +4401,6 @@
     "conversion: variables: column 'source_species' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'source_additional_information' varies within a sample_id; retained at observation grain.",
     "conversion: variables: column 'source_material_name' varies within a sample_id; retained at observation grain.",
-    "conversion: variables: column 'source_source_file_name' varies within a sample_id; retained at observation grain.",
-    "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
+    "conversion: variables: column 'source_source_file_name' varies within a sample_id; retained at observation grain."
   ]
 }

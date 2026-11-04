@@ -61,6 +61,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 20,
+      "in_one_source_only": 20,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 20
+      }
+    },
     "technical_repetitions": null,
     "unit": "Replicates indexed by sample/drying state"
   },
@@ -201,11 +210,9 @@
         "notes"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:05.595683+00:00",
+  "generated_at": "2026-11-03T23:46:20.269512+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -228,8 +235,8 @@
   "integrity": {
     "content_hash": "c3b77c320d1e2ebb12e900b661d4c54e0866f5cd0b9f54da4371157e2e9cbdfa",
     "manifest": "manifest.json",
-    "metadata_hash": "6a0790012b5b20e186efa7689ab6fa59e5162309942297fe2c72ae3760628d0a",
-    "processing_hash": "d690212cdb28b7874295a8b24fcc3ecfe8efa14d820bb64d08707476f32b8cce"
+    "metadata_hash": "734cd74024768f53b3e51ffe78b4777df9188cd30977386c4f8461ec8a59c69a",
+    "processing_hash": "0aa92f88d5cda7a642cdf05f6b5ffebe4019908de0763bbb470a9db7d71658e8"
   },
   "protocol_version": "7",
   "provenance": {
@@ -258,13 +265,6 @@
         "title": null
       },
       {
-        "access": "open",
-        "kind": "url",
-        "license": null,
-        "locator": "https://creativecommons.org/licenses/by/4.0/",
-        "title": null
-      },
-      {
         "access": "manual",
         "kind": "script",
         "license": null,
@@ -275,7 +275,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.",
       "Curation identity contract: 20 groups M 1\u2026M 20 aligned with moisture references; 1\u20135 indexed spectra per group, 73 in total. The converter explicitly treats the suffix as a replicate. Whether it is strictly technical rather than an independent preparation remains undocumented."
     ]
@@ -1299,15 +1298,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999731780025976,
+          "effective_rank": 1.24,
+          "n_components_95": 1,
+          "n_components_99": 2
         },
         "mean_max": 48.629452065245744,
         "mean_min": 3.674109587114151,
         "n_outliers": 27,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9538954922376615,
+            0.0374595066804198,
+            0.007640758626737579,
+            0.0005980520251669941,
+            0.00018455716364990324,
+            9.444732460479301e-05,
+            5.596914670814301e-05,
+            2.4598826935369007e-05,
+            1.2004126393650273e-05,
+            7.791844319789426e-06,
+            5.37775038196432e-06,
+            4.778845273489699e-06,
+            1.45444420183541e-06,
+            1.3151434305542525e-06,
+            1.0678956790582863e-06,
+            9.584882841706603e-07,
+            6.674451281136734e-07,
+            6.190293767323314e-07,
+            5.614274834229023e-07,
+            5.14995941548735e-07,
+            4.87349663909344e-07,
+            4.464087430550896e-07,
+            4.3808270579369214e-07,
+            4.0364900658683775e-07,
+            3.7249421065221775e-07,
+            3.5883965030810395e-07,
+            3.2890849894013246e-07,
+            3.254354015073226e-07,
+            2.9577136845224507e-07,
+            2.723665393468201e-07
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 236839.91644830414,
@@ -1667,8 +1700,8 @@
             "noise_rms": 0.006053982148316188,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -3637,15 +3670,55 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_observations",
+      "name": "source_file_targets",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_file_targets",
+        "numeric_sentinels": [],
+        "original_name": "source_file_targets",
+        "present": 73,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 73,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 73,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 73,
+            "name": "Moisture_values.xlsx"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.2.0",
+    "content": "1.3.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: column 'replicate' varies within a sample_id; retained at observation grain."
   ]
 }

@@ -55,6 +55,21 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top explicit_open (×1100) |
 | usage_scope | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top public_reuse_possible (×1100) |
 | notes | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top EcoSIS package calcareous-grassland-species-over-growing-season-at-the-leaf-level, no interpolation applied by project. (×1100) |
+| source_spectra | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1100, top WW_119_ag_eu_L1 (×1) |
+| source_site_long | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top wrotham_water (×1100) |
+| source_site_short | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top WW (×1100) |
+| source_country | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top UK (×1100) |
+| source_date | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=13, top 29/04/2021 (×85) |
+| source_leaf_nos | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=5, top L1 (×221) |
+| source_measurement | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top REFL (×1100) |
+| source_measurement_type | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top LC (×1100) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top vegetation (×1100) |
+| source_instrumentation | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top SVCHR1024i (×1100) |
+| source_calibration | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top spectralon (×1100) |
+| source_wavelengths | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top nm (×1100) |
+| source_project | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top multitemporal_assessment_of_diversity_and_condition_in_UK_seminatural_grasslands_using_optical_reflectance (×1100) |
+| source_pi | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top AnneVerhoef (×1100) |
+| source_affiliation | metadata | categorical | *Not specified.* | n=1100, missing=0, classes=1, top University_of_Reading_UK (×1100) |
 
 ## Statistics — splits
 
@@ -75,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 1 fields, passport: 42 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 42 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -95,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d8f9b65b6416a07bc5e647385df4c0d022d00a5b7955a28b4378ae803ff332f9`
-- **Processing hash:** `993e0dec3e912488e190415814d4f6e425ca7886519502e51279dab976fbd2df` | **metadata hash:** `b549402580079c9a6b59d2a80e51ad92c453d6434dd7fb0369fa2780f6201788`
+- **Processing hash:** `dce566ca1d7150b82e4b925720f595766819c7c8b59c4d7ce1f4f269222bdb88` | **metadata hash:** `31a73feae02915165a537c4b028ca2b4ba051a0e01fb5d1edd9dd47a2438b436`

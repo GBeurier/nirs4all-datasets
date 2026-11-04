@@ -38,6 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top The FIR MID NIR spectra of e liquids were acquired using a Bruker Invenio-R (Universiti Putra Malaysia) instrument equipped with an attenuated total internal reflection (ATR).zip (×27) |
 | official_source_url | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top https://data.mendeley.com/datasets/2cwtxdtstn/1 (×27) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top v0.8.61 (×27) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=27, missing=0, classes=27, top LV_542_OKT_1 (×1) |
 
 ## Statistics — splits
 
@@ -58,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 14 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 14 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,6 +79,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ed1d3852616e314fa456d6fc48725dd97c7a2a0a2eb1deb7682e06db8987b708`
-- **Processing hash:** `ed891d841288df5448c26e893ae1ffdb15d8ccd65d63af125054fb4a6580c474` | **metadata hash:** `be69720c9500a748278c02c3f3b455ce76794b82c55e5e339fbd7ae159d9f2e1`
+- **Processing hash:** `8821cbde2283edd02d5ac0fe7705d45257ef8ba68f1bdccf0c319e18eccd4fa3` | **metadata hash:** `1431ba757025de086a98bf8d068985152fd349d32f9ca7c434bcdcb7ecd1ec48`

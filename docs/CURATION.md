@@ -67,10 +67,12 @@ for the anonymized tier; its existing masked accessors remain available.
 ## Identity contracts
 
 `src/nirs4all_datasets/curation_contracts.json` holds the dataset-specific
-reviewed mappings. It includes all 298 reviewed source IDs, normalized to catalog
+reviewed mappings. It held all 298 reviewed source IDs, normalized to catalog
 slugs with their original spelling retained. The current repository contains
 297 of those datasets; the Lyonia wave-3 source is not added to the catalog by
-this migration.
+this migration. Leaves composed into one database (`consolidation.json`) are
+replaced by one contract for the database: the union of the member field rules,
+with each member's copies of its own target dropped in favour of the target rule.
 
 Rules are local to a dataset, not general guesses from column names or suffixes:
 

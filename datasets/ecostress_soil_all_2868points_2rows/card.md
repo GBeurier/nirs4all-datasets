@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top manual_review_needed (×2) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top private_use_only (×2) |
 | notes | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top soil.aridisol.calciorthid.none.all.84p3721.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Light yellowish brown loam (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top soil (×2) |
+| source_class | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Aridisol (×2) |
+| source_subclass | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Calciorthid (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top none (×2) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top 84P3721 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top JHU (×2) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top All (×2) |
+| source_origin | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top 1.5 km NE of Minkher Gharbi, Syria via USDA Soil Conservationservice. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
+| source_description | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top The parent material is igneous-basaltic rock. Physiography: level to undulating upland plains. Light yellowish brown loam, (typic xerollic). Original ASTER Spectral Library name was jhu.becknic.soil.aridisol.calciorthid.coarse.84P3721.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×2) |
+| source_first_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top X (×2) |
+| source_second_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Y (×2) |
+| source_x_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Wavelength (micrometers) (×2) |
+| source_y_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Reflectance (percent) (×2) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 14.98–14.98, mean 14.98 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=2, missing=0, range 2868–2868, mean 2868 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top soil.aridisol.calciorthid.none.all.84p3721.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Light yellowish brown loam (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top soil (×2) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top soil.aridisol.calciorthid.none.all.84p3721.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `2db330c585604ea8f844a769e79ac5ac75cc742ca334e9b6df0ebccb9884579a`
-- **Processing hash:** `1b426ef3bf92d9e0e50bc7ec41082500b04f0f85f3658024c35bd482c10fd3bb` | **metadata hash:** `4236973f1544b402c022660a3e3ce48e6917a8aa3c4facfddc2ef54bce346dd3`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `7a72e9abccf457940dd6cbc77086d84e3acde7975eace302d0f1037aad159864`
+- **Processing hash:** `340edc5c6aa39be3148c8045b0973f3a6dfe874253d79fbc96abdb48fbfdc203` | **metadata hash:** `8a4ea82a7f75ca9a3be0474689272538238f7ddafd5ae79a077073e036a9ca52`

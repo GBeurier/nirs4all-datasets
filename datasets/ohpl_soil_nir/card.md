@@ -27,6 +27,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
 | som | target | numeric | *Not specified.* | n=108, missing=0, range 42.91–95.85, mean 85.43 ± 10.82 |
+| source_repository | metadata | categorical | *Not specified.* | n=108, missing=0, classes=1, top nanxstats/OHPL (×108) |
+| source_local_bacon_reference | metadata | categorical | *Not specified.* | n=108, missing=0, classes=1, top D:\R\R projects\DeLeTe_BACON (×108) |
 
 ## Statistics — splits
 
@@ -37,7 +39,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -47,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -67,6 +69,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `debc1a6c79964ce6e47bae4308ca40ebe081e66020c7e2f2369bc1df0d2ba9d5`
-- **Processing hash:** `2f2aef81498c7ef5b18d4be0bac602958c817142c98f3cd4a07ca52a8e9528c9` | **metadata hash:** `3d2af34b3d21b54bc80953fb94e756ec90d0065e7bc5f79abff188e8b96e02bb`
+- **Processing hash:** `47a21946e13512639f36a0e0b14b4b6cf0156a411564545d56540999719c76cc` | **metadata hash:** `6d21d65140607b526a2592576f376fe30ff64170784345669245fea8afaa52d7`

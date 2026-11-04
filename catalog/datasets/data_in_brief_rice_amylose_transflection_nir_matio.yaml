@@ -76,6 +76,12 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_split
+  role: metadata
+  type: categorical
+- name: source_split_index
+  role: metadata
+  type: numeric
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -87,20 +93,17 @@ splits:
   applied: false
 tier: public
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: Dataset of Near-infrared spectroscopy measurement for amylose determination
     using PLS algorithms
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: Sample identifier declared in M"
+  - 'Curation identity contract: Sample identifier declared in M'
 governance:
   license: CC-BY-4.0
   owner_steward: Dataset of Near-infrared spectroscopy measurement for amylose determination
@@ -121,11 +124,6 @@ origin_sources:
 - kind: url
   mode: raw
   locator: https://pmc.ncbi.nlm.nih.gov/articles/PMC5712058/
-  access: open
-  expected_files: []
-- kind: url
-  mode: raw
-  locator: https://creativecommons.org/licenses/by/4.0/
   access: open
   expected_files: []
 - kind: script
@@ -150,5 +148,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/data_in_brief_rice_amylose_transflection_nir_matio
-  source_fingerprint: 5e06f1fbc28bb3abdad083bdda4568bb7e3d20065978971242ea64faacdfcc85
+  source_relpath: v2.0/data_in_brief_rice_amylose_transflection_nir_matio
+  source_fingerprint: 0c5735253107b681d6b262a9d6441f736b9956144df668d9bab244dc5710d869

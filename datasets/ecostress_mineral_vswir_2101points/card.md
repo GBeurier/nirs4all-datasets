@@ -57,6 +57,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top manual_review_needed (×406) |
 | usage_scope | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top private_use_only (×406) |
 | notes | metadata | categorical | *Not specified.* | n=406, missing=0, classes=402, top None (×5) |
+| source_name | metadata | categorical | *Not specified.* | n=406, missing=0, classes=131, top Quartz SiO_2 (×15) |
+| source_type | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Mineral (×406) |
+| source_class | metadata | categorical | *Not specified.* | n=406, missing=0, classes=12, top Silicate (×198) |
+| source_subclass | metadata | categorical | *Not specified.* | n=406, missing=0, classes=8, top None (×202) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=406, missing=0, classes=4, top Fine (×147) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=406, missing=0, classes=148, top A-1A (×3) |
+| source_owner | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top JPL (×406) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top VSWIR (×406) |
+| source_origin | metadata | categorical | *Not specified.* | n=406, missing=0, classes=117, top Unknown. (×34) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top N/A (×406) |
+| source_description | metadata | categorical | *Not specified.* | n=406, missing=0, classes=406, top Particle size was 125-500um.Collected by: JPL Original ASTER Spectral Library name was jpl.perkin.mineral.arsenate.none.coarse.a01a.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Hemispherical reflectance (×406) |
+| source_first_column | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top X (×406) |
+| source_second_column | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Y (×406) |
+| source_x_units | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Wavelength (micrometers) (×406) |
+| source_y_units | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top Reflectance (percent) (×406) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=406, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=406, missing=0, range 0.4–0.4, mean 0.4 ± 5.558e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=406, missing=0, range 2101–2101, mean 2101 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=406, missing=0, classes=402, top None (×5) |
+| source_material_name | metadata | categorical | *Not specified.* | n=406, missing=0, classes=131, top Quartz SiO_2 (×15) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=406, missing=0, classes=1, top mineral (×406) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=406, missing=0, classes=406, top mineral.arsenate.none.coarse.vswir.a-1a.jpl.perkin.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -78,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +122,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `94128f45e944c2ef9d93139f068d26d65d08bf03d8bdde6fdf81e41d2f6ac0c8`
-- **Processing hash:** `372bd811999cf47c5357bdd788d1ac4fe8a68cadbb20076cc16269cbb60931ab` | **metadata hash:** `c6ff2fc29fc25b378707525f626fa00da737f27b6dc4437a0bda121b3e6c6746`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `926ed6c0517cab06191ba943afcfac36848418e7dad67dbeb9a7358c936cce45`
+- **Processing hash:** `b72511945e361b19c07fa2cf9425c6ff7264561d5a56aa2bd6f96debe3af974c` | **metadata hash:** `c7b100ea9461320be9bd6a95f0a53ec7f82d053a6f9406ffff193232e71e58df`

@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top manual_review_needed (×83) |
 | usage_scope | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top private_use_only (×83) |
 | notes | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top none (×83) |
+| source_name | metadata | categorical | *Not specified.* | n=83, missing=0, classes=81, top Quartzite (×2) |
+| source_type | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Rock (×83) |
+| source_class | metadata | categorical | *Not specified.* | n=83, missing=0, classes=3, top Igneous (×38) |
+| source_subclass | metadata | categorical | *Not specified.* | n=83, missing=0, classes=21, top Felsic (×11) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Solid (×83) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=83, missing=0, classes=83, top Ward17 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top JPL (×83) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top All (×83) |
+| source_origin | metadata | categorical | *Not specified.* | n=83, missing=0, classes=82, top Ward's Collection of American Rocks. Sample locality - Portland, Middlesex County, Connecticut. (×2) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top N/A (×83) |
+| source_description | metadata | categorical | *Not specified.* | n=83, missing=0, classes=83, top A very fine-grained, porphyritic rock, light gray in color.Geologic age - Tertiary (Post-Oligocene).Collected by: Ward's Natural Science Original ASTER Spectral Library name was jpl.nicolet.rock.igneous.alkalic.solid.ward17.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Hemispherical reflectance (×83) |
+| source_first_column | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top X (×83) |
+| source_second_column | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Y (×83) |
+| source_x_units | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Wavelength (micrometers) (×83) |
+| source_y_units | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top Reflectance (percent) (×83) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=83, missing=0, range 15.39–15.39, mean 15.39 ± 1.787e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=83, missing=0, range 2–2, mean 2 ± 2.234e-16 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=83, missing=0, range 2257–2257, mean 2257 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top none (×83) |
+| source_material_name | metadata | categorical | *Not specified.* | n=83, missing=0, classes=81, top Quartzite (×2) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=83, missing=0, classes=1, top rock (×83) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=83, missing=0, classes=83, top rock.igneous.alkalic.solid.all.ward17.jpl.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b9858d24c792ff7bb3e4aa7ec37fd7caa0e4ce49e322d7400f9e11a06c07a7c4`
-- **Processing hash:** `98128e8868ca197282eb9d80148d96c25fd73b41ddd4771466fb9dbd631dbca2` | **metadata hash:** `8bf51cb501af671c6a6bd666b9d9b96f3061026712fa4d81cc8339bd302b7ac5`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `999927d4f035b41e2399c0706ef80f5a9cee2eb66b169d1b0391c478bccb8747`
+- **Processing hash:** `29911fb6d4bfeb3e3f90bf35f2e1e2771be7d7007db0f658bca9e4220529911c` | **metadata hash:** `6ae25a33cee8f14c8695cc6d307009cda79fa1fde4f285796ba0ef84808c1cf0`

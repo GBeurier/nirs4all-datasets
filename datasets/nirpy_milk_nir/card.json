@@ -45,6 +45,15 @@
     "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": null,
     "sample_id_available": false,
+    "source_coverage": {
+      "in_all_sources": null,
+      "in_one_source_only": null,
+      "n_sources": 1,
+      "pairwise_shared": null,
+      "per_source": {
+        "X": 450
+      }
+    },
     "technical_repetitions": null,
     "unit": "Physical unit undetermined"
   },
@@ -139,11 +148,9 @@
         "notes"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:09.283757+00:00",
+  "generated_at": "2026-11-03T23:46:29.892634+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -166,8 +173,8 @@
   "integrity": {
     "content_hash": "d2c2c2371456639e9436aff3939ce90a96f11620cdc06a8ac418d0bac170a7a3",
     "manifest": "manifest.json",
-    "metadata_hash": "53dd4bbec1c0c2ade2d76d23d1ff89a0fa6edf9ea8505b674b53fdb643e21dec",
-    "processing_hash": "a617133d4ee8a04de6f698e470fb443fe578653ebdbcb6cd0538143ec49a2c48"
+    "metadata_hash": "e09083d23938332ed6dde51301874ade38d47b75f151ae121759c987c156239f",
+    "processing_hash": "d029880d538a0733aaba3abed45c156bd63964d9bf68b09b2bfb993964626b46"
   },
   "protocol_version": "7",
   "provenance": {
@@ -199,7 +206,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: Date/column-index-like identifier, physical identity not established; literal counting is rejected. Each label is reused in 9 different Y classes; the former 9/11 values did not describe replicates of the same milk."
     ]
   },
@@ -1222,15 +1228,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9985703437615524,
+          "effective_rank": 1.74,
+          "n_components_95": 2,
+          "n_components_99": 3
         },
         "mean_max": 2.3210735501183404,
         "mean_min": 0.04987351598011123,
         "n_outliers": 118,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.8098775673882457,
+            0.17617412835472823,
+            0.009138487172265616,
+            0.0017335012707008779,
+            0.0007838916286842947,
+            0.0002519518427492073,
+            0.0002080694070772882,
+            0.00018094854643758832,
+            0.00011991701097941492,
+            0.00010188113968417851,
+            8.96184863232086e-05,
+            8.411330421723529e-05,
+            6.789264835072522e-05,
+            5.588898173241109e-05,
+            5.128650453441333e-05,
+            4.273094147025885e-05,
+            4.231982856571261e-05,
+            3.865951399304598e-05,
+            3.625283382883407e-05,
+            3.600427690455004e-05,
+            3.364004803476323e-05,
+            3.187136342972097e-05,
+            2.8574389211148473e-05,
+            2.7995421811031445e-05,
+            2.6974395531420895e-05,
+            2.5693162121916928e-05,
+            2.518763498149408e-05,
+            2.433930375109037e-05,
+            2.1848552340119027e-05,
+            2.159536252281567e-05
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 304.7159864232027,
@@ -1531,8 +1571,8 @@
             "noise_rms": 7.943217960440006e-05,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -4017,12 +4057,8 @@
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
-  "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
-  ]
+  "warnings": []
 }

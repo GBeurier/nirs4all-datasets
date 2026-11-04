@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 2,
+      "in_one_source_only": 2,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 2
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -137,11 +146,9 @@
         "notes"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:10.094832+00:00",
+  "generated_at": "2026-11-03T23:47:49.280229+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -164,8 +171,8 @@
   "integrity": {
     "content_hash": "e5e2cf96120f2f20091459ef4970569907c487f159eb49db0eda47d5d5bbc087",
     "manifest": "manifest.json",
-    "metadata_hash": "e0b697c19efa6e17167bf088bcc599e69bfd9eba3d828848199aecb22cb213a9",
-    "processing_hash": "b2a533870bcc8b5e197600de7719f6ca80e22f6f5ea27246db7b01472ca2ace0"
+    "metadata_hash": "bfa12d52eceee7161a4f58dcea904581302dc48da04a4bcf2bc5a87a99314560",
+    "processing_hash": "528923e295ba83a64c2092e38ed0131621414b8e192ea4ea06768e77c6758060"
   },
   "protocol_version": "7",
   "provenance": {
@@ -191,13 +198,6 @@
         "kind": "url",
         "license": null,
         "locator": "https://data.mendeley.com/public-api/datasets/8wpgzrp33s/files?folder_id=root&version=1&$start=0&$limit=1000",
-        "title": null
-      },
-      {
-        "access": "open",
-        "kind": "url",
-        "license": null,
-        "locator": "https://creativecommons.org/licenses/by/4.0/",
         "title": null
       },
       {
@@ -1235,15 +1235,20 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999999999999997,
+          "effective_rank": 1.0,
+          "n_components_95": 1,
+          "n_components_99": 1
         },
         "mean_max": 82.97247314453125,
         "mean_min": 14.993124008178711,
         "n_outliers": null,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9999999999999997
+          ],
+          "n_components": 1
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 166.14045834732056,
@@ -1552,8 +1557,8 @@
             "noise_rms": 0.03876066688294792,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2463,12 +2468,10 @@
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "variable 'film_thickness_um' declared but absent from canonical variables.parquet; skipped"
   ]
 }

@@ -7,6 +7,9 @@ October 2026 update: the Python package now contains original-source recipes for
 all 135 public datasets (133 without a profile requirement, two requiring explicit
 Harvard guestbook answers). See [PUBLIC_ORIGIN_LOADING.md](PUBLIC_ORIGIN_LOADING.md).
 The inventory and implementation narrative below are retained as historical context.
+November 2026: per-target and per-instrument leaves are composed into origin
+databases (`consolidation.json`); the catalog has 241 datasets and 95 public
+recipes. Dataset IDs below that no longer exist were consumed by a database.
 
 The numerical inventory below describes the July snapshot. The October 2026
 integration contains 297 standardized datasets (133 additions); see

@@ -58,6 +58,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top manual_review_needed (×113) |
 | usage_scope | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top private_use_only (×113) |
 | notes | metadata | categorical | *Not specified.* | n=113, missing=0, classes=93, top none (×16) |
+| source_name | metadata | categorical | *Not specified.* | n=113, missing=0, classes=93, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×4) |
+| source_type | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Mineral (×113) |
+| source_class | metadata | categorical | *Not specified.* | n=113, missing=0, classes=7, top Silicate (×90) |
+| source_subclass | metadata | categorical | *Not specified.* | n=113, missing=0, classes=8, top None (×23) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Fine (×113) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=113, missing=0, classes=113, top aragonite_1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=113, missing=0, classes=2, top JHU (×112) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top TIR (×113) |
+| source_origin | metadata | categorical | *Not specified.* | n=113, missing=0, classes=113, top Sample from Horenec, Bilina, Cechy, Czechoslovakia, viaSmithsonian (sample no. NMNH B10083). (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top N/A (×113) |
+| source_description | metadata | categorical | *Not specified.* | n=113, missing=0, classes=113, top The sample was composed of two transparent, colorless pieces: one prismatic, 1.8 cm x 1.8 cm x 2 cm, and weighing about 2 g, the other a 5 mm x 5 mm x 5 mm cleavage fragment weighing 0.65 g. No impurities were detected in hand sample or microscopically. Particle size was less than 2 Micrometers. Original ASTER Spectral Library name was jhu.nicolet.mineral.carbonate.none.powder.aragon1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=113, missing=0, classes=3, top Transmission (×111) |
+| source_first_column | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top X (×113) |
+| source_second_column | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Y (×113) |
+| source_x_units | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Wavelength (micrometers) (×113) |
+| source_y_units | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top Transmittance (percent) (×113) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=113, missing=0, range 25.04–25.04, mean 25.04 ± 7.137e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=113, missing=0, range 2.079–2.079, mean 2.079 ± 4.461e-16 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=113, missing=0, range 2287–2287, mean 2287 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=113, missing=0, classes=93, top none (×16) |
+| source_material_name | metadata | categorical | *Not specified.* | n=113, missing=0, classes=93, top Olivine (Fo92) (Fe+2,Mg)2SiO4 (×4) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=113, missing=0, classes=1, top mineral (×113) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=113, missing=0, classes=113, top mineral.carbonate.none.fine.tir.aragonite_1.jhu.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -68,7 +91,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -79,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 4 fields, measurements: 2 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 4 fields, passport: 50 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +123,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `0eff0a6ceb162cc0f5531398dfc95b7c197baafda7cc0c434c1057886fb2d15a`
-- **Processing hash:** `1f4c5764ceba0524caf0128368b2da45d0b72e7733a9271ed07e9d298dfb8268` | **metadata hash:** `2e4c5f8b80fbe7a10475441118beb8e25239d7b2eca2b38060b500665b5ffa9d`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `4758dc68f8c8a8e75b03393fca37a1436ecf6e865ae33416450d2048bfa469c6`
+- **Processing hash:** `ba31788cc593911a05a91965a584ffc45aa31deb282155926834c8611dcf6cda` | **metadata hash:** `205b1a76f6c9d8c410f6ef2d19019b0ca081662414d2e009978e2efdda5a91f1`

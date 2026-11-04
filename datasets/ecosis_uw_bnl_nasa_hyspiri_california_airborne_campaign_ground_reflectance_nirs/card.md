@@ -54,6 +54,22 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top explicit_open (×64) |
 | usage_scope | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top public_reuse_possible (×64) |
 | notes | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top EcoSIS package uw-bnl-nasa-hyspiri-california-airborne-campaign-ground-target-spectra, no interpolation applied by project. (×64) |
+| source_Spectra | metadata | categorical | *Not specified.* | n=64, missing=0, classes=64, top Ivanpah_1 (×1) |
+| source_Site | metadata | categorical | *Not specified.* | n=64, missing=0, classes=4, top Sierra National Forest (×27) |
+| source_Site_Code | metadata | categorical | *Not specified.* | n=64, missing=0, classes=4, top SNF (×27) |
+| source_Measurement_Date | metadata | categorical | *Not specified.* | n=64, missing=0, classes=7, top 6/18/13 (×22) |
+| source_Measurement_Time | metadata | categorical | *Not specified.* | n=64, missing=12, classes=16, top 16:52:03 (×15) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=64, missing=0, range 33.52–37.08, mean 35.54 ± 1.714 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=64, missing=0, range -119.3–-115.4, mean -117.8 ± 1.594 |
+| source_Reference | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top Spectralon (×64) |
+| source_Measurement | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top Reflectance (×64) |
+| source_Spectra_Units | metadata | categorical | *Not specified.* | n=64, missing=0, classes=2, top Ratio (×51) |
+| source_Spectral_Resolution | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top 1nm (×64) |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=64, missing=0, classes=3, top Bare_Fiber (×39) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top Spectral Evolution (×64) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top PSM-3500 (×64) |
+| source_Instrument_Serial_Number | metadata | categorical | *Not specified.* | n=64, missing=0, classes=1, top SN1336023[3] (×64) |
+| source_Comments | metadata | categorical | *Not specified.* | n=64, missing=22, classes=4, top Collection details: Spectra was collected using a 1.5 meter long fiber connected to the instrument collection port. Data collection was done using the bare (22deg) fiber mounted in a pistol grip assembly. A white reference was collected prior to collection of the concrete and blacktop target spectrum. Target spectrum were collected ~90cm away from the operator at a height of ~1.2 meters above the surface. The sky was 100% cloud free, wind was minimal, slightly hazy. (×22) |
 
 ## Statistics — splits
 
@@ -64,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 10 fields, Y: 1 fields, measurements: 1 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 8 fields, Y: 1 fields, passport: 35 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `86dd8f30c7b9d1c1cc1baa9870ddafcbca5530f32c1508ae5ba4cc2c98c54f1f`
-- **Processing hash:** `4a3dfcb10967bbf3555748b0725c8395ef23d3433b0d9bd039dc0a3f7d293da3` | **metadata hash:** `ef17c754fd9df92882932d989090a46ff31509da5f0e5fd4f75f1e7c68e865a9`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `a5583a61de9b63b400434bffa5c065f6e25a58c4c71f7d97e50eb7624e62a8ef`
+- **Processing hash:** `ce05b7465200e635d5bd27b5dde9ca4581d5d12132f1e349a1f158f0c4191659` | **metadata hash:** `b86e560311d1d694dace2efcbae12384fd9dbfa7b76d6c8739e2e6f82fa37058`

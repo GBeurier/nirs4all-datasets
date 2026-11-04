@@ -62,6 +62,24 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top explicit_open (×302) |
 | usage_scope | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top public_reuse_possible (×302) |
 | notes | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top EcoSIS package ngee-tropics-gliht-puerto-rico-campaign-leaf-spectral-reflectance-and-transmittance-march-2017, no interpolation applied by project. (×302) |
+| source_SampleID | metadata | categorical | *Not specified.* | n=302, missing=0, classes=302, top BNL12801 (×1) |
+| source_QA_QC_Flag | metadata | numeric | *Not specified.* | n=302, missing=298, range 1–1, mean 1 ± 0 |
+| source_Comments | metadata | categorical | *Not specified.* | n=302, missing=295, classes=4, top High water content, real? (×4) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top Spectral Evolution (×253) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top PSR+3500 (×253) |
+| source_Instrument_Serial_Number | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top SN1586067[3] (×253) |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top Fiber_Optic_LC_RP_Pro (×253) |
+| source_Collection_Units | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top Raw_DN (×253) |
+| source_Spectra_Units | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Percent_Reflectance_0_100 (×302) |
+| source_Spectra_Type | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Leaf (×302) |
+| source_Reflectance_Transmittance_Type | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Spectralon_corrected (×302) |
+| source_Measurement | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Reflectance (×302) |
+| source_White_Reference_Standard | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top 99AA10-0614-0826 SRS-99-020 (×302) |
+| source_Spectral_Resolution | metadata | numeric | *Not specified.* | n=302, missing=0, range 1–1, mean 1 ± 0 |
+| source_Wavelength_Units | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Nanometer (×302) |
+| source_Interpolation_Method | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Linear (×302) |
+| source_Overlap_Handling | metadata | categorical | *Not specified.* | n=302, missing=0, classes=1, top Removed (×302) |
+| source_Overlap_Removal | metadata | categorical | *Not specified.* | n=302, missing=0, classes=2, top During_Collection (×253) |
 
 ## Statistics — splits
 
@@ -72,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -82,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 4 fields, Y: 8 fields, measurements: 1 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 8 fields, passport: 45 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `4acf06407ba7561d62a3c975d5a7163de77618e77719e6f85c9c60d3a6301802`
-- **Processing hash:** `fed672cd3b03eaafdfcf9cfe9616efa4976b4c6e6c5519159baf04b13a44c7bc` | **metadata hash:** `38fb5e88ba317a2c91cc32193f14324ac80f35146b999c5d11f7989e75f5b2f3`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `8c9f72ec04ba8ead0208759c6652f066730f570509623cd2115a91adade02429`
+- **Processing hash:** `754eb6385a1dc4e51c98560b89248866de40bf4a62d7cd6505dbadc46c041ec0` | **metadata hash:** `1180c5f66e79d7f904ce9eba09c5e4f8b97a7d470896a9d7cf939e363c45f226`

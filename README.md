@@ -97,9 +97,9 @@ Python assembly recipes are marked as delegate routes in that contract.
 import nirs4all_datasets as n4ad
 
 n4ad.list()                              # the catalog index
-n4ad.card("barley_moisture_perten")        # generated card if present locally (otherwise None)
+n4ad.card("perten_cereals_nir")        # generated card if present locally (otherwise None)
 
-ds = n4ad.get("barley_moisture_perten")    # -> NirsDataset (original resources fetched, assembled, cached)
+ds = n4ad.get("perten_cereals_nir")    # -> NirsDataset (original resources fetched, assembled, cached)
 ds.sources()                             # ['X'] for this dataset
 ds.x("X")                               # one source's spectra as a 2D numpy array
 ds.x(concat=False)                       # {source_id: array} for every source (sample-aligned, not row-aligned)
@@ -109,9 +109,9 @@ ds.split("original")                     # the native split labels, if the sourc
 ds.to_nirs4all()                         # hand off to nirs4all for modelling
 ```
 
-The installed package includes the 297-entry catalog and origin-loading recipes for
-all 135 public datasets. Run from any directory; no checkout or CIRAD source bundle
-is needed. Two malaria datasets require an explicit optional guestbook profile.
+The installed package includes the 241-entry catalog and origin-loading recipes for
+all 95 public datasets. Run from any directory; no checkout or CIRAD source bundle
+is needed. The malaria database requires an explicit optional guestbook profile.
 See [public-origin loading](docs/PUBLIC_ORIGIN_LOADING.md) for the profile option,
 provider limits, and the native ChEMBL peak-list representation.
 

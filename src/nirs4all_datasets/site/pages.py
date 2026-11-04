@@ -657,7 +657,32 @@ def _sources_panel(view: DatasetView, rel: str) -> str:
             f'<div class="source-card">{head}{chart}'
             f'<div class="stat-grid">{sampling}{signal}{integrity}{shape_ref}{outlier_table}{dimensionality}</div>{metric_scores}{secondary_charts}{xy_panel}</div>'
         )
-    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{C.panel_intro("Spectral sources")}{"".join(blocks)}</div></section>'
+    body = "".join(blocks) if len(blocks) == 1 else _coverage_table(card, sources) + _source_tabs(sources, blocks)
+    return f'<section class="panel wide"><h2>Spectral sources</h2><div class="panel-body">{C.panel_intro("Spectral sources")}{body}</div></section>'
+
+
+def _coverage_table(card: dict[str, Any], sources: list[dict[str, Any]]) -> str:
+    """How the sources of one database share its samples (sources may be partially disjoint)."""
+    coverage = (card.get("alignment") or {}).get("source_coverage") or {}
+    per_source = coverage.get("per_source") or {}
+    rows = [[str(s.get("name") or s.get("source_id")), _f(s.get("n_observations")) or "—", _f(per_source.get(s.get("source_id"))) or "—"] for s in sources]
+    shared = coverage.get("in_all_sources")
+    note = (
+        f"{_f(shared)} sample units are measured by every source; {_f(coverage.get('in_one_source_only'))} by a single source. Sources are joined by declared sample identity, never by row position."
+        if shared is not None else "Sample identity is not declared, so the overlap between sources is not established; each source is reported separately."
+    )
+    return f'<div class="source-coverage">{C.data_table("Source coverage", ["Source", "Observations", "Sample units"], rows, num_cols={1, 2})}<p class="dl-note">{esc(note)}</p></div>'
+
+
+def _source_tabs(sources: list[dict[str, Any]], blocks: list[str]) -> str:
+    """One tab per source (CSS-only radio group: works offline and without JavaScript)."""
+    tabs, panels, rules = [], [], []
+    for i, (source, block) in enumerate(zip(sources, blocks, strict=True)):
+        label = esc(source.get("name") or source.get("source_id"))
+        tabs.append(f'<input type="radio" name="source-tab" id="source-tab-{i}"{" checked" if i == 0 else ""}><label for="source-tab-{i}">{label}</label>')
+        panels.append(f'<div class="source-tab-panel" data-tab="{i}">{block}</div>')
+        rules.append(f'#source-tab-{i}:checked ~ .source-tab-panels [data-tab="{i}"]{{display:block}}')
+    return f'<style>{"".join(rules)}</style><div class="source-tabs">{"".join(tabs)}<div class="source-tab-panels">{"".join(panels)}</div></div>'
 
 
 def _xy_panel(source: dict[str, Any], view: DatasetView) -> str:

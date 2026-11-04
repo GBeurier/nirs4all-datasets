@@ -52,7 +52,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "830700e37d9429ed316311ef91026b4a5bb395f4c4d258d16d6528c868e53187"
+      "sha256": "7c6bee93366029e10b375c140e924d9fba2926ef5b3381158fb2ab7be6279945"
     }
   ],
   "keywords": [
@@ -406,6 +406,36 @@
               "@id": "file/variables.parquet"
             }
           }
+        },
+        {
+          "@id": "variables/source_split",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'source_split' (role metadata, type categorical).",
+          "name": "source_split",
+          "source": {
+            "extract": {
+              "column": "source_split"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/source_split_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'source_split_index' (role metadata, type numeric).",
+          "name": "source_split_index",
+          "source": {
+            "extract": {
+              "column": "source_split_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
         }
       ],
       "key": {
@@ -417,9 +447,8 @@
   "sameAs": [
     "https://www.sciencedirect.com/science/article/pii/S2352340917305176",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC5712058/",
-    "https://creativecommons.org/licenses/by/4.0/",
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.1.0"
+  "version": "1.2.0"
 }

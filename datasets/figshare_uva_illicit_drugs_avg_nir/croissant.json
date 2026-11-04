@@ -1,0 +1,832 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "Figshare UvA illicit drugs NIR, five instruments, sample-averaged. Origin database composed from 5 standardized v2.0 leaves: 5 spectral source(s), 5 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nOpen tier: freely usable and redistributable under the stated license.",
+  "distribution": [
+    {
+      "@id": "file/X_asd.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "ASD FieldSpec averaged NIR",
+      "sha256": "892b276745cd39f79ab97b2cac2d30f004e788fe1d8e2baa6df86d5aaf6e1912"
+    },
+    {
+      "@id": "file/X_micronir.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Viavi MicroNIR averaged NIR",
+      "sha256": "2832574036c09e5feed5fa56011691671e47226094e7d898fa891a82230f2904"
+    },
+    {
+      "@id": "file/X_neospectra.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "NeoSpectra averaged NIR",
+      "sha256": "fa0dc4743ce182d7a6cea5888b8f78f4e65ae8b2a118fac2f9e9d97274f2341d"
+    },
+    {
+      "@id": "file/X_nirone.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "NIRONE averaged NIR",
+      "sha256": "e27a202fdeeb8ffc42a4e89a7550e37ed222610556abc62ab5b0a2d55ff6f923"
+    },
+    {
+      "@id": "file/X_scio.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "Consumer Physics SCiO averaged NIR",
+      "sha256": "ca36717e0d41172bd6eb0f3770d815ff0412137e35ca76fef439faf8e32e606b"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "be3e9fb1fc0634cfbd151e288c81d7f0516f1fe3d91fffedf916ff6e508ae025"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "figshare"
+  ],
+  "license": "CC-BY-4.0",
+  "name": "figshare_uva_illicit_drugs_avg_nir",
+  "recordSet": [
+    {
+      "@id": "X_asd",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'ASD FieldSpec averaged NIR' (390 observations x 2151 wavelengths).",
+      "field": [
+        {
+          "@id": "X_asd/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_asd.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_asd/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_asd.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_asd/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_asd.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_asd/observation_id"
+      },
+      "name": "X_asd"
+    },
+    {
+      "@id": "X_micronir",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Viavi MicroNIR averaged NIR' (424 observations x 125 wavelengths).",
+      "field": [
+        {
+          "@id": "X_micronir/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_micronir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_micronir/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_micronir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_micronir/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_micronir.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_micronir/observation_id"
+      },
+      "name": "X_micronir"
+    },
+    {
+      "@id": "X_neospectra",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'NeoSpectra averaged NIR' (429 observations x 160 wavelengths).",
+      "field": [
+        {
+          "@id": "X_neospectra/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_neospectra.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_neospectra/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_neospectra.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_neospectra/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_neospectra.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_neospectra/observation_id"
+      },
+      "name": "X_neospectra"
+    },
+    {
+      "@id": "X_nirone",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'NIRONE averaged NIR' (341 observations x 201 wavelengths).",
+      "field": [
+        {
+          "@id": "X_nirone/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_nirone.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_nirone/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_nirone.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_nirone/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_nirone.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_nirone/observation_id"
+      },
+      "name": "X_nirone"
+    },
+    {
+      "@id": "X_scio",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'Consumer Physics SCiO averaged NIR' (419 observations x 331 wavelengths).",
+      "field": [
+        {
+          "@id": "X_scio/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_scio.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_scio/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_scio.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_scio/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_scio.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_scio/observation_id"
+      },
+      "name": "X_scio"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Target and metadata variables keyed by observation_id.",
+      "field": [
+        {
+          "@id": "variables/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/component",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'component' (role target, type categorical).",
+          "name": "component",
+          "source": {
+            "extract": {
+              "column": "component"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/set",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'set' (role target, type categorical).",
+          "name": "set",
+          "source": {
+            "extract": {
+              "column": "set"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/salt_form",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'salt_form' (role target, type categorical).",
+          "name": "salt_form",
+          "source": {
+            "extract": {
+              "column": "salt_form"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/matrix",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'matrix' (role target, type categorical).",
+          "name": "matrix",
+          "source": {
+            "extract": {
+              "column": "matrix"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/color",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'color' (role target, type categorical).",
+          "name": "color",
+          "source": {
+            "extract": {
+              "column": "color"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instrument",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instrument' (role metadata, type categorical).",
+          "name": "instrument",
+          "source": {
+            "extract": {
+              "column": "instrument"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instrument_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instrument_code' (role metadata, type categorical).",
+          "name": "instrument_code",
+          "source": {
+            "extract": {
+              "column": "instrument_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/source_set_from_file",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'source_set_from_file' (role metadata, type categorical).",
+          "name": "source_set_from_file",
+          "source": {
+            "extract": {
+              "column": "source_set_from_file"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/api_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'api_url' (role metadata, type categorical).",
+          "name": "api_url",
+          "source": {
+            "extract": {
+              "column": "api_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/download_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'download_url' (role metadata, type categorical).",
+          "name": "download_url",
+          "source": {
+            "extract": {
+              "column": "download_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/article_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'article_url' (role metadata, type categorical).",
+          "name": "article_url",
+          "source": {
+            "extract": {
+              "column": "article_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_dataset' (role metadata, type categorical).",
+          "name": "doi_dataset",
+          "source": {
+            "extract": {
+              "column": "doi_dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_publication",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_publication' (role metadata, type categorical).",
+          "name": "doi_publication",
+          "source": {
+            "extract": {
+              "column": "doi_publication"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_id' (role metadata, type categorical).",
+          "name": "license_id",
+          "source": {
+            "extract": {
+              "column": "license_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license_url' (role metadata, type categorical).",
+          "name": "license_url",
+          "source": {
+            "extract": {
+              "column": "license_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/usage_scope",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'usage_scope' (role metadata, type categorical).",
+          "name": "usage_scope",
+          "source": {
+            "extract": {
+              "column": "usage_scope"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/signal_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'signal_type' (role metadata, type categorical).",
+          "name": "signal_type",
+          "source": {
+            "extract": {
+              "column": "signal_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/decoder",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'decoder' (role metadata, type categorical).",
+          "name": "decoder",
+          "source": {
+            "extract": {
+              "column": "decoder"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/notes",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'notes' (role metadata, type categorical).",
+          "name": "notes",
+          "source": {
+            "extract": {
+              "column": "notes"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/nr",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'nr' (role metadata, type numeric).",
+          "name": "nr",
+          "source": {
+            "extract": {
+              "column": "nr"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/other",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'other' (role metadata, type categorical).",
+          "name": "other",
+          "source": {
+            "extract": {
+              "column": "other"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/observation_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://uvaauas.figshare.com/articles/dataset/Dataset_of_Near-Infrared_Spectral_Data_of_Illicit-Drugs_and_Forensic_Casework_Samples_Analyzed_by_Five_Portable_Spectrometers_Operating_in_Different_Wavelength_Ranges/21252300",
+    "https://api.figshare.com/v2/articles/21252300"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.1.0"
+}

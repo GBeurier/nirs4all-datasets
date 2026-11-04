@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 3,
+      "in_one_source_only": 3,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 3
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -214,7 +223,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:11.240256+00:00",
+  "generated_at": "2026-11-03T16:12:40.962472+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -235,15 +244,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "79bcff9504d137b3811f38f9a4848843818b321fcdf1a4b1e66a0eee75e496a5",
+    "content_hash": "52441881cdef56a5d102bda028410d2d439617f271f9bb90cea3df0d56a686f0",
     "manifest": "manifest.json",
-    "metadata_hash": "fdc4a2eb934de51d80ffd5e7d54bcb17090ce6280dc442da9079a6a60eb5ceea",
-    "processing_hash": "8155bb22910d0583c5526f68d11331cbb0ff644f0fda620385774a4b54489230"
+    "metadata_hash": "5686c22d1324ff1908028cdd6cfe78f66dcf6df66136dcba71919fd953a4d96d",
+    "processing_hash": "836a594f93fe970e4a81a5048639ad8e2a8638d49c2e08bdd17b6819889d8c08"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1304,15 +1313,21 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999999999999997,
+          "effective_rank": 1.13,
+          "n_components_95": 1,
+          "n_components_99": 2
         },
         "mean_max": 29.843333562215168,
         "mean_min": 1.9214667081832886,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9738247353732093,
+            0.026175264626790325
+          ],
+          "n_components": 2
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 122.0703787515958,
@@ -1640,8 +1655,8 @@
             "noise_rms": 0.015434393131987932,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2957,10 +2972,1028 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Construction Concrete"
+          },
+          {
+            "count": 1,
+            "name": "Asphalt Shingle"
+          },
+          {
+            "count": 1,
+            "name": "Asphalt roofing shingle"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "manmade"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.4444444444444444,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 2,
+        "normalized_entropy": 0.9182958340544894
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Roofing Material"
+          },
+          {
+            "count": 1,
+            "name": "Concrete"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Construction Concrete"
+          },
+          {
+            "count": 1,
+            "name": "Roofing Shingle"
+          },
+          {
+            "count": 1,
+            "name": "Shingle"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Solid"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "0598UUUCNC"
+          },
+          {
+            "count": 1,
+            "name": "0490UUUASP"
+          },
+          {
+            "count": 1,
+            "name": "0597UUUASP"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "National Photographic Interpretation Center"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "All"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Spectra obtained from the Noncoventional Exploitation FactorsData System of the National Photographic Interpretation Center."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Approximately 30-year-old runway construction concrete with (mostly granite) aggregate showing. Sample was light gray and weathered. Original ASTER Spectral Library name was jhu.becknic.manmade.concrete.construction.solid.0598uuu.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "White, granule-covered asphalt roofing shingle. Sample was tar paper, with a white sand coating over construction asphalt. Original ASTER Spectral Library name was jhu.becknic.manmade.roofing.shingle.solid.0490uuu.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Fifteen year old construction asphalt from roofing shingle. Sample was weathered and soiled, gray in color, and granule-covered. Original ASTER Spectral Library name was jhu.becknic.manmade.roofing.shingle.solid.0597uuu.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Directional (10 Degree) Hemispherical Reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 0.3,
+        "mean": 0.3,
+        "median": 0.3,
+        "min": 0.3,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 0.3,
+        "q3": 0.3,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 15.0,
+        "mean": 15.0,
+        "median": 15.0,
+        "min": 15.0,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 15.0,
+        "q3": 15.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 561.0,
+        "mean": 561.0,
+        "median": 561.0,
+        "min": 561.0,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 561.0,
+        "q3": 561.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Construction Concrete"
+          },
+          {
+            "count": 1,
+            "name": "Asphalt Shingle"
+          },
+          {
+            "count": 1,
+            "name": "Asphalt roofing shingle"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "manmade"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "manmade.concrete.constructionconcrete.solid.all.0598uuucnc.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.roofingmaterial.roofingshingle.solid.all.0490uuuasp.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.roofingmaterial.shingle.solid.all.0597uuuasp.jhu.becknic.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

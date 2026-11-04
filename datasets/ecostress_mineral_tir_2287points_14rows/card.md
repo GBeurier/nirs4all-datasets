@@ -58,6 +58,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manual_review_needed (×14) |
 | usage_scope | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top private_use_only (×14) |
 | notes | metadata | categorical | *Not specified.* | n=14, missing=0, classes=13, top None (×2) |
+| source_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2 (×2) |
+| source_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Mineral (×14) |
+| source_class | metadata | categorical | *Not specified.* | n=14, missing=0, classes=2, top Silicate (×13) |
+| source_subclass | metadata | categorical | *Not specified.* | n=14, missing=0, classes=5, top Inosilicate (×5) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=14, missing=0, classes=3, top Coarse (×7) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top hornblen_3 (×2) |
+| source_owner | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top JHU (×14) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top TIR (×14) |
+| source_origin | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top Calumet Island, Ottowa River, Canada via the Smithsaonian(sample no. NMNH 78662) (×2) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top N/A (×14) |
+| source_description | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top Sample was a fragment of a black crystal, contaminated on one end with a clay coating and surficial quartz crystals, this surficial contamination was scraped off. There appeared to be a small amount of internal contamination by a fibrous mineral. Very few grains showed mild alteration, there was about 1% contamination by a low refractive index mineral with low birefringence. Particle size was 74-250 micrometers.(Amphibole Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.coarse.hornbl2.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=14, missing=0, classes=2, top Bidirectional reflectance (×13) |
+| source_first_column | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top X (×14) |
+| source_second_column | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Y (×14) |
+| source_x_units | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Wavelength (micrometers) (×14) |
+| source_y_units | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Reflectance (percent) (×14) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=14, missing=0, range 25.04–25.04, mean 25.04 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=14, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=14, missing=0, range 2287–2287, mean 2287 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=14, missing=0, classes=13, top None (×2) |
+| source_material_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=10, top Hornblende Ca2(Fe+2,Mg)4Al(Si7Al)O22(OH,F)2 (×2) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top mineral (×14) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top mineral.silicate.inosilicate.coarse.tir.hornblen_2.jhu.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -79,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +123,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `f5a3cd9eccc191111ab0ab0b454b7f0a89a3e5a57a55f58997be52706e04e94d`
-- **Processing hash:** `eb13634fff27d5454df77967832244439965485426a3f8d54ce59c02b2447cc9` | **metadata hash:** `a0a3e7b28f8362df2d5ded1617e63668d63e8a2f0ede3e9d597b42f1eb256ab2`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `d15af174744901d9dc8412c5b3c48e0569f465cff3da5e20312a2d4a6146fe4f`
+- **Processing hash:** `909be0adafaaae949b9efb2c037234e34e363e2a7c804aa7bc09d1c73a67f7ec` | **metadata hash:** `16a6a7ce4c5f3012d03b1326acb89ea255211db009d5d9b5693b2ab4d940b092`

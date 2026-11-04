@@ -57,6 +57,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top manual_review_needed (×28) |
 | usage_scope | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top private_use_only (×28) |
 | notes | metadata | categorical | *Not specified.* | n=28, missing=0, classes=4, top none (×25) |
+| source_name | metadata | categorical | *Not specified.* | n=28, missing=0, classes=25, top Dolomitic Marble (×2) |
+| source_type | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top rock (×28) |
+| source_class | metadata | categorical | *Not specified.* | n=28, missing=0, classes=2, top Metamorphic (×21) |
+| source_subclass | metadata | categorical | *Not specified.* | n=28, missing=0, classes=10, top Schist (×7) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=28, missing=0, classes=2, top Coarse (×27) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=28, missing=0, classes=28, top Gneiss1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top JHU (×28) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top All (×28) |
+| source_origin | metadata | categorical | *Not specified.* | n=28, missing=0, classes=26, top Sample No. 468, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co. (×3) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top N/A (×28) |
+| source_description | metadata | categorical | *Not specified.* | n=28, missing=0, classes=28, top This is a greenish rock containing only 20% quartz, 35% albite, a mixture of chlorite and muscovite (40%) and 5% rutile.Particle size was 500-1500 Micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.metamorphic.gneiss.coarse.gneiss1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×28) |
+| source_first_column | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top X (×28) |
+| source_second_column | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top Y (×28) |
+| source_x_units | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top Wavelength (micrometers) (×28) |
+| source_y_units | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top Reflectance (percent) (×28) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=28, missing=0, range 14.98–14.98, mean 14.98 ± 3.618e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=28, missing=0, range 0.4–0.4, mean 0.4 ± 5.653e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=28, missing=0, range 2868–2868, mean 2868 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=28, missing=0, classes=4, top none (×25) |
+| source_material_name | metadata | categorical | *Not specified.* | n=28, missing=0, classes=25, top Dolomitic Marble (×2) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=28, missing=0, classes=1, top rock (×28) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=28, missing=0, classes=28, top rock.metamorphic.gneis.coarse.all.gneiss1.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -67,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +122,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a867e1c9873d417ccf47c3772cddc2b49d24752a51bd3c7a263a5d4168e1b784`
-- **Processing hash:** `2b784f9a83fbcc19dbe3761033c63d9e6e97018ff50f354a56c3d8cedc1f0213` | **metadata hash:** `1e5a84fb3833ab499b4ae6b6462e3cb3b609342939a8d9f5b8be2be02dc1010c`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `c27f9a23e5649e998bd818f7df37ca56c7bf1c6e668a4399f07d2d2aa5c2425c`
+- **Processing hash:** `d7413332f1d3fed2c446a79b680294fd02e061b0db46e9edc3b8e3b4434d5c99` | **metadata hash:** `d627f6aa0b1457e0248136eeb7cab50f2c52ef09836bb210186190a8e9470231`

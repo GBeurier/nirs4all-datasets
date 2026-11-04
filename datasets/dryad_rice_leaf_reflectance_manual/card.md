@@ -32,6 +32,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=2700, missing=0, classes=1, top data+for+publish.rar::*_Reflectance_flag leaf.xlsx (×2700) |
 | official_source_url | metadata | categorical | *Not specified.* | n=2700, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.p8pq7fq (×2700) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=2700, missing=0, classes=1, top v0.8.58 (×2700) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=2700, missing=0, classes=495, top S1 (×6) |
 
 ## Statistics — splits
 
@@ -52,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: The 495 column names are local to the 11 variety files. Merging them produces false groups of 5–6 spectra. 2700 variety × column pairs are distinct; physical independence and technical replicates are not established.
-- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -72,6 +73,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `0947e407789581ba5b4cba0b0f29b225c526b88861fcf3c349c285ad73e4f900`
-- **Processing hash:** `6e42367cc0ac4a368ebea972e97f750553653ccbf5ffe9b4526b922b813641fc` | **metadata hash:** `ee52ce0716332a5a47868bca1182fe829cef0d19ead12d6f2c02f1aae2c23c8c`
+- **Processing hash:** `a873299ceab94b7db5ce075345ef901359ce4799e79e2442880addae28fb5f23` | **metadata hash:** `9690dfd7b7f1f8aed0876d5b1c56865db998ab7e8b624fd9f6ac3895db0fb549`

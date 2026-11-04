@@ -45,6 +45,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | file_format | metadata | categorical | *Not specified.* | n=5000, missing=0, classes=1, top RDS OpenSpecy object (×5000) |
 | quality_flags | metadata | categorical | *Not specified.* | n=5000, missing=4843, classes=9, top strong difference (×79) |
 | notes | metadata | categorical | *Not specified.* | n=5000, missing=0, classes=1, top capped v0.1 export from OpenSpecy nobaseline.rds (×5000) |
+| source_spectrum_id | metadata | categorical | *Not specified.* | n=5000, missing=0, classes=5000, top f3b31368dd95aead0b1953cab5a4d016 (×1) |
+| source_library | metadata | categorical | *Not specified.* | n=5000, missing=0, classes=12, top win cowger and sebastian primpke (×1724) |
 
 ## Statistics — splits
 
@@ -55,7 +57,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -66,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 5 fields, measurements: 0 fields, passport: 17 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 5 fields, passport: 17 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `44fc317d1b9fb4d889fb89f972f72b99733a7f31c599fe7572e671764a05db57`
-- **Processing hash:** `53c7c29f74d826fbec84863f6adba9e089e397b4ba46cae7b9620426858140db` | **metadata hash:** `ec4dd2df2d2af72a0eafa5ab032401dc5cc7735d98b7ff17d98d53ccf3d52bd8`
+- **Processing hash:** `aa31989b185f2df7fcbf0abd3a03227fa65fb8d31d98a5e9cae5da43e1595555` | **metadata hash:** `7a4c8ed82e5c8ef68be46d1185b82d213d2b5ce26a81b6fce8df527a04e194cc`

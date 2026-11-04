@@ -41,17 +41,18 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=1004, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=1004, missing=0, range 1751–1751, mean 1751 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top Axe spectral applique sur 226.0-1101.0 nm avec un pas de 0.5 nm, coherent avec 1751 variables. (×1004) |
+| source_zip | metadata | categorical | *Not specified.* | n=1004, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/EthanolLevel.zip (×1004) |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 500, train: 504
+- **original** (documented, not applied): train: 504, test: 500
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9da9f21a3049ea87af094651611a6eced28256b30d93cfd42460e2e00bad931e`
-- **Processing hash:** `765b19f1aa7939fcbe389387b98de806e68da34179e30f3bfc17c738be1de469` | **metadata hash:** `c0081b07c6b1d7888053e487b17e51d235c3dcce213fe4725c227fdd94ac3b9e`
+- **Processing hash:** `6fb641f27c33647182f537242aabb09529c78290964079e2939274b1b9c63a13` | **metadata hash:** `52f68fe1926d04eca26a87a56f8b6e0cc0884665cf2ee5555f68478fbb3ae506`

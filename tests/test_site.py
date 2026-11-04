@@ -677,3 +677,18 @@ def test_open_origin_without_raw_route_does_not_advertise_implemented_download()
     html = load_snippet('d', 'private', open_retrieval=True, retrieval_status='missing_delegate', raw_route_available=False)
     assert 'Automatic retrieval is not implemented' in html
     assert 'retrieve(' not in html and 'token=' not in html
+
+
+def test_multi_source_database_offers_one_tab_per_source_with_its_coverage() -> None:
+    sources = [{"source_id": "X_asd", "name": "ASD", "n_observations": 390, "spectral": {}}, {"source_id": "X_scio", "name": "SCiO", "n_observations": 419, "spectral": {}}]
+    coverage = {"n_sources": 2, "per_source": {"X_asd": 390, "X_scio": 419}, "in_all_sources": 234, "in_one_source_only": 341, "pairwise_shared": [["X_asd", "X_scio", 234]]}
+    view = DatasetView(entry={"id": "d"}, tier="public", card={"sources": sources, "alignment": {"source_coverage": coverage}}, has_card=True, show_value_stats=True, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=True, asset_dataset_id="d")
+    html = pages._sources_panel(view, "")
+    assert html.count('type="radio" name="source-tab"') == 2 and 'id="source-tab-0" checked' in html
+    assert '#source-tab-1:checked ~ .source-tab-panels [data-tab="1"]{display:block}' in html
+    assert "234 sample units are measured by every source" in html
+
+
+def test_single_source_page_has_no_source_tabs() -> None:
+    view = DatasetView(entry={"id": "d"}, tier="public", card={"sources": [{"source_id": "X", "spectral": {}}]}, has_card=True, show_value_stats=True, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=True, asset_dataset_id="d")
+    assert "source-tab" not in pages._sources_panel(view, "")

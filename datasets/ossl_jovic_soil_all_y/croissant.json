@@ -1,0 +1,725 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "OSSL Jovic soil vis-NIR and MIR. Origin database composed from 2 standardized v2.0 leaves: 2 spectral source(s), 8 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X_mir.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "recovered_spectra",
+      "sha256": "f9c9e9c204ce17d4437194b83bff55fd20be0b0cb30546d87f8b3e3908e4acb0"
+    },
+    {
+      "@id": "file/X_visnir.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "recovered_spectra",
+      "sha256": "186f8b94562dbeb71251c38c8f784cc3b750b784539b5294f575f2c6bef87e39"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "7e24ebea25d03fdae2dcb9258be0eef1f23d5763795dc0504125dd51b7d1b700"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "ossl"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "ossl_jovic_soil_all_y",
+  "recordSet": [
+    {
+      "@id": "X_mir",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'recovered_spectra' (45 observations x 1701 wavelengths).",
+      "field": [
+        {
+          "@id": "X_mir/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_mir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_mir/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_mir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_mir/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the none axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_mir.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_mir/observation_id"
+      },
+      "name": "X_mir"
+    },
+    {
+      "@id": "X_visnir",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'recovered_spectra' (135 observations x 1076 wavelengths).",
+      "field": [
+        {
+          "@id": "X_visnir/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_visnir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_visnir/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_visnir.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_visnir/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_visnir.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_visnir/observation_id"
+      },
+      "name": "X_visnir"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Target and metadata variables keyed by observation_id.",
+      "field": [
+        {
+          "@id": "variables/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/c_tot_usda_a622_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'c_tot_usda_a622_w_pct' (role target, type numeric).",
+          "name": "c_tot_usda_a622_w_pct",
+          "source": {
+            "extract": {
+              "column": "c_tot_usda_a622_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/caco3_usda_a54_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'caco3_usda_a54_w_pct' (role target, type numeric).",
+          "name": "caco3_usda_a54_w_pct",
+          "source": {
+            "extract": {
+              "column": "caco3_usda_a54_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/clay_tot_usda_a334_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'clay_tot_usda_a334_w_pct' (role target, type numeric).",
+          "name": "clay_tot_usda_a334_w_pct",
+          "source": {
+            "extract": {
+              "column": "clay_tot_usda_a334_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_tot_usda_a623_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_tot_usda_a623_w_pct' (role target, type numeric).",
+          "name": "n_tot_usda_a623_w_pct",
+          "source": {
+            "extract": {
+              "column": "n_tot_usda_a623_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/oc_usda_c729_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'oc_usda_c729_w_pct' (role target, type numeric).",
+          "name": "oc_usda_c729_w_pct",
+          "source": {
+            "extract": {
+              "column": "oc_usda_c729_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ph_h2o_usda_a268_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'ph_h2o_usda_a268_index' (role target, type numeric).",
+          "name": "ph_h2o_usda_a268_index",
+          "source": {
+            "extract": {
+              "column": "ph_h2o_usda_a268_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/sand_tot_usda_c60_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'sand_tot_usda_c60_w_pct' (role target, type numeric).",
+          "name": "sand_tot_usda_c60_w_pct",
+          "source": {
+            "extract": {
+              "column": "sand_tot_usda_c60_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/silt_tot_usda_c62_w_pct",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'silt_tot_usda_c62_w_pct' (role target, type numeric).",
+          "name": "silt_tot_usda_c62_w_pct",
+          "source": {
+            "extract": {
+              "column": "silt_tot_usda_c62_w_pct"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/ID_sample",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'ID_sample' (role metadata, type categorical).",
+          "name": "ID_sample",
+          "source": {
+            "extract": {
+              "column": "ID_sample"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/SpectralRep",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'SpectralRep' (role metadata, type numeric).",
+          "name": "SpectralRep",
+          "source": {
+            "extract": {
+              "column": "SpectralRep"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset' (role metadata, type categorical).",
+          "name": "dataset",
+          "source": {
+            "extract": {
+              "column": "dataset"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/collection_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'collection_name' (role metadata, type categorical).",
+          "name": "collection_name",
+          "source": {
+            "extract": {
+              "column": "collection_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_code' (role metadata, type categorical).",
+          "name": "dataset_code",
+          "source": {
+            "extract": {
+              "column": "dataset_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dataset_owner",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dataset_owner' (role metadata, type categorical).",
+          "name": "dataset_owner",
+          "source": {
+            "extract": {
+              "column": "dataset_owner"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectral_kind",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectral_kind' (role metadata, type categorical).",
+          "name": "spectral_kind",
+          "source": {
+            "extract": {
+              "column": "spectral_kind"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_local_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_local_id' (role metadata, type categorical).",
+          "name": "scan_local_id",
+          "source": {
+            "extract": {
+              "column": "scan_local_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_model_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_model_name' (role metadata, type categorical).",
+          "name": "scan_model_name",
+          "source": {
+            "extract": {
+              "column": "scan_model_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_model_code",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_model_code' (role metadata, type categorical).",
+          "name": "scan_model_code",
+          "source": {
+            "extract": {
+              "column": "scan_model_code"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_optics",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_optics' (role metadata, type categorical).",
+          "name": "scan_optics",
+          "source": {
+            "extract": {
+              "column": "scan_optics"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_preparation",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_preparation' (role metadata, type categorical).",
+          "name": "scan_preparation",
+          "source": {
+            "extract": {
+              "column": "scan_preparation"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/country_iso3166",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'country_iso3166' (role metadata, type categorical).",
+          "name": "country_iso3166",
+          "source": {
+            "extract": {
+              "column": "country_iso3166"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pedon_taxa",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'pedon_taxa' (role metadata, type categorical).",
+          "name": "pedon_taxa",
+          "source": {
+            "extract": {
+              "column": "pedon_taxa"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/horizon_designation",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'horizon_designation' (role metadata, type numeric).",
+          "name": "horizon_designation",
+          "source": {
+            "extract": {
+              "column": "horizon_designation"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/feature_count_per_dimension",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'feature_count_per_dimension' (role metadata, type numeric).",
+          "name": "feature_count_per_dimension",
+          "source": {
+            "extract": {
+              "column": "feature_count_per_dimension"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/dimensions",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'dimensions' (role metadata, type categorical).",
+          "name": "dimensions",
+          "source": {
+            "extract": {
+              "column": "dimensions"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/wavelength_note",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'wavelength_note' (role metadata, type categorical).",
+          "name": "wavelength_note",
+          "source": {
+            "extract": {
+              "column": "wavelength_note"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/active_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'active_status' (role metadata, type categorical).",
+          "name": "active_status",
+          "source": {
+            "extract": {
+              "column": "active_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/replaces_dataset_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'replaces_dataset_id' (role metadata, type categorical).",
+          "name": "replaces_dataset_id",
+          "source": {
+            "extract": {
+              "column": "replaces_dataset_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/site_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Variable 'site_id' (role metadata, type identifier).",
+          "name": "site_id",
+          "source": {
+            "extract": {
+              "column": "site_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/longitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'longitude' (role metadata, type numeric).",
+          "name": "longitude",
+          "source": {
+            "extract": {
+              "column": "longitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/latitude",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'latitude' (role metadata, type numeric).",
+          "name": "latitude",
+          "source": {
+            "extract": {
+              "column": "latitude"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/campaign_date_begin",
+          "@type": "cr:Field",
+          "dataType": "sc:Date",
+          "description": "Variable 'campaign_date_begin' (role metadata, type datetime).",
+          "name": "campaign_date_begin",
+          "source": {
+            "extract": {
+              "column": "campaign_date_begin"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/campaign_date_end",
+          "@type": "cr:Field",
+          "dataType": "sc:Date",
+          "description": "Variable 'campaign_date_end' (role metadata, type datetime).",
+          "name": "campaign_date_end",
+          "source": {
+            "extract": {
+              "column": "campaign_date_end"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/location_error_m",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'location_error_m' (role metadata, type numeric).",
+          "name": "location_error_m",
+          "source": {
+            "extract": {
+              "column": "location_error_m"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/observation_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_soillab_L1_v1.2.csv.gz",
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_visnir_L0_v1.2.csv.gz",
+    "https://storage.googleapis.com/soilspec4gg-public/ossl_soilsite_L0_v1.2.csv.gz"
+  ],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.1.0"
+}

@@ -118,6 +118,9 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_id
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -126,20 +129,19 @@ alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: A dataset of Visible - Short Wave InfraRed reflectance spectra collected
     in-vivo on the dorsal and ventral aspect of arms
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra each. The scan suffix of the exported sample_id is removed only for this verified contract."
+  - 'Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra
+    each. The scan suffix of the exported sample_id is removed only for this verified
+    contract.'
 governance:
   license: CC-BY-4.0
   owner_steward: A dataset of Visible - Short Wave InfraRed reflectance spectra collected
@@ -161,11 +163,6 @@ origin_sources:
 - kind: url
   mode: raw
   locator: https://pmc.ncbi.nlm.nih.gov/articles/PMC7683223/
-  access: open
-  expected_files: []
-- kind: url
-  mode: raw
-  locator: http://creativecommons.org/licenses/by/4.0
   access: open
   expected_files: []
 - kind: script
@@ -190,5 +187,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/mendeley_human_arm_muscle_vis_swir_reflectance
-  source_fingerprint: 7e24ad3cc401adf6464837b9ede29672b1e3d27405626a680f8b301e8ab1b932
+  source_relpath: v2.0/mendeley_human_arm_muscle_vis_swir_reflectance
+  source_fingerprint: 59acd39d8d7162e0cc832278de07afb718da0dc34aed96eaf7bd3ce56d9c010c

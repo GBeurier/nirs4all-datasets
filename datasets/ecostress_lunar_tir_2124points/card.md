@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top manual_review_needed (×17) |
 | usage_scope | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top private_use_only (×17) |
 | notes | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top none (×17) |
+| source_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top 60051.19 (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Soil (×17) |
+| source_class | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Lunar (×17) |
+| source_subclass | metadata | categorical | *Not specified.* | n=17, missing=0, classes=3, top Highland (×8) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Fine (×17) |
+| source_sample_no | metadata | numeric | *Not specified.* | n=17, missing=17, range —, mean *Not specified.* ± *Not specified.* |
+| source_owner | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top JHU (×17) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top TIR (×17) |
+| source_origin | metadata | categorical | *Not specified.* | n=17, missing=0, classes=4, top Apollo 16 landing site via the NASA Lunar Sample Repository at JohnsonSpace Center, Houston, TX. (×8) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top N/A (×17) |
+| source_description | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top This sample is one of a suite of relatively more aluminous and lower iron and titanium soils at the Apollo 16 site, and has the second oldest exposure age of the four soils of that suite (Is/FeO=57). Original ASTER Spectral Library name was jhu.becknic.soil.lunar.highlands.fine.60051.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×17) |
+| source_first_column | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top X (×17) |
+| source_second_column | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Y (×17) |
+| source_x_units | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Wavelength (micrometers) (×17) |
+| source_y_units | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Reflectance (percent) (×17) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=17, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=17, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=17, missing=0, range 2124–2124, mean 2124 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top none (×17) |
+| source_material_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top 60051.19 (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top lunar (×17) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top soil.lunar.highland.fine.tir.60051_19.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b1880de68be38b6555097d68f6cd5c31dfe58a580bc7720886451156d620b4bb`
-- **Processing hash:** `ba0f1414ccb61c276d2f10b3dea7b937a91c72bb7f6e91c8f57a505c7cb2138a` | **metadata hash:** `d0068ac44e1d0903a374b97210975ffb3722c1e7aafb0bf63097c0b8a450b5d0`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `5ed69ae5d1c3ea83fd60b71c10b7bfc155276ab04a7477230df5273c27d6f4cf`
+- **Processing hash:** `bdb783ef2eb04117c1e4e2ff95289102e5a196c4aab8dfc90e7b3a95e6d8170d` | **metadata hash:** `3ff55365009849ba1f7c91774283188d02abb3bec569579cc7c266ab5afb4c6f`

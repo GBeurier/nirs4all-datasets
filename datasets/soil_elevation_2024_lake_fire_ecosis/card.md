@@ -81,8 +81,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: The upstream converter selected date: 27 and 79 rows on two dates. The 106 ASD files and times are distinct, with 7 plots; the date is not a sample identifier and the file identifies an acquisition.
-- **Curated views:** M: 7 fields, Y: 1 fields, measurements: 1 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: The upstream converter selected date: 27 and 79 rows on two dates. The 106 ASD files and times are distinct, with 7 plots; the date is not a sample identifier and the file identifies an acquisition.
+- **Curated views:** M: 7 fields, Y: 1 fields, passport: 32 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,6 +102,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `4b0edcc6820027d5304374390b7343e2ef312b537ec0059f1c8181092c448e9b`
-- **Processing hash:** `f3512933a607c282ae79086066c1047b65f490da9c2a2428f1445b965712d8ee` | **metadata hash:** `de81871cb5dd7c7ddafae6875fbcc8254e1f97d5aef0bf5fb239d0e67ab4da5e`
+- **Processing hash:** `f106914b464b86139dc6442f3bc459f2071dac2aba2c001095b6571062e02e4f` | **metadata hash:** `eefe5298b63326f7b4bd697094a462fd6b8d258df581e2976f6726e98a319b10`

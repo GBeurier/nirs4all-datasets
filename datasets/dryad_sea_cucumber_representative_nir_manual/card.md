@@ -33,6 +33,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top representative+original+spectra.rar (×61) |
 | official_source_url | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.n1066 (×61) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=61, missing=0, classes=1, top v0.8.58 (×61) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=61, missing=0, classes=61, top RS-1 (×1) |
 
 ## Statistics — splits
 
@@ -52,8 +53,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -73,6 +74,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `2825ca8e062daf3eb981ddbe6b363d19b0550d2699c5ec96b48df21987e35dc5`
-- **Processing hash:** `3609285a66694b0d97c1ba89ff7a7bf465b14c904dddd1cd1b25395b2153bcb4` | **metadata hash:** `6b5c446cd172bdedc8528b5dc2b621dd6ef854eea4759457ffe0513f1d55fe4b`
+- **Processing hash:** `446b5c684b2c4cd32bdb263e0a5c1816888cd415eb227b2372f5d3e4236f371c` | **metadata hash:** `841c10c938a777aa4f94c769cb91bad1b8f0d8ae8002e2d6f3bbefead104cca1`

@@ -38,6 +38,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=26, missing=0, classes=1, top The MID spectra of e liquids were acquired using a Bruker Alpha II (Universiti Putra Malaysia) instrument equipped with an attenuated total internal reflection (ATR).zip (×26) |
 | official_source_url | metadata | categorical | *Not specified.* | n=26, missing=0, classes=1, top https://data.mendeley.com/datasets/ddrzk7t5nt/1 (×26) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=26, missing=0, classes=1, top v0.8.61 (×26) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=26, missing=0, classes=26, top LV_542_OKT_1 (×1) |
 
 ## Statistics — splits
 
@@ -58,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 14 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 14 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,6 +79,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c56ba75a72e91169acd80428e1156fe38c26fb699d4f672a875892db265434cf`
-- **Processing hash:** `77a46b8e8ae158d1d60aeb0c45e5a1232ef6c73156e025679404dab6165a903d` | **metadata hash:** `8e6346c4b4b9155cef052685c86032004d6139373ced17068351e27a8002b882`
+- **Processing hash:** `7379f165539c2bdbe4ba80e4750a8c0641296efc32852343ca22b0e3faac1673` | **metadata hash:** `f5c6bbae7caf3cb736d4b8a59945ff680e14ea14447ca053fe6f1f7570935fdc`

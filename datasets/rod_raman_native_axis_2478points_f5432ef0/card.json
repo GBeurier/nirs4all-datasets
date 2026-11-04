@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 11,
+      "in_one_source_only": 11,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 11
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -185,11 +194,9 @@
         "m_raman_measurement_device_excitation_laser_wavelength"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:04.684263+00:00",
+  "generated_at": "2026-11-03T23:46:34.819188+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -212,8 +219,8 @@
   "integrity": {
     "content_hash": "fbae93659cecc736df45c6487ea228c6eee249bd27b69f19b964142161bea9b5",
     "manifest": "manifest.json",
-    "metadata_hash": "955bddcb3d860a40da61ed29486b3d1593dceb888c42f5bc6d450f7370702a4d",
-    "processing_hash": "f2d5343be06d1861ec31149b8969c35ea08d3a026043606d8563cfa87842ca60"
+    "metadata_hash": "2741eca4f9c09f0e85ad7071b7e346c0dfcc5090b133fcb14f805b502c51a0a4",
+    "processing_hash": "1381b5317d3c23924be7cdbae14381fd96b1b020aef53eafe29bf229f8851535"
   },
   "protocol_version": "7",
   "provenance": {
@@ -238,7 +245,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: Sample identifier declared in M"
     ]
   },
@@ -1261,15 +1267,29 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 1.0,
+          "effective_rank": 1.0,
+          "n_components_95": 1,
+          "n_components_99": 1
         },
         "mean_max": 31611.08567205884,
         "mean_min": 0.0,
         "n_outliers": 3,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9998719220496632,
+            5.052297608973715e-05,
+            3.590062337935917e-05,
+            2.4175086125079224e-05,
+            5.438457531441773e-06,
+            3.75787065240669e-06,
+            3.261468282003759e-06,
+            2.337792308803352e-06,
+            2.0688991177187272e-06,
+            6.147768501531139e-07
+          ],
+          "n_components": 10
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 1512471.8590246427,
@@ -1590,8 +1610,8 @@
             "noise_rms": 0.22746680396928434,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -3035,12 +3055,10 @@
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: dropped duplicate columns ['chemical_formula_sum'] (kept the first source's values)."
   ]
 }

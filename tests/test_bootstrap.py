@@ -174,3 +174,11 @@ def test_refresh_preserves_curated_retrieval_and_pins(tmp_path: Path, v2_leaf: A
     assert refreshed["dataverse"]["dataset_version"] == "2.0"
     assert refreshed["versions"]["content"] == "2.1.0"
     assert refreshed["reproducibility"]["notes"] == "Curated conversion notes"
+
+
+def test_licence_pages_are_terms_not_origin_sources() -> None:
+    from nirs4all_datasets.bootstrap import _classify_origin
+
+    for url in ["https://creativecommons.org/licenses/by/4.0/", "https://spdx.org/licenses/etalab-2.0.html", "https://opendatacommons.org/licenses/odbl/1-0/", "https://example.org/licenses/terms.html"]:
+        assert _classify_origin(url) == ("skip", None)
+    assert _classify_origin("https://zenodo.org/records/1")[0] == "source"

@@ -54,6 +54,25 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top explicit_open (×2379) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top public_reuse_possible (×2379) |
 | notes | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top EcoSIS package fresh-leaf-spectra-to-estimate-leaf-morphology-and-biochemistry-for-northern-temperate-forests, no interpolation applied by project. (×2379) |
+| source_Spectra | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=2363, top DC05_PIRE_MN_LC_REFL (×2) |
+| source_Sample_Name | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1387, top BH05_ACSM_B (×4) |
+| source_device | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=2, top leaf clip (×1506) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top reflectance (×1489) |
+| source_Sample_Year | metadata | numeric | *Not specified.* | n=2379, missing=0, range 2008–2010, mean 2008 ± 0.6032 |
+| source_UniqueID | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1403, top BH05_ACSM_B_2008 (×4) |
+| source_Site | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top BH (×1668) |
+| source_Site_Name | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top Baraboo Hills (×1668) |
+| source_State | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=2, top Wisconsin (×1825) |
+| source_Plot | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top BH02 (×1668) |
+| source_Height | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top B (×2379) |
+| source_Age | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top NA (×2379) |
+| source_Height_Age | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top B (×2379) |
+| source_Sample_Name_aux | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top BH02_ACRU_B (×1668) |
+| source_UniqueID_aux | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=3, top BH02_ACRU_B_2008 (×1668) |
+| source_Sample_Type | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top Vegetation (×2379) |
+| source_Project | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top NASA Forest Functional Types (×2379) |
+| source_PI | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top Philip A. Townsend (×2379) |
+| source_Affiliation | metadata | categorical | *Not specified.* | n=2379, missing=0, classes=1, top FERST - University of Wisconsin Madison (×2379) |
 
 ## Statistics — splits
 
@@ -74,7 +93,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 6 fields, Y: 1 fields, measurements: 3 fields, passport: 40 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 1 fields, passport: 40 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +115,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `faf2e7f8a63cfb57af6f3e7b77fdbef10286d16147a61333103bdbcc6ee47f5e`
-- **Processing hash:** `8b62c524418f5b2a2e01d94e610184eb52a5d765579bdaabebe0337320183eb9` | **metadata hash:** `2e740eae7a6c61616fbce4cff326fb27e8f40d90100ca2ac41a2e7cd5ebabca0`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `16c873887113c65389146a75dd26724ddc4c944d70c7b1ffb0c956609d122fc8`
+- **Processing hash:** `086c67909cd9f0e248e32b06c13f80711276e3bdefe27fd29344ba45328d895c` | **metadata hash:** `21c6a64728904962fe56924de0b1eb6b9ebd0f8a4e6578b0e5186e836ef068a2`

@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top manual_review_needed (×2) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top private_use_only (×2) |
 | notes | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top none (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Illite/smectite (K,H3O)(Al,Mg,Fe)2(Si,Al)4 O10 [(OH)2,H2O] (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Mineral (×2) |
+| source_class | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Silicate (×2) |
+| source_subclass | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Phyllosilicate (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Fine (×2) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top illsmec_1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top JHU (×2) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top TIR (×2) |
+| source_origin | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Cameron, Arizona, from Hunt and Salisbury Collection #31(purchased from Ward's Natural Science Establishment), (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
+| source_description | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top The sample was a light tan, earthy clay. Called "montmorillonite" by Ward's, the bulk sample and the less than 2 micrometers particle-size separate are pure illite/smectite, with 35% illite layers. Particle size was Less than 2 Micrometer.(Sheet Silicates) (Mica Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.phyllosilicate.fine.illsme1t.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Transmission (×2) |
+| source_first_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top X (×2) |
+| source_second_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Y (×2) |
+| source_x_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Wavelength (micrometers) (×2) |
+| source_y_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Transmittence (percent) (×2) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 25.04–25.04, mean 25.04 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=2, missing=0, range 2287–2287, mean 2287 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top none (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Illite/smectite (K,H3O)(Al,Mg,Fe)2(Si,Al)4 O10 [(OH)2,H2O] (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top mineral (×2) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top mineral.silicate.phyllosilicate.fine.tir.illsmec_1.jhu.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `500762fdfc7672966668556db34e5de3fc3c15bf43a0551ce11738c83daf02ac`
-- **Processing hash:** `899f95a7e6dc3619f1eb2f09d9c0397b9a765d61ef0d13654afe806b0313580b` | **metadata hash:** `b3ba47098d57b2bf9d9656c128bdcc986f6d54be2188ba38b3a0286d31cd6668`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `ea113588cf461bc7c919727e8c287755b8784ed8d47e5acd8a948725affef6e2`
+- **Processing hash:** `fc10ba9cf77f26efef2e73074e3acaa367fa6d55527df6046041bd222a622b58` | **metadata hash:** `da310e2d5eff0cdc6bca19c12c3a4108bcc54e44cf40bafb88eb57148bded874`

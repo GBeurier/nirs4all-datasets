@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top manual_review_needed (×3) |
 | usage_scope | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top private_use_only (×3) |
 | notes | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top None. (×3) |
+| source_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Grass (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top vegetation (×3) |
+| source_class | metadata | categorical | *Not specified.* | n=3, missing=0, classes=2, top tree (×2) |
+| source_genus | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Unknown (×3) |
+| source_species | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Unknown (×3) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top grass (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top JHU (×3) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top All (×3) |
+| source_origin | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top The entire spectral range was measured at Johns Hopkins University--see file vegetata.doc for details. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Unknown (×3) |
+| source_description | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Green Rye grass. Spectra were assembled from two segments, the bidirectional VNIR and SWIR comprising segment one and the hemispherical MWIR and TIR comprising segment two. The VNIR/SWIR spectrum was measured in the laboratory at JHU with a GER IRIS Mark IV using a large piece of sod. The grass was illuminated from directly above and measured at a reflectance angle of 60 degrees to avoid viewing the thatch. (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Bidirectional and directional hemispherical reflectance. (×3) |
+| source_first_column | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top X (×3) |
+| source_second_column | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Y (×3) |
+| source_x_units | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Wavelength (micrometers) (×3) |
+| source_y_units | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Reflectance (percent) (×3) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=3, missing=0, range 0.302–0.302, mean 0.302 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=3, missing=0, range 14–14, mean 14 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=3, missing=0, range 550–550, mean 550 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top None. (×3) |
+| source_material_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Grass (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top vegetation (×3) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top vegetation.grass.unknown.unknown.all.grass.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 4 fields, passport: 46 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, passport: 47 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `298d980f94c3e32c147c1bfbd48370d1a2346c932c22ab682019adc6607a9b29`
-- **Processing hash:** `32eaa49dc4068a1696a141c36f3ca3958fedada8f19e16b10514cb35d7a741e5` | **metadata hash:** `d7d8e15b7b17ddcbc4e419f7fd5f149bf23eebefaa091c595a9e447ca2b0de54`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `93c44037e3bf1d29c9c4936ad9f7861549a4d10c84d44281dadbc3c3739996c9`
+- **Processing hash:** `96ce8b8492623d1a9f8168633a091110dd8914d4807fbe2aed1d023814085a14` | **metadata hash:** `29628752b5e0b367d2f8a719cfee98f4e9cf419a26e88896cd3560871a48f9fd`

@@ -5,7 +5,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Motivation
 
 - **Domain / purpose:** ecosis
-- **Description:** EcoSIS NGEE Tropics Leaf Spectral Reflectance Measured in Panama Collected February to April 2016 (reflectance). v2.0 standardized NIRS package: 1 spectral source(s), 3 declared target(s). Auto-generated from dataset_card.json (verify before publication).
+- **Description:** EcoSIS NGEE Tropics Leaf Spectral Reflectance Measured in Panama Collected February to April 2016 (reflectance). Origin database composed from 2 standardized v2.0 leaves: 1 spectral source(s), 4 declared target(s). Auto-generated from dataset_card.json (verify before publication).
 - **Keywords:** nir, v2, ecosis
 - **Contributor:** NGEE Tropics Leaf Spectral Reflectance Measured in Panama Collected February to April 2016
 
@@ -31,16 +31,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | SLA_cm2_gDW | target | numeric | *Not specified.* | n=708, missing=124, range 48.8–454.4, mean 104.8 ± 45.67 |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top 78a97d90-36b1-4e4b-9c93-7e2db590f154 (×708) |
 | site | metadata | categorical | *Not specified.* | n=708, missing=0, classes=2, top PA-SLZ (×487) |
-| location | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| country | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| latitude | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| longitude | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
 | coordinate_precision_notes | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top source-provided coordinates when available (×708) |
 | year | metadata | numeric | *Not specified.* | n=708, missing=0, range 2019–2019, mean 2019 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| species | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| genus | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
-| family | metadata | categorical | *Not specified.* | n=708, missing=708, classes=0, — |
 | plant_part | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Leaf (×708) |
 | canopy_or_leaf | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top leaf (×708) |
 | instrument | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Spectra Vista Corporation, Spectral Evolution HR-1024i (×708) |
@@ -56,6 +48,77 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top explicit_open (×708) |
 | usage_scope | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top public_reuse_possible (×708) |
 | notes | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top EcoSIS package ngee-tropics-leaf-spectral-reflectance-measured-in-panama-collected-february-to-april-2016, no interpolation applied by project. (×708) |
+| Narea_g_m2 | target | numeric | *Not specified.* | n=708, missing=522, range -9999–3.35, mean -51.84 ± 733.3 |
+| source_Sample_ID | metadata | categorical | *Not specified.* | n=708, missing=0, classes=708, top BNL10401 (×1) |
+| source_Site | metadata | categorical | *Not specified.* | n=708, missing=0, classes=2, top PA-SLZ (×487) |
+| source_Sample_Date | metadata | categorical | *Not specified.* | n=708, missing=0, classes=10, top 20160421 (×153) |
+| source_Spectra_Name | metadata | categorical | *Not specified.* | n=708, missing=0, classes=708, top BNL10401 (×1) |
+| source_BNL_Barcode | metadata | categorical | *Not specified.* | n=708, missing=0, classes=708, top BNL10401 (×1) |
+| source_Instrument | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top SVC_HR-1024i (×708) |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Fiber_1_LC_RP (×708) |
+| source_Collection_Units | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Radiance (×708) |
+| source_Spectra_Units | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Percent_Reflectance_0_100 (×708) |
+| source_Spectra_Type | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Leaf (×708) |
+| source_Reflectance_Type | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Absolute (×708) |
+| source_White_Reference_Standard | metadata | categorical | *Not specified.* | n=708, missing=0, classes=2, top 99AA10-0614-0826 SRS-99-020 (×437) |
+| source_Spectral_Resolution | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top 1nm (×708) |
+| source_Wavelength | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Nanometer (×708) |
+| source_Interpolation_Method | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Linear (×708) |
+| source_Overlap_Handling | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Removed (×708) |
+| source_Overlap_Removal | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Post_processing (×708) |
+| source_Overlap_Matching_Type | metadata | categorical | *Not specified.* | n=708, missing=0, classes=1, top Radiance (×708) |
+| source_Duplicate_flag | metadata | numeric | *Not specified.* | n=708, missing=124, range 1–1, mean 1 ± 0 |
+| source_Chem_type | metadata | categorical | *Not specified.* | n=708, missing=124, classes=1, top CHN (×584) |
+| SpectralRep | metadata | numeric | *Not specified.* | n=708, missing=522, range 1–1, mean 1 ± 0 |
+| Sample_ID | metadata | categorical | *Not specified.* | n=708, missing=522, classes=186, top BNL10401 (×1) |
+| Site | metadata | categorical | *Not specified.* | n=708, missing=522, classes=2, top PA-SLZ (×107) |
+| Sample_Date | metadata | categorical | *Not specified.* | n=708, missing=522, classes=10, top 20160214 (×24) |
+| Spectra_Name | metadata | categorical | *Not specified.* | n=708, missing=522, classes=186, top BNL10401 (×1) |
+| BNL_Barcode | metadata | categorical | *Not specified.* | n=708, missing=522, classes=186, top BNL10401 (×1) |
+| Instrument | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top SVC_HR-1024i (×186) |
+| Foreoptic | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Fiber_1_LC_RP (×186) |
+| Collection_Units | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Radiance (×186) |
+| Spectra_Units | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Percent_Reflectance_0_100 (×186) |
+| Spectra_Type | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Leaf (×186) |
+| Reflectance_Type | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Absolute (×186) |
+| White_Reference_Standard | metadata | categorical | *Not specified.* | n=708, missing=522, classes=2, top 99AA10-0614-0827 SRS-99-020 (×118) |
+| Spectral_Resolution | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top 1nm (×186) |
+| Wavelength | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Nanometer (×186) |
+| Interpolation_Method | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Linear (×186) |
+| Overlap_Handling | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Removed (×186) |
+| Overlap_Removal | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Post_processing (×186) |
+| Overlap_Matching_Type | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top Radiance (×186) |
+| Date | metadata | categorical | *Not specified.* | n=708, missing=522, classes=10, top 2/14/16 (×24) |
+| Location | metadata | categorical | *Not specified.* | n=708, missing=522, classes=2, top PA-SLZ (×108) |
+| Species_Code | metadata | categorical | *Not specified.* | n=708, missing=522, classes=26, top MICOBO (×16) |
+| Latin_genus | metadata | categorical | *Not specified.* | n=708, missing=522, classes=25, top Miconia (×16) |
+| Latin_species | metadata | categorical | *Not specified.* | n=708, missing=522, classes=25, top borealis (×16) |
+| Genus_species | metadata | categorical | *Not specified.* | n=708, missing=522, classes=26, top Miconia borealis (×16) |
+| Gasex_typeOrSequence | metadata | categorical | *Not specified.* | n=708, missing=522, classes=2, top ACi (×149) |
+| TleafDegC_canopy | metadata | numeric | *Not specified.* | n=708, missing=671, range 23.8–29.7, mean 26.14 ± 1.181 |
+| TleafDegCpreSpec | metadata | numeric | *Not specified.* | n=708, missing=527, range 26.4–32.8, mean 29.58 ± 1.653 |
+| TleafDegCpostSpec | metadata | numeric | *Not specified.* | n=708, missing=526, range 27.2–36.3, mean 30.88 ± 1.881 |
+| Photo_num | metadata | categorical | *Not specified.* | n=708, missing=529, classes=176, top ?Shawn's phone (×3) |
+| Canopy_position | metadata | categorical | *Not specified.* | n=708, missing=522, classes=2, top sunlit (×159) |
+| General_Comments | metadata | categorical | *Not specified.* | n=708, missing=696, classes=6, top leaf temperatures before and after spectra reading may be missing or inaccurate (×7) |
+| Cmass_pc | metadata | numeric | *Not specified.* | n=708, missing=522, range 37.64–54.06, mean 49.15 ± 3.593 |
+| Nmass_pc | metadata | numeric | *Not specified.* | n=708, missing=522, range 1.06–5.66, mean 2.204 ± 0.9319 |
+| CNratio | metadata | numeric | *Not specified.* | n=708, missing=522, range 7.94–49.39, mean 25.3 ± 8.212 |
+| Carea_g_m2 | metadata | numeric | *Not specified.* | n=708, missing=522, range -9999–94.3, mean -6.286 ± 736.9 |
+| Duplicate_flag | metadata | numeric | *Not specified.* | n=708, missing=523, range 1–1, mean 1 ± 0 |
+| Chem_type | metadata | categorical | *Not specified.* | n=708, missing=523, classes=1, top CHN (×185) |
+| LWP_coll_time | metadata | categorical | *Not specified.* | n=708, missing=671, classes=34, top 7:50 (×3) |
+| LWP_time | metadata | numeric | *Not specified.* | n=708, missing=692, range -9999–-9999, mean -9999 ± 0 |
+| LWP_bar | metadata | numeric | *Not specified.* | n=708, missing=671, range 6–28.5, mean 17.11 ± 5.307 |
+| LWP_comment | metadata | categorical | *Not specified.* | n=708, missing=706, classes=2, top ? from phloem (×1) |
+| dataset | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top EcoSIS (×186) |
+| dimensions | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top 1D (×186) |
+| axis_note | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top wavelengths_as_provided_by_EcoSIS_resource (×186) |
+| official_data_url | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top https://data.ecosis.org/dataset/ngee-tropics-leaf-spectral-reflectance-measured-in-panama-collected-february-to-april-2016 (×186) |
+| official_package_url | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top https://ecosis.org/package/ngee-tropics-leaf-spectral-reflectance-measured-in-panama-collected-february-to-april-2016 (×186) |
+| license_url | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top http://www.opendefinition.org/licenses/odc-by (×186) |
+| public_release_allowed | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top True (×186) |
+| parent_standardized_dataset_id | metadata | categorical | *Not specified.* | n=708, missing=522, classes=1, top ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs (×186) |
 
 ## Statistics — splits
 
@@ -66,7 +129,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +139,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 3 fields, Y: 3 fields, measurements: 1 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 13 fields, Y: 4 fields, passport: 51 fields, measurements: 10 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +166,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `810c67cc80a0c93b7b9526aae2223544511c04d7e1a201f1f3037644284f5cf2`
-- **Processing hash:** `9221844fccebfbabdeb1e79835a80d989e8799926b9bd1797f3c290306a4f8b3` | **metadata hash:** `f41ed1a8c916e0450a70931ffee9b0dd19cd338d9a895cfd4378b34d7e36c30d`
+- **Content version:** 1.3.0 | **schema/protocol:** 2.0
+- **Content hash:** `1e1f2416a0c7dd6821119c1b835d79c0479a12294ed3a9751024e45735f910d5`
+- **Processing hash:** `2019e0ea55ac747f40a5a26096571f95d2d788c970a1af85769da2543e4ad716` | **metadata hash:** `aee7299abea599e7d82778238ac58c18b475798acaf0a2d5dfc4df2d89d18d98`

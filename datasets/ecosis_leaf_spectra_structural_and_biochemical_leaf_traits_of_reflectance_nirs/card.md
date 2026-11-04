@@ -98,6 +98,15 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=184, missing=0, classes=1, top explicit_open (×184) |
 | usage_scope | metadata | categorical | *Not specified.* | n=184, missing=0, classes=1, top public_reuse_possible (×184) |
 | notes | metadata | categorical | *Not specified.* | n=184, missing=0, classes=1, top EcoSIS package leaf-spectra--structural-and-biochemical-leaf-traits-of-eight-crop-species, no interpolation applied by project. (×184) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=184, missing=0, classes=184, top 10202 (×1) |
+| source_leaf_health | metadata | categorical | *Not specified.* | n=184, missing=0, classes=4, top Excellent (×137) |
+| source_leaf_position | metadata | categorical | *Not specified.* | n=184, missing=0, classes=31, top RFEL (×93) |
+| source_manipulations | metadata | numeric | *Not specified.* | n=184, missing=24, range 0–0, mean 0 ± 0 |
+| source_pot_medium | metadata | categorical | *Not specified.* | n=184, missing=0, classes=2, top mycor (×98) |
+| source_Notes | metadata | categorical | *Not specified.* | n=184, missing=182, classes=1, top lost some supernate. Do not use starch assay. (×2) |
+| source_QC | metadata | numeric | *Not specified.* | n=184, missing=179, range 1–1, mean 1 ± 0 |
+| source_Notes_aux | metadata | categorical | *Not specified.* | n=184, missing=182, classes=1, top lost some supernate. Do not use starch assay. (×2) |
+| source_QC_aux | metadata | numeric | *Not specified.* | n=184, missing=179, range 1–1, mean 1 ± 0 |
 
 ## Statistics — splits
 
@@ -118,7 +127,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 46 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 46 fields, passport: 35 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -140,6 +149,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `49c0b83b08fd5dc91166651d3680468de405bfa78bbd2b300cf1046711ffe15e`
-- **Processing hash:** `9b079da7d5bcc26edc373a4d043489ecd80d16b2d73cc9fb2ed7a366bef429ed` | **metadata hash:** `b0ec97f5053b54d1285b35c684257ee0f752c863f5c903fbd39e95efe1da6453`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `94b085c36d0905c51f7cc697ffe035d9e621ea449f25b9ae15631b60315b4f27`
+- **Processing hash:** `705085583afaec5468200bd94724dca583dc142ef52837bd4cfa14c83d105e7f` | **metadata hash:** `1f0a3558df7cc04ed0c786516517fab88c4615b8c135b865c466e865ae11e6ac`

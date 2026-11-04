@@ -41,6 +41,14 @@ possible**. It contains:
 Coverage: **X only** · X + Y · X + Y + metadata. The Python package can return data **with or without a
 split** (concatenated by default).
 
+**One dataset per origin database.** Some upstream packages split one published record into one leaf
+per target (the same spectra, one Y each) or one leaf per instrument (the same samples, one block each).
+The catalog does not mirror those task views: `consolidation.json` composes them into **one dataset
+holding the samples and all their variables**, with one source per instrument or measurement mode,
+and lists leaves that duplicate an existing database as superseded. Spectra are matched only by their
+stored values, sources only by declared sample identity; records published separately (another DOI,
+another licence) are never joined, and sources that share no sample stay separate datasets.
+
 **Multi-sources & repetitions (structural).** Like Y, **X can be multiple** (multi-source dataset:
 several instruments / acquisitions). Each source is managed **independently**: no fusion, no
 resampling, no imposed common grid. Most importantly, because of **asymmetric spectral repetitions**

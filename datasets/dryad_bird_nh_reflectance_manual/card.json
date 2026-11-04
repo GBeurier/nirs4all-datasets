@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 42,
+      "in_one_source_only": 42,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 42
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -97,7 +106,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:48:18.116563+00:00",
+  "generated_at": "2026-11-03T23:30:31.315542+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -118,10 +127,10 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "0d3d71051f3a5d3c46d7bd2d781dca19fee0899f0293382d4c7b27470b7ad13b",
+    "content_hash": "e44126d8fdd4b126fa9c9a8871a36e1dee0fee26aaf0f0ed983b998a6ff9130b",
     "manifest": "manifest.json",
-    "metadata_hash": "7f90e49b53bded81aad2eb94f4bbf361afb1a2a7ca212bbd457cac3cf0e6a588",
-    "processing_hash": "3ce15d34479d63c127cd41ce5ac1ac49c484d05e32f034cbfdb514d703eeef31"
+    "metadata_hash": "d703e32fd47b5ba18b06974ba609d89e88afc2ffdeb9217706c2ad0be3aaeeb6",
+    "processing_hash": "2aac2fed88eebe2b2f40aee8a6721daa9f15e2a70d3101624c38d3086b0fd0f4"
   },
   "protocol_version": "7",
   "provenance": {
@@ -1168,15 +1177,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9982897093180373,
+          "effective_rank": 3.08,
+          "n_components_95": 4,
+          "n_components_99": 6
         },
         "mean_max": 76.99221338544574,
         "mean_min": -0.09776627964207105,
         "n_outliers": 12,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.5102437959026287,
+            0.369332613678153,
+            0.057701336784186125,
+            0.0399809583777142,
+            0.012568034589327683,
+            0.004307343771326369,
+            0.0015973128499447112,
+            0.0012265355672115708,
+            0.0007922080002265786,
+            0.0005395697973185446,
+            0.0003631986638424571,
+            0.00030432489022660914,
+            0.00017151757654155234,
+            0.0001394388278814754,
+            0.00011946738207184694,
+            0.00010469622168043711,
+            7.08781227724028e-05,
+            6.982042429746773e-05,
+            6.400099133871364e-05,
+            5.039302429749247e-05,
+            4.690088169835168e-05,
+            3.769772088766496e-05,
+            2.3991069954299272e-05,
+            2.1940331332712138e-05,
+            1.8220978345354178e-05,
+            1.5353362820353453e-05,
+            1.2416184210971829e-05,
+            1.1752106137558032e-05,
+            9.417573401983575e-06,
+            8.643490240943937e-06
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 189359.65006152648,
@@ -1497,8 +1540,8 @@
             "noise_rms": 0.0009291409422602572,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -1545,8 +1588,8 @@
             "peak_position_std": 299.68975643718403,
             "rms_to_mean_spectrum": 3.9500535773074597,
             "rms_to_mean_spectrum_p95": 8.506103574735096,
-            "sam_to_mean_spectrum": 0.06575657222305045,
-            "sam_to_mean_spectrum_p95": 0.12506000427350228,
+            "sam_to_mean_spectrum": 0.06575657222305385,
+            "sam_to_mean_spectrum_p95": 0.12506000427350406,
             "xcorr_lag_p95_axis": 0.0,
             "xcorr_lag_p95_features": 0.0
           },
@@ -1980,10 +2023,170 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9761904761904762,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.023809523809523808,
+        "n_classes": 42,
+        "normalized_entropy": 0.9999999999999999
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 42,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_id",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_id",
+        "present": 42,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 42,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 42,
+        "n_classes": 42,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "3644"
+          },
+          {
+            "count": 1,
+            "name": "3818"
+          },
+          {
+            "count": 1,
+            "name": "3638"
+          },
+          {
+            "count": 1,
+            "name": "23465"
+          },
+          {
+            "count": 1,
+            "name": "23466"
+          },
+          {
+            "count": 1,
+            "name": "23467"
+          },
+          {
+            "count": 1,
+            "name": "23468"
+          },
+          {
+            "count": 1,
+            "name": "23469"
+          },
+          {
+            "count": 1,
+            "name": "23470"
+          },
+          {
+            "count": 1,
+            "name": "23558"
+          },
+          {
+            "count": 1,
+            "name": "17408"
+          },
+          {
+            "count": 1,
+            "name": "19447"
+          },
+          {
+            "count": 1,
+            "name": "23510"
+          },
+          {
+            "count": 1,
+            "name": "23511"
+          },
+          {
+            "count": 1,
+            "name": "23513"
+          },
+          {
+            "count": 1,
+            "name": "23556"
+          },
+          {
+            "count": 1,
+            "name": "23555"
+          },
+          {
+            "count": 1,
+            "name": "23554"
+          },
+          {
+            "count": 1,
+            "name": "3634"
+          },
+          {
+            "count": 1,
+            "name": "3632"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sheet",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sheet",
+        "numeric_sentinels": [],
+        "original_name": "source_sheet",
+        "present": 42,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 42,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 42,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 42,
+            "name": "NHReflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

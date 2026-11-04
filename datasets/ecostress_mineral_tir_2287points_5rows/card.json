@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 5,
+      "in_one_source_only": 5,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 5
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -214,7 +223,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:07.275622+00:00",
+  "generated_at": "2026-11-03T16:15:55.357349+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -235,15 +244,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "900239a461d1cf0255a409d839adb7c2faa8ca55bc72cb059e3f768754ec01c5",
+    "content_hash": "904b8e8935a2a6c9bef843a710f772c24541ceacae5beb0ff7e8411b114d7381",
     "manifest": "manifest.json",
-    "metadata_hash": "dd5efccf2c98bc39430affd93ca3f20302cb485c6e05b2d63b6248039dd07d7e",
-    "processing_hash": "8818897bdddf15191507922eb6e6044e2c1443e54d714fa1b37efae71273ae3c"
+    "metadata_hash": "f6b6e56e8ad408dda981f47b2a3aec7c140f033b1817a1962c4a3af717625e6e",
+    "processing_hash": "19ce6a27a872c80c5013f78e232476e4b8c323ffbf9d45a9ad9d5ef5e27549a6"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1304,15 +1313,23 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999999999999999,
+          "effective_rank": 2.55,
+          "n_components_95": 3,
+          "n_components_99": 4
         },
         "mean_max": 95.89040069580078,
         "mean_min": 28.634400177001954,
         "n_outliers": 1,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.629338962967183,
+            0.25204895725197063,
+            0.10422648923716649,
+            0.014385590543679843
+          ],
+          "n_components": 4
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 1457.4515653118037,
@@ -1633,8 +1650,8 @@
             "noise_rms": 0.020577074334780267,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2972,10 +2989,1100 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Diopside CaMgSi2O6"
+          },
+          {
+            "count": 1,
+            "name": "Clinochlore (Fe+2,Mg)5Al(Si3Al)O10(OH)8"
+          },
+          {
+            "count": 1,
+            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
+          },
+          {
+            "count": 1,
+            "name": "Chabazite CaAl2Si4O12.6H2O"
+          },
+          {
+            "count": 1,
+            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Mineral"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Silicate"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.72,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.2,
+        "n_classes": 4,
+        "normalized_entropy": 0.9609640474436812
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Tectosilicate"
+          },
+          {
+            "count": 1,
+            "name": "Inosilicate"
+          },
+          {
+            "count": 1,
+            "name": "Phyllosilicate"
+          },
+          {
+            "count": 1,
+            "name": "Sorosilicate"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Fine"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "diopside_2"
+          },
+          {
+            "count": 1,
+            "name": "clinochl_2"
+          },
+          {
+            "count": 1,
+            "name": "clinozo_1"
+          },
+          {
+            "count": 1,
+            "name": "chabazite_1"
+          },
+          {
+            "count": 1,
+            "name": "clinopt_1"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "JHU"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "TIR"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Sample from DeKalb, New York via the Smithsonian (sampleno. NMNH R18685)."
+          },
+          {
+            "count": 1,
+            "name": "Hunt and Salisbury Collection (from the Clay Mineral SocietyRepository #CCA-1), orign, Flagstaff Hill, El Dorado Co., California."
+          },
+          {
+            "count": 1,
+            "name": "Sample from Baja California, Mexico via Smithsonian (sampleno. NMNH 112513-2."
+          },
+          {
+            "count": 1,
+            "name": "W. J. Ehmann #40, from Kyogle, N.S.W., Australia."
+          },
+          {
+            "count": 1,
+            "name": "Donated by W. J. Ehmann , Sample #7 from Castle Creek,Idaho."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Most of the 13 mm x 10 mm x 6 mm sample was clean, fresh and green. One area was eroded and weathered and probably impure. The crushed sample was hand-picked to avoid impurities. A moderate amount of weathering and alteration can be seen under the microscope. The alteration is brown in color (limonite). Particle size was less than 2 Micrometers.(Chain Silicates) (Pyroxene Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.powder.diopsi2.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample was made up of green chunks of coarsely crystalline material. Microscopic examination indicated that it was pure.Particle size was less than 2 Micrometers.(sheet silicates) (Chlorite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.phyllosilicate.powder.clinoc2.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample was one large (2.5 cm x 2 cm x 2 cm) crystal with good crystal faces, weighing 19 g. It was dark gray in color, with <<1% limonitic surface contamination, which was easily removed. Under the microscope the sample appears to be pure and free from alteration. Sample was in Epidote Group and particle size was less than 2 micrometers. Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.sorosilicate.powder.clinoz1p.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample was a white crystalline mass. Petrographically the sample appears to be pure chabazite. Sample was <2 Micrometers in particle size. Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.tectosilicate.powder.chabaz1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample is a cream-colored earthy mass. Because of the earthy nature of this mineral sample, there is little difference between the spectra of different particle size ranges. Petrographically it is clean and pure clinoptilolite. Particle size was less than 2 Micrometers.(Framework silicates) (Zeolite Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.tectosilicate.powder.clinop1.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Transmission"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "Transmittance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 25.044,
+        "mean": 25.044,
+        "median": 25.044,
+        "min": 25.044,
+        "n": 5,
+        "n_missing": 0,
+        "q1": 25.044,
+        "q3": 25.044,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2.0795,
+        "mean": 2.0795,
+        "median": 2.0795,
+        "min": 2.0795,
+        "n": 5,
+        "n_missing": 0,
+        "q1": 2.0795,
+        "q3": 2.0795,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2287.0,
+        "mean": 2287.0,
+        "median": 2287.0,
+        "min": 2287.0,
+        "n": 5,
+        "n_missing": 0,
+        "q1": 2287.0,
+        "q3": 2287.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.phyllosilicate.fine.tir.clinochl_2.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "None"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.tectosilicate.fine.tir.chabazite_1.jhu.nicolet.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.tectosilicate.fine.tir.clinopt_1.jhu.nicolet.ancillary.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Diopside CaMgSi2O6"
+          },
+          {
+            "count": 1,
+            "name": "Clinochlore (Fe+2,Mg)5Al(Si3Al)O10(OH)8"
+          },
+          {
+            "count": 1,
+            "name": "Clinozoisite Ca2Al3(SiO4)3(OH)"
+          },
+          {
+            "count": 1,
+            "name": "Chabazite CaAl2Si4O12.6H2O"
+          },
+          {
+            "count": 1,
+            "name": "Clinoptilolite (Na,K,Ca)2-3Al3(Al,Si)2Si13O36.12H2O"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 5,
+            "name": "mineral"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.2,
+        "n_classes": 5,
+        "normalized_entropy": 1.0000000000000002
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 5,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 5,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 5,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 5,
+        "n_classes": 5,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.phyllosilicate.fine.tir.clinochl_2.jhu.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.sorosilicate.fine.tir.clinozo_1.jhu.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.tectosilicate.fine.tir.chabazite_1.jhu.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.silicate.tectosilicate.fine.tir.clinopt_1.jhu.nicolet.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

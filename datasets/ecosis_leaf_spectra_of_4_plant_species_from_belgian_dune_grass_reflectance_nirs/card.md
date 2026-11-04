@@ -5,14 +5,14 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 ## Motivation
 
 - **Domain / purpose:** ecosis
-- **Description:** EcoSIS Leaf spectra of 4 plant species from Belgian dune grasslands + Rosa rugosa from the Northern Japan (reflectance). v2.0 standardized NIRS package: 1 spectral source(s), 5 declared target(s). Auto-generated from dataset_card.json (verify before publication).
+- **Description:** EcoSIS Leaf spectra of 4 plant species from Belgian dune grasslands + Rosa rugosa from the Northern Japan (reflectance). Origin database composed from 4 standardized v2.0 leaves: 1 spectral source(s), 8 declared target(s). Auto-generated from dataset_card.json (verify before publication).
 - **Keywords:** nir, v2, ecosis
 - **Contributor:** Leaf spectra of 4 plant species from Belgian dune grasslands + Rosa rugosa from the Northern Japan
 
 ## Composition
 
-- **Alignment:** observation level; *Not specified.* sample(s), 2399 observation(s) total; sample_id available: False.
-- **Exported observations per source unit:** ND (identity/repetition information unavailable).
+- **Alignment:** sample level; 2399 sample(s), 2399 observation(s) total; sample_id available: True.
+- **Exported observations per source unit:** 1–1 (mean 1).
 - **Documented technical repetitions:** *Not specified.*.
 - **Variable grain / join key:** sample_id.
 
@@ -32,17 +32,14 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | LDMC__mg/mg | target | numeric | *Not specified.* | n=2399, missing=0, range 0.0704–0.5409, mean 0.2664 ± 0.1081 |
 | EWT__mg/cm2 | target | numeric | *Not specified.* | n=2399, missing=0, range 5.474–42.72, mean 18.44 ± 7.05 |
 | ecosis_resource_id | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top ee8fe8de-aab0-4d69-834d-bf9178e16c2a (×2399) |
-| site | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
 | location | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top Oostende, Ishikari (×2399) |
 | country | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2, top Belgium (×2041) |
 | latitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 43.15–51.36, mean 50.05 ± 2.858 |
 | longitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 2.644–141.4, mean 23.61 ± 49.31 |
 | coordinate_precision_notes | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top source-provided coordinates when available (×2399) |
 | year | metadata | numeric | *Not specified.* | n=2399, missing=0, range 2019–2019, mean 2019 ± 0 |
-| date | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
 | species | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top rugosa (×729) |
 | genus | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top Rosa (×729) |
-| family | metadata | categorical | *Not specified.* | n=2399, missing=2399, classes=0, — |
 | plant_part | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top Leaf (×2399) |
 | canopy_or_leaf | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top leaf (×2399) |
 | instrument | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top spectra vista corporation, sv SVC HR-1024TM (×2399) |
@@ -58,6 +55,31 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top explicit_open (×2399) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top public_reuse_possible (×2399) |
 | notes | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top EcoSIS package leaf-spectra-of-4-plant-species-from-belgian-dune-grasslands---rosa-rugosa-from-the-northern-japan, no interpolation applied by project. (×2399) |
+| source_ids | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2399, top BPR1 Rosrug 1 (×1) |
+| source_plot_code | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=75, top PR1 (×60) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 43.15–51.36, mean 50.05 ± 2.858 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 2.644–141.4, mean 23.61 ± 49.31 |
+| source_country | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2, top Belgium (×2041) |
+| source_Spcode | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top Rosrug (×729) |
+| SpectralRep | metadata | numeric | *Not specified.* | n=2399, missing=0, range 1–1, mean 1 ± 0 |
+| ids | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=2399, top BPR1 Rosrug 1 (×1) |
+| plot code | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=75, top PR1 (×60) |
+| Latitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 43.15–51.36, mean 50.05 ± 2.858 |
+| Longitude | metadata | numeric | *Not specified.* | n=2399, missing=0, range 2.644–141.4, mean 23.61 ± 49.31 |
+| latin genus | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top Rosa (×729) |
+| latin species | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top rugosa (×729) |
+| Spcode | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=4, top Rosrug (×729) |
+| LMA (mg/cm2) | metadata | numeric | *Not specified.* | n=2399, missing=0, range 1.525–13.89, mean 6.221 ± 2.649 |
+| LDMC (mg/mg) | metadata | numeric | *Not specified.* | n=2399, missing=0, range 0.0704–0.5409, mean 0.2664 ± 0.1081 |
+| EWT (mg/cm2) | metadata | numeric | *Not specified.* | n=2399, missing=0, range 5.474–42.72, mean 18.44 ± 7.05 |
+| dataset | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top EcoSIS (×2399) |
+| dimensions | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top 1D (×2399) |
+| axis_note | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top wavelengths_as_provided_by_EcoSIS_resource (×2399) |
+| official_data_url | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top https://data.ecosis.org/dataset/leaf-spectra-of-4-plant-species-from-belgian-dune-grasslands---rosa-rugosa-from-the-northern-japan (×2399) |
+| official_package_url | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top https://ecosis.org/package/leaf-spectra-of-4-plant-species-from-belgian-dune-grasslands---rosa-rugosa-from-the-northern-japan (×2399) |
+| license_url | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top http://www.opendefinition.org/licenses/odc-odbl (×2399) |
+| public_release_allowed | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top True (×2399) |
+| parent_standardized_dataset_id | metadata | categorical | *Not specified.* | n=2399, missing=0, classes=1, top ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs (×2399) |
 
 ## Statistics — splits
 
@@ -68,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 5 fields, measurements: 0 fields, passport: 29 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 5 fields, passport: 40 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `3603c08fb1505a07bfe4af071455339b70ba78d31bbdf3975e955382cca50b26`
-- **Processing hash:** `3e48077b508e85f937cd9b7c4b4bb3f89979cbc6f05d660466ac77aafa72228b` | **metadata hash:** `ed605ba8af25a0a268e71cc59567ff2e5f5ca3aa1959c5d7803e2a25ecc046d9`
+- **Content version:** 1.3.0 | **schema/protocol:** 2.0
+- **Content hash:** `3974179f57e4dba7d11cfb521b10c5ec0776f3a57d04b8380fe462cfaeca78ac`
+- **Processing hash:** `dd38f17883891a65802513640878c8aa2e65221dea0b75e5e5c12edea2e079f6` | **metadata hash:** `24a16865390c137f175e1cefb6e73e13c71ff0284d2a0afcb18c41151ac1744a`

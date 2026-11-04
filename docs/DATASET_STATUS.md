@@ -5,12 +5,12 @@ automatically from the catalog + health probe; **validation** is the human revie
 `catalog/validation.yaml` (hand-edited, never overwritten by `bootstrap`)._
 
 ## Summary
-- **297 datasets** — 162 private, 135 public
-- **Processing:** 297 qualified (qualified = metrics computed)
-- **Origin:** 10 unreachable, 9 unverified, 278 verified
-- **Validation (human):** 297 pending
-- **Distribution:** 135 public tier, 162 no personal DOI
-- **Retrieval:** 7 manual_only, 61 missing_delegate, 225 raw_reproducible, 4 token_required
+- **241 datasets** — 146 private, 95 public
+- **Processing:** 241 qualified (qualified = metrics computed)
+- **Origin:** 10 unreachable, 7 unverified, 224 verified
+- **Validation (human):** 241 pending
+- **Distribution:** 95 public tier, 146 no personal DOI
+- **Retrieval:** 2 blocked_parser, 6 manual_only, 49 missing_delegate, 182 raw_reproducible, 2 token_required
 
 ## Legend
 - **state** — `described` → `canonical` → **`qualified`** (per-source/per-variable metrics computed)
@@ -23,30 +23,14 @@ automatically from the catalog + health probe; **validation** is the human revie
 ## Datasets
 | id | tier | state | mat. | origin | validation | distribution | retrieval | samples |
 |----|------|-------|:----:|:------:|------------|--------------|-----------|--------:|
-| `barley_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
-| `barley_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
-| `canopy_lignin_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 80 |
-| `canopy_lma_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 43 |
-| `canopy_lma_g_m2_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 80 |
-| `canopy_lwc_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 43 |
-| `canopy_narea_2017_2017_reflectance_ngee_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 41 |
-| `canopy_nitrogen_seasonal_blackhawk_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 80 |
 | `canopy_treatment_2009_2016_to_cedar_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
 | `cartilage_spectroscopy_scientificdata_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 869 |
-| `cereals_all_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 450 |
-| `cereals_all_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 450 |
 | `cgl_nir_grain_eigenvector` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `manual_only` | 231 |
 | `chembl_ir_raman_multiblock` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
-| `cirad_madagascar_organic_resources_asd_nonstd_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 1000 |
-| `cirad_madagascar_organic_resources_asd_std_xds_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 1000 |
+| `cirad_madagascar_organic_resources_asd_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 1000 |
 | `corn_eigenvector_nir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `manual_only` | 80 |
-| `corn_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
-| `corn_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
 | `data_in_brief_rice_amylose_transflection_nir_matio` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 313 |
 | `diesel_fuels_nir_eigenvector` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `manual_only` | 784 |
-| `drug_common_application_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 32 |
-| `drug_compound_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 32 |
-| `drug_solvent_reagent_flanagan_raman` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 32 |
 | `dryad_avocado_felix_handheld_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1139 |
 | `dryad_avocado_oo_benchtop_snv_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 199 |
 | `dryad_beech_leaf_second_derivative_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
@@ -75,10 +59,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_2019_plosone_wheat_hessian_fly_ms_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | — |
 | `ecosis_3d_canopy_level_spectra_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 59 |
 | `ecosis_3d_leaf_level_spectra_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | — |
-| `ecosis_cabo_2018_2019_leaf_level_spectra_absorbance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1971 |
-| `ecosis_cabo_2018_2019_leaf_level_spectra_transmittance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1971 |
-| `ecosis_cabo_2018_2019_leaf_level_spectra_v2_absorbance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1971 |
-| `ecosis_cabo_2018_2019_leaf_level_spectra_v2_transmittance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1971 |
+| `ecosis_cabo_2018_2019_leaf_level_spectra_v2_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1971 |
 | `ecosis_calcareous_grassland_species_over_growing_season_at_the_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 1100 |
 | `ecosis_canopy_spectra_of_boreal_tree_species_from_alberta_pott_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2550 |
 | `ecosis_common_milkweed_leaf_responses_to_water_stress_and_elev_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 735 |
@@ -87,19 +68,19 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_fab_leaf_spectra_across_a_light_gradient_at_cedar_creek_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
 | `ecosis_fine_scale_vnir_hyperspectral_canopy_reflectances_from_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | — |
 | `ecosis_freeze_dried_leaf_spectra_and_measured_traits_from_the_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 82 |
-| `ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 609 |
 | `ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 609 |
 | `ecosis_fresh_leaf_spectra_and_measured_traits_from_the_sierra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 35 |
 | `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 2363 |
 | `ecosis_fresh_leaf_vswir_spectra_leaf_traits_california_reflectance_nirs` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | 285 |
 | `ecosis_greater_cape_floristic_region_leaf_spectral_library_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
-| `ecosis_ground_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 607 |
 | `ecosis_ground_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 607 |
+| `ecosis_hyperspectral_leaf_reflectance_biochemistry_and_physiol_leaf_spectra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 665 |
 | `ecosis_hyperspectral_leaf_reflectance_biochemistry_and_physiol_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
 | `ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 322 |
+| `ecosis_leaf_optical_properties_experiment_database_lopex93_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `blocked_parser` | 330 |
 | `ecosis_leaf_reflectance_and_traits_of_plants_sampled_along_a_w_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 190 |
 | `ecosis_leaf_reflectance_and_tratis_of_floating_and_emergent_ma_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 325 |
-| `ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
+| `ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2399 |
 | `ecosis_leaf_spectra_of_boreal_tree_species_from_alberta_potted_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 3235 |
 | `ecosis_leaf_spectra_structural_and_biochemical_leaf_traits_of_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 184 |
 | `ecosis_leaf_traits_compilation_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 47393 |
@@ -115,10 +96,11 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecosis_ngee_tropics_gliht_puerto_rico_campaign_leaf_spectral_r_transmittance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 222 |
 | `ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 708 |
 | `ecosis_oven_dried_leaf_spectra_and_measured_traits_from_the_si_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 83 |
-| `ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 614 |
+| `ecosis_potato_virus_y_detection_in_solanum_tuberosum_greenhouse_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `blocked_parser` | 80 |
 | `ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 614 |
 | `ecosis_productivity_and_characterization_of_soybean_foliar_tra_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
 | `ecosis_purdue_leaf_spectral_functional_traits_plsr_v2_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 987 |
+| `ecosis_seasonal_canopy_spectra_and_traits_blackhawk_island_wi_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 80 |
 | `ecosis_seasonal_measurements_of_photosynthesis_and_leaf_traits_reflectance_nirs` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 48 |
 | `ecosis_spectra_from_in_situ_deciduous_leaves_and_leaves_collec_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | — |
 | `ecosis_spectral_characterization_of_multiple_corn_varieties_we_reflectance_nirs` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 288 |
@@ -177,7 +159,6 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecostress_soil_all_2868points_2rows` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 2 |
 | `ecostress_soil_all_2868points_4rows` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 4 |
 | `ecostress_soil_all_2868points_6rows` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 6 |
-| `ecostress_soil_tir_2124points` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 17 |
 | `ecostress_soil_tir_2223points` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 11 |
 | `ecostress_vegetation_all_550points` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 3 |
 | `ecostress_vegetation_tir_1736points` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 4 |
@@ -187,41 +168,14 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ecostress_vegetation_vswir_2151points_343rows` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 325 |
 | `ecostress_water_all_965points` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 4 |
 | `fairdata_bovine_knee_ligament_nir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 50 |
-| `figshare_uva_illicit_drugs_asd_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 390 |
-| `figshare_uva_illicit_drugs_micronir_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 424 |
-| `figshare_uva_illicit_drugs_neospectra_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 429 |
-| `figshare_uva_illicit_drugs_nirone_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 341 |
-| `figshare_uva_illicit_drugs_scio_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 419 |
+| `figshare_uva_illicit_drugs_avg_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 599 |
 | `flanagan_api_compounds_raman` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 32 |
-| `github_grapevine_chloride_nirsg1_nir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `token_required` | 259 |
-| `github_grapevine_chloride_svc_hr1024i_visnir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `token_required` | 556 |
+| `github_grapevine_chloride_nir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `token_required` | 556 |
 | `github_streptanthus_leaf_reflectance_visnir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 51 |
 | `grapevine_leaftraits_multisensor_nir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `token_required` | 2079 |
 | `harvard_dataverse_forage_quality_visnir_manual` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | — |
-| `leaf_chlorophyll_mg_m2_2023_fresh_sierra_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 35 |
-| `leaf_equivalent_water_thickness_g_cm2_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 330 |
-| `leaf_ewt_mg_cm2_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2399 |
-| `leaf_initial_of_boreal_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 3235 |
-| `leaf_ldmc_mg_mg_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2399 |
-| `leaf_leaf_mass_per_area_g_cm2_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 330 |
-| `leaf_lma_gdw_cm2_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 74 |
-| `leaf_lma_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 665 |
-| `leaf_lma_mg_cm2_of_4_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2399 |
-| `leaf_lma_value_g_m2_2023_fresh_sierra_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 35 |
-| `leaf_n_mass_g_g_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 261 |
-| `leaf_narea_g_m2_2016_2016_ngee_tropics_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 186 |
-| `leaf_nitrogen_pct_dw_reflectance_refl_optical_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 330 |
-| `leaf_protein_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 658 |
-| `leaf_pvy_strain_time1_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 80 |
-| `leaf_pvy_strain_time2_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 80 |
-| `leaf_pvy_strain_time4_potato_virus_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 80 |
+| `harvard_dataverse_malaria_anopheles_gambiae_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `manual_only` | — |
 | `leaf_sample_category_fresh_dry_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 74 |
-| `leaf_sla_cm2_g_dw_uw_bnl_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 74 |
-| `leaf_starch_hyperspectral_reflectance_ecosis` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 654 |
-| `leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 987 |
-| `malaria_anopheles_gambiae_oocyst_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `manual_only` | — |
-| `malaria_anopheles_gambiae_sporozoite_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `manual_only` | — |
-| `manure21_nir_all_y` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `token_required` | 490 |
 | `mendeley_agricultural_soil_fertility_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 40 |
 | `mendeley_animal_feed_quality_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 25 |
 | `mendeley_black_pmma_transmissivity_uvvisnir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 2 |
@@ -256,20 +210,15 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `openspecy_ftir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | — |
 | `openspecy_raman` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | — |
 | `ossl_afsis1_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 1904 |
-| `ossl_afsis2_mir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 151 |
-| `ossl_afsis2_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 151 |
+| `ossl_afsis2_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 151 |
 | `ossl_cassl_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 1578 |
 | `ossl_garrett_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 184 |
 | `ossl_icraf_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 3776 |
-| `ossl_jovic_mir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 45 |
-| `ossl_jovic_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 135 |
+| `ossl_jovic_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 135 |
 | `ossl_kellogg_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 85669 |
-| `ossl_lucas_mir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 40175 |
-| `ossl_lucas_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 40175 |
-| `ossl_lucas_woodwell_mir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 589 |
-| `ossl_lucas_woodwell_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 589 |
-| `ossl_neospectra_mir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 1976 |
-| `ossl_neospectra_nir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 2106 |
+| `ossl_lucas_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 40175 |
+| `ossl_lucas_woodwell_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 589 |
+| `ossl_neospectra_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 2106 |
 | `ossl_schiedung_visnir_soil_all_y` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 259 |
 | `perten_cereals_nir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 450 |
 | `pharmaceutical_tablets_nir_shootout_eigenvector` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `manual_only` | 655 |
@@ -277,9 +226,7 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `plastic_polymer_name_grouped_flopp_ftir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 186 |
 | `pnnl_quant_ir` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | — |
 | `recherche_data_gouv_fresh_dried_manure_nir_jigo8r` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 332 |
-| `recherche_data_gouv_grapevine_leaf_asd_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 2394 |
-| `recherche_data_gouv_grapevine_leaf_micronir_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 2408 |
-| `recherche_data_gouv_grapevine_leaf_neospectra_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 2116 |
+| `recherche_data_gouv_grapevine_leaf_wvapol` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `raw_reproducible` | 2427 |
 | `recherche_data_gouv_oilseed_rape_tissue_ftnir_6vyuqn` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 2427 |
 | `recherche_data_gouv_raw_manure_nir_e1ji8u` | private | qualified | ✅ | ✅ | ⏳ pending | no personal DOI | `missing_delegate` | 490 |
 | `rod_raman_native_axis_1925points_13194863` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 17 |
@@ -311,12 +258,9 @@ automatically from the catalog + health probe; **validation** is the human revie
 | `ucph_soil_som_ergosterol_nir` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | 108 |
 | `ucph_tablet_nir` | private | qualified | ✅ | — | ⏳ pending | no personal DOI | `manual_only` | 310 |
 | `ucph_wheat_kernel_nit` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | 523 |
-| `wheat_moisture_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
-| `wheat_protein_perten` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 150 |
 | `wiley_blueberry_phenomics_nir_manual` | private | qualified | ✅ | ❌ | ⏳ pending | no personal DOI | `missing_delegate` | — |
 | `zenodo_milk_composition_transmittance_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 1224 |
 | `zenodo_neospectra_soil_nir_ccby` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 7790 |
 | `zenodo_tomato_leaf_stress_visnir_matio` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 216 |
-| `zenodo_twinspectra_fieldspec_rdf_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 718 |
-| `zenodo_twinspectra_micronir_rdf_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 720 |
+| `zenodo_twinspectra_rdf_nir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 768 |
 | `zenodo_western_highveld_soil_nir_mir` | public | qualified | ✅ | ✅ | ⏳ pending | public tier | `raw_reproducible` | 803 |

@@ -8,13 +8,21 @@ consumer can use the installed package without the CIRAD source bundle:
 ```python
 import nirs4all_datasets as bank
 
-dataset = bank.get("barley_moisture_perten")
+dataset = bank.get("perten_cereals_nir")
 n4a_dataset = dataset.to_nirs4all()
 ```
 
 See [PUBLIC_ORIGIN_LOADING.md](PUBLIC_ORIGIN_LOADING.md) for original downloads,
 explicit optional Harvard profiles, source representation corrections, and
-provider limits. The 162 private datasets retain their protected access rules.
+provider limits. The private datasets retain their protected access rules.
+
+November 2026: the catalog is managed by origin database. The 297 supplied leaves
+included per-target views of one record (the same spectra, one target each),
+per-instrument views of the same samples, and duplicate versions. They are composed
+by `consolidation.json` into 241 datasets (95 public, 146 private): 72 leaves are
+consumed by 21 databases or superseded by an existing one. The counts below
+describe the supplied leaves; the tracked audit files keep the entries of the
+datasets still in the catalog.
 
 [`catalog/integration_validation.json`](../catalog/integration_validation.json)
 records the historical 0.3.12 local round-trip checks for all 297 standardized
@@ -24,7 +32,7 @@ fresh public download. Original-source validation is recorded separately in
 
 The audited snapshot is the CIRAD [NIRS DB v2.0 folder](https://ciradfr-my.sharepoint.com/personal/denis_cornet_cirad_fr/Documents/NIRS%20DB/v2.0), synchronized locally for this integration. The folder may require CIRAD authorization; these files are not republished here. Dataset availability and permitted use remain governed by the source and individual catalog descriptors.
 
-[`catalog/source_audit.json`](../catalog/source_audit.json) inventories all 297 standardized leaves. It records 133 IDs absent from baseline commit `e68d1befb6cb8245799e83d4b4e4c41e66287689`, relative leaf names, card and script fingerprints, table filenames, sizes, SHA-256 fingerprints and structural header details. It contains no table values or machine-specific paths. A leaf's presence establishes that a standardized bundle was supplied; it does not establish that its original raw source is downloadable or reproducible.
+[`catalog/source_audit.json`](../catalog/source_audit.json) inventoried all 297 standardized leaves and now keeps the 225 that remain catalog datasets (composed databases have no upstream script). It records 133 IDs absent from baseline commit `e68d1befb6cb8245799e83d4b4e4c41e66287689`, relative leaf names, card and script fingerprints, table filenames, sizes, SHA-256 fingerprints and structural header details. It contains no table values or machine-specific paths. A leaf's presence establishes that a standardized bundle was supplied; it does not establish that its original raw source is downloadable or reproducible.
 
 All 297 leaves contain `source_to_standard.py`. Static inspection finds 255 scripts referencing 50 distinct `convert_*.py` files absent from the supplied source tree. The audit lists each reference and each missing filename. This is a filename-based dependency inventory, not execution or a complete analysis of Python imports. The other 42 scripts are not thereby certified self-contained. The locally available standardized tables remain importable subject to their format and rights, and the supplied wrappers alone cannot reconstruct those affected bundles. Public-origin recipes shipped in 0.3.13 replace the missing wrappers with explicit acquisition and assembly using existing readers. No wrapper is executed automatically.
 

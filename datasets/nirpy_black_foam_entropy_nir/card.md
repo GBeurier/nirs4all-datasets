@@ -58,6 +58,13 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | n_points_original | metadata | numeric | *Not specified.* | n=500, missing=0, range 228–228, mean 228 ± 0 |
 | target_status | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top no_sample_level_target_in_source (×500) |
 | notes | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top Instrument CSV contains absorbance, sample signal, and reference signal, exported as aligned X blocks without smoothing or resampling. Non-finite absorbance values caused by zero sample signal are written as missing values. (×500) |
+| source_archive | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top NIR_black_foam_nirpy.zip (×500) |
+| source_member_file | metadata | categorical | *Not specified.* | n=500, missing=0, classes=500, top NIR_black_foam_nirpy/column1_singleExposureColumn 1_123028_20231118_113637.csv (×1) |
+| source_scan_number | metadata | numeric | *Not specified.* | n=500, missing=0, range 1.23e+05–1.235e+05, mean 1.233e+05 ± 144.5 |
+| source_scan_date | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top 20231118 (×500) |
+| source_scan_time | metadata | numeric | *Not specified.* | n=500, missing=0, range 1.136e+05–1.151e+05, mean 1.144e+05 ± 424.8 |
+| source_use_case | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top information entropy smoothing tutorial (×500) |
+| source_context | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top 500 independent NIR acquisitions from the same black foam sample. (×500) |
 
 ## Statistics — splits
 
@@ -80,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 0 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 0 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `d1d035a1bec6ebae249ec86039954bbff36c8c3e5e807de698631ac4758e6d66`
-- **Processing hash:** `640ec7e4f1dfb6a55f2f65c18f70aa3bb518c325f5b9bf68dacd1c075b932880` | **metadata hash:** `7135b6c2f337187367f36146010fdb9fc8486bd58be217c454601356a5d8ac54`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `f36afe72bd15fb9d7127f80585ff99c2307f6af6a342989d18698ed66ff9f394`
+- **Processing hash:** `821942f7b5db3235dab258c115fdd5762377f5117b9445f8b1fc097248ce2666` | **metadata hash:** `0acce3ee02c5d164819f186b8c07e38497aa0ed79be4b8d4f0507253a2066211`

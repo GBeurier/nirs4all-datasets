@@ -79,9 +79,6 @@ variables:
 - name: notes
   role: metadata
   type: categorical
-- name: original_sample_id
-  role: metadata
-  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -90,20 +87,18 @@ alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: 'Data of: Integration of handheld NIR and machine learning for the
     development of a Measure & Monitor technology for chicken meat authenticity'
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates."
+  - 'Curation identity contract: Sample identifier declared in M; frequencies of this
+    identifier describe exported rows without establishing technical replicates.'
 governance:
   license: CC-BY-4.0
   owner_steward: 'Data of: Integration of handheld NIR and machine learning for the
@@ -132,11 +127,6 @@ origin_sources:
   locator: https://data.mendeley.com/public-api/datasets/cp2hdhkys3/files?folder_id=root&version=6&$start=0&$limit=1000
   access: open
   expected_files: []
-- kind: url
-  mode: raw
-  locator: https://creativecommons.org/licenses/by/4.0/
-  access: open
-  expected_files: []
 - kind: script
   mode: raw
   locator: source_to_standard.py
@@ -161,5 +151,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/mendeley_chicken_meat_authenticity_handheld_nir
-  source_fingerprint: 05059f6508b9746eaaf4ab605201a31a7d74283641aad8d83fd9e2710ea6f33b
+  source_relpath: v2.0/mendeley_chicken_meat_authenticity_handheld_nir
+  source_fingerprint: cdc16e8bfbc129374cb61afd371b667f0bd93b3236762daadcd769de86f4885d

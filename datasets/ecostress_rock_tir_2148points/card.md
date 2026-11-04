@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top manual_review_needed (×5) |
 | usage_scope | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top private_use_only (×5) |
 | notes | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top rock.metamorphic.phyllite.solid.tir.fge4.jpl.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Grey-green phyllite (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top rock (×5) |
+| source_class | metadata | categorical | *Not specified.* | n=5, missing=0, classes=2, top Sedimentary (×4) |
+| source_subclass | metadata | categorical | *Not specified.* | n=5, missing=0, classes=4, top Arenaceou (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Solid (×5) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top FGE4 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top University of NSW (×5) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top TIR (×5) |
+| source_origin | metadata | categorical | *Not specified.* | n=5, missing=0, classes=4, top Nundooka Sandstone, Fowlers Gap, western New South Wales, AustraliaHewson(1998) PhD thesis (×2) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top N/A (×5) |
+| source_description | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Chlorite/muscovite-rich phyllite Greenschist facies Physiography: Exposed in low relief valleys as abundant scree and weathered outcrops Original ASTER Spectral Library name was jpl.nicolet.rock.metamorphic.phyllite.solid.fge4.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Directional hemispherical reflectance (×5) |
+| source_first_column | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top X (×5) |
+| source_second_column | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Y (×5) |
+| source_x_units | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Wavelength (micrometers) (×5) |
+| source_y_units | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Reflectance (percent) (×5) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=5, missing=0, range 14.98–14.98, mean 14.98 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=5, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=5, missing=0, range 2148–2148, mean 2148 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top rock.metamorphic.phyllite.solid.tir.fge4.jpl.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Grey-green phyllite (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top rock (×5) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top rock.metamorphic.phyllite.solid.tir.fge4.jpl.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b162bb2fd5b5aa0a7a678729fe7439defefea2a653a5526e4be190c87013fa9f`
-- **Processing hash:** `cfbe078465300265a69e4c2fb2544428650bca10a6683e69b22bb868de07c9ed` | **metadata hash:** `4ef4fe4a4dc7272ed42113efc4f344e9c5384d07c741f6fda716506af8346f22`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `3359a880ca50a353c7ca934582f5fe54abe47097baa6e0f009b111c025b6e20f`
+- **Processing hash:** `a7da4c8cef6c94b97a44c635d82f68fb534cc84b59f017078c39779a6ae145e1` | **metadata hash:** `925521d7818dea27099d2a0c15c88263ec12dd8e7c615c3a441bdc31de705f6e`

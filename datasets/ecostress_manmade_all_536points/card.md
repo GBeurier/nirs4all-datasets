@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top manual_review_needed (×22) |
 | usage_scope | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top private_use_only (×22) |
 | notes | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top none (×22) |
+| source_name | metadata | categorical | *Not specified.* | n=22, missing=0, classes=16, top Copper Metal (×3) |
+| source_type | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top manmade (×22) |
+| source_class | metadata | categorical | *Not specified.* | n=22, missing=0, classes=3, top Roofing Material (×12) |
+| source_subclass | metadata | categorical | *Not specified.* | n=22, missing=0, classes=9, top Metal (×7) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Solid (×22) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=22, missing=0, classes=22, top 0097UUUBRK (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top National Photographic Interpretation Center (×22) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top All (×22) |
+| source_origin | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Spectra obtained from the Noncoventional Exploitation FactorsData System of the National Photographic Interpretation Center. (×22) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top N/A (×22) |
+| source_description | metadata | categorical | *Not specified.* | n=22, missing=0, classes=22, top Smooth-faced red building construction brick. Original ASTER Spectral Library name was jhu.becknic.manmade.construction.brick.solid.0097uuu.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×22) |
+| source_first_column | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top X (×22) |
+| source_second_column | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Y (×22) |
+| source_x_units | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Wavelength (micrometers) (×22) |
+| source_y_units | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top Reflectance (percent) (×22) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=22, missing=0, range 0.3–0.3, mean 0.3 ± 5.682e-17 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=22, missing=0, range 12.5–12.5, mean 12.5 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=22, missing=0, range 536–536, mean 536 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top none (×22) |
+| source_material_name | metadata | categorical | *Not specified.* | n=22, missing=0, classes=16, top Copper Metal (×3) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=22, missing=0, classes=1, top manmade (×22) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=22, missing=0, classes=22, top manmade.generalconstructionmaterial.brick.solid.all.0097uuubrk.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 4 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 50 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `fb0dd53137da1bfb9b064327fd392496651cd6f25430c57b68d5a1cb7b230075`
-- **Processing hash:** `68161787c6c76ae290b6e3334037bcbb69698b5ef5f36b1241f85428f4ee1fce` | **metadata hash:** `0bb1f88d10040ec2aa0649290a29dd7556e4774cfc824367cf0d6f2702f72718`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `7041c89f22ad130e318feea908b5fd07caa4ca45f7487881dfc9dd212debc128`
+- **Processing hash:** `83da11324180e12c44022ef7ae0402e701874fc29d68ab18abee21c0a0dadac7` | **metadata hash:** `4c693a06c3e6cff9ea43238f5d48d70c807afd5dcbce0b92d7520668044e7ad2`

@@ -253,3 +253,18 @@ def test_run_health_check_only_limits_probe(tmp_path: Path) -> None:
 
     assert report["n_datasets"] == 1
     assert set(report["datasets"]) == {"wheat"}
+
+
+def test_run_health_check_only_keeps_other_probes_and_drops_retired_ids(tmp_path: Path) -> None:
+    _write_descriptor(tmp_path, _descriptor("wheat", Tier.PUBLIC, [_origin(SourceKind.ZENODO, "10.5281/zenodo.9")]))
+    _write_descriptor(tmp_path, _descriptor("barley", Tier.PUBLIC, [_origin(SourceKind.ZENODO, "10.5281/zenodo.8")]))
+    run_health_check(tmp_path, session=FakeSession(default=404), now=_NOW)
+    (tmp_path / "catalog" / "datasets" / "barley.yaml").rename(tmp_path / "catalog" / "datasets" / "oats.yaml")
+
+    report = run_health_check(tmp_path, session=FakeSession(default=200), only=["wheat"], now=_NOW)
+
+    assert set(report["datasets"]) == {"wheat"}  # "barley" left the catalog; "oats" was never probed
+    assert report["datasets"]["wheat"]["degraded"] is False
+    _write_descriptor(tmp_path, _descriptor("rye", Tier.PUBLIC, [_origin(SourceKind.ZENODO, "10.5281/zenodo.7")]))
+    report = run_health_check(tmp_path, session=FakeSession(default=404), only=["rye"], now=_NOW)
+    assert set(report["datasets"]) == {"wheat", "rye"} and report["n_degraded"] == 1

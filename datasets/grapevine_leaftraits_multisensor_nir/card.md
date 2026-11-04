@@ -77,7 +77,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -86,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Leaf × date, aligned across the four blocks; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 4 fields, Y: 28 fields, measurements: 0 fields, passport: 10 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 28 fields, passport: 10 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,6 +106,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a179d6405b62f608462d219f96be4e5a5a571a0c80a593e7018c20a57aa74618`
-- **Processing hash:** `4fa8a6e88eb6ec7ea2134308e751e43e93bb7826b18a596ba57992b19b12f221` | **metadata hash:** `6ae74c902ba26f618aceb75dc8e49a224c4169290d62eaebff293e20145bbb69`
+- **Processing hash:** `089c1bafd3012504f217783107ac254a5faef66d295001cb61b16ca0fa64d187` | **metadata hash:** `e98cbf572fcc75751f7e688fc020ff795baba04ea6d1edf11ee431724f80dd20`

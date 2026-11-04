@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 64,
+      "in_one_source_only": 64,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 64
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -114,6 +123,10 @@
           {
             "name": "latitude",
             "resource": "M.csv"
+          },
+          {
+            "name": "source_Latitude",
+            "resource": "M.csv"
           }
         ],
         "stats": {
@@ -137,6 +150,10 @@
         "source_columns": [
           {
             "name": "longitude",
+            "resource": "M.csv"
+          },
+          {
+            "name": "source_Longitude",
             "resource": "M.csv"
           }
         ],
@@ -241,48 +258,6 @@
       },
       {
         "grain": "observation",
-        "name": "latitude_2",
-        "source_columns": [
-          {
-            "name": "source_Latitude",
-            "resource": "M.csv"
-          }
-        ],
-        "stats": {
-          "completeness_pct": 100.0,
-          "imbalance_ratio": 22.0,
-          "n_missing": 0,
-          "n_present": 64,
-          "n_rows": 64,
-          "n_unique": 28,
-          "type": "categorical"
-        },
-        "unit": null,
-        "view": "M"
-      },
-      {
-        "grain": "observation",
-        "name": "longitude_2",
-        "source_columns": [
-          {
-            "name": "source_Longitude",
-            "resource": "M.csv"
-          }
-        ],
-        "stats": {
-          "completeness_pct": 100.0,
-          "imbalance_ratio": 22.0,
-          "n_missing": 0,
-          "n_present": 64,
-          "n_rows": 64,
-          "n_unique": 29,
-          "type": "categorical"
-        },
-        "unit": null,
-        "view": "M"
-      },
-      {
-        "grain": "observation",
         "name": "foreoptic",
         "source_columns": [
           {
@@ -333,8 +308,6 @@
         "site_code",
         "measurement_date",
         "measurement_time",
-        "latitude_2",
-        "longitude_2",
         "foreoptic"
       ],
       "Y": [
@@ -383,7 +356,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:06.725086+00:00",
+  "generated_at": "2026-11-03T16:11:49.588735+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "ODC-By-1.0",
@@ -404,15 +377,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "86dd8f30c7b9d1c1cc1baa9870ddafcbca5530f32c1508ae5ba4cc2c98c54f1f",
+    "content_hash": "a5583a61de9b63b400434bffa5c065f6e25a58c4c71f7d97e50eb7624e62a8ef",
     "manifest": "manifest.json",
-    "metadata_hash": "ef17c754fd9df92882932d989090a46ff31509da5f0e5fd4f75f1e7c68e865a9",
-    "processing_hash": "4a3dfcb10967bbf3555748b0725c8395ef23d3433b0d9bd039dc0a3f7d293da3"
+    "metadata_hash": "b86e560311d1d694dace2efcbae12384fd9dbfa7b76d6c8739e2e6f82fa37058",
+    "processing_hash": "ce05b7465200e635d5bd27b5dde9ca4581d5d12132f1e349a1f158f0c4191659"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "UW-BNL NASA HyspIRI California Airborne Campaign Ground Target Spectra",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1460,15 +1433,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9996966495648579,
+          "effective_rank": 1.15,
+          "n_components_95": 1,
+          "n_components_99": 2
         },
         "mean_max": 13.832710051210597,
         "mean_min": 4.5842377211665735,
         "n_outliers": 21,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9758761355338381,
+            0.0169351085410081,
+            0.00354355865737459,
+            0.0011080819631942443,
+            0.0007008465040801975,
+            0.0004524629893780663,
+            0.00033004793688245257,
+            0.00027881317418917186,
+            0.0002384305544278361,
+            0.0002331637104852013,
+            0.00013962236836325746,
+            8.897113454564235e-05,
+            7.346706039836951e-05,
+            7.656252828996513e-07,
+            2.0636323080387217e-07,
+            1.2929399946183157e-07,
+            9.52969462832051e-08,
+            1.7349771442652175e-08,
+            1.251422538831347e-08,
+            9.455329293959558e-09,
+            8.281765812056663e-09,
+            6.639064653144054e-09,
+            5.293250238321673e-09,
+            4.813878078228429e-09,
+            3.6637754589300832e-09,
+            3.0231721390815334e-09,
+            2.6125840481057962e-09,
+            2.2891153273218672e-09,
+            2.25838562715774e-09,
+            1.7214631530723572e-09
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 18506.821183849184,
@@ -1789,8 +1796,8 @@
             "noise_rms": 4.810846440443623e-05,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -1877,7 +1884,7 @@
           "points": [
             {
               "x": -380.2150543500889,
-              "y": -32.82858835997597
+              "y": -32.828588359975974
             },
             {
               "x": -382.22278365502115,
@@ -1889,7 +1896,7 @@
             },
             {
               "x": 843.2434777090562,
-              "y": 193.68288163177854
+              "y": 193.6828816317785
             },
             {
               "x": 985.5598505557754,
@@ -1929,11 +1936,11 @@
             },
             {
               "x": 1248.1271017075105,
-              "y": 284.08874768207926
+              "y": 284.0887476820792
             },
             {
               "x": 929.276875815874,
-              "y": 206.81087932389522
+              "y": 206.81087932389525
             },
             {
               "x": 4143.636364437083,
@@ -1945,7 +1952,7 @@
             },
             {
               "x": -385.2133573330776,
-              "y": -32.347689666193126
+              "y": -32.34768966619313
             },
             {
               "x": -385.18069452883566,
@@ -1985,7 +1992,7 @@
             },
             {
               "x": -383.962928927988,
-              "y": -32.25763419094348
+              "y": -32.257634190943484
             },
             {
               "x": -387.4866606231271,
@@ -2101,7 +2108,7 @@
             },
             {
               "x": -387.663885982354,
-              "y": -34.66687504678818
+              "y": -34.666875046788185
             },
             {
               "x": -387.02895820128236,
@@ -3428,10 +3435,1000 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.984375,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.015625,
+        "n_classes": 64,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Spectra",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 64,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Spectra",
+        "numeric_sentinels": [],
+        "original_name": "source_Spectra",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 64,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Ivanpah_1"
+          },
+          {
+            "count": 1,
+            "name": "Ivanpah_2"
+          },
+          {
+            "count": 1,
+            "name": "Ivanpah_3"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00837"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00838"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00839"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00840"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00841"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spec-00842"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_1_Spectralon"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spec-00849"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spec-00850"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spec-00851"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spec-00852"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spec-00853"
+          },
+          {
+            "count": 1,
+            "name": "Bare_Field_2_Spectralon"
+          },
+          {
+            "count": 1,
+            "name": "CVARS_FallowField1_4deg_Refl_00329"
+          },
+          {
+            "count": 1,
+            "name": "CVARS_FallowField1_4deg_Refl_00330"
+          },
+          {
+            "count": 1,
+            "name": "CVARS_FallowField1_4deg_Refl_00331"
+          },
+          {
+            "count": 1,
+            "name": "CVARS_FallowField1_4deg_Refl_00332"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6474609375,
+        "imbalance_ratio": 9.0,
+        "minority_fraction": 0.046875,
+        "n_classes": 4,
+        "normalized_entropy": 0.8299798451724528
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Site",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Site",
+        "numeric_sentinels": [],
+        "original_name": "source_Site",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 27,
+            "name": "Sierra National Forest"
+          },
+          {
+            "count": 25,
+            "name": "Coachella Valley Agricultural Research Station"
+          },
+          {
+            "count": 9,
+            "name": "Mixed Conifer Flux Tower"
+          },
+          {
+            "count": 3,
+            "name": "Ivanpah_Playa"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6474609375,
+        "imbalance_ratio": 9.0,
+        "minority_fraction": 0.046875,
+        "n_classes": 4,
+        "normalized_entropy": 0.8299798451724528
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Site_Code",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Site_Code",
+        "numeric_sentinels": [],
+        "original_name": "source_Site_Code",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 27,
+            "name": "SNF"
+          },
+          {
+            "count": 25,
+            "name": "CVARS"
+          },
+          {
+            "count": 9,
+            "name": "MCON"
+          },
+          {
+            "count": 3,
+            "name": "IP"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.787109375,
+        "imbalance_ratio": 7.333333333333333,
+        "minority_fraction": 0.046875,
+        "n_classes": 7,
+        "normalized_entropy": 0.8838005101951403
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Measurement_Date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 7,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Measurement_Date",
+        "numeric_sentinels": [],
+        "original_name": "source_Measurement_Date",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 7,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 22,
+            "name": "6/18/13"
+          },
+          {
+            "count": 13,
+            "name": "6/5/13"
+          },
+          {
+            "count": 12,
+            "name": "2014"
+          },
+          {
+            "count": 5,
+            "name": "6/16/14"
+          },
+          {
+            "count": 5,
+            "name": "6/17/14"
+          },
+          {
+            "count": 4,
+            "name": "6/19/13"
+          },
+          {
+            "count": 3,
+            "name": "6/3/13"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8550295857988166,
+        "imbalance_ratio": 15.0,
+        "minority_fraction": 0.019230769230769232,
+        "n_classes": 16,
+        "normalized_entropy": 0.8221478966157483
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Measurement_Time",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 16,
+        "invalid": 0,
+        "missing": 12,
+        "missing_values": [],
+        "name": "source_Measurement_Time",
+        "numeric_sentinels": [],
+        "original_name": "source_Measurement_Time",
+        "present": 52,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 16,
+        "n_missing": 12,
+        "top_classes": [
+          {
+            "count": 15,
+            "name": "16:52:03"
+          },
+          {
+            "count": 7,
+            "name": "17:13:47"
+          },
+          {
+            "count": 7,
+            "name": "17:00:31"
+          },
+          {
+            "count": 6,
+            "name": "17:22:08"
+          },
+          {
+            "count": 4,
+            "name": "16:56:24"
+          },
+          {
+            "count": 2,
+            "name": "16:18:39"
+          },
+          {
+            "count": 2,
+            "name": "15:11:56"
+          },
+          {
+            "count": 1,
+            "name": "15:34:26"
+          },
+          {
+            "count": 1,
+            "name": "15:40:03"
+          },
+          {
+            "count": 1,
+            "name": "15:43:36"
+          },
+          {
+            "count": 1,
+            "name": "11:11:05"
+          },
+          {
+            "count": 1,
+            "name": "11:15:20"
+          },
+          {
+            "count": 1,
+            "name": "11:16:24"
+          },
+          {
+            "count": 1,
+            "name": "11:25:14"
+          },
+          {
+            "count": 1,
+            "name": "11:28:23"
+          },
+          {
+            "count": 1,
+            "name": "15:18:55"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          26,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          35
+        ],
+        "edges": [
+          33.51714,
+          33.66557958333333,
+          33.81401916666667,
+          33.962458749999996,
+          34.11089833333333,
+          34.25933791666667,
+          34.407777499999995,
+          34.55621708333333,
+          34.704656666666665,
+          34.85309625,
+          35.001535833333335,
+          35.14997541666666,
+          35.298415,
+          35.446854583333334,
+          35.59529416666666,
+          35.74373375,
+          35.89217333333333,
+          36.04061291666667,
+          36.1890525,
+          36.33749208333333,
+          36.485931666666666,
+          36.63437125,
+          36.78281083333333,
+          36.931250416666664,
+          37.07969
+        ]
+      },
+      "name": "source_Latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 28,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Latitude",
+        "numeric_sentinels": [],
+        "original_name": "source_Latitude",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.048228183791603825,
+        "is_normal": false,
+        "kurtosis": -1.9094429442500702,
+        "normality_p": 6.214807821839417e-251,
+        "skewness": -0.31675567377717856
+      },
+      "stats": {
+        "max": 37.07969,
+        "mean": 35.54353420312499,
+        "median": 37.03272,
+        "min": 33.51714,
+        "n": 64,
+        "n_missing": 0,
+        "q1": 33.52247,
+        "q3": 37.03272,
+        "std": 1.7142001001514688
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          35,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          26,
+          0,
+          0,
+          0,
+          3
+        ],
+        "edges": [
+          -119.25155,
+          -119.09082833333333,
+          -118.93010666666666,
+          -118.769385,
+          -118.60866333333333,
+          -118.44794166666667,
+          -118.28721999999999,
+          -118.12649833333333,
+          -117.96577666666666,
+          -117.805055,
+          -117.64433333333332,
+          -117.48361166666666,
+          -117.32289,
+          -117.16216833333333,
+          -117.00144666666667,
+          -116.84072499999999,
+          -116.68000333333333,
+          -116.51928166666666,
+          -116.35856,
+          -116.19783833333332,
+          -116.03711666666666,
+          -115.87639499999999,
+          -115.71567333333333,
+          -115.55495166666665,
+          -115.39423
+        ]
+      },
+      "name": "source_Longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 29,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Longitude",
+        "numeric_sentinels": [],
+        "original_name": "source_Longitude",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.013527101965827489,
+        "is_normal": false,
+        "kurtosis": -1.9539116103791767,
+        "normality_p": 1.2167268583093149e-216,
+        "skewness": 0.22602133555982692
+      },
+      "stats": {
+        "max": -115.39423,
+        "mean": -117.80381070312501,
+        "median": -119.19669,
+        "min": -119.25155,
+        "n": 64,
+        "n_missing": 0,
+        "q1": -119.25142,
+        "q3": -116.1564725,
+        "std": 1.5935441593442117
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Reference",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Reference",
+        "numeric_sentinels": [],
+        "original_name": "source_Reference",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "Spectralon"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_Measurement",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "Reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.32373046875,
+        "imbalance_ratio": 3.923076923076923,
+        "minority_fraction": 0.203125,
+        "n_classes": 2,
+        "normalized_entropy": 0.7281342378690551
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Spectra_Units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Spectra_Units",
+        "numeric_sentinels": [],
+        "original_name": "source_Spectra_Units",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 51,
+            "name": "Ratio"
+          },
+          {
+            "count": 13,
+            "name": "Percent"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Spectral_Resolution",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Spectral_Resolution",
+        "numeric_sentinels": [],
+        "original_name": "source_Spectral_Resolution",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "1nm"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.52490234375,
+        "imbalance_ratio": 7.8,
+        "minority_fraction": 0.078125,
+        "n_classes": 3,
+        "normalized_entropy": 0.7868986554874103
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Foreoptic",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Foreoptic",
+        "numeric_sentinels": [],
+        "original_name": "source_Foreoptic",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 39,
+            "name": "Bare_Fiber"
+          },
+          {
+            "count": 20,
+            "name": "4deg"
+          },
+          {
+            "count": 5,
+            "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Instrument_Manufacturer",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Instrument_Manufacturer",
+        "numeric_sentinels": [],
+        "original_name": "source_Instrument_Manufacturer",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "Spectral Evolution"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Instrument_Model",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Instrument_Model",
+        "numeric_sentinels": [],
+        "original_name": "source_Instrument_Model",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "PSM-3500"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Instrument_Serial_Number",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Instrument_Serial_Number",
+        "numeric_sentinels": [],
+        "original_name": "source_Instrument_Serial_Number",
+        "present": 64,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 64,
+            "name": "SN1336023[3]"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6156462585034014,
+        "imbalance_ratio": 7.333333333333333,
+        "minority_fraction": 0.07142857142857142,
+        "n_classes": 4,
+        "normalized_entropy": 0.8036813370082111
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Comments",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 22,
+        "missing_values": [],
+        "name": "source_Comments",
+        "numeric_sentinels": [],
+        "original_name": "source_Comments",
+        "present": 42,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 64,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 64,
+        "n_classes": 4,
+        "n_missing": 22,
+        "top_classes": [
+          {
+            "count": 22,
+            "name": "Collection details: Spectra was collected using a 1.5 meter long fiber connected to the instrument collection port. Data collection was done using the bare (22deg) fiber mounted in a pistol grip assembly. A white reference was collected prior to collection of the concrete and blacktop target spectrum. Target spectrum were collected ~90cm away from the operator at a height of ~1.2 meters above the surface. The sky was 100% cloud free, wind was minimal, slightly hazy."
+          },
+          {
+            "count": 13,
+            "name": "Collection details: Spectra was collected using a 1.5 meter long fiber connected to the instrument collection port. Data collection was done using the bare (22deg) fiber mounted in a pistol grib assembly. A white reference was collected prior to collection of target spectrum. Target spectrum were collected ~90cm away from the operator at a height of ~1.2 meters above the surface. The sun was roughly S-SW, the sky was 100% cloud free, wind was minimal."
+          },
+          {
+            "count": 4,
+            "name": "Collection details: Spectra was collected using a 1.5 meter long fiber connected to the instrument collection port. Data collection was done using the bare (22deg) fiber mounted in a pistol grib assembly. A white reference was collected prior to collection of the rock target spectrum. Target spectrum were collected ~90cm away from the operator at a height of ~1.2 meters above the surface. The sky was 100% cloud free, wind was minimal."
+          },
+          {
+            "count": 3,
+            "name": "Collection details: Spectra was collected with the bare collection port on the instrument, no fiber or fore optic was used in spectral collection. The instrument was mounted on a tripod ~1 meter above the surface in a nadir orientation. A white reference was collected prior to collection of target spectrum. The sky was 100% cloud free, wind was minimal."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

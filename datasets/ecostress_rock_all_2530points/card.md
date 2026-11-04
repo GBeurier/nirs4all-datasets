@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top manual_review_needed (×30) |
 | usage_scope | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top private_use_only (×30) |
 | notes | metadata | categorical | *Not specified.* | n=30, missing=0, classes=30, top rock.igneous.felsic.solid.all.ap-936-10.usgs.perknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=30, missing=0, classes=5, top Rhyolite (×23) |
+| source_type | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Rock (×30) |
+| source_class | metadata | categorical | *Not specified.* | n=30, missing=0, classes=3, top Igneous (×23) |
+| source_subclass | metadata | categorical | *Not specified.* | n=30, missing=0, classes=3, top Felsic (×27) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Solid (×30) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=30, missing=0, classes=30, top AP-936-10 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top United States Geological Survey, L. C. Rowan (×30) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top All (×30) |
+| source_origin | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Iberian Pyrite Belt, Spain (×30) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top N/A (×30) |
+| source_description | metadata | categorical | *Not specified.* | n=30, missing=0, classes=30, top Rhyolite, freshSample was Whole Rock Chips. Original ASTER Spectral Library name was usgs.perknic.rock.igneous.felsic.solid.rhy10.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Directional Hemispherical Reflectance (×30) |
+| source_first_column | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top X (×30) |
+| source_second_column | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Y (×30) |
+| source_x_units | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Wavelength (micrometers) (×30) |
+| source_y_units | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top Reflectance (percent) (×30) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=30, missing=0, range 14.05–14.05, mean 14.05 ± 3.613e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=30, missing=0, range 0.405–0.405, mean 0.405 ± 1.129e-16 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=30, missing=0, range 2530–2530, mean 2530 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=30, missing=0, classes=30, top rock.igneous.felsic.solid.all.ap-936-10.usgs.perknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=30, missing=0, classes=5, top Rhyolite (×23) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=30, missing=0, classes=1, top rock (×30) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=30, missing=0, classes=30, top rock.igneous.felsic.solid.all.ap-936-10.usgs.perknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 4 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 50 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `5a5d7aba7ae93f8ca569305a01b870c76166b586a1da2a8600ee3cf20628869f`
-- **Processing hash:** `557995bef7649f70b111824c344108359ffbf0ca33943c092a295d6af437f52c` | **metadata hash:** `33c61292f719725f8f5254187e0fed5a041998577df6b3988de773661766a05e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e64edc23aac69d1e668f791dec7110563628ac9426e59dd78005a5d801e51393`
+- **Processing hash:** `67684c7f8633d4ffa88a4bd3a7423f8e9603ed79088a23a27ca71738343b1333` | **metadata hash:** `eaeebb670c342710e40e8807e60719a973ff2846dbca5d59057143b7ee6afe5b`

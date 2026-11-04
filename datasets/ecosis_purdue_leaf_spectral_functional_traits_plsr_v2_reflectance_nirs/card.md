@@ -59,6 +59,25 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=987, missing=0, classes=1, top explicit_open (×987) |
 | usage_scope | metadata | categorical | *Not specified.* | n=987, missing=0, classes=1, top public_reuse_possible (×987) |
 | notes | metadata | categorical | *Not specified.* | n=987, missing=0, classes=1, top EcoSIS package purdue-leaf-spectral-and-functional-trait-data-used-in-plsr-modeling-v2, no interpolation applied by project. (×987) |
+| source_Unique_ID | metadata | categorical | *Not specified.* | n=987, missing=0, classes=987, top E18_20180704_Black_walnut_p1_Control_Plantation_1 (×1) |
+| source_Experiment_ID | metadata | categorical | *Not specified.* | n=987, missing=0, classes=4, top 2019_EEL (×326) |
+| source_Site_Name | metadata | categorical | *Not specified.* | n=987, missing=0, classes=2, top EEL (×498) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=987, missing=0, range 40.42–40.43, mean 40.43 ± 0.004691 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=987, missing=0, range -87.04–-86.91, mean -86.98 ± 0.06194 |
+| source_Common_name | metadata | categorical | *Not specified.* | n=987, missing=0, classes=2, top Black_walnut (×839) |
+| source_E18_Fungal_Infection | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×815) |
+| source_W18_Nitrogen_Deficiency | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×793) |
+| source_W18_Drought | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×793) |
+| source_E19_Fungal_Infection | metadata | categorical | *Not specified.* | n=987, missing=0, classes=5, top noTreatment (×661) |
+| source_E19_Drought | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×661) |
+| source_W19_Nitrogen_Deficiency | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×692) |
+| source_W19_Salt_Deposition | metadata | categorical | *Not specified.* | n=987, missing=0, classes=3, top noTreatment (×692) |
+| source_CO2_assimilation_rate | metadata | categorical | *Not specified.* | n=987, missing=0, classes=450, top noData (×538) |
+| source_Specific_leaf_area | metadata | categorical | *Not specified.* | n=987, missing=0, classes=340, top noData (×647) |
+| source_Leaf_water_content | metadata | categorical | *Not specified.* | n=987, missing=0, classes=341, top noData (×647) |
+| source_Nitrogen | metadata | categorical | *Not specified.* | n=987, missing=0, classes=130, top noData (×791) |
+| source_Sugars | metadata | categorical | *Not specified.* | n=987, missing=0, classes=197, top noData (×791) |
+| source_Gallic_acid | metadata | categorical | *Not specified.* | n=987, missing=0, classes=198, top noData (×790) |
 
 ## Statistics — splits
 
@@ -69,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -79,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Unique source identifier including experiment and date; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 14 fields, Y: 5 fields, measurements: 6 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 12 fields, Y: 5 fields, passport: 31 fields, measurements: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +118,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8aa3828226b9eb66b55ca20c50c1d2a110849921c55e25f836c8e07e3106e288`
-- **Processing hash:** `2daba47ec9f480d3e73e037f4d392fb24bed370f651ef2658b1c6a62658d96e4` | **metadata hash:** `d8300f0e82601460836f4adcfe47ca9a76271e9ae116f02b70b1eba273b3962f`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `3058cc9a4aeab89a9d917116d80e51d1a5bb90ff763a4add1c728af55157c751`
+- **Processing hash:** `edb63058634577023461a0bd75a1a85cebd0daa32d15505784fed2fe37ee596c` | **metadata hash:** `6167b12ee5c02f2b65ddea9cf397e4710b45e2ef986776c519155fd23850d716`

@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 15,
+      "in_one_source_only": 15,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 15
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -97,11 +106,9 @@
         "y_infestation_status"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:10.952997+00:00",
+  "generated_at": "2026-11-03T23:45:50.858109+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC0-1.0",
@@ -124,8 +131,8 @@
   "integrity": {
     "content_hash": "94b77af45aa8391a4a9983a328d9bb830ccf07b803a0c5373738efeb400bbbcb",
     "manifest": "manifest.json",
-    "metadata_hash": "efca2b99dab0c862df300629b9940c05a80d565686eff24af6e75c1beefdb355",
-    "processing_hash": "7510048caadad9117bac0681ca8877115e3d19379a20398296d15dfa014e1b31"
+    "metadata_hash": "873a8fe81a2a5d7edab0ac52fe58cf5effea14de4d13949e1cc69308d32e4b6c",
+    "processing_hash": "204c1fcbbea1a1aa6145b889e8dae86a8db14bbb583407543c16c388f7e38333"
   },
   "protocol_version": "7",
   "provenance": {
@@ -150,7 +157,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: Original sample identifier retained under a prefixed/equivalent name"
     ]
   },
@@ -1173,15 +1179,33 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9975214499196982,
+          "effective_rank": 3.07,
+          "n_components_95": 5,
+          "n_components_99": 8
         },
         "mean_max": 4.0978186617294945,
         "mean_min": -2.0633655567963918,
         "n_outliers": 4,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.6771772218607839,
+            0.1655250444771337,
+            0.065599038563207,
+            0.030307371596179376,
+            0.024904068016427337,
+            0.01105204810175392,
+            0.008653737656316295,
+            0.00789425192381922,
+            0.005014952014148893,
+            0.001393715709928532,
+            0.001027832899449823,
+            0.0008630369024855107,
+            0.0005876802783662714,
+            1.716197722625018e-32
+          ],
+          "n_components": 14
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 196.2661625277081,
@@ -1502,8 +1526,8 @@
             "noise_rms": 0.00020316671713054566,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -1919,15 +1943,111 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9333333333333333,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.06666666666666667,
+        "n_classes": 15,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_id",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 15,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_id",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_id",
+        "present": 15,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 15,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 15,
+        "n_classes": 15,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Infested L1-R1"
+          },
+          {
+            "count": 1,
+            "name": "Infested L1-R2"
+          },
+          {
+            "count": 1,
+            "name": "Infested L1-R3"
+          },
+          {
+            "count": 1,
+            "name": "Infested L1-R4"
+          },
+          {
+            "count": 1,
+            "name": "Infested L1-R5"
+          },
+          {
+            "count": 1,
+            "name": "Infested L2-R1"
+          },
+          {
+            "count": 1,
+            "name": "Infested L2-R2"
+          },
+          {
+            "count": 1,
+            "name": "Infested L2-R3"
+          },
+          {
+            "count": 1,
+            "name": "Infested L2-R4"
+          },
+          {
+            "count": 1,
+            "name": "Infested L2-R5"
+          },
+          {
+            "count": 1,
+            "name": "Uninfested L1-R1"
+          },
+          {
+            "count": 1,
+            "name": "Uninfested L1-R2"
+          },
+          {
+            "count": 1,
+            "name": "Uninfested L1-R3"
+          },
+          {
+            "count": 1,
+            "name": "Uninfested L1-R4"
+          },
+          {
+            "count": 1,
+            "name": "Uninfested L1-R5"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
     "conversion: variables: dropped duplicate columns ['infestation_status'] (kept the first source's values)."
   ]
 }

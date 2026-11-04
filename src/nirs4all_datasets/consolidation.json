@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "scope": "One catalog dataset per origin record: its samples with all their variables, and every spectral block that shares those samples. Upstream per-target and per-instrument leaves are composed here; records published separately are never joined.",
+  "databases": {
+    "ecosis_seasonal_canopy_spectra_and_traits_blackhawk_island_wi_reflectance_nirs": {
+      "name": "EcoSIS seasonal canopy spectra and traits, Blackhawk Island, WI",
+      "blocks": {"X": {"members": ["canopy_lignin_seasonal_blackhawk_ecosis", "canopy_lma_g_m2_seasonal_blackhawk_ecosis", "canopy_nitrogen_seasonal_blackhawk_ecosis"]}}
+    },
+    "ecosis_ngee_arctic_2017_canopy_spectral_reflectance_seward_pen_reflectance_nirs": {
+      "blocks": {"X": {"members": ["ecosis_ngee_arctic_2017_canopy_spectral_reflectance_seward_pen_reflectance_nirs", "canopy_lma_2017_2017_reflectance_ngee_ecosis", "canopy_lwc_2017_2017_reflectance_ngee_ecosis", "canopy_narea_2017_2017_reflectance_ngee_ecosis"]}}
+    },
+    "ecosis_leaf_optical_properties_experiment_database_lopex93_reflectance_nirs": {
+      "name": "EcoSIS Leaf Optical Properties Experiment database (LOPEX93)",
+      "blocks": {"X": {"members": ["leaf_equivalent_water_thickness_g_cm2_reflectance_refl_optical_ecosis", "leaf_leaf_mass_per_area_g_cm2_reflectance_refl_optical_ecosis", "leaf_nitrogen_pct_dw_reflectance_refl_optical_ecosis"]}}
+    },
+    "ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs": {
+      "blocks": {"X": {"members": ["ecosis_leaf_spectra_of_4_plant_species_from_belgian_dune_grass_reflectance_nirs", "leaf_ewt_mg_cm2_of_4_ecosis", "leaf_ldmc_mg_mg_of_4_ecosis", "leaf_lma_mg_cm2_of_4_ecosis"]}},
+      "renames": {"leaf_ewt_mg_cm2_of_4_ecosis": {"EWT_mg_cm2": "EWT__mg/cm2"}, "leaf_ldmc_mg_mg_of_4_ecosis": {"LDMC_mg_mg": "LDMC__mg/mg"}, "leaf_lma_mg_cm2_of_4_ecosis": {"LMA_mg_cm2": "LMA__mg/cm2"}}
+    },
+    "ecosis_uw_bnl_nasa_hyspiri_airborne_campaign_leaf_and_canopy_s_reflectance_nirs": {
+      "blocks": {"X": {"members": ["ecosis_uw_bnl_nasa_hyspiri_airborne_campaign_leaf_and_canopy_s_reflectance_nirs", "leaf_lma_gdw_cm2_uw_bnl_ecosis", "leaf_n_mass_g_g_uw_bnl_ecosis", "leaf_sla_cm2_g_dw_uw_bnl_ecosis"]}},
+      "sample_columns": {"ecosis_uw_bnl_nasa_hyspiri_airborne_campaign_leaf_and_canopy_s_reflectance_nirs": "source_Unique_Sample_ID"}
+    },
+    "ecosis_hyperspectral_leaf_reflectance_biochemistry_and_physiol_leaf_spectra_reflectance_nirs": {
+      "name": "EcoSIS hyperspectral leaf reflectance, biochemistry and physiology of droughted and watered crops (leaf spectra)",
+      "blocks": {"X": {"members": ["leaf_lma_hyperspectral_reflectance_ecosis", "leaf_protein_hyperspectral_reflectance_ecosis", "leaf_starch_hyperspectral_reflectance_ecosis"]}}
+    },
+    "ecosis_fresh_leaf_spectra_and_measured_traits_from_the_sierra_reflectance_nirs": {
+      "blocks": {"X": {"members": ["ecosis_fresh_leaf_spectra_and_measured_traits_from_the_sierra_reflectance_nirs", "leaf_chlorophyll_mg_m2_2023_fresh_sierra_ecosis", "leaf_lma_value_g_m2_2023_fresh_sierra_ecosis"]}},
+      "renames": {"leaf_chlorophyll_mg_m2_2023_fresh_sierra_ecosis": {"chlorophyll_mg_m2": "chlorophyll__mg/m2"}, "leaf_lma_value_g_m2_2023_fresh_sierra_ecosis": {"LMA_value_g_m2": "LMA_value_g/m2"}}
+    },
+    "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs": {
+      "blocks": {"X": {"members": ["ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs", "leaf_narea_g_m2_2016_2016_ngee_tropics_ecosis"]}}
+    },
+    "ecosis_potato_virus_y_detection_in_solanum_tuberosum_greenhouse_reflectance_nirs": {
+      "name": "EcoSIS Potato Virus Y detection in Solanum tuberosum, greenhouse plant-level means",
+      "blocks": {"X": {"mode": "stack", "members": ["leaf_pvy_strain_time1_potato_virus_ecosis", "leaf_pvy_strain_time2_potato_virus_ecosis", "leaf_pvy_strain_time4_potato_virus_ecosis"]}},
+      "label": {"column": "measurement_time", "values": {"leaf_pvy_strain_time1_potato_virus_ecosis": "time1", "leaf_pvy_strain_time2_potato_virus_ecosis": "time2", "leaf_pvy_strain_time4_potato_virus_ecosis": "time4"}}
+    },
+    "harvard_dataverse_malaria_anopheles_gambiae_nir": {
+      "name": "Harvard Dataverse NIR spectra of Plasmodium falciparum infected Anopheles gambiae",
+      "blocks": {"X": {"mode": "stack", "members": ["malaria_anopheles_gambiae_oocyst_nir", "malaria_anopheles_gambiae_sporozoite_nir"]}},
+      "label": {"column": "infection_stage", "values": {"malaria_anopheles_gambiae_oocyst_nir": "oocyst", "malaria_anopheles_gambiae_sporozoite_nir": "sporozoite"}},
+      "renames": {"malaria_anopheles_gambiae_oocyst_nir": {"x": "parasite_load"}, "malaria_anopheles_gambiae_sporozoite_nir": {"x": "parasite_load"}}
+    },
+    "figshare_uva_illicit_drugs_avg_nir": {
+      "name": "Figshare UvA illicit drugs NIR, five instruments, sample-averaged",
+      "blocks": {
+        "X_asd": {"members": ["figshare_uva_illicit_drugs_asd_avg_nir"]},
+        "X_micronir": {"members": ["figshare_uva_illicit_drugs_micronir_avg_nir"]},
+        "X_neospectra": {"members": ["figshare_uva_illicit_drugs_neospectra_avg_nir"]},
+        "X_nirone": {"members": ["figshare_uva_illicit_drugs_nirone_avg_nir"]},
+        "X_scio": {"members": ["figshare_uva_illicit_drugs_scio_avg_nir"]}
+      }
+    },
+    "recherche_data_gouv_grapevine_leaf_wvapol": {
+      "name": "Recherche Data Gouv grapevine leaf traits, ASD, MicroNIR and NeoSpectra",
+      "blocks": {
+        "X_asd": {"members": ["recherche_data_gouv_grapevine_leaf_asd_wvapol"]},
+        "X_micronir": {"members": ["recherche_data_gouv_grapevine_leaf_micronir_wvapol"]},
+        "X_neospectra": {"members": ["recherche_data_gouv_grapevine_leaf_neospectra_wvapol"]}
+      }
+    },
+    "github_grapevine_chloride_nir": {
+      "name": "GitHub grapevine leaf chloride, NIR-S-G1 and SVC HR-1024i",
+      "blocks": {
+        "X_nirs_g1": {"members": ["github_grapevine_chloride_nirsg1_nir"]},
+        "X_svc_hr1024i": {"members": ["github_grapevine_chloride_svc_hr1024i_visnir"]}
+      }
+    },
+    "zenodo_twinspectra_rdf_nir": {
+      "name": "Zenodo TwinSpectra soil NIR, ASD FieldSpec and MicroNIR",
+      "blocks": {
+        "X_fieldspec": {"members": ["zenodo_twinspectra_fieldspec_rdf_nir"]},
+        "X_micronir": {"members": ["zenodo_twinspectra_micronir_rdf_nir"]}
+      }
+    },
+    "ecosis_cabo_2018_2019_leaf_level_spectra_v2_nirs": {
+      "name": "EcoSIS CABO 2018-2019 leaf-level spectra v2, reflectance and transmittance",
+      "blocks": {
+        "X_reflectance": {"members": ["ecosis_cabo_2018_2019_leaf_level_spectra_v2_absorbance_nirs"], "signal_type": "reflectance"},
+        "X_transmittance": {"members": ["ecosis_cabo_2018_2019_leaf_level_spectra_v2_transmittance_nirs"], "signal_type": "transmittance"}
+      }
+    },
+    "cirad_madagascar_organic_resources_asd_visnir": {
+      "name": "CIRAD Madagascar organic resources ASD vis-NIR, native and XDS-standardized",
+      "blocks": {
+        "X_native": {"members": ["cirad_madagascar_organic_resources_asd_nonstd_visnir"]},
+        "X_xds_standardized": {"members": ["cirad_madagascar_organic_resources_asd_std_xds_visnir"]}
+      }
+    },
+    "ossl_afsis2_soil_all_y": {
+      "name": "OSSL AfSIS-II soil vis-NIR and MIR",
+      "blocks": {"X_visnir": {"members": ["ossl_afsis2_visnir_soil_all_y"]}, "X_mir": {"members": ["ossl_afsis2_mir_soil_all_y"]}}
+    },
+    "ossl_jovic_soil_all_y": {
+      "name": "OSSL Jovic soil vis-NIR and MIR",
+      "blocks": {"X_visnir": {"members": ["ossl_jovic_visnir_soil_all_y"]}, "X_mir": {"members": ["ossl_jovic_mir_soil_all_y"]}}
+    },
+    "ossl_lucas_soil_all_y": {
+      "name": "OSSL LUCAS soil vis-NIR and MIR",
+      "blocks": {"X_visnir": {"members": ["ossl_lucas_visnir_soil_all_y"]}, "X_mir": {"members": ["ossl_lucas_mir_soil_all_y"]}}
+    },
+    "ossl_lucas_woodwell_soil_all_y": {
+      "name": "OSSL LUCAS Woodwell soil vis-NIR and MIR",
+      "blocks": {"X_visnir": {"members": ["ossl_lucas_woodwell_visnir_soil_all_y"]}, "X_mir": {"members": ["ossl_lucas_woodwell_mir_soil_all_y"]}}
+    },
+    "ossl_neospectra_soil_all_y": {
+      "name": "OSSL NeoSpectra soil NIR and MIR",
+      "blocks": {"X_nir": {"members": ["ossl_neospectra_nir_soil_all_y"]}, "X_mir": {"members": ["ossl_neospectra_mir_soil_all_y"]}}
+    }
+  },
+  "superseded": {
+    "barley_moisture_perten": "perten_cereals_nir",
+    "barley_protein_perten": "perten_cereals_nir",
+    "corn_moisture_perten": "perten_cereals_nir",
+    "corn_protein_perten": "perten_cereals_nir",
+    "wheat_moisture_perten": "perten_cereals_nir",
+    "wheat_protein_perten": "perten_cereals_nir",
+    "cereals_all_moisture_perten": "perten_cereals_nir",
+    "cereals_all_protein_perten": "perten_cereals_nir",
+    "drug_common_application_flanagan_raman": "flanagan_api_compounds_raman",
+    "drug_compound_flanagan_raman": "flanagan_api_compounds_raman",
+    "drug_solvent_reagent_flanagan_raman": "flanagan_api_compounds_raman",
+    "leaf_initial_of_boreal_ecosis": "ecosis_leaf_spectra_of_boreal_tree_species_from_alberta_potted_reflectance_nirs",
+    "leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis": "ecosis_purdue_leaf_spectral_functional_traits_plsr_v2_reflectance_nirs",
+    "ecosis_cabo_2018_2019_leaf_level_spectra_absorbance_nirs": "ecosis_cabo_2018_2019_leaf_level_spectra_v2_nirs",
+    "ecosis_cabo_2018_2019_leaf_level_spectra_transmittance_nirs": "ecosis_cabo_2018_2019_leaf_level_spectra_v2_nirs",
+    "ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs": "ecosis_fresh_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs",
+    "ecosis_ground_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs": "ecosis_ground_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs",
+    "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_reflectance_nirs": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs",
+    "manure21_nir_all_y": "recherche_data_gouv_raw_manure_nir_e1ji8u",
+    "ecostress_soil_tir_2124points": "ecostress_lunar_tir_2124points"
+  }
+}
