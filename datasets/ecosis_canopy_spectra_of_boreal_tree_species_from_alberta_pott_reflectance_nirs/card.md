@@ -56,6 +56,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top explicit_open (×2550) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top public_reuse_possible (×2550) |
 | notes | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=1, top EcoSIS package canopy-spectra-of-boreal-tree-species-from-alberta-potted-tree-experiment, no interpolation applied by project. (×2550) |
+| source_ID | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=2550, top 20150624Ll1 (×1) |
+| source_Date | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=58, top 20150721 (×45) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=2550, missing=0, range 53.53–53.53, mean 53.53 ± 0 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=2550, missing=0, range -113.5–-113.5, mean -113.5 ± 2.843e-14 |
+| source_Initial | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=9, top Ll (×290) |
+| source_FullName | metadata | categorical | *Not specified.* | n=2550, missing=0, classes=9, top Larix laricina (×290) |
 
 ## Statistics — splits
 
@@ -66,7 +72,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 1 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 33 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +104,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `10871ba4c1610db0dfd0a96a7f1783011fe1adca88b5614e2bc05d33a8365c00`
-- **Processing hash:** `00037acbae6dffc9904e9415159c66d4cbb3a959655cd916abfb51684f77a9e0` | **metadata hash:** `f39151bef118e6744708aabc88aa13769c10914a317ba6ff392a2eb12e7eb675`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `9ff0de5fad70596d7ffba5ae5a768dcd85fb3713e86a6dc7b9d0a020e5e4af37`
+- **Processing hash:** `e54574ea17fbf9a4efcccac8491a3a5af1c6c380375c209fe1a7767b925febe9` | **metadata hash:** `9572b93deb8f1c15e619685a8e64f9a3fddc53466b6c70191fe56bb52a77ef11`

@@ -58,6 +58,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top manual_review_needed (×8) |
 | usage_scope | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top private_use_only (×8) |
 | notes | metadata | categorical | *Not specified.* | n=8, missing=0, classes=4, top none (×5) |
+| source_name | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top Nepheline Syenite (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top rock (×8) |
+| source_class | metadata | categorical | *Not specified.* | n=8, missing=0, classes=2, top Sedimentary (×5) |
+| source_subclass | metadata | categorical | *Not specified.* | n=8, missing=0, classes=5, top Mafic (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=8, missing=0, classes=2, top Coarse (×5) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top Syenite_H2 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top JHU (×8) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top All (×8) |
+| source_origin | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top Blue Mountain, Methuen Twp., Ontario, via Ward's Scientific (Cat.No. W-17) (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top N/A (×8) |
+| source_description | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top A medium-grained leucocratic rock showing some foliation, consisting of plagioclase, nepheline and biotite. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.intermediate.solid.syenit2.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=8, missing=0, classes=2, top Directional (10 Degree) Hemispherical Reflectance (×5) |
+| source_first_column | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top X (×8) |
+| source_second_column | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top Y (×8) |
+| source_x_units | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top Wavelength (micrometers) (×8) |
+| source_y_units | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top Reflectance (percent) (×8) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=8, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=8, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=8, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=8, missing=0, classes=4, top none (×5) |
+| source_material_name | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top Nepheline Syenite (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=8, missing=0, classes=1, top rock (×8) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=8, missing=0, classes=8, top rock.igneous.intermediate.solid.all.syenite_h2.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -68,7 +91,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -79,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +123,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `e5fa8f9c0338fecb79f291fda493aaafa0347f752ef27edc1588cce5be056407`
-- **Processing hash:** `2a25af68f1667ef6e220a969ca4dfc2371ef24dd9d66ecb2731155abc1c77a39` | **metadata hash:** `5502bcea489c69465ffff0bc6d6c391129791bc14bb70b871253bfee063c21c7`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `968a8a794b5fb3401923b48812596aec72225773e90f039a2025605031ad841c`
+- **Processing hash:** `64538d2b94b1deaf348d751c8298bd890886f7f298240fec8e901dd9293292db` | **metadata hash:** `4ee9d3017fe546b685be384371be4265e44a5a4d6088631ad2085024ca3c7d03`

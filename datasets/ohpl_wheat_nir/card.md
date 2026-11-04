@@ -27,6 +27,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Name | Role | Type | Unit | Summary |
 | --- | --- | --- | --- | --- |
 | protein | target | numeric | *Not specified.* | n=100, missing=0, range 7.75–14.28, mean 11.41 ± 1.11 |
+| source_repository | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top nanxstats/OHPL (×100) |
+| source_local_bacon_reference | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top D:\R\R projects\DeLeTe_BACON (×100) |
 
 ## Statistics — splits
 
@@ -37,7 +39,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -47,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -67,6 +69,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `bde5d9f6d916fbe6333d947137bc0c3224006f336a545bb916f1172a215bcd31`
-- **Processing hash:** `6b0abe8a87198ac690ece75510806b91350649228b4b5eda86472f7f91f5119e` | **metadata hash:** `2181883a8e3fb4845adbad38535907e0000f1847b5d0a29e0b19e6bfd7803b4f`
+- **Processing hash:** `86276affcbb5e1fb5f978f29af75b3b9912af1e3f8b91d210decf065ba91e944` | **metadata hash:** `02e95463d7fd060b2641e1a0d72194c9483113e07160165959c32a00c81c74d6`

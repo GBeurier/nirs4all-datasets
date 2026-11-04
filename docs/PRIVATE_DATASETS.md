@@ -1,6 +1,6 @@
 # Private and anonymized datasets
 
-_162 datasets have a private or anonymized governance tier. This tier concerns the project's
+_146 datasets have a private or anonymized governance tier. This tier concerns the project's
 redistribution policy; it does not imply that the original source is inaccessible or requires a token._
 
 Retrieval status describes the catalogued route: `raw_reproducible` has a raw retrieval route;
@@ -9,12 +9,11 @@ needs a configured hosted DOI and token; `manual_only` requires manual retrieval
 its terms. A personal Dataverse DOI is separate from original-source retrieval; see
 [PUBLISHING.md](PUBLISHING.md) for the future publishing workflow.
 
-## Governance inventory (162)
+## Governance inventory (146)
 | id | name | tier | license | origin(s) | retrieval | samples | validation |
 |----|------|------|---------|-----------|-----------|--------:|------------|
 | `cgl_nir_grain_eigenvector` | CGL_NIR grain protein Eigenvector | private | LicenseRef-not-cleared | script, url | `manual_only` | 231 | ⏳ pending |
-| `cirad_madagascar_organic_resources_asd_nonstd_visnir` | CIRAD Madagascar organic resources ASD non-standardized VIS-NIR | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 1000 | ⏳ pending |
-| `cirad_madagascar_organic_resources_asd_std_xds_visnir` | CIRAD Madagascar organic resources ASD standardized on XDS VIS-NIR | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 1000 | ⏳ pending |
+| `cirad_madagascar_organic_resources_asd_visnir` | CIRAD Madagascar organic resources ASD vis-NIR, native and XDS-standardized | private | LicenseRef-not-cleared | dataverse | `raw_reproducible` | 1000 | ⏳ pending |
 | `corn_eigenvector_nir` | CORN Eigenvector NIR | private | LicenseRef-not-cleared | script, url | `manual_only` | 80 | ⏳ pending |
 | `diesel_fuels_nir_eigenvector` | Diesel fuels NIR Eigenvector | private | LicenseRef-not-cleared | script, url | `manual_only` | 784 | ⏳ pending |
 | `ecosis_2014_cedar_creek_esr_grassland_biodiversity_experiment_reflectance_nirs` | EcoSIS 2014 Cedar Creek ESR Grassland Biodiversity Experiment: Leaf-level Contact Data: Trait Predictions (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 831 | ⏳ pending |
@@ -27,12 +26,14 @@ its terms. A personal Dataverse DOI is separate from original-source retrieval; 
 | `ecosis_fine_scale_vnir_hyperspectral_canopy_reflectances_from_reflectance_nirs` | EcoSIS Fine-scale VNIR hyperspectral canopy reflectances from Virginia successional forests (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | — | ⏳ pending |
 | `ecosis_fresh_leaf_spectra_to_estimate_leaf_morphology_and_bioc_reflectance_nirs` | EcoSIS Fresh Leaf Spectra to Estimate Leaf Morphology and Biochemistry for Northern Temperate Forests (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 2363 | ⏳ pending |
 | `ecosis_fresh_leaf_vswir_spectra_leaf_traits_california_reflectance_nirs` | EcoSIS Fresh Leaf VSWIR Spectra to Estimate Leaf Traits for California Ecosystems (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 285 | ⏳ pending |
+| `ecosis_leaf_optical_properties_experiment_database_lopex93_reflectance_nirs` | EcoSIS Leaf Optical Properties Experiment database (LOPEX93) | private | LicenseRef-not-cleared | url | `blocked_parser` | 330 | ⏳ pending |
 | `ecosis_leaf_reflectance_and_traits_of_plants_sampled_along_a_w_reflectance_nirs` | EcoSIS Leaf reflectance and traits of plants sampled along a water affinity gradient (AQGRAD) (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 190 | ⏳ pending |
 | `ecosis_leaf_reflectance_and_tratis_of_floating_and_emergent_ma_reflectance_nirs` | EcoSIS Leaf reflectance and tratis of floating and emergent macrophytes (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 325 | ⏳ pending |
 | `ecosis_leaf_traits_compilation_reflectance_nirs` | EcoSIS Leaf Traits Compilation reflectance | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 47393 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_and_transmittance_reflectance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance and Transmittance Data 2014 to 2016 Utqiagvik (Barrow) Alaska (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 199 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_and_transmittance_transmittance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance and Transmittance Data 2014 to 2016 Utqiagvik (Barrow) Alaska (transmittance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 31 | ⏳ pending |
 | `ecosis_ngee_arctic_leaf_spectral_reflectance_utqiagvik_barrow_reflectance_nirs` | EcoSIS NGEE Arctic Leaf Spectral Reflectance Utqiagvik (Barrow) Alaska 2013 (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 69 | ⏳ pending |
+| `ecosis_potato_virus_y_detection_in_solanum_tuberosum_greenhouse_reflectance_nirs` | EcoSIS Potato Virus Y detection in Solanum tuberosum, greenhouse plant-level means | private | LicenseRef-not-cleared | url | `blocked_parser` | 80 | ⏳ pending |
 | `ecosis_purdue_leaf_spectral_functional_traits_plsr_v2_reflectance_nirs` | EcoSIS Purdue Leaf Spectral and Functional Trait Data used in PLSR modeling v2 (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 987 | ⏳ pending |
 | `ecosis_spectra_from_in_situ_deciduous_leaves_and_leaves_collec_reflectance_nirs` | EcoSIS Spectra from in situ deciduous leaves and leaves collected for nitrogen analysis throughout autumn (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | — | ⏳ pending |
 | `ecosis_spectral_characterization_of_multiple_corn_varieties_we_reflectance_nirs` | EcoSIS Spectral Characterization of Multiple Corn Varieties: West Madison Agricultural Station 2014 (reflectance) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 288 | ⏳ pending |
@@ -88,7 +89,6 @@ its terms. A personal Dataverse DOI is separate from original-source retrieval; 
 | `ecostress_soil_all_2868points_2rows` | ECOSTRESS soil all axis e7e7baa6 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 2 | ⏳ pending |
 | `ecostress_soil_all_2868points_4rows` | ECOSTRESS soil all axis be345a03 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 4 | ⏳ pending |
 | `ecostress_soil_all_2868points_6rows` | ECOSTRESS soil all axis d24e4e1f | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 6 | ⏳ pending |
-| `ecostress_soil_tir_2124points` | ECOSTRESS soil tir axis 69ac2056 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 17 | ⏳ pending |
 | `ecostress_soil_tir_2223points` | ECOSTRESS soil tir axis 2895e351 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 11 | ⏳ pending |
 | `ecostress_vegetation_all_550points` | ECOSTRESS vegetation all axis 6fbcd0b0 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 3 | ⏳ pending |
 | `ecostress_vegetation_tir_1736points` | ECOSTRESS vegetation tir axis d3f7b526 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 4 | ⏳ pending |
@@ -98,19 +98,10 @@ its terms. A personal Dataverse DOI is separate from original-source retrieval; 
 | `ecostress_vegetation_vswir_2151points_343rows` | ECOSTRESS vegetation vswir axis 4d4366d1 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 325 | ⏳ pending |
 | `ecostress_water_all_965points` | ECOSTRESS water all axis 21cbe3b0 | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 4 | ⏳ pending |
 | `flanagan_api_compounds_raman` | Flanagan API compounds Raman | private | LicenseRef-not-cleared | figshare, script, url | `raw_reproducible` | 32 | ⏳ pending |
-| `github_grapevine_chloride_nirsg1_nir` | GitHub grapevine chloride NIR-S-G1 NIR | private | LicenseRef-not-cleared | script | `token_required` | 259 | ⏳ pending |
-| `github_grapevine_chloride_svc_hr1024i_visnir` | GitHub grapevine chloride SVC HR-1024i VIS-NIR | private | LicenseRef-not-cleared | script | `token_required` | 556 | ⏳ pending |
+| `github_grapevine_chloride_nir` | GitHub grapevine leaf chloride, NIR-S-G1 and SVC HR-1024i | private | LicenseRef-not-cleared | — | `token_required` | 556 | ⏳ pending |
 | `github_streptanthus_leaf_reflectance_visnir` | GitHub spectral-network Streptanthus leaf reflectance VIS-NIR | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 51 | ⏳ pending |
 | `grapevine_leaftraits_multisensor_nir` | Grapevine LeafTraits multisensor NIR | private | LicenseRef-not-cleared | script | `token_required` | 2079 | ⏳ pending |
-| `leaf_equivalent_water_thickness_g_cm2_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Equivalent_Water_Thickness_g_cm2) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 330 | ⏳ pending |
-| `leaf_leaf_mass_per_area_g_cm2_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Leaf_mass_per_area_g_cm2) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 330 | ⏳ pending |
-| `leaf_nitrogen_pct_dw_reflectance_refl_optical_ecosis` | EcoSIS Leaf Optical Properties Experiment Database (LOPEX93) (Nitrogen_pct_DW) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 330 | ⏳ pending |
-| `leaf_pvy_strain_time1_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 80 | ⏳ pending |
-| `leaf_pvy_strain_time2_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 80 | ⏳ pending |
-| `leaf_pvy_strain_time4_potato_virus_ecosis` | EcoSIS Potato Virus Y Detection in Solanum tuberosum: Greenhouse Data (PVY_Strain) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 80 | ⏳ pending |
 | `leaf_sample_category_fresh_dry_ecosis` | EcoSIS Fresh and Dry Spectra of Several Plant Tissues and Chemical and Phenological Constituents (Sample_category) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 74 | ⏳ pending |
-| `leaf_w18_nitrogen_deficiency_2018_2019_purdue_functional_ecosis` | EcoSIS Purdue Leaf Spectral and Functional Trait Data used in PLSR modeling (W18_Nitrogen_Deficiency) | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 987 | ⏳ pending |
-| `manure21_nir_all_y` | MANURE21 NIR all chemistry targets | private | LicenseRef-not-cleared | script | `token_required` | 490 | ⏳ pending |
 | `nirpy_abs_plastic_frc_nir` | Nirpy Research ABS plastic FRC NIR | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 500 | ⏳ pending |
 | `nirpy_avocado_whittaker_nir` | Nirpy Research avocado Whittaker smoothing NIR | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 100 | ⏳ pending |
 | `nirpy_black_foam_entropy_nir` | Nirpy Research black foam entropy smoothing NIR | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 500 | ⏳ pending |
@@ -129,20 +120,15 @@ its terms. A personal Dataverse DOI is separate from original-source retrieval; 
 | `openspecy_ftir` | OpenSpecy FTIR spectral library subset | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | — | ⏳ pending |
 | `openspecy_raman` | OpenSpecy RAMAN spectral library subset | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | — | ⏳ pending |
 | `ossl_afsis1_visnir_soil_all_y` | ossl afsis1 visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 1904 | ⏳ pending |
-| `ossl_afsis2_mir_soil_all_y` | ossl afsis2 mir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 151 | ⏳ pending |
-| `ossl_afsis2_visnir_soil_all_y` | ossl afsis2 visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 151 | ⏳ pending |
+| `ossl_afsis2_soil_all_y` | OSSL AfSIS-II soil vis-NIR and MIR | private | LicenseRef-not-cleared | url | `raw_reproducible` | 151 | ⏳ pending |
 | `ossl_cassl_visnir_soil_all_y` | ossl cassl visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 1578 | ⏳ pending |
 | `ossl_garrett_visnir_soil_all_y` | ossl garrett visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 184 | ⏳ pending |
 | `ossl_icraf_visnir_soil_all_y` | ossl icraf visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 3776 | ⏳ pending |
-| `ossl_jovic_mir_soil_all_y` | ossl jovic mir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 45 | ⏳ pending |
-| `ossl_jovic_visnir_soil_all_y` | ossl jovic visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 135 | ⏳ pending |
+| `ossl_jovic_soil_all_y` | OSSL Jovic soil vis-NIR and MIR | private | LicenseRef-not-cleared | url | `raw_reproducible` | 135 | ⏳ pending |
 | `ossl_kellogg_visnir_soil_all_y` | ossl kellogg visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 85669 | ⏳ pending |
-| `ossl_lucas_mir_soil_all_y` | ossl lucas mir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 40175 | ⏳ pending |
-| `ossl_lucas_visnir_soil_all_y` | ossl lucas visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 40175 | ⏳ pending |
-| `ossl_lucas_woodwell_mir_soil_all_y` | ossl lucas woodwell mir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 589 | ⏳ pending |
-| `ossl_lucas_woodwell_visnir_soil_all_y` | ossl lucas woodwell visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 589 | ⏳ pending |
-| `ossl_neospectra_mir_soil_all_y` | ossl neospectra mir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 1976 | ⏳ pending |
-| `ossl_neospectra_nir_soil_all_y` | ossl neospectra nir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 2106 | ⏳ pending |
+| `ossl_lucas_soil_all_y` | OSSL LUCAS soil vis-NIR and MIR | private | LicenseRef-not-cleared | url | `raw_reproducible` | 40175 | ⏳ pending |
+| `ossl_lucas_woodwell_soil_all_y` | OSSL LUCAS Woodwell soil vis-NIR and MIR | private | LicenseRef-not-cleared | url | `raw_reproducible` | 589 | ⏳ pending |
+| `ossl_neospectra_soil_all_y` | OSSL NeoSpectra soil NIR and MIR | private | LicenseRef-not-cleared | url | `raw_reproducible` | 2106 | ⏳ pending |
 | `ossl_schiedung_visnir_soil_all_y` | ossl schiedung visnir soil all y | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | 259 | ⏳ pending |
 | `perten_cereals_nir` | Perten cereals NIR | private | LicenseRef-not-cleared | script, zenodo | `missing_delegate` | 450 | ⏳ pending |
 | `pharmaceutical_tablets_nir_shootout_eigenvector` | Pharmaceutical tablets NIR Shootout Eigenvector | private | LicenseRef-not-cleared | script, url | `manual_only` | 655 | ⏳ pending |
@@ -150,10 +136,8 @@ its terms. A personal Dataverse DOI is separate from original-source retrieval; 
 | `plastic_polymer_name_grouped_flopp_ftir` | FLOPP FTIR polymer classification | private | LicenseRef-not-cleared | figshare, script, url | `raw_reproducible` | 186 | ⏳ pending |
 | `pnnl_quant_ir` | PNNL/NIST Quantitative Infrared Database private-use subset | private | LicenseRef-not-cleared | script, url | `raw_reproducible` | — | ⏳ pending |
 | `recherche_data_gouv_fresh_dried_manure_nir_jigo8r` | Recherche Data Gouv fresh dried poultry cattle manure NIR | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 332 | ⏳ pending |
-| `recherche_data_gouv_grapevine_leaf_asd_wvapol` | Recherche Data Gouv grapevine leaf ASD | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 2394 | ⏳ pending |
-| `recherche_data_gouv_grapevine_leaf_micronir_wvapol` | Recherche Data Gouv grapevine leaf MicroNIR | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 2408 | ⏳ pending |
-| `recherche_data_gouv_grapevine_leaf_neospectra_wvapol` | Recherche Data Gouv grapevine leaf NeoSpectra | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 2116 | ⏳ pending |
-| `recherche_data_gouv_oilseed_rape_tissue_ftnir_6vyuqn` | Recherche Data Gouv oilseed rape tissue FT-NIR nitrogen carbon | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 2427 | ⏳ pending |
+| `recherche_data_gouv_grapevine_leaf_wvapol` | Recherche Data Gouv grapevine leaf traits, ASD, MicroNIR and NeoSpectra | private | LicenseRef-not-cleared | dataverse | `raw_reproducible` | 2427 | ⏳ pending |
+| `recherche_data_gouv_oilseed_rape_tissue_ftnir_6vyuqn` | Recherche Data Gouv oilseed rape tissue FT-NIR nitrogen carbon | private | LicenseRef-not-cleared | dataverse, script | `missing_delegate` | 2427 | ⏳ pending |
 | `recherche_data_gouv_raw_manure_nir_e1ji8u` | Recherche Data Gouv raw cattle poultry pig manure NIR | private | LicenseRef-not-cleared | dataverse, script, url | `missing_delegate` | 490 | ⏳ pending |
 | `rruff_ir` | RRUFF IR mineral spectral library common-axis subset | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 347 | ⏳ pending |
 | `rruff_raman` | RRUFF RAMAN mineral spectral library common-axis subset | private | LicenseRef-not-cleared | script, url | `missing_delegate` | 12 | ⏳ pending |

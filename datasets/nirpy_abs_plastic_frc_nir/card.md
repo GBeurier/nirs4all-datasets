@@ -42,6 +42,9 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | spectral_signal | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top raw_numeric_signal_from_source (×500) |
 | target_status | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top no_sample_level_target_in_source (×500) |
 | notes | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top Source stores wavelength rows and scan columns. Converted by transposing to one scan per observation, no smoothing or resampling applied. (×500) |
+| source_column_id | metadata | categorical | *Not specified.* | n=500, missing=0, classes=500, top 0 (×1) |
+| source_use_case | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top Fourier ring correlation smoothing tutorial (×500) |
+| source_context | metadata | categorical | *Not specified.* | n=500, missing=0, classes=1, top 500 noisy NIR spectra of ABS plastic, stored as spectra in columns and wavelength rows. (×500) |
 
 ## Statistics — splits
 
@@ -64,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,6 +87,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `60151bb4aef673a0a594acb3dc572a05c8fd780a730353a92038eeffa6f56135`
-- **Processing hash:** `10d75ca416106a12bb0b3e2d3c831558ee60ef4329249ab46bd9b1acdbb0c8a3` | **metadata hash:** `87624c432c38904b8ea5295b5af057f81cc847052f871b614cba47f7d0aaa3b8`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `0798ff0b7620b61af90b0d471586f6babb42a4d981e5a17a65aad88c61942a68`
+- **Processing hash:** `f266f76d5b6ad38653f140b05793075ad6de76638bd23702351a79061920d32c` | **metadata hash:** `50c46caa3e5ee0a85a21dfd70a6dfde03fba4b04b9d3d46b850602ad3f4d7b48`

@@ -57,6 +57,72 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top explicit_restricted (×2850) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top private_use_only (×2850) |
 | notes | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top EcoSIS package fine-scale-vnir-hyperspectral-canopy-reflectances-from-virginia-successional-forests, no interpolation applied by project. (×2850) |
+| source_Primary | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=9, top Rh_da (×645) |
+| source_Field | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=3, top EM (×1140) |
+| source_Acquisition_Method | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Pixel (×2850) |
+| source_Sample_Platform | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top UAV (×2850) |
+| source_Measurement_Venue | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top outdoor (×2850) |
+| source_Target_Type | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Canopy (×2850) |
+| source_Measurement_Quantity | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Reflectance (×2850) |
+| source_Measurement_Units | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top % (×2850) |
+| source_Wavelength_Units | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top nm (×2850) |
+| source_Target_Status | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Live (×2850) |
+| source_Light_Source | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Sun (×2850) |
+| source_Foreoptic_Type | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Foreoptic (×2850) |
+| source_Foreoptic_Field_of_View | metadata | numeric | *Not specified.* | n=2850, missing=0, range 11.5–11.5, mean 11.5 ± 0 |
+| source_Processing_Averaged | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Processing_Interpolated | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Processing_Resampled | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Headwall Photonics (×2850) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Nano-hyperspec (×2850) |
+| source_Theme | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Ecology, Phenology (×2850) |
+| source_Ecosystem_Type | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Forest (×2850) |
+| source_Latitude | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 39°03'52.2" N (×2850) |
+| source_Longitude | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 78°03'28.9" W (×2850) |
+| source_geojson | metadata | categorical | *Not specified.* | n=2850, missing=2850, classes=0, — |
+| source_Location_Name | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Blandy Experimental Farm (×2850) |
+| source_Sample_Collection_Date | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 2020 (×2850) |
+| source_Common_Name | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top autumn olive, dahurian buckthorn, bush honeysuckle, tree of heaven, honey locust, osage orange, black walnut, eastern red cedar (×2850) |
+| source_Latin_Genus | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Elaeagnus, Rhamnus, Lonicera, Ailanthus, Gleditsia, Maclura, Juglans, Juniperus (×2850) |
+| source_Latin_Species | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top umbellata, davurica, maackii, altissima, triacanthos, pomifera, nigra, virginiana (×2850) |
+| source_USDA_Symbol | metadata | categorical | *Not specified.* | n=2850, missing=2850, classes=0, — |
+| source_Vegetation_Type | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top tree, shrub, evergreen, deciduous (×2850) |
+| source_Author | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Kelsey Huelsman (×2850) |
+| source_Author_Email | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top ksh5s@virginia.edu (×2850) |
+| source_Maintainer | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Kelsey Huelsman (×2850) |
+| source_Maintainer_Email | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top ksh5s@virginia.edu (×2850) |
+| source_Acquisition_Method_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Pixel (×2850) |
+| source_Sample_Platform_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top UAV (×2850) |
+| source_Measurement_Venue_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top outdoor (×2850) |
+| source_Target_Type_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Canopy (×2850) |
+| source_Measurement_Quantity_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Reflectance (×2850) |
+| source_Measurement_Units_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top % (×2850) |
+| source_Wavelength_Units_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top nm (×2850) |
+| source_Target_Status_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Live (×2850) |
+| source_Light_Source_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Sun (×2850) |
+| source_Foreoptic_Type_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Foreoptic (×2850) |
+| source_Foreoptic_Field_of_View_aux | metadata | numeric | *Not specified.* | n=2850, missing=0, range 11.5–11.5, mean 11.5 ± 0 |
+| source_Processing_Averaged_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Processing_Interpolated_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Processing_Resampled_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top No (×2850) |
+| source_Instrument_Manufacturer_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Headwall Photonics (×2850) |
+| source_Instrument_Model_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Nano-hyperspec (×2850) |
+| source_Theme_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Ecology, Phenology (×2850) |
+| source_Ecosystem_Type_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Forest (×2850) |
+| source_Latitude_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 39°03'52.2" N (×2850) |
+| source_Longitude_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 78°03'28.9" W (×2850) |
+| source_geojson_aux | metadata | categorical | *Not specified.* | n=2850, missing=2850, classes=0, — |
+| source_Location_Name_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Blandy Experimental Farm (×2850) |
+| source_Sample_Collection_Date_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top 2020 (×2850) |
+| source_Common_Name_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top autumn olive, dahurian buckthorn, bush honeysuckle, tree of heaven, honey locust, osage orange, black walnut, eastern red cedar (×2850) |
+| source_Latin_Genus_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Elaeagnus, Rhamnus, Lonicera, Ailanthus, Gleditsia, Maclura, Juglans, Juniperus (×2850) |
+| source_Latin_Species_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top umbellata, davurica, maackii, altissima, triacanthos, pomifera, nigra, virginiana (×2850) |
+| source_USDA_Symbol_aux | metadata | categorical | *Not specified.* | n=2850, missing=2850, classes=0, — |
+| source_Vegetation_Type_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top tree, shrub, evergreen, deciduous (×2850) |
+| source_Author_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Kelsey Huelsman (×2850) |
+| source_Author_Email_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top ksh5s@virginia.edu (×2850) |
+| source_Maintainer_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top Kelsey Huelsman (×2850) |
+| source_Maintainer_Email_aux | metadata | categorical | *Not specified.* | n=2850, missing=0, classes=1, top ksh5s@virginia.edu (×2850) |
 
 ## Statistics — splits
 
@@ -67,7 +133,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +143,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 60 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, passport: 60 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +163,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `cc97f55465dbfa40600e868768d490252f506e0fd577ff865f5269ee3749b42e`
-- **Processing hash:** `2a3f3e0fb899317df6b38e4edb5feb49e796de1d6f0aa8aa1cb782544722c121` | **metadata hash:** `3762e6e9fa1a682d1ec405d517ee5acd034d921c29dace6cbc67879d9883d56a`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `cac2e66467d0995de21b30379aa4eff418d65df27bd5ede488b77146196399e1`
+- **Processing hash:** `b35e16dc71283c5e2bcca939131c1d660833c68e9a373161357db3c7094df18c` | **metadata hash:** `3a59c7d3fe3d56969a6b9aaf5479481ec06aaf8929fd018bb5603284efbb85b9`

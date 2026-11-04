@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 120,
+      "in_one_source_only": 120,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 120
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -139,7 +148,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:11.524059+00:00",
+  "generated_at": "2026-11-03T23:31:25.591058+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -162,13 +171,13 @@
   "integrity": {
     "content_hash": "9fb22d02c9792b18289a035afda00c54ee514d00378309dd890db9b127062dd6",
     "manifest": "manifest.json",
-    "metadata_hash": "c22fb219b3506e168ab2e1db5fc3904ce682249f3a28e0a10616890f79249c9c",
-    "processing_hash": "a6d8f1c7be0d560910e0d3d1eb16f277708ff60bc5759d4215c386c70ece8f18"
+    "metadata_hash": "1b7a76735da3e06b8b77f69e6ef53f28137c7be4f97589851167fbe3cd72505b",
+    "processing_hash": "ec9d93ad27880342f0a97472988ada2810ec5981f44df84299d239dbcc114fff"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "timeseries_classif_nirs_database",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1217,15 +1226,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9839675674529732,
+          "effective_rank": 2.34,
+          "n_components_95": 3,
+          "n_components_99": 15
         },
         "mean_max": 3.3513640642166136,
         "mean_min": -1.4660349001487096,
         "n_outliers": 46,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.7781447149603604,
+            0.135206020219371,
+            0.038196367932444485,
+            0.013098337527147732,
+            0.005065961727556207,
+            0.0038338857960471717,
+            0.0033171277070262583,
+            0.0028464825777970125,
+            0.002312571171544867,
+            0.0019460978336781013,
+            0.0017666693538941143,
+            0.0013749407605037768,
+            0.0012867504708124603,
+            0.0011879594294280065,
+            0.0009088459279066761,
+            0.0008873703757281114,
+            0.0007331640803946172,
+            0.0007038016463645698,
+            0.0005602245463122928,
+            0.0005167074265473984,
+            0.0004851593493350969,
+            0.0004043282613241927,
+            0.000338791119927649,
+            0.0003137630373340307,
+            0.000279901965301876,
+            0.00026279277943634763,
+            0.00025846131324127204,
+            0.00024208939763937221,
+            0.00020735174281900806,
+            0.00020515803215823063
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 1.4978827154424579,
@@ -1526,8 +1569,8 @@
             "noise_rms": 0.0014823837733064366,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -3393,10 +3436,52 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_zip",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_zip",
+        "numeric_sentinels": [],
+        "original_name": "source_zip",
+        "present": 120,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 120,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 120,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 120,
+            "name": "https://www.timeseriesclassification.com/aeon-toolkit/Meat.zip"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

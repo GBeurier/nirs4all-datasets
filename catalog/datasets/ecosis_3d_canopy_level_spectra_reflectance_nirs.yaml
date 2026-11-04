@@ -113,6 +113,12 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_plot_id
+  role: metadata
+  type: categorical
+- name: source_year
+  role: metadata
+  type: numeric
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -121,16 +127,18 @@ alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: 3D LMA Canopy Level Spectra
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
-  conversion_status: partial
+  ingest_reader_version: 0.3.17+curation.1
+  conversion_status: ok
   warnings:
-  - "Curation identity contract: Source plot × year; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream."
+  - 'Curation identity contract: Source plot × year; grouped by the source column
+    retained in M. Exported multiplicity does not prove the number of scans averaged
+    upstream.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: 3D LMA Canopy Level Spectra
@@ -180,5 +188,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/ecosis_3d_canopy_level_spectra_reflectance_nirs
-  source_fingerprint: 5cad5858f0067f556c54563c13937cefff0857b77fa8af246103d31387d19017
+  source_relpath: v2.0/ecosis_3d_canopy_level_spectra_reflectance_nirs
+  source_fingerprint: cf19dd1cd29a9345468bcdd91d7fe11fb45851f77c54a2e7dfb8032f2941513d

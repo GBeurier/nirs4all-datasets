@@ -54,6 +54,22 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top manual_review_needed (×1065) |
 | usage_scope | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top private_use_only (×1065) |
 | notes | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top EcoSIS package urban-reflectance-spectra-from-santa-barbara--ca, no interpolation applied by project. (×1065) |
+| source_Name | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1065, top frrkof.002- (×1) |
+| source_Polygon_Unit_ID | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=23, top Dennison_Home (×106) |
+| source_Sampling_Unit | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top polygon (×1065) |
+| source_Level_1 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=2, top impervious (×888) |
+| source_Level_2 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=6, top roof (×497) |
+| source_Level_3 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=28, top comp_shingle (×353) |
+| source_Level_4 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=45, top asphalt (×161) |
+| source_Level_5 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=10, top new (×530) |
+| source_Level_6 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=18, top roof (×486) |
+| source_Level_7 | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=36, top COMP_SHINGLE_ROOF (×353) |
+| source_Lat | metadata | numeric | *Not specified.* | n=1065, missing=0, range 34.01–34.46, mean 34.42 ± 0.08015 |
+| source_Long | metadata | numeric | *Not specified.* | n=1065, missing=0, range -119.9–119.9, mean -114.2 ± 36.3 |
+| source_Date | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=7, top 2001_06_05 (×334) |
+| source_Scale | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top field (×1065) |
+| source_source | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=1, top asd (×1065) |
+| source_photo | metadata | categorical | *Not specified.* | n=1065, missing=0, classes=26, top none (×977) |
 
 ## Statistics — splits
 
@@ -64,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 12 fields, Y: 0 fields, measurements: 0 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 0 fields, passport: 35 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b6c350f796c24e716656ca326e9cfe8b560a1a18f94d099c504e57050bdfff4c`
-- **Processing hash:** `9047b3bf96985213bd2e3f72df43dca6a3fe4e45f3c50fe47f3ca06169c12ea8` | **metadata hash:** `cc35fbc0dd727735e789f24c40cfe31098eca817fea7bcea6d3fe34f7a0bacec`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e90e495010f6c5c0eb7a8e2641813c4e8fefae56f33fbb341a62a88d475eb2e3`
+- **Processing hash:** `55cb996fa0b1be35c387a78ae469cc96ff8e812a0bc88534eb800e6516f454cf` | **metadata hash:** `c452e4b18e64259ba95f9c49eb002fdc669d2d2bd7f36aa0a172c3e32b7e9ea2`

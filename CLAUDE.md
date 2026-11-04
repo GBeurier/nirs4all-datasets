@@ -13,7 +13,14 @@ provenance back to the **origin** that published the data. The heavy bytes never
 the native acquisition core resolves, fetches, verifies, and caches canonical bytes. The optional Python
 package wraps that core as `get()/retrieve()/NirsDataset`.
 
-Status: **0.3.x, pre-1.0**. CLI entry point: `n4a-datasets`. Schema version: **2.0**.
+Status: **0.3.x, pre-1.0**. CLI entry point: `n4a-datasets`. Schema version: **2.0**. Card metric
+protocol: `qualify/registry.py::PROTOCOL_VERSION`.
+
+`AGENTS.md` (Codex-side guide: commit style `fix(scope): …` / `data(<id>): add …`, English-only project
+content) and `docs/ARCHITECTURE.md` (module map) complement this file. Before any curation, cache,
+qualification, or native-boundary work read `docs/maintenance/curation_ownership_roadmap.md`: it forbids
+modifying `nirs4all-io`, `dag-ml`, or `dag-ml-data` as part of that work, and only moves a numerical method
+to `nirs4all-methods` when a matching native method is absent (no duplicate PCA kernel).
 
 ### The boundary rule (load-bearing)
 
@@ -29,22 +36,46 @@ site, the (future) personal-Dataverse publish/fetch path, and config/secrets.
 ## Commands
 
 ```bash
-# Dev install (builds the optional Python package + embedded native core; uses editable sibling bridges via [tool.uv.sources])
+# Dev install. The root pyproject is a *maturin* project: this compiles the Rust extension
+# `nirs4all_datasets._n4ds` (bindings/python) together with the pure-Python layer in src/.
+# Re-run it after any Rust change, or Python keeps the stale src/nirs4all_datasets/_n4ds.abi3.so.
+# [tool.uv.sources] points nirs4all / nirs4all-io / nirs4all-formats at the editable sibling checkouts.
 uv venv && uv pip install -e ".[dev]"
 
-# Green gate (mirror of CI, run before reporting work complete)
+# Python green gate (mirror of CI `python` job)
 ruff check .
 mypy --config-file pyproject.toml src
 python catalog/scripts/validate.py                  # schema validity of all descriptors
 python catalog/scripts/validate.py --check-publish  # also require public-tier datasets publishable
 python -m nirs4all_datasets.cli catalog --root .    # regenerate the index...
 git diff --exit-code catalog/datasets.yaml          # ...CI fails if it is not committed
-pytest -q
+pytest -m "not network"
+pytest -q bindings/r/tests                          # R build recipes (native / Windows ARM64 / WebR)
+
+# Rust green gate (CI `rust` job; Cargo path-deps need ../nirs4all-formats and ../nirs4all-io —
+# scripts/ensure_rust_deps.sh checks them out in CI)
+cargo fmt --all --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo build -p nirs4all-datasets-core --no-default-features
+
+# WASM/JS (CI `wasm` job)
+wasm-pack build bindings/wasm --release --target nodejs --out-dir pkg-node --scope nirs4all
+node bindings/wasm/tests/node_smoke.cjs
 
 # Single test / file
 pytest tests/test_canonical.py
 pytest tests/test_schema.py::<test_name>
+cargo test -p nirs4all-datasets-core <name>
+
+# Release train (versions are bumped in lock-step across pyproject, Cargo, npm, R, MATLAB)
+scripts/bump_version.sh --check
+python scripts/check_release_train.py               # offline check against release/train-v1.toml
 ```
+
+`n4a-datasets catalog` rewrites both `catalog/datasets.yaml` and `catalog/index.json` (`index` rebuilds only
+the latter); CI diffs only the YAML, so commit both whenever descriptors/manifests change. The
+release procedure is `docs/dev/release_process.md` (summary in `docs/RELEASING.md`).
 
 Tests use **no network** — the Dataverse client/access layer and the origin health probe are tested
 with an injected fake `requests.Session` / `HttpSession`. The `network` pytest marker exists for
@@ -62,15 +93,21 @@ n4a-datasets bootstrap <source_tree> [--prune] [--force]            # bootstrap.
 n4a-datasets add <raw_source> <id>                                  # one raw source -> canonical + card + index
 n4a-datasets build-all --source-tree <tree> [--only a,b] [--force]  # bulk.py: parallel organize+qualify, then index
                        [--protocol-refresh] [--skip-assets] [--site]
+n4a-datasets import-standardized <bundle> <id> --out <dir>          # v2.0 bundle -> canonical, never runs its scripts
+n4a-datasets curate <source_tree> [--only a,b]                      # curation.py: traced M/Y views -> catalog/curation/<id>.json
 n4a-datasets qualify <id> [--anonymize]                             # (re)build one card.json (+ card.anon.json)
 n4a-datasets health-check [--only a,b]                              # health.py: probe open origins -> catalog/health.json
-n4a-datasets catalog                                                # regenerate catalog/datasets.yaml
+n4a-datasets catalog                                                # regenerate catalog/datasets.yaml + index.json
+n4a-datasets index                                                  # regenerate only catalog/index.json
+n4a-datasets status                                                 # docs/DATASET_STATUS.md + docs/PRIVATE_DATASETS.md
+n4a-datasets retrieval-audit                                        # static retrieval-readiness worklist -> catalog/retrieval_audit.json
 n4a-datasets site [--out site]                                      # site/: interactive static catalog
 n4a-datasets list [--tier ...] [--domain ...] [--spectro-family ...]   # inspect the local catalog
 n4a-datasets card <id>                                              # print one identity card (JSON)
 
 # Access
-n4a-datasets get <id> [--source X1] [--token ...] [--instance ...]  # local-first, else fetch; print a summary
+n4a-datasets get <id> [--source X1] [--token ...] [--instance ...]  # canonical NirsDataset: local-first, else fetch
+n4a-datasets retrieve <id>                                          # raw origin bytes, staged by the Rust reader stack
 
 # Publish + governance (FUTURE — personal Dataverse for protected data; see docs/PUBLISHING.md)
 n4a-datasets publish <id> --collection <alias> --contact-email <addr>  # first publish mints a DOI; later = version update
@@ -94,17 +131,25 @@ organize.py  ──► canonical.py           2. CANONICAL  id-keyed CSV -> data
 manifest.py                             3. MANIFEST   content-addressed manifest.json
         │                                              (processing_hash + metadata_hash)
         ▼
-qualify/profile.py                      4. QUALIFY    card.json + card.md + croissant.json + assets/*.png
-        │
+curation.py                             3b. CURATE    observation-preserving M/Y/structure/passport views
+        │                                              + catalog/curation/<id>.json mapping reports
         ▼
-catalog.py                              5. INDEX      catalog/datasets.yaml (per-dataset entries + a
-        │                                              whole-bank `summary` / bank_summary)
+qualify/profile.py                      4. QUALIFY    card.json + card.md + croissant.json (chart data is
+        │                                              embedded in the card; the site draws inline SVG)
+        ▼
+catalog.py + index.py                   5. INDEX      catalog/datasets.yaml (entries + whole-bank `summary`)
+        │                                              + catalog/index.json (cross-language download contract)
+        ▼
+status.py                                  STATUS     docs/DATASET_STATUS.md + docs/PRIVATE_DATASETS.md;
+        │                                              human sign-off in catalog/validation.yaml
         ▼
 health.py                               6. HEALTH     probe open origins -> catalog/health.json
         │                                              (degrade a PUBLIC dataset whose open origins all died)
         ▼
-access.py  ◄── get("<id>")              USE           local-first, else fetch by DOI/origin, verify SHA-256,
-        │                                              cache, return a NirsDataset
+access.py  ◄── get("<id>")              USE           local → packaged public-origin recipe (public_pull/)
+        │                                              → personal-Dataverse DOI → open origin DOI;
+        │                                              verify SHA-256, cache, return a NirsDataset
+retrieval.py ◄── retrieve("<id>")                     raw origin bytes, staged by the Rust reader stack
         ▼
 publish.py + dataverse.py               (future) PUBLISH   personal Dataverse for PROTECTED (private/
                                                             anonymized) data — NOT done now; public data
@@ -122,18 +167,58 @@ run) and refreshes the index (and, with `--site`, the static site). The `site/` 
 static catalog by pure formatting of already-generated artifacts — no nirs4all import, no
 recomputation.
 
+**One dataset per origin database (`consolidate.py`, `consolidation.json`).** Upstream per-target leaves
+(same spectra, one y each) and per-instrument leaves (same samples, one block each) of one record are
+composed into `<tree>/consolidated/<id>/`; `find_v2_leaves` skips the consumed and `superseded` leaves.
+Union blocks match spectra by stored values, sources are linked by declared sample identity only,
+conflicting values abort, and members with different licences are never merged. Sources that share no
+sample stay separate datasets. The current descriptors were refined by `scripts/curate_catalog.py`, so a
+full `bootstrap` would rewrite ~200 of them: rebuild selected datasets with `curate_catalog.migrate_one`.
+
 The `qualify/` package splits the card build (step 4): `profile.py` orchestrates and owns the card
 schema, `metrics.py` computes the descriptive stats nirs4all does not expose, `registry.py` holds the
-metric registry + `PROTOCOL_VERSION` (bumped to re-qualify under a new protocol), `plots.py` renders
-the PNG assets (Agg backend), `croissant.py` / `datasheet.py` emit the MLCommons Croissant JSON-LD and
-the Datasheets-for-Datasets `card.md`, and `anonymize.py` produces the anonymized-tier transform
-(masked variable names + z-scored numeric targets) consumed by both `get()` and the site.
+metric registry + `PROTOCOL_VERSION` (bumped to re-qualify under a new protocol), `assessments.py`
+stores optional external `assessments.json` sidecars, `croissant.py` / `datasheet.py` emit the MLCommons
+Croissant JSON-LD and the Datasheets-for-Datasets `card.md`, and `anonymize.py` produces the
+anonymized-tier transform (masked variable names + z-scored numeric targets). `anonymize.public_card` /
+`public_descriptor` are the **single chokepoint** every displayed surface (index entry, `NirsDataset`,
+site, Dataverse metadata) derives from — never render an anonymized dataset's fields any other way
+(`tests/test_anon_enforcement.py`).
+
+Roughness qualification with the `[methods]` extra uses `n4m.roles.SpectralNoiseProxy`; PCA/outlier
+metrics still come from `nirs4all` (see the curation roadmap before moving either).
+
+### Curation (`curation.py`, `docs/CURATION.md`)
+
+Curation never rewrites source columns: it adds versioned consumer views (`M`, `Y`, `structure`,
+`passport`, `measurements`, plus `original_M`/`original_Y`) exposed by `NirsDataset.curated*()` /
+`consumer_views()`. Per-dataset contracts live in `src/nirs4all_datasets/curation_contracts.json`
+(identity rules, renames, missing tokens/sentinels, declared derivations); the committed
+`catalog/curation/<id>.json` files are the mapping/statistics reports. Identity rules are
+dataset-specific — never add global suffix-stripping or grouping heuristics, never infer a join from equal
+row counts, and report unknown identity as `null`. Byte-affecting curation directives (type, role, unit,
+dependency declarations, normalization) are part of the processing/cache identity.
+
+### Rust acquisition core + bindings (`crates/`, `bindings/`, `bindings/SPEC.md`)
+
+Only **acquisition** is native: `nirs4all-datasets-core` resolves an id against `catalog/index.json`,
+fetches (Dataverse / Zenodo / figshare / URL, redirect-safe), SHA-256-verifies, caches, and retrieves/
+prepares raw resources via `nirs4all-io`/`nirs4all-formats`. `nirs4all-datasets-capi` is the stable C ABI
+(JSON in/out, cbindgen header `crates/nirs4all-datasets-capi/include/nirs4all_datasets.h` committed; `abi-check.yml` fails if any exported symbol lacks the `n4ds_` prefix);
+`nirs4all-datasets-cli` is a Rust CLI. Bindings (excluded from the cargo workspace): `bindings/python`
+(pyo3 module `_n4ds`, wrapped by `_acquire.py`), `bindings/wasm` (npm `@nirs4all/datasets-wasm`),
+`bindings/r` (R package `nirs4alldatasets`), `bindings/matlab` (MEX). The analysis layer
+(qualify/card/site/health/anonymize/catalog assembly) stays pure Python and is never ported across the ABI.
+`catalog/index.json` is the contract non-Python clients consume: per-file SHA-256/size/file-id, origins,
+DOI/version pins, and a tier-sanitized `public_descriptor`. It is bundled into the wheel.
 
 ## What lives where (3-tier storage)
 
 - **git-tracked** (small): `catalog/datasets/<id>.yaml` (descriptor), `catalog/datasets.yaml` (index +
-  whole-bank `summary`), `catalog/health.json`, `catalog/reconciliation.json`, and per-dataset
-  `card.json`, `card.md`, `croissant.json`, `manifest.json`.
+  whole-bank `summary`), `catalog/index.json`, `catalog/health.json`, `catalog/reconciliation.json`,
+  `catalog/validation.yaml` (human sign-off; never touched by `bootstrap`), `catalog/curation/<id>.json`,
+  the generated `docs/DATASET_STATUS.md` / `docs/PRIVATE_DATASETS.md`, and per-dataset `card.json`,
+  `card.md`, `croissant.json`, `manifest.json`.
 - **the origin** (Zenodo / a data Dataverse / a vendor archive): the raw + canonical **bytes**, fetched
   on demand and **never re-hosted** by this project; a personal Dataverse is only a *future* fallback
   for protected data and rotted origins.

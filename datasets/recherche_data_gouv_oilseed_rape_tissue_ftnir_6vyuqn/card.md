@@ -74,13 +74,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ### Origin sources (where the bytes live)
 
 - Recherche Data Gouv — kind `dataverse`, access `open`, license *Not specified.*: `10.57745/6VYUQN`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://spdx.org/licenses/etalab-2.0.html`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 6 fields, measurements: 0 fields, passport: 27 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 3 fields, Y: 6 fields, passport: 27 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `dcd44de74d833a45b34883aaec4a476ee1e31d28014f2f6b78738c7fe97cf977`
-- **Processing hash:** `366b8c5db8addafcf9d8df5696675d681461edb72a93c90a6c90e4bdc7cdd907` | **metadata hash:** `dd4c9581c2958fc18c45e0c00ed67680e7cded33864b27d9f34bd4a73cb6aea6`
+- **Processing hash:** `33720947cb3818bd9a762cc3b6eee34aaa2a12de072b1d1dc78d0262238dab2f` | **metadata hash:** `2e3b48b7e0d24c7ed2c5ffaa077ce20093334bd19ce6b6ed570684813dbcf0ce`

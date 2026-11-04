@@ -45,6 +45,15 @@
     "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": null,
     "sample_id_available": false,
+    "source_coverage": {
+      "in_all_sources": null,
+      "in_one_source_only": null,
+      "n_sources": 1,
+      "pairwise_shared": null,
+      "per_source": {
+        "X": 106
+      }
+    },
     "technical_repetitions": null,
     "unit": "Physical unit undetermined"
   },
@@ -321,11 +330,9 @@
         "notes"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:48:58.325628+00:00",
+  "generated_at": "2026-11-03T23:46:38.757458+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -348,8 +355,8 @@
   "integrity": {
     "content_hash": "4b0edcc6820027d5304374390b7343e2ef312b537ec0059f1c8181092c448e9b",
     "manifest": "manifest.json",
-    "metadata_hash": "de81871cb5dd7c7ddafae6875fbcc8254e1f97d5aef0bf5fb239d0e67ab4da5e",
-    "processing_hash": "f3512933a607c282ae79086066c1047b65f490da9c2a2428f1445b965712d8ee"
+    "metadata_hash": "eefe5298b63326f7b4bd697094a462fd6b8d258df581e2976f6726e98a319b10",
+    "processing_hash": "f106914b464b86139dc6442f3bc459f2071dac2aba2c001095b6571062e02e4f"
   },
   "protocol_version": "7",
   "provenance": {
@@ -388,7 +395,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: The upstream converter selected date: 27 and 79 rows on two dates. The 106 ASD files and times are distinct, with 7 plots; the date is not a sample identifier and the file identifies an acquisition."
     ]
   },
@@ -1411,15 +1417,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.999847224556757,
+          "effective_rank": 1.54,
+          "n_components_95": 2,
+          "n_components_99": 3
         },
         "mean_max": 0.26802565825154195,
         "mean_min": 0.04491298055091767,
         "n_outliers": 53,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.8964243633915288,
+            0.06517799487850402,
+            0.029762318552208993,
+            0.004125390769526932,
+            0.0018277113609991543,
+            0.0017000959752061535,
+            0.0004403050457385598,
+            0.00018936956289079167,
+            0.00012872367493047215,
+            7.095134522319719e-05,
+            4.19893687532568e-05,
+            3.487619648681203e-05,
+            1.7470457312556632e-05,
+            1.3309314858763e-05,
+            1.0323662013857437e-05,
+            8.511394407298867e-06,
+            5.845830807259964e-06,
+            4.321900122468192e-06,
+            2.817814563299603e-06,
+            2.4199675286865258e-06,
+            1.6685101544188504e-06,
+            1.435536436416405e-06,
+            1.0754385325755846e-06,
+            8.990168374491344e-07,
+            8.019683607427793e-07,
+            5.720184279701478e-07,
+            4.5530678337372533e-07,
+            3.6268202063283063e-07,
+            3.2678176231194106e-07,
+            2.7858886867763576e-07
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 436.6322901765239,
@@ -1740,8 +1780,8 @@
             "noise_rms": 1.560210533588754e-05,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -4664,13 +4704,10 @@
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv.",
-    "conversion: variables: dropped duplicate columns ['elevation'] (kept the first source's values).",
-    "variable 'original_sample_id' declared but absent from canonical variables.parquet; skipped"
+    "conversion: variables: dropped duplicate columns ['elevation'] (kept the first source's values)."
   ]
 }

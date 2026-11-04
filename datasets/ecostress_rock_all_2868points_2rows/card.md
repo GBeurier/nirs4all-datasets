@@ -54,6 +54,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top manual_review_needed (×2) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top private_use_only (×2) |
 | notes | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top none (×2) |
+| source_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Dolomitic Limestone (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top rock (×2) |
+| source_class | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Sedimentary (×2) |
+| source_subclass | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Limestone (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Fine (×2) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top limestone_2 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top JHU (×2) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top All (×2) |
+| source_origin | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Sample No. 353, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
+| source_description | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top This somewhat heterogeneous sample consists of bands of pure fine-grained to microcrystalline dolomite, alternating with bands of coarser dolomite crystals and subangular aligned quartz grains showing pressure solution texture. There is also a greenish-brown material (clay) scattered throughout the sample in small amounts. Particle size was 0-75 Micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.sedimentary.limestone.fine.limest2.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×2) |
+| source_first_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top X (×2) |
+| source_second_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Y (×2) |
+| source_x_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Wavelength (micrometers) (×2) |
+| source_y_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Reflectance (percent) (×2) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 14.98–14.98, mean 14.98 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=2, missing=0, range 2868–2868, mean 2868 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top none (×2) |
+| source_material_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Dolomitic Limestone (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top rock (×2) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top rock.sedimentary.limestone.fine.all.limestone_2.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -64,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 5 fields, passport: 48 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 48 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +119,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `79b67a1046b851f9ca68932f9946a3b590610258d2f99323ec16c484faa82e02`
-- **Processing hash:** `76da40b3002bce9afa473afcc241ac10b6e52ff204fa29143b9d75e09a72838a` | **metadata hash:** `9e9690f57697b3b1dd32398b0478f4a2d64ba82537bb5ca6451d3ecade22e93b`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `f30b34e9d31d62e8af2271d4ea78a9c96ba1427bc31d3bc030d1c8a6d010daae`
+- **Processing hash:** `439f59a978f66832b06f6b450d93785d0fbb16cb8c70299857dba68f3a5bd030` | **metadata hash:** `35f8e8d3e83a367e8abda8f370c264fde93d026c3ca6551b7ed8001fc4bfefe7`

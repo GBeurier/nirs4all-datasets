@@ -41,6 +41,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=70, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=70, missing=0, range 2844–2844, mean 2844 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top Sources ASTER/ECOSTRESS: les spectres All de la bibliotheque ASTER ont 2844 valeurs de X, de 14.0110 a 0.4000 um. La partie VSWIR Beckman est documentee sur 0.4-2.5 um avec un pas de 0.001 um de 0.4 a 0.8 puis 0.004 um de 0.8 a 2.5, mais le vecteur bande-a-bande fusionne n'est pas fourni dans l'archive Rock, axe lineaire interpole applique ici en ordre decroissant 14.0110->0.4000 sur 2844 variables. (×70) |
+| source_zip | metadata | categorical | *Not specified.* | n=70, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/Rock.zip (×70) |
 
 ## Statistics — splits
 
@@ -51,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `b0affc5f9f49e8f55e039c6e7608a822313a4d8cc5ee3f48730ed9f75793f9ba`
-- **Processing hash:** `e5110b7b34dcbd4d48032e99b67253e7525b3fc4cae9a8b661a3642f6ac4dee8` | **metadata hash:** `95dbc137f4bf51d796e3d0ce15caeb2205649a8475c20c540526c7ebbd6b3e66`
+- **Processing hash:** `38d20f95861ad1bc217c97c0fa65cc10ec4bbfe8b8cd2ca56c91d1edb027561a` | **metadata hash:** `816640c4db80b875074ac159d7da901bc7ca5aa59f7572b03fe1b0fe9104538f`

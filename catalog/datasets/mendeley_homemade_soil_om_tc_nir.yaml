@@ -76,6 +76,9 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_sheet
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -84,20 +87,17 @@ alignment_level: sample
 splits: []
 tier: public
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: Dataset of near-infrared spectral data for prediction of organic matter
     and total carbon in agricultural soil using homemade NIR spectrometer
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: Sample identifier declared in M"
+  - 'Curation identity contract: Sample identifier declared in M'
 governance:
   license: CC-BY-4.0
   owner_steward: Dataset of near-infrared spectral data for prediction of organic
@@ -126,11 +126,6 @@ origin_sources:
   locator: https://data.mendeley.com/public-api/datasets/yt78nwnhbd/files?folder_id=root&version=1&$start=0&$limit=1000
   access: open
   expected_files: []
-- kind: url
-  mode: raw
-  locator: https://creativecommons.org/licenses/by/4.0/
-  access: open
-  expected_files: []
 - kind: script
   mode: raw
   locator: source_to_standard.py
@@ -155,5 +150,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/mendeley_homemade_soil_om_tc_nir
-  source_fingerprint: aeb41f8ae834720bb29f2324431fa2b73691ff400bba4448ded1dc0497fc117f
+  source_relpath: v2.0/mendeley_homemade_soil_om_tc_nir
+  source_fingerprint: c5fb388b7df08585baed7f1eac81616735584154c1dcd1d798e9a7dfa41aeab4

@@ -72,6 +72,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=735, missing=0, classes=1, top explicit_open (×735) |
 | usage_scope | metadata | categorical | *Not specified.* | n=735, missing=0, classes=1, top public_reuse_possible (×735) |
 | notes | metadata | categorical | *Not specified.* | n=735, missing=0, classes=1, top EcoSIS package common-milkweed-leaf-responses-to-water-stress-and-elevated-temperature, no interpolation applied by project. (×735) |
+| source_ID | metadata | categorical | *Not specified.* | n=735, missing=0, classes=735, top 1 (×1) |
+| source_Latex__mg | metadata | categorical | *Not specified.* | n=735, missing=534, classes=126, top 0.51 (×5) |
+| source_Unnamed__17 | metadata | categorical | *Not specified.* | n=735, missing=735, classes=0, — |
+| source_Population | metadata | categorical | *Not specified.* | n=735, missing=0, classes=5, top ced (×188) |
+| source_rep_ID | metadata | categorical | *Not specified.* | n=735, missing=0, classes=120, top 28 (×10) |
+| source_Block | metadata | numeric | *Not specified.* | n=735, missing=0, range 1–2, mean 1.494 ± 0.5003 |
 
 ## Statistics — splits
 
@@ -82,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -92,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep_ID. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 2 fields, Y: 19 fields, measurements: 1 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 19 fields, passport: 34 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -113,6 +119,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `8ebaedb14ee09abae481357615d4d79725c5d7010d78d75b92b8c04567001518`
-- **Processing hash:** `3b753c5c5a82e23a39c2c8f47a8e7b215892f0e87b387d6ba070b18533e2edae` | **metadata hash:** `0ac194e2032865eb31b64ec32805bdd89a5286ca670aea47129c5b89601ff4ca`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `c5e30cecfd4d4369c8ee7abdddb8f80d604eba3af380cb74d8028131f46d8536`
+- **Processing hash:** `0eabb6e1b672f3741ab5558c2f4095299c3567462d0eec1994c5afe348a2eee3` | **metadata hash:** `7db57b748f177a0e5e5e09fe26fbcb847ff0ed8893d0f024867b06e2ee78751c`

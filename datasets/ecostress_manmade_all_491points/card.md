@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manual_review_needed (×14) |
 | usage_scope | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top private_use_only (×14) |
 | notes | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top none (×14) |
+| source_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=7, top Construction Concrete (×4) |
+| source_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manmade (×14) |
+| source_class | metadata | categorical | *Not specified.* | n=14, missing=0, classes=3, top General Construction Material (×6) |
+| source_subclass | metadata | categorical | *Not specified.* | n=14, missing=0, classes=6, top Paving Concrete (×4) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Solid (×14) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top 0092UUU_CNC (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top National Photographic Interpretation Center (×14) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top All (×14) |
+| source_origin | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Spectra obtained from the Noncoventional Exploitation FactorsData System of the National Photographic Interpretation Center. (×14) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top N/A (×14) |
+| source_description | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top Gray and white weathered runway concrete. Sample had a flat surface, with a matte texture, and very little aggregate showing. Original ASTER Spectral Library name was jhu.becknic.manmade.concrete.paving.solid.0092uuu.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×14) |
+| source_first_column | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top X (×14) |
+| source_second_column | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Y (×14) |
+| source_x_units | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Wavelength (micrometers) (×14) |
+| source_y_units | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top Reflectance (percent) (×14) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=14, missing=0, range 0.42–0.42, mean 0.42 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=14, missing=0, range 14–14, mean 14 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=14, missing=0, range 491–491, mean 491 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top none (×14) |
+| source_material_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=7, top Construction Concrete (×4) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=14, missing=0, classes=1, top manmade (×14) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=14, missing=0, classes=14, top manmade.concrete.pavingconcrete.solid.all.0092uuu_cnc.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 4 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 50 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a251192f4631b4395cc9fe48287ae152312c9e84e22805138fee5291d9a2e0bd`
-- **Processing hash:** `b022f73fb9314d5fd2c75113f0ccaa00a79c784b67f437ac9b9faa75447c6f30` | **metadata hash:** `c1f66c0e2381bbb89125b9189177d3102335822c1bce38af7857820e943a9324`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `1983fd56b5a5831d50dbd78fe3062939175e929db3df9372042e6927582bc978`
+- **Processing hash:** `e2fbfa3efc6e9703e31baf9d551f6df823d0900e7883eb5a7356107e816dbf1f` | **metadata hash:** `91a11cae66f3369f4c0f2482f731393cc096c0568dc25e4c642fd29ab1896029`

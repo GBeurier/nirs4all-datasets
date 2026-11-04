@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 4,
+      "in_one_source_only": 4,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 4
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -236,7 +245,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:48:59.237728+00:00",
+  "generated_at": "2026-11-03T16:17:29.912501+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -257,15 +266,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "2d12bd09d4a6a2fc66eaf62413bf906f8f598bc924ce41f07cbb73f28a0fe6c7",
+    "content_hash": "e784e71753499a28e58e584bf9129bfc45cc0feb55b3e05521052f70b63620cf",
     "manifest": "manifest.json",
-    "metadata_hash": "780bbf067a81b64b5a7a73309e2ec6777d0e8d224824cae0eca23fb8a9397844",
-    "processing_hash": "759c6dcefa9988357186daedc2e76772b264a1ece5f903e7f23e59a37381492c"
+    "metadata_hash": "2cccfafdc6f403ab517aaac1062b43124a1651570cadc5c86e360fc6ebc72868",
+    "processing_hash": "d45dd8c3b5d991498e8718d61a00b52e07abb91e5035638b5b1d2211fe42a88a"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1326,15 +1335,22 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 1.0,
+          "effective_rank": 1.36,
+          "n_components_95": 2,
+          "n_components_99": 3
         },
         "mean_max": 80.84749984741211,
         "mean_min": 2.106875002384186,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9223565238777212,
+            0.0648336581281276,
+            0.012809817994151235
+          ],
+          "n_components": 3
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 380.03178006755854,
@@ -1655,8 +1671,8 @@
             "noise_rms": 0.014572661762835806,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2996,10 +3012,1056 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Green Schist"
+          },
+          {
+            "count": 1,
+            "name": "Tourmaline Schist"
+          },
+          {
+            "count": 1,
+            "name": "Fossiliferous Limestone"
+          },
+          {
+            "count": 1,
+            "name": "Lithographic Limestone"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "rock"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.5,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.5,
+        "n_classes": 2,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Metamorphic"
+          },
+          {
+            "count": 2,
+            "name": "Sedimentary"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.5,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.5,
+        "n_classes": 2,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Schist"
+          },
+          {
+            "count": 2,
+            "name": "Limestone"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Fine"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "schist1"
+          },
+          {
+            "count": 1,
+            "name": "schist4"
+          },
+          {
+            "count": 1,
+            "name": "limestone_1"
+          },
+          {
+            "count": 1,
+            "name": "limestone_5"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "JHU"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "All"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Sample No. 392, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co."
+          },
+          {
+            "count": 1,
+            "name": "Sample No. 468, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co."
+          },
+          {
+            "count": 1,
+            "name": "Sample No. 355, from the Hunt and Salisbury Collection atthe U.S. Geological Survey, Denver, Co."
+          },
+          {
+            "count": 1,
+            "name": "Sample No. 356, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "This is a medium to coarse-grained sample containing tremolite-actinolite crystals and talc. Amphibole is heavily altered to talc, and in addition to these phases there is quartz and some carbonate, as an alteration product, along with opaque grains. There may be heavily altered plagioclase present in this sample as well. Modes were 50.6% talc, 38% amphibole, 5.4% quartz, 3.6% calcite, 2.4% plagioclase remnants. Particle size was 0-75 Micrometer. Original ASTER Spectral Library name was jhu.becknic.rock.metamorphic.schist.fine.schist1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "This is a very coarse-grained rock containing euhedral brown tourmaline poikiloblastically enclosing quartz remnants, large subhedra of muscovite enclosing remnants of tourmaline or much lesser quartz, and recrystallized quartz. Magnetite occurs scattered throughout this rock as well. Modes were 35% quartz, 33% tourmaline, 30.6% muscovite and 1.4% opaques. Particle size was 0-75 Micrometer. Original ASTER Spectral Library name was jhu.becknic.rock.metamorphic.schist.fine.schist4.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Sample consists of a homogeneous microcrystalline carbonate matrix, with scattered flecks of reddish brown material and abundant fossils (primarily small bivalves) with recrystallized calcite. Some bivalves still show laminar structure. Very minor quartz was also noted in this section.Particle size was 0 - 75 Micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.sedimentary.limestone.fine.limest1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample is a homogeneous microcrystalline carbonate with scattered flecks of a reddish brown (Fe-rich ?) material, which sometimes occurs as discontinuous bands throughout the section.Particle size was 0 - 75 Micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.sedimentary.limestone.fine.limest5.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Directional (10 Degree) Hemispherical Reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 14.983,
+        "mean": 14.983,
+        "median": 14.983,
+        "min": 14.983,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 14.983,
+        "q3": 14.983,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 0.4,
+        "mean": 0.4,
+        "median": 0.4,
+        "min": 0.4,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 0.4,
+        "q3": 0.4,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2868.0,
+        "mean": 2868.0,
+        "median": 2868.0,
+        "min": 2868.0,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 2868.0,
+        "q3": 2868.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Green Schist"
+          },
+          {
+            "count": 1,
+            "name": "Tourmaline Schist"
+          },
+          {
+            "count": 1,
+            "name": "Fossiliferous Limestone"
+          },
+          {
+            "count": 1,
+            "name": "Lithographic Limestone"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "rock"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "rock.metamorphic.schist.fine.all.schist1.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.metamorphic.schist.fine.all.schist4.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.sedimentary.limestone.fine.all.limestone_1.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.sedimentary.limestone.fine.all.limestone_5.jhu.becknic.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

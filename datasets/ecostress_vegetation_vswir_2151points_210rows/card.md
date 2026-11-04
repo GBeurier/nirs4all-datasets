@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top manual_review_needed (×210) |
 | usage_scope | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top private_use_only (×210) |
 | notes | metadata | categorical | *Not specified.* | n=210, missing=54, classes=156, top vegetation.shrub.gasteria.acinacifolia.vswir.jpl143.jpl.asd.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=210, missing=0, classes=74, top Bambusa beecheyana (×9) |
+| source_type | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top vegetation (×210) |
+| source_class | metadata | categorical | *Not specified.* | n=210, missing=0, classes=3, top Tree (×185) |
+| source_genus | metadata | categorical | *Not specified.* | n=210, missing=0, classes=48, top Quercus (×25) |
+| source_species | metadata | categorical | *Not specified.* | n=210, missing=0, classes=70, top beecheyana (×9) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=210, missing=0, classes=210, top VH352 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=210, missing=0, classes=2, top JPL (×206) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top VSWIR (×210) |
+| source_origin | metadata | categorical | *Not specified.* | n=210, missing=0, classes=164, top 34.12593, - 118.10983, WGS84 (×6) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=210, missing=0, classes=6, top 10/3/2016 (×60) |
+| source_description | metadata | categorical | *Not specified.* | n=210, missing=0, classes=2, top Samples were collected at the Huntington Garden in San Marino California as part of a JPL Subcontract studying HyTES imagery. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD. (×206) |
+| source_measurement | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top Bidirectional reflectance (×210) |
+| source_first_column | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top X (×210) |
+| source_second_column | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top Y (×210) |
+| source_x_units | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top Wavelength (micrometer) (×210) |
+| source_y_units | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top Reflectance (percentage) (×210) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=210, missing=0, range 0.35–0.35, mean 0.35 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=210, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=210, missing=0, range 2151–2151, mean 2151 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=210, missing=54, classes=156, top vegetation.shrub.gasteria.acinacifolia.vswir.jpl143.jpl.asd.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=210, missing=0, classes=74, top Bambusa beecheyana (×9) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=210, missing=0, classes=1, top vegetation (×210) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=210, missing=0, classes=210, top vegetation.grass.avena.fatua.vswir.vh352.ucsb.asd.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometer)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 7 fields, Y: 2 fields, measurements: 3 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 2 fields, passport: 43 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `aaea9d1199772f3693cbbbf63e16e8b9851eb0b8c4efe8400ddb8a0db78bad88`
-- **Processing hash:** `81291d1384014ed0a2283a8b6454499cccbe9d62921650fc8863e3fd3c8c449d` | **metadata hash:** `57f449af36950772b2055e7aad1714a22df79061b97be52f6c243ff37811c530`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `660e6b3f01f54d26f8a6da22fca83c5b6fb85928ee8fb1b7f5d30ba31e305521`
+- **Processing hash:** `d53bbca4915df07f58fd2bc262da23de4a3378e09a2e42a88c9994506bde2017` | **metadata hash:** `0b064698661b2dfa105ff77d41fdfbe7954e8e136cdf074369f44b0be8c12f97`

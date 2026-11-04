@@ -54,6 +54,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=761, missing=0, classes=1, top manual_review_needed (×761) |
 | usage_scope | metadata | categorical | *Not specified.* | n=761, missing=0, classes=1, top private_use_only (×761) |
 | notes | metadata | categorical | *Not specified.* | n=761, missing=0, classes=1, top EcoSIS package varietal-discrimination-and-detection-of-pvy-in-solanum-tuberosum--hawaii-2014, no interpolation applied by project. (×761) |
+| source_ID | metadata | categorical | *Not specified.* | n=761, missing=0, classes=761, top 1 (×1) |
+| source_VAR | metadata | categorical | *Not specified.* | n=761, missing=0, classes=80, top atlantic (×52) |
+| source_strain | metadata | categorical | *Not specified.* | n=761, missing=552, classes=9, top Wi (×111) |
+| source_infect | metadata | categorical | *Not specified.* | n=761, missing=0, classes=2, top h (×432) |
+| source_rep | metadata | numeric | *Not specified.* | n=761, missing=0, range 1–8, mean 1.844 ± 1.263 |
+| source_state | metadata | categorical | *Not specified.* | n=761, missing=0, classes=4, top WI (×481) |
 
 ## Statistics — splits
 
@@ -64,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 4 fields, Y: 0 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 0 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `0ba6b702141ec73b1b0b355b78632c44f7d30ef024febd76726bb9ad6a54596e`
-- **Processing hash:** `812f176479c417cb3c51027dbe9a55b8d4e5dfd8a93bd5aa14a3463b23277ecd` | **metadata hash:** `f857f992f8be9073dc5192c1f6b3c0ee3c90e597fe4e25974194348366f5a87e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e1b7f5ce915713f3c027ccd944fcd4d3524e7789793c5f131d9c17829e82e736`
+- **Processing hash:** `bbe953a7f30249387b207a40593c76b865e7f73ae7a0d728931548cc5ef9302b` | **metadata hash:** `7a4442f616574ada3128511a2a2969c7ce9e0d743c210772374f153f3517c8af`

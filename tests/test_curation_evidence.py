@@ -176,7 +176,9 @@ def test_partial_profile_draws_only_available_axes():
     assert "partial profile</title>" not in svg  # no filled polygon across missing axes
 
 
-def test_lucas_source_context_is_content_addressed_and_regenerated(tmp_path):
+def test_lucas_source_context_is_content_addressed_and_regenerated(tmp_path, monkeypatch):
+    # The fixture soilsite is passed explicitly; a maintainer's real soilsite must not leak in.
+    monkeypatch.delenv("NIRS4ALL_OSSL_SOILSITE", raising=False)
     from nirs4all_datasets.curation import LUCAS_SOILSITE_FIELDS
     from nirs4all_datasets.organize import organize
 

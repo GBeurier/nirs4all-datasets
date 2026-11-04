@@ -35,6 +35,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top Felix_2nd_ave.xlsx (×1991) |
 | official_source_url | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.98sf7m0rj (×1991) |
 | manual_download | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1, top True (×1991) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=1991, missing=0, classes=1139, top 1 (×5) |
 
 ## Statistics — splits
 
@@ -54,8 +55,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Repeated measurements of the same fruit identifier; NIR dates vary over the follow-up.
-- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Repeated measurements of the same fruit identifier; NIR dates vary over the follow-up.
+- **Curated views:** M: 2 fields, Y: 2 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,6 +76,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `de2bcd22617ea626b5224f4e8c562dbb87b315029c275cc0afba870c377d2d6b`
-- **Processing hash:** `5501c04cbc6c5d7e6363cbe2f8e8254cb7aa45bf4ce5cd9096e9adff7b67c479` | **metadata hash:** `25be654bb710c25426add5ed413a08855c10d149ae1fc80da691286064e67034`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `6a40f18b79490c36fa5e6bcac1a4fb609a04cae478e84b5e439b5ac15f12a4f8`
+- **Processing hash:** `e9a1d10cb3f916de254896126f8a966cc7df2a320213b73402c770eda9d92d0a` | **metadata hash:** `74bff84224d264fef4d92b43db7194ddb5c8ff1a42792b7b9350461585b63d05`

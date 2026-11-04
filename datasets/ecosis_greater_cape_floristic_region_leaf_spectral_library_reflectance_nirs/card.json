@@ -36,6 +36,15 @@
     "repetition_semantics": "exported_rows_per_unit_per_source; technical/biological independence requires source evidence",
     "reps_per_sample": null,
     "sample_id_available": false,
+    "source_coverage": {
+      "in_all_sources": null,
+      "in_one_source_only": null,
+      "n_sources": 1,
+      "pairwise_shared": null,
+      "per_source": {
+        "X": 3205
+      }
+    },
     "technical_repetitions": null,
     "unit": "Unit undetermined"
   },
@@ -81,6 +90,10 @@
           {
             "name": "latitude",
             "resource": "M.csv"
+          },
+          {
+            "name": "source_Latitude",
+            "resource": "M.csv"
           }
         ],
         "stats": {
@@ -105,6 +118,10 @@
           {
             "name": "longitude",
             "resource": "M.csv"
+          },
+          {
+            "name": "source_Longitude",
+            "resource": "M.csv"
           }
         ],
         "stats": {
@@ -118,48 +135,6 @@
           "n_rows": 3205,
           "n_unique": 376,
           "type": "numeric"
-        },
-        "unit": null,
-        "view": "M"
-      },
-      {
-        "grain": "observation",
-        "name": "latitude_2",
-        "source_columns": [
-          {
-            "name": "source_Latitude",
-            "resource": "M.csv"
-          }
-        ],
-        "stats": {
-          "completeness_pct": 100.0,
-          "imbalance_ratio": 96.0,
-          "n_missing": 0,
-          "n_present": 3205,
-          "n_rows": 3205,
-          "n_unique": 391,
-          "type": "categorical"
-        },
-        "unit": null,
-        "view": "M"
-      },
-      {
-        "grain": "observation",
-        "name": "longitude_2",
-        "source_columns": [
-          {
-            "name": "source_Longitude",
-            "resource": "M.csv"
-          }
-        ],
-        "stats": {
-          "completeness_pct": 100.0,
-          "imbalance_ratio": 96.0,
-          "n_missing": 0,
-          "n_present": 3205,
-          "n_rows": 3205,
-          "n_unique": 376,
-          "type": "categorical"
         },
         "unit": null,
         "view": "M"
@@ -295,8 +270,6 @@
       "M": [
         "latitude",
         "longitude",
-        "latitude_2",
-        "longitude_2",
         "subregion",
         "month_day",
         "subregabbr"
@@ -345,7 +318,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:48:10.767684+00:00",
+  "generated_at": "2026-11-03T15:48:51.061279+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-SA-4.0",
@@ -366,15 +339,15 @@
     "tier": "public"
   },
   "integrity": {
-    "content_hash": "7ec3b9d0155e7c65756ae533102a96245512d0b0bb0d3dd1511b41c7f3ed1ffd",
+    "content_hash": "8529de6c2591ff8c45947621efd6c910c0c07a3483dd43eca4ccee3cba865a44",
     "manifest": "manifest.json",
-    "metadata_hash": "9cde6530e46f3902f658b58eca10b306021349e2c5c9dfe430a2712398a7996f",
-    "processing_hash": "ce15905a85559be2f84d78f83e834ad44e39afb24adf4ccf5daa993d5f5ea8c3"
+    "metadata_hash": "b047071dcb15b33e6466930037265f60afa5a0449b8b60a758597a5f297a7d02",
+    "processing_hash": "1c7288b7c32c02bc0aa2f8ba847ec2c2f2ac1cf86fd5ad849c7a2038b45f4c25"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "Greater Cape Floristic Region Leaf Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1432,15 +1405,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9996187240031184,
+          "effective_rank": 1.72,
+          "n_components_95": 2,
+          "n_components_99": 4
         },
         "mean_max": 49.93223839460781,
         "mean_min": 7.168743542780557,
         "n_outliers": 1303,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.8420983538855735,
+            0.13207583759754676,
+            0.013458700324987615,
+            0.005435482836639886,
+            0.003147777714513148,
+            0.0018146689844630393,
+            0.0007541620433449969,
+            0.00038450077824323697,
+            0.00024132550430658174,
+            0.00020791433349957378,
+            7.272180305045592e-05,
+            5.368953913521522e-05,
+            3.517969699554104e-05,
+            2.3106271155956553e-05,
+            1.920575904523376e-05,
+            1.665950113046458e-05,
+            1.4080801045155386e-05,
+            1.0750277478440082e-05,
+            9.26897573285069e-06,
+            8.026509252374125e-06,
+            6.536303203278723e-06,
+            5.60766476744545e-06,
+            4.891116533388936e-06,
+            4.331583708917668e-06,
+            3.7553672930260042e-06,
+            3.5105167989134884e-06,
+            3.2111922984270305e-06,
+            2.9789831669318132e-06,
+            2.860487435818994e-06,
+            2.7107522457463553e-06
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 14388.916913713583,
@@ -1761,8 +1768,8 @@
             "noise_rms": 0.04612380535395491,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -6886,10 +6893,779 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9991930510293735,
+        "imbalance_ratio": 16.0,
+        "minority_fraction": 0.00031201248049921997,
+        "n_classes": 1981,
+        "normalized_entropy": 0.9726605343297494
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_NewUID",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1981,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_NewUID",
+        "numeric_sentinels": [],
+        "original_name": "source_NewUID",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3205,
+        "n_classes": 1981,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 16,
+            "name": "703_7_BK"
+          },
+          {
+            "count": 11,
+            "name": "703_2_BK"
+          },
+          {
+            "count": 10,
+            "name": "715_24_BK"
+          },
+          {
+            "count": 9,
+            "name": "703_27_BK"
+          },
+          {
+            "count": 9,
+            "name": "703_28_BK"
+          },
+          {
+            "count": 9,
+            "name": "705_14_BK"
+          },
+          {
+            "count": 9,
+            "name": "705_9_BK"
+          },
+          {
+            "count": 8,
+            "name": "703_14_BK"
+          },
+          {
+            "count": 8,
+            "name": "701_4_BK"
+          },
+          {
+            "count": 8,
+            "name": "708_21_BK"
+          },
+          {
+            "count": 8,
+            "name": "709_22_BK"
+          },
+          {
+            "count": 8,
+            "name": "705_12_BK"
+          },
+          {
+            "count": 7,
+            "name": "702_28_BK"
+          },
+          {
+            "count": 7,
+            "name": "717_3_BK"
+          },
+          {
+            "count": 7,
+            "name": "703_3_BK"
+          },
+          {
+            "count": 7,
+            "name": "703_4_BK"
+          },
+          {
+            "count": 7,
+            "name": "703_8_BK"
+          },
+          {
+            "count": 7,
+            "name": "703_9_BK"
+          },
+          {
+            "count": 7,
+            "name": "710_13_BK"
+          },
+          {
+            "count": 7,
+            "name": "719_1_BK"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.998232578289091,
+        "imbalance_ratio": 24.0,
+        "minority_fraction": 0.00031201248049921997,
+        "n_classes": 1187,
+        "normalized_entropy": 0.9483816551955723
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_finalname",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1187,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_finalname",
+        "numeric_sentinels": [],
+        "original_name": "source_finalname",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3205,
+        "n_classes": 1187,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 24,
+            "name": "Leucadendron salignum"
+          },
+          {
+            "count": 24,
+            "name": "Pelargonium peltatum"
+          },
+          {
+            "count": 20,
+            "name": "Pelargonium reniforme"
+          },
+          {
+            "count": 20,
+            "name": "Protea neriifolia"
+          },
+          {
+            "count": 19,
+            "name": "Protea eximia"
+          },
+          {
+            "count": 19,
+            "name": "Protea lorifolia"
+          },
+          {
+            "count": 19,
+            "name": "Portulacaria afra"
+          },
+          {
+            "count": 16,
+            "name": "Ruschia virgata"
+          },
+          {
+            "count": 16,
+            "name": "Protea repens"
+          },
+          {
+            "count": 16,
+            "name": "Cussonia spicata"
+          },
+          {
+            "count": 16,
+            "name": "Crassula ovata"
+          },
+          {
+            "count": 15,
+            "name": "Berzelia lanuginosa"
+          },
+          {
+            "count": 15,
+            "name": "Anthospermum aethiopicum"
+          },
+          {
+            "count": 15,
+            "name": "Cymbopogon marginatus"
+          },
+          {
+            "count": 15,
+            "name": "Schotia latifolia"
+          },
+          {
+            "count": 14,
+            "name": "Protea nitida"
+          },
+          {
+            "count": 14,
+            "name": "Pappea capensis"
+          },
+          {
+            "count": 13,
+            "name": "Leucadendron laureolum"
+          },
+          {
+            "count": 13,
+            "name": "Pterocelastrus tricuspidatus"
+          },
+          {
+            "count": 13,
+            "name": "Passerina obtusifolia"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          833,
+          37,
+          9,
+          292,
+          0,
+          1031,
+          253,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65,
+          114,
+          13,
+          127,
+          7,
+          29,
+          27,
+          43,
+          152,
+          173
+        ],
+        "edges": [
+          -34.36736,
+          -34.23840625,
+          -34.109452499999996,
+          -33.980498749999995,
+          -33.851545,
+          -33.72259125,
+          -33.5936375,
+          -33.46468375,
+          -33.33573,
+          -33.20677625,
+          -33.077822499999996,
+          -32.948868749999995,
+          -32.819914999999995,
+          -32.69096125,
+          -32.5620075,
+          -32.43305375,
+          -32.3041,
+          -32.17514625,
+          -32.0461925,
+          -31.91723875,
+          -31.788285,
+          -31.659331249999997,
+          -31.5303775,
+          -31.40142375,
+          -31.27247
+        ]
+      },
+      "name": "source_Latitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 391,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Latitude",
+        "numeric_sentinels": [],
+        "original_name": "source_Latitude",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.028417158559398855,
+        "is_normal": false,
+        "kurtosis": -0.04626221553764509,
+        "normality_p": 9.650660902647861e-101,
+        "skewness": 1.1369102865428504
+      },
+      "stats": {
+        "max": -31.27247,
+        "mean": -33.42126019769735,
+        "median": -33.67944,
+        "min": -34.36736,
+        "n": 3205,
+        "n_missing": 0,
+        "q1": -34.23988,
+        "q3": -33.52319,
+        "std": 0.9497372502928916
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          515,
+          67,
+          543,
+          226,
+          15,
+          198,
+          44,
+          12,
+          0,
+          33,
+          185,
+          83,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          123,
+          1161
+        ],
+        "edges": [
+          18.38403,
+          18.63254458333333,
+          18.881059166666667,
+          19.12957375,
+          19.37808833333333,
+          19.626602916666666,
+          19.875117499999998,
+          20.123632083333334,
+          20.372146666666666,
+          20.620661249999998,
+          20.869175833333333,
+          21.117690416666665,
+          21.366205,
+          21.614719583333333,
+          21.863234166666665,
+          22.11174875,
+          22.360263333333332,
+          22.608777916666668,
+          22.8572925,
+          23.10580708333333,
+          23.354321666666664,
+          23.60283625,
+          23.85135083333333,
+          24.099865416666667,
+          24.34838
+        ]
+      },
+      "name": "source_Longitude",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 376,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Longitude",
+        "numeric_sentinels": [],
+        "original_name": "source_Longitude",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.1169443394469565,
+        "is_normal": false,
+        "kurtosis": -1.7840188935138586,
+        "normality_p": 0.0,
+        "skewness": 0.21386500377879358
+      },
+      "stats": {
+        "max": 24.34838,
+        "mean": 21.25735196105772,
+        "median": 20.11455,
+        "min": 18.38403,
+        "n": 3205,
+        "n_missing": 0,
+        "q1": 18.9902,
+        "q3": 24.1632,
+        "std": 2.48592698347736
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.763527152630567,
+        "imbalance_ratio": 4.553191489361702,
+        "minority_fraction": 0.08798751950078003,
+        "n_classes": 6,
+        "normalized_entropy": 0.9046505944040202
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_Subregion",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Subregion",
+        "numeric_sentinels": [],
+        "original_name": "source_Subregion",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3205,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1284,
+            "name": "Baviaanksloof"
+          },
+          {
+            "count": 515,
+            "name": "Cape Point"
+          },
+          {
+            "count": 468,
+            "name": "HTR"
+          },
+          {
+            "count": 355,
+            "name": "Hangklip"
+          },
+          {
+            "count": 301,
+            "name": "Langeberg"
+          },
+          {
+            "count": 282,
+            "name": "Cederberg"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.9743169433485608,
+        "imbalance_ratio": 12.0,
+        "minority_fraction": 0.0049921996879875195,
+        "n_classes": 57,
+        "normalized_entropy": 0.9489428543928381
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_DateMonthDay",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 57,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_DateMonthDay",
+        "numeric_sentinels": [],
+        "original_name": "source_DateMonthDay",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3205,
+        "n_classes": 57,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 192,
+            "name": "703"
+          },
+          {
+            "count": 141,
+            "name": "710"
+          },
+          {
+            "count": 136,
+            "name": "701"
+          },
+          {
+            "count": 133,
+            "name": "709"
+          },
+          {
+            "count": 131,
+            "name": "702"
+          },
+          {
+            "count": 114,
+            "name": "711"
+          },
+          {
+            "count": 108,
+            "name": "705"
+          },
+          {
+            "count": 98,
+            "name": "717"
+          },
+          {
+            "count": 95,
+            "name": "719"
+          },
+          {
+            "count": 93,
+            "name": "723"
+          },
+          {
+            "count": 86,
+            "name": "725"
+          },
+          {
+            "count": 84,
+            "name": "708"
+          },
+          {
+            "count": 81,
+            "name": "718"
+          },
+          {
+            "count": 79,
+            "name": "712"
+          },
+          {
+            "count": 72,
+            "name": "621"
+          },
+          {
+            "count": 69,
+            "name": "825"
+          },
+          {
+            "count": 66,
+            "name": "729"
+          },
+          {
+            "count": 63,
+            "name": "730"
+          },
+          {
+            "count": 61,
+            "name": "625"
+          },
+          {
+            "count": 60,
+            "name": "715"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          523,
+          462,
+          422,
+          390,
+          312,
+          278,
+          224,
+          161,
+          151,
+          83,
+          71,
+          30,
+          30,
+          9,
+          14,
+          12,
+          5,
+          6,
+          3,
+          4,
+          5,
+          4,
+          3,
+          3
+        ],
+        "edges": [
+          1.0,
+          4.875,
+          8.75,
+          12.625,
+          16.5,
+          20.375,
+          24.25,
+          28.125,
+          32.0,
+          35.875,
+          39.75,
+          43.625,
+          47.5,
+          51.375,
+          55.25,
+          59.125,
+          63.0,
+          66.875,
+          70.75,
+          74.625,
+          78.5,
+          82.375,
+          86.25,
+          90.125,
+          94.0
+        ]
+      },
+      "name": "source_Sample",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 91,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_Sample",
+        "numeric_sentinels": [],
+        "original_name": "source_Sample",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.7833206037295147,
+        "is_normal": false,
+        "kurtosis": 3.4668696172335673,
+        "normality_p": 5.334048905770541e-199,
+        "skewness": 1.4625375357775539
+      },
+      "stats": {
+        "max": 94.0,
+        "mean": 17.368486739469578,
+        "median": 14.0,
+        "min": 1.0,
+        "n": 3205,
+        "n_missing": 0,
+        "q1": 7.0,
+        "q3": 25.0,
+        "std": 13.605093518629381
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.763527152630567,
+        "imbalance_ratio": 4.553191489361702,
+        "minority_fraction": 0.08798751950078003,
+        "n_classes": 6,
+        "normalized_entropy": 0.9046505944040202
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_SubregAbbr",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_SubregAbbr",
+        "numeric_sentinels": [],
+        "original_name": "source_SubregAbbr",
+        "present": 3205,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3205,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3205,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1284,
+            "name": "BK"
+          },
+          {
+            "count": 515,
+            "name": "CP"
+          },
+          {
+            "count": 468,
+            "name": "HTR"
+          },
+          {
+            "count": 355,
+            "name": "HK"
+          },
+          {
+            "count": 301,
+            "name": "LB"
+          },
+          {
+            "count": 282,
+            "name": "CB"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

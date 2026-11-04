@@ -35,6 +35,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=266, missing=0, classes=1, top NIRS.zip::*.spc (×266) |
 | official_source_url | metadata | categorical | *Not specified.* | n=266, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.324ch00 (×266) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=266, missing=0, classes=1, top v0.8.59 (×266) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=266, missing=0, classes=266, top FeMe00001 (×1) |
+| source_folder | metadata | categorical | *Not specified.* | n=266, missing=0, classes=2, top Species Identification raw spectra (×154) |
 
 ## Statistics — splits
 
@@ -54,8 +56,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 11 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 11 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,6 +77,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b3e5775e758704c5f863586befd4f514e34b682f26fefcd1bfa2bf8fe6829261`
-- **Processing hash:** `e099144c0da1e24e9893326d0effa6a5769fa33971c3dd29ad609ac74d371286` | **metadata hash:** `0f5cbe5c6c26cbb420c28aa9d74b68d3438d87cc8e04abdf72a7cdfda7f1e0db`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e4781c496922063cc72e5b50ba6cf9cc69dea9ec878c6bd235656e874a277ba4`
+- **Processing hash:** `561e84a82a130b36301a32ea11fe457dce83fd4573756074bf8d51f8492ad563` | **metadata hash:** `9dbcdeb719047e15dd2dd30248ab77c0123a50e8b2436da454e2d71eba01a0c2`

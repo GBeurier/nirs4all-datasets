@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 347 distinct RRUFF specimens, each with one exported IR spectrum.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2d9ae258deb50e1bdf33b78a04c109dafde2a14ff6036e08f3c8f499fdc0a8da`
-- **Processing hash:** `515a97dd6e7d572a6fe3bca27ee30d8032a666c33aeecd18348b156cafaf2a3a` | **metadata hash:** `358ecece4343a3b305f0299ca4b142be37194131eec83b920a92775fc6455be0`
+- **Processing hash:** `e11dae2a779af3a97a48e3834d9ebf3ba28d7861a5fafc8eaa9f3e1cd7efd5d0` | **metadata hash:** `6958a95bf3aa58a98f768f18c4b3878d0c48b57ec1dff27ca10e8c7f60b78cc0`

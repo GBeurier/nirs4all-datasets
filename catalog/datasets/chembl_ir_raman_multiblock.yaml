@@ -164,6 +164,18 @@ variables:
 - name: origin_url
   role: metadata
   type: text
+- name: source_spectrum_id
+  role: metadata
+  type: categorical
+- name: source_sqlite_file
+  role: metadata
+  type: categorical
+- name: source_table
+  role: metadata
+  type: categorical
+- name: source_row_id
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -177,19 +189,19 @@ splits:
   applied: false
 tier: public
 versions:
-  content: 2.1.0
+  content: 2.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: Raman-ChEMBL Figshare
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
   - Version 2 exposes original variable-length peak lists with NaN padding and per-molecule
     frequency metadata; the inherited 512-point fitted representation cannot be reproduced
     without undocumented broadening parameters.
-  - "Curation identity contract: Undetermined"
+  - 'Curation identity contract: Undetermined'
 governance:
   license: CC-BY-4.0
   owner_steward: Raman-ChEMBL Figshare
@@ -242,5 +254,5 @@ generation:
   managed: false
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/chembl_ir_raman_multiblock
-  source_fingerprint: f0168dc24029b76c599dc003f8bcc27c2c6a675f64c51863b98a0192e94d0e86
+  source_relpath: v2.0/chembl_ir_raman_multiblock
+  source_fingerprint: c5c9eea7ec3fb98f42ed865487eb401b2bc7e67e77787a9a3d357f0576f3fd77

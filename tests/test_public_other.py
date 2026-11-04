@@ -22,19 +22,21 @@ class Context:
         return self.path.parent
 
 
-def test_twinspectra_retains_group_and_native_identifiers(tmp_path):
+def test_twinspectra_keeps_both_instruments_as_sources_of_the_same_samples(tmp_path):
     path = tmp_path / "raw.csv"
     pd.DataFrame({"id": [101, 102], "sample": [1, 2], "group": ["A", "B"], "fold": [0, 1], "908.1": [0.5, 0.6]}).to_csv(path, index=False)
     context = Context(path)
-    result = other.build(SimpleNamespace(id="zenodo_twinspectra_micronir_rdf_nir"), context)
+    result = other.build(SimpleNamespace(id="zenodo_twinspectra_rdf_nir"), context)
     sources, y, m = context.result
     assert result == tmp_path
     assert context.source_url.startswith("https://zenodo.org/")
-    assert sources["X"]["908.1"].tolist() == [0.5, 0.6]
-    assert y["group"].tolist() == ["A", "B"]
-    assert m["sample_id"].tolist() == ["1", "2"]
-    assert m["fold"].tolist() == [0, 1]
-    assert sources["X"]["observation_id"].equals(y["observation_id"])
+    assert list(sources) == ["X_fieldspec", "X_micronir"]
+    assert sources["X_micronir"]["908.1"].tolist() == [0.5, 0.6]
+    assert y["group"].tolist() == ["A", "B", "A", "B"]
+    assert m["sample_id"].tolist() == ["1", "2", "1", "2"]
+    assert m["fold"].tolist() == [0, 1, 0, 1]
+    observations = pd.concat([frame["observation_id"] for frame in sources.values()], ignore_index=True)
+    assert observations.is_unique and observations.equals(y["observation_id"])
 
 
 def test_flanagan_original_loader_keeps_product_grouping(tmp_path):
@@ -52,13 +54,13 @@ def test_flanagan_original_loader_keeps_product_grouping(tmp_path):
         def download(self, url, filename=None):
             return spectra if url == "spectra" else products
 
-    for dataset_id in ["flanagan_api_compounds_raman", "drug_common_application_flanagan_raman", "drug_compound_flanagan_raman", "drug_solvent_reagent_flanagan_raman"]:
-        context = FlanaganContext(spectra)
-        other.build(SimpleNamespace(id=dataset_id), context)
-        _, targets, metadata = context.result
-        result = curate_tables(dataset_id, metadata, targets)
-        assert result.structure["sample_id"].tolist() == ["A", "A", "B"]
-        assert result.report["identity"]["n_samples"] == 2
+    context = FlanaganContext(spectra)
+    other.build(SimpleNamespace(id="flanagan_api_compounds_raman"), context)
+    _, targets, metadata = context.result
+    assert list(targets.columns[1:]) == ["compound", "common_application", "solvent_reagent"]
+    result = curate_tables("flanagan_api_compounds_raman", metadata, targets)
+    assert result.structure["sample_id"].tolist() == ["A", "A", "B"]
+    assert result.report["identity"]["n_samples"] == 2
 
 
 def test_milk_uses_total_transmittance_and_all_targets(tmp_path):
@@ -124,6 +126,7 @@ def test_malaria_joins_publisher_sample_ids_and_keeps_stage_split(tmp_path, monk
     with zipfile.ZipFile(archive, "w") as z:
         z.writestr("Spectra training dataset oocyst infection/21C400001.spc", b"1")
         z.writestr("Spectra test dataset oocyst infection/113G00003.spc", b"3")
+        z.writestr("Spectra training dataset sporozoite infection/214C00002.spc", b"5")
 
     class MalariaContext(Context):
         def dataverse_file(self, file_id, filename, *, guestbook_id):
@@ -136,24 +139,25 @@ def test_malaria_joins_publisher_sample_ids_and_keeps_stage_split(tmp_path, monk
 
     monkeypatch.setattr(native, "open_bytes", parse)
     context = MalariaContext(archive)
-    other.build(SimpleNamespace(id="malaria_anopheles_gambiae_oocyst_nir"), context)
+    other.build(SimpleNamespace(id="harvard_dataverse_malaria_anopheles_gambiae_nir"), context)
     sources, targets, metadata = context.result
-    assert sources["X"]["1000"].tolist() == [1, 3]
-    assert targets["x"].tolist() == [12.0, 22.0]
-    assert metadata["sample_id"].tolist() == ["M214C001", "M113G3"]
-    assert metadata["split_original"].tolist() == ["train", "test"]
-    assert metadata["age"].tolist() == [4, 6]
+    assert sources["X"]["1000"].tolist() == [1, 3, 5]
+    assert targets["parasite_load"].tolist() == [12.0, 22.0, 3.0]
+    assert metadata["sample_id"].tolist() == ["M214C001", "M113G3", "S214C002"]
+    assert metadata["infection_stage"].tolist() == ["oocyst", "oocyst", "sporozoite"]
+    assert metadata["split_original"].tolist() == ["train", "test", "train"]
+    assert metadata["age"].tolist() == [4, 6, 5]
 
 
 def test_malaria_does_not_submit_a_missing_guestbook_profile(tmp_path, monkeypatch):
     from nirs4all_datasets.public_pull.common import PullContext
 
-    context = PullContext("malaria_anopheles_gambiae_oocyst_nir", tmp_path / "stage", tmp_path / "cache")
+    context = PullContext("harvard_dataverse_malaria_anopheles_gambiae_nir", tmp_path / "stage", tmp_path / "cache")
     monkeypatch.setattr(context, "get_json", lambda *_args, **_kwargs: {"data": {"nameRequired": True, "customQuestions": []}})
     monkeypatch.setattr(context.session, "post", lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("unexpected submission")))
     import pytest
     with pytest.raises(ValueError, match="guestbook_response.*name"):
-        other.build(SimpleNamespace(id="malaria_anopheles_gambiae_oocyst_nir"), context)
+        other.build(SimpleNamespace(id="harvard_dataverse_malaria_anopheles_gambiae_nir"), context)
 
 
 def test_origin_metadata_uses_names_visible_after_canonical_conversion(tmp_path):

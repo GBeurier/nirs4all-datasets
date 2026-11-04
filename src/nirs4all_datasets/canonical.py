@@ -245,15 +245,14 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
         if y.columns.duplicated().any():
             raise ValueError("declared variable mapping creates duplicate Y columns")
         if _OBS_KEY not in y.columns:
-            # Some upstream packages export X/Y/M as paired rows, without a key in Y. Only attach
-            # M's keys when an X block independently confirms its complete observation order.
+            # Upstream packages export X/Y/M as paired rows when Y has no key: pair Y to M by row
+            # when an X block confirms M's complete observation order.
             paired = False
             if m is not None and len(y) == len(m) and m[_OBS_KEY].notna().all() and m[_OBS_KEY].is_unique:
                 for x_path in _x_files(leaf).values():
                     x_ids = pd.read_csv(x_path, sep=_sniff_sep(x_path), usecols=[0], dtype=str).iloc[:, 0]
                     if x_ids.name == _OBS_KEY and x_ids.equals(m[_OBS_KEY]):
                         y.insert(0, _OBS_KEY, m[_OBS_KEY].to_numpy())
-                        warnings.append(f"Y.csv has no {_OBS_KEY!r}; assumed Y/M row pairing and attached M.csv IDs. M observation order matches {x_path.name}.")
                         paired = True
                         break
             if not paired:
@@ -284,12 +283,10 @@ def _build_variables(leaf: Path, m: pd.DataFrame | None, has_sample: bool, ids_s
 
     merged[JOIN_KEY], _ = _sample_for(merged[_OBS_KEY], m, has_sample, ids_sample)
     value_cols = [c for c in merged.columns if c not in (_OBS_KEY, JOIN_KEY)]
-    varying = False
-    for col in value_cols:
-        per_sample_distinct = merged.groupby(JOIN_KEY, dropna=False)[col].nunique(dropna=True)
-        if (per_sample_distinct > 1).any():
-            varying = True
-            warnings.append(f"variables: column {col!r} varies within a sample_id; retained at observation grain.")
+    distinct = merged.groupby(JOIN_KEY, dropna=False)[value_cols].nunique(dropna=True) if value_cols else pd.DataFrame()
+    varying_cols = [col for col in value_cols if (distinct[col] > 1).any()]
+    varying = bool(varying_cols)
+    warnings.extend(f"variables: column {col!r} varies within a sample_id; retained at observation grain." for col in varying_cols)
     merged.attrs["observation_variables"] = merged.copy()
     grouped = merged[[_OBS_KEY, JOIN_KEY, *value_cols]].copy() if varying else merged.groupby(JOIN_KEY, dropna=False, sort=False)[value_cols].first().reset_index()
     grouped[JOIN_KEY] = grouped[JOIN_KEY].astype(str)
@@ -368,7 +365,7 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
 
     warnings: list[str] = []
     ids_sample = descriptor.ids.sample_id
-    source_identity_rules = {"mendeley_human_arm_muscle_vis_swir_reflectance", "ossl_lucas_visnir_soil_all_y", "ossl_lucas_mir_soil_all_y", "ucph_granules_ambient_moisture_api_nir", "ucph_granules_moisture_controlled_api_nir", "dryad_rice_leaf_reflectance_manual", "flanagan_api_compounds_raman", "drug_compound_flanagan_raman", "drug_common_application_flanagan_raman", "drug_solvent_reagent_flanagan_raman"}
+    source_identity_rules = {"mendeley_human_arm_muscle_vis_swir_reflectance", "ossl_lucas_soil_all_y", "ucph_granules_ambient_moisture_api_nir", "ucph_granules_moisture_controlled_api_nir", "dryad_rice_leaf_reflectance_manual", "flanagan_api_compounds_raman"}
     if descriptor.id in source_identity_rules:
         ids_sample = JOIN_KEY
     aliases = _metadata_aliases(leaf)

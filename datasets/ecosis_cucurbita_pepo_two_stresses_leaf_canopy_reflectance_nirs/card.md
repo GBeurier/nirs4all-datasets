@@ -66,6 +66,13 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top explicit_open (×541) |
 | usage_scope | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top public_reuse_possible (×541) |
 | notes | metadata | categorical | *Not specified.* | n=541, missing=0, classes=1, top EcoSIS package leaf-and-canopy-spectroscopy-and-biochemical-data-of-field-grown-cucurbita-pepo-under-two-stresses, no interpolation applied by project. (×541) |
+| source_uniquefield | metadata | categorical | *Not specified.* | n=541, missing=0, classes=541, top 2019-07-03_01_1_leaf (×1) |
+| source_Location | metadata | categorical | *Not specified.* | n=541, missing=24, classes=1, top BNL_Biology_Field (×517) |
+| source_Paired_Spectra | metadata | categorical | *Not specified.* | n=541, missing=24, classes=1, top leaf (×517) |
+| source_Plot | metadata | numeric | *Not specified.* | n=541, missing=24, range 1–18, mean 9.267 ± 5.149 |
+| source_Rep | metadata | numeric | *Not specified.* | n=541, missing=24, range 1–3, mean 2.002 ± 0.82 |
+| source_Species | metadata | categorical | *Not specified.* | n=541, missing=24, classes=1, top CUPE (×517) |
+| source_Measurement_Date | metadata | categorical | *Not specified.* | n=541, missing=24, classes=10, top 2019-07-19 (×54) |
 
 ## Statistics — splits
 
@@ -76,7 +83,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -86,7 +93,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 4 fields, Y: 13 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 13 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,6 +115,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `de80b48a4156d1dbe836bcaf16381373f61b8d09a82ff938c16dbb8949042ece`
-- **Processing hash:** `4653d6cb36dc5f6a5aa90b865ed19a90abaeae8f8352f6ceca47ff59e231fb74` | **metadata hash:** `d9cab7979cacc5aa01ff90319d70ce76fc0d9971287774db3b942959d56b883a`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `9c78f239a76e8e6e8dd80df22211fb8fa7620cbca49ca782ac8d50d0ed37ece8`
+- **Processing hash:** `0cecfe083a795b748890e657e6156d5a73c2b97aeb21f615b10a4e462178c63a` | **metadata hash:** `99ad8b9eb4000e207541a3de825a06db1c99f427a800a34845cc63d374d93e6e`

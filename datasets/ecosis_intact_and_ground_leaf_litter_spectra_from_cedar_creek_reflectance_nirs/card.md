@@ -64,6 +64,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=322, missing=0, classes=1, top explicit_open (×322) |
 | usage_scope | metadata | categorical | *Not specified.* | n=322, missing=0, classes=1, top public_reuse_possible (×322) |
 | notes | metadata | categorical | *Not specified.* | n=322, missing=0, classes=1, top EcoSIS package intact--and-ground-leaf-litter-spectra-from-cedar-creek-and-minneapolis, no interpolation applied by project. (×322) |
+| source_plot | metadata | numeric | *Not specified.* | n=322, missing=205, range 4–147, mean 72.45 ± 43.4 |
+| source_individual | metadata | categorical | *Not specified.* | n=322, missing=0, classes=41, top 1 (×131) |
+| source_ID | metadata | categorical | *Not specified.* | n=322, missing=0, classes=322, top 101_1C_PIBA_1 (×1) |
+| source_latitude | metadata | numeric | *Not specified.* | n=322, missing=0, range 44.95–45.4, mean 45.38 ± 0.08537 |
+| source_longitude | metadata | numeric | *Not specified.* | n=322, missing=0, range -93.21–-93.19, mean -93.19 ± 0.003794 |
 
 ## Statistics — splits
 
@@ -85,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 11 fields, measurements: 1 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 11 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `08fc4ce431f9079151ef351a6d35a5e421b1b2b7a5e853b4686ce7e586609367`
-- **Processing hash:** `14397535402f9371579edd6c0a2a3f3e8d2a1f6b7f75d826c37c4b9e763b744a` | **metadata hash:** `97e2975e066eb0eba7acc5a2807f784a33052f3476548f855061352f7eeba206`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `a5991e2f888662eed73792d72601b0b7757b1af7e0a53c2c80ca9b46f18ac4b5`
+- **Processing hash:** `08e4235ed81f9c2f4a540ed38c32ccd0347eb8491a7f88705878b9da31b36197` | **metadata hash:** `f62d02087081dcecc05f3b1c885ae0dddf3745cc2616305ffcac249ac3ffbf24`

@@ -32,6 +32,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top doi_10_5061_dryad_tx95x6bbn__v20260304.zip::Dataset-Spectral.zip::Dataset/Data-global.csv (×15) |
 | official_source_url | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.tx95x6bbn (×15) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=15, missing=0, classes=1, top v0.8.58 (×15) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=15, missing=0, classes=15, top Infested L1-R1 (×1) |
 
 ## Statistics — splits
 
@@ -51,8 +52,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
+- **Curated views:** M: 0 fields, Y: 0 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -72,6 +73,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `94b77af45aa8391a4a9983a328d9bb830ccf07b803a0c5373738efeb400bbbcb`
-- **Processing hash:** `7510048caadad9117bac0681ca8877115e3d19379a20398296d15dfa014e1b31` | **metadata hash:** `efca2b99dab0c862df300629b9940c05a80d565686eff24af6e75c1beefdb355`
+- **Processing hash:** `204c1fcbbea1a1aa6145b889e8dae86a8db14bbb583407543c16c388f7e38333` | **metadata hash:** `873a8fe81a2a5d7edab0ac52fe58cf5effea14de4d13949e1cc69308d32e4b6c`

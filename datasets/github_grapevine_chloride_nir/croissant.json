@@ -1,0 +1,571 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "repeated": "cr:repeated",
+    "sc": "https://schema.org/",
+    "sha256": "sha256",
+    "source": "cr:source",
+    "subField": "cr:subField"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": null,
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": [],
+  "description": "GitHub grapevine leaf chloride, NIR-S-G1 and SVC HR-1024i. Origin database composed from 2 standardized v2.0 leaves: 2 spectral source(s), 4 declared target(s). Auto-generated from dataset_card.json (verify before publication).\n\nPrivate tier: export requires an access token; not openly redistributable.",
+  "distribution": [
+    {
+      "@id": "file/X_nirs_g1.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X_nirs_g1",
+      "sha256": "7ba9098f001ca711169983b96ca0dc555a7483cb269bfb9efe5c8c67e8acc620"
+    },
+    {
+      "@id": "file/X_svc_hr1024i.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "X_svc_hr1024i",
+      "sha256": "0e6abba50f48e70bf90da0a99d6055a5355decd1a3c114d5072022e4820285d1"
+    },
+    {
+      "@id": "file/variables.parquet",
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "name": "variables",
+      "sha256": "06a045c595b4031ade0a29ca2c712614696c4b40ac5252110219578a5470afe4"
+    }
+  ],
+  "keywords": [
+    "nir",
+    "v2",
+    "github"
+  ],
+  "license": "LicenseRef-not-cleared",
+  "name": "github_grapevine_chloride_nir",
+  "recordSet": [
+    {
+      "@id": "X_nirs_g1",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X_nirs_g1' (259 observations x 228 wavelengths).",
+      "field": [
+        {
+          "@id": "X_nirs_g1/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_nirs_g1.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_nirs_g1/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_nirs_g1.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_nirs_g1/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_nirs_g1.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_nirs_g1/observation_id"
+      },
+      "name": "X_nirs_g1"
+    },
+    {
+      "@id": "X_svc_hr1024i",
+      "@type": "cr:RecordSet",
+      "description": "Spectra from source 'X_svc_hr1024i' (556 observations x 2177 wavelengths).",
+      "field": [
+        {
+          "@id": "X_svc_hr1024i/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Unique acquisition identity within this spectral source.",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/X_svc_hr1024i.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_svc_hr1024i/sample_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Source-unit grouping (may repeat; availability documented in the card).",
+          "name": "sample_id",
+          "source": {
+            "extract": {
+              "column": "sample_id"
+            },
+            "fileObject": {
+              "@id": "file/X_svc_hr1024i.parquet"
+            }
+          }
+        },
+        {
+          "@id": "X_svc_hr1024i/spectrum",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Spectral intensities across the nm axis.",
+          "name": "spectrum",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "file/X_svc_hr1024i.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "X_svc_hr1024i/observation_id"
+      },
+      "name": "X_svc_hr1024i"
+    },
+    {
+      "@id": "variables",
+      "@type": "cr:RecordSet",
+      "description": "Target and metadata variables keyed by observation_id.",
+      "field": [
+        {
+          "@id": "variables/observation_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Sample identity (join key).",
+          "name": "observation_id",
+          "source": {
+            "extract": {
+              "column": "observation_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chloride_average",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chloride_average' (role target, type numeric).",
+          "name": "chloride_average",
+          "source": {
+            "extract": {
+              "column": "chloride_average"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chloridometer_reading1",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chloridometer_reading1' (role target, type numeric).",
+          "name": "chloridometer_reading1",
+          "source": {
+            "extract": {
+              "column": "chloridometer_reading1"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chloridometer_reading2",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chloridometer_reading2' (role target, type numeric).",
+          "name": "chloridometer_reading2",
+          "source": {
+            "extract": {
+              "column": "chloridometer_reading2"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/chloridometer_reading3",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'chloridometer_reading3' (role target, type numeric).",
+          "name": "chloridometer_reading3",
+          "source": {
+            "extract": {
+              "column": "chloridometer_reading3"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/pot_number",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'pot_number' (role metadata, type numeric).",
+          "name": "pot_number",
+          "source": {
+            "extract": {
+              "column": "pot_number"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/trial",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'trial' (role metadata, type categorical).",
+          "name": "trial",
+          "source": {
+            "extract": {
+              "column": "trial"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/genotype",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'genotype' (role metadata, type categorical).",
+          "name": "genotype",
+          "source": {
+            "extract": {
+              "column": "genotype"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/replicate",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'replicate' (role metadata, type numeric).",
+          "name": "replicate",
+          "source": {
+            "extract": {
+              "column": "replicate"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/salt_treatment_mM_NaCl",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'salt_treatment_mM_NaCl' (role metadata, type numeric).",
+          "name": "salt_treatment_mM_NaCl",
+          "source": {
+            "extract": {
+              "column": "salt_treatment_mM_NaCl"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/article_url",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'article_url' (role metadata, type categorical).",
+          "name": "article_url",
+          "source": {
+            "extract": {
+              "column": "article_url"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/doi_publication",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'doi_publication' (role metadata, type categorical).",
+          "name": "doi_publication",
+          "source": {
+            "extract": {
+              "column": "doi_publication"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/instrument_name",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'instrument_name' (role metadata, type categorical).",
+          "name": "instrument_name",
+          "source": {
+            "extract": {
+              "column": "instrument_name"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/spectroscopy_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'spectroscopy_type' (role metadata, type categorical).",
+          "name": "spectroscopy_type",
+          "source": {
+            "extract": {
+              "column": "spectroscopy_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/signal_type",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'signal_type' (role metadata, type categorical).",
+          "name": "signal_type",
+          "source": {
+            "extract": {
+              "column": "signal_type"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_unit",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'axis_unit' (role metadata, type categorical).",
+          "name": "axis_unit",
+          "source": {
+            "extract": {
+              "column": "axis_unit"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_min' (role metadata, type numeric).",
+          "name": "axis_min",
+          "source": {
+            "extract": {
+              "column": "axis_min"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/axis_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'axis_max' (role metadata, type numeric).",
+          "name": "axis_max",
+          "source": {
+            "extract": {
+              "column": "axis_max"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_original",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'n_points_original' (role metadata, type numeric).",
+          "name": "n_points_original",
+          "source": {
+            "extract": {
+              "column": "n_points_original"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'license' (role metadata, type categorical).",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/rights_status",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'rights_status' (role metadata, type categorical).",
+          "name": "rights_status",
+          "source": {
+            "extract": {
+              "column": "rights_status"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/public_release_allowed",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'public_release_allowed' (role metadata, type categorical).",
+          "name": "public_release_allowed",
+          "source": {
+            "extract": {
+              "column": "public_release_allowed"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/decoder",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'decoder' (role metadata, type categorical).",
+          "name": "decoder",
+          "source": {
+            "extract": {
+              "column": "decoder"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/scan_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'scan_id' (role metadata, type categorical).",
+          "name": "scan_id",
+          "source": {
+            "extract": {
+              "column": "scan_id"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/n_points_interpolated",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'n_points_interpolated' (role metadata, type categorical).",
+          "name": "n_points_interpolated",
+          "source": {
+            "extract": {
+              "column": "n_points_interpolated"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "variables/observation_id"
+      },
+      "name": "variables"
+    }
+  ],
+  "sameAs": [],
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "version": "1.1.0"
+}

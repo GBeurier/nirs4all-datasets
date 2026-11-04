@@ -27,9 +27,7 @@
       "site",
       "latitude",
       "longitude",
-      "plot",
-      "latitude_2",
-      "longitude_2"
+      "plot"
     ],
     "Y": [
       "species__species",
@@ -2301,13 +2299,24 @@
         "n_present": 322,
         "n_missing": 0,
         "completeness_pct": 100.0,
-        "n_unique": 31,
-        "type": "categorical",
-        "imbalance_ratio": 193.0
+        "n_unique": 29,
+        "type": "numeric",
+        "min": 4.0,
+        "max": 147.0,
+        "n_censored": 0,
+        "n_invalid": 205
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:plot",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {
+        "invalid": 205
+      },
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2350,8 +2359,14 @@
         "imbalance_ratio": 131.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:individual",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2394,17 +2409,23 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:id",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_latitude",
-      "canonical_name": "latitude_2",
+      "canonical_name": "latitude",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "keep_conflicting_homonyms_separate",
+      "operation": "coalesce_compatible_aliases",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
@@ -2434,23 +2455,30 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 25.833333333333332
+        "type": "numeric",
+        "min": 44.95,
+        "max": 45.4,
+        "n_censored": 0,
+        "n_invalid": 0
       },
-      "reasons": [
-        "conflicting aliases; no overwrite"
-      ],
-      "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:latitude_2",
-      "mapping_version": "1.1"
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:latitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_longitude",
-      "canonical_name": "longitude_2",
+      "canonical_name": "longitude",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "keep_conflicting_homonyms_separate",
+      "operation": "coalesce_compatible_aliases",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
@@ -2480,14 +2508,21 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 25.833333333333332
+        "type": "numeric",
+        "min": -93.21,
+        "max": -93.19,
+        "n_censored": 0,
+        "n_invalid": 0
       },
-      "reasons": [
-        "conflicting aliases; no overwrite"
-      ],
-      "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:longitude_2",
-      "mapping_version": "1.1"
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs:longitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2548,6 +2583,10 @@
         {
           "resource": "M.csv",
           "name": "latitude"
+        },
+        {
+          "resource": "M.csv",
+          "name": "source_latitude"
         }
       ]
     },
@@ -2572,6 +2611,10 @@
         {
           "resource": "M.csv",
           "name": "longitude"
+        },
+        {
+          "resource": "M.csv",
+          "name": "source_longitude"
         }
       ]
     },
@@ -2585,56 +2628,17 @@
         "n_present": 322,
         "n_missing": 0,
         "completeness_pct": 100.0,
-        "n_unique": 31,
-        "type": "categorical",
-        "imbalance_ratio": 193.0
+        "n_unique": 29,
+        "type": "numeric",
+        "min": 4.0,
+        "max": 147.0,
+        "n_censored": 0,
+        "n_invalid": 205
       },
       "source_columns": [
         {
           "resource": "M.csv",
           "name": "source_plot"
-        }
-      ]
-    },
-    {
-      "name": "latitude_2",
-      "view": "M",
-      "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 322,
-        "n_present": 322,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 25.833333333333332
-      },
-      "source_columns": [
-        {
-          "resource": "M.csv",
-          "name": "source_latitude"
-        }
-      ]
-    },
-    {
-      "name": "longitude_2",
-      "view": "M",
-      "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 322,
-        "n_present": 322,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 25.833333333333332
-      },
-      "source_columns": [
-        {
-          "resource": "M.csv",
-          "name": "source_longitude"
         }
       ]
     },

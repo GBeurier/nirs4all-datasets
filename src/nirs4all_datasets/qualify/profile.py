@@ -109,7 +109,25 @@ def _provenance(descriptor: DatasetDescriptor) -> dict[str, Any]:
     }
 
 
-def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor, source_profiles: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _source_coverage(source_samples: dict[str, set[str]], available: bool) -> dict[str, Any]:
+    """Which sample units each spectral source measures, and how the sources overlap.
+
+    Sources of one database may be partially disjoint (an instrument missed some samples); overlap is
+    counted on declared sample identity only, so it is ``None`` when that identity is unavailable.
+    """
+    ids = list(source_samples)
+    union = set().union(*source_samples.values()) if source_samples else set()
+    shared = set.intersection(*source_samples.values()) if source_samples else set()
+    return {
+        "n_sources": len(ids),
+        "per_source": {sid: len(samples) for sid, samples in source_samples.items()},
+        "in_all_sources": len(shared) if available else None,
+        "in_one_source_only": sum(1 for unit in union if sum(unit in s for s in source_samples.values()) == 1) if available else None,
+        "pairwise_shared": [[a, b, len(source_samples[a] & source_samples[b])] for i, a in enumerate(ids) for b in ids[i + 1:]] if available else None,
+    }
+
+
+def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[int], descriptor: DatasetDescriptor, source_profiles: list[dict[str, Any]] | None = None, source_samples: dict[str, set[str]] | None = None) -> dict[str, Any]:
     n_observations_total = int(sum(int(s.get("n_observations") or 0) for s in config.get("sources", [])))
     reps = registry.metrics_for("dataset")["reps_per_sample"](np.asarray(reps_counts, dtype="float64")) if reps_counts else None
     from nirs4all_datasets.qualify import metrics
@@ -130,6 +148,7 @@ def _alignment(config: dict[str, Any], sample_ids: set[str], reps_counts: list[i
         "identity_status": identity.get("status") if identity else ("available" if available else "unavailable"),
         "unit": identity.get("unit") if identity else None,
         "profile_scores": metrics.aggregate_profile_scores(source_profiles or []),
+        "source_coverage": _source_coverage(source_samples or {}, available),
     }
 
 
@@ -566,6 +585,7 @@ def build_card(
     source_frames: list[pd.DataFrame] = []
     source_profiles: list[dict[str, Any]] = []
     all_sample_ids: set[str] = set()
+    source_samples: dict[str, set[str]] = {}
     reps_counts: list[int] = []
     for entry in config.get("sources", []):
         section, df, src_samples = _source_section(entry, descriptor, warnings, compute_pca=compute_pca, compute_curve=compute_assets, shared_profile=by_source.get(entry["source_id"]), shared=assessment_mode == "shared")
@@ -577,6 +597,7 @@ def build_card(
                 profile["diagnostics"] = metrics.diagnostic_hypotheses(profile, top_k=8, domain_context=diagnostic_domain)
             source_profiles.append(profile)
         all_sample_ids |= src_samples
+        source_samples[entry["source_id"]] = src_samples
         if _SAMPLE_KEY in df.columns:
             reps_counts.extend(int(c) for c in df[_SAMPLE_KEY].astype(str).value_counts().to_numpy())
 
@@ -623,7 +644,7 @@ def build_card(
         "generated_at": datetime.now(UTC).isoformat(),
         "identity": _identity(descriptor),
         "versions": _versions(descriptor),
-        "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor, source_profiles),
+        "alignment": _alignment(config, all_sample_ids, reps_counts, descriptor, source_profiles, source_samples),
         "sources": source_sections,
         "variables": variable_sections,
         "variable_join_key": variables_block.get("join_key", _SAMPLE_KEY) if variables_block else _SAMPLE_KEY,

@@ -33,6 +33,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | FREEZE | target | numeric | *Not specified.* | n=784, missing=389, range -59.5–6.6, mean -14.01 ± 11.68 |
 | TOTAL | target | numeric | *Not specified.* | n=784, missing=389, range 8.3–47.2, mean 30.75 ± 6.759 |
 | VISC | target | numeric | *Not specified.* | n=784, missing=389, range 1.12–4.05, mean 2.517 ± 0.5284 |
+| source_sample_label | metadata | categorical | *Not specified.* | n=784, missing=0, classes=784, top 17366 (×1) |
 
 ## Statistics — splits
 
@@ -43,7 +44,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -53,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 7 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 7 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -73,6 +74,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `ecc2af670f6bffe3707fffb0bfe4303582fda7a8b58dee6932cb79d9b56d1895`
-- **Processing hash:** `9097f1fa96ea84276bf7de5a344ab150c1b55c7389406d5f55c59a356080f772` | **metadata hash:** `71c55caca3db4b23090cca5ccc2ee2506f42c54bf800db75a5d4388f1016318b`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `9f00c564cc9223f3d8e28be547fad99da5f18589166d1f95c889cc057cbc093c`
+- **Processing hash:** `33e1a14e2f0d6a3edf6a888475656e5c4c3c5caa59e6a270a5b021c5cd7d377c` | **metadata hash:** `022cca91ca472f6dd4bbc4e911d88ce290f983f94f6df57789a5ec4a27b4ebc9`

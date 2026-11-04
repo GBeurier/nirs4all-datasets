@@ -54,6 +54,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top manual_review_needed (×1485) |
 | usage_scope | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top private_use_only (×1485) |
 | notes | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1, top EcoSIS package 3d-lma-leaf-level-spectra, no interpolation applied by project. (×1485) |
+| source_Unnamed__0 | metadata | categorical | *Not specified.* | n=1485, missing=0, classes=1485, top plot68_2017_t01_1685_01 (×1) |
 
 ## Statistics — splits
 
@@ -64,7 +65,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -74,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 1 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 31 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -94,6 +95,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `441072e54313804bb9866e8f63dca7a91e2a06d88a22ca0859c90ed88558ccc5`
-- **Processing hash:** `0a27be55a6123ea39cbc81320438f9c218ce9db4021e877bd9b488d69f49d023` | **metadata hash:** `3f2095d244c188b61ad28616dbbfc6d9a3905b54c2c5b475f9adc67cfb71c3a8`
+- **Processing hash:** `ca1d6d56a9e348299d94209e16731130822b26cd64dd569ff5eb869efcdf811c` | **metadata hash:** `fd38da473afc39d72c194c81304b4512764e92594536c241f132e9b5c220b549`

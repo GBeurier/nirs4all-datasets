@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top manual_review_needed (×2) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top private_use_only (×2) |
 | notes | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top mineral.oxide.none.fine.tir.chromite_1.jhu.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Chromite Fe+2Cr2O4 (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Mineral (×2) |
+| source_class | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Oxide (×1) |
+| source_subclass | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top None (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Fine (×2) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top chromite_1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top JHU (×2) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top TIR (×2) |
+| source_origin | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Smithsonian NMNH 117075, Sample from Tiebaghi Mine, NewCaledonia. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
+| source_description | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top The sample was one large (3.5 cm x 2 cm x 2 cm) piece with a few crystal faces showing, weighing 42 g. Minimal contamination (<1%) occurred along a few thin veins containing mostly kaolinte. Microscopic examination confirmed the substantial purity of the sample. Most of the contaminating earthy material was removed by ultrasonic cleaning of the crushed sample. Particle size was less than 2 Micrometers.(Spinel Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.oxide.none.powder.chromi1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Transmission (×2) |
+| source_first_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top X (×2) |
+| source_second_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Y (×2) |
+| source_x_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Wavelength (micrometers) (×2) |
+| source_y_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Transmittance (percent) (×2) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 25.04–25.04, mean 25.04 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=2, missing=0, range 2287–2287, mean 2287 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top mineral.oxide.none.fine.tir.chromite_1.jhu.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Chromite Fe+2Cr2O4 (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top mineral (×2) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top mineral.oxide.none.fine.tir.chromite_1.jhu.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `3a62cf546e941b6a5f86705faf382d900a6bb27406d7e0794b066ea5008d24c3`
-- **Processing hash:** `12198fa83928eb700f43e0a67ff9bc828d42f69f289b1ae3c2fe7c1385ba6191` | **metadata hash:** `5f619dbc9a13fb92c6cd12b79fd40b9778d2e79265f5d2127ecfee9d4e7ea40a`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `8b06c448d61e5a1d6c7764f9a18e0092d07840aaf38dc62b27801fdc71bf75cc`
+- **Processing hash:** `79f0df3bc5caeaebc3a3af857002f10ffed524eb17a61f9d29cfcfc6a02e4537` | **metadata hash:** `71c75ff798f10bb38663912aca7c7682bdded72a2bab7a100a8f3644308921bb`

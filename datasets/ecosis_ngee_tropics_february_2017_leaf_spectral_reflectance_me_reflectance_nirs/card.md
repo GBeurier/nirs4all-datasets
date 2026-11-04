@@ -65,6 +65,28 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top explicit_open (×249) |
 | usage_scope | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top public_reuse_possible (×249) |
 | notes | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top EcoSIS package ngee-tropics-february-2017-leaf-spectral-reflectance-measured-in-panama-at-the-pa-slz-canopy-crane, no interpolation applied by project. (×249) |
+| source_SampleID | metadata | categorical | *Not specified.* | n=249, missing=0, classes=249, top BNL11814 (×1) |
+| source_Canopy_position | metadata | categorical | *Not specified.* | n=249, missing=116, classes=1, top sunlit (×133) |
+| source_Site | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top PA-SLZ (×249) |
+| source_Date | metadata | categorical | *Not specified.* | n=249, missing=0, classes=5, top 20170221 (×90) |
+| source_Spectra_Name | metadata | categorical | *Not specified.* | n=249, missing=0, classes=249, top BNL11814 (×1) |
+| source_Relative_leaf_age | metadata | categorical | *Not specified.* | n=249, missing=0, classes=4, top M (×85) |
+| source_Leaf_age_revised | metadata | categorical | *Not specified.* | n=249, missing=0, classes=3, top M (×85) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Spectra Vista Corporation (×249) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top HR-2014i (×249) |
+| source_Instrument_Serial_Number | metadata | numeric | *Not specified.* | n=249, missing=0, range 2041–2041, mean 2041 ± 0 |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Fiber_1_LC_RP (×249) |
+| source_Collection_Units | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Radiance (×249) |
+| source_Spectra_Units | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Percent_Reflectance_0_100 (×249) |
+| source_Spectra_Type | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Leaf (×249) |
+| source_Reflectance_Type | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Spectralon_corrected (×249) |
+| source_White_Reference_Standard | metadata | categorical | *Not specified.* | n=249, missing=0, classes=2, top 99AA10-0614-0827 SRS-99-020 (×140) |
+| source_Spectral_Resolution | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top 1nm (×249) |
+| source_Wavelength | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Nanometer (×249) |
+| source_Interpolation_Method | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Linear (×249) |
+| source_Overlap_Handling | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Removed (×249) |
+| source_Overlap_Removal | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Post_processing (×249) |
+| source_Overlap_Matching_Type | metadata | categorical | *Not specified.* | n=249, missing=0, classes=1, top Radiance (×249) |
 
 ## Statistics — splits
 
@@ -75,7 +97,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -85,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 1 fields, passport: 46 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 12 fields, passport: 46 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -110,6 +132,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `28b96eadc12aafef2bae3257c637c3cc0000c1bc58205e6e24195101e8ffc135`
-- **Processing hash:** `c21176e08f964c1dbba9aa21dd7a5ce230564ea511980049f332b9fa303a09c2` | **metadata hash:** `02f20433b8725a27e1f56fd3639c17318582b0010ed5606081e707f746b0f5ea`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `1837f73dceedf10eb8c6b815466224dc73b0c13368d29af8ba7615fe64a6f03d`
+- **Processing hash:** `51ff14c6b01da7366bd8f0ad70594f4d5a9db692cfaa5bc5365f0983dde7b8e2` | **metadata hash:** `4bada64afa70a4dfb732cd2826d29ef39389bd2ccb2bd83cc5683795f6d43c81`

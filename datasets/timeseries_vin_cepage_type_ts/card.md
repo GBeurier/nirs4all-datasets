@@ -41,17 +41,18 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=111, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=111, missing=0, range 234–234, mean 234 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top Hypothese utilisateur: meme convention spectrale que Strawberry, axe lineaire interpole applique ici en ordre decroissant 4000->400 sur 234 variables. (×111) |
+| source_zip | metadata | categorical | *Not specified.* | n=111, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/Wine.zip (×111) |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 54, train: 57
+- **original** (documented, not applied): train: 57, test: 54
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `cbe59cf2c9c175969d47ea838d618e8ba8428ed8cb6bb34cbde6136e317f836c`
-- **Processing hash:** `e4ab9f43d78add5f1d3a2a2046433cd27c0207354bd340ab31e417f632ac444c` | **metadata hash:** `2d05462cd10c2a773ca4e225bc6b0a084bb7b34a626bec1c35eb9762a8ff5874`
+- **Processing hash:** `1fa001b65383c3515390d0ba92e37214800e2f97e4b972f6a8c7919d0e3759bc` | **metadata hash:** `8be246e857edfa91772f11c8c41f3bf3e815b452e8ae9efc603c8ff3cf12760d`

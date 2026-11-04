@@ -2,7 +2,7 @@
 
 This page walks through the two ways to use the catalog: the **Python API** and the **`n4a-datasets`
 CLI**. Install the package and run from any directory. The bundled catalog contains
-297 datasets, including 135 public entries with original-source loading recipes.
+241 datasets, including 95 public entries with original-source loading recipes.
 `get()` uses current local data when available, otherwise downloads and assembles
 public origin resources into its cache. Hosted canonical resources retain their
 manifest checksum verification. See {doc}`installation` and
@@ -17,9 +17,9 @@ The consumer surface is three module-level functions — `list`, `card`, and `ge
 import nirs4all_datasets as n4ad
 
 n4ad.list()                              # the catalog index (list of dicts), supports keyword filters
-n4ad.card("barley_moisture_perten")        # generated card if present locally (otherwise None)
+n4ad.card("perten_cereals_nir")        # generated card if present locally (otherwise None)
 
-ds = n4ad.get("barley_moisture_perten")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
+ds = n4ad.get("perten_cereals_nir")    # -> NirsDataset (fetched from origin, checksum-verified, cached)
 ```
 
 `list()` forwards keyword filters to the catalog search, e.g.:
@@ -69,7 +69,7 @@ the sources are uniquely alignable by observation or sample id.
 
 ### Tokens for protected datasets
 
-Public datasets need no Dataverse token. The two malaria datasets require optional,
+Public datasets need no Dataverse token. The malaria database requires optional,
 explicitly supplied guestbook profile answers; see {doc}`PUBLIC_ORIGIN_LOADING`. Private / anonymized datasets need a Dataverse token, passed inline or
 resolved from the environment / config file:
 

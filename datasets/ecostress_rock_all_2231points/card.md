@@ -57,6 +57,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top manual_review_needed (×27) |
 | usage_scope | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top private_use_only (×27) |
 | notes | metadata | categorical | *Not specified.* | n=27, missing=0, classes=21, top none (×7) |
+| source_name | metadata | categorical | *Not specified.* | n=27, missing=0, classes=4, top Basalt (×16) |
+| source_type | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Rock (×27) |
+| source_class | metadata | categorical | *Not specified.* | n=27, missing=0, classes=2, top Igneous (×20) |
+| source_subclass | metadata | categorical | *Not specified.* | n=27, missing=0, classes=2, top Mafic (×20) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Solid (×27) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=27, missing=0, classes=27, top ME10B (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=27, missing=0, classes=2, top Lawrence Rowan, USGS Reston (×20) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top All (×27) |
+| source_origin | metadata | categorical | *Not specified.* | n=27, missing=0, classes=20, top Southeastern Idaho (×7) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top N/A (×27) |
+| source_description | metadata | categorical | *Not specified.* | n=27, missing=0, classes=27, top Basalt, fresh surfaceSample was Whole rock chips. Original ASTER Spectral Library name was usgs.perknic.rock.igneous.mafic.solid.me10b.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Directional Hemispherical Reflectance (×27) |
+| source_first_column | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top X (×27) |
+| source_second_column | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Y (×27) |
+| source_x_units | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Wavelength (micrometers) (×27) |
+| source_y_units | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top Reflectance (percent) (×27) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=27, missing=0, range 14.05–14.05, mean 14.05 ± 1.81e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=27, missing=0, range 0.4–0.4, mean 0.4 ± 5.657e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=27, missing=0, range 2231–2231, mean 2231 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=27, missing=0, classes=21, top none (×7) |
+| source_material_name | metadata | categorical | *Not specified.* | n=27, missing=0, classes=4, top Basalt (×16) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=27, missing=0, classes=1, top rock (×27) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=27, missing=0, classes=27, top rock.igneous.mafic.solid.all.me10b.usgs.perknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -67,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -78,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 3 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 50 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +122,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `db4dd99a7c4950a0d75030787b9f50f927facc2cc55bddeaf40a4519a4f21764`
-- **Processing hash:** `c213b75d83ac82ef7f1ee9c7055222c8fb67cd08af2925c7bd9cc2b4d6c0cd43` | **metadata hash:** `fd489e9f5a22165c7a10edf1e95b30bfb856b3d45495fd9deeac8a9f173dac3e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e7bac0c268be65631c44c1bfd75eca03e35c3f49d09d65fe11449e2bcde1aaca`
+- **Processing hash:** `266af0fa2086c56998ae76bf2672088bff9a59027cb724d26087fb3fa9beb338` | **metadata hash:** `f0f3d480e32c226aad765e4c3ad69ebcc6ea414d4dca7d5f7647b1ba3f74522c`

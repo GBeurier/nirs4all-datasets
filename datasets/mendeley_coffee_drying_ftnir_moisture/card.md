@@ -46,6 +46,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | moisture_standard_deviation | metadata | numeric | *Not specified.* | n=73, missing=0, range 0.1029–2.019, mean 0.5485 ± 0.463 |
 | moisture_coefficient_of_variation_pct | metadata | numeric | *Not specified.* | n=73, missing=0, range 0.2026–4.11, mean 2.009 ± 1.138 |
 | notes | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top Unprocessed FT-NIR spectra of parchment coffee during drying, sample columns without moisture target were excluded from X/Y/M. (×73) |
+| source_file_targets | metadata | categorical | *Not specified.* | n=73, missing=0, classes=1, top Moisture_values.xlsx (×73) |
 
 ## Statistics — splits
 
@@ -63,13 +64,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/7c6gx7rr6d/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/snapshot/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/7c6gx7rr6d/files?folder_id=root&version=1&$start=0&$limit=1000`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groups M 1…M 20 aligned with moisture references; 1–5 indexed spectra per group, 73 in total. The converter explicitly treats the suffix as a replicate. Whether it is strictly technical rather than an independent preparation remains undocumented.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 2 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 20 groups M 1…M 20 aligned with moisture references; 1–5 indexed spectra per group, 73 in total. The converter explicitly treats the suffix as a replicate. Whether it is strictly technical rather than an independent preparation remains undocumented.
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 21 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,6 +89,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `c3b77c320d1e2ebb12e900b661d4c54e0866f5cd0b9f54da4371157e2e9cbdfa`
-- **Processing hash:** `d690212cdb28b7874295a8b24fcc3ecfe8efa14d820bb64d08707476f32b8cce` | **metadata hash:** `6a0790012b5b20e186efa7689ab6fa59e5162309942297fe2c72ae3760628d0a`
+- **Processing hash:** `0aa92f88d5cda7a642cdf05f6b5ffebe4019908de0763bbb470a9db7d71658e8` | **metadata hash:** `734cd74024768f53b3e51ffe78b4777df9188cd30977386c4f8461ec8a59c69a`

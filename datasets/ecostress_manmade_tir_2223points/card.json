@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 10,
+      "in_one_source_only": 10,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 10
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -192,7 +201,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:07.034360+00:00",
+  "generated_at": "2026-11-03T16:12:44.190404+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -213,15 +222,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "713d706762bdf95b105d4af635c7800a55b0fd08245069f8682998898b698419",
+    "content_hash": "467d5db8ba1b358b76fb110bc617ac7347da403a6fc72a7971d70f71e74fc517",
     "manifest": "manifest.json",
-    "metadata_hash": "df3e931e0bccdfde365a7ca26a209369f58d98cca3b094dc4c7b80deb51fa070",
-    "processing_hash": "0729236d8a0c3acc6d87298ed09bbecfc6fa6284c925a0ed5aed6a5675edf608"
+    "metadata_hash": "00633e613028fa053c20cdb99d4e260ed704298825afb9682643dfe7cfafe9c0",
+    "processing_hash": "5d58eae2e58f35d772d4675c8517113a28fa0df4c14603dbe8db1f6e80bc9202"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1282,15 +1291,28 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 1.0,
+          "effective_rank": 1.04,
+          "n_components_95": 1,
+          "n_components_99": 1
         },
         "mean_max": 15.736630201339722,
         "mean_min": 8.754759979248046,
         "n_outliers": 3,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9950069590313632,
+            0.004084996658460388,
+            0.0004408204873839241,
+            0.00022182713871818897,
+            0.00013472160707003763,
+            5.492082019615463e-05,
+            3.3823916989585926e-05,
+            1.2204925964155978e-05,
+            9.725413854315e-06
+          ],
+          "n_components": 9
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 143.41608893152355,
@@ -1611,8 +1633,8 @@
             "noise_rms": 0.039614677808618576,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2940,10 +2962,1136 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7599999999999999,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.1,
+        "n_classes": 6,
+        "normalized_entropy": 0.898244401703927
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Flat Black Paint"
+          },
+          {
+            "count": 2,
+            "name": "Glossy Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Metallic Silver Paint"
+          },
+          {
+            "count": 1,
+            "name": "Gloss Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Ultra Flat Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Lamp (Ebony) Black Paint"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Manmade"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "General Construction Material"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Paint"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Solid"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.1,
+        "n_classes": 10,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "1246"
+          },
+          {
+            "count": 1,
+            "name": "1247"
+          },
+          {
+            "count": 1,
+            "name": "1249"
+          },
+          {
+            "count": 1,
+            "name": "1601"
+          },
+          {
+            "count": 1,
+            "name": "1602"
+          },
+          {
+            "count": 1,
+            "name": "1949"
+          },
+          {
+            "count": 1,
+            "name": "7211"
+          },
+          {
+            "count": 1,
+            "name": "DA67"
+          },
+          {
+            "count": 1,
+            "name": "DM625"
+          },
+          {
+            "count": 1,
+            "name": "DM725"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "JPL"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "TIR"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.1,
+        "n_classes": 4,
+        "normalized_entropy": 0.9232196723355077
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "The Testor Corp., 620 Buckbee St., Rockford, IL 61104"
+          },
+          {
+            "count": 3,
+            "name": "The Sherwin-Williams Co., Solon, OH 44139"
+          },
+          {
+            "count": 2,
+            "name": "Design Master, P.O. Box 601, Boulder, CO 80306"
+          },
+          {
+            "count": 1,
+            "name": "DecoArt, P.O. Box 386, Stanford, KY 40084"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.1,
+        "n_classes": 10,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Metallic silver spray enamel paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1246.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Glossy black spray enamel paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1247.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Flat black spray enamel paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1249.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Glossy black interior/exterior spray paint.Krylon #1601.Collected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1601.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Ultra flat black interior/exterior spray paint.Krylon #1602.Collected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1602.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Flat black custom (FS37038) spray enamel paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.1949.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Flat black latex enamel spray paint.Krylon #7211.Collected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.7211.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Lamp (ebony) black acrylic paint. Liquid format, paint appliedwith a brush.Collected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.da67.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Glossy black spray paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.dm625.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Flat black spray paintCollected by JPL Original ASTER Spectral Library name was jpl.nicolet.manmade.construction.paint.solid.dm725.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Hemispherical reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 14.0131,
+        "mean": 14.0131,
+        "median": 14.0131,
+        "min": 14.0131,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 14.0131,
+        "q3": 14.0131,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2.0003,
+        "mean": 2.0003,
+        "median": 2.0003,
+        "min": 2.0003,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 2.0003,
+        "q3": 2.0003,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2223.0,
+        "mean": 2223.0,
+        "median": 2223.0,
+        "min": 2223.0,
+        "n": 10,
+        "n_missing": 0,
+        "q1": 2223.0,
+        "q3": 2223.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.7599999999999999,
+        "imbalance_ratio": 4.0,
+        "minority_fraction": 0.1,
+        "n_classes": 6,
+        "normalized_entropy": 0.898244401703927
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 6,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 6,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Flat Black Paint"
+          },
+          {
+            "count": 2,
+            "name": "Glossy Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Metallic Silver Paint"
+          },
+          {
+            "count": 1,
+            "name": "Gloss Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Ultra Flat Black Paint"
+          },
+          {
+            "count": 1,
+            "name": "Lamp (Ebony) Black Paint"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 10,
+            "name": "manmade"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.8999999999999999,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.1,
+        "n_classes": 10,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 10,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 10,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 10,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 10,
+        "n_classes": 10,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1246.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1247.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1249.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1601.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1602.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.1949.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.7211.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.da67.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.dm625.jpl.nicolet.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "manmade.generalconstructionmaterial.paint.solid.tir.dm725.jpl.nicolet.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

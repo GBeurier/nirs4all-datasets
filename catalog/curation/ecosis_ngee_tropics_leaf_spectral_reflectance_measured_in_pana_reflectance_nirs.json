@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
   "dataset_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs",
-  "contract_sha256": "f3d8840f4f0f64229f144d21714e8e15bb6d0979fe85d817298a6c9699b80d89",
+  "contract_sha256": "80019100e8b34f9bdade70919af7bfeb3088037c83a3ad7b7ece676098659778",
   "grain": "observation",
   "identity": {
     "method": "column",
@@ -27,12 +27,23 @@
     "M": [
       "site",
       "sample_date",
-      "white_reference_standard"
+      "white_reference_standard",
+      "date",
+      "location",
+      "species_code",
+      "genus",
+      "species",
+      "gasex_typeorsequence",
+      "tleafdegc_canopy",
+      "tleafdegcprespec",
+      "tleafdegcpostspec",
+      "canopy_position"
     ],
     "Y": [
       "h2o_pc",
       "lma_gdw_m2",
-      "sla_cm2_gdw"
+      "sla_cm2_gdw",
+      "narea_g_m2"
     ],
     "passport": [
       "dataset_id",
@@ -64,25 +75,40 @@
       "overlap_handling",
       "overlap_removal",
       "duplicate_flag",
-      "m_location",
-      "m_country",
-      "m_latitude",
-      "m_longitude",
+      "spectralrep",
+      "photo_num",
+      "general_comments",
+      "dataset",
+      "dataset_title",
+      "resource",
+      "dimensions",
+      "axis_note",
+      "official_data_url",
+      "official_package_url",
+      "license_url",
+      "public_release_allowed",
+      "parent_standardized_dataset_id",
       "m_year",
-      "m_date",
-      "m_species",
-      "m_genus",
-      "m_family",
       "m_plant_part",
       "m_canopy_or_leaf",
       "m_instrument",
       "m_acquisition_mode",
       "m_instrument_2",
       "m_foreoptic",
-      "m_chem_type"
+      "m_chem_type",
+      "m_instrument_3"
     ],
     "measurements": [
-      "overlap_matching_type"
+      "overlap_matching_type",
+      "genus_species",
+      "cmass_pc",
+      "nmass_pc",
+      "cn_ratio",
+      "carea_g_m2",
+      "lwp_coll_time",
+      "lwp_time",
+      "lwp_bar",
+      "lwp_comment"
     ]
   },
   "mapping": [
@@ -241,6 +267,59 @@
         "thousands_separator": null
       },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:sla_cm2_gdw",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "Y.csv",
+      "original_name": "Narea_g_m2",
+      "canonical_name": "narea_g_m2",
+      "original_role": "Y",
+      "semantic_role": "measured_trait",
+      "view": "Y",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 122,
+        "type": "numeric",
+        "min": -9999.0,
+        "max": 3.35,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:narea_g_m2",
       "mapping_version": "1.1",
       "value_issue_counts": {},
       "value_issue_detail": "Retained in local canonical/curation/mapping.json"
@@ -507,214 +586,6 @@
     },
     {
       "source_resource": "M.csv",
-      "original_name": "location",
-      "canonical_name": "m_location",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_location",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "country",
-      "canonical_name": "m_country",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_country",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "latitude",
-      "canonical_name": "m_latitude",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_latitude",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "longitude",
-      "canonical_name": "m_longitude",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_longitude",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
       "original_name": "coordinate_precision_notes",
       "canonical_name": "coordinate_precision_notes",
       "original_role": "M",
@@ -814,214 +685,6 @@
         "thousands_separator": null
       },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_year",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "date",
-      "canonical_name": "m_date",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_date",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "species",
-      "canonical_name": "m_species",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_species",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "genus",
-      "canonical_name": "m_genus",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_genus",
-      "mapping_version": "1.1",
-      "value_issue_counts": {},
-      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
-    },
-    {
-      "source_resource": "M.csv",
-      "original_name": "family",
-      "canonical_name": "m_family",
-      "original_role": "M",
-      "semantic_role": "experimental_context",
-      "view": "passport",
-      "operation": "identity",
-      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
-      "grain": "observation",
-      "unit": null,
-      "missing_rule": {
-        "rule_version": "1.1",
-        "tokens": [
-          "",
-          "-",
-          "--",
-          "<na>",
-          "missing",
-          "n/a",
-          "nan",
-          "nat",
-          "no data",
-          "nodata",
-          "not available",
-          "not measured",
-          "not provided",
-          "null",
-          "unknown"
-        ]
-      },
-      "stats": {
-        "n_rows": 709,
-        "n_present": 0,
-        "n_missing": 709,
-        "completeness_pct": 0.0,
-        "n_unique": 0,
-        "type": "categorical",
-        "imbalance_ratio": null
-      },
-      "reasons": [
-        "empty"
-      ],
-      "numeric_dialect": {
-        "decimal_separator": ",",
-        "thousands_separator": null
-      },
-      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_family",
       "mapping_version": "1.1",
       "value_issue_counts": {},
       "value_issue_detail": "Retained in local canonical/curation/mapping.json"
@@ -1820,8 +1483,14 @@
         "imbalance_ratio": 2.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:source_sample_id",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1864,8 +1533,14 @@
         "imbalance_ratio": 2.1936936936936937
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:site",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1908,8 +1583,14 @@
         "imbalance_ratio": 7.285714285714286
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:sample_date",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1952,8 +1633,14 @@
         "imbalance_ratio": 2.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_name",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1996,8 +1683,14 @@
         "imbalance_ratio": 2.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:bnl_barcode",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2043,8 +1736,14 @@
         "conflicting aliases; no overwrite",
         "constant"
       ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_instrument_2",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2089,8 +1788,14 @@
       "reasons": [
         "constant"
       ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_foreoptic",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2133,8 +1838,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:collection_units",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2177,8 +1888,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_units",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2221,8 +1938,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_type",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2265,8 +1988,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:reflectance_type",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2309,8 +2038,14 @@
         "imbalance_ratio": 1.6066176470588236
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:white_reference_standard",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2353,8 +2088,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectral_resolution",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2397,8 +2138,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:wavelength",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2441,8 +2188,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:interpolation_method",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2485,8 +2238,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_handling",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2529,8 +2288,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_removal",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2573,8 +2338,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_matching_type",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2613,12 +2384,21 @@
         "n_missing": 124,
         "completeness_pct": 82.51057827926657,
         "n_unique": 1,
-        "type": "categorical",
-        "imbalance_ratio": 1.0
+        "type": "numeric",
+        "min": 1.0,
+        "max": 1.0,
+        "n_censored": 0,
+        "n_invalid": 0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:duplicate_flag",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2663,8 +2443,2629 @@
       "reasons": [
         "constant"
       ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_chem_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "SpectralRep",
+      "canonical_name": "spectralrep",
+      "original_role": "M",
+      "semantic_role": "acquisition_index",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectralrep",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Sample_ID",
+      "canonical_name": "source_sample_id",
+      "original_role": "M",
+      "semantic_role": "identifier",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          ""
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 186,
+        "type": "categorical",
+        "imbalance_ratio": 2.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:source_sample_id",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Site",
+      "canonical_name": "site",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.3375
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:site",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Sample_Date",
+      "canonical_name": "sample_date",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 10,
+        "type": "categorical",
+        "imbalance_ratio": 2.5
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:sample_date",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Spectra_Name",
+      "canonical_name": "spectra_name",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 186,
+        "type": "categorical",
+        "imbalance_ratio": 2.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_name",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "BNL_Barcode",
+      "canonical_name": "bnl_barcode",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 186,
+        "type": "categorical",
+        "imbalance_ratio": 2.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:bnl_barcode",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Instrument",
+      "canonical_name": "m_instrument_3",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "passport",
+      "operation": "keep_conflicting_homonyms_separate",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [
+        "conflicting aliases; no overwrite",
+        "constant"
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_instrument_3",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Foreoptic",
+      "canonical_name": "m_foreoptic",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [
+        "constant"
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_foreoptic",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Collection_Units",
+      "canonical_name": "collection_units",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:collection_units",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Spectra_Units",
+      "canonical_name": "spectra_units",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_units",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Spectra_Type",
+      "canonical_name": "spectra_type",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectra_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Reflectance_Type",
+      "canonical_name": "reflectance_type",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:reflectance_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "White_Reference_Standard",
+      "canonical_name": "white_reference_standard",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.75
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:white_reference_standard",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Spectral_Resolution",
+      "canonical_name": "spectral_resolution",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:spectral_resolution",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Wavelength",
+      "canonical_name": "wavelength",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:wavelength",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Interpolation_Method",
+      "canonical_name": "interpolation_method",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:interpolation_method",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Overlap_Handling",
+      "canonical_name": "overlap_handling",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_handling",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Overlap_Removal",
+      "canonical_name": "overlap_removal",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_removal",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Overlap_Matching_Type",
+      "canonical_name": "overlap_matching_type",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:overlap_matching_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Date",
+      "canonical_name": "date",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 10,
+        "type": "categorical",
+        "imbalance_ratio": 2.4
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:date",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Location",
+      "canonical_name": "location",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.3974358974358974
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:location",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Species_Code",
+      "canonical_name": "species_code",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 26,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:species_code",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Latin_genus",
+      "canonical_name": "genus",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 25,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:genus",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Latin_species",
+      "canonical_name": "species",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 25,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:species",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Genus_species",
+      "canonical_name": "genus_species",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 26,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:genus_species",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Gasex_typeOrSequence",
+      "canonical_name": "gasex_typeorsequence",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 4.054054054054054
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:gasex_typeorsequence",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "TleafDegC_canopy",
+      "canonical_name": "tleafdegc_canopy",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 37,
+        "n_missing": 672,
+        "completeness_pct": 5.218617771509168,
+        "n_unique": 22,
+        "type": "numeric",
+        "min": 23.8,
+        "max": 29.7,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:tleafdegc_canopy",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "TleafDegCpreSpec",
+      "canonical_name": "tleafdegcprespec",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 182,
+        "n_missing": 527,
+        "completeness_pct": 25.669957686882935,
+        "n_unique": 60,
+        "type": "numeric",
+        "min": 26.4,
+        "max": 32.8,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:tleafdegcprespec",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "TleafDegCpostSpec",
+      "canonical_name": "tleafdegcpostspec",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 184,
+        "n_missing": 525,
+        "completeness_pct": 25.952045133991536,
+        "n_unique": 70,
+        "type": "numeric",
+        "min": 27.2,
+        "max": 36.3,
+        "n_censored": 0,
+        "n_invalid": 1
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:tleafdegcpostspec",
+      "mapping_version": "1.1",
+      "value_issue_counts": {
+        "invalid": 1
+      },
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Photo_num",
+      "canonical_name": "photo_num",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 180,
+        "n_missing": 529,
+        "completeness_pct": 25.38787023977433,
+        "n_unique": 176,
+        "type": "categorical",
+        "imbalance_ratio": 3.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:photo_num",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Canopy_position",
+      "canonical_name": "canopy_position",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "M",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 5.925925925925926
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:canopy_position",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "General_Comments",
+      "canonical_name": "general_comments",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 12,
+        "n_missing": 697,
+        "completeness_pct": 1.692524682651622,
+        "n_unique": 6,
+        "type": "categorical",
+        "imbalance_ratio": 7.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:general_comments",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Cmass_pc",
+      "canonical_name": "cmass_pc",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 173,
+        "type": "numeric",
+        "min": 37.64,
+        "max": 54.06,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:cmass_pc",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Nmass_pc",
+      "canonical_name": "nmass_pc",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 119,
+        "type": "numeric",
+        "min": 1.06,
+        "max": 5.66,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:nmass_pc",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "CNratio",
+      "canonical_name": "cn_ratio",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 184,
+        "type": "numeric",
+        "min": 7.94,
+        "max": 49.39,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:cn_ratio",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Carea_g_m2",
+      "canonical_name": "carea_g_m2",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 184,
+        "type": "numeric",
+        "min": -9999.0,
+        "max": 94.3,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:carea_g_m2",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Duplicate_flag",
+      "canonical_name": "duplicate_flag",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 186,
+        "n_missing": 523,
+        "completeness_pct": 26.23413258110014,
+        "n_unique": 1,
+        "type": "numeric",
+        "min": 1.0,
+        "max": 1.0,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:duplicate_flag",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "Chem_type",
+      "canonical_name": "m_chem_type",
+      "original_role": "M",
+      "semantic_role": "experimental_context",
+      "view": "passport",
+      "operation": "coalesce_compatible_aliases",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 186,
+        "n_missing": 523,
+        "completeness_pct": 26.23413258110014,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [
+        "constant"
+      ],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:m_chem_type",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "LWP_coll_time",
+      "canonical_name": "lwp_coll_time",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 37,
+        "n_missing": 672,
+        "completeness_pct": 5.218617771509168,
+        "n_unique": 34,
+        "type": "categorical",
+        "imbalance_ratio": 3.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:lwp_coll_time",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "LWP_time",
+      "canonical_name": "lwp_time",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 37,
+        "n_missing": 672,
+        "completeness_pct": 5.218617771509168,
+        "n_unique": 1,
+        "type": "numeric",
+        "min": -9999.0,
+        "max": -9999.0,
+        "n_censored": 0,
+        "n_invalid": 21
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:lwp_time",
+      "mapping_version": "1.1",
+      "value_issue_counts": {
+        "invalid": 21
+      },
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "LWP_bar",
+      "canonical_name": "lwp_bar",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 37,
+        "n_missing": 672,
+        "completeness_pct": 5.218617771509168,
+        "n_unique": 19,
+        "type": "numeric",
+        "min": 6.0,
+        "max": 28.5,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:lwp_bar",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "LWP_comment",
+      "canonical_name": "lwp_comment",
+      "original_role": "M",
+      "semantic_role": "measured_trait",
+      "view": "measurements",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 2,
+        "n_missing": 707,
+        "completeness_pct": 0.2820874471086037,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:lwp_comment",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "dataset",
+      "canonical_name": "dataset",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:dataset",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "source_dataset_title",
+      "canonical_name": "dataset_title",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:dataset_title",
       "mapping_version": "1.1"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "source_resource",
+      "canonical_name": "resource",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "rename",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:resource",
+      "mapping_version": "1.1"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "dimensions",
+      "canonical_name": "dimensions",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:dimensions",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "axis_note",
+      "canonical_name": "axis_note",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:axis_note",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "official_data_url",
+      "canonical_name": "official_data_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:official_data_url",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "official_package_url",
+      "canonical_name": "official_package_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:official_package_url",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "license_url",
+      "canonical_name": "license_url",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:license_url",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "public_release_allowed",
+      "canonical_name": "public_release_allowed",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:public_release_allowed",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
+    },
+    {
+      "source_resource": "M.csv",
+      "original_name": "parent_standardized_dataset_id",
+      "canonical_name": "parent_standardized_dataset_id",
+      "original_role": "M",
+      "semantic_role": "provenance",
+      "view": "passport",
+      "operation": "identity",
+      "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
+      "grain": "observation",
+      "unit": null,
+      "missing_rule": {
+        "rule_version": "1.1",
+        "tokens": [
+          "",
+          "-",
+          "--",
+          "<na>",
+          "missing",
+          "n/a",
+          "nan",
+          "nat",
+          "no data",
+          "nodata",
+          "not available",
+          "not measured",
+          "not provided",
+          "null",
+          "unknown"
+        ]
+      },
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 1,
+        "type": "categorical",
+        "imbalance_ratio": 1.0
+      },
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_ngee_tropics_leaf_spectral_reflectance_measured_in_pana_reflectance_nirs:parent_standardized_dataset_id",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -2702,6 +5103,10 @@
         {
           "resource": "M.csv",
           "name": "source_Site"
+        },
+        {
+          "resource": "M.csv",
+          "name": "Site"
         }
       ]
     },
@@ -2723,6 +5128,10 @@
         {
           "resource": "M.csv",
           "name": "source_Sample_Date"
+        },
+        {
+          "resource": "M.csv",
+          "name": "Sample_Date"
         }
       ]
     },
@@ -2744,6 +5153,229 @@
         {
           "resource": "M.csv",
           "name": "source_White_Reference_Standard"
+        },
+        {
+          "resource": "M.csv",
+          "name": "White_Reference_Standard"
+        }
+      ]
+    },
+    {
+      "name": "date",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 10,
+        "type": "categorical",
+        "imbalance_ratio": 2.4
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Date"
+        }
+      ]
+    },
+    {
+      "name": "location",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 1.3974358974358974
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Location"
+        }
+      ]
+    },
+    {
+      "name": "species_code",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 26,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Species_Code"
+        }
+      ]
+    },
+    {
+      "name": "genus",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 25,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Latin_genus"
+        }
+      ]
+    },
+    {
+      "name": "species",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 25,
+        "type": "categorical",
+        "imbalance_ratio": 17.0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Latin_species"
+        }
+      ]
+    },
+    {
+      "name": "gasex_typeorsequence",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 4.054054054054054
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Gasex_typeOrSequence"
+        }
+      ]
+    },
+    {
+      "name": "tleafdegc_canopy",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 37,
+        "n_missing": 672,
+        "completeness_pct": 5.218617771509168,
+        "n_unique": 22,
+        "type": "numeric",
+        "min": 23.8,
+        "max": 29.7,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "TleafDegC_canopy"
+        }
+      ]
+    },
+    {
+      "name": "tleafdegcprespec",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 182,
+        "n_missing": 527,
+        "completeness_pct": 25.669957686882935,
+        "n_unique": 60,
+        "type": "numeric",
+        "min": 26.4,
+        "max": 32.8,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "TleafDegCpreSpec"
+        }
+      ]
+    },
+    {
+      "name": "tleafdegcpostspec",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 184,
+        "n_missing": 525,
+        "completeness_pct": 25.952045133991536,
+        "n_unique": 70,
+        "type": "numeric",
+        "min": 27.2,
+        "max": 36.3,
+        "n_censored": 0,
+        "n_invalid": 1
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "TleafDegCpostSpec"
+        }
+      ]
+    },
+    {
+      "name": "canopy_position",
+      "view": "M",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 2,
+        "type": "categorical",
+        "imbalance_ratio": 5.925925925925926
+      },
+      "source_columns": [
+        {
+          "resource": "M.csv",
+          "name": "Canopy_position"
         }
       ]
     },
@@ -2818,6 +5450,30 @@
           "name": "SLA_cm2_gDW"
         }
       ]
+    },
+    {
+      "name": "narea_g_m2",
+      "view": "Y",
+      "grain": "observation",
+      "unit": null,
+      "stats": {
+        "n_rows": 709,
+        "n_present": 187,
+        "n_missing": 522,
+        "completeness_pct": 26.375176304654442,
+        "n_unique": 122,
+        "type": "numeric",
+        "min": -9999.0,
+        "max": 3.35,
+        "n_censored": 0,
+        "n_invalid": 0
+      },
+      "source_columns": [
+        {
+          "resource": "Y.csv",
+          "name": "Narea_g_m2"
+        }
+      ]
     }
   ],
   "enrichments": [],
@@ -2825,7 +5481,7 @@
   "missing_policy": "Whole-token text rules; NA/ND/none preserved unless a column rule says otherwise; no unconfirmed numeric sentinels or implicit imputation.",
   "source_values": "Immutable original M/Y tables retained separately; mappings do not make many-to-one NA normalization reversible.",
   "source_hashes": {
-    "M.csv": "226b32e03288065bb14abaac65b308cdd0b4f0c3e5811ead4efd3c1701b79390",
-    "Y.csv": "918456b6e8eb06177f596059cf298abf625145174df4c4a1a096f81f8a7807e4"
+    "M.csv": "d7c1d197101947626ef0ca454d872ed220de522f3ebc1a1453d1db6491785866",
+    "Y.csv": "a0f255a9ccdf1c07e60fb7e65bdf2519194c8e45f058967a91ba8fb2f2511aed"
   }
 }

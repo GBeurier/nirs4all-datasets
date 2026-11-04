@@ -45,6 +45,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=58, missing=0, range 2500–2500, mean 2500 ± 9.174e-13 |
 | n_points_original | metadata | numeric | *Not specified.* | n=58, missing=0, range 1557–1557, mean 1557 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=58, missing=0, classes=1, top Raw NIR spectra used, MSC/BLC preprocessed sheets are available in source workbook but not standardized here. (×58) |
+| source_spectral_sheet | metadata | categorical | *Not specified.* | n=58, missing=0, classes=1, top Raw Spectra data (×58) |
+| source_target_sheet | metadata | categorical | *Not specified.* | n=58, missing=0, classes=1, top TA and Vit C (×58) |
 
 ## Statistics — splits
 
@@ -62,13 +64,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/ph57ynng46/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/ph57ynng46/snapshot/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/ph57ynng46/files?folder_id=root&version=1&$start=0&$limit=1000`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 0 fields, Y: 2 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +89,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c4dcea2b4902cda028a531b1489be6cf40a67a17078790a056b56c7784d03afc`
-- **Processing hash:** `1eea5537c161cfeaf90e7cb8e43e9fbfdc35a5ab21ea14f685effcbf8854ce30` | **metadata hash:** `355316180ee92dcd7c4192040cda0249522842242bb7e35e20c4a80fedac91f0`
+- **Processing hash:** `0c9041726500c342970098751fff6b0bd6f585cfb7541eaf06b3974eff661a2b` | **metadata hash:** `a845a0af32a6ac9ad96a47ab6d38c8ccae497fad1745e57f1999e00b748ce73a`

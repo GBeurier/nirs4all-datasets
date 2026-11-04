@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top manual_review_needed (×57) |
 | usage_scope | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top private_use_only (×57) |
 | notes | metadata | categorical | *Not specified.* | n=57, missing=37, classes=20, top nonphotosyntheticvegetation.bark.acer.rubrum.vswir.acru-1-81.ucsb.asd.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=57, missing=0, classes=28, top Calocedrus decrruens (×4) |
+| source_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=2, top non photosynthetic vegetation (×54) |
+| source_class | metadata | categorical | *Not specified.* | n=57, missing=0, classes=6, top bark (×18) |
+| source_genus | metadata | categorical | *Not specified.* | n=57, missing=0, classes=13, top Pinus (×17) |
+| source_species | metadata | categorical | *Not specified.* | n=57, missing=0, classes=17, top decurrens (×6) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=57, missing=0, classes=54, top VH266 (×2) |
+| source_owner | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top UCSB (×57) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top VSWIR (×57) |
+| source_origin | metadata | categorical | *Not specified.* | n=57, missing=0, classes=7, top 37.04403333, -119.30225, WGS84 (×19) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=57, missing=0, classes=4, top 5/10/2014 (×19) |
+| source_description | metadata | categorical | *Not specified.* | n=57, missing=0, classes=11, top Samples were collected as part of the HyspIRI Airborne Campaign proposal titled: HyspIRI discrimination of plant species and functional types along a strong environmental temperature gradient. The same materials were processed in the Nicolet and then measured using the ASD. (×25) |
+| source_measurement | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Bidirectional reflectance (×57) |
+| source_first_column | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top X (×57) |
+| source_second_column | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Y (×57) |
+| source_x_units | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Wavelength (micrometers) (×57) |
+| source_y_units | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top Reflectance (percentage) (×57) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=57, missing=0, range 0.35–0.35, mean 0.35 ± 5.6e-17 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=57, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=57, missing=0, range 2151–2151, mean 2151 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=57, missing=37, classes=20, top nonphotosyntheticvegetation.bark.acer.rubrum.vswir.acru-1-81.ucsb.asd.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=57, missing=0, classes=28, top Calocedrus decrruens (×4) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=57, missing=0, classes=1, top nonphotosyntheticvegetation (×57) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=57, missing=0, classes=57, top nonphotosyntheticvegetation.bark.abies.concolor.vswir.vh311.ucsb.asd.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 7 fields, Y: 3 fields, measurements: 3 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 3 fields, passport: 43 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `157615390d969e34c182e25a6ec542b11523f557cb93d56af5af83892ee2f330`
-- **Processing hash:** `da186ce04724e53250c3b5ade1409967f71ee84bb5e813be2edeacf7c4dfe9bd` | **metadata hash:** `1212fb6b2a899a163610627a146042aeab05f8ce4bbc59060281831e04de815d`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e444e76a2616c07e32a2feb3c3d847b723ef53d870caf35db0b569fbe54b76ef`
+- **Processing hash:** `0b3dca722e12587d499b35b6e85cdab12b9c525a34d6d37916776aa611928e84` | **metadata hash:** `b5e8e39bbd849e05f41d17c29ac872ec9f938023e46fc8895366356564dd6878`

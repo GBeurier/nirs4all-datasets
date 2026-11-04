@@ -42,6 +42,33 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 100,
+      "in_one_source_only": 0,
+      "n_sources": 3,
+      "pairwise_shared": [
+        [
+          "X_absorbance",
+          "X_reference_signal",
+          100
+        ],
+        [
+          "X_absorbance",
+          "X_sample_signal",
+          100
+        ],
+        [
+          "X_reference_signal",
+          "X_sample_signal",
+          100
+        ]
+      ],
+      "per_source": {
+        "X_absorbance": 100,
+        "X_reference_signal": 100,
+        "X_sample_signal": 100
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -92,12 +119,15 @@
         ],
         "stats": {
           "completeness_pct": 100.0,
-          "imbalance_ratio": 1.0,
+          "max": 143954.0,
+          "min": 143623.0,
+          "n_censored": 0,
+          "n_invalid": 0,
           "n_missing": 0,
           "n_present": 100,
           "n_rows": 100,
           "n_unique": 100,
-          "type": "categorical"
+          "type": "numeric"
         },
         "unit": null,
         "view": "M"
@@ -294,7 +324,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:48:55.161019+00:00",
+  "generated_at": "2026-11-03T23:06:11.719992+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -315,10 +345,10 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "6e1df9be73e88d377920f4850d3347fbcdf029b09356f21fe85956f7396c4e5e",
+    "content_hash": "51d0400fa821a0dd7736ee1405b24377fd7d008652e801adfc814d6529231e59",
     "manifest": "manifest.json",
-    "metadata_hash": "1f71d4d4bcfe9def6a80a5e6e34a0542d358b53e174f161cdd7a080afb1774a1",
-    "processing_hash": "2604dca4cada30aef21e43baca09f794d010ee57f9d05b0143b28d8d9b8eb299"
+    "metadata_hash": "3453df234005e62d27470148389242f1b3a8479469680d4e726073e709ddbf6f",
+    "processing_hash": "c0be3de7c3989205fcfdc7d1a1072a7fa5e7b4b2acec0ba2fd53f8191ff8c1d7"
   },
   "protocol_version": "7",
   "provenance": {
@@ -1379,15 +1409,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
+          "cumulative_top10": 0.7808151144760549,
+          "effective_rank": 13.93,
           "n_components_95": null,
           "n_components_99": null
         },
         "mean_max": 2.1099001574516296,
         "mean_min": 1.0643680238723754,
         "n_outliers": 36,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.16458833093200395,
+            0.14333001517586,
+            0.10423875062380768,
+            0.09392148655969211,
+            0.08952783702035508,
+            0.07178406295854105,
+            0.04890400957749004,
+            0.027033096473239333,
+            0.023730574613176448,
+            0.013756950541889258,
+            0.011738055554765528,
+            0.010667063215594933,
+            0.009738159760494663,
+            0.008796187121926122,
+            0.008078555171965143,
+            0.007448235239396477,
+            0.007248499440687009,
+            0.006737538298013197,
+            0.006389595701908755,
+            0.006368940380496493,
+            0.005915133101973984,
+            0.005696731554001915,
+            0.00537492687063458,
+            0.005206762713115508,
+            0.004974159753338505,
+            0.004920316183211294,
+            0.004699223613575889,
+            0.004294510873795568,
+            0.004053097594055847,
+            0.0038775808282713
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 1173.0062281143123,
@@ -1510,10 +1574,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.5088030586689403,
+              "score": 0.5088030586689402,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.5088030586689403,
+              "signal_strength": 0.5088030586689402,
               "strength": "medium"
             },
             {
@@ -1633,10 +1697,10 @@
                 "Check the repeat protocol before interpreting an intra-ID dispersion."
               ],
               "reference_scope": "dataset_mean_not_independent_reference",
-              "score": 0.03564838232457317,
+              "score": 0.03564838232457315,
               "score_explanation": "A signature at 0.78 is not a causal probability of 78%.",
               "score_kind": "heuristic_signature",
-              "signal_strength": 0.03564838232457317,
+              "signal_strength": 0.03564838232457315,
               "strength": "weak"
             },
             {
@@ -1687,8 +1751,8 @@
             "noise_rms": 0.015185210407097464,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -1702,18 +1766,18 @@
             "worst_band_index": 226
           },
           "outliers": {
-            "hotelling_t2_max": 61.045512634446816,
+            "hotelling_t2_max": 61.04551263444682,
             "hotelling_t2_median": 10.030417916222069,
-            "hotelling_t2_p95": 24.79550305409089,
-            "hotelling_t2_ratio": 2.4720309025199674,
-            "mahalanobis_h_max": 7.8131627804908055,
+            "hotelling_t2_p95": 24.795503054090894,
+            "hotelling_t2_ratio": 2.472030902519968,
+            "mahalanobis_h_max": 7.813162780490806,
             "mahalanobis_h_median": 3.1670828334739136,
             "mahalanobis_h_p95": 4.979441311947296,
             "mahalanobis_h_ratio": 1.572248524515363,
             "pca_q_max": 0.27395758738744613,
-            "pca_q_median": 0.15074235403380265,
-            "pca_q_p95": 0.2103990525382103,
-            "pca_q_ratio": 1.395752732447247
+            "pca_q_median": 0.1507423540338027,
+            "pca_q_p95": 0.21039905253821028,
+            "pca_q_ratio": 1.395752732447246
           },
           "profile_scores": {
             "integrity_risk": 0.02807017543859649,
@@ -3208,7 +3272,41 @@
         "mean_max": 645669.0,
         "mean_min": 32073.0,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 360270810.31654096,
@@ -3488,8 +3586,8 @@
             "noise_rms": 232.1206290719009,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -4593,15 +4691,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
+          "cumulative_top10": 0.35363149134013766,
+          "effective_rank": 21.08,
           "n_components_95": null,
           "n_components_99": null
         },
         "mean_max": 36457.52,
         "mean_min": 575.21,
         "n_outliers": 36,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.16412416270070682,
+            0.02665012072056229,
+            0.02349757605062182,
+            0.022482341986804426,
+            0.020694185238416155,
+            0.020184559785935044,
+            0.019778230588841757,
+            0.01902476486512501,
+            0.018962986150924593,
+            0.018232563252199744,
+            0.01784219047917583,
+            0.01733005453076468,
+            0.016788486389171103,
+            0.016437292256208158,
+            0.015979239967218513,
+            0.015758887178197054,
+            0.015471832811366548,
+            0.014779925346036376,
+            0.014183793008502341,
+            0.013855238629259784,
+            0.013452316909335748,
+            0.01328173457051663,
+            0.013031956938896763,
+            0.01286338739371177,
+            0.012503019629415819,
+            0.012045527481636566,
+            0.011992581523146558,
+            0.011717667634478143,
+            0.011291692747148646,
+            0.011215075532413646
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 15474118.304603446,
@@ -4878,8 +5010,8 @@
             "noise_rms": 562.5974569030818,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -4895,8 +5027,8 @@
           "outliers": {
             "hotelling_t2_max": 34.21248525866669,
             "hotelling_t2_median": 9.825144781939773,
-            "hotelling_t2_p95": 24.859289295111676,
-            "hotelling_t2_ratio": 2.5301702770637156,
+            "hotelling_t2_p95": 24.859289295111672,
+            "hotelling_t2_ratio": 2.530170277063715,
             "mahalanobis_h_max": 5.8491439765718445,
             "mahalanobis_h_median": 3.134507774335109,
             "mahalanobis_h_p95": 4.985904823039397,
@@ -4945,7 +5077,7 @@
             "edge_noise_ratio": 0.7306417029466068
           },
           "structure": {
-            "density_cv": 0.2093771633975412,
+            "density_cv": 0.20937716339754117,
             "isolation_forest_score_p95": 0.5400577677010782,
             "knn_distance_ratio_p95": 1.469025234686945,
             "local_outlier_factor_p95": 1.469025234686945,
@@ -7049,10 +7181,490 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_archive",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_archive",
+        "numeric_sentinels": [],
+        "original_name": "source_archive",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "NIR_avocado_spectra_nirpy.zip"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.99,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.01,
+        "n_classes": 100,
+        "normalized_entropy": 0.9999999999999997
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_member_file",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 100,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_member_file",
+        "numeric_sentinels": [],
+        "original_name": "source_member_file",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 100,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059287_20210910_143623.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059288_20210910_143626.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059289_20210910_143628.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059290_20210910_143630.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059291_20210910_143632.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059292_20210910_143634.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059293_20210910_143636.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059294_20210910_143638.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059295_20210910_143641.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059296_20210910_143643.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059297_20210910_143645.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059298_20210910_143647.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059299_20210910_143649.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059300_20210910_143651.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059301_20210910_143653.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059302_20210910_143655.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059303_20210910_143657.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059304_20210910_143700.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059305_20210910_143702.csv"
+          },
+          {
+            "count": 1,
+            "name": "Avocado_spectra/Column 1_059306_20210910_143704.csv"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5
+        ],
+        "edges": [
+          59287.0,
+          59291.125,
+          59295.25,
+          59299.375,
+          59303.5,
+          59307.625,
+          59311.75,
+          59315.875,
+          59320.0,
+          59324.125,
+          59328.25,
+          59332.375,
+          59336.5,
+          59340.625,
+          59344.75,
+          59348.875,
+          59353.0,
+          59357.125,
+          59361.25,
+          59365.375,
+          59369.5,
+          59373.625,
+          59377.75,
+          59381.875,
+          59386.0
+        ]
+      },
+      "name": "source_scan_number",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 100,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_scan_number",
+        "numeric_sentinels": [],
+        "original_name": "source_scan_number",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0004889316352646687,
+        "is_normal": false,
+        "kurtosis": -1.1999999999999997,
+        "normality_p": 2.9561947150806057e-08,
+        "skewness": 0.0
+      },
+      "stats": {
+        "max": 59386.0,
+        "mean": 59336.5,
+        "median": 59336.5,
+        "min": 59287.0,
+        "n": 100,
+        "n_missing": 0,
+        "q1": 59311.75,
+        "q3": 59361.25,
+        "std": 29.011491975882016
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_scan_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_scan_date",
+        "numeric_sentinels": [],
+        "original_name": "source_scan_date",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "20210910"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "histogram": {
+        "counts": [
+          7,
+          6,
+          4,
+          0,
+          0,
+          3,
+          7,
+          6,
+          7,
+          6,
+          0,
+          0,
+          1,
+          7,
+          6,
+          6,
+          7,
+          1,
+          0,
+          0,
+          6,
+          7,
+          6,
+          7
+        ],
+        "edges": [
+          143623.0,
+          143636.79166666666,
+          143650.58333333334,
+          143664.375,
+          143678.16666666666,
+          143691.95833333334,
+          143705.75,
+          143719.54166666666,
+          143733.33333333334,
+          143747.125,
+          143760.91666666666,
+          143774.70833333334,
+          143788.5,
+          143802.29166666666,
+          143816.08333333334,
+          143829.875,
+          143843.66666666666,
+          143857.45833333334,
+          143871.25,
+          143885.04166666666,
+          143898.83333333334,
+          143912.625,
+          143926.41666666666,
+          143940.20833333334,
+          143954.0
+        ]
+      },
+      "name": "source_scan_time",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 100,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_scan_time",
+        "numeric_sentinels": [],
+        "original_name": "source_scan_time",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0007145747922827206,
+        "is_normal": false,
+        "kurtosis": -1.2193935862244356,
+        "normality_p": 1.0695365064141872e-08,
+        "skewness": -0.0480977981714812
+      },
+      "stats": {
+        "max": 143954.0,
+        "mean": 143793.83,
+        "median": 143809.0,
+        "min": 143623.0,
+        "n": 100,
+        "n_missing": 0,
+        "q1": 143716.5,
+        "q3": 143901.5,
+        "std": 102.75144620378683
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_use_case",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_use_case",
+        "numeric_sentinels": [],
+        "original_name": "source_use_case",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "Whittaker smoothing tutorial"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_context",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_context",
+        "numeric_sentinels": [],
+        "original_name": "source_context",
+        "present": 100,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 100,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 100,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 100,
+            "name": "100 NIR spectra of one Hass avocado with absorbance, sample signal, and reference signal."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

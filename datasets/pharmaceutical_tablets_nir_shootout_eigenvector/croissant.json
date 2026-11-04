@@ -59,7 +59,7 @@
       "@type": "cr:FileObject",
       "encodingFormat": "application/vnd.apache.parquet",
       "name": "variables",
-      "sha256": "b7030081357f74cd9d4d43b1bd5d6e95721e9cd5359f5a4f6cb2e966914523bf"
+      "sha256": "411b4e18054836b675c97a3b7bd1bc27dd9fa075383016819d973ad412204cd8"
     }
   ],
   "keywords": [
@@ -242,6 +242,36 @@
               "@id": "file/variables.parquet"
             }
           }
+        },
+        {
+          "@id": "variables/source_split",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Variable 'source_split' (role metadata, type categorical).",
+          "name": "source_split",
+          "source": {
+            "extract": {
+              "column": "source_split"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
+        },
+        {
+          "@id": "variables/source_split_index",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Variable 'source_split_index' (role metadata, type numeric).",
+          "name": "source_split_index",
+          "source": {
+            "extract": {
+              "column": "source_split_index"
+            },
+            "fileObject": {
+              "@id": "file/variables.parquet"
+            }
+          }
         }
       ],
       "key": {
@@ -255,5 +285,5 @@
     "source_to_standard.py"
   ],
   "url": "https://entrepot.recherche.data.gouv.fr",
-  "version": "1.1.0"
+  "version": "1.2.0"
 }

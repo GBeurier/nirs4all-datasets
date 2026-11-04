@@ -66,6 +66,19 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top explicit_open (×1131) |
 | usage_scope | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top public_reuse_possible (×1131) |
 | notes | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top EcoSIS package productivity-and-characterization-of-soybean-foliar-traits-under-aphid-pressure, no interpolation applied by project. (×1131) |
+| source_SPECIES | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top Glycine max (×1131) |
+| source_DATAFROM | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top Greenhouse (×1131) |
+| source_INSTRUMENT | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top ASD FieldSpec 4 (×1131) |
+| source_LATITUDE | metadata | numeric | *Not specified.* | n=1131, missing=0, range 43.08–43.08, mean 43.08 ± 7.109e-15 |
+| source_LONGITUDE | metadata | numeric | *Not specified.* | n=1131, missing=0, range -89.42–-89.42, mean -89.42 ± 1.422e-14 |
+| source_CITY | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top Madison (×1131) |
+| source_STATE | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=1, top Wisconsin (×1131) |
+| source_DATE | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=22, top 7082013 (×82) |
+| source_YYYY | metadata | numeric | *Not specified.* | n=1131, missing=0, range 2013–2013, mean 2013 ± 0 |
+| source_TREAT | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=5, top H (×288) |
+| source_STAGE | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=2, top R (×572) |
+| source_REP | metadata | numeric | *Not specified.* | n=1131, missing=0, range 1–6, mean 3.057 ± 1.443 |
+| source_LEAF_HEIGHT | metadata | categorical | *Not specified.* | n=1131, missing=0, classes=2, top U (×570) |
 
 ## Statistics — splits
 
@@ -76,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -86,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_REP. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 0 fields, passport: 39 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 12 fields, passport: 36 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,6 +119,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `0511bf66f3329c42ed933add9c2cf3ea48cc3b811915756dccc14d4ef63be14d`
-- **Processing hash:** `0e4389518f4a6b681165404c80bf7b83bec3139c0c6e95f5cdd03d0c63bca692` | **metadata hash:** `4dabb52762b26d3e8eb80eaf6adf1f6cec8be2abfd4a7d0d98e5cbbb67b87a20`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `ced215a74dd21bd182e866caa2289c87cb49cf05052872704bf6119e934b2bf4`
+- **Processing hash:** `ac68f57ab9b5982c0a424956d32fabac6ac0ddb7fe91ce1b019cb04432f231a8` | **metadata hash:** `605e80a3630def03b8abc6c250df925b5fd7c571c23bd5ba2ad41a38eb3f5762`

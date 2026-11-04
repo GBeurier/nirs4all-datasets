@@ -62,6 +62,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=332, missing=0, classes=1, top explicit_open (×332) |
 | usage_scope | metadata | categorical | *Not specified.* | n=332, missing=0, classes=1, top public_reuse_possible (×332) |
 | notes | metadata | categorical | *Not specified.* | n=332, missing=0, classes=1, top EcoSIS package 2018-cedar-creek-pressed-leaves, no interpolation applied by project. (×332) |
+| source_sample_name | metadata | categorical | *Not specified.* | n=332, missing=0, classes=332, top 101_PIBA_1A_OUTER (×1) |
+| source_Plot | metadata | numeric | *Not specified.* | n=332, missing=40, range 2–336, mean 72.79 ± 57.86 |
+| source_Location | metadata | categorical | *Not specified.* | n=332, missing=0, classes=76, top 1 (×35) |
+| source_ID | metadata | categorical | *Not specified.* | n=332, missing=0, classes=332, top 101_PIBA_1A_OUTER (×1) |
+| source_latitude | metadata | numeric | *Not specified.* | n=332, missing=0, range 45.4–45.4, mean 45.4 ± 1.423e-14 |
+| source_longitude | metadata | numeric | *Not specified.* | n=332, missing=0, range -93.19–-93.19, mean -93.19 ± 1.423e-14 |
 
 ## Statistics — splits
 
@@ -72,7 +78,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -82,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 9 fields, measurements: 1 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 9 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,6 +110,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b289c5ec6aa866a640e62456420c30ebe8002d4abae8bc9e547986d209eb70f8`
-- **Processing hash:** `89183f4d343b81ecebdc198c53901bca14b6423ef7e13f0a9b37ea0a300e5d0c` | **metadata hash:** `121acb0e1d18dfd64a846142cf2137f5c5cf487cb3734c6f254953064ed51db8`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `95aaf684df92d2fc843f85d1ff5386c60ec2ff3b2f536990b5e8b287ddcf44c6`
+- **Processing hash:** `6acd55e3413c2292a2d22d153e2ac820b8a3b48a7cd2379d54dfbbdaa49f93cf` | **metadata hash:** `20382e7ebea78858b69668ac4b611937378db170fde368f7ea803030529f4438`

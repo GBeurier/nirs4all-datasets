@@ -103,6 +103,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=614, missing=0, classes=1, top explicit_open (×614) |
 | usage_scope | metadata | categorical | *Not specified.* | n=614, missing=0, classes=1, top public_reuse_possible (×614) |
 | notes | metadata | categorical | *Not specified.* | n=614, missing=0, classes=1, top EcoSIS package pressed-leaf-cabo-spectra-from-herbarium-project-v2, no interpolation applied by project. (×614) |
+| source_ID | metadata | categorical | *Not specified.* | n=614, missing=0, classes=614, top 10277030 (×1) |
+| source_Project | metadata | categorical | *Not specified.* | n=614, missing=0, classes=4, top Beauchamp-Rioux (×405) |
+| source_Stage | metadata | categorical | *Not specified.* | n=614, missing=0, classes=8, top NA (×547) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=614, missing=0, range -34.81–45.99, mean 36.84 ± 25.04 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=614, missing=0, range -75.52–116.1, mean -53.13 ± 59.22 |
 
 ## Statistics — splits
 
@@ -113,7 +118,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -123,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 50 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 50 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -145,6 +150,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `84e192965a5131e861582f4ef40a84d303dd6616a9b860354b825f6a53d5e0f3`
-- **Processing hash:** `5342b0512715fe78a42af98155c0f4b3d1e010f6ef9026f71b9ddd5760f9e0c7` | **metadata hash:** `0f6f6be0dbad7bd2b0b8a8bb6685b18f926398414da54340d44cc938ec70d144`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `65093c442d4bcfa6eda35308e9017fddae01145d26b9ea120810273ab2f2132d`
+- **Processing hash:** `109e6569189b5bd0adddbef9f2ea26cb14e2269ab9bbd1675a1e8a770a37d609` | **metadata hash:** `4828927f395bf4184ce6afddf9fe9e2c0a6b630f906250f60eaf80062a293738`

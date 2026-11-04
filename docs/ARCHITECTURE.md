@@ -11,6 +11,8 @@ layer that lazy‑imports the heavy deps.
 
 ```
 NIRS DB/v2.0/<leaf>/dataset_card.json + X*/Y/M.csv
+        │  consolidate.py          COMPOSE    per-target / per-instrument leaves of one origin record
+        │                                     -> NIRS DB/consolidated/<id>/ (one database: all y, all sources)
         │  bootstrap.py            DESCRIBE   card.json -> catalog/datasets/<id>.yaml (schema-2.0 descriptor)
         ▼
 organize.py ─► canonical.py        CANONICAL  id-keyed CSV -> datasets/<id>/canonical/ (per-source Parquet,
@@ -46,6 +48,7 @@ fallback if a worker dies) with per‑dataset failure isolation; `discover`‑st
 | Module | Role |
 |---|---|
 | `schema.py` | The contract: `DatasetDescriptor` + `Manifest` pydantic models, enums, validators, `publication_blockers()`. |
+| `consolidate.py` + `consolidation.json` | One dataset per origin database: composes upstream per-target / per-instrument leaves into `NIRS DB/consolidated/<id>/` (spectra matched by stored values, sources linked by declared sample identity, never by row position), and lists superseded duplicates; `bootstrap` describes the composed leaf and skips its members. |
 | `bootstrap.py` | v2.0 `dataset_card.json` → schema‑2.0 descriptor (modality/axis/variable‑type inference, honest governance, origin/publication routing). |
 | `canonical.py` | id‑keyed CSV → per‑source Parquet + per‑sample `variables.parquet` + `splits/` + `dataset.json`; sample‑identity join; comma‑decimal coercion. |
 | `manifest.py` | `processing_hash` (byte‑determining) + `metadata_hash` (displayed) + `needs_rebuild` incrementality. |

@@ -54,6 +54,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top manual_review_needed (×4) |
 | usage_scope | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top private_use_only (×4) |
 | notes | metadata | categorical | *Not specified.* | n=4, missing=4, classes=0, — |
+| source_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top lichen off trees (×3) |
+| source_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top non photosynthetic vegetation (×4) |
+| source_class | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top lichen (×4) |
+| source_genus | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Lichen (×4) |
+| source_species | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top species (×4) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top VH296 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top UCSB (×4) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top TIR (×4) |
+| source_origin | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top 37.232539, -119.233498, WGS84 (×3) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top 5/10/2014 (×4) |
+| source_description | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Samples were collected as part of the HyspIRI Airborne Campaign proposal titled: HyspIRI discrimination of plant species and functional types along a strong environmental temperature gradient. The same materials were processed in the Nicolet and then measured using the ASD. (×4) |
+| source_measurement | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Hemispherical reflectance (×4) |
+| source_first_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top X (×4) |
+| source_second_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Y (×4) |
+| source_x_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Wavelength (micrometer) (×4) |
+| source_y_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Reflectance (percentage) (×4) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 2.501–2.501, mean 2.501 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 15.34–15.34, mean 15.34 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=4, missing=0, range 1736–1736, mean 1736 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=4, missing=4, classes=0, — |
+| source_material_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top lichen off trees (×3) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top nonphotosyntheticvegetation (×4) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top nonphotosyntheticvegetation.lichen.lichen.species.tir.vh296.ucsb.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -64,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometer)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 4 fields, passport: 48 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 48 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +119,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `a0119be2e45999d57036ba9ac499ef2a0fbde4abeef86f2a93bc92dab3e0575d`
-- **Processing hash:** `3eef390bf88d15e8ed8d21bb524fa4f1a75481811d17a17919be1f0459856555` | **metadata hash:** `ff646a251ed583c30e822d39d780afbfac69fc5bb5acca2663250319037ad68d`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e262f69ee6e6554c5a6c05431fb5bc24fd1902f2ef0e5ceae36389f16a022894`
+- **Processing hash:** `8cb65c9549db152d25a2193429a4283febccbc415003fa1d496d94c98a0015c0` | **metadata hash:** `1288355081eb35d919eeabb7759bed24fd1e9568f01843a7bf2b50a754c74ab7`

@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top manual_review_needed (×343) |
 | usage_scope | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top private_use_only (×343) |
 | notes | metadata | categorical | *Not specified.* | n=343, missing=0, classes=343, top vegetation.shrub.adenostoma.fasciculatum.vswir.vh033.ucsb.asd.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=343, missing=0, classes=56, top Arctostaphylos glandulosa 3 (×13) |
+| source_type | metadata | categorical | *Not specified.* | n=343, missing=0, classes=2, top vegetation (×304) |
+| source_class | metadata | categorical | *Not specified.* | n=343, missing=0, classes=2, top Shrub (×178) |
+| source_genus | metadata | categorical | *Not specified.* | n=343, missing=0, classes=18, top Quercus (×60) |
+| source_species | metadata | categorical | *Not specified.* | n=343, missing=0, classes=26, top glandulosa (×37) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=343, missing=0, classes=325, top VH049 (×2) |
+| source_owner | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top UCSB (×343) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top VSWIR (×343) |
+| source_origin | metadata | categorical | *Not specified.* | n=343, missing=0, classes=41, top USA, Massachusetts, Harvard Forest (×39) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=343, missing=0, classes=9, top 11/2/2013 (×52) |
+| source_description | metadata | categorical | *Not specified.* | n=343, missing=0, classes=2, top Samples were collected as part of the HyspIRI Airborne Campaign. 48 individual plants were sampled in three times in 2013 - spring summer and fall. The name of the sample includes a 1 2 or 3 which references a different individual of the species. Samples were taken to JPL and processed within 48 hours of collection. The same leaves were processed in the Nicolet and then measured using the ASD. (×304) |
+| source_measurement | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top Bidirectional reflectance (×343) |
+| source_first_column | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top X (×343) |
+| source_second_column | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top Y (×343) |
+| source_x_units | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top Wavelength (micrometers) (×343) |
+| source_y_units | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top Reflectance (percentage) (×343) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=343, missing=0, range 0.35–0.35, mean 0.35 ± 1.112e-16 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=343, missing=0, range 2.5–2.5, mean 2.5 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=343, missing=0, range 2151–2151, mean 2151 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=343, missing=0, classes=343, top vegetation.shrub.adenostoma.fasciculatum.vswir.vh033.ucsb.asd.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=343, missing=0, classes=56, top Arctostaphylos glandulosa 3 (×13) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=343, missing=0, classes=1, top vegetation (×343) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=343, missing=0, classes=343, top vegetation.shrub.adenostoma.fasciculatum.vswir.vh033.ucsb.asd.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 7 fields, Y: 3 fields, measurements: 3 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 3 fields, passport: 43 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `3820c056b80228f7201aca3f295abeb9989b3f198c6ddca45934ec8862ae927a`
-- **Processing hash:** `3ac8ea4a3fcc7f855c18cf69efef62016a923577c6561315a07d9a29560bde62` | **metadata hash:** `4f021f43df1d8961fe5c5769b9e8144997cbd6a9df5e6f641600bee7bafb9650`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `a2556fbd5595c4f1c63f18d0316193371dee8bc1ea6199a3997954355b0ca65e`
+- **Processing hash:** `35f42aae0dcb792eba63ca8917de689251278ac2ebd4e990507538f904138c84` | **metadata hash:** `44f1ff09ffc130ec2cbc5b54405e2d7505e5b86321258fd86c7807ff6e25aae0`

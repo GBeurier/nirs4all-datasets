@@ -16,23 +16,22 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-_MALARIA = {"malaria_anopheles_gambiae_oocyst_nir", "malaria_anopheles_gambiae_sporozoite_nir"}
+_MALARIA = "harvard_dataverse_malaria_anopheles_gambiae_nir"
 _CHEMBL_LIMIT = 50000
-_PERTEN = {f"{crop}_{trait}_perten" for crop in ("barley", "corn", "wheat", "cereals_all") for trait in ("moisture", "protein")} | {"perten_cereals_nir"}
 _ROD = json.loads(Path(__file__).with_name("other_recipes.json").read_text(encoding="utf-8"))
-_UVA = {f"figshare_uva_illicit_drugs_{instrument}_avg_nir" for instrument in ("asd", "micronir", "neospectra", "nirone", "scio")}
-_FLANAGAN = {"flanagan_api_compounds_raman", "drug_compound_flanagan_raman", "drug_common_application_flanagan_raman", "drug_solvent_reagent_flanagan_raman"}
+_UVA = {"asd": "ASD", "micronir": "MicroNIR", "neospectra": "NeoSpectra", "nirone": "NIRONE", "scio": "Scio"}
 _ZENODO = {
     "zenodo_milk_composition_transmittance_nir": ("8263430", "data_table.csv"),
-    "zenodo_twinspectra_fieldspec_rdf_nir": ("18471662", "measurements_2151.csv"),
-    "zenodo_twinspectra_micronir_rdf_nir": ("18471662", "measurements_125.csv"),
     "zenodo_neospectra_soil_nir_ccby": ("13122321", "1976_NSlibrary_withmetadata.csv"),
     "zenodo_western_highveld_soil_nir_mir": ("17510653", "NWU_NIR_MIR_Dataset.csv"),
 }
 
 
+_SINGLE = {"perten_cereals_nir", "flanagan_api_compounds_raman", "figshare_uva_illicit_drugs_avg_nir", _MALARIA, "zenodo_twinspectra_rdf_nir", "chembl_ir_raman_multiblock", "cartilage_spectroscopy_scientificdata_nir", "data_in_brief_rice_amylose_transflection_nir_matio", "zenodo_tomato_leaf_stress_visnir_matio"}
+
+
 def supports(dataset_id: str) -> bool:
-    return dataset_id in _PERTEN or dataset_id in _ZENODO or dataset_id in _FLANAGAN or dataset_id in _UVA or dataset_id in _ROD or dataset_id in _MALARIA or dataset_id == "chembl_ir_raman_multiblock" or dataset_id == "cartilage_spectroscopy_scientificdata_nir" or dataset_id == "data_in_brief_rice_amylose_transflection_nir_matio" or dataset_id == "zenodo_tomato_leaf_stress_visnir_matio"
+    return dataset_id in _SINGLE or dataset_id in _ZENODO or dataset_id in _ROD
 
 
 def _ids(dataset_id: str, n: int) -> pd.Series:
@@ -40,6 +39,7 @@ def _ids(dataset_id: str, n: int) -> pd.Series:
 
 
 def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.DataFrame], targets: list[str], sample: pd.Series | None, url: str, groupings: dict[str, pd.Series] | None = None) -> Path:
+    """Write blocks that all measure the rows of ``raw`` (one observation per row)."""
     raw = raw.reset_index(drop=True)
     obs = _ids(dataset_id, len(raw))
     source_frames = {}
@@ -47,6 +47,29 @@ def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.Dat
         block = block.reset_index(drop=True).copy()
         block.insert(0, "observation_id", obs)
         source_frames[name] = block
+    return _write_tables(context, dataset_id, raw, obs, source_frames, targets, sample, url, groupings)
+
+
+def _write_sources(context, dataset_id: str, parts: dict[str, tuple[pd.DataFrame, pd.DataFrame, pd.Series]], targets: list[str], url: str) -> Path:
+    """Write one block per source, each with its own observations (``raw`` rows, spectra, sample ids).
+
+    Sources are linked only through the sample identities the origin declares.
+    """
+    raws, frames, samples = [], {}, []
+    start = 0
+    for name, (raw, block, sample) in parts.items():
+        obs = pd.Series([f"{dataset_id}_{i:05d}" for i in range(start + 1, start + len(raw) + 1)], name="observation_id")
+        block = block.reset_index(drop=True).copy()
+        block.insert(0, "observation_id", obs)
+        frames[name] = block
+        raws.append(raw.reset_index(drop=True))
+        samples.append(sample.reset_index(drop=True).astype(str))
+        start += len(raw)
+    raw = pd.concat(raws, ignore_index=True)
+    return _write_tables(context, dataset_id, raw, _ids(dataset_id, len(raw)), frames, targets, pd.concat(samples, ignore_index=True), url)
+
+
+def _write_tables(context, dataset_id: str, raw: pd.DataFrame, obs: pd.Series, source_frames: dict[str, pd.DataFrame], targets: list[str], sample: pd.Series | None, url: str, groupings: dict[str, pd.Series] | None = None) -> Path:
     y = raw[targets].copy()
     y.insert(0, "observation_id", obs)
     m = raw.drop(columns=targets).copy()
@@ -67,10 +90,9 @@ def _write(context, dataset_id: str, raw: pd.DataFrame, blocks: dict[str, pd.Dat
 def _perten(dataset_id: str, context) -> Path:
     url = "https://zenodo.org/api/records/15838136/files/sensAIfood_Perten.zip/content"
     archive = context.download(url, filename="sensAIfood_Perten.zip")
-    crops = ("Barley", "Corn", "Wheat") if dataset_id.startswith(("cereals_all", "perten_cereals")) else (dataset_id.split("_")[0].title(),)
     frames = []
     with zipfile.ZipFile(archive) as z:
-        for crop in crops:
+        for crop in ("Barley", "Corn", "Wheat"):
             name = f"{crop}_sensAIfood_Perten.csv"
             with z.open(name) as f:
                 frame = pd.read_csv(f)
@@ -88,19 +110,12 @@ def _perten(dataset_id: str, context) -> Path:
     block = data[xcols].copy()
     meta = data.drop(columns=xcols).copy()
     meta["cereal_type"] = meta["Cereal"]
-    if dataset_id == "perten_cereals_nir":
-        targets = ["Moisture", "Protein"]
-        meta["crop"] = meta["Cereal"]
-        meta["instrument"] = meta["Spectrometer"]
-        meta["country"] = meta["Country"]
-        meta["year"] = meta["Year"]
-        meta["variety"] = meta["Variety"]
-    else:
-        target = "moisture" if "moisture" in dataset_id else "protein"
-        original = target.title()
-        meta[target] = meta.pop(original)
-        targets = [target]
-    return _write(context, dataset_id, meta, {"X": block}, targets, data["ID"], url)
+    meta["crop"] = meta["Cereal"]
+    meta["instrument"] = meta["Spectrometer"]
+    meta["country"] = meta["Country"]
+    meta["year"] = meta["Year"]
+    meta["variety"] = meta["Variety"]
+    return _write(context, dataset_id, meta, {"X": block}, ["Moisture", "Protein"], data["ID"], url)
 
 
 def _zenodo(dataset_id: str, context) -> Path:
@@ -119,11 +134,6 @@ def _zenodo(dataset_id: str, context) -> Path:
             raw[f"Trans_{channel}"] = [json.dumps(row.tolist()) for row in readings.to_numpy()]
         targets = ["Fat", "Prot", "Lact", "SCC", "Urea", "Milk_yield"]
         blocks = {"X": block}
-    elif record == "18471662":
-        blocks = {"X": data.iloc[:, 4:].copy()}
-        raw = data.iloc[:, :4].copy()
-        targets = ["group"]
-        sample = raw["sample"]
     elif record == "13122321":
         blocks = {"X": data.iloc[:, 13:].copy()}
         raw = data.iloc[:, :13].copy()
@@ -154,37 +164,44 @@ def _flanagan(dataset_id: str, context) -> Path:
     raw["label"] = raw["compound"]
     raw["compound_rep_index"] = raw.groupby("compound", dropna=False).cumcount() + 1
     raw = raw.rename(columns={"Organic": "organic", "Formula": "formula", "Supplier - Product": "supplier_product", "Assay %": "assay_pct", "Exposure (secs)": "exposure_secs", "Pixel Fill %": "pixel_fill_pct", "Samples": "compound_source_sample_count", "Approx. Raman bands (deviation of 2 cm-1 per external sources)": "approx_raman_bands_source"})
-    if dataset_id != "flanagan_api_compounds_raman":
-        aliases = {"organic": "Organic", "formula": "Formula", "solvent_reagent": "Solvent_Reagent", "common_application": "Common_Application", "supplier_product": "Supplier_Product", "assay_pct": "Assay_pct", "exposure_secs": "Exposure_secs", "pixel_fill_pct": "Pixel_Fill_pct", "compound_source_sample_count": "Samples", "approx_raman_bands_source": "Approx_Raman_bands_deviation_of_2_cm_1_per_external_sources"}
-        for source, alias in aliases.items():
-            raw[alias] = raw[source]
-    # The single-target derivative cards classify the remaining source fields as metadata.
-    if dataset_id == "flanagan_api_compounds_raman":
-        targets = ["compound", "common_application", "solvent_reagent"]
-    else:
-        targets = [dataset_id.removeprefix("drug_").removesuffix("_flanagan_raman")]
+    targets = ["compound", "common_application", "solvent_reagent"]
     return _write(context, dataset_id, raw, {"X": spectral.drop(columns="label")}, targets, raw["compound"], files[spectral_name], groupings={"source_label": raw["compound"], "compound_key": raw["compound"]})
 
 
 def _uva(dataset_id: str, context) -> Path:
+    """One source per instrument; the same coded samples are measured by several instruments."""
     files = {item["name"]: item["url"] for item in context.provider_files("figshare", "10.6084/m9.figshare.21252300")}
     url = files["dataset.zip"]
-    instrument = {"asd": "ASD", "micronir": "MicroNIR", "neospectra": "NeoSpectra", "nirone": "NIRONE", "scio": "Scio"}[dataset_id.removeprefix("figshare_uva_illicit_drugs_").removesuffix("_avg_nir")]
+    parts = {}
     with zipfile.ZipFile(context.download(url, filename="uva_dataset.zip")) as z:
         metadata = pd.read_excel(z.open("metadata.xlsx")).rename(columns={"salt form": "salt_form"})
-        blocks, names = [], []
-        for name in sorted(z.namelist()):
-            if name.startswith("datafiles averaged per sample/") and name.endswith(f"_Avg_{instrument}.xlsx"):
-                frame = pd.read_excel(z.open(name))
-                names.extend([Path(name).name] * len(frame))
-                blocks.append(frame)
-    if not blocks:
-        raise ValueError(f"No averaged {instrument} workbooks in original archive")
-    source = pd.concat(blocks, ignore_index=True)
-    source = source.rename(columns={source.columns[0]: "code"})
-    raw = pd.DataFrame({"code": source["code"], "source_file": names})
-    raw = raw.merge(metadata, on="code", how="left", validate="many_to_one", sort=False)
-    return _write(context, dataset_id, raw, {"X": source.drop(columns="code")}, ["component", "set", "salt_form", "matrix", "color"], raw["code"], url)
+        for key, instrument in _UVA.items():
+            blocks, names = [], []
+            for name in sorted(z.namelist()):
+                if name.startswith("datafiles averaged per sample/") and name.endswith(f"_Avg_{instrument}.xlsx"):
+                    frame = pd.read_excel(z.open(name))
+                    names.extend([Path(name).name] * len(frame))
+                    blocks.append(frame)
+            if not blocks:
+                raise ValueError(f"No averaged {instrument} workbooks in original archive")
+            source = pd.concat(blocks, ignore_index=True)
+            source = source.rename(columns={source.columns[0]: "code"})
+            raw = pd.DataFrame({"code": source["code"], "instrument": instrument, "source_file": names})
+            raw = raw.merge(metadata, on="code", how="left", validate="many_to_one", sort=False)
+            parts[f"X_{key}"] = (raw, source.drop(columns="code"), raw["code"])
+    return _write_sources(context, dataset_id, parts, ["component", "set", "salt_form", "matrix", "color"], url)
+
+
+def _twinspectra(dataset_id: str, context) -> Path:
+    """The same soil samples measured by an ASD FieldSpec and a MicroNIR."""
+    parts = {}
+    url = "https://zenodo.org/records/18471662"
+    for key, filename in (("X_fieldspec", "measurements_2151.csv"), ("X_micronir", "measurements_125.csv")):
+        data = pd.read_csv(context.download(f"https://zenodo.org/api/records/18471662/files/{filename}/content", filename=filename))
+        raw = data.iloc[:, :4].copy()
+        raw["source_file"] = filename
+        parts[key] = (raw, data.iloc[:, 4:].copy(), raw["sample"])
+    return _write_sources(context, dataset_id, parts, ["group"], url)
 
 
 def _tomato(dataset_id: str, context) -> Path:
@@ -357,9 +374,7 @@ def _malaria_id(value: str) -> tuple[str, str, int]:
     return match[1], match[2], int(match[3])
 
 def _malaria(dataset_id: str, context) -> Path:
-    """Load the publisher's spectra after an explicitly supplied guestbook response."""
-    from nirs4all_datasets.public_pull.native import open_bytes
-
+    """Load both infection stages' publisher spectra after an explicitly supplied guestbook response."""
     spectra_archive = context.dataverse_file(3326596, "NIRS spectra P falciparum infection.zip", guestbook_id=293)
     frames = []
     for label, split, file_id in (("Calibration dataset", "train", 3326589), ("Validation dataset", "test", 3330651)):
@@ -368,9 +383,23 @@ def _malaria(dataset_id: str, context) -> Path:
         table["split_original"] = split
         table["parasite_load"] = table.get("parasite_load", table.get("parasiteload"))
         frames.append(table)
-    data = pd.concat(frames, ignore_index=True)
-    stage = 2 if "oocyst" in dataset_id else 1
-    data = data[pd.to_numeric(data["Stage"], errors="coerce") == stage].reset_index(drop=True)
+    tables = pd.concat(frames, ignore_index=True)
+    stages, blocks = [], []
+    axis = None
+    for stage, expected_stage in ((2, "oocyst"), (1, "sporozoite")):
+        data, block, axis = _malaria_stage(tables, stage, expected_stage, spectra_archive, axis)
+        data["infection_stage"] = expected_stage
+        stages.append(data)
+        blocks.append(block)
+    data = pd.concat(stages, ignore_index=True)
+    return _write(context, dataset_id, data, {"X": pd.concat(blocks, ignore_index=True)}, ["parasite_load"], data["sampleid"], "https://doi.org/10.7910/DVN/YD34OX")
+
+
+def _malaria_stage(tables: pd.DataFrame, stage: int, expected_stage: str, spectra_archive: Path, axis: np.ndarray | None) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray]:
+    """Match one infection stage's reference rows to its publisher SPC spectra."""
+    from nirs4all_datasets.public_pull.native import open_bytes
+
+    data = tables[pd.to_numeric(tables["Stage"], errors="coerce") == stage].reset_index(drop=True)
     data["sampleid"] = data["sampleid"].astype(str).str.strip()
     if data["sampleid"].duplicated().any():
         raise ValueError("Original malaria sample IDs are not unique")
@@ -380,8 +409,6 @@ def _malaria(dataset_id: str, context) -> Path:
     sample_ids = set(zip(data["split_original"], data["join_key"], strict=True))
     spectral_rows = {}
     spectral_names = {}
-    axis = None
-    expected_stage = "oocyst" if stage == 2 else "sporozoite"
     with zipfile.ZipFile(spectra_archive) as spectra:
         for member in spectra.namelist():
             lower = member.casefold()
@@ -412,14 +439,12 @@ def _malaria(dataset_id: str, context) -> Path:
         raise ValueError(f"Original malaria spectra do not match {len(missing)} sample IDs; inspect publisher file naming and do not substitute local exports")
     block = pd.DataFrame([spectral_rows[key] for key in keys], columns=[str(x) for x in axis])
     data["spectrum_file"] = [spectral_names[key] for key in keys]
-    data = data.drop(columns="join_key")
-    data["x"] = data["parasite_load"]
-    return _write(context, dataset_id, data, {"X": block}, ["x"], data["sampleid"], "https://doi.org/10.7910/DVN/YD34OX")
+    return data.drop(columns="join_key"), block, axis
 
 def build(descriptor, context) -> Path:
     """Download the declared original source and construct a standardized leaf."""
     dataset_id = descriptor.id
-    if dataset_id in _MALARIA:
+    if dataset_id == _MALARIA:
         return _malaria(dataset_id, context)
     if dataset_id == "chembl_ir_raman_multiblock":
         return _chembl(dataset_id, context)
@@ -431,11 +456,13 @@ def build(descriptor, context) -> Path:
         return _rod(dataset_id, context)
     if dataset_id == "zenodo_tomato_leaf_stress_visnir_matio":
         return _tomato(dataset_id, context)
-    if dataset_id in _UVA:
+    if dataset_id == "figshare_uva_illicit_drugs_avg_nir":
         return _uva(dataset_id, context)
-    if dataset_id in _FLANAGAN:
+    if dataset_id == "zenodo_twinspectra_rdf_nir":
+        return _twinspectra(dataset_id, context)
+    if dataset_id == "flanagan_api_compounds_raman":
         return _flanagan(dataset_id, context)
-    if dataset_id in _PERTEN:
+    if dataset_id == "perten_cereals_nir":
         return _perten(dataset_id, context)
     if dataset_id in _ZENODO:
         return _zenodo(dataset_id, context)

@@ -51,6 +51,12 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | replicate_label | metadata | categorical | *Not specified.* | n=165, missing=1, classes=9, top a (×41) |
 | parse_note | metadata | categorical | *Not specified.* | n=165, missing=45, classes=2, top Adulterant name expanded from raw code by domain convention, raw code is retained. (×111) |
 | notes | metadata | categorical | *Not specified.* | n=165, missing=0, classes=1, top Source CSV has two spectral-axis rows: column headers are cm^-1 while the first data row stores matching nm values despite inverted source labels. The nm row was removed from X and retained here as secondary-axis metadata. (×165) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=165, missing=0, classes=154, top 4% JMAF (G) a (×2) |
+| source_percent_value | metadata | numeric | *Not specified.* | n=165, missing=6, range 1–100, mean 19.86 ± 35.63 |
+| source_percent_substance | metadata | categorical | *Not specified.* | n=165, missing=0, classes=4, top JMAF (×72) |
+| source_group_code | metadata | categorical | *Not specified.* | n=165, missing=0, classes=2, top G (×129) |
+| source_prefix | metadata | categorical | *Not specified.* | n=165, missing=144, classes=7, top A (×5) |
+| source_suffix | metadata | categorical | *Not specified.* | n=165, missing=153, classes=5, top P (×3) |
 
 ## Statistics — splits
 
@@ -72,8 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: sample_id is a created row counter; source labels and letters a…i do not establish a unique physical identity. The replication protocol remains undetermined.
-- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: sample_id is a created row counter; source labels and letters a…i do not establish a unique physical identity. The replication protocol remains undetermined.
+- **Curated views:** M: 0 fields, Y: 3 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `76b04bc4af0590e9da4505e19addfec57401d535a2d9209f48620e1cc6998276`
-- **Processing hash:** `dd05a0ebbb66995bd58082bdbbc779d21c2c28d6d6e55fbc9332e9e1f186ff48` | **metadata hash:** `9d4742f668611bfbae7a4b8141598f228a28973f1919b988a5440608c34a3068`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `06500845cb79dabe9528833a65cfd2ee72777bb375486010e9b0fc92a639a9ee`
+- **Processing hash:** `6dd2b17c58ba000ecd249131b1eb7fa032e0b3f2568f40abf918e20dcb32e07f` | **metadata hash:** `2e69a31f1a9ca2956a52d24f57a5561a71ea34b456df5357a05b374c47ff0b56`

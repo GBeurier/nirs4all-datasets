@@ -63,6 +63,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top 925999ad-8127-4428-b7cc-c03c12e62d3c_ovzjey37.zip::Ristaniemi_et_al._Biomechanical_biochemical_and_near_infrared_spectral_data_of_bovine_knee_ligaments_and_patellar_tendon/Data_NIRS.xlsx (×250) |
 | official_source_url | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top https://etsin.fairdata.fi/dataset/925999ad-8127-4428-b7cc-c03c12e62d3c/data (×250) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=250, missing=0, classes=1, top v0.8.57 (×250) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=250, missing=0, classes=50, top M01_ACL (×5) |
 
 ## Statistics — splits
 
@@ -82,8 +83,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: 50 ligaments measured at five sites each, in two aligned blocks; 5 spatial positions, not five independent preparations.
-- **Curated views:** M: 2 fields, Y: 28 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 50 ligaments measured at five sites each, in two aligned blocks; 5 spatial positions, not five independent preparations.
+- **Curated views:** M: 2 fields, Y: 28 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -103,6 +104,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `23eb81ff003aa194ca2bf10a751bf1783820995f2ee814a349a525365618adc7`
-- **Processing hash:** `fbb9b406ac6742e62b4b53b5992d5dbcec2276eec8af8f3e9e46030c24b6353b` | **metadata hash:** `b550b8b5ae15a1d9d35c207dbbc29778ed155689cf55b2d20fb7ac2398b31b65`
+- **Processing hash:** `a507224d56f106fe552632adeb83df8fe553610c73750f0c3e863e4dce0afbf1` | **metadata hash:** `253b61e8cfb969282642c0672eedd6467643f3336cf69b4aebc08e23ca12e590`

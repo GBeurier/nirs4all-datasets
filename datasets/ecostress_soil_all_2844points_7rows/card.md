@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top manual_review_needed (×7) |
 | usage_scope | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top private_use_only (×7) |
 | notes | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top soil.alfisol.fragiboralf.none.all.86p1994.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top Pale brown silty loam (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top soil (×7) |
+| source_class | metadata | categorical | *Not specified.* | n=7, missing=0, classes=4, top Inceptisol (×3) |
+| source_subclass | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top Fragiboralf (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top none (×7) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top 86P1994 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top JHU (×7) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top All (×7) |
+| source_origin | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top Bonner Co., Id. via USDA Soil Conservation service. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top N/A (×7) |
+| source_description | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top Pale brown silty loam (medial, typic). Original ASTER Spectral Library name was jhu.becknic.soil.alfisol.fragiboralf.coarse.86P1994.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×7) |
+| source_first_column | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top X (×7) |
+| source_second_column | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top Y (×7) |
+| source_x_units | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top Wavelength (micrometers) (×7) |
+| source_y_units | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top Reflectance (percent) (×7) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=7, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=7, missing=0, range 0.4–0.4, mean 0.4 ± 5.996e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=7, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top soil.alfisol.fragiboralf.none.all.86p1994.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top Pale brown silty loam (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=7, missing=0, classes=1, top soil (×7) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=7, missing=0, classes=7, top soil.alfisol.fragiboralf.none.all.86p1994.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `df03b39ecdfbb739ed4ef9d1ab83942527283473b7f61a3ad8df12445e80090b`
-- **Processing hash:** `ca60b620b38342af876bffb9208a85a9bdb122ece98ab8c2026c4b1e3aebe166` | **metadata hash:** `b85606d750eae367596b0d17a03918bf5599b3f21e4c7ef9381f390038023173`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `51211251648b559be28729fada0845b1b46b660beb6265c10e3b70cff0627223`
+- **Processing hash:** `4764d9d247fbd79744ccb969c8eb32cea3d31a83cf97de450dfbe311051c2f96` | **metadata hash:** `276173e761f260860c5d37a3fa030e33ea5a5de7e74ad27df52c96eb71425174`

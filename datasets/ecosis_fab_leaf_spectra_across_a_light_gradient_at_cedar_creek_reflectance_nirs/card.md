@@ -57,6 +57,11 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top explicit_open (×138) |
 | usage_scope | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top public_reuse_possible (×138) |
 | notes | metadata | categorical | *Not specified.* | n=138, missing=0, classes=1, top EcoSIS package fab-leaf-spectra-across-a-light-gradient-at-cedar-creek-lter, no interpolation applied by project. (×138) |
+| source_Year | metadata | numeric | *Not specified.* | n=138, missing=0, range 2018–2018, mean 2018 ± 0 |
+| source_Plot | metadata | numeric | *Not specified.* | n=138, missing=0, range 7–147, mean 71.07 ± 43.8 |
+| source_Location | metadata | categorical | *Not specified.* | n=138, missing=0, classes=46, top 3D (×9) |
+| source_USDASymbol | metadata | categorical | *Not specified.* | n=138, missing=0, classes=8, top QUMA2 (×18) |
+| source_SpeciesRichness | metadata | categorical | *Not specified.* | n=138, missing=0, classes=3, top 1 (×48) |
 
 ## Statistics — splits
 
@@ -67,7 +72,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 4 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +103,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `64fdba49c9f6081c1369f9800767293d47c576c600ee4633999b513ebcdab8f2`
-- **Processing hash:** `e334a1732c8a2c61cc30fece3bc65c5206edff4a80f6f86a49ab90cca41b7a61` | **metadata hash:** `913899ca7697760a88e3b7a71790b1b5eb825cbf2d32c14c280ae702caac4f8e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `67b3077bc7c7ce6f8c0c757ced9c115b858f6c52f9cebdbbb34ddf5b079d4996`
+- **Processing hash:** `fb85fbc544f4d14bed1076462509ef7d9eec71bc026d3ea6cc9c56476f9e4277` | **metadata hash:** `9c026c6f83cb06ffd37035e135a3897d7c57889a28bd4a435c7cad67a82b9c00`

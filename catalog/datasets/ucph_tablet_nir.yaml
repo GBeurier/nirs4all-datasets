@@ -36,6 +36,9 @@ variables:
 - name: scale
   role: metadata
   type: categorical
+- name: source_sample_id
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -49,16 +52,17 @@ splits:
   applied: false
 tier: private
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: UCPH Chemometrics tablet dataset
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
-  conversion_status: partial
+  ingest_reader_version: 0.3.17+curation.1
+  conversion_status: ok
   warnings:
-  - "Curation identity contract: source_sample_id includes batch and tablet number; the ten numbers do not demonstrate ten reacquisitions of the same tablet."
+  - 'Curation identity contract: source_sample_id includes batch and tablet number;
+    the ten numbers do not demonstrate ten reacquisitions of the same tablet.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: UCPH Chemometrics tablet dataset
@@ -104,5 +108,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/ucph_tablet_nir
-  source_fingerprint: 9fe7e60786c1f51752449b17a0caa3c518c2341777366cd242c6af809929f6c4
+  source_relpath: v2.0/ucph_tablet_nir
+  source_fingerprint: a3f2933a8eb77c77f44e5e3e0758086b2b8016f24913e14d75f1241440505189

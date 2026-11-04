@@ -57,6 +57,14 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=1, top explicit_open (×3205) |
 | usage_scope | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=1, top public_reuse_possible (×3205) |
 | notes | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=1, top EcoSIS package greater-cape-floristic-region-leaf-spectral-library, no interpolation applied by project. (×3205) |
+| source_NewUID | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=1981, top 703_7_BK (×16) |
+| source_finalname | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=1187, top Leucadendron salignum (×24) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=3205, missing=0, range -34.37–-31.27, mean -33.42 ± 0.9497 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=3205, missing=0, range 18.38–24.35, mean 21.26 ± 2.486 |
+| source_Subregion | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=6, top Baviaanksloof (×1284) |
+| source_DateMonthDay | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=57, top 703 (×192) |
+| source_Sample | metadata | numeric | *Not specified.* | n=3205, missing=0, range 1–94, mean 17.37 ± 13.61 |
+| source_SubregAbbr | metadata | categorical | *Not specified.* | n=3205, missing=0, classes=6, top BK (×1284) |
 
 ## Statistics — splits
 
@@ -67,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +85,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 3 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 3 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `7ec3b9d0155e7c65756ae533102a96245512d0b0bb0d3dd1511b41c7f3ed1ffd`
-- **Processing hash:** `ce15905a85559be2f84d78f83e834ad44e39afb24adf4ccf5daa993d5f5ea8c3` | **metadata hash:** `9cde6530e46f3902f658b58eca10b306021349e2c5c9dfe430a2712398a7996f`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `8529de6c2591ff8c45947621efd6c910c0c07a3483dd43eca4ccee3cba865a44`
+- **Processing hash:** `1c7288b7c32c02bc0aa2f8ba847ec2c2f2ac1cf86fd5ad849c7a2038b45f4c25` | **metadata hash:** `b047071dcb15b33e6466930037265f60afa5a0449b8b60a758597a5f297a7d02`

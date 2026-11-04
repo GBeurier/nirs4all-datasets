@@ -58,6 +58,13 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | n_points_original | metadata | numeric | *Not specified.* | n=100, missing=0, range 228–228, mean 228 ± 0 |
 | target_status | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top no_sample_level_target_in_source (×100) |
 | notes | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top Instrument CSV contains absorbance, sample signal, and reference signal, exported as aligned X blocks without smoothing or resampling. Non-finite absorbance values caused by zero sample signal are written as missing values. (×100) |
+| source_archive | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top NIR_avocado_spectra_nirpy.zip (×100) |
+| source_member_file | metadata | categorical | *Not specified.* | n=100, missing=0, classes=100, top Avocado_spectra/Column 1_059287_20210910_143623.csv (×1) |
+| source_scan_number | metadata | numeric | *Not specified.* | n=100, missing=0, range 5.929e+04–5.939e+04, mean 5.934e+04 ± 29.01 |
+| source_scan_date | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top 20210910 (×100) |
+| source_scan_time | metadata | numeric | *Not specified.* | n=100, missing=0, range 1.436e+05–1.44e+05, mean 1.438e+05 ± 102.8 |
+| source_use_case | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top Whittaker smoothing tutorial (×100) |
+| source_context | metadata | categorical | *Not specified.* | n=100, missing=0, classes=1, top 100 NIR spectra of one Hass avocado with absorbance, sample signal, and reference signal. (×100) |
 
 ## Statistics — splits
 
@@ -80,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 0 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 0 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `6e1df9be73e88d377920f4850d3347fbcdf029b09356f21fe85956f7396c4e5e`
-- **Processing hash:** `2604dca4cada30aef21e43baca09f794d010ee57f9d05b0143b28d8d9b8eb299` | **metadata hash:** `1f71d4d4bcfe9def6a80a5e6e34a0542d358b53e174f161cdd7a080afb1774a1`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `51d0400fa821a0dd7736ee1405b24377fd7d008652e801adfc814d6529231e59`
+- **Processing hash:** `c0be3de7c3989205fcfdc7d1a1072a7fa5e7b4b2acec0ba2fd53f8191ff8c1d7` | **metadata hash:** `3453df234005e62d27470148389242f1b3a8479469680d4e726073e709ddbf6f`

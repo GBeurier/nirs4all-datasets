@@ -59,6 +59,13 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top explicit_open (×156) |
 | usage_scope | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top public_reuse_possible (×156) |
 | notes | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top EcoSIS package 2018-talladega-national-forest--leaf-level-reflectance-spectra-and-foliar-traits, no interpolation applied by project. (×156) |
+| source_Sample_ID | metadata | categorical | *Not specified.* | n=156, missing=0, classes=156, top TALL001 (×1) |
+| source_Date | metadata | categorical | *Not specified.* | n=156, missing=0, classes=10, top 20180512 (×24) |
+| source_Latitude | metadata | numeric | *Not specified.* | n=156, missing=0, range 4.617e+05–4.639e+05, mean 4.632e+05 ± 682.7 |
+| source_Longitude | metadata | numeric | *Not specified.* | n=156, missing=0, range 3.645e+06–3.648e+06, mean 3.646e+06 ± 876.4 |
+| source_Canopy_Position | metadata | categorical | *Not specified.* | n=156, missing=0, classes=3, top M (×52) |
+| source_Exposition | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top natural environment (×156) |
+| source_Plant_Growth_Form | metadata | categorical | *Not specified.* | n=156, missing=0, classes=1, top tree (×156) |
 
 ## Statistics — splits
 
@@ -69,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -79,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 6 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 6 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +107,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `9e412c1aa78b02608b5ac2a1c3f39437a35604817a4e80a0722be47e2230b782`
-- **Processing hash:** `049131914b7883ed388b0456aa31a3d448ffde93a1f3f2822549d745e4fa16ef` | **metadata hash:** `ac5adc2b57a242f032deecc1aa5bed340329e5644e00151884cebbf64855bea8`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `d95bc4c16b31d5791c48035e78cacdfe8afe9dee744b310b7409c14a13d744a7`
+- **Processing hash:** `5666bc2c43210f51a8c7d1be860034557d874c0abdb20005e5bdb29d45f07a80` | **metadata hash:** `c67e07a42732a53a588534169fee4aec8d510f018a0f79b53d9dfdbcddeb5d29`

@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 300,
+      "in_one_source_only": 300,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 300
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -185,11 +194,9 @@
         "notes"
       ]
     },
-    "warnings": [
-      "Y/M row pairing explicitly assumed; not independently verified by target identifiers."
-    ]
+    "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:11.460899+00:00",
+  "generated_at": "2026-11-03T23:46:20.779009+00:00",
   "governance": {
     "access_policy": "Open per source license.",
     "license": "CC-BY-4.0",
@@ -212,8 +219,8 @@
   "integrity": {
     "content_hash": "fa2c17bf844a8f054ea96ace8f7079044665ffd8099bf5584ff4c3ba30eadd19",
     "manifest": "manifest.json",
-    "metadata_hash": "2fd709de4f2a9ca2972406c44c4906d98f0e0d6a1f20a4572f26c274077de7d7",
-    "processing_hash": "0644805b9eb17dce2321f845f031213e2f434734f1085afac1922fab0dd5a680"
+    "metadata_hash": "5663f8c1df0cfa23bbfb8b37a7f01f1e234966729f3f7897ddc517d189b5dbee",
+    "processing_hash": "bd86d6a638ce7509c13a0d864f944357d241e25dfbdefa3f63432d55b7bd9789"
   },
   "protocol_version": "7",
   "provenance": {
@@ -242,13 +249,6 @@
         "title": null
       },
       {
-        "access": "open",
-        "kind": "url",
-        "license": null,
-        "locator": "https://creativecommons.org/licenses/by/4.0/",
-        "title": null
-      },
-      {
         "access": "manual",
         "kind": "script",
         "license": null,
@@ -259,7 +259,6 @@
     "publications": [],
     "reference_method": null,
     "warnings": [
-      "Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.",
       "Curation identity contract: Sample identifier declared in M"
     ]
   },
@@ -1282,15 +1281,49 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.999926487928391,
+          "effective_rank": 1.35,
+          "n_components_95": 2,
+          "n_components_99": 3
         },
         "mean_max": 0.4320908588171005,
         "mean_min": -0.5389614713191986,
         "n_outliers": 143,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.9332542448586126,
+            0.05263892836754682,
+            0.006690971846236978,
+            0.004578760048862479,
+            0.0015666885251236814,
+            0.0004697794894266286,
+            0.0003598553042456765,
+            0.0001962931730469962,
+            0.00013473662854859432,
+            3.622968674060338e-05,
+            2.5340121486913538e-05,
+            1.3692681415265082e-05,
+            7.943350257637855e-06,
+            6.272886390514928e-06,
+            4.795303648381087e-06,
+            3.2726931680816546e-06,
+            2.3908779843366084e-06,
+            1.6693710738330472e-06,
+            1.5125765312762893e-06,
+            1.0430417827289783e-06,
+            6.036452205406786e-07,
+            4.391683309447016e-07,
+            3.2376814236455867e-07,
+            2.834405140137215e-07,
+            2.6102262999385785e-07,
+            2.2937498658285272e-07,
+            2.0909329888047966e-07,
+            1.96476637492355e-07,
+            1.82890906140142e-07,
+            1.6447872414059239e-07
+          ],
+          "n_components": 30
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": -170.48379701326155,
@@ -1611,8 +1644,8 @@
             "noise_rms": 0.0007236607978481709,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -4766,11 +4799,8 @@
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
-  "warnings": [
-    "conversion: Y/M row pairing explicitly assumed; not independently verified by target identifiers.",
-    "conversion: Y.csv has no 'observation_id'; assumed Y/M row pairing and attached M.csv IDs. M observation order matches X.csv."
-  ]
+  "warnings": []
 }

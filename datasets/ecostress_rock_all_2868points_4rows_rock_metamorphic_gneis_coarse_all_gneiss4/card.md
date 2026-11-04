@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top manual_review_needed (×4) |
 | usage_scope | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top private_use_only (×4) |
 | notes | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top none (×3) |
+| source_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Syenite Gneiss (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top rock (×4) |
+| source_class | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top Metamorphic (×3) |
+| source_subclass | metadata | categorical | *Not specified.* | n=4, missing=0, classes=3, top Gneis (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Coarse (×4) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top gneiss4 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top JHU (×4) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top All (×4) |
+| source_origin | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Sample No. 467, The Hunt and Salisbury Collection at the U.S.Geological Survey, Denver, Co. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top N/A (×4) |
+| source_description | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top This sample probably represents a metamorphosed zircon syenite. It is a coarse-grained sample showing granulation along most grain boundaries. There are abundant anhedra of nepheline and microperthitic feldspar, an amphibole (either hornblende or a sodic phase), abundant magnetite and numerous grains of zircon. Cancrinite occurs aroundfeldspars scattered throughout the section. Particle size was 500-1500 Micrometer. Original ASTER Spectral Library name was jhu.becknic.rock.metamorphic.gneiss.coarse.gneiss4.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Directional (10 Degree) Hemispherical Reflectance (×4) |
+| source_first_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top X (×4) |
+| source_second_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Y (×4) |
+| source_x_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Wavelength (micrometers) (×4) |
+| source_y_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Reflectance (percent) (×4) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 14.98–14.98, mean 14.98 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=4, missing=0, range 2868–2868, mean 2868 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top none (×3) |
+| source_material_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Syenite Gneiss (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top rock (×4) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top rock.metamorphic.gneis.coarse.all.gneiss4.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `35f8ba0d7c8e071bdd09aab48301bc6484eaf7e051b55fc9831eb54a4f57383b`
-- **Processing hash:** `8fd6d923919a13e7d0400e9cea29c5f49612f119827a588d7713885ec9d1cf0e` | **metadata hash:** `c34fe53bfebd54d58282a783a40f4058cb01053f178ed2eea5892323576f5a6a`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `cf31a6c0d4c161a4f3f8ad4f6d17a131afb934e60bfc88768e051ca814c130be`
+- **Processing hash:** `0326c85e36b1ee1b71ec259b3b13c600339cb110fab8e27e0f22682309f61d81` | **metadata hash:** `9279b29482cad2b842c085fdda6320cea7adc00efd6ae9db8976f53861cad4fd`

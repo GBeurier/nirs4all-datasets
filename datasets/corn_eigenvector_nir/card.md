@@ -32,6 +32,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | Oil | target | numeric | *Not specified.* | n=80, missing=0, range 3.088–3.832, mean 3.498 ± 0.177 |
 | Protein | target | numeric | *Not specified.* | n=80, missing=0, range 7.654–9.711, mean 8.668 ± 0.4986 |
 | Starch | target | numeric | *Not specified.* | n=80, missing=0, range 62.83–66.47, mean 64.7 ± 0.8207 |
+| source_dataset | metadata | categorical | *Not specified.* | n=80, missing=0, classes=1, top Eigenvector corn.mat (×80) |
 
 ## Statistics — splits
 
@@ -42,7 +43,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -55,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 4 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 4 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,6 +76,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `fad668163949b7af553784388bfaa896eec3b9482f81df360b0d9957e430d671`
-- **Processing hash:** `d44b39f5adb71025a90d1a993061e9dcecafe539eb7392e4dd616ed081f19180` | **metadata hash:** `7509b2c66214395f4cf466b174a89329d1e2d832914e422e4a91f52f0ea4e0d8`
+- **Processing hash:** `f7050a1f4da0271292b2c323010550cc688ce830c94a24b7035c4e1491f916c8` | **metadata hash:** `5ef27fa0c7f4251a5e8a55b6c73c150feea93ff821368fd5066bad0d79c412bb`

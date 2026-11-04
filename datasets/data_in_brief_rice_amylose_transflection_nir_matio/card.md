@@ -44,6 +44,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | axis_max | metadata | numeric | *Not specified.* | n=313, missing=0, range 1.249e+04–1.249e+04, mean 1.249e+04 ± 0 |
 | n_points_original | metadata | numeric | *Not specified.* | n=313, missing=0, range 1154–1154, mean 1154 ± 0 |
 | notes | metadata | categorical | *Not specified.* | n=313, missing=0, classes=1, top Xcal/Xtest and ycal/ytest concatenated, source split preserved. (×313) |
+| source_split | metadata | categorical | *Not specified.* | n=313, missing=0, classes=2, top calibration (×203) |
+| source_split_index | metadata | numeric | *Not specified.* | n=313, missing=0, range 1–203, mean 85.66 ± 55.54 |
 
 ## Statistics — splits
 
@@ -60,13 +62,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://www.sciencedirect.com/science/article/pii/S2352340917305176`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://pmc.ncbi.nlm.nih.gov/articles/PMC5712058/`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +87,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `626823cc8e5684cba23c40b2ae78fa7a022d78a0f6df39ec3b2e2d4fbc232fe6`
-- **Processing hash:** `bdd7fd697b42daff83a73d39e9dbc2bc41fd542680672a0b08d7e4eeb7219d99` | **metadata hash:** `17af7abe019654a3b4bf7f718255e0015d2abb64254bf41bb44000182be836c5`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `e6e0ed3ce3ed904283f5aced4499c2c927eb92d2d11c771f4c857f41357cb7d1`
+- **Processing hash:** `21c158f3f209f516157e6ea516fad05636f1013b839f166a6dc047fcd2e3c420` | **metadata hash:** `949807bcfb27b02e4162a0756fe5d4f8b7e036531b8e4fa25122ef13e2c2ebdc`

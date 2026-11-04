@@ -60,6 +60,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top explicit_open (×962) |
 | usage_scope | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top public_reuse_possible (×962) |
 | notes | metadata | categorical | *Not specified.* | n=962, missing=0, classes=1, top EcoSIS package tabletop-leaf-drydowns-to-relate-leaf-spectra-and-leaf-water--santa-barbara--ca-, no interpolation applied by project. (×962) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=962, missing=0, classes=48, top hear_10 (×37) |
+| source_common_name | metadata | categorical | *Not specified.* | n=962, missing=0, classes=13, top toyon (×202) |
 
 ## Statistics — splits
 
@@ -80,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Drying follow-up: repeated observations cover different water states/times.
-- **Curated views:** M: 1 fields, Y: 9 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 9 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +102,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d81c196ae8cc9b37f613026545474078c4d35e365e5a8623df0574d1b0142622`
-- **Processing hash:** `039a1dbf625d4a0475984c664cddecf2cd3c958441a9754ca1719026d9dd447e` | **metadata hash:** `79007806eb3f96d9b9432646a2a971f643449cc2d4829b6511b0e84556f1fb98`
+- **Processing hash:** `f25dfcfc8632ba419b0493585aeb1eb938e2f54021dfa0e4b5bcc3de4ec3c128` | **metadata hash:** `ff83b68ea9163609ac2efdd1e06d9e08a7bc7e6944cd9faee7dfe833ca6b8f23`

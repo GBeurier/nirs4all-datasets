@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 4,
+      "in_one_source_only": 4,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 4
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -214,7 +223,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:00.081879+00:00",
+  "generated_at": "2026-11-03T16:17:16.011400+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -235,15 +244,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "94a057d7a3df6ab013490384daae080ed705097a161bbafdffbbf98b051a30a1",
+    "content_hash": "8f738ffd297a5521d892a21703238232ecd5c3afbbc8560264301690ceb86dfe",
     "manifest": "manifest.json",
-    "metadata_hash": "e95d26bd9771a93cd944af38bd9501933d7b7afab55bb58a1d95d1a4f4c2c1b2",
-    "processing_hash": "76b957bae91fd9bdadfcdddbfc016c95386eea0bc7dd15b0522f295396342af8"
+    "metadata_hash": "ed0e1adf528bb8115347179e2a6328343d0a675888c706e92285a1eb8f84f909",
+    "processing_hash": "3d9101b4a289b5b9b770856afe7830bba8e6e107766f7abb24a3c6a98530c4f7"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1304,15 +1313,22 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 1.0,
+          "effective_rank": 2.07,
+          "n_components_95": 2,
+          "n_components_99": 2
         },
         "mean_max": 53.576499938964844,
         "mean_min": 1.6702000200748444,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.5591898384702773,
+            0.43222047642317235,
+            0.008589685106550421
+          ],
+          "n_components": 3
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 266.167724635446,
@@ -1633,8 +1649,8 @@
             "noise_rms": 0.004844109285723631,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2936,10 +2952,1056 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.625,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.25,
+        "n_classes": 3,
+        "normalized_entropy": 0.946394630357186
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Picrite"
+          },
+          {
+            "count": 1,
+            "name": "Diabase"
+          },
+          {
+            "count": 1,
+            "name": "Ijolite"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "rock"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Igneous"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.375,
+        "imbalance_ratio": 3.0,
+        "minority_fraction": 0.25,
+        "n_classes": 2,
+        "normalized_entropy": 0.8112781244591328
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Ultramafic"
+          },
+          {
+            "count": 1,
+            "name": "Mafic"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Fine"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Diabase_H1"
+          },
+          {
+            "count": 1,
+            "name": "Ijolite_H1"
+          },
+          {
+            "count": 1,
+            "name": "Picrite_H1"
+          },
+          {
+            "count": 1,
+            "name": "Picrite_H2"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "JHU"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "All"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "from St. Peters, Pennsylvania, via Ward's Scientific (Cat. No. W-127)"
+          },
+          {
+            "count": 1,
+            "name": "from McClure Mountains, Colorado, via Ward's Scientific (Cat. No.W-19)"
+          },
+          {
+            "count": 1,
+            "name": "from Kilauea, via Rosalind Helz, USGS, Reston, VA (Cat. No. KI81-1-210.0)"
+          },
+          {
+            "count": 1,
+            "name": "from Kilauea, via Rosalind Helz, USGS, Reston, VA (Cat. No.79-5-180.8)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "The sample from which the powder was derived was a medium-grained dark gray rock consisting of feldspar and pyroxene.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.mafic.fine.diabas1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample from which the powder was derived is a dark gray to black, medium- to coarse-grained rock composed of nepheline, biotite, a black mafic mineral and opaques.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.ultramafic.fine.ijolit1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "The sample from which the powder was derived is dark gray porphyritic rock. Green olivine phenocrysts 1-8 mm in size make up about 8% of the rock. There are also opaque grains less than or equal to1 mm in size. The groundmass is dark gray and very fine-grained.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.ultramafic.fine.picrit1.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Powder derived from sample that was light gray porphyritic, slightly vesicular rock. Green olivine phenocrysts range in size from approx. 0.5 mm to 4.0 mm and make up about 2-3% of the rock. The grayish groundmass is very fine-grained.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.ultramafic.fine.picrit2.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Directional (10 degree) hemispherical reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 14.011,
+        "mean": 14.011,
+        "median": 14.011,
+        "min": 14.011,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 14.011,
+        "q3": 14.011,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 0.4,
+        "mean": 0.4,
+        "median": 0.4,
+        "min": 0.4,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 0.4,
+        "q3": 0.4,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2844.0,
+        "mean": 2844.0,
+        "median": 2844.0,
+        "min": 2844.0,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 2844.0,
+        "q3": 2844.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "rock.igneous.mafic.fine.all.diabase_h1.jhu.becknic.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.ijolite_h1.jhu.becknic.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.picrite_h1.jhu.becknic.ancillary.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.picrite_h2.jhu.becknic.ancillary.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.625,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.25,
+        "n_classes": 3,
+        "normalized_entropy": 0.946394630357186
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "Picrite"
+          },
+          {
+            "count": 1,
+            "name": "Diabase"
+          },
+          {
+            "count": 1,
+            "name": "Ijolite"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "rock"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "rock.igneous.mafic.fine.all.diabase_h1.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.ijolite_h1.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.picrite_h1.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "rock.igneous.ultramafic.fine.all.picrite_h2.jhu.becknic.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top manual_review_needed (×4) |
 | usage_scope | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top private_use_only (×4) |
 | notes | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top rock.igneous.mafic.fine.all.diabase_h1.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=3, top Picrite (×2) |
+| source_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top rock (×4) |
+| source_class | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Igneous (×4) |
+| source_subclass | metadata | categorical | *Not specified.* | n=4, missing=0, classes=2, top Ultramafic (×3) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Fine (×4) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top Diabase_H1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top JHU (×4) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top All (×4) |
+| source_origin | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top from St. Peters, Pennsylvania, via Ward's Scientific (Cat. No. W-127) (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top N/A (×4) |
+| source_description | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top The sample from which the powder was derived was a medium-grained dark gray rock consisting of feldspar and pyroxene.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.mafic.fine.diabas1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×4) |
+| source_first_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top X (×4) |
+| source_second_column | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Y (×4) |
+| source_x_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Wavelength (micrometers) (×4) |
+| source_y_units | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top Reflectance (percent) (×4) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=4, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=4, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top rock.igneous.mafic.fine.all.diabase_h1.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=3, top Picrite (×2) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=4, missing=0, classes=1, top rock (×4) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=4, missing=0, classes=4, top rock.igneous.mafic.fine.all.diabase_h1.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `94a057d7a3df6ab013490384daae080ed705097a161bbafdffbbf98b051a30a1`
-- **Processing hash:** `76b957bae91fd9bdadfcdddbfc016c95386eea0bc7dd15b0522f295396342af8` | **metadata hash:** `e95d26bd9771a93cd944af38bd9501933d7b7afab55bb58a1d95d1a4f4c2c1b2`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `8f738ffd297a5521d892a21703238232ecd5c3afbbc8560264301690ceb86dfe`
+- **Processing hash:** `3d9101b4a289b5b9b770856afe7830bba8e6e107766f7abb24a3c6a98530c4f7` | **metadata hash:** `ed0e1adf528bb8115347179e2a6328343d0a675888c706e92285a1eb8f84f909`

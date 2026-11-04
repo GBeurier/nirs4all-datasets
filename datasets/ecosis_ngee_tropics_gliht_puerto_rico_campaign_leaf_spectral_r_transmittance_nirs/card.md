@@ -61,6 +61,25 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top explicit_open (×222) |
 | usage_scope | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top public_reuse_possible (×222) |
 | notes | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top EcoSIS package ngee-tropics-gliht-puerto-rico-campaign-leaf-spectral-reflectance-and-transmittance-march-2017, no interpolation applied by project. (×222) |
+| source_SampleID | metadata | categorical | *Not specified.* | n=222, missing=0, classes=222, top BNL12862T (×1) |
+| source_QA_QC_Flag | metadata | categorical | *Not specified.* | n=222, missing=222, classes=0, — |
+| source_Comments | metadata | categorical | *Not specified.* | n=222, missing=218, classes=1, top High water content, real? (×4) |
+| source_Instrument_Manufacturer | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Spectra Vista Corporation (×222) |
+| source_Instrument_Model | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top HR-1024i (×222) |
+| source_Instrument_Serial_Number | metadata | numeric | *Not specified.* | n=222, missing=0, range 2041–2041, mean 2041 ± 0 |
+| source_Foreoptic | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top SVC_Integrating_Sphere (×222) |
+| source_Collection_Units | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Raw_DN (×222) |
+| source_Spectra_Units | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Percent_Transmittance_0_100 (×222) |
+| source_Spectra_Type | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Leaf (×222) |
+| source_Reflectance_Transmittance_Type | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Relative (×222) |
+| source_Measurement | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Transmittance (×222) |
+| source_White_Reference_Standard | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top SVC_IS_Spectralon_Standard (×222) |
+| source_Spectral_Resolution | metadata | numeric | *Not specified.* | n=222, missing=0, range 1–1, mean 1 ± 0 |
+| source_Wavelength_Units | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Nanometer (×222) |
+| source_Interpolation_Method | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Linear (×222) |
+| source_Overlap_Handling | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Removed (×222) |
+| source_Overlap_Removal | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Post_processing (×222) |
+| source_Overlap_Matching_Type | metadata | categorical | *Not specified.* | n=222, missing=0, classes=1, top Raw_DN (×222) |
 
 ## Statistics — splits
 
@@ -71,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -81,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 48 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 8 fields, passport: 48 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `0f495aa2e033d5214eeed5c2ced9197b0d379218d077f23e52bb67f7ca83184c`
-- **Processing hash:** `d88061ed5b30aa908d5f8aee0fd576569dd165a17c630d296bb35634af24b11d` | **metadata hash:** `530cef358dea862208d4a993f289aa1e866186243421e01242c0013e6c526302`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `d67338b6ec53448fd434859835b5244429260f8cea46b12b9ae0b7e508526749`
+- **Processing hash:** `2ccb901f7d537915100a87a3e8ad28531c7505f90fc53e330374ac0d1da0db1e` | **metadata hash:** `875eb2a9863ccae9131532b4f0d8dbeefb9aef355c6964f75489905c8bcd5ccc`

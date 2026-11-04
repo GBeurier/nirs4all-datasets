@@ -5,6 +5,34 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [Unreleased]
+
+- Manage the catalog by origin database: a dataset is now the samples of one
+  published record with all their variables. Upstream per-target leaves (the same
+  spectra, one target each) and per-instrument leaves (the same samples, one block
+  each) are composed by `consolidate.py` from the committed `consolidation.json`;
+  `bootstrap` describes the composed leaf and skips its members. Spectra are matched
+  only by their stored values and sources only by declared sample identity; conflicting
+  measurements abort the composition, and members with different licences are never
+  merged. This retires 72 task-view and duplicate entries and adds 16 databases, among
+  them multi-source databases (UvA illicit drugs, five instruments; Recherche Data Gouv
+  grapevine, three instruments; OSSL collections with vis-NIR and MIR; CABO v2
+  reflectance and transmittance). EcoSIS databases gain the trait joins that only
+  their per-target views carried (NGEE Arctic canopy, UW-BNL, NGEE Tropics Panama,
+  Belgian dune grassland), and their origin recipes join every trait table.
+- Fix the CABO 2018-2019 v2 reflectance resource being labelled absorbance, and the
+  malaria target named `x` (it is the parasite load; the infection stage is now a
+  variable of one database instead of two dataset ids).
+- Cards report per-source sample coverage (`alignment.source_coverage`); dataset pages
+  of multi-source databases show the coverage and one tab per source.
+- `health-check --only` keeps the other datasets' probes instead of rewriting
+  `catalog/health.json` with the selected ids alone.
+- A keyless `Y.csv` paired to `M.csv` by row, with M's order confirmed by an X block,
+  is the normal upstream layout and no longer emits a conversion or curation warning.
+- Remove stale variable declarations that no data carries: `original_sample_id` from
+  20 descriptors whose identity moved to `sample_id`, and the empty source columns
+  (country, date, species…) of the five EcoSIS databases enriched in place.
+
 ## [0.3.18] - 2026-11-03
 
 - Licensing metadata only, no code change: every published surface now declares the

@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top manual_review_needed (×17) |
 | usage_scope | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top private_use_only (×17) |
 | notes | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top none (×17) |
+| source_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top Gaylussite Na2Ca(CO3)2 * 5H2O (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Mineral (×17) |
+| source_class | metadata | categorical | *Not specified.* | n=17, missing=0, classes=4, top Borate (×8) |
+| source_subclass | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top None (×17) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Coarse (×17) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=17, missing=0, classes=16, top None (×2) |
+| source_owner | metadata | categorical | *Not specified.* | n=17, missing=0, classes=2, top Smithsonian Institute, National Museum of Nat. History (×10) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top All (×17) |
+| source_origin | metadata | categorical | *Not specified.* | n=17, missing=0, classes=16, top Boron, California (×2) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top N/A (×17) |
+| source_description | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top Gaylussite powder from Searles Lake, CASample was Unsieved coarse powder. Original ASTER Spectral Library name was usgs.perknic.mineral.borate.none.coarse.gaylusc.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Directional Hemispherical Reflectance (×17) |
+| source_first_column | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top X (×17) |
+| source_second_column | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Y (×17) |
+| source_x_units | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Wavelength (micrometers) (×17) |
+| source_y_units | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top Reflectance (percent) (×17) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=17, missing=0, range 13.9–13.9, mean 13.9 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=17, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=17, missing=0, range 2752–2752, mean 2752 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top none (×17) |
+| source_material_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top Gaylussite Na2Ca(CO3)2 * 5H2O (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=17, missing=0, classes=1, top mineral (×17) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=17, missing=0, classes=17, top mineral.borate.none.coarse.all.nmnh102876-2.usgs.perknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `96730de60d580bdfa3ced2872e4bd3d2cf4e4f918a7b761c4cc1d240f02681d5`
-- **Processing hash:** `d88ca0687c0a5b3c64bdfdb22263f2a6e61aade2deaf0a98a66477ca13421d65` | **metadata hash:** `4393f1221fae453fec2ccfba4c37572b7bfa9261df485ce1b88a9b9a22ca6075`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `2e3f28c2f798ff4089381eb45d5f341a437a0ab34d51afc47ccc725e377b11e2`
+- **Processing hash:** `38afac863ba9a2ddf7c17fcf0ab45b506c03f8d61c20da65dd741212381cf354` | **metadata hash:** `ce1f77b555343141447fa3cd7c92c401a9fca538ccdc232688a48424788542e5`

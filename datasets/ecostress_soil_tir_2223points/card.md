@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top manual_review_needed (×11) |
 | usage_scope | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top private_use_only (×11) |
 | notes | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top soil.aridisol.none.unsorted.tir.fgg009.jpl.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=11, missing=0, classes=8, top Red-orange sandy loam (×3) |
+| source_type | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top soil (×11) |
+| source_class | metadata | categorical | *Not specified.* | n=11, missing=0, classes=2, top Entisol (×7) |
+| source_subclass | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top None (×11) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Unsorted (×11) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top fgg009 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top University of NSW (×11) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top TIR (×11) |
+| source_origin | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Fowlers Gap, western New South Wales, AustraliaHewson(1998) PhD thesis (×11) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top N/A (×11) |
+| source_description | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top Parent material consists of aeolian silts/clays and sandstone debris.Physiography: Alluvium along creek on footslopes of sandstone (Nundooka Sandstone) outcropping hills Original ASTER Spectral Library name was jpl.nicolet.soil.aridisol.none.unsorted.fgg009.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Directional hemispherical reflectance (×11) |
+| source_first_column | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top X (×11) |
+| source_second_column | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Y (×11) |
+| source_x_units | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Wavelength (micrometers) (×11) |
+| source_y_units | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top Reflectance (percent) (×11) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=11, missing=0, range 14.01–14.01, mean 14.01 ± 1.863e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=11, missing=0, range 2–2, mean 2 ± 4.658e-16 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=11, missing=0, range 2223–2223, mean 2223 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top soil.aridisol.none.unsorted.tir.fgg009.jpl.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=11, missing=0, classes=8, top Red-orange sandy loam (×3) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=11, missing=0, classes=1, top soil (×11) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=11, missing=0, classes=11, top soil.aridisol.none.unsorted.tir.fgg009.jpl.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 5 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, passport: 49 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `baf087be92ccab168da0d5e11292e843b3e8b1992cacdae86b17299595515f1d`
-- **Processing hash:** `af6adc44d34d1529c8f66e744f04d233236679655fe055be82f5a1e78c8d87ec` | **metadata hash:** `64937fb396ead8250e0954006dc8681867555a84a83727099e69e1bff60ea8ea`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `d1fb58aa481ec8e53cd12ea992a4d559ab21254fef46252d0d41c7058de3c221`
+- **Processing hash:** `de812e888df9b7011a807aed52d6c615c8547503ce920ae1a7fb726ac855abb0` | **metadata hash:** `c34b177ec8595ff91fd10fa429c88c3820ae9fdf038dfb6afe2a69d0a79ba1c8`

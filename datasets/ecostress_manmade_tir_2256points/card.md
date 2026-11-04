@@ -54,6 +54,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top manual_review_needed (×16) |
 | usage_scope | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top private_use_only (×16) |
 | notes | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top none (×16) |
+| source_name | metadata | categorical | *Not specified.* | n=16, missing=0, classes=2, top Brass plate (×15) |
+| source_type | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Manmade (×16) |
+| source_class | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Reflectance target (×16) |
+| source_subclass | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top None (×16) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Solid (×16) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=16, missing=0, classes=16, top 001682 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top JPL (×16) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top TIR (×16) |
+| source_origin | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Labsphere, P.O. Box 70, Shaker Street, North Sutton, NH 03260(603) 927-4266 (×16) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top N/A (×16) |
+| source_description | metadata | categorical | *Not specified.* | n=16, missing=0, classes=16, top Measurement made at center. Field Gold.Oct. 29 1997 to Oct. 30 1997. Original ASTER Spectral Library name was jpl.nicolet.manmade.target.none.solid.fg11097j.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Hemispherical Reflectance (×16) |
+| source_first_column | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top X (×16) |
+| source_second_column | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Y (×16) |
+| source_x_units | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Wavelength (micrometers) (×16) |
+| source_y_units | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top Reflectence (percent) (×16) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=16, missing=0, range 15.39–15.39, mean 15.39 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=16, missing=0, range 2–2, mean 2 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=16, missing=0, range 2256–2256, mean 2256 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top none (×16) |
+| source_material_name | metadata | categorical | *Not specified.* | n=16, missing=0, classes=2, top Brass plate (×15) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=16, missing=0, classes=1, top manmade (×16) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=16, missing=0, classes=16, top manmade.reflectancetarget.none.solid.tir.001682.jpl.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -64,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -75,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 5 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 49 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -96,6 +119,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `b2cf1cb9c775e6415c30971b13fbc17050818a6b6f007c3a022b3482d59e0308`
-- **Processing hash:** `8093bec3742802461c0495a3ec405edf53d30141c3344bf61d3bd6fa9ffff7b8` | **metadata hash:** `4cd0e831e5b5357e4b82d26331f0ddca2c209768f546184aa69203fe2baa7abc`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `13e7cf172f4da85efd9260a92f16316dade29613b4a298cab9aaf67c2ca5b3da`
+- **Processing hash:** `d624ffcd1b4aa144b0d3ff076a3d78e8d51a481c6a89188c3c3b6f8811952880` | **metadata hash:** `ca0d5ed2b8f07d51a62afa7beef7f3c9f0c815a4a667de876ad8365aef7c0220`

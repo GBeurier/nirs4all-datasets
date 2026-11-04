@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top manual_review_needed (×47) |
 | usage_scope | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top private_use_only (×47) |
 | notes | metadata | categorical | *Not specified.* | n=47, missing=37, classes=10, top nonphotosyntheticvegetation.bark.acer.rubrum.tir.acru-1-81.ucsb.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=47, missing=0, classes=22, top Pinus coulteri bark (×3) |
+| source_type | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top non photosynthetic vegetation (×47) |
+| source_class | metadata | categorical | *Not specified.* | n=47, missing=0, classes=4, top bark (×18) |
+| source_genus | metadata | categorical | *Not specified.* | n=47, missing=0, classes=11, top Pinus (×17) |
+| source_species | metadata | categorical | *Not specified.* | n=47, missing=0, classes=15, top coulteri (×6) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=47, missing=0, classes=47, top VH311 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top UCSB (×47) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top TIR (×47) |
+| source_origin | metadata | categorical | *Not specified.* | n=47, missing=0, classes=5, top 37.04403333, -119.30225, WGS84 (×19) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=47, missing=0, classes=3, top 5/10/2014 (×19) |
+| source_description | metadata | categorical | *Not specified.* | n=47, missing=0, classes=10, top Samples were collected as part of the HyspIRI Airborne Campaign proposal titled: HyspIRI discrimination of plant species and functional types along a strong environmental temperature gradient. The same materials were processed in the Nicolet and then measured using the ASD. (×25) |
+| source_measurement | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top Hemispherical reflectance (×47) |
+| source_first_column | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top X (×47) |
+| source_second_column | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top Y (×47) |
+| source_x_units | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top Wavelength (micrometers) (×47) |
+| source_y_units | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top Reflectance (percentage) (×47) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=47, missing=0, range 2.501–2.501, mean 2.501 ± 4.489e-16 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=47, missing=0, range 15.34–15.34, mean 15.34 ± 1.796e-15 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=47, missing=0, range 1736–1736, mean 1736 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=47, missing=37, classes=10, top nonphotosyntheticvegetation.bark.acer.rubrum.tir.acru-1-81.ucsb.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=47, missing=0, classes=22, top Pinus coulteri bark (×3) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=47, missing=0, classes=1, top nonphotosyntheticvegetation (×47) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=47, missing=0, classes=47, top nonphotosyntheticvegetation.bark.abies.concolor.tir.vh311.ucsb.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 6 fields, Y: 2 fields, measurements: 4 fields, passport: 43 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 2 fields, passport: 43 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `461d0ee72d403ae5d3c712c291ad5810dd142e0883861e87eb6d5707fb91eba6`
-- **Processing hash:** `a611d4db44ac7b43919b08dd552cfb9c27f225095bcba2cf9d7b09aa2389235f` | **metadata hash:** `5aa4c8b0d538e61daebd9b1437d0b65daa5f9802bd6cd0a2a3ad3e5d6c3148a6`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `196932793cf456443d2e6ac621ff4896944fd72bcb8be889c7fcc9e5bdf00d8a`
+- **Processing hash:** `7be26b6a216e47ae8d6abec96ab19d9c7efc63530aeb5e4f4129ee6f41a2969e` | **metadata hash:** `35465f6fd5c0609fd2049406e2ff58c6684bc17fba56f594dad27f0adbad3e4c`

@@ -35,8 +35,7 @@
   "views": {
     "M": [
       "year",
-      "plot",
-      "year_2"
+      "plot"
     ],
     "Y": [
       "easting",
@@ -1826,17 +1825,23 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_3d_canopy_level_spectra_reflectance_nirs:plot",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_year",
-      "canonical_name": "year_2",
+      "canonical_name": "year",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "keep_conflicting_homonyms_separate",
+      "operation": "coalesce_compatible_aliases",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
@@ -1866,14 +1871,21 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 2.2777777777777777
+        "type": "numeric",
+        "min": 2016.0,
+        "max": 2017.0,
+        "n_censored": 0,
+        "n_invalid": 0
       },
-      "reasons": [
-        "conflicting aliases; no overwrite"
-      ],
-      "variable_id": "ecosis_3d_canopy_level_spectra_reflectance_nirs:year_2",
-      "mapping_version": "1.1"
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_3d_canopy_level_spectra_reflectance_nirs:year",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -1910,6 +1922,10 @@
         {
           "resource": "M.csv",
           "name": "year"
+        },
+        {
+          "resource": "M.csv",
+          "name": "source_year"
         }
       ]
     },
@@ -1931,27 +1947,6 @@
         {
           "resource": "M.csv",
           "name": "source_plot_id"
-        }
-      ]
-    },
-    {
-      "name": "year_2",
-      "view": "M",
-      "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 59,
-        "n_present": 59,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 2,
-        "type": "categorical",
-        "imbalance_ratio": 2.2777777777777777
-      },
-      "source_columns": [
-        {
-          "resource": "M.csv",
-          "name": "source_year"
         }
       ]
     },

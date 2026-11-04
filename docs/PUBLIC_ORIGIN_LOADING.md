@@ -1,7 +1,7 @@
 # Loading public datasets from their origins
 
 Install `nirs4all-datasets` and call `get()` from any directory. The wheel contains
-the catalog and the recipes for all 135 public datasets; a repository checkout,
+the catalog and the recipes for all 95 public datasets; a repository checkout,
 the CIRAD source bundle, and historical `convert_*.py` files are unnecessary.
 
 ```bash
@@ -11,7 +11,7 @@ pip install 'nirs4all-datasets[nirs4all]'
 ```python
 import nirs4all_datasets as bank
 
-dataset = bank.get("barley_moisture_perten")
+dataset = bank.get("perten_cereals_nir")
 X = dataset.x()
 y = dataset.y()
 model_data = dataset.to_nirs4all()
@@ -25,15 +25,15 @@ and output checksums. Cached canonical files are checked before reuse.
 Original sample identifiers and native partitions are retained where available.
 No dataset bytes are hosted by this project.
 
-There are 133 recipes without a personal-profile requirement, and two Harvard
-malaria recipes requiring explicit guestbook responses. Provider availability,
+There are 94 recipes without a personal-profile requirement, and one Harvard
+malaria recipe requiring explicit guestbook responses. Provider availability,
 terms, and rate limits still apply. HTTP 429 is retried with backoff; if the
 provider continues refusing requests, the exception is reported to the caller.
 Source archives may be large: the ChEMBL resource is approximately 5 GB.
 
 ## Optional Harvard guestbook profile
 
-For the two malaria datasets, pass your own answers using `guestbook_response`.
+For the malaria database, pass your own answers using `guestbook_response`.
 Without them, the package reports the required fields before submitting a
 guestbook response. It never invents an identity or prompts interactively inside
 the Python API. Other datasets do not require this argument.
@@ -64,7 +64,7 @@ import json
 from pathlib import Path
 
 profile = json.loads(Path("my-guestbook.json").read_text())
-dataset = bank.get("malaria_anopheles_gambiae_oocyst_nir", guestbook_response=profile)
+dataset = bank.get("harvard_dataverse_malaria_anopheles_gambiae_nir", guestbook_response=profile)
 ```
 
 The CLI accepts the same object with `--guestbook-response my-guestbook.json`.

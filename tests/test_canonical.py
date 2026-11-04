@@ -93,12 +93,12 @@ def test_keyless_paired_targets_use_verified_metadata_ids(tmp_path: Path, v2_lea
     leaf = v2_leaf(tmp_path / "ds", targets={"moisture": "numeric"}, sample_of={"o1": "s1", "o2": "s2"})
     (leaf / "Y.csv").write_text("moisture\n11.1\n14.0\n")
     desc, _ = build_descriptor_from_card(leaf)
-    assert any("Y row pairing is not independently verified" in w for w in desc.provenance.warnings)
+    assert not any("pairing" in w for w in desc.provenance.warnings)
     res, _ = _build(leaf, tmp_path / "out")
     variables = pd.read_parquet(res.canonical_dir / "variables.parquet").set_index("sample_id")
     assert variables.loc["s1", "moisture"] == 11.1
     assert variables.loc["s2", "moisture"] == 14.0
-    assert any("assumed Y/M row pairing" in w and "matches X.csv" in w for w in res.warnings)
+    assert not any("pairing" in w for w in res.warnings)
 
 
 def test_keyless_targets_reject_unverified_order(tmp_path: Path, v2_leaf: Any) -> None:

@@ -46,6 +46,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=347, missing=0, classes=1, top A Near-Infrared Spectroscopy Dataset for Chemical.zip::A Near-Infrared Spectroscopy Dataset for Chemical/data/Raw-nir-spectra-data-B9Y2sV.xlsx (×347) |
 | official_source_url | metadata | categorical | *Not specified.* | n=347, missing=0, classes=1, top https://data.mendeley.com/datasets/9z7dgdtggk/1 (×347) |
 | standardization_batch | metadata | categorical | *Not specified.* | n=347, missing=0, classes=1, top v0.8.57 (×347) |
+| source_sample_number | metadata | numeric | *Not specified.* | n=347, missing=0, range 1–347, mean 174 ± 100.3 |
+| source_row_number | metadata | categorical | *Not specified.* | n=347, missing=0, classes=347, top 1 (×1) |
 
 ## Statistics — splits
 
@@ -65,8 +67,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Source tobacco sample; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 2 fields, Y: 13 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Source tobacco sample; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
+- **Curated views:** M: 2 fields, Y: 13 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `4847f071d6a7063a1c0d702b8c1c35e896416648c0ccd301b516f1501786c23b`
-- **Processing hash:** `bcc867e0cb328a6feda0c525a9e0a4fc70f85dd254a0cadc3bae2ad15988b227` | **metadata hash:** `34cd81fda3300a3637728bfa196c323883a7f04c95cb1954ee5ad5a277fe5c6e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `49843b5c36ea5780380ae51d16110ab1db27c426436747e7ca94079c39c1eeae`
+- **Processing hash:** `1b91567134edbf7baadfb2ab8fad6f953c258953794029700fe0919997a07094` | **metadata hash:** `5af4f517a21587f9afa0b6c2cc6c30c683cd9d952352e82fd75cb4bf9cb5ca88`

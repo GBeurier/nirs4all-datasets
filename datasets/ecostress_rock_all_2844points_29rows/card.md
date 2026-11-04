@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top manual_review_needed (×29) |
 | usage_scope | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top private_use_only (×29) |
 | notes | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top rock.igneous.felsic.fine.all.granite_h1.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=29, missing=0, classes=20, top Basalt (×6) |
+| source_type | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top rock (×29) |
+| source_class | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Igneous (×29) |
+| source_subclass | metadata | categorical | *Not specified.* | n=29, missing=0, classes=4, top Mafic (×12) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Fine (×29) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top Granite_H1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top JHU (×29) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top All (×29) |
+| source_origin | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top From Quincy, Norfolk, Massachusetts via Ward's Scientific (Cat.No. W-4) (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top N/A (×29) |
+| source_description | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top Sample from which powder was derived is a gray, medium- to coarse-grained rock composed of quartz, feldspar, and a mafic mineral.Particle size was 0-75 micrometers. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.felsic.fine.granit1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×29) |
+| source_first_column | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top X (×29) |
+| source_second_column | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Y (×29) |
+| source_x_units | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Wavelength (micrometers) (×29) |
+| source_y_units | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top Reflectance (percent) (×29) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=29, missing=0, range 14.01–14.01, mean 14.01 ± 5.423e-15 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=29, missing=0, range 0.4–0.4, mean 0.4 ± 1.13e-16 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=29, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top rock.igneous.felsic.fine.all.granite_h1.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=29, missing=0, classes=20, top Basalt (×6) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=29, missing=0, classes=1, top rock (×29) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=29, missing=0, classes=29, top rock.igneous.felsic.fine.all.granite_h1.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `12240cc698412fdd0352c29c92835a80baec69731f2d96e8d997ceebbf0321e1`
-- **Processing hash:** `b7dbe60d62d5236899ed819442331bd844118863ea235ce98dcdfd526c9e70dd` | **metadata hash:** `8439a4c81bc4116bc2a111964da1a6604d24c5e840ad9ac2bebadee7f4f2f37b`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `bb055f6a85ba3071dc49cce3f96b89fb50b23ba4a2922d915f509bc7e7f57c2d`
+- **Processing hash:** `924b42e16af123bb4d87a98a409071a25d9be7c1b9c463c9854f038d7816ae1f` | **metadata hash:** `c92b735833a8fdfc53f46ee082fb3fbdecacb611e11e7f31c3bc31b6cf1bd1d8`

@@ -63,13 +63,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/datasets/k55b8mvs84/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/k55b8mvs84/snapshot/1`
 - *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://data.mendeley.com/public-api/datasets/k55b8mvs84/files?folder_id=root&version=1&$start=0&$limit=1000`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,6 +88,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `fa2c17bf844a8f054ea96ace8f7079044665ffd8099bf5584ff4c3ba30eadd19`
-- **Processing hash:** `0644805b9eb17dce2321f845f031213e2f434734f1085afac1922fab0dd5a680` | **metadata hash:** `2fd709de4f2a9ca2972406c44c4906d98f0e0d6a1f20a4572f26c274077de7d7`
+- **Processing hash:** `bd86d6a638ce7509c13a0d864f944357d241e25dfbdefa3f63432d55b7bd9789` | **metadata hash:** `5663f8c1df0cfa23bbfb8b37a7f01f1e234966729f3f7897ddc517d189b5dbee`

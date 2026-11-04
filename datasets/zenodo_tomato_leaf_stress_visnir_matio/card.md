@@ -62,13 +62,12 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ### Origin sources (where the bytes live)
 
 - Zenodo — kind `zenodo`, access `open`, license *Not specified.*: `https://zenodo.org/records/12800065`
-- *Not specified.* — kind `url`, access `open`, license *Not specified.*: `https://creativecommons.org/licenses/by/4.0/`
 - standardization script (maintainer-only) — kind `script`, access `manual`, license *Not specified.*: `source_to_standard.py`
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: Numbers r1…r7 are experimental factors; leaves and treatment levels remain distinct. No grouping by r alone.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Numbers r1…r7 are experimental factors; leaves and treatment levels remain distinct. No grouping by r alone.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,6 +87,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `579615f13c9ea5ee881508fe62c16649565d9deefbec604bb3c8777ac7ec9911`
-- **Processing hash:** `7c66029f565a3176b51b1d06fdbc2c6ec76fa659063b4f57611e14ea24e0d37c` | **metadata hash:** `e77c00e33f38da58f6d97c50febf1fa1678abcb1310256f8556eb6a7f9d35d67`
+- **Processing hash:** `fdd40efa01392f65f20c00a757deab7e337a5faa738b2d294290cfb53ea4672a` | **metadata hash:** `40a30dfa2e7ff413d32b74d81c5d522c14f0a13c9b96c6c618f26ebcac9b5d58`

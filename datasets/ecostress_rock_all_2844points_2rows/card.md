@@ -58,6 +58,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top manual_review_needed (×2) |
 | usage_scope | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top private_use_only (×2) |
 | notes | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top rock.igneous.felsic.solid.all.aplite_h1.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Aplite (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top rock (×2) |
+| source_class | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Igneous (×1) |
+| source_subclass | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Felsic (×1) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Solid (×1) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Aplite_H1 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top JHU (×2) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top All (×2) |
+| source_origin | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top From Boulder County, Colorado via Ward's Scientific (Cat. No. W-101) (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top N/A (×2) |
+| source_description | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top A fine-grained to medium-grained leucocratic rock composed of quartz, feldspar, micas and opaques. Original ASTER Spectral Library name was jhu.becknic.rock.igneous.felsic.solid.aplite1.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Directional (10 degree) hemispherical reflectance (×1) |
+| source_first_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top X (×2) |
+| source_second_column | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Y (×2) |
+| source_x_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Wavelength (micrometers) (×2) |
+| source_y_units | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top Reflectance (percent) (×2) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=2, missing=0, range 0.4–0.4, mean 0.4 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=2, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top rock.igneous.felsic.solid.all.aplite_h1.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top Aplite (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=2, missing=0, classes=1, top rock (×2) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=2, missing=0, classes=2, top rock.igneous.felsic.solid.all.aplite_h1.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -68,7 +91,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -79,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +123,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `39103d5190091897de8dfe2ce0e53aeb92e0260ba4acd23d3cecc3fc878ad661`
-- **Processing hash:** `72b468a55d3f7160b6dd0dcbd96056bd2797eb0b396c643be62ff0b2c78b5ae3` | **metadata hash:** `d8c1d90e52a7469714a43d34f5929f63fe5c8dbe9abb346915bc023dbb13debb`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `2d1928529a1231ad19e1c80c17a9de034a49fd3e7384bf3d53ecc0ae4da183aa`
+- **Processing hash:** `498c95a9712694cc3cdee36c61f2e87534fe13c23f42e290b00f13db9f9bc604` | **metadata hash:** `a3728e5067986a02b41df1c91ad59497f80166e489513d19e0f68ca84b43011e`

@@ -27,9 +27,7 @@
       "latitude",
       "longitude",
       "project",
-      "stage",
-      "latitude_2",
-      "longitude_2"
+      "stage"
     ],
     "Y": [
       "species__species",
@@ -4421,8 +4419,14 @@
         "imbalance_ratio": 1.0
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:id",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -4465,8 +4469,14 @@
         "imbalance_ratio": 6.044776119402985
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:project",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -4509,17 +4519,23 @@
         "imbalance_ratio": 68.375
       },
       "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
       "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:stage",
-      "mapping_version": "1.1"
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_Latitude",
-      "canonical_name": "latitude_2",
+      "canonical_name": "latitude",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "keep_conflicting_homonyms_separate",
+      "operation": "coalesce_compatible_aliases",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
@@ -4549,23 +4565,30 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 537,
-        "type": "categorical",
-        "imbalance_ratio": 5.0
+        "type": "numeric",
+        "min": -34.8084809,
+        "max": 45.98927255,
+        "n_censored": 0,
+        "n_invalid": 0
       },
-      "reasons": [
-        "conflicting aliases; no overwrite"
-      ],
-      "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:latitude_2",
-      "mapping_version": "1.1"
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:latitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
       "original_name": "source_Longitude",
-      "canonical_name": "longitude_2",
+      "canonical_name": "longitude",
       "original_role": "M",
       "semantic_role": "experimental_context",
       "view": "M",
-      "operation": "keep_conflicting_homonyms_separate",
+      "operation": "coalesce_compatible_aliases",
       "value_normalization": "NFKC and outer-whitespace trim; numeric parsing when declared; original values retained",
       "grain": "observation",
       "unit": null,
@@ -4595,14 +4618,21 @@
         "n_missing": 0,
         "completeness_pct": 100.0,
         "n_unique": 538,
-        "type": "categorical",
-        "imbalance_ratio": 9.0
+        "type": "numeric",
+        "min": -75.5206979,
+        "max": 116.0698001,
+        "n_censored": 0,
+        "n_invalid": 0
       },
-      "reasons": [
-        "conflicting aliases; no overwrite"
-      ],
-      "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:longitude_2",
-      "mapping_version": "1.1"
+      "reasons": [],
+      "numeric_dialect": {
+        "decimal_separator": ",",
+        "thousands_separator": null
+      },
+      "variable_id": "ecosis_pressed_leaf_cabo_spectra_from_herbarium_project_v2_reflectance_nirs:longitude",
+      "mapping_version": "1.1",
+      "value_issue_counts": {},
+      "value_issue_detail": "Retained in local canonical/curation/mapping.json"
     },
     {
       "source_resource": "M.csv",
@@ -4639,6 +4669,10 @@
         {
           "resource": "M.csv",
           "name": "latitude"
+        },
+        {
+          "resource": "M.csv",
+          "name": "source_Latitude"
         }
       ]
     },
@@ -4663,6 +4697,10 @@
         {
           "resource": "M.csv",
           "name": "longitude"
+        },
+        {
+          "resource": "M.csv",
+          "name": "source_Longitude"
         }
       ]
     },
@@ -4705,48 +4743,6 @@
         {
           "resource": "M.csv",
           "name": "source_Stage"
-        }
-      ]
-    },
-    {
-      "name": "latitude_2",
-      "view": "M",
-      "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 614,
-        "n_present": 614,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 537,
-        "type": "categorical",
-        "imbalance_ratio": 5.0
-      },
-      "source_columns": [
-        {
-          "resource": "M.csv",
-          "name": "source_Latitude"
-        }
-      ]
-    },
-    {
-      "name": "longitude_2",
-      "view": "M",
-      "grain": "observation",
-      "unit": null,
-      "stats": {
-        "n_rows": 614,
-        "n_present": 614,
-        "n_missing": 0,
-        "completeness_pct": 100.0,
-        "n_unique": 538,
-        "type": "categorical",
-        "imbalance_ratio": 9.0
-      },
-      "source_columns": [
-        {
-          "resource": "M.csv",
-          "name": "source_Longitude"
         }
       ]
     },

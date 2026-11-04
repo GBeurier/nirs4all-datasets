@@ -81,8 +81,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Curation identity contract: The upstream converter selected Experiment=e244, a constant experiment code. The 205 plots, dates, and times describe multiple units; no specimen identifier or technical replicate is established.
-- **Curated views:** M: 7 fields, Y: 1 fields, measurements: 1 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: The upstream converter selected Experiment=e244, a constant experiment code. The 205 plots, dates, and times describe multiple units; no specimen identifier or technical replicate is established.
+- **Curated views:** M: 7 fields, Y: 1 fields, passport: 31 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,6 +102,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `13e7624d2fb9e1ca873e40aa1f8469d59bac9e8946e1cc1fe9c0e59d120dce39`
-- **Processing hash:** `171f2c17db5d89d2cc79b3c9638c4720f480c0876d52e78b1a137d6c468cda53` | **metadata hash:** `3ac6efd2d21176046e808289b72e897d4e39fdc969b98545a0dd39bfcbe1601f`
+- **Processing hash:** `78eb580270db620d011fcc013a63287e5b2d44e9fe0635815412d5002a70d551` | **metadata hash:** `dcbf89a1040bbc713104e19b99c6f922dcb471ed0b7ff799acccc33070d12383`

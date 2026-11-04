@@ -28,13 +28,31 @@ def supports(dataset_id: str) -> bool:
 
 
 def build(descriptor: DatasetDescriptor, context: Any) -> Path:
-    """Download the selected original table and assemble a standardized leaf."""
+    """Download the selected original tables and assemble a standardized leaf.
+
+    A recipe names one spectral resource, or one per source under ``blocks`` when a package
+    publishes several measurement modes of the same samples (e.g. reflectance and transmittance).
+    """
     recipe = _recipes().get(descriptor.id)
     if recipe is None:
         raise ValueError(f"No verified EcoSIS assembly recipe for {descriptor.id!r}")
-    if len(descriptor.sources) != 1:
-        raise ValueError(f"EcoSIS recipe for {descriptor.id} requires exactly one source")
-    source = descriptor.sources[0]
+    parts = recipe.get("blocks") or {descriptor.sources[0].source_id: recipe}
+    if set(parts) != {source.source_id for source in descriptor.sources}:
+        raise ValueError(f"EcoSIS recipe for {descriptor.id} must name one resource per source")
+    spectra: dict[str, pd.DataFrame] = {}
+    targets, metadata = [], []
+    start = 1
+    for source in descriptor.sources:
+        block, y, m = _assemble(descriptor, source, parts[source.source_id], context, start, partial_targets="blocks" in recipe)
+        spectra[source.source_id] = block
+        targets.append(y)
+        metadata.append(m)
+        start += len(block)
+    return Path(context.write_tables(spectra, pd.concat(targets, ignore_index=True), pd.concat(metadata, ignore_index=True)))
+
+
+def _assemble(descriptor: DatasetDescriptor, source: Any, recipe: dict[str, Any], context: Any, start: int, *, partial_targets: bool) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Join one spectral resource with its declared tables; observation ids continue from ``start``."""
     path = context.download(recipe["url"], recipe["filename"])
     raw = pd.read_csv(path, low_memory=False)
     for join in recipe.get("joins", [recipe["join"]] if "join" in recipe else []):
@@ -85,13 +103,14 @@ def build(descriptor: DatasetDescriptor, context: Any) -> Path:
     if len(axis) != source.n_variables:
         raise ValueError(f"EcoSIS resource {recipe['url']} has {len(axis)} axis columns; expected {source.n_variables}")
     targets = [v.name for v in descriptor.variables if v.role.value == "target"]
-    target_columns = recipe.get("target_columns", {name: name for name in targets})
+    # Each measurement-mode resource of a multi-source package carries its own subset of targets.
+    target_columns = recipe.get("target_columns", {name: name for name in targets if not partial_targets or name in raw.columns})
     sample_column = recipe["sample_column"]
     required = [*([sample_column] if sample_column else []), *target_columns.values(), *recipe["metadata_columns"].values()]
     missing = [column for column in required if column not in raw.columns]
     if missing:
         raise ValueError(f"EcoSIS resource {recipe['url']} is missing expected columns: {missing}")
-    ids = pd.Series([f"{descriptor.id}_{i:06d}" for i in range(1, len(raw) + 1)], name="observation_id")
+    ids = pd.Series([f"{descriptor.id}_{i:06d}" for i in range(start, start + len(raw))], name="observation_id")
     try:
         spectra = raw[axis].apply(pd.to_numeric, errors="raise")
     except (ValueError, TypeError) as exc:
@@ -123,4 +142,4 @@ def build(descriptor: DatasetDescriptor, context: Any) -> Path:
         extra_columns[output_name] = raw[column]
     if extra_columns:
         metadata = pd.concat([metadata, pd.DataFrame(extra_columns)], axis=1)
-    return Path(context.write_tables({source.source_id: spectra}, y, metadata))
+    return spectra, y, metadata

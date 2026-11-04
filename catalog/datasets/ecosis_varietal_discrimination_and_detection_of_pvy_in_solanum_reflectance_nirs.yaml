@@ -107,6 +107,24 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_ID
+  role: metadata
+  type: categorical
+- name: source_VAR
+  role: metadata
+  type: categorical
+- name: source_strain
+  role: metadata
+  type: categorical
+- name: source_infect
+  role: metadata
+  type: categorical
+- name: source_rep
+  role: metadata
+  type: numeric
+- name: source_state
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -115,17 +133,19 @@ alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: 'Varietal Discrimination and Detection of PVY in Solanum tuberosum:
     Hawaii 2014'
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
-  conversion_status: partial
+  ingest_reader_version: 0.3.17+curation.1
+  conversion_status: ok
   warnings:
-  - "Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep. The number of levels of a Rep factor is not used as the number of spectra per sample."
+  - 'Curation identity contract: Sample identifier declared in M. Index fields examined:
+    source_rep. The number of levels of a Rep factor is not used as the number of
+    spectra per sample.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: 'Varietal Discrimination and Detection of PVY in Solanum tuberosum:
@@ -170,5 +190,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/ecosis_varietal_discrimination_and_detection_of_pvy_in_solanum_reflectance_nirs
-  source_fingerprint: 2ba163c9afd583e6f4f81a86875e662625f267c9333f64528ee220aee472c715
+  source_relpath: v2.0/ecosis_varietal_discrimination_and_detection_of_pvy_in_solanum_reflectance_nirs
+  source_fingerprint: 5cf988476b9aedb96d70638bd8a80ad8eeadef7dabba509f249685ac34d8d90d

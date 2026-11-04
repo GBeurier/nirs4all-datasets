@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 3,
+      "in_one_source_only": 3,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 3
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -109,10 +118,6 @@
         "source_columns": [
           {
             "name": "species",
-            "resource": "M.csv"
-          },
-          {
-            "name": "source_species",
             "resource": "M.csv"
           }
         ],
@@ -231,13 +236,14 @@
         "m_family",
         "m_instrument",
         "m_acquisition_mode",
+        "m_species_2",
         "m_collection_date",
         "m_sample_type"
       ]
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:11.297300+00:00",
+  "generated_at": "2026-11-03T16:17:39.838456+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -258,15 +264,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "298d980f94c3e32c147c1bfbd48370d1a2346c932c22ab682019adc6607a9b29",
+    "content_hash": "93c44037e3bf1d29c9c4936ad9f7861549a4d10c84d44281dadbc3c3739996c9",
     "manifest": "manifest.json",
-    "metadata_hash": "d7d8e15b7b17ddcbc4e419f7fd5f149bf23eebefaa091c595a9e447ca2b0de54",
-    "processing_hash": "32eaa49dc4068a1696a141c36f3ca3958fedada8f19e16b10514cb35d7a741e5"
+    "metadata_hash": "29628752b5e0b367d2f8a719cfee98f4e9cf419a26e88896cd3560871a48f9fd",
+    "processing_hash": "96ce8b8492623d1a9f8168633a091110dd8914d4807fbe2aed1d023814085a14"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1327,15 +1333,21 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 1.0000000000000004,
+          "effective_rank": 2.0,
+          "n_components_95": 2,
+          "n_components_99": 2
         },
         "mean_max": 53.91866556803385,
         "mean_min": 0.9253000020980835,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.5308614291864905,
+            0.46913857081351
+          ],
+          "n_components": 2
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 69.80803980036576,
@@ -1663,8 +1675,8 @@
             "noise_rms": 0.013163392212756695,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2954,10 +2966,1028 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Grass"
+          },
+          {
+            "count": 1,
+            "name": "Conifer"
+          },
+          {
+            "count": 1,
+            "name": "Decidous"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "vegetation"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.4444444444444444,
+        "imbalance_ratio": 2.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 2,
+        "normalized_entropy": 0.9182958340544894
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 2,
+            "name": "tree"
+          },
+          {
+            "count": 1,
+            "name": "grass"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_genus",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_genus",
+        "numeric_sentinels": [],
+        "original_name": "source_genus",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Unknown"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_species",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_species",
+        "numeric_sentinels": [],
+        "original_name": "source_species",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Unknown"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "grass"
+          },
+          {
+            "count": 1,
+            "name": "conifer"
+          },
+          {
+            "count": 1,
+            "name": "decidous"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "JHU"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "All"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "The entire spectral range was measured at Johns Hopkins University--see file vegetata.doc for details."
+          },
+          {
+            "count": 1,
+            "name": "Spectral data from measurements by Barry Rock (VNIR/SWIR) and Jack Salisbury (MWIR/TIR)---see file vegetata.doc for details."
+          },
+          {
+            "count": 1,
+            "name": "Spectral data from measurements by Barry Rock (VNIR) and Jack Salisbury (TIR)---see file vegetata.doc for details."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Unknown"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Green Rye grass. Spectra were assembled from two segments, the bidirectional VNIR and SWIR comprising segment one and the hemispherical MWIR and TIR comprising segment two. The VNIR/SWIR spectrum was measured in the laboratory at JHU with a GER IRIS Mark IV using a large piece of sod. The grass was illuminated from directly above and measured at a reflectance angle of 60 degrees to avoid viewing the thatch."
+          },
+          {
+            "count": 1,
+            "name": "Conifer trees. Spectra were assembled from two segments, the bidirectional VNIR and SWIR comprising segment one, and the hemispherical MWIR and TIR comprising segment two. Both segments used needle piles to simulate a conifer canopy."
+          },
+          {
+            "count": 1,
+            "name": "Decidous trees. Spectra were assembled from two segments, the VNIR and SWIR comprising segment one, and the MWIR and TIR comprising segment two. Both segments used leaf piles to simulate a canopy."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Bidirectional and directional hemispherical reflectance."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 0.302,
+        "mean": 0.302,
+        "median": 0.302,
+        "min": 0.302,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 0.302,
+        "q3": 0.302,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 14.0,
+        "mean": 14.0,
+        "median": 14.0,
+        "min": 14.0,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 14.0,
+        "q3": 14.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 550.0,
+        "mean": 550.0,
+        "median": 550.0,
+        "min": 550.0,
+        "n": 3,
+        "n_missing": 0,
+        "q1": 550.0,
+        "q3": 550.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "None."
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Grass"
+          },
+          {
+            "count": 1,
+            "name": "Conifer"
+          },
+          {
+            "count": 1,
+            "name": "Decidous"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "vegetation"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.6666666666666667,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.3333333333333333,
+        "n_classes": 3,
+        "normalized_entropy": 0.9999999999999998
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 3,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 3,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 3,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 3,
+        "n_classes": 3,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "vegetation.grass.unknown.unknown.all.grass.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "vegetation.tree.unknown.unknown.all.conifer.jhu.becknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "vegetation.tree.unknown.unknown.all.deciduous.jhu.becknic.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

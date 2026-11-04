@@ -108,8 +108,6 @@ def _pull(descriptor: DatasetDescriptor, *, cache_dir: str | Path | None = None,
         if not leaf.is_dir() or not list(leaf.glob("X*.csv")):
             raise ValueError(f"{descriptor.id}: recipe did not produce spectral tables")
         runtime = descriptor.model_copy(deep=True)
-        # Historical standardized-table assumptions do not describe freshly joined originals.
-        runtime.provenance.warnings = [w for w in runtime.provenance.warnings if not w.startswith(("Y.csv has no observation_id;", "Observation identity is used as the canonical join key because source sample_id"))]
         layout_path = leaf / "pull-layout.json"
         layout = json.loads(layout_path.read_text(encoding="utf-8")) if layout_path.is_file() else {}
         for source in runtime.sources:

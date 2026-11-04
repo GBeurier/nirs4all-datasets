@@ -55,6 +55,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top manual_review_needed (×5) |
 | usage_scope | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top private_use_only (×5) |
 | notes | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Diopside CaMgSi2O6 (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Mineral (×5) |
+| source_class | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Silicate (×5) |
+| source_subclass | metadata | categorical | *Not specified.* | n=5, missing=0, classes=4, top Tectosilicate (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Fine (×5) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top diopside_2 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top JHU (×5) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top TIR (×5) |
+| source_origin | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Sample from DeKalb, New York via the Smithsonian (sampleno. NMNH R18685). (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top N/A (×5) |
+| source_description | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Most of the 13 mm x 10 mm x 6 mm sample was clean, fresh and green. One area was eroded and weathered and probably impure. The crushed sample was hand-picked to avoid impurities. A moderate amount of weathering and alteration can be seen under the microscope. The alteration is brown in color (limonite). Particle size was less than 2 Micrometers.(Chain Silicates) (Pyroxene Group) Original ASTER Spectral Library name was jhu.nicolet.mineral.silicate.inosilicate.powder.diopsi2.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Transmission (×5) |
+| source_first_column | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top X (×5) |
+| source_second_column | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Y (×5) |
+| source_x_units | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Wavelength (micrometers) (×5) |
+| source_y_units | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top Transmittance (percent) (×5) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=5, missing=0, range 25.04–25.04, mean 25.04 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=5, missing=0, range 2.079–2.079, mean 2.079 ± 0 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=5, missing=0, range 2287–2287, mean 2287 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top Diopside CaMgSi2O6 (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=5, missing=0, classes=1, top mineral (×5) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=5, missing=0, classes=5, top mineral.silicate.inosilicate.fine.tir.diopside_2.jhu.nicolet.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -65,7 +88,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -76,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,6 +120,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `900239a461d1cf0255a409d839adb7c2faa8ca55bc72cb059e3f768754ec01c5`
-- **Processing hash:** `8818897bdddf15191507922eb6e6044e2c1443e54d714fa1b37efae71273ae3c` | **metadata hash:** `dd5efccf2c98bc39430affd93ca3f20302cb485c6e05b2d63b6248039dd07d7e`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `904b8e8935a2a6c9bef843a710f772c24541ceacae5beb0ff7e8411b114d7381`
+- **Processing hash:** `19ce6a27a872c80c5013f78e232476e4b8c323ffbf9d45a9ad9d5ef5e27549a6` | **metadata hash:** `f6b6e56e8ad408dda981f47b2a3aec7c140f033b1817a1962c4a3af717625e6e`

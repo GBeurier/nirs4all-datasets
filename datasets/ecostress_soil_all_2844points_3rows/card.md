@@ -56,6 +56,29 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | rights_status | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top manual_review_needed (×3) |
 | usage_scope | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top private_use_only (×3) |
 | notes | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top soil.alfisol.paleustalf.none.all.87p1087.jhu.becknic.ancillary.txt (×1) |
+| source_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Reddish brown fine sandy loam (×1) |
+| source_type | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top soil (×3) |
+| source_class | metadata | categorical | *Not specified.* | n=3, missing=0, classes=2, top Alfisol (×2) |
+| source_subclass | metadata | categorical | *Not specified.* | n=3, missing=0, classes=2, top Paleustalf (×2) |
+| source_particle_size | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top none (×3) |
+| source_sample_no | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top 87P1087 (×1) |
+| source_owner | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top JHU (×3) |
+| source_wavelength_range | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top All (×3) |
+| source_origin | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Lubbock Co., Tx. via USDA Soil Conservation service. (×1) |
+| source_collection_date | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top N/A (×3) |
+| source_description | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top The parent material is eolian from broad plain in level or undulating uplands. Reddish brown fine sandy loam (fine-loamy, mixed, thermic aridic). Original ASTER Spectral Library name was jhu.becknic.soil.alfisol.paleustalf.coarse.87P1087.spectrum.txt (×1) |
+| source_measurement | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Directional (10 degree) hemispherical reflectance (×3) |
+| source_first_column | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top X (×3) |
+| source_second_column | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Y (×3) |
+| source_x_units | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Wavelength (micrometers) (×3) |
+| source_y_units | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top Reflectance (percent) (×3) |
+| source_first_x_value | metadata | numeric | *Not specified.* | n=3, missing=0, range 14.01–14.01, mean 14.01 ± 0 |
+| source_last_x_value | metadata | numeric | *Not specified.* | n=3, missing=0, range 0.4–0.4, mean 0.4 ± 6.799e-17 |
+| source_number_of_x_values | metadata | numeric | *Not specified.* | n=3, missing=0, range 2844–2844, mean 2844 ± 0 |
+| source_additional_information | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top soil.alfisol.paleustalf.none.all.87p1087.jhu.becknic.ancillary.txt (×1) |
+| source_material_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top Reddish brown fine sandy loam (×1) |
+| source_sample_type | metadata | categorical | *Not specified.* | n=3, missing=0, classes=1, top soil (×3) |
+| source_source_file_name | metadata | categorical | *Not specified.* | n=3, missing=0, classes=3, top soil.alfisol.paleustalf.none.all.87p1087.jhu.becknic.spectrum.txt (×1) |
 
 ## Statistics — splits
 
@@ -66,7 +89,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -77,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
-- **Content hash:** `999cda822fc29a06b2231ac8a53813b6ef0f4ee475ea981a79a2ad7c8165f529`
-- **Processing hash:** `8c188feaa66d21adb49018bc61f458b8c963dea591e9906986375e2c3d14752f` | **metadata hash:** `8b6a47c116e2d9d6a4085f7f2f4ef200a391beb2a3cbd5ca52a7c8949f831d7f`
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content hash:** `80cc9f3c3226e46d401cce5acb84cbcde6a8567b2716fbd2b7cca73cf701b727`
+- **Processing hash:** `b8f5d7db9d6c230a9f1a8cfe54ba82c024fa7fe4a507ef254191ebde8fb87f97` | **metadata hash:** `dc9074319766673edaab8958e5edce4cf20bab0e67054f3e36ef8f6d6caeade0`

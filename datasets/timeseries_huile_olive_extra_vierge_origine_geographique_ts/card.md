@@ -41,17 +41,18 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | dimensions | metadata | numeric | *Not specified.* | n=60, missing=0, range 1–1, mean 1 ± 0 |
 | feature_count_per_dimension | metadata | numeric | *Not specified.* | n=60, missing=0, range 570–570, mean 570 ± 0 |
 | wavelength_note | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top Publication source: tous les spectres d'absorbance ont ete tronques sur 799-1897 cm^-1, axe lineaire reconstruit ici en ordre decroissant 1897->799 sur 570 variables. (×60) |
+| source_zip | metadata | categorical | *Not specified.* | n=60, missing=0, classes=1, top https://www.timeseriesclassification.com/aeon-toolkit/OliveOil.zip (×60) |
 
 ## Statistics — splits
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 30, train: 30
+- **original** (documented, not applied): train: 30, test: 30
 
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -62,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9b49feb7bbeadb03cd3fbc1c0406d6e828237d430e222ed13daf8ce0d8672f64`
-- **Processing hash:** `d3b19c2140ed3414b1ad91135c0d446f110b5f1ac54151b195445c44f3b22d27` | **metadata hash:** `760584a5ec40a10df92b289229dd986c699a0b4d06df7e817cc03a990b9e1a90`
+- **Processing hash:** `04efd04890771ef92549d12a14c4f38b037d5f9deb883e2769f5303a39d54e1a` | **metadata hash:** `13ee742db039ccf6b8b2c44df07edcf865cfdbc30d2d3bae5c9f1aef85aff3d7`

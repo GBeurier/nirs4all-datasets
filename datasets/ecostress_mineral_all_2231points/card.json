@@ -42,6 +42,15 @@
       "min": 1
     },
     "sample_id_available": true,
+    "source_coverage": {
+      "in_all_sources": 4,
+      "in_one_source_only": 4,
+      "n_sources": 1,
+      "pairwise_shared": [],
+      "per_source": {
+        "X": 4
+      }
+    },
     "technical_repetitions": null,
     "unit": "Multiplicity of the declared identifier; protocol not established"
   },
@@ -192,7 +201,7 @@
     },
     "warnings": []
   },
-  "generated_at": "2026-10-30T15:49:08.440125+00:00",
+  "generated_at": "2026-11-03T16:13:14.242294+00:00",
   "governance": {
     "access_policy": "Manual download / private-use-only per source.",
     "license": "LicenseRef-not-cleared",
@@ -213,15 +222,15 @@
     "tier": "private"
   },
   "integrity": {
-    "content_hash": "3649db522c63f8efafc695dcede100a5eb4fe14db326bcceb8ade0cc20346888",
+    "content_hash": "8ab14e9a04ab32b44ef9a50894e9eb04994124b509fd3dae7c12ae7cf0833152",
     "manifest": "manifest.json",
-    "metadata_hash": "e5f0113f23d8be246bb8d3141f53fd253228ae46277913bbb36576939d3d83b0",
-    "processing_hash": "6ed2f5f42e6c856891ddd78225a9ae9656c060b5a236948f535d1ea86073cd9b"
+    "metadata_hash": "2f0368d522bacd10932e97f1f7581acbf4d79e608ddf908ee100be8505420ee7",
+    "processing_hash": "c8ec3ff003106388030832d1a8b80ad0a647205834ed9b673a1aa0e865c9dd24"
   },
   "protocol_version": "7",
   "provenance": {
     "contributor": "ECOSTRESS Spectral Library",
-    "conversion_status": "partial",
+    "conversion_status": "ok",
     "origin_sources": [
       {
         "access": "open",
@@ -1282,15 +1291,22 @@
           ]
         },
         "dimensionality": {
-          "cumulative_top10": null,
-          "effective_rank": null,
-          "n_components_95": null,
-          "n_components_99": null
+          "cumulative_top10": 0.9999999999999993,
+          "effective_rank": 1.66,
+          "n_components_95": 2,
+          "n_components_99": 3
         },
         "mean_max": 84.43692398071289,
         "mean_min": 0.8754999861121178,
         "n_outliers": 0,
-        "pca": null,
+        "pca": {
+          "explained_variance_ratio": [
+            0.8468470040862387,
+            0.12125577244163441,
+            0.031897223472126174
+          ],
+          "n_components": 3
+        },
         "profile": {
           "amplitude": {
             "area_under_curve": 135.80392666577734,
@@ -1611,8 +1627,8 @@
             "noise_rms": 0.037405620821432645,
             "producer": {
               "abi_version": "2.20.0",
-              "engine_version": "1.3.10+abi.2.20.0",
-              "library_sha256": "0dafb507871302f43e7657cc701220a8b59712b432fec8d283ecf7478830b7b3",
+              "engine_version": "1.3.14+abi.2.20.0",
+              "library_sha256": "f9c5ac0e34fd1e4ea5284eede90d291c6a99704894c2d0937e6abd0391feaa2e",
               "name": "nirs4all-methods",
               "operation": "diagnostics.spectral_noise_proxy",
               "protocol_version": "spectral-second-difference-mad-index.v1"
@@ -2894,10 +2910,1040 @@
       },
       "type": "categorical",
       "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_name",
+        "numeric_sentinels": [],
+        "original_name": "source_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Natron Na2CO310H2O"
+          },
+          {
+            "count": 1,
+            "name": "Epsomite MgSO47H2O"
+          },
+          {
+            "count": 1,
+            "name": "Hexahydrite MgSO46H2O"
+          },
+          {
+            "count": 1,
+            "name": "Mirabilite Na2SO410H2O"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_type",
+        "numeric_sentinels": [],
+        "original_name": "source_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Mineral"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.375,
+        "imbalance_ratio": 3.0,
+        "minority_fraction": 0.25,
+        "n_classes": 2,
+        "normalized_entropy": 0.8112781244591328
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_class",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 2,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_class",
+        "numeric_sentinels": [],
+        "original_name": "source_class",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 2,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 3,
+            "name": "Sulfate"
+          },
+          {
+            "count": 1,
+            "name": "Carbonate"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_subclass",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_subclass",
+        "numeric_sentinels": [],
+        "original_name": "source_subclass",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "None"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_particle_size",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_particle_size",
+        "numeric_sentinels": [],
+        "original_name": "source_particle_size",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Coarse"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_no",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_no",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_no",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Natron"
+          },
+          {
+            "count": 1,
+            "name": "Epsomite"
+          },
+          {
+            "count": 1,
+            "name": "Hexahydr"
+          },
+          {
+            "count": 1,
+            "name": "Mirabili"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_owner",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_owner",
+        "numeric_sentinels": [],
+        "original_name": "source_owner",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "USGS"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_wavelength_range",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_wavelength_range",
+        "numeric_sentinels": [],
+        "original_name": "source_wavelength_range",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "All"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_origin",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_origin",
+        "numeric_sentinels": [],
+        "original_name": "source_origin",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Produced in lab"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_collection_date",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_collection_date",
+        "numeric_sentinels": [],
+        "original_name": "source_collection_date",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "N/A"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_description",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_description",
+        "numeric_sentinels": [],
+        "original_name": "source_description",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "SyntheticSample was unsieved powder. Original ASTER Spectral Library name was usgs.perknic.mineral.carbonate.none.coarse.natron.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "Synthetic. Sample was unsieved powder. Original ASTER Spectral Library name was usgs.perknic.mineral.sulfate.none.coarse.epsomite.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "SyntheticSample was unsieved powder. Original ASTER Spectral Library name was usgs.perknic.mineral.sulfate.none.coarse.hexahydr.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "SyntheticSample was Coarse unsieved powder. Original ASTER Spectral Library name was usgs.perknic.mineral.sulfate.none.coarse.mirabili.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_measurement",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_measurement",
+        "numeric_sentinels": [],
+        "original_name": "source_measurement",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Directional Hemispherical Reflectance"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_first_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_column",
+        "numeric_sentinels": [],
+        "original_name": "source_first_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "X"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_second_column",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_second_column",
+        "numeric_sentinels": [],
+        "original_name": "source_second_column",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Y"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_x_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_x_units",
+        "numeric_sentinels": [],
+        "original_name": "source_x_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Wavelength (micrometers)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_y_units",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_y_units",
+        "numeric_sentinels": [],
+        "original_name": "source_y_units",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "Reflectance (percent)"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_first_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_first_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_first_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 14.051,
+        "mean": 14.051,
+        "median": 14.051,
+        "min": 14.051,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 14.051,
+        "q3": 14.051,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_last_x_value",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_last_x_value",
+        "numeric_sentinels": [],
+        "original_name": "source_last_x_value",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 0.4,
+        "mean": 0.4,
+        "median": 0.4,
+        "min": 0.4,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 0.4,
+        "q3": 0.4,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "denominator": "canonical_sample_units",
+      "name": "source_number_of_x_values",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_number_of_x_values",
+        "numeric_sentinels": [],
+        "original_name": "source_number_of_x_values",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "shape": {
+        "cv": 0.0,
+        "is_normal": null,
+        "kurtosis": null,
+        "normality_p": null,
+        "skewness": null
+      },
+      "stats": {
+        "max": 2231.0,
+        "mean": 2231.0,
+        "median": 2231.0,
+        "min": 2231.0,
+        "n": 4,
+        "n_missing": 0,
+        "q1": 2231.0,
+        "q3": 2231.0,
+        "std": 0.0
+      },
+      "type": "numeric",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_additional_information",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_additional_information",
+        "numeric_sentinels": [],
+        "original_name": "source_additional_information",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "none"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_material_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_material_name",
+        "numeric_sentinels": [],
+        "original_name": "source_material_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "Natron Na2CO310H2O"
+          },
+          {
+            "count": 1,
+            "name": "Epsomite MgSO47H2O"
+          },
+          {
+            "count": 1,
+            "name": "Hexahydrite MgSO46H2O"
+          },
+          {
+            "count": 1,
+            "name": "Mirabilite Na2SO410H2O"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.0,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 1.0,
+        "n_classes": 1,
+        "normalized_entropy": 0.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_sample_type",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 1,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_sample_type",
+        "numeric_sentinels": [],
+        "original_name": "source_sample_type",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 1,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 4,
+            "name": "mineral"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
+    },
+    {
+      "assets": [],
+      "balance": {
+        "gini_simpson": 0.75,
+        "imbalance_ratio": 1.0,
+        "minority_fraction": 0.25,
+        "n_classes": 4,
+        "normalized_entropy": 1.0
+      },
+      "denominator": "canonical_sample_units",
+      "name": "source_source_file_name",
+      "normalization": {
+        "censored": 0,
+        "decimal_separator": ",",
+        "distinct": 4,
+        "invalid": 0,
+        "missing": 0,
+        "missing_values": [],
+        "name": "source_source_file_name",
+        "numeric_sentinels": [],
+        "original_name": "source_source_file_name",
+        "present": 4,
+        "protocol_version": "1.1",
+        "thousands_separator": null,
+        "total": 4,
+        "unit": null
+      },
+      "role": "metadata",
+      "stats": {
+        "n": 4,
+        "n_classes": 4,
+        "n_missing": 0,
+        "top_classes": [
+          {
+            "count": 1,
+            "name": "mineral.carbonate.none.coarse.all.natron.usgs.perknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.sulfate.none.coarse.all.epsomite.usgs.perknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.sulfate.none.coarse.all.hexahydr.usgs.perknic.spectrum.txt"
+          },
+          {
+            "count": 1,
+            "name": "mineral.sulfate.none.coarse.all.mirabili.usgs.perknic.spectrum.txt"
+          }
+        ]
+      },
+      "type": "categorical",
+      "unit": null
     }
   ],
   "versions": {
-    "content": "1.1.0",
+    "content": "1.2.0",
     "schema_protocol": "2.0"
   },
   "warnings": []

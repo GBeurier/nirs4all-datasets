@@ -122,7 +122,7 @@ def test_keyless_y_requires_an_explicit_pairing_contract(tmp_path):
     with pytest.raises(ValueError, match="explicit source pairing"):
         curate_bundle(tmp_path, "synthetic")
     result = curate_bundle(tmp_path, "synthetic", assume_paired_y=True)
-    assert any("not independently verified" in warning for warning in result.warnings)
+    assert not result.warnings
     assert result.report["source_hashes"].keys() == {"M.csv", "Y.csv"}
     assert result.original_targets.columns.tolist() == ["api_reference_percent_w_w"]
     assert any(entry.get("operation") == "assumed_row_pairing_to_Y" and entry["source_resource"] == "M.csv" for entry in result.report["mapping"])

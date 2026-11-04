@@ -96,6 +96,24 @@ variables:
 - name: notes
   role: metadata
   type: categorical
+- name: source_sample_id
+  role: metadata
+  type: categorical
+- name: source_percent_value
+  role: metadata
+  type: numeric
+- name: source_percent_substance
+  role: metadata
+  type: categorical
+- name: source_group_code
+  role: metadata
+  type: categorical
+- name: source_prefix
+  role: metadata
+  type: categorical
+- name: source_suffix
+  role: metadata
+  type: categorical
 ids:
   observation_id: observation_id
   sample_id: sample_id
@@ -104,19 +122,18 @@ alignment_level: sample
 splits: []
 tier: private
 versions:
-  content: 1.1.0
+  content: 1.2.0
   schema_protocol: '2.0'
 provenance:
   contributor: Nirpy Research GitHub Honey2021.csv
   raw_sha256: []
   ingest_reader: v2.0-standardized
-  ingest_reader_version: 0.3.13+curation.1
+  ingest_reader_version: 0.3.17+curation.1
   conversion_status: partial
   warnings:
-  - Y.csv has no observation_id; conversion assumes Y/M paired row order when counts
-    match and M observation order matches an X block. Y row pairing is not independently
-    verified.
-  - "Curation identity contract: sample_id is a created row counter; source labels and letters a…i do not establish a unique physical identity. The replication protocol remains undetermined."
+  - 'Curation identity contract: sample_id is a created row counter; source labels
+    and letters a…i do not establish a unique physical identity. The replication protocol
+    remains undetermined.'
 governance:
   license: LicenseRef-not-cleared
   owner_steward: Nirpy Research GitHub Honey2021.csv
@@ -169,5 +186,5 @@ generation:
   managed: true
   generator: bootstrap-v2
   generator_version: '2'
-  source_relpath: standardized_datasets/nirpy_honey_adulteration_nir_aquagram
-  source_fingerprint: 6e01f306bb51b4f6357594713cfbf8f82da097f72818822f6120f90da1eb7419
+  source_relpath: v2.0/nirpy_honey_adulteration_nir_aquagram
+  source_fingerprint: 209a9f5fcbd78e45cedb48262149b5fb90fadcb555838a563065949c0f29e9c3

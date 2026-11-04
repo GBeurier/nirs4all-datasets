@@ -40,6 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 | manual_download_file | metadata | categorical | *Not specified.* | n=180, missing=0, classes=1, top spectra_data.csv \| NSC_data.csv \| info_samples.csv (×180) |
 | official_source_url | metadata | categorical | *Not specified.* | n=180, missing=0, classes=1, top https://datadryad.org/dataset/doi:10.5061/dryad.jd2cb (×180) |
 | manual_download | metadata | categorical | *Not specified.* | n=180, missing=0, classes=1, top True (×180) |
+| source_sample_id | metadata | categorical | *Not specified.* | n=180, missing=0, classes=180, top 631B2 (×1) |
 
 ## Statistics — splits
 
@@ -59,8 +60,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Y.csv has no observation_id; conversion assumes Y/M paired row order when counts match and M observation order matches an X block. Y row pairing is not independently verified.; Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Sample identifier declared in M
+- **Curated views:** M: 5 fields, Y: 4 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,6 +81,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `e3785ca8a285cab3540f7c3640e4b8f790ef4c937d1d815fd115ec66279d2319`
-- **Processing hash:** `45cd0a5d4f1fd97f4c744760346e568bb834d32115a764e2bee1ebe2f0050158` | **metadata hash:** `31f29905d8291a603698c847f55e8477692b9175c3603428f8a687493f5fee94`
+- **Processing hash:** `1bd62b0d65762e9e17de76ce8658d68a248f99990bd2ad618fce2867857a294a` | **metadata hash:** `f94b4351f43a9b23b546b5671189022a6dab9e9fa7e0a69900e192ce35155d5c`
