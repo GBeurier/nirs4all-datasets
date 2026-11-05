@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NASA FFT Project Leaf Reflectance Morphology and Biochemistry for Northern Temperate Forests (reflectance)
+# Datasheet — NASA FFT temperate forest leaves — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -107,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 10 fields, Y: 8 fields, passport: 41 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 8 fields, measurements: 2 fields, passport: 41 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -130,4 +130,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `075fffc4a4f4a065519013046392614769c357e04dfb82fda0c184ec7c04e232`
-- **Processing hash:** `34f107150f38e748f7d34412fa8da73507f8f433fa87ef242d9f10ef08ec8631` | **metadata hash:** `22f140968adf43428957b81688f62fce44d5603da4c65c463d13a4b49b014e8b`
+- **Processing hash:** `34f107150f38e748f7d34412fa8da73507f8f433fa87ef242d9f10ef08ec8631` | **metadata hash:** `e2c5a230712fd7a9626a48548cb3e0b447cdfa6eed0557a809076df1ac68be91`

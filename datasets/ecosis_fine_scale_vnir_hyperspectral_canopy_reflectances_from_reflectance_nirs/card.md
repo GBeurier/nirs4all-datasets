@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Fine-scale VNIR hyperspectral canopy reflectances from Virginia successional forests (reflectance)
+# Datasheet — Virginia successional forests — canopy VNIR reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -143,7 +143,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 2 fields, passport: 60 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 60 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -165,4 +165,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `cac2e66467d0995de21b30379aa4eff418d65df27bd5ede488b77146196399e1`
-- **Processing hash:** `b35e16dc71283c5e2bcca939131c1d660833c68e9a373161357db3c7094df18c` | **metadata hash:** `3a59c7d3fe3d56969a6b9aaf5479481ec06aaf8929fd018bb5603284efbb85b9`
+- **Processing hash:** `b35e16dc71283c5e2bcca939131c1d660833c68e9a373161357db3c7094df18c` | **metadata hash:** `29d6010407a6734ecc06d2fc24b6dd4d163c790fd0dfa3bf37ddc00665a87d82`

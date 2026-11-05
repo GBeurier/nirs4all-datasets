@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Oven Dried Leaf Spectra and Measured Traits from the Sierra Nevada (CA) in July 2023 (reflectance)
+# Datasheet — Sierra Nevada leaves 2023 — oven-dried reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -96,7 +96,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: source_replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 7 fields, Y: 15 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 15 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -118,4 +118,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `94a762f643e0ca8f8166497af5ef5f8b541ce5298c199d47535178f31ac9b103`
-- **Processing hash:** `10ad6d2731219c2cfd546d274a3dc6ada430a37d8f4daa2edc613e7501289b21` | **metadata hash:** `503dde65fc89a5e81693d61acd3e975e10bcb5c4ecee0ce00f1a646d963f38d9`
+- **Processing hash:** `10ad6d2731219c2cfd546d274a3dc6ada430a37d8f4daa2edc613e7501289b21` | **metadata hash:** `8b3e8c66cd52dc929645c55726fd4389ab308193d4263456fb5d88dd0892a2a2`

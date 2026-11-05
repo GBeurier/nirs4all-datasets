@@ -1,4 +1,4 @@
-# Datasheet — Bovine knee ligament multi-instrument NIR data
+# Datasheet — Bovine knee ligaments — multi-instrument NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -84,7 +84,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 50 ligaments measured at five sites each, in two aligned blocks; 5 spatial positions, not five independent preparations.
-- **Curated views:** M: 2 fields, Y: 28 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 28 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,4 +106,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `23eb81ff003aa194ca2bf10a751bf1783820995f2ee814a349a525365618adc7`
-- **Processing hash:** `a507224d56f106fe552632adeb83df8fe553610c73750f0c3e863e4dce0afbf1` | **metadata hash:** `253b61e8cfb969282642c0672eedd6467643f3336cf69b4aebc08e23ca12e590`
+- **Processing hash:** `a507224d56f106fe552632adeb83df8fe553610c73750f0c3e863e4dce0afbf1` | **metadata hash:** `9f22cd2086c64cd3839b5acfc4d2992274b562e7fa18987a2b1bf02a9f26703f`

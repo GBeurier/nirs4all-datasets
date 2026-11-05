@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Varietal Discrimination and Detection of PVY in Solanum tuberosum: Hawaii 2014 (reflectance)
+# Datasheet — Hawaii potato varieties and PVY 2014 — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -80,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 4 fields, Y: 0 fields, passport: 34 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 0 fields, measurements: 0 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,4 +102,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e1b7f5ce915713f3c027ccd944fcd4d3524e7789793c5f131d9c17829e82e736`
-- **Processing hash:** `bbe953a7f30249387b207a40593c76b865e7f73ae7a0d728931548cc5ef9302b` | **metadata hash:** `7a4442f616574ada3128511a2a2969c7ce9e0d743c210772374f153f3517c8af`
+- **Processing hash:** `bbe953a7f30249387b207a40593c76b865e7f73ae7a0d728931548cc5ef9302b` | **metadata hash:** `f852b8793dc37f3ffa56a01f9e450b4791f7f2f622e228ebb90e0d275f0929c0`

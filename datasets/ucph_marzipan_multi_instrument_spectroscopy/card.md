@@ -1,4 +1,4 @@
-# Datasheet — UCPH marzipan multi-instrument spectroscopy
+# Datasheet — Marzipan — multi-instrument spectroscopy (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 11 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 11 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9b8bca8c691d4e726e4e241218684e485a7848950138dc974aa7fdc25a0fffe0`
-- **Processing hash:** `a738789daf416d1e402e0163deec70a961ca45ba0c36e90f35801508a8933fb3` | **metadata hash:** `2ef78b8a8c8a551903ebb92250d82e0cf21924e63019f9b2e3308ec6853b0aae`
+- **Processing hash:** `a738789daf416d1e402e0163deec70a961ca45ba0c36e90f35801508a8933fb3` | **metadata hash:** `d6889b1fe3d94ddb2d6ba02482df1838f0618b16c7445db2e96918a3d6710fb7`

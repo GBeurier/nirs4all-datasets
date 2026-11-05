@@ -1,4 +1,4 @@
-# Datasheet — UCPH bread staling enzyme NIR
+# Datasheet — Bread staling — enzyme treatment, NIR (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -62,7 +62,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 324 exported positions; L/M/R are three spatial positions. Do not confuse bread, position, and replication at a fixed position.
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,4 +84,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `065e42bcf7e6fbfc80961217ad06c4c4e3ad299b5539ffdf35b9ab4a6358b680`
-- **Processing hash:** `aae73646cf501cb13f2571057cbe41c570ac2997d9b28a06ea01f25f2bfeb0d6` | **metadata hash:** `30f1237873ac958a2f2867a13dfaaa9ce432d56509ccf70e84bc3f183e84a064`
+- **Processing hash:** `aae73646cf501cb13f2571057cbe41c570ac2997d9b28a06ea01f25f2bfeb0d6` | **metadata hash:** `23695ef9aa3e89997840a3bf1742099cf2b42e823664c698de4c65e72dde97fe`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Potato Virus Y detection in Solanum tuberosum, greenhouse plant-level means
+# Datasheet — Potato PVY greenhouse — reflectance, plant means
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 1 fields, passport: 19 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 1 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `f4367959a640f9296971e0114ef501393923aa10b9cf64ed7df3a2b4cf3811c6`
-- **Processing hash:** `929aed0cc29006f9244a124b4d81a08301c79758cf9f4cd13e675d0aac6d3715` | **metadata hash:** `c89b5b43bdc9788e0505effb0770aba39076b0bb8b6dd6482848c92575711692`
+- **Processing hash:** `929aed0cc29006f9244a124b4d81a08301c79758cf9f4cd13e675d0aac6d3715` | **metadata hash:** `ed30c7201296c790086be9fc58ea291d52f21ea2dfc37d4ff5c53f8ac2cc876f`

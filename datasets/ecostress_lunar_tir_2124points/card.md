@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS lunar tir axis 69ac2056
+# Datasheet — ECOSTRESS lunar materials — 2.0795–14.011 µm (2124 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -99,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 2 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,4 +122,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `5ed69ae5d1c3ea83fd60b71c10b7bfc155276ab04a7477230df5273c27d6f4cf`
-- **Processing hash:** `bdb783ef2eb04117c1e4e2ff95289102e5a196c4aab8dfc90e7b3a95e6d8170d` | **metadata hash:** `3ff55365009849ba1f7c91774283188d02abb3bec569579cc7c266ab5afb4c6f`
+- **Processing hash:** `bdb783ef2eb04117c1e4e2ff95289102e5a196c4aab8dfc90e7b3a95e6d8170d` | **metadata hash:** `dfd1a20741d0b7bc633bc1eccbc9a397b8ec898a389cb16550b5f3e402b74faf`

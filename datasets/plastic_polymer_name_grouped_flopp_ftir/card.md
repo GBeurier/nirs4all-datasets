@@ -1,4 +1,4 @@
-# Datasheet — FLOPP FTIR polymer classification
+# Datasheet — FLOPP polymers — FTIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -59,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 17 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 17 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,4 +81,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `3bbcf2ca5612692229f87f5880bf53a49081392b4f958c3d85dc9dbb9fc6384c`
-- **Processing hash:** `c1f68bbf569827815709356e8b85982bfd195098a4e9cdfa2579b2a020ae4211` | **metadata hash:** `44a61b2d3b0a91ca94b5c091057589a339925b914321d1ece69a5ee02dc61037`
+- **Processing hash:** `c1f68bbf569827815709356e8b85982bfd195098a4e9cdfa2579b2a020ae4211` | **metadata hash:** `a40e6524889e8f907ab75fa79b3092eda5abd0cc9885bb99b9589f4c9c194059`

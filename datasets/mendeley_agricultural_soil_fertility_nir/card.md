@@ -1,4 +1,4 @@
-# Datasheet — Mendeley agricultural soil fertility NIR
+# Datasheet — Agricultural soils — fertility, NIR (Mendeley)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -69,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 6 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 6 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `334d5289ad69bc1c999483cde561fd92dc49a3d131410a676194d9bbbc5192f3`
-- **Processing hash:** `d62fdccae7ffa09fdd5c0267bc39966a3ab80f0717e4f7bb8c88d8e52d44f1b6` | **metadata hash:** `1a96b86ce783ad3b4f1ef1a1a8a88ccf64acff2f5d677064936c14c12587956e`
+- **Processing hash:** `d62fdccae7ffa09fdd5c0267bc39966a3ab80f0717e4f7bb8c88d8e52d44f1b6` | **metadata hash:** `d128ec1a8be5adddfd75536d032aeb1f00a1ceec5c8bb7dc6bec1c6735f83ad7`

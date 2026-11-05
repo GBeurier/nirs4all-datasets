@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research plums Brix and firmness NIR
+# Datasheet — Plums — Brix and firmness, NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -61,7 +61,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,4 +83,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6a13c0c17559f6375da07d19b158523b94db41d8d212e7ea1ac3c6850540d8b8`
-- **Processing hash:** `4d4e6ed7a0be57ab782fab30f7382a586461c1a315087e66f973521f54e85d01` | **metadata hash:** `81736eb2dd82d813824b537f57c8eebdadeed9ec86d913e8fd26b00b847f39cf`
+- **Processing hash:** `4d4e6ed7a0be57ab782fab30f7382a586461c1a315087e66f973521f54e85d01` | **metadata hash:** `d72f606b51b19d35a4c260017b65312dac7552d44eeca97fcbcc9f5b3904c33e`

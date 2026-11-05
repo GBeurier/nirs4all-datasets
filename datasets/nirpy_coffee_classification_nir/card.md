@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research coffee classification NIR
+# Datasheet — Coffee — NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `bdc6b9e8855fb7555a953ad960c8136167a9e9687f2cca12ffce10a9dbf9dab5`
-- **Processing hash:** `fa8f93463d1712608e736ee9a068820d4adc59e6872590f780b0b5d5eb52d9ec` | **metadata hash:** `f27f4f23e3dcb4cbf1ebc630c16014f4590350c7881e48413f1647ccfd83fffa`
+- **Processing hash:** `fa8f93463d1712608e736ee9a068820d4adc59e6872590f780b0b5d5eb52d9ec` | **metadata hash:** `2627f18a86af578a54b5e9643ea1322eca713626671560acbb6bf0046194c39d`

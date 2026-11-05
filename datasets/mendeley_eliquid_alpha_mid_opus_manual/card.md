@@ -1,4 +1,4 @@
-# Datasheet — E-liquid Alpha II MID OPUS transmittance spectra
+# Datasheet — E-liquids — MIR transmittance, Alpha II
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -59,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 14 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 14 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,4 +81,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c56ba75a72e91169acd80428e1156fe38c26fb699d4f672a875892db265434cf`
-- **Processing hash:** `7379f165539c2bdbe4ba80e4750a8c0641296efc32852343ca22b0e3faac1673` | **metadata hash:** `f5c6bbae7caf3cb736d4b8a59945ff680e14ea14447ca053fe6f1f7570935fdc`
+- **Processing hash:** `7379f165539c2bdbe4ba80e4750a8c0641296efc32852343ca22b0e3faac1673` | **metadata hash:** `938ce2116a23780915a0ae13002913104d4b5c3cb8206a19c64195a7967a4e94`

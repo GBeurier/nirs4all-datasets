@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 2019 PLOSONE wheat hessian fly ms (reflectance)
+# Datasheet — Wheat and Hessian fly 2019 — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -75,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,4 +98,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `984227d07ed52d3785b060652e513c5e64a50f4cc3ed542ecb51015fcb04618f`
-- **Processing hash:** `a52d88bc794971c3a8d74b122fcaedf5a16eb776b3e6b6115f862e5aca31ec8b` | **metadata hash:** `a16fb8483b6c47a563806d32f7cd7c15b1904434b95440e41c8cd88ebe6e6e2f`
+- **Processing hash:** `a52d88bc794971c3a8d74b122fcaedf5a16eb776b3e6b6115f862e5aca31ec8b` | **metadata hash:** `5e5d6fa5d69463dd54fbd086ef5e4e8f85f22990567da29e3dc0ba99bf906135`

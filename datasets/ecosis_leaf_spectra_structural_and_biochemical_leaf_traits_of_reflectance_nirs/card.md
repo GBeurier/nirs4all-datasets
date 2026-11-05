@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf spectra, structural and biochemical leaf traits of eight crop species (reflectance)
+# Datasheet — Eight crop species — leaf reflectance and traits
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -127,7 +127,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 46 fields, passport: 35 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 46 fields, measurements: 0 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -151,4 +151,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `94b085c36d0905c51f7cc697ffe035d9e621ea449f25b9ae15631b60315b4f27`
-- **Processing hash:** `705085583afaec5468200bd94724dca583dc142ef52837bd4cfa14c83d105e7f` | **metadata hash:** `1f0a3558df7cc04ed0c786516517fab88c4615b8c135b865c466e865ae11e6ac`
+- **Processing hash:** `705085583afaec5468200bd94724dca583dc142ef52837bd4cfa14c83d105e7f` | **metadata hash:** `25661d0f6fe6684d7881a29a96606359ac4f13df4f0cf219c586cef6633562e3`

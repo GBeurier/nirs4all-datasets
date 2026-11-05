@@ -1,4 +1,4 @@
-# Datasheet — boeuf_classe_adulteration_ts
+# Datasheet — Beef — meat spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 30, test: 30
+- **original** (documented, not applied): test: 30, train: 30
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a4c87ab9ca50a0882b402540a715a60848b814b22f7b15ea9943cbbc1d172fd9`
-- **Processing hash:** `55868fecefcfb38acad583cbee15af64955a45668745e086a970dff3134d163b` | **metadata hash:** `2bd0f9cc11acd345690ab8a994e1931d777a9e54c45e2bed25d86c89eec230ff`
+- **Processing hash:** `55868fecefcfb38acad583cbee15af64955a45668745e086a970dff3134d163b` | **metadata hash:** `e8228e0c88df187ab818e5af004bcc3e835d14c54cb6e90b8c3e39c248a09e1b`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS UW-BNL NASA HyspIRI Airborne Campaign Leaf and Canopy Spectra and Trait Data (reflectance)
+# Datasheet — UW-BNL HyspIRI — leaf + canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -172,7 +172,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 22 fields, Y: 5 fields, passport: 54 fields, measurements: 35 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 22 fields, Y: 5 fields, measurements: 35 fields, passport: 54 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -195,4 +195,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `02a3558a3f6890c79a203824f01cee1c121830d18fff0adf3095f907cbb0299a`
-- **Processing hash:** `fc070684c27ee8bc248141ad19e869ef989bfb2467888e64e91a0a266bf85998` | **metadata hash:** `5bb64b28541523c0ad244680062ce457bbf677dee92974e003eba7b10e922787`
+- **Processing hash:** `fc070684c27ee8bc248141ad19e869ef989bfb2467888e64e91a0a266bf85998` | **metadata hash:** `2a74f4dddb4ed23078622f71b6c213bb6a56c855dffb6b34fda7c45be183d86b`

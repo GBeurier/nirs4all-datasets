@@ -1,4 +1,4 @@
-# Datasheet — Data in Brief rice amylose transflection NIR
+# Datasheet — Rice amylose — NIR transflection
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e6e0ed3ce3ed904283f5aced4499c2c927eb92d2d11c771f4c857f41357cb7d1`
-- **Processing hash:** `21c158f3f209f516157e6ea516fad05636f1013b839f166a6dc047fcd2e3c420` | **metadata hash:** `949807bcfb27b02e4162a0756fe5d4f8b7e036531b8e4fa25122ef13e2c2ebdc`
+- **Processing hash:** `21c158f3f209f516157e6ea516fad05636f1013b839f166a6dc047fcd2e3c420` | **metadata hash:** `f44c686d2a840e841f082e11544fd86c30f8ac72b956fa8d673fb3bdc08888f6`

@@ -1,4 +1,4 @@
-# Datasheet — Grassland Hyspex spectra and plant species data
+# Datasheet — Grassland species — HySpex spectra
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -157,7 +157,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Source plot; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 5 fields, Y: 100 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 100 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -179,4 +179,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `aefd6f7f97b9c456c9c1f2421c3fe4fddfa1b507bcc5f8c8bcd5703148520541`
-- **Processing hash:** `ca040339e5035e7b151f76330b9341403c56ea3741aac787f78966c908a38c0b` | **metadata hash:** `f71a183645c8762ad6c6a2e60f285ca98fbd5d4e7be74fc32406a7ec873f2238`
+- **Processing hash:** `ca040339e5035e7b151f76330b9341403c56ea3741aac787f78966c908a38c0b` | **metadata hash:** `e3fc5d538ca732afafb7fd1c82804e9808e1c13955f61e99cfb33a8263792bcf`

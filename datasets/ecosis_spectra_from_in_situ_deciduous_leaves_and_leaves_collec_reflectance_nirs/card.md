@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Spectra from in situ deciduous leaves and leaves collected for nitrogen analysis throughout autumn (reflectance)
+# Datasheet — Deciduous leaves — autumn nitrogen, in situ + collected spectra
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -87,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 11 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 11 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `23eba48e02467c61e2eef3b4e0289ae6b4df1a7d25ccc5a17cc6817e471e56bd`
-- **Processing hash:** `cb4acf777a4cf07cee9c8473845cea3effbd76a2145ba1734a1f035aedbd94d7` | **metadata hash:** `3c7f30bac2fe6c05b4e031a5685cb2c0987df4ae7c4ba8bf658b872e9a2d15d7`
+- **Processing hash:** `cb4acf777a4cf07cee9c8473845cea3effbd76a2145ba1734a1f035aedbd94d7` | **metadata hash:** `eae80751ad90cbeb89833951edefaa7a6980c64ddfa7a6cfeab6b639167a8412`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf Traits Compilation reflectance
+# Datasheet — Leaf Traits Compilation — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -76,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 9 fields, Y: 4 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 9 fields, Y: 4 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,4 +98,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `552bb08a2748f805d79862232e2dbb104cb0549edf94669e0f85fcab24d58a31`
-- **Processing hash:** `4ddce625c6f6ea0373a42263872e5e9ce613a50ee90456b133b99af71f59c970` | **metadata hash:** `9f755ae2cf73ac58f716c44631984edd3f267d8d48622e93583fd4d5b1cf9ed6`
+- **Processing hash:** `4ddce625c6f6ea0373a42263872e5e9ce613a50ee90456b133b99af71f59c970` | **metadata hash:** `209a7058b52a365f936aa2017d462745f94ff4c3f461cc5ed9d17f437dd84439`

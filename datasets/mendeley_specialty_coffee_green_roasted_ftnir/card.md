@@ -1,4 +1,4 @@
-# Datasheet — Mendeley specialty coffee green roasted FT-NIR
+# Datasheet — Specialty coffee — green + roasted, FT-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -70,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: replicate. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,4 +92,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6e02c483879b83a80b498bf6c8211ddc56887d877e1e80dc2d865190804dc957`
-- **Processing hash:** `fb7839a9d7ef225ab2b4a33d81009ef25e007c8ecc1d585fe27b47c4380633c0` | **metadata hash:** `771815ac74349db69ccf5dd4205fefc53a04bbb62352149d4cbd5c9d52118a11`
+- **Processing hash:** `fb7839a9d7ef225ab2b4a33d81009ef25e007c8ecc1d585fe27b47c4380633c0` | **metadata hash:** `50f0ad0adca790025fe7030eb619864c28e86a8d26e24a1a63fe260134db3a28`

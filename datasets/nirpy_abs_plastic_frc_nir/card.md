@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research ABS plastic FRC NIR
+# Datasheet — ABS plastic — NIR (Nirpy FRC series)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `0798ff0b7620b61af90b0d471586f6babb42a4d981e5a17a65aad88c61942a68`
-- **Processing hash:** `f266f76d5b6ad38653f140b05793075ad6de76638bd23702351a79061920d32c` | **metadata hash:** `50c46caa3e5ee0a85a21dfd70a6dfde03fba4b04b9d3d46b850602ad3f4d7b48`
+- **Processing hash:** `f266f76d5b6ad38653f140b05793075ad6de76638bd23702351a79061920d32c` | **metadata hash:** `9c2c7c50a7235773569ada81c22d98425dc2f2df57975ce7eaa0bc55ea232a58`

@@ -1,4 +1,4 @@
-# Datasheet — Mendeley homemade soil OM TC NIR
+# Datasheet — Homemade soils — organic matter and total carbon, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c72b565f0ecc2b559b2799e9a34b7e03ac163706d97ad147bc0010f47ef1737a`
-- **Processing hash:** `a64bd9b268900eae41a824b20589bbddf189829b0f23e40aa08d6bab506b560b` | **metadata hash:** `12e8df32528768aa6335c224ef36325ed1a737b205a1d41f039cc9ce9345c766`
+- **Processing hash:** `a64bd9b268900eae41a824b20589bbddf189829b0f23e40aa08d6bab506b560b` | **metadata hash:** `2973359bc573b71132883d88235606d441643920e8c84ddff6d2442fb38c4dbe`

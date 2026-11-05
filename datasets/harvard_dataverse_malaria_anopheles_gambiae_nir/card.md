@@ -1,4 +1,4 @@
-# Datasheet — Harvard Dataverse NIR spectra of Plasmodium falciparum infected Anopheles gambiae
+# Datasheet — Anopheles gambiae — Plasmodium infection, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -40,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 365, test: 197
+- **original** (documented, not applied): test: 197, train: 365
 
 ## Collection process
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 274 ID strings for 333 rows; ID1/ID2 may collide after concatenation. Mosquito identity and reacquisitions are not established by the available reconstruction script.
-- **Curated views:** M: 1 fields, Y: 1 fields, passport: 13 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 0 fields, passport: 13 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `5c4185984d596f73ed1aaa1c00933b838befe06da4fc0db171265a092a7821d3`
-- **Processing hash:** `21a1363144ceaf5795dff0c6d97c9a1408bb7171d554687914fb4ceb5fdbfd2e` | **metadata hash:** `508a52d7e9393eed113b96bf8158df27df77f49fee1818a163a001358ad7a52b`
+- **Processing hash:** `21a1363144ceaf5795dff0c6d97c9a1408bb7171d554687914fb4ceb5fdbfd2e` | **metadata hash:** `e9365c91245f8526b78b3a2e8f08caf6532699a3f0db52fc28b4e8c14f313f36`

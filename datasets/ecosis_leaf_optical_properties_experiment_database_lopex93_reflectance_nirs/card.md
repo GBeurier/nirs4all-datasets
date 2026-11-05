@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf Optical Properties Experiment database (LOPEX93)
+# Datasheet — LOPEX93 leaves — optical spectra
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -94,7 +94,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 3 fields, passport: 27 fields, measurements: 20 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 3 fields, measurements: 20 fields, passport: 27 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -116,4 +116,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `d862fb0b9ef4f505da4372ab2be7a4f024ebfb4a416908116cb7db5941a3225b`
-- **Processing hash:** `9c29ae12d987cded2c7259b7110dfdee8c566ba30ee3a64c05b2001c8ec3ff91` | **metadata hash:** `0ffcb4a0ab63e3f346cc07bd23ba0ebc0e395c55cd59b80d0872186ffb0221fd`
+- **Processing hash:** `9c29ae12d987cded2c7259b7110dfdee8c566ba30ee3a64c05b2001c8ec3ff91` | **metadata hash:** `ac18fefe7374ca1b4c9144b21a167519f2f415601ee4a2243cd34ea1b99ea401`

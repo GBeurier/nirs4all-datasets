@@ -1,4 +1,4 @@
-# Datasheet — Recherche Data Gouv oilseed rape tissue FT-NIR nitrogen carbon
+# Datasheet — Oilseed rape tissues — nitrogen and carbon, FT-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 6 fields, passport: 27 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 6 fields, measurements: 0 fields, passport: 27 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `dcd44de74d833a45b34883aaec4a476ee1e31d28014f2f6b78738c7fe97cf977`
-- **Processing hash:** `33720947cb3818bd9a762cc3b6eee34aaa2a12de072b1d1dc78d0262238dab2f` | **metadata hash:** `2e3b48b7e0d24c7ed2c5ffaa077ce20093334bd19ce6b6ed570684813dbcf0ce`
+- **Processing hash:** `33720947cb3818bd9a762cc3b6eee34aaa2a12de072b1d1dc78d0262238dab2f` | **metadata hash:** `8a67df16bdcfb4cf50422a02b8311c3ef421966b6366c54ae7e93ceb1d535a42`

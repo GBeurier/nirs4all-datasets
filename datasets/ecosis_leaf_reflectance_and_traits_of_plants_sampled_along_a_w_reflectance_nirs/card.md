@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf reflectance and traits of plants sampled along a water affinity gradient (AQGRAD) (reflectance)
+# Datasheet — AQGRAD plants — water affinity, leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -95,7 +95,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 12 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 12 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -118,4 +118,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `34d0f61ab43c4ba6e043e9848133ac915c28e0e37eefcb047a92f2e2468a9cbc`
-- **Processing hash:** `9d19e99d0f7bf9de1b056436aa4478eb9b6c8c5fc38160ee4961705097bb5968` | **metadata hash:** `5c3d26098c46c7811e3f38422ae1929ffa3abe4e9d736a6c6f04e1a4735d1ba8`
+- **Processing hash:** `9d19e99d0f7bf9de1b056436aa4478eb9b6c8c5fc38160ee4961705097bb5968` | **metadata hash:** `5d50e5c22b043a958373eea48c6d1fe97b9e5196c99a4dded56cc68359d4db8e`

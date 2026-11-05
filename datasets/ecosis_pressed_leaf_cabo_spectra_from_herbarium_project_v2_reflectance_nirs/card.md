@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Pressed-leaf CABO spectra from herbarium project v2 (reflectance)
+# Datasheet — CABO herbarium project — pressed-leaf reflectance, v2
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -128,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 50 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 50 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -152,4 +152,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `65093c442d4bcfa6eda35308e9017fddae01145d26b9ea120810273ab2f2132d`
-- **Processing hash:** `109e6569189b5bd0adddbef9f2ea26cb14e2269ab9bbd1675a1e8a770a37d609` | **metadata hash:** `4828927f395bf4184ce6afddf9fe9e2c0a6b630f906250f60eaf80062a293738`
+- **Processing hash:** `109e6569189b5bd0adddbef9f2ea26cb14e2269ab9bbd1675a1e8a770a37d609` | **metadata hash:** `8eff20fd744592eaa998aaec7455f9f48f44a4aad37bbb89ba9c33d363a0141d`

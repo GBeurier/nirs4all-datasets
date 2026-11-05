@@ -1,4 +1,4 @@
-# Datasheet — Mendeley intact mango TA Vit C raw NIR
+# Datasheet — Intact mango — acidity and vitamin C, raw NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -69,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c4dcea2b4902cda028a531b1489be6cf40a67a17078790a056b56c7784d03afc`
-- **Processing hash:** `0c9041726500c342970098751fff6b0bd6f585cfb7541eaf06b3974eff661a2b` | **metadata hash:** `a845a0af32a6ac9ad96a47ab6d38c8ccae497fad1745e57f1999e00b748ce73a`
+- **Processing hash:** `0c9041726500c342970098751fff6b0bd6f585cfb7541eaf06b3974eff661a2b` | **metadata hash:** `4191a59df4af604461133f28c5dbc897c78546c2ecf52931d5933ed308eb9f30`

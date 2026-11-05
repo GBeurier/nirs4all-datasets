@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Arctic Leaf Spectral Reflectance Utqiagvik (Barrow) Alaska 2013 (reflectance)
+# Datasheet — NGEE Arctic Utqiagvik 2013 — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -112,7 +112,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 31 fields, passport: 38 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 31 fields, measurements: 0 fields, passport: 38 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -136,4 +136,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `501c2d691e9c33715fbd337b2db95fa223a7a7305e8019dba24baac9e42eaece`
-- **Processing hash:** `2e32d49730cd5a02bc441b6fe116c724ca13371168e114df9aa134d48c036e68` | **metadata hash:** `ef2e9a9a1e75fa686795b13eb6865bdd70666a9d54c296bc0aa6e15c62e7d552`
+- **Processing hash:** `2e32d49730cd5a02bc441b6fe116c724ca13371168e114df9aa134d48c036e68` | **metadata hash:** `0e295bd351093d1596fd71683b2ba568bbd186236c69986bbe0b931db523360c`

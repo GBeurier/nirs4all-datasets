@@ -1,4 +1,4 @@
-# Datasheet — CIRAD Madagascar organic resources ASD vis-NIR, native and XDS-standardized
+# Datasheet — Madagascar organic resources — ASD + XDS-standardized Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -119,7 +119,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 31 fields, Y: 20 fields, passport: 25 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 31 fields, Y: 20 fields, measurements: 0 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -141,4 +141,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `11ebd414d317c46ea8f84d762e0a23c6be87c31892162ec2239a9e03c5101a9b`
-- **Processing hash:** `be169c9d5c8ebc7bcf61c11a6c29e0c9eabc57b45c425b27c0de62596004f541` | **metadata hash:** `aceaad661a34e029481907df5494f8dfcf9a5866452f276993fccba9a06c8ba7`
+- **Processing hash:** `be169c9d5c8ebc7bcf61c11a6c29e0c9eabc57b45c425b27c0de62596004f541` | **metadata hash:** `e0c5e5fc53ab048973a679220575af81fd36d9488b99db154a5dc2fd2181a984`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Purdue Leaf Spectral and Functional Trait Data used in PLSR modeling v2 (reflectance)
+# Datasheet — Purdue leaves — reflectance and functional traits, v2
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -98,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Unique source identifier including experiment and date; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 12 fields, Y: 5 fields, passport: 31 fields, measurements: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 12 fields, Y: 5 fields, measurements: 6 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -120,4 +120,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `3058cc9a4aeab89a9d917116d80e51d1a5bb90ff763a4add1c728af55157c751`
-- **Processing hash:** `edb63058634577023461a0bd75a1a85cebd0daa32d15505784fed2fe37ee596c` | **metadata hash:** `6167b12ee5c02f2b65ddea9cf397e4710b45e2ef986776c519155fd23850d716`
+- **Processing hash:** `edb63058634577023461a0bd75a1a85cebd0daa32d15505784fed2fe37ee596c` | **metadata hash:** `ff06087eaf29435704c00cce54773f45c0d240a71bddf5c3acbce0f984550e55`

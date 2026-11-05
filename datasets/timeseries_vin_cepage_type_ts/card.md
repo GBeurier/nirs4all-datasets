@@ -1,4 +1,4 @@
-# Datasheet — vin_cepage_type_ts
+# Datasheet — Wine — wine spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 57, test: 54
+- **original** (documented, not applied): test: 54, train: 57
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `cbe59cf2c9c175969d47ea838d618e8ba8428ed8cb6bb34cbde6136e317f836c`
-- **Processing hash:** `1fa001b65383c3515390d0ba92e37214800e2f97e4b972f6a8c7919d0e3759bc` | **metadata hash:** `8be246e857edfa91772f11c8c41f3bf3e815b452e8ae9efc603c8ff3cf12760d`
+- **Processing hash:** `1fa001b65383c3515390d0ba92e37214800e2f97e4b972f6a8c7919d0e3759bc` | **metadata hash:** `bf230382857dfd642da9d8561e54e4a37e2d94e486e6c0832efdb29d778171f2`

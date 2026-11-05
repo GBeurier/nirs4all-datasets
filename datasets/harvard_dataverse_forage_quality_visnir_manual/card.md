@@ -1,4 +1,4 @@
-# Datasheet — Forage quality Vis-NIR spectra
+# Datasheet — Forage quality — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -58,7 +58,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 3 fields, Y: 4 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 4 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,4 +80,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `889562c5ecc9086dbc8c5d73c71fa448336045620b18c9be6ba23daef2869c4f`
-- **Processing hash:** `a2b4bf01a7fde82aad7c3a0a93d66250e3e2dedb02e067c076977a03a021264a` | **metadata hash:** `b46f2fe60938bfd12370626c4faecf91597a26bc5cbc478807e139d125d71f11`
+- **Processing hash:** `a2b4bf01a7fde82aad7c3a0a93d66250e3e2dedb02e067c076977a03a021264a` | **metadata hash:** `b30ed5a3dd49de2da054db48a7a1be7c59a1f6befa0e9ea34515b4597b55a0be`

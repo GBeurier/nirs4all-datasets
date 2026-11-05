@@ -1,4 +1,4 @@
-# Datasheet — Dryad tree tissue nonstructural carbohydrates NIR
+# Datasheet — Tree tissues — nonstructural carbohydrates, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -61,7 +61,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 4 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,4 +83,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `e3785ca8a285cab3540f7c3640e4b8f790ef4c937d1d815fd115ec66279d2319`
-- **Processing hash:** `1bd62b0d65762e9e17de76ce8658d68a248f99990bd2ad618fce2867857a294a` | **metadata hash:** `f94b4351f43a9b23b546b5671189022a6dab9e9fa7e0a69900e192ce35155d5c`
+- **Processing hash:** `1bd62b0d65762e9e17de76ce8658d68a248f99990bd2ad618fce2867857a294a` | **metadata hash:** `d1b70306a3701a6e872a52398b0624460bf71e86b7c9d4b0e1c34b4ce75debf6`

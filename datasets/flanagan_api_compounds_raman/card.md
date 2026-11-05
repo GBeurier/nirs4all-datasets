@@ -1,4 +1,4 @@
-# Datasheet — Flanagan API compounds Raman
+# Datasheet — Pharmaceutical API compounds — Raman (Flanagan)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 32 products, each sampled in a vial; 100–145 manual acquisitions per product. The unique sample_id is created by adding a scan counter to the compound. The number of independent preparations per product is not established.
-- **Curated views:** M: 5 fields, Y: 3 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 3 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `1e39044801fe460edbd38bd2e9562f9df96fba20b2e2d5c59b6356aaaa2cf1b7`
-- **Processing hash:** `66edbe5f57d143f5af7121a617d8af4b44b157ed1abe237b507817152b90bde9` | **metadata hash:** `0cb6a95b54c834c7d22824bad0b2abec289abcf688908d7d16afcb77a3af9736`
+- **Processing hash:** `66edbe5f57d143f5af7121a617d8af4b44b157ed1abe237b507817152b90bde9` | **metadata hash:** `5e6495122678e31c5aea7094432010029e8506d6c4d81ee3feae5bd85baf0254`

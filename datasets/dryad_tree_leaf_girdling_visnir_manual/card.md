@@ -1,4 +1,4 @@
-# Datasheet — Tree leaf girdling reflectance spectra
+# Datasheet — Tree leaves — girdling reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: 2722 source codes for 2731 rows. Each of the 9 repeated codes has two strictly identical spectral vectors; these are not demonstrated reacquisitions. No rows were removed from the sources.
-- **Curated views:** M: 1 fields, Y: 0 fields, passport: 9 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 9 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `86ce3a659f027e8b39fbac661c7d5228c74f2918dfa865353be233aa8dbde378`
-- **Processing hash:** `d3ae62531f96cead3203db87798fcbdacb62d021291cfe3011c3287aac89cc4a` | **metadata hash:** `2157fab7d10581a88216e2fafad53d96ff6c9938c18afec57f563dd8b8402635`
+- **Processing hash:** `d3ae62531f96cead3203db87798fcbdacb62d021291cfe3011c3287aac89cc4a` | **metadata hash:** `377d2edae81d938453ff0a4d418433bc1ddee8ac8b181140815fa074ff32afd4`

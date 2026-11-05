@@ -1,4 +1,4 @@
-# Datasheet — Dryad Hawaii avocado Felix handheld NIR
+# Datasheet — Hawaii avocado — handheld Felix NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -56,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Repeated measurements of the same fruit identifier; NIR dates vary over the follow-up.
-- **Curated views:** M: 2 fields, Y: 2 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,4 +78,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6a40f18b79490c36fa5e6bcac1a4fb609a04cae478e84b5e439b5ac15f12a4f8`
-- **Processing hash:** `e9a1d10cb3f916de254896126f8a966cc7df2a320213b73402c770eda9d92d0a` | **metadata hash:** `74bff84224d264fef4d92b43db7194ddb5c8ff1a42792b7b9350461585b63d05`
+- **Processing hash:** `e9a1d10cb3f916de254896126f8a966cc7df2a320213b73402c770eda9d92d0a` | **metadata hash:** `1f1c25eee428912cf50a110e0e7b30fe6b14a8f422efebbc754438793b26888f`

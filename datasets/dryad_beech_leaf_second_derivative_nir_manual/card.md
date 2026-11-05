@@ -1,4 +1,4 @@
-# Datasheet — Beech leaf second-derivative NIR spectra
+# Datasheet — Beech leaves — NIR, second derivative
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `756b126fc5946af5cf3200d17d8b0f144692a1ff55b0da98d6b908f41227c91c`
-- **Processing hash:** `cbfb3c24d856406dad476ffb4e67b0ed28cb4a4a44ecafb492d7c425fe439c02` | **metadata hash:** `b927d9f44dbdf9264b1cac27276a44959d6c14ebb19f9153389a7094e6734bcc`
+- **Processing hash:** `cbfb3c24d856406dad476ffb4e67b0ed28cb4a4a44ecafb492d7c425fe439c02` | **metadata hash:** `bd4f0454065c72824f58ab497ee0626970698f4ffd177bcf53cb186dda514fc1`

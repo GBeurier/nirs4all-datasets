@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS seasonal canopy spectra and traits, Blackhawk Island, WI
+# Datasheet — Blackhawk Island — seasonal canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -80,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 9 fields, Y: 3 fields, passport: 21 fields, measurements: 6 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 9 fields, Y: 3 fields, measurements: 6 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,4 +102,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `6c9d539ae0268e0f5d06fd3bf516d9a9c60f42599bb6d00dfe46260a21935e0b`
-- **Processing hash:** `009752c2f643d8ef423b83e24cfd8ac78eb49c5cbcd3a45f68a07a8dda853420` | **metadata hash:** `3092d4247ce32cdeba8cc816104cbd11dabb909fbb91c51e6a412ff2b7931c9b`
+- **Processing hash:** `009752c2f643d8ef423b83e24cfd8ac78eb49c5cbcd3a45f68a07a8dda853420` | **metadata hash:** `3d3b12eb2ec44baf3a81a1065107b417510ab08bab16504d665431e090faf258`

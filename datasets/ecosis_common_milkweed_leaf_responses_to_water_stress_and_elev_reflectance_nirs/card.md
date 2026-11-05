@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Common Milkweed Leaf Responses to Water Stress and Elevated Temperature (reflectance)
+# Datasheet — Milkweed leaves — water and heat stress, reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -98,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep_ID. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 2 fields, Y: 19 fields, passport: 34 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 19 fields, measurements: 1 fields, passport: 34 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,4 +121,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c5e30cecfd4d4369c8ee7abdddb8f80d604eba3af380cb74d8028131f46d8536`
-- **Processing hash:** `0eabb6e1b672f3741ab5558c2f4095299c3567462d0eec1994c5afe348a2eee3` | **metadata hash:** `7db57b748f177a0e5e5e09fe26fbcb847ff0ed8893d0f024867b06e2ee78751c`
+- **Processing hash:** `0eabb6e1b672f3741ab5558c2f4095299c3567462d0eec1994c5afe348a2eee3` | **metadata hash:** `2d5cda597bfaea46951522abd9ca0a2ec9ec5c90e27e53e0216e5cc01031cb64`

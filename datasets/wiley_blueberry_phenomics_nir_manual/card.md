@@ -1,4 +1,4 @@
-# Datasheet — Blueberry phenomics NIR spectra
+# Datasheet — Blueberry phenomics — NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 1 fields, Y: 2 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d0eeba77139fc481792e03b0de5407f9e638c783793c61331db8210cf739af53`
-- **Processing hash:** `8886da7641fdb3533f61cf07ec4031e2b6339bddab5babecf8f412389a7bd5a0` | **metadata hash:** `c14695357d8960e4f0f8a02dd44e360664a1c4645bc0416e14f90441187132b1`
+- **Processing hash:** `8886da7641fdb3533f61cf07ec4031e2b6339bddab5babecf8f412389a7bd5a0` | **metadata hash:** `b1fd546c00c4922d116ec9d9f24fca1926014f2bac0f5916351fc4af3ceb62c2`

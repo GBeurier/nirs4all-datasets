@@ -1,4 +1,4 @@
-# Datasheet — ossl schiedung visnir soil all y
+# Datasheet — OSSL Schiedung soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 9 fields, passport: 88 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 9 fields, measurements: 1 fields, passport: 88 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d04d08db87f867aded852f342626fa31be01f0792befab0d4db752e9fac3289a`
-- **Processing hash:** `d94794ab486e7bcdb5fd8001f3073c346391888da9a0781faefd87359f8f4bd8` | **metadata hash:** `cd1113cd0f2a13e2e2f953c8d6937cc64871beb96ed7123f8746b57096e47226`
+- **Processing hash:** `d94794ab486e7bcdb5fd8001f3073c346391888da9a0781faefd87359f8f4bd8` | **metadata hash:** `245ad46e9c47a9f13c101ca3b833db5240a815e39139d9d959f8a826a3f7dd5a`

@@ -1,4 +1,4 @@
-# Datasheet — viande_espece_viande_ts
+# Datasheet — Meat — meat species spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 60, test: 60
+- **original** (documented, not applied): test: 60, train: 60
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9fb22d02c9792b18289a035afda00c54ee514d00378309dd890db9b127062dd6`
-- **Processing hash:** `ec9d93ad27880342f0a97472988ada2810ec5981f44df84299d239dbcc114fff` | **metadata hash:** `1b7a76735da3e06b8b77f69e6ef53f28137c7be4f97589851167fbe3cd72505b`
+- **Processing hash:** `ec9d93ad27880342f0a97472988ada2810ec5981f44df84299d239dbcc114fff` | **metadata hash:** `b1cc794872bababdbb83bc0d0a59f1f54078f1ebad0855a1e049785015638429`

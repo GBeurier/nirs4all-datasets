@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS UW-BNL NASA HyspIRI California Airborne Campaign Ground Target Spectra (reflectance)
+# Datasheet — UW-BNL HyspIRI California — ground-target reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -90,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 8 fields, Y: 1 fields, passport: 35 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 8 fields, Y: 1 fields, measurements: 1 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -112,4 +112,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a5583a61de9b63b400434bffa5c065f6e25a58c4c71f7d97e50eb7624e62a8ef`
-- **Processing hash:** `ce05b7465200e635d5bd27b5dde9ca4581d5d12132f1e349a1f158f0c4191659` | **metadata hash:** `b86e560311d1d694dace2efcbae12384fd9dbfa7b76d6c8739e2e6f82fa37058`
+- **Processing hash:** `ce05b7465200e635d5bd27b5dde9ca4581d5d12132f1e349a1f158f0c4191659` | **metadata hash:** `78b18f8da0d5a339f56c02be266faca65028762693bf70aa290b6f7213632b8b`

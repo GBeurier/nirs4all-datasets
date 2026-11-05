@@ -1,4 +1,4 @@
-# Datasheet — Zenodo NeoSpectra soil NIR CC-BY
+# Datasheet — Soils — handheld NeoSpectra NIR (Zenodo)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -76,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 10 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 10 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,4 +98,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e90178b7788cbb2921bf2734042e5e1bdcf687bd86a8662e26b131391e09ab40`
-- **Processing hash:** `7842f4c0cc34472e0eb47650300dc3d3f05b62d2be188e1eadc17d4baffd76ed` | **metadata hash:** `9a31a5b5e1cf1c4ab1171c7d41e0225062883471b50d3405a4d7666b76e2dddd`
+- **Processing hash:** `7842f4c0cc34472e0eb47650300dc3d3f05b62d2be188e1eadc17d4baffd76ed` | **metadata hash:** `ea3a547b4019335a276a3a7c2b106c18a4297a98d08e2d143555a7b2d2135c42`

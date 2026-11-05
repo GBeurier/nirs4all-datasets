@@ -1,4 +1,4 @@
-# Datasheet — ossl icraf visnir soil all y
+# Datasheet — OSSL ICRAF soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 18 fields, passport: 76 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 18 fields, measurements: 1 fields, passport: 76 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2271f9c458b9424f268c397b8a88390756ac12c8297356bd6421ea72de13295d`
-- **Processing hash:** `4b83ba5a34a9f2c294da32660de1c4dc545ddc9319113673d6cad86e617d39e9` | **metadata hash:** `f22bd300f986cb6f33d326d809d31a18b4d6df6fb5884f99f21679be589d61f0`
+- **Processing hash:** `4b83ba5a34a9f2c294da32660de1c4dc545ddc9319113673d6cad86e617d39e9` | **metadata hash:** `b57347a741c2de492ff4eaa1b2ac3361bfba65cc3ec7d35ad0b495c71e605ea4`
