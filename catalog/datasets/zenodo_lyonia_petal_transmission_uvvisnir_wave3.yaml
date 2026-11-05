@@ -1,0 +1,189 @@
+schema_version: '2.0'
+id: zenodo_lyonia_petal_transmission_uvvisnir_wave3
+name: Lyonia petal and window UV/VIS/NIR transmission spectra
+description: Transmission spectra through pigmented petal and unpigmented window tissues
+  of Lyonia fruticosa and Lyonia lucida, from Zenodo record 22038338. The preserved
+  standardized view contains 227 spectral measurements and 3,648 wavelength channels.
+  Species and tissue type describe the experiment; the source does not declare an
+  ML prediction task. This metadata-only catalog addition has no canonical build or
+  qualification card yet.
+domain: plant
+keywords:
+- Lyonia
+- petal
+- window
+- UV
+- VIS
+- NIR
+- transmission
+- floral microclimate
+citation: https://doi.org/10.1111/nph.71608
+sources:
+- source_id: X
+  name: 13August2025_UVTransmissionSpectra_JW.csv
+  modality: other
+  axis_unit: nm
+  axis_min: 184.909
+  axis_max: 905.154
+  signal_type: transmittance
+  n_observations: 227
+  n_variables: 3648
+variables:
+- name: species
+  role: metadata
+  type: categorical
+  original_name: Species
+  derived_from: []
+- name: tissue_type
+  role: metadata
+  type: categorical
+  original_name: Window_Petal
+  derived_from: []
+- name: plant_id
+  role: metadata
+  type: identifier
+  original_name: Plant
+  derived_from: []
+- name: flower_id
+  role: metadata
+  type: identifier
+  original_name: Flower
+  derived_from: []
+- name: source_filename
+  role: metadata
+  type: identifier
+  original_name: Filename
+  derived_from: []
+ids:
+  observation_id: observation_id
+  sample_id: sample_id
+  sample_id_available: false
+alignment_level: observation
+splits: []
+tier: public
+versions:
+  content: 1.0.0
+  schema_protocol: '2.0'
+provenance:
+  contributor: Williams, Jessica N; Barker, Daniel; Millet, Antonia; Carcache, Jonathan;
+    Francis, Jacob
+  raw_sha256:
+  - c1ac322a72af58de72972744cf9abf189ed0392890f371503673bc569d1b8c3e
+  warnings:
+  - 'Metadata-only addition: raw Zenodo checksum verified; canonical conversion and
+    numerical qualification have not run.'
+  - The source contains UV, visible and near-infrared wavelengths; modality 'other'
+    avoids assigning the entire block to one restricted spectral family.
+  - Filename identifies a spectral measurement. Plant and flower numbers are nested
+    within species; no global physical sample key or technical repetition grouping
+    is asserted.
+  - Species and Window_Petal were previously exported as classification targets by
+    a legacy converter. They remain experimental metadata here because the publication
+    does not declare that ML task.
+  - The source README analyzes UV 280-400 nm and IR 700-880 nm. The full stored axis
+    extends beyond these ranges; no clipping, rescaling or physical validity guarantee
+    is inferred.
+  - The legacy Y.csv has no observation key. Its row order does not authorize a canonical
+    join; future conversion must use the keyed raw source columns.
+governance:
+  license: CC-BY-4.0
+  owner_steward: Jessica N. Williams and coauthors
+  redistribution_rights: Zenodo record 22038338 declares CC-BY-4.0; attribution required.
+    Catalog links to the origin and does not rehost the bytes.
+  consent_ethics_status: Plant floral tissues; no human subjects indicated in the
+    source README. No separate ethics assessment is asserted.
+  anonymization_status: Source plant/flower identifiers retained; no anonymization
+    applied.
+  permitted_use: Reuse under CC-BY-4.0 with attribution.
+  access_policy: Open download from the version-pinned Zenodo record.
+origin_sources:
+- kind: zenodo
+  mode: raw
+  locator: https://zenodo.org/records/22038338
+  access: open
+  license: CC-BY-4.0
+  title: Petal infrared transmission warms flowers and reduces microbial abundance
+    - data and r scripts
+  expected_files:
+  - 13August2025_UVTransmissionSpectra_JW.csv
+  - README.txt
+  notes: 'Record DOI: 10.5281/zenodo.22038338. Only the petal/window transmission
+    measurement file is described here; other experiments and filter spectra in the
+    record are not merged.'
+publications:
+- doi: 10.1111/nph.71608
+  title: Petal infrared transmission warms flowers and reduces microbial abundance
+  authors: []
+dataverse:
+  instance: https://entrepot.recherche.data.gouv.fr
+retrieval:
+  schema_version: '1.0'
+  status: documented_only
+  public_retrievable: true
+  public_redistributable: true
+  canonical_hosted: false
+  routes:
+  - id: zenodo_22038338_selected_raw
+    priority: 1
+    access: open
+    method: raw_retrieve
+    provider: zenodo
+    locator: https://zenodo.org/records/22038338
+    landing_url: https://zenodo.org/records/22038338
+    api_url: https://zenodo.org/api/records/22038338
+    automated_download_allowed: true
+    redistribution_allowed: true
+    terms_url: https://creativecommons.org/licenses/by/4.0/
+    citation: 10.5281/zenodo.22038338
+    resources:
+    - id: petal_window_transmission
+      role: spectra
+      required: true
+      selector:
+        kind: zenodo_key
+        value: 13August2025_UVTransmissionSpectra_JW.csv
+      file_name: 13August2025_UVTransmissionSpectra_JW.csv
+      format: csv
+      sha256: c1ac322a72af58de72972744cf9abf189ed0392890f371503673bc569d1b8c3e
+      size: 52790293
+      unpack:
+        archive: false
+        members: []
+    - id: readme
+      role: readme
+      required: true
+      selector:
+        kind: zenodo_key
+        value: README.txt
+      file_name: README.txt
+      format: txt
+      unpack:
+        archive: false
+        members: []
+    canonicalization:
+      engine: manual
+      parameters: {}
+      expected_files: []
+      notes: Selected raw resources can be fetched; the keyed long-format pivot is
+        not an admitted automatic canonical recipe.
+    health:
+      probe: true
+      expected_status:
+      - 200
+      - 302
+    notes: Select only the transmission CSV and its README; do not enumerate and merge
+      unrelated experiments in the record.
+  blockers:
+  - No owner-supported keyed long-to-wide canonical recipe or qualified canonical
+    payload is supplied by this metadata addition.
+  notes: Raw CSV and README are openly available at the pinned origin. Automatic canonical
+    reconstruction remains unqualified.
+reproducibility:
+  origin_record: '22038338'
+  raw_identity: Local raw bytes match the Zenodo file MD5 and size; SHA-256 recorded
+    in provenance.
+  legacy_identifier: zenodo_lyonia_petal_transmission_uvvisnir_wave3
+  canonical_status: not_built
+  qualification_status: not_run
+generation:
+  managed: false

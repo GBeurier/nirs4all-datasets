@@ -38,3 +38,24 @@ Sparse publication `.n4a` records await the agreed fields. Core owns the contain
 Repository owns recipe/bundle publication; Datasets owns source metadata;
 Domains owns source-study interpretation and evaluation limits. A paper citation
 does not constitute an executable or validated pipeline.
+
+## Manual source review, 5 November 2026
+
+`manual-source-review-20261105.json` records user-confirmed source publications
+for JIGO8R manure, 6VYUQN Brassica tissue, RRUFF IR/Raman and blueberry phenomics.
+Its binary evidence remains in the private documentary library.
+
+`leaf-traits-compilation-origins-20261105.csv` restores the full source list:
+37 original dataset IDs, 36 distinct original-source URLs and 47,393 compiled
+rows. Martha's Vineyard and Harvard Forest share one repository URL and retain
+their separate IDs. Dataset#30 has a copied name in the source CSV; its original
+name is retained alongside the soybean title confirmed by Supporting Table S1.
+This is a metadata review inventory. Existing runtime descriptors, spectral data,
+qualification cards and source memberships are unchanged by that inventory.
+
+The retained `zenodo_lyonia_petal_transmission_uvvisnir_wave3` is separately added
+as a schema-valid descriptor and catalog entry. It documents the pinned Zenodo
+origin, CC-BY-4.0 license and measured transmission block. Species and tissue
+type remain metadata: the source does not declare an ML prediction task.
+Canonical conversion, physical-sample grouping and numerical qualification
+remain unqualified; no generated card or fabricated data hashes are supplied.
