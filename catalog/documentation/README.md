@@ -59,3 +59,33 @@ origin, CC-BY-4.0 license and measured transmission block. Species and tissue
 type remain metadata: the source does not declare an ML prediction task.
 Canonical conversion, physical-sample grouping and numerical qualification
 remain unqualified; no generated card or fabricated data hashes are supplied.
+
+## Verified clarification and paired-source proposal
+
+`clarification-review-20261105.json` records the next fifteen association
+dispositions, source-specific replacements and three resolved published-edition
+flags. Full evidence captures remain private. It distinguishes FLOPP constituent
+provenance in FTIR (125 of 5,000 exported spectra) from parent OpenSpecy
+documentation; no FLOPP provenance was found in the supplied Raman subset.
+The 2017 Arctic canopy reference uses the published BG article while preserving
+its EGUsphere preprint relation. Leaf-level references remain leaf-level context.
+The bread matrix and the companion hyperspectral cube remain separate scopes.
+
+`sierra-nevada-2023-paired-sources.json` is a concrete composition candidate:
+83 declared sample keys; fresh 363 spectra/35 samples, freeze-dried 492/82,
+oven-dried 498/83; 35 samples occur in all three sources. Physical sample keys
+and source observation keys were checked against the pinned canonical source
+Parquet hashes. Metadata checks found no conflicting sampling dates, plot IDs,
+genera or nonmissing species for shared sample keys. Replicate indices and
+spectral row positions do not establish cross-state pairings.
+
+The existing owner composer was executed in isolated local staging and preserved
+all three repetition counts. The delivered recipe records three X blocks and
+their source bindings, original IDs and input hashes. Admission of this paired
+collection across three preparation-specific EcoSIS deposits remains explicit
+owner review; canonical materialization and numerical qualification have not run.
+The three current runtime descriptors and qualified cards remain intact.
+
+The association of `gcb.70246` with the three July-2023 preparation-specific
+packages still needs an exact publication-to-deposit or training-input link.
+Shared sites, authors and verified sample pairing do not establish paper use.
