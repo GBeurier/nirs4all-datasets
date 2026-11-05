@@ -1,4 +1,4 @@
-# Datasheet — GitHub grapevine leaf chloride, NIR-S-G1 and SVC HR-1024i
+# Datasheet — Grapevine leaf chloride — NIR-S-G1 + SVC HR-1024i
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -70,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Each trial × pot_number pair is unique. replicate=1…5 is the biological replicate of the genotype × salt design. The three chloridometer readings are analytical measurements in Y; none is a spectral replicate.
-- **Curated views:** M: 5 fields, Y: 4 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,4 +92,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `cbfee889281bf3c6c1740ee0dd968502878ff1958f6c46f9e8519331c59b3e67`
-- **Processing hash:** `083037fda0c039421a18f9ed0425f8b9b2be1221ae2abdb580e262acc729ec45` | **metadata hash:** `a3cbbf2b51dc0d7d81a9950c3bd21da54b8aacc5363ff5df414bf76da465c770`
+- **Processing hash:** `083037fda0c039421a18f9ed0425f8b9b2be1221ae2abdb580e262acc729ec45` | **metadata hash:** `ac7725fc80a3f793a190cf352099a1c3e8a236b1ef033e6ad76546a67e44ff01`

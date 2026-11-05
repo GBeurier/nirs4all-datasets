@@ -1,4 +1,4 @@
-# Datasheet — Mendeley cucurbitaceae fruits Vis-NIR
+# Datasheet — Cucurbitaceae fruits — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 2 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `fa2c17bf844a8f054ea96ace8f7079044665ffd8099bf5584ff4c3ba30eadd19`
-- **Processing hash:** `bd86d6a638ce7509c13a0d864f944357d241e25dfbdefa3f63432d55b7bd9789` | **metadata hash:** `5663f8c1df0cfa23bbfb8b37a7f01f1e234966729f3f7897ddc517d189b5dbee`
+- **Processing hash:** `bd86d6a638ce7509c13a0d864f944357d241e25dfbdefa3f63432d55b7bd9789` | **metadata hash:** `8fda72253e604b6a95c2471aad0fe66df7e8f724ccdb0eea8eb77e101a98f6fa`

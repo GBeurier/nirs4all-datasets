@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Intact- and ground-leaf litter spectra from Cedar Creek and Minneapolis (reflectance)
+# Datasheet — Cedar Creek–Minneapolis litter — intact + ground reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -90,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 11 fields, passport: 30 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 11 fields, measurements: 1 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -112,4 +112,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a5991e2f888662eed73792d72601b0b7757b1af7e0a53c2c80ca9b46f18ac4b5`
-- **Processing hash:** `08e4235ed81f9c2f4a540ed38c32ccd0347eb8491a7f88705878b9da31b36197` | **metadata hash:** `f62d02087081dcecc05f3b1c885ae0dddf3745cc2616305ffcac249ac3ffbf24`
+- **Processing hash:** `08e4235ed81f9c2f4a540ed38c32ccd0347eb8491a7f88705878b9da31b36197` | **metadata hash:** `9336536e6b684d77eb8e42c0164644764a0112cd895a608685312fa2adaff2b7`

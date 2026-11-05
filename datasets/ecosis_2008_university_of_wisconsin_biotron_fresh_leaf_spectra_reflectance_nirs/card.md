@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 2008 University of Wisconsin Biotron Fresh Leaf Spectra and Gas Exchange Leaf Traits (reflectance)
+# Datasheet — Wisconsin Biotron leaves 2008 — fresh-leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -90,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 3 fields, Y: 12 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 12 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -118,4 +118,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `cf962f61f6a4dbafee6f3b95b6cd6a41f6d00af6251833948a827bcd2a205c07`
-- **Processing hash:** `4eb7aab30544b6c7109114de82e964d80f47b6724c0a371e3fdb2275087eb909` | **metadata hash:** `a7dab4a090e1c58001f4f8977ca7ca70840b3e93422606ed87e3b5721afdc3af`
+- **Processing hash:** `4eb7aab30544b6c7109114de82e964d80f47b6724c0a371e3fdb2275087eb909` | **metadata hash:** `6722e9c93a7a5e751c626dd8b801705d5e740fe7ed65bfef3645758c5fd72673`

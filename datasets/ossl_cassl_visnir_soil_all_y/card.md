@@ -1,4 +1,4 @@
-# Datasheet — ossl cassl visnir soil all y
+# Datasheet — OSSL CASSL soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 14 fields, passport: 80 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 14 fields, measurements: 1 fields, passport: 80 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6a76329244ad5f5f7e70df50f495ac5b9e38e394f17ebcc91b156e8782f671b9`
-- **Processing hash:** `460483ae0d55d8b4e3454f7a7be656515505694c10f6813eea1affd97f157233` | **metadata hash:** `7badb36182d01b20a3c90a5170671374fe2f72f083951e7b045d7701f3e1289a`
+- **Processing hash:** `460483ae0d55d8b4e3454f7a7be656515505694c10f6813eea1affd97f157233` | **metadata hash:** `4b7d1d52fb6b0e43ed7776dcffc6f82f5c7d03ff3d1cb62c89505ad085cb9046`

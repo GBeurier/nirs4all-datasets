@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS rock all axis 2228baf8
+# Datasheet — ECOSTRESS rocks — 0.4–14.0112 µm (2844 bands; 8 spectra)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -102,7 +102,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 2 fields, Y: 5 fields, passport: 49 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 5 fields, measurements: 3 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -125,4 +125,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `968a8a794b5fb3401923b48812596aec72225773e90f039a2025605031ad841c`
-- **Processing hash:** `64538d2b94b1deaf348d751c8298bd890886f7f298240fec8e901dd9293292db` | **metadata hash:** `4ee9d3017fe546b685be384371be4265e44a5a4d6088631ad2085024ca3c7d03`
+- **Processing hash:** `64538d2b94b1deaf348d751c8298bd890886f7f298240fec8e901dd9293292db` | **metadata hash:** `11cf9d4db0129fa0f61cb5d6b87d67ff88c63811674044801dab3d44abd263f2`

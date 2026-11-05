@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Urban Materials Spectral Library reflectance
+# Datasheet — Urban materials — reflectance library (EcoSIS)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -64,7 +64,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,4 +86,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a82ff49df33da7106fc428460ce8508f2e75d7893b43b04606b4fc133994194c`
-- **Processing hash:** `37b5ba17e897bf76fa745801ee3ee9b7177d6370a30feac22739b38ad9a68df3` | **metadata hash:** `0464eef162dc115690b2b5e6a75f03f35d5aab454706658693893d83bbbc4dbf`
+- **Processing hash:** `37b5ba17e897bf76fa745801ee3ee9b7177d6370a30feac22739b38ad9a68df3` | **metadata hash:** `5792177635147cbaa9c0d3b63bd5c16b3fef08b41f4e5afa7217bcd7084f3f7d`

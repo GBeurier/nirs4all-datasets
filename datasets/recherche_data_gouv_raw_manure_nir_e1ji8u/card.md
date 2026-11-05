@@ -1,4 +1,4 @@
-# Datasheet — Recherche Data Gouv raw cattle poultry pig manure NIR
+# Datasheet — Cattle + poultry + pig manure — raw NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -78,7 +78,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 9 fields, passport: 24 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 9 fields, measurements: 0 fields, passport: 24 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,4 +100,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `5c4e49ef18f18b4a4f86e04109cde96168104074575e855b03f174cfb77d9daf`
-- **Processing hash:** `c9a3f7f5e78cdc29f1801dc5320a296c4c0a47cbfcf32c9aca7e9d5b0918ef16` | **metadata hash:** `cfb9dffc67ca2e54a9754eed2724907306cddf8c54b7242b6d59e37358fc8b4b`
+- **Processing hash:** `c9a3f7f5e78cdc29f1801dc5320a296c4c0a47cbfcf32c9aca7e9d5b0918ef16` | **metadata hash:** `5aaf9fb3a0f5df9175889f52eb10e8e01a5b0f9263ca6eb090b5a4f4ebdc8f44`

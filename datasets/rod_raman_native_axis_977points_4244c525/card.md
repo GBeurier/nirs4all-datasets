@@ -1,4 +1,4 @@
-# Datasheet — ROD Raman native-axis 977-point mineral subset 4244c525
+# Datasheet — ROD minerals — Raman, 150.046–1299.2 cm⁻¹ (977 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -71,7 +71,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 2 fields, passport: 25 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 2 fields, measurements: 0 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,4 +93,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d4967919ce7ee8d3ea3715f01cf7d47373cd3d9c761efb7fdacb32ac1fe324be`
-- **Processing hash:** `48f8a55a386ada95b1d2000607f0216fc6a6a92005cdd9f85783565bddc631eb` | **metadata hash:** `dfb8faba45771e68cfb6d32fdf135a5507c4d0e31e43394b30625a4d2a59f698`
+- **Processing hash:** `48f8a55a386ada95b1d2000607f0216fc6a6a92005cdd9f85783565bddc631eb` | **metadata hash:** `adcbddb4c2c1a22b5ab61d94903662fe58ae8b696a9f19380e61a32ca45e474f`

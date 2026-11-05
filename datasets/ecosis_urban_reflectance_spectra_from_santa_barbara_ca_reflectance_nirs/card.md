@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Urban Reflectance Spectra from Santa Barbara, CA (reflectance)
+# Datasheet — Santa Barbara urban materials — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -90,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 10 fields, Y: 0 fields, passport: 35 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 0 fields, measurements: 0 fields, passport: 35 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -112,4 +112,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e90e495010f6c5c0eb7a8e2641813c4e8fefae56f33fbb341a62a88d475eb2e3`
-- **Processing hash:** `55cb996fa0b1be35c387a78ae469cc96ff8e812a0bc88534eb800e6516f454cf` | **metadata hash:** `c452e4b18e64259ba95f9c49eb002fdc669d2d2bd7f36aa0a172c3e32b7e9ea2`
+- **Processing hash:** `55cb996fa0b1be35c387a78ae469cc96ff8e812a0bc88534eb800e6516f454cf` | **metadata hash:** `c4a2b740967ad6287186e756e6c31c75910809fb19e4802d8cac665f4165d076`

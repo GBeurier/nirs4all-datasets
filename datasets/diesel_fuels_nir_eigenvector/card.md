@@ -1,4 +1,4 @@
-# Datasheet — Diesel fuels NIR Eigenvector
+# Datasheet — Diesel fuels — NIR (Eigenvector)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 7 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 7 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9f00c564cc9223f3d8e28be547fad99da5f18589166d1f95c889cc057cbc093c`
-- **Processing hash:** `33e1a14e2f0d6a3edf6a888475656e5c4c3c5caa59e6a270a5b021c5cd7d377c` | **metadata hash:** `022cca91ca472f6dd4bbc4e911d88ce290f983f94f6df57789a5ec4a27b4ebc9`
+- **Processing hash:** `33e1a14e2f0d6a3edf6a888475656e5c4c3c5caa59e6a270a5b021c5cd7d377c` | **metadata hash:** `282c4132f7f726a0c98770fb7395078b8a3449a265b0eb9e55c56ac32c4b5d71`

@@ -1,4 +1,4 @@
-# Datasheet — roche_type_roche_ts
+# Datasheet — Rock — rock spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `b0affc5f9f49e8f55e039c6e7608a822313a4d8cc5ee3f48730ed9f75793f9ba`
-- **Processing hash:** `38d20f95861ad1bc217c97c0fa65cc10ec4bbfe8b8cd2ca56c91d1edb027561a` | **metadata hash:** `816640c4db80b875074ac159d7da901bc7ca5aa59f7572b03fe1b0fe9104538f`
+- **Processing hash:** `38d20f95861ad1bc217c97c0fa65cc10ec4bbfe8b8cd2ca56c91d1edb027561a` | **metadata hash:** `6f57cb2a32bc0c70c286d44453e16a062ee590544921f3c6e07ce5bec0390afe`

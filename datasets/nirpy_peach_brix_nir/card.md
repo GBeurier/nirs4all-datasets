@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research peach Brix NIR
+# Datasheet — Peaches — Brix, NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `7e6e52b7301bb79ea1ec399c83e8b18e9a2ebf73e9b6d00d62b817d252d12545`
-- **Processing hash:** `d08d2d5fe3aee5ae5b9af8cdc15ab3edab3bc073ecd33814e4cf2bd6753f6c1f` | **metadata hash:** `e01db6e86d829bc865161d4cd1a4191b3382229d529d673af0c1604d8211b922`
+- **Processing hash:** `d08d2d5fe3aee5ae5b9af8cdc15ab3edab3bc073ecd33814e4cf2bd6753f6c1f` | **metadata hash:** `5c1db205d6826b46d68d35a05bb43e1c8efd613ecc0f8aece0a2b5ba3c515515`

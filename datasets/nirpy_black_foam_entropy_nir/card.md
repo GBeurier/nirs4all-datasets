@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research black foam entropy smoothing NIR
+# Datasheet — Black foam — NIR (Nirpy entropy series)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -87,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 0 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 0 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `f36afe72bd15fb9d7127f80585ff99c2307f6af6a342989d18698ed66ff9f394`
-- **Processing hash:** `821942f7b5db3235dab258c115fdd5762377f5117b9445f8b1fc097248ce2666` | **metadata hash:** `0acce3ee02c5d164819f186b8c07e38497aa0ed79be4b8d4f0507253a2066211`
+- **Processing hash:** `821942f7b5db3235dab258c115fdd5762377f5117b9445f8b1fc097248ce2666` | **metadata hash:** `19d62dbea3a71d12efb30bbc7f89b96d3f8dca757059529db70bcfac58ee8bad`

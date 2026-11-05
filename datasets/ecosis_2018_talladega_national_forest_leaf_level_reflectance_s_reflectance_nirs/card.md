@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 2018 Talladega National Forest: Leaf level Reflectance Spectra and Foliar Traits (reflectance)
+# Datasheet — Talladega forest leaves 2018 — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -86,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 6 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 6 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d95bc4c16b31d5791c48035e78cacdfe8afe9dee744b310b7409c14a13d744a7`
-- **Processing hash:** `5666bc2c43210f51a8c7d1be860034557d874c0abdb20005e5bdb29d45f07a80` | **metadata hash:** `c67e07a42732a53a588534169fee4aec8d510f018a0f79b53d9dfdbcddeb5d29`
+- **Processing hash:** `5666bc2c43210f51a8c7d1be860034557d874c0abdb20005e5bdb29d45f07a80` | **metadata hash:** `7d2ef50e8a6fe006cf42dbdf21ae1b0a3b0b68760ce315e67ee966714e05106b`

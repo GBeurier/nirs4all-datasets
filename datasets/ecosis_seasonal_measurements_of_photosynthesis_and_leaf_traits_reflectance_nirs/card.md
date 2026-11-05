@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Seasonal measurements of photosynthesis and leaf traits in scarlet oak (reflectance)
+# Datasheet — Scarlet oak — seasonal leaf reflectance and photosynthesis
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -96,7 +96,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 18 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 18 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -119,4 +119,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ad08132efa3c524192674415dd55b5ec33944e99b9d351a0c7e404dea05ae164`
-- **Processing hash:** `b5e89ad0238999e91e52aae22ea52274d859483fe4d7fcf37f60b9a3e90d6adc` | **metadata hash:** `ec649ad1b2a6ff5733eccadd7d6999a2853a5e17196e8167a9c83c33e09bd0ae`
+- **Processing hash:** `b5e89ad0238999e91e52aae22ea52274d859483fe4d7fcf37f60b9a3e90d6adc` | **metadata hash:** `07e1bb76f68640ca8b2e120f78e3cc2155c3ba2c25c69a72e5f425bed2616a08`

@@ -1,4 +1,4 @@
-# Datasheet — Mendeley animal feed quality NIR
+# Datasheet — Animal feed — quality, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 4 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 4 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ce76bf58f02b3a1ad568937fe2389c0421cd0e184c6031c5b724c50e3b0efa95`
-- **Processing hash:** `31912f59d8c58bc525411fc478fb2b67dcc08153d7d4f70f2ee059df9af22495` | **metadata hash:** `7fc549ea4a7286eec9122c47b39a12d571e7c2132c45203e0b45aa369b7ae6b7`
+- **Processing hash:** `31912f59d8c58bc525411fc478fb2b67dcc08153d7d4f70f2ee059df9af22495` | **metadata hash:** `56e8b6ccdf00dc4884cd358eeeb702bb43da8fe0c582d47d8b95895c60e18c1e`

@@ -1,4 +1,4 @@
-# Datasheet — Drosophila SPC NIR spectra
+# Datasheet — Drosophila — NIR, SPC series
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -57,7 +57,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 11 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 11 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -79,4 +79,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e4781c496922063cc72e5b50ba6cf9cc69dea9ec878c6bd235656e874a277ba4`
-- **Processing hash:** `561e84a82a130b36301a32ea11fe457dce83fd4573756074bf8d51f8492ad563` | **metadata hash:** `9dbcdeb719047e15dd2dd30248ab77c0123a50e8b2436da454e2d71eba01a0c2`
+- **Processing hash:** `561e84a82a130b36301a32ea11fe457dce83fd4573756074bf8d51f8492ad563` | **metadata hash:** `484f386f344b493e1494880ed187f827696e44d8eba450fde6084e5c74558e44`

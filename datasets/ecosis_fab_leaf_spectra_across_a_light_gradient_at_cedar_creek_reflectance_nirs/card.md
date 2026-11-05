@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS FAB Leaf Spectra Across a Light Gradient at Cedar Creek LTER (reflectance)
+# Datasheet — Cedar Creek FAB leaves — light gradient, reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 4 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 4 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -105,4 +105,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `67b3077bc7c7ce6f8c0c757ced9c115b858f6c52f9cebdbbb34ddf5b079d4996`
-- **Processing hash:** `fb85fbc544f4d14bed1076462509ef7d9eec71bc026d3ea6cc9c56476f9e4277` | **metadata hash:** `9c026c6f83cb06ffd37035e135a3897d7c57889a28bd4a435c7cad67a82b9c00`
+- **Processing hash:** `fb85fbc544f4d14bed1076462509ef7d9eec71bc026d3ea6cc9c56476f9e4277` | **metadata hash:** `878055a64534085fd7ed0216b3f6ea15a91ac969fd952b9e0a6f3c45f4fe7546`

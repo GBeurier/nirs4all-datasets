@@ -1,4 +1,4 @@
-# Datasheet — spiritueux_whisky_bouteille_taux_ethanol_ts
+# Datasheet — EthanolLevel — spirit spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 504, test: 500
+- **original** (documented, not applied): test: 500, train: 504
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9da9f21a3049ea87af094651611a6eced28256b30d93cfd42460e2e00bad931e`
-- **Processing hash:** `6fb641f27c33647182f537242aabb09529c78290964079e2939274b1b9c63a13` | **metadata hash:** `52f68fe1926d04eca26a87a56f8b6e0cc0884665cf2ee5555f68478fbb3ae506`
+- **Processing hash:** `6fb641f27c33647182f537242aabb09529c78290964079e2939274b1b9c63a13` | **metadata hash:** `ecfc1042890df39d127e8d9f09ee9a974fb430a4f93f2494f41e321b53721be2`

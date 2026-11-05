@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Spectral Characterization of Multiple Corn Varieties: West Madison Agricultural Station 2014 (reflectance)
+# Datasheet — West Madison corn varieties 2014 — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -76,7 +76,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -98,4 +98,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d7b42836c14ec53af5062d07d23b5db8e5872f4aea89c492b3873dd4c4a5d90e`
-- **Processing hash:** `7173841d754bc9e7147a1a1d527a2217d7ab617ea399e907b145424f0022f8a9` | **metadata hash:** `4dc88caa090b119b655be08de7293da93dcb9b197bf17762516aa51749c9f324`
+- **Processing hash:** `7173841d754bc9e7147a1a1d527a2217d7ab617ea399e907b145424f0022f8a9` | **metadata hash:** `151a2d4e191ec509251ad909371de251e1d44879abe0d0fa8b5b401f84c839ac`

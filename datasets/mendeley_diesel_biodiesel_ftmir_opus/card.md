@@ -1,4 +1,4 @@
-# Datasheet — Mendeley diesel and biodiesel FTIR OPUS
+# Datasheet — Diesel + biodiesel — FT-MIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -70,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 22 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 22 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,4 +92,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2899dcdba0bae74c9a9ce13817206eb57340699abfa896cbc6368cd4fd018cb2`
-- **Processing hash:** `d41c72955b4a490af94cf47e771d2a7c0d9ed9d978d9b836adfe0d9ac2fafae0` | **metadata hash:** `50c807a4b52e970977963ec33a4668f12a3d7d48c5547e16b3b64e56083ceb7d`
+- **Processing hash:** `d41c72955b4a490af94cf47e771d2a7c0d9ed9d978d9b836adfe0d9ac2fafae0` | **metadata hash:** `86082d8d7f9e5a68ca0d7c34bbaf6b68468898719c5b025ad1ae9f50d49b0bed`

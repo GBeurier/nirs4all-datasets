@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS water all axis 21cbe3b0
+# Datasheet — ECOSTRESS water — 0.34–14.01 µm (965 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -101,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -124,4 +124,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c9cf40e197dbfd18bac74e223d6be41b84aedadad5b94b15a57695be3b72e4ca`
-- **Processing hash:** `a17cbdfd9cd3d2fa9aa144640e66946b32dc3ec5736e687700fa8e14de5220c0` | **metadata hash:** `27838a5a137935fb9c10f6eea935b4a55d2f19aaabe93553ca14b663790a6ac8`
+- **Processing hash:** `a17cbdfd9cd3d2fa9aa144640e66946b32dc3ec5736e687700fa8e14de5220c0` | **metadata hash:** `275af8e32074436ea3df754f3cdd7b43b0cd544b47fa8cac8705b94cffe353e8`

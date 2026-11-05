@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf spectra of 4 plant species from Belgian dune grasslands + Rosa rugosa from the Northern Japan (reflectance)
+# Datasheet — Belgian dune plants + Japanese Rosa rugosa — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 5 fields, passport: 40 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 5 fields, measurements: 0 fields, passport: 40 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,4 +122,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `3974179f57e4dba7d11cfb521b10c5ec0776f3a57d04b8380fe462cfaeca78ac`
-- **Processing hash:** `dd38f17883891a65802513640878c8aa2e65221dea0b75e5e5c12edea2e079f6` | **metadata hash:** `24a16865390c137f175e1cefb6e73e13c71ff0284d2a0afcb18c41151ac1744a`
+- **Processing hash:** `dd38f17883891a65802513640878c8aa2e65221dea0b75e5e5c12edea2e079f6` | **metadata hash:** `c89fd27353e0fa7a54bf349aeb9b9c6c12f17fbeeb39957dd9f4fc40437d4473`

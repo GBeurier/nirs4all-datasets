@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 3D LMA Canopy Level Spectra (reflectance)
+# Datasheet — 3D LMA experiment — canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -78,7 +78,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Source plot × year; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 2 fields, Y: 3 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 3 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e3805c30776e404fe084e3cd1e355ded5f4884f19ba2e100db3b665bc0f1eeb7`
-- **Processing hash:** `7b2775a0c8fc9ef66cb61287b68f90537ad3202ff504e0943fae96852b0b6d62` | **metadata hash:** `d5cd9843c7081acada60de383a92989cc899c92737475a6ef35f7ddcbc4e7840`
+- **Processing hash:** `7b2775a0c8fc9ef66cb61287b68f90537ad3202ff504e0943fae96852b0b6d62` | **metadata hash:** `af02913eb494e5afdeedd092447ed9f43a76a46b1b9ee3b4d47ef4012a3d564e`

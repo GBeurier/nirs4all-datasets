@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Productivity and Characterization of Soybean Foliar Traits Under Aphid Pressure (reflectance)
+# Datasheet — Soybean leaves — aphid pressure, reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -99,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_REP. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 4 fields, Y: 12 fields, passport: 36 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 0 fields, passport: 36 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,4 +121,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ced215a74dd21bd182e866caa2289c87cb49cf05052872704bf6119e934b2bf4`
-- **Processing hash:** `ac68f57ab9b5982c0a424956d32fabac6ac0ddb7fe91ce1b019cb04432f231a8` | **metadata hash:** `605e80a3630def03b8abc6c250df925b5fd7c571c23bd5ba2ad41a38eb3f5762`
+- **Processing hash:** `ac68f57ab9b5982c0a424956d32fabac6ac0ddb7fe91ce1b019cb04432f231a8` | **metadata hash:** `5d6e1932654dafc7585350b72f3fa430b3b023aa8ee71f119e5b152d25dca918`

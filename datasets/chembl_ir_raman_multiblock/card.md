@@ -1,4 +1,4 @@
-# Datasheet — ChEMBL IR Raman multiblock
+# Datasheet — ChEMBL molecules — computed IR + Raman
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -87,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Version 2 exposes original variable-length peak lists with NaN padding and per-molecule frequency metadata; the inherited 512-point fitted representation cannot be reproduced without undocumented broadening parameters.; Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 8 fields, passport: 31 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 2.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `77091fb87e550014ad12cdbc12ffa60aec8fdd7078d769e84b315f034796b784`
-- **Processing hash:** `98401db47c5c4c81025b581cbfe3884d2e4465cfcd898ab56084724bb5d95a96` | **metadata hash:** `283d679841f085b3c0572c91c8fa8de0a68804157e9f899bd29a11f33404a2b5`
+- **Processing hash:** `98401db47c5c4c81025b581cbfe3884d2e4465cfcd898ab56084724bb5d95a96` | **metadata hash:** `039b86fefcdf553f8b8c231291ba2520965be5c4ec426c6671b2ceb67b8ce7e6`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Tropics Leaf Spectral Reflectance Measured in Panama Collected February to April 2016 (reflectance)
+# Datasheet — NGEE Tropics Panama 2016 — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -139,7 +139,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 13 fields, Y: 4 fields, passport: 51 fields, measurements: 10 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 13 fields, Y: 4 fields, measurements: 10 fields, passport: 51 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -168,4 +168,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `1e1f2416a0c7dd6821119c1b835d79c0479a12294ed3a9751024e45735f910d5`
-- **Processing hash:** `2019e0ea55ac747f40a5a26096571f95d2d788c970a1af85769da2543e4ad716` | **metadata hash:** `aee7299abea599e7d82778238ac58c18b475798acaf0a2d5dfc4df2d89d18d98`
+- **Processing hash:** `2019e0ea55ac747f40a5a26096571f95d2d788c970a1af85769da2543e4ad716` | **metadata hash:** `06810957f19a702ce3d4646f39e322676222abebc6549e5e060f093341872893`

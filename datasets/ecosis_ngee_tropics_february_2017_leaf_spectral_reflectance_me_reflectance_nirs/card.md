@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Tropics February 2017 Leaf Spectral Reflectance Measured in Panama at the PA-SLZ Canopy Crane (reflectance)
+# Datasheet — NGEE Tropics Panama PA-SLZ 2017 — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -107,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 12 fields, passport: 46 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 1 fields, passport: 46 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -134,4 +134,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `1837f73dceedf10eb8c6b815466224dc73b0c13368d29af8ba7615fe64a6f03d`
-- **Processing hash:** `51ff14c6b01da7366bd8f0ad70594f4d5a9db692cfaa5bc5365f0983dde7b8e2` | **metadata hash:** `4bada64afa70a4dfb732cd2826d29ef39389bd2ccb2bd83cc5683795f6d43c81`
+- **Processing hash:** `51ff14c6b01da7366bd8f0ad70594f4d5a9db692cfaa5bc5365f0983dde7b8e2` | **metadata hash:** `2960e531ae763078d1dc202cc4235056dcdb744b3fcd0e7b1d5192842d4f8b1c`

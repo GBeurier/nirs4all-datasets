@@ -1,4 +1,4 @@
-# Datasheet — Rice flag leaf reflectance spectra
+# Datasheet — Rice flag leaves — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -53,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: The 495 column names are local to the 11 variety files. Merging them produces false groups of 5–6 spectra. 2700 variety × column pairs are distinct; physical independence and technical replicates are not established.
-- **Curated views:** M: 1 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,4 +75,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `0947e407789581ba5b4cba0b0f29b225c526b88861fcf3c349c285ad73e4f900`
-- **Processing hash:** `a873299ceab94b7db5ce075345ef901359ce4799e79e2442880addae28fb5f23` | **metadata hash:** `9690dfd7b7f1f8aed0876d5b1c56865db998ab7e8b624fd9f6ac3895db0fb549`
+- **Processing hash:** `a873299ceab94b7db5ce075345ef901359ce4799e79e2442880addae28fb5f23` | **metadata hash:** `22da46d2a7728cf805184661f04ed99082ba5287ba55d61212bd681d8aa5ccaa`

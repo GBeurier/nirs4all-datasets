@@ -1,4 +1,4 @@
-# Datasheet — Bird NHReflectance spectra
+# Datasheet — Birds — NHReflectance series
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -53,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,4 +75,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e44126d8fdd4b126fa9c9a8871a36e1dee0fee26aaf0f0ed983b998a6ff9130b`
-- **Processing hash:** `2aac2fed88eebe2b2f40aee8a6721daa9f15e2a70d3101624c38d3086b0fd0f4` | **metadata hash:** `d703e32fd47b5ba18b06974ba609d89e88afc2ffdeb9217706c2ad0be3aaeeb6`
+- **Processing hash:** `2aac2fed88eebe2b2f40aee8a6721daa9f15e2a70d3101624c38d3086b0fd0f4` | **metadata hash:** `4ff799a169820e995d55568f7b887c712305ff3427f61ed6f0411cbb31796d08`

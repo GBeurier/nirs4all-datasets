@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Fresh Leaf Spectra and Measured Traits from the Sierra Nevada (CA) in July 2023 (reflectance)
+# Datasheet — Sierra Nevada leaves 2023 — fresh reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -108,7 +108,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. Index fields examined: source_replicate_id. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 6 fields, Y: 13 fields, passport: 38 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 13 fields, measurements: 0 fields, passport: 38 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -130,4 +130,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `a081680748a4b9e02e1006091e61fac51d01cc14eb154900a2a4404258d473e9`
-- **Processing hash:** `ba7d5d9672a35ef8daddf9d641eebc821cae890b9f040add2482ee33c73f907d` | **metadata hash:** `77dc20a0e3cabf033142912a7fc685168dab95e57f11699e7330db25676f8595`
+- **Processing hash:** `ba7d5d9672a35ef8daddf9d641eebc821cae890b9f040add2482ee33c73f907d` | **metadata hash:** `c3c7d9d3ad4693e5bb2291d18bda1297efa7ebf41c61ec5529f8f7d9b07c0918`

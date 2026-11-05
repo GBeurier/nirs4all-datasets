@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS soil tir axis 2895e351
+# Datasheet — ECOSTRESS soils — 2.0003–14.0131 µm (2223 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -99,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 49 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 5 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,4 +122,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d1fb58aa481ec8e53cd12ea992a4d559ab21254fef46252d0d41c7058de3c221`
-- **Processing hash:** `de812e888df9b7011a807aed52d6c615c8547503ce920ae1a7fb726ac855abb0` | **metadata hash:** `c34b177ec8595ff91fd10fa429c88c3820ae9fdf038dfb6afe2a69d0a79ba1c8`
+- **Processing hash:** `de812e888df9b7011a807aed52d6c615c8547503ce920ae1a7fb726ac855abb0` | **metadata hash:** `f4fbfa16cc369e833ffb39050ba614e333da485d44be64d50a8c1cccfee3c141`

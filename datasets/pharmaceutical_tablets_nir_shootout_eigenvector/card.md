@@ -1,4 +1,4 @@
-# Datasheet — Pharmaceutical tablets NIR Shootout Eigenvector
+# Datasheet — Pharmaceutical tablets — NIR Shootout (Eigenvector)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -37,7 +37,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 460, calibration: 155, validation: 40
+- **original** (documented, not applied): calibration: 155, test: 460, validation: 40
 
 ## Collection process
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 3 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `05a1df76bc03bee4e043088315c09b5710c4c0b29f3ae090a776a53ed50682ab`
-- **Processing hash:** `e2e606d825bcf1b6b09a349603a506ce1e5d807122e1ac3083c01a7fcaf4f101` | **metadata hash:** `645d98a621d79d4c21a01a7e547f32dadcda73396fc4389de74f66826141a213`
+- **Processing hash:** `e2e606d825bcf1b6b09a349603a506ce1e5d807122e1ac3083c01a7fcaf4f101` | **metadata hash:** `f47cc29e4a07b8cf50f6ceb25c71ff45deb128f159cd66b4d54db5866ecf3608`

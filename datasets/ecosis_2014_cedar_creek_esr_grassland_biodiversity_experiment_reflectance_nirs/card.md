@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 2014 Cedar Creek ESR Grassland Biodiversity Experiment: Leaf-level Contact Data: Trait Predictions (reflectance)
+# Datasheet — Cedar Creek ESR leaves 2014 — reflectance, predicted traits
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -107,7 +107,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: source_Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 5 fields, Y: 11 fields, passport: 49 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 11 fields, measurements: 0 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -129,4 +129,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `6cc48a2b99e512de371687eedd1755fefdbbfc6e6e575dc03f0989a19b85cc22`
-- **Processing hash:** `5d65c4dbbaa2fa1a6cb9a0d3d9ab59f2c81f04d11f105344548d8e6da33eeb79` | **metadata hash:** `946fbb50832854e820413df34492dd9d36834092565c9caabf084b48721044ec`
+- **Processing hash:** `5d65c4dbbaa2fa1a6cb9a0d3d9ab59f2c81f04d11f105344548d8e6da33eeb79` | **metadata hash:** `e6f50044711177c135bb2e95336b4e89027b439ffd3dcca65cb7d96a585db406`

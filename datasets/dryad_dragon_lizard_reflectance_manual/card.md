@@ -1,4 +1,4 @@
-# Datasheet — Dragon lizard reflectance spectra
+# Datasheet — Dragon lizards — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -55,7 +55,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 2 fields, Y: 0 fields, passport: 9 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 0 fields, measurements: 0 fields, passport: 9 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -77,4 +77,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `acec4eb434919eef1b9b9bf67de7ef21ee8f2eadea68b01b2261f43339557738`
-- **Processing hash:** `554a2ac87914bc78c6976caea8b6d51cadcc1180702b1c2895965698b8322ac7` | **metadata hash:** `784f2a9859d5e2da5f7b92e7c9cb05e769243be3a95673a98a539be57299562f`
+- **Processing hash:** `554a2ac87914bc78c6976caea8b6d51cadcc1180702b1c2895965698b8322ac7` | **metadata hash:** `bcd15fe3bcb394169b2c287658479ab406e08f682769fe8d347e8f48c44a9137`

@@ -1,4 +1,4 @@
-# Datasheet — Recherche Data Gouv grapevine leaf traits, ASD, MicroNIR and NeoSpectra
+# Datasheet — Grapevine leaf traits — ASD + MicroNIR + NeoSpectra (WvaPol)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -86,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 14 fields, Y: 7 fields, passport: 22 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 14 fields, Y: 7 fields, measurements: 0 fields, passport: 22 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,4 +108,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `fd046afd18be97f74a046eb65e1df650cbeb4b3a254d1e1549eee8072ce40cd9`
-- **Processing hash:** `fdee0227c529160be0419683da24c9f7da61b25d1a23cfb92c5bf78a9afa8989` | **metadata hash:** `b8297830d48b79312749922a619225b12b7f26a4ed55908c0ce47c483a7d9f43`
+- **Processing hash:** `fdee0227c529160be0419683da24c9f7da61b25d1a23cfb92c5bf78a9afa8989` | **metadata hash:** `b6760d17dc0218d421a1d43c92e288161576ada2b6307ed3da0d25326f913e02`

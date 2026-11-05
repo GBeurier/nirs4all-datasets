@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research Raman spectra mixtures
+# Datasheet — Mineral mixtures — Raman (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -62,7 +62,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 3 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,4 +84,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c5457ae524d7f7adce4dabe011a3c1570847af0baa0ea5c1d42d264d9d122059`
-- **Processing hash:** `741fba2b91093caa8519fc856bba822fa40f31883c1e2e6413162a1598609d40` | **metadata hash:** `e19b8b2818107924f9206cc525b808097d180b030088ae3654cf109bf6a5bb9b`
+- **Processing hash:** `741fba2b91093caa8519fc856bba822fa40f31883c1e2e6413162a1598609d40` | **metadata hash:** `18feab9b576ab40a7f4ff09711bb8d88b0e87826724a3657f5cb0e8a43567aa8`
