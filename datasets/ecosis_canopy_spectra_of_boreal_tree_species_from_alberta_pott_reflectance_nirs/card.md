@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Canopy spectra of boreal tree species from Alberta potted tree experiment (reflectance)
+# Datasheet — Alberta boreal potted trees — canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 2 fields, passport: 33 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 2 fields, measurements: 1 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,4 +106,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9ff0de5fad70596d7ffba5ae5a768dcd85fb3713e86a6dc7b9d0a020e5e4af37`
-- **Processing hash:** `e54574ea17fbf9a4efcccac8491a3a5af1c6c380375c209fe1a7767b925febe9` | **metadata hash:** `9572b93deb8f1c15e619685a8e64f9a3fddc53466b6c70191fe56bb52a77ef11`
+- **Processing hash:** `e54574ea17fbf9a4efcccac8491a3a5af1c6c380375c209fe1a7767b925febe9` | **metadata hash:** `2d18e74afcc08e9eff0822d0d51d20ad911f06d66e5e1c45d800ee4e84cd0fc6`

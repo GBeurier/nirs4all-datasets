@@ -1,4 +1,4 @@
-# Datasheet — OSSL Jovic soil vis-NIR and MIR
+# Datasheet — OSSL Jovic soils — Vis-NIR + MIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 8 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 8 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,4 +104,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `38d1d53105ca22dcadab899edac7d21e599712ff1408e70321f5f980d816a9d0`
-- **Processing hash:** `3ad5a399829c13b5d2bfa0d542604df41ac056bf6c7f1ebbe7692e4a820bceb3` | **metadata hash:** `d20095f2e2fdf48465360e776cf6237a0039f26e3f5cbea3b5f5fc7ae148e696`
+- **Processing hash:** `3ad5a399829c13b5d2bfa0d542604df41ac056bf6c7f1ebbe7692e4a820bceb3` | **metadata hash:** `275c76cdabcc99f2f9f83395fde8935549d2d712bfbe53889f5f1b36be4052ab`

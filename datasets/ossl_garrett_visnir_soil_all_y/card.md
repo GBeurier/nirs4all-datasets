@@ -1,4 +1,4 @@
-# Datasheet — ossl garrett visnir soil all y
+# Datasheet — OSSL Garrett soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 27 fields, passport: 67 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 27 fields, measurements: 1 fields, passport: 67 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `183e4e16638ba417a28a4d9644dd88e998e745dd088061d9204e5b37ae065e53`
-- **Processing hash:** `7e49c8acb5608026a1ad6bf508aabaac4677e6267ffedaf8f455e388a77645ff` | **metadata hash:** `eed3b905b785ea549617fcd1d037ff87fdcfec676c4c9874a555872f4d0eee36`
+- **Processing hash:** `7e49c8acb5608026a1ad6bf508aabaac4677e6267ffedaf8f455e388a77645ff` | **metadata hash:** `1c03abb1b8026f739c70700ba80e93a5c2eff9ab35735781201c7aba93aa2702`

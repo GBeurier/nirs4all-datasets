@@ -1,4 +1,4 @@
-# Datasheet — Perten cereals NIR
+# Datasheet — Cereals — NIR (Perten)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -62,7 +62,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 2 fields, passport: 11 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 2 fields, measurements: 0 fields, passport: 11 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,4 +84,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `bb2b3bb327bfdad1d037cc127ec932a6198c31d6f504639e7624b65d41642462`
-- **Processing hash:** `2f00d4b638e9cf0d918b26041e2795839314db29fcf6d9877253d8a01182e07f` | **metadata hash:** `c3f75dc885cbed23da1001c3f119d11d0f09a44420d7257b08a173b70a5f8461`
+- **Processing hash:** `2f00d4b638e9cf0d918b26041e2795839314db29fcf6d9877253d8a01182e07f` | **metadata hash:** `ea1a09b33f884669a72275665eadb06a7e24e4bcc33c205df2e5841d6d38c7b3`

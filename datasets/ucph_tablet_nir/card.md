@@ -1,4 +1,4 @@
-# Datasheet — UCPH tablet NIR
+# Datasheet — Pharmaceutical tablets — NIR (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -53,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: source_sample_id includes batch and tablet number; the ten numbers do not demonstrate ten reacquisitions of the same tablet.
-- **Curated views:** M: 2 fields, Y: 2 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 2 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,4 +75,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2d969385e06373dda01ad9072d9ab2e22471fc13c14f27c2c8cf4f043025352f`
-- **Processing hash:** `c2dbdad9d7bd1515bc994228283a9f1baeddde2608805ddd953ed24aa50031cf` | **metadata hash:** `88dee30b01dc34877945f08d445aa13e6d0c19fec38afeb1ce5054517aacf630`
+- **Processing hash:** `c2dbdad9d7bd1515bc994228283a9f1baeddde2608805ddd953ed24aa50031cf` | **metadata hash:** `fdd3f0c88953b6c84f06f84824f23abb8e2a35396191aa3799161bbbb1f494cd`

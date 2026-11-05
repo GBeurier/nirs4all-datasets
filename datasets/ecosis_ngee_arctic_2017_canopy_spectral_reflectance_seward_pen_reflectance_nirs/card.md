@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Arctic 2017 Canopy Spectral Reflectance Seward Peninsula Alaska (reflectance)
+# Datasheet — NGEE Arctic Seward 2017 — canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -129,7 +129,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 8 fields, Y: 4 fields, passport: 50 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 8 fields, Y: 4 fields, measurements: 5 fields, passport: 50 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -151,4 +151,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `57753b0d401fcceb61518800c64b55299f6f838abe39178fd73cdb7b6d3871d0`
-- **Processing hash:** `31529f8f5805f97d4469032acfe5d414406a0234ca257256432143ea445d446e` | **metadata hash:** `9c4e0b99be58ee8a3d7372c2a5dd965d783f013a0138bf2251bb6564385ae151`
+- **Processing hash:** `31529f8f5805f97d4469032acfe5d414406a0234ca257256432143ea445d446e` | **metadata hash:** `a63e93cc67c9de072010371c2e845b7e57dacb7e9d2a632eefb5af91d33d33a3`

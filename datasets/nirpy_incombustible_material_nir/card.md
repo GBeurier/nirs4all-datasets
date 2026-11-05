@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research incombustible material NIR
+# Datasheet — Incombustible material — NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e6d9b10e175a4f4e575238729eb2dc3be0491571fa6d18a6fc34e0597293cd08`
-- **Processing hash:** `5f236bdddfb7cf6df0eba0097afccf9e00b913419393fd4dad7feee889d392ce` | **metadata hash:** `dc1a5d50e63f99646d2e714587da7c49271022015b2cf54eec0c5827e81d13d6`
+- **Processing hash:** `5f236bdddfb7cf6df0eba0097afccf9e00b913419393fd4dad7feee889d392ce` | **metadata hash:** `51c4f5d5bcf2d218c80b9aada7b5863ee39a75f21286f2ea0fb787af64b23ed0`

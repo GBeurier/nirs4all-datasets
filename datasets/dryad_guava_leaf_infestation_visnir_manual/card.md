@@ -1,4 +1,4 @@
-# Datasheet — Guava leaf infestation reflectance spectra
+# Datasheet — Guava leaves — infestation reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -53,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,4 +75,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `94b77af45aa8391a4a9983a328d9bb830ccf07b803a0c5373738efeb400bbbcb`
-- **Processing hash:** `204c1fcbbea1a1aa6145b889e8dae86a8db14bbb583407543c16c388f7e38333` | **metadata hash:** `873a8fe81a2a5d7edab0ac52fe58cf5effea14de4d13949e1cc69308d32e4b6c`
+- **Processing hash:** `204c1fcbbea1a1aa6145b889e8dae86a8db14bbb583407543c16c388f7e38333` | **metadata hash:** `c6b521bb9b421fd0d9243f84edfcc9c2e065e3e4685a258474719e9d3272068b`

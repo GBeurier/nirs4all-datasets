@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS manmade tir axis 85fbc8f6
+# Datasheet — ECOSTRESS manufactured materials — 2.0003–15.3853 µm (2256 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -98,7 +98,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 49 fields, measurements: 5 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 5 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,4 +121,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `13e7cf172f4da85efd9260a92f16316dade29613b4a298cab9aaf67c2ca5b3da`
-- **Processing hash:** `d624ffcd1b4aa144b0d3ff076a3d78e8d51a481c6a89188c3c3b6f8811952880` | **metadata hash:** `ca0d5ed2b8f07d51a62afa7beef7f3c9f0c815a4a667de876ad8365aef7c0220`
+- **Processing hash:** `d624ffcd1b4aa144b0d3ff076a3d78e8d51a481c6a89188c3c3b6f8811952880` | **metadata hash:** `10a80a667b27b7b6d60da2a488266c8ddcb8979548d62b0857ff69ed0e9172d5`

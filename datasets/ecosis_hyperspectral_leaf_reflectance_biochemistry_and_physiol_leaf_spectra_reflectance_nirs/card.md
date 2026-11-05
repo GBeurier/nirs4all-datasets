@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS hyperspectral leaf reflectance, biochemistry and physiology of droughted and watered crops (leaf spectra)
+# Datasheet — Droughted and watered crops — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -99,7 +99,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M. Index fields examined: Rep. The number of levels of a Rep factor is not used as the number of spectra per sample.
-- **Curated views:** M: 12 fields, Y: 3 fields, passport: 25 fields, measurements: 18 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 12 fields, Y: 3 fields, measurements: 18 fields, passport: 25 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,4 +121,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `e27fe56e499c6c86f5d0129969e3369dae7b336664f14db157f9d6bdb329a57a`
-- **Processing hash:** `db458ffe8684931af07b5817327498e9c4d7bd55967a41beffaa0f3bc2a05c1b` | **metadata hash:** `0ebe71c52bbf1767211e565a29e2b025286eefe0e8fe9fbb57dc3f3c7af8727a`
+- **Processing hash:** `db458ffe8684931af07b5817327498e9c4d7bd55967a41beffaa0f3bc2a05c1b` | **metadata hash:** `3b805a8cea61812ce1126abdecc95b20b965c4e6b9f470b1f5e488952347371e`

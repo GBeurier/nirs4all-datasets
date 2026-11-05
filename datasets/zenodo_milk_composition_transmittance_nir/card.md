@@ -1,4 +1,4 @@
-# Datasheet — Zenodo milk composition NIR transmittance
+# Datasheet — Milk composition — NIR transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -77,7 +77,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 6 fields, Y: 6 fields, passport: 21 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 6 fields, measurements: 1 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,4 +99,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `2703eb6925893974bec9db1f8690847706ebf18d3784456ee626d93bc15fe312`
-- **Processing hash:** `0c62b0c66ba6191998912a5412e1ee37149e8a1bed5be213c2aad4640869e583` | **metadata hash:** `3a88185f61ae73951196df5673a181da1379a7346788e5f31ce710edf3863c41`
+- **Processing hash:** `0c62b0c66ba6191998912a5412e1ee37149e8a1bed5be213c2aad4640869e583` | **metadata hash:** `b8233e5986cd9044ac1a58b25623641f801f34dcc6933345682290849ebc6eeb`

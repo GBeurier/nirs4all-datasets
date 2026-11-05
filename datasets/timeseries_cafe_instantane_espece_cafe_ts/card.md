@@ -1,4 +1,4 @@
-# Datasheet — cafe_instantane_espece_cafe_ts
+# Datasheet — Coffee — coffee spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 28, test: 28
+- **original** (documented, not applied): test: 28, train: 28
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `3a7228bdcc74bcb39c448f889c8c8257787d02f61188b838778dc02902a82e0e`
-- **Processing hash:** `7b48d16f1b19d1559820aee31b2648daa7b3caca017d23a9adea6b745cb0b85d` | **metadata hash:** `3b4bb3349e0a5e80887638042c5727b9f48e699ab581714aa731214a0f78896c`
+- **Processing hash:** `7b48d16f1b19d1559820aee31b2648daa7b3caca017d23a9adea6b745cb0b85d` | **metadata hash:** `3abececff83041f485faa06ab1bfbc9fc924989ba6cf1928c32f7fd4abf7e495`

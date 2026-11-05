@@ -1,4 +1,4 @@
-# Datasheet — UCPH wheat kernel NIT
+# Datasheet — Wheat kernels — NIR transmittance (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -59,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,4 +81,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ffd6bca16fca15a66a46a18bc40b37e65b5a8b792c840448df2d2b513a004e43`
-- **Processing hash:** `83abcad946429a759b7d4b85337d724c8bcb69585e44fde52b17a063cddd226c` | **metadata hash:** `dee4cb4cc7516038ade135f7e66cbdd3061ba5c49d19dc967bef2eecd4d787cf`
+- **Processing hash:** `83abcad946429a759b7d4b85337d724c8bcb69585e44fde52b17a063cddd226c` | **metadata hash:** `5f824dd87122de914f7c15fc43a1b456108957c5b4d08c6fa18659bdc6ac61f9`

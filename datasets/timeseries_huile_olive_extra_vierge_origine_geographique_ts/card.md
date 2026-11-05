@@ -1,4 +1,4 @@
-# Datasheet — huile_olive_extra_vierge_origine_geographique_ts
+# Datasheet — OliveOil — olive oil spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 30, test: 30
+- **original** (documented, not applied): test: 30, train: 30
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9b49feb7bbeadb03cd3fbc1c0406d6e828237d430e222ed13daf8ce0d8672f64`
-- **Processing hash:** `04efd04890771ef92549d12a14c4f38b037d5f9deb883e2769f5303a39d54e1a` | **metadata hash:** `13ee742db039ccf6b8b2c44df07edcf865cfdbc30d2d3bae5c9f1aef85aff3d7`
+- **Processing hash:** `04efd04890771ef92549d12a14c4f38b037d5f9deb883e2769f5303a39d54e1a` | **metadata hash:** `e64bd35601b280e30e8ba8e01a2234a0336052ade28f99c92f833d1a253fd3c4`

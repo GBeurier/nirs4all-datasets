@@ -1,4 +1,4 @@
-# Datasheet — Mendeley chicken meat authenticity handheld NIR
+# Datasheet — Chicken meat — authenticity, handheld NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 3 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `b58f08df2fa0a1e765fd28d078ba72ea60bbaf33567ce20358341aa4a3f87b1f`
-- **Processing hash:** `6dda3b35a94ca90fa11c40804df3b081255bf0cec9fe7a61f497ee7326c5b2f1` | **metadata hash:** `1c7113b6e71e195956325483b2d564d972fbcdd0c4deff5a16ac2f2fbc0549b8`
+- **Processing hash:** `6dda3b35a94ca90fa11c40804df3b081255bf0cec9fe7a61f497ee7326c5b2f1` | **metadata hash:** `45f43ba71c70015717991b351d7762515b5f4f7308ad3ef0fe32ccfcbd3295d3`

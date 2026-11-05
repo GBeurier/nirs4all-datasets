@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS meteorites tir axis d3032c60
+# Datasheet — ECOSTRESS meteorites — 2.0795–25.044 µm (2287 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -123,4 +123,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `8859542decd7d2f0738b4d0cf6ef5d5521905018f1922a04561eaf5e39071759`
-- **Processing hash:** `e672c8a1b8fc49e762e6b32a9d136e1b96b3f10bd4d03c89190b1120f1c4ae4f` | **metadata hash:** `c28c3f0b306358e636e91d979fffa45f6dc1f241d93f38001bab7358185f2408`
+- **Processing hash:** `e672c8a1b8fc49e762e6b32a9d136e1b96b3f10bd4d03c89190b1120f1c4ae4f` | **metadata hash:** `289785f4849224461bc04ad00bc6af94bc11c837ad06802f5533ac46073f3501`

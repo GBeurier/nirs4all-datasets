@@ -1,4 +1,4 @@
-# Datasheet — Beetle ventral transmittance spectra
+# Datasheet — Beetles — ventral transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `423437437956c3883324bc10d824741020a92b381aafdfa3968e36eb02ec2217`
-- **Processing hash:** `bf29e5964f088f67bb36807d8c4706e2117670835ba4cda3c802c7a0e947431d` | **metadata hash:** `00b73dad64d05d4ddc0bbc9951ddd338e45bfc5c1f2158c8bc7be1071bb14832`
+- **Processing hash:** `bf29e5964f088f67bb36807d8c4706e2117670835ba4cda3c802c7a0e947431d` | **metadata hash:** `de998860ad81fd6b39020165287348c435ca97e31c090cbc57cc35618b5d2603`

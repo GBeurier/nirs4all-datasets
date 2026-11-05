@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Leaf reflectance and tratis of floating and emergent macrophytes (reflectance)
+# Datasheet — Floating and emergent macrophytes — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -95,7 +95,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 13 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 13 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -119,4 +119,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `4dc0f214bd4f0f214a01b19ebe4d5cb9eb8e691503a8820c517ad11a4bd60c19`
-- **Processing hash:** `a8e1e8aa78d1e2148e3ffe2428347208e65e2401473a26265dc0c22a521f8a57` | **metadata hash:** `86258e5391447c7d2a1a9a7de8d495b8fbcc6a4b6e4345656029946e7730a968`
+- **Processing hash:** `a8e1e8aa78d1e2148e3ffe2428347208e65e2401473a26265dc0c22a521f8a57` | **metadata hash:** `45b646558e834142fbbd8fca16db22e6f3f658827c3cc1a04f10ef16e6b6756d`

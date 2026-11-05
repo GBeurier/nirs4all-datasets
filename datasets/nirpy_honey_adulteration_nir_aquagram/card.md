@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research honey adulteration NIR aquagram
+# Datasheet — Honey adulteration — NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: sample_id is a created row counter; source labels and letters a…i do not establish a unique physical identity. The replication protocol remains undetermined.
-- **Curated views:** M: 0 fields, Y: 3 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 3 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `06500845cb79dabe9528833a65cfd2ee72777bb375486010e9b0fc92a639a9ee`
-- **Processing hash:** `6dd2b17c58ba000ecd249131b1eb7fa032e0b3f2568f40abf918e20dcb32e07f` | **metadata hash:** `2e69a31f1a9ca2956a52d24f57a5561a71ea34b456df5357a05b374c47ff0b56`
+- **Processing hash:** `6dd2b17c58ba000ecd249131b1eb7fa032e0b3f2568f40abf918e20dcb32e07f` | **metadata hash:** `6206b5103611710a0b7d28684e1b945fa710aab735415a6ced859ce18cea3553`

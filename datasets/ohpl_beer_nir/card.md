@@ -1,4 +1,4 @@
-# Datasheet — Beer original extract OHPL NIR
+# Datasheet — Beer — original extract, NIR (OHPL)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -34,7 +34,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 40, test: 20
+- **original** (documented, not applied): test: 20, train: 40
 
 ## Collection process
 
@@ -49,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,4 +71,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `980d25a6b20c48b2272a59e7394f5cad577ef1d15fd807ce757e690750c83332`
-- **Processing hash:** `0355f9b4fd428869e9e23790e97172e78582ea5da1f30efb3bbf7528e147fad3` | **metadata hash:** `d37de391d901e28995ec74554ff16ffc8495d87d4dac8ec031e972b92917452b`
+- **Processing hash:** `0355f9b4fd428869e9e23790e97172e78582ea5da1f30efb3bbf7528e147fad3` | **metadata hash:** `03b0500cfa17fbf2b91ef251941bd8f7dbd7a3f0b4b40c150b9fd3d7a22c7f8d`

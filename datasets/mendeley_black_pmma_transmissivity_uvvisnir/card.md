@@ -1,4 +1,4 @@
-# Datasheet — Mendeley black PMMA transmissivity UV-Vis-NIR
+# Datasheet — Black PMMA — UV-Vis-NIR transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -66,7 +66,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Corrected inherited sample_temperature_C target to film_thickness_um: original files are Transmissivity_50µm_UV-Vis-NIR.xlsx and Transmissivity_73µm_UV-Vis-NIR.xlsx; their sheets contain no temperature measurement.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -88,4 +88,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e5e2cf96120f2f20091459ef4970569907c487f159eb49db0eda47d5d5bbc087`
-- **Processing hash:** `528923e295ba83a64c2092e38ed0131621414b8e192ea4ea06768e77c6758060` | **metadata hash:** `bfa12d52eceee7161a4f58dcea904581302dc48da04a4bcf2bc5a87a99314560`
+- **Processing hash:** `528923e295ba83a64c2092e38ed0131621414b8e192ea4ea06768e77c6758060` | **metadata hash:** `e3a7846b7088c984b515aa6553e77fbd1cbcbac85ff37efed36b7062317fa322`

@@ -1,4 +1,4 @@
-# Datasheet — Beetle top transmittance spectra
+# Datasheet — Beetles — dorsal transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `faafa063f715c8894e930aad8c5907a2a9494f54b85515f5c7694f83667e56ac`
-- **Processing hash:** `c60b05c57f4f3cf50290ec0ef61f39813ebae34fd84ec396e76de1b3bf612be4` | **metadata hash:** `2b0a33e1334cba7425a042308020dcd9fa96144f279e1d1b51c090d48c24365d`
+- **Processing hash:** `c60b05c57f4f3cf50290ec0ef61f39813ebae34fd84ec396e76de1b3bf612be4` | **metadata hash:** `3b2747aebb12f8050291e8cad2230f8095b78976c1fe4300f9a36549868b13c5`

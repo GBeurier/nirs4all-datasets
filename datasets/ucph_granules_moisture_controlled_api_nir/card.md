@@ -1,4 +1,4 @@
-# Datasheet — UCPH granules moisture-controlled API NIR
+# Datasheet — Pharmaceutical granules — controlled moisture, NIR (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -69,7 +69,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: The NIR sample ID is a batch/design combination; the vial is identified by _vN and each acquisition by .0/.1/.2. 216 vials × 3 acquisitions. The 64 instrument scans are averaged within each acquisition.
-- **Curated views:** M: 5 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -91,4 +91,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `63905661a079541e892220bcf7cc8cf0d39fb0981ded862d04a8ac5661d47916`
-- **Processing hash:** `9a05069deace46280cc4c5232316b44695644edf31b0b8e4927913e5356a3e51` | **metadata hash:** `501cada2b96612f0b46eb9efcf82f0da58f06088046c7b6c27663fa72138babb`
+- **Processing hash:** `9a05069deace46280cc4c5232316b44695644edf31b0b8e4927913e5356a3e51` | **metadata hash:** `bcbc6b2915a41a956433b05feda7e1e78af5830dc9a30cbb8e0c39215c270544`

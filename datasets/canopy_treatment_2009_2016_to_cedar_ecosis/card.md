@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 2009 to 2016 Cedar Creek Enemy Removal Experiment Canopy Reflectance (MSR) (Treatment)
+# Datasheet — Cedar Creek enemy removal 2009–2016 — canopy reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: The upstream converter selected Experiment=e244, a constant experiment code. The 205 plots, dates, and times describe multiple units; no specimen identifier or technical replicate is established.
-- **Curated views:** M: 7 fields, Y: 1 fields, passport: 31 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 1 fields, measurements: 1 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,4 +104,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `13e7624d2fb9e1ca873e40aa1f8469d59bac9e8946e1cc1fe9c0e59d120dce39`
-- **Processing hash:** `78eb580270db620d011fcc013a63287e5b2d44e9fe0635815412d5002a70d551` | **metadata hash:** `dcbf89a1040bbc713104e19b99c6f922dcb471ed0b7ff799acccc33070d12383`
+- **Processing hash:** `78eb580270db620d011fcc013a63287e5b2d44e9fe0635815412d5002a70d551` | **metadata hash:** `2a5dc2775c7527b1e84fe9ee40da407c9a7eed1bf14b71f7cfb8260f494d3584`

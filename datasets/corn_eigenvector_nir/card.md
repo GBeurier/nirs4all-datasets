@@ -1,4 +1,4 @@
-# Datasheet — CORN Eigenvector NIR
+# Datasheet — Corn — NIR, three instruments (Eigenvector)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -56,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 4 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 4 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,4 +78,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `fad668163949b7af553784388bfaa896eec3b9482f81df360b0d9957e430d671`
-- **Processing hash:** `f7050a1f4da0271292b2c323010550cc688ce830c94a24b7035c4e1491f916c8` | **metadata hash:** `5ef27fa0c7f4251a5e8a55b6c73c150feea93ff821368fd5066bad0d79c412bb`
+- **Processing hash:** `f7050a1f4da0271292b2c323010550cc688ce830c94a24b7035c4e1491f916c8` | **metadata hash:** `b148c50d1d24b7a6a8e6775a89f779e60a3a0e2db9d3527ccd76d678ab525c21`

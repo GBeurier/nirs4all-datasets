@@ -1,4 +1,4 @@
-# Datasheet — OSSL NeoSpectra soil NIR and MIR
+# Datasheet — OSSL NeoSpectra soils — NIR + MIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -101,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 10 fields, Y: 23 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 23 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -123,4 +123,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `5c7f05f7eb2f0b463deef9be81410a5f57b1a32264a6a676c3c98468b0abc0fc`
-- **Processing hash:** `2db467dcbfe0900066be5519de6cf605d2d525c6467a4fae22bd2869a81eebcf` | **metadata hash:** `de5275dac627724eb0e6691dcbb840ea36d72afd779257cc8a3841839801e5a1`
+- **Processing hash:** `2db467dcbfe0900066be5519de6cf605d2d525c6467a4fae22bd2869a81eebcf` | **metadata hash:** `dfe8e2b6d22c3b12c9075a57b7e41c4368c5373d864342a36db82f426563f84f`

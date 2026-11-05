@@ -1,4 +1,4 @@
-# Datasheet — UCPH soil SOM ergosterol NIR
+# Datasheet — Soils — organic matter and ergosterol, NIR (UCPH)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Source sample from the MAT file; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 15 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 15 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `86975c6ad9e82f432de392c4160f1719bef6a1fb72d64a54494617ed3fb25eba`
-- **Processing hash:** `1e6606b1a300e04fabe1d154e1a8f849c0e725c97f02343407c9e6e06fe64fd1` | **metadata hash:** `7fa7467f90455396fd9243b0cd5698287ff81f5c1cc911a466f8bc844c16897b`
+- **Processing hash:** `1e6606b1a300e04fabe1d154e1a8f849c0e725c97f02343407c9e6e06fe64fd1` | **metadata hash:** `0c838670683a66f6429719640846d5878defadd61ff02217a0740b8435afed6c`

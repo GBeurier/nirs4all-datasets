@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS mineral vswir axis 61f98690
+# Datasheet — ECOSTRESS minerals — 0.4–2.5 µm (2101 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -101,7 +101,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 4 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 4 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -124,4 +124,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `926ed6c0517cab06191ba943afcfac36848418e7dad67dbeb9a7358c936cce45`
-- **Processing hash:** `b72511945e361b19c07fa2cf9425c6ff7264561d5a56aa2bd6f96debe3af974c` | **metadata hash:** `c7b100ea9461320be9bd6a95f0a53ec7f82d053a6f9406ffff193232e71e58df`
+- **Processing hash:** `b72511945e361b19c07fa2cf9425c6ff7264561d5a56aa2bd6f96debe3af974c` | **metadata hash:** `e87c5f471ce7a526e361e731972505aa6847a370ba661d65e6b98c312ddbe4cc`

@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS nonphotosyntheticvegetation tir axis 1389b1f1
+# Datasheet — ECOSTRESS nonphotosynthetic plants — 2.501–15.387 µm (1737 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 5 fields, Y: 3 fields, passport: 45 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 3 fields, measurements: 3 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -123,4 +123,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ca77f8d56a933c7081a2240893f0463d459b7baf2866b71cedec6d1d84dc8edf`
-- **Processing hash:** `7e6fff9649767c6cebacfbde3a8e4d1b413a3adc8ca921285c04c1bbafc2b9d4` | **metadata hash:** `dc16011087c3beb62fccf33077c7de10c43c77ff397d748acbca5c9d75e5a444`
+- **Processing hash:** `7e6fff9649767c6cebacfbde3a8e4d1b413a3adc8ca921285c04c1bbafc2b9d4` | **metadata hash:** `d6dc27bc74cc7654616e7da59db02aef27b54d6ad09ccc8b38df45801e83b074`

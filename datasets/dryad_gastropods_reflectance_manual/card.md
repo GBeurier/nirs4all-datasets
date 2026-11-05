@@ -1,4 +1,4 @@
-# Datasheet — Gastropod reflectance spectra
+# Datasheet — Gastropods — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -57,7 +57,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 4 fields, Y: 0 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 0 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -79,4 +79,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `04fbc37161383fa1589a5cedb6b5ebe2a4b206e2871b6e7a4ff8ec5be1fefde5`
-- **Processing hash:** `eae698aa5373daedefe7f51c461844208c55df9bab5705195ef4211de727bc8e` | **metadata hash:** `e14ad5b1905f537018000f711ab34899ffbe011358c7347240899194e48b7205`
+- **Processing hash:** `eae698aa5373daedefe7f51c461844208c55df9bab5705195ef4211de727bc8e` | **metadata hash:** `2799df5331f8c55de8015a87f87485151c48db4be8a53c389a815d26f95efc04`

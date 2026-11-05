@@ -1,4 +1,4 @@
-# Datasheet — Dryad Hawaii avocado bench-top SNV NIR
+# Datasheet — Hawaii avocado — benchtop NIR, SNV
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `a75ffa58f343ce406e19cb00aa3d8ba270abc0be6ca75bed409d22c6883f36ca`
-- **Processing hash:** `020b04e82559dd616d662fa97c58d10b0d0f5113a5c129b549f6d3768e95f139` | **metadata hash:** `bfd4405e599432bd993473291df06e8dd17f9de2d4343f08d77ca5c4dc4a7870`
+- **Processing hash:** `020b04e82559dd616d662fa97c58d10b0d0f5113a5c129b549f6d3768e95f139` | **metadata hash:** `cec3f20eb790bacf12d7fdb814659285d30dccc30998ee7b607606641f8a1d29`

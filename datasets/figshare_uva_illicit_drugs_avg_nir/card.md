@@ -1,4 +1,4 @@
-# Datasheet — Figshare UvA illicit drugs NIR, five instruments, sample-averaged
+# Datasheet — Illicit drugs — NIR, five instruments, sample means (UvA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 4 fields, passport: 27 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 4 fields, measurements: 0 fields, passport: 27 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `15e76fa807ea7e49d21a7cee87a6a0801f372b962dd79c813986b1cd942d2198`
-- **Processing hash:** `13b8a2a1d5923b9000698d1eb71d13cbcd91d4b00d2f9cfc4a8e20d2af2f654a` | **metadata hash:** `20c93ae0d254a6997242e5fa01761cf06fde1cd93e069c09b5b5b6ccb514a01a`
+- **Processing hash:** `13b8a2a1d5923b9000698d1eb71d13cbcd91d4b00d2f9cfc4a8e20d2af2f654a` | **metadata hash:** `05576d17715957437fdac31ecd5ec695ed71e7739c02c4d191de6b1e8b9fe297`

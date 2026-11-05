@@ -1,4 +1,4 @@
-# Datasheet — PNNL/NIST Quantitative Infrared Database private-use subset
+# Datasheet — NIST quantitative IR library — local subset
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -71,7 +71,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -93,4 +93,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `13bbfd8b998b88632abba7c080265b493867ff363b14be78cfaf08abe82cc699`
-- **Processing hash:** `7be74b8613b43a00ec09f8dcdeb19e922118d66c3973b6e9845acd4fd7d8eb25` | **metadata hash:** `26e8c549bf254ad0d3d64a868d10a424253965df51436ecc7377ed0833dae292`
+- **Processing hash:** `7be74b8613b43a00ec09f8dcdeb19e922118d66c3973b6e9845acd4fd7d8eb25` | **metadata hash:** `dd6e0b923b3d0478a15ab3a27a51923d64a2af487bf3d69b43a9b665f76270bc`

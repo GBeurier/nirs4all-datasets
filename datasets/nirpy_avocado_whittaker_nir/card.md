@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research avocado Whittaker smoothing NIR
+# Datasheet — Avocado — NIR (Nirpy Whittaker series)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -87,7 +87,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 0 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 0 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `51d0400fa821a0dd7736ee1405b24377fd7d008652e801adfc814d6529231e59`
-- **Processing hash:** `c0be3de7c3989205fcfdc7d1a1072a7fa5e7b4b2acec0ba2fd53f8191ff8c1d7` | **metadata hash:** `3453df234005e62d27470148389242f1b3a8479469680d4e726073e709ddbf6f`
+- **Processing hash:** `c0be3de7c3989205fcfdc7d1a1072a7fa5e7b4b2acec0ba2fd53f8191ff8c1d7` | **metadata hash:** `bc39daf6d7749e61842d3267978b70a131720a32647d0fb9d180a3f682e509a3`

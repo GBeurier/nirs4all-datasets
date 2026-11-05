@@ -1,4 +1,4 @@
-# Datasheet — Wheat protein OHPL NIR
+# Datasheet — Wheat — protein, NIR (OHPL)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -49,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,4 +71,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `bde5d9f6d916fbe6333d947137bc0c3224006f336a545bb916f1172a215bcd31`
-- **Processing hash:** `86276affcbb5e1fb5f978f29af75b3b9912af1e3f8b91d210decf065ba91e944` | **metadata hash:** `02e95463d7fd060b2641e1a0d72194c9483113e07160165959c32a00c81c74d6`
+- **Processing hash:** `86276affcbb5e1fb5f978f29af75b3b9912af1e3f8b91d210decf065ba91e944` | **metadata hash:** `f02279849f3bc46f56056882f726759dfcdbad08deaf6916b47145a0c9e459fb`

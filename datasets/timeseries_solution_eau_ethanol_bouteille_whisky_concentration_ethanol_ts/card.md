@@ -1,4 +1,4 @@
-# Datasheet — solution_eau_ethanol_bouteille_whisky_concentration_ethanol_ts
+# Datasheet — EthanolConcentration — solution spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `f1606edff0850c4105db431dba87cecaf7037f5536bbd7edb551080f0f8ba6e3`
-- **Processing hash:** `67a511d198e2d41066aa29e30eded98154f3bb3974a3210c0ee742f37f318e0c` | **metadata hash:** `c30dfa672d9a0a249e196df16f1d306fe6c28ff9816773670ba0279f5ac36592`
+- **Processing hash:** `67a511d198e2d41066aa29e30eded98154f3bb3974a3210c0ee742f37f318e0c` | **metadata hash:** `01fe96ebe787ffe861b235def9e870d4dab50ddd8bf17418ea992c8bcecfde4f`

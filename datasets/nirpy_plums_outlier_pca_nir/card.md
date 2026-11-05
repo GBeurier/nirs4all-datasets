@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research plums outlier PCA NIR
+# Datasheet — Plums — NIR (Nirpy PCA tutorial series)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 22 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 1 fields, passport: 22 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `3c8ee48dd26af42060d7643afb7d6327dd3e083cf77c391d5afeaae2436a5461`
-- **Processing hash:** `b4de0aad5080a9401ce7137a8b0d16bd21ff24e167f85b11854bc41935141a3f` | **metadata hash:** `26076d6bd32491ecbd635c585e1ef2f71261f219deac8dfa09d22a1841d166b1`
+- **Processing hash:** `b4de0aad5080a9401ce7137a8b0d16bd21ff24e167f85b11854bc41935141a3f` | **metadata hash:** `afcdbed6fae49370a13f3a066e61870628f6bfd3cfacd6ef38224acb37cd9c04`

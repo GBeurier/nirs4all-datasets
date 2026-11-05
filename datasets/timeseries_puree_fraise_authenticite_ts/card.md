@@ -1,4 +1,4 @@
-# Datasheet — puree_fraise_authenticite_ts
+# Datasheet — Strawberry — puree spectra (UCR/UEA)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): train: 613, test: 370
+- **original** (documented, not applied): test: 370, train: 613
 
 ## Collection process
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `73356e602376b7b5c969ac7523797f1eedd49081bc5aeb5e4e212bdad66387a1`
-- **Processing hash:** `cb6f8e80ff17b7958bbe5bc1650f61336173db0785be1d45019a1e4fe4118830` | **metadata hash:** `bc36559f246014e26cb90823f13dc00d1937ac5cbd5857a1d939af9a8f42afaf`
+- **Processing hash:** `cb6f8e80ff17b7958bbe5bc1650f61336173db0785be1d45019a1e4fe4118830` | **metadata hash:** `77b959d3e04deab81478a673328531a5eb88240dfa5edc936470a2df6a423dea`

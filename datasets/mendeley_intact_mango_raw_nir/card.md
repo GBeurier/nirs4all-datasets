@@ -1,4 +1,4 @@
-# Datasheet — Mendeley intact mango raw NIR
+# Datasheet — Intact mango — raw NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 4 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 4 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `e8ff65acc7fefe0c0ba872b287a8c346351decc92f326ad1211d4a98ea03326c`
-- **Processing hash:** `8bdfa050e0c4bffbe13b7c6a2aadde489d90e3022cc40baeaeb00d60e223bb44` | **metadata hash:** `7882fa818e6752a94cadff950d1fe51e0d66a6a71ba683c8ce9c1bc0196f1565`
+- **Processing hash:** `8bdfa050e0c4bffbe13b7c6a2aadde489d90e3022cc40baeaeb00d60e223bb44` | **metadata hash:** `43247180a77437548d63fbe413a34cfdf5151d71ea0f2120b2829e2720ebb618`

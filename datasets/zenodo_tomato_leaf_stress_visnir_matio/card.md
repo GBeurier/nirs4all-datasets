@@ -1,4 +1,4 @@
-# Datasheet — Zenodo tomato leaf stress Vis-NIR matio
+# Datasheet — Tomato leaves — stress, Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Numbers r1…r7 are experimental factors; leaves and treatment levels remain distinct. No grouping by r alone.
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `579615f13c9ea5ee881508fe62c16649565d9deefbec604bb3c8777ac7ec9911`
-- **Processing hash:** `fdd40efa01392f65f20c00a757deab7e337a5faa738b2d294290cfb53ea4672a` | **metadata hash:** `40a30dfa2e7ff413d32b74d81c5d522c14f0a13c9b96c6c618f26ebcac9b5d58`
+- **Processing hash:** `fdd40efa01392f65f20c00a757deab7e337a5faa738b2d294290cfb53ea4672a` | **metadata hash:** `833db0b63665ac2815f5aff21715e43afab35e5b261a9ef9fd2f80ab40917660`

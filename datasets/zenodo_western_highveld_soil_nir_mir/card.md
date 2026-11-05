@@ -1,4 +1,4 @@
-# Datasheet — Zenodo Western Highveld soil NIR MIR
+# Datasheet — Western Highveld soils — NIR + MIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -70,7 +70,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 6 fields, passport: 20 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 6 fields, measurements: 0 fields, passport: 20 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -92,4 +92,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `25bf7273e53ebda86b8be10b0aa49e54b34153dd415453c645b3375a6888877b`
-- **Processing hash:** `4313fc1ec7cabffae33287f0e8d8f1c7bbb48613bcc6dfb4869016a9b4049552` | **metadata hash:** `a9ad72db64326f22f271115a9e60297813ad458c60b8b18e9d06ba02742fa817`
+- **Processing hash:** `4313fc1ec7cabffae33287f0e8d8f1c7bbb48613bcc6dfb4869016a9b4049552` | **metadata hash:** `8ea0afc402b606acc2960bb812d6cc2ba9f65b3f7e5c6d7666731d47904275cf`

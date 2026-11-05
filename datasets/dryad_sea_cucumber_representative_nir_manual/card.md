@@ -1,4 +1,4 @@
-# Datasheet — Sea cucumber representative NIR spectra
+# Datasheet — Sea cucumbers — representative NIR spectra
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Original-source loading retains source observations and native axes; this revision supersedes the inherited standardized snapshot counts. See docs/PUBLIC_ORIGIN_LOADING.md.; Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -76,4 +76,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.3.0 | **schema/protocol:** 2.0
 - **Content hash:** `2825ca8e062daf3eb981ddbe6b363d19b0550d2699c5ec96b48df21987e35dc5`
-- **Processing hash:** `446b5c684b2c4cd32bdb263e0a5c1816888cd415eb227b2372f5d3e4236f371c` | **metadata hash:** `841c10c938a777aa4f94c769cb91bad1b8f0d8ae8002e2d6f3bbefead104cca1`
+- **Processing hash:** `446b5c684b2c4cd32bdb263e0a5c1816888cd415eb227b2372f5d3e4236f371c` | **metadata hash:** `d35846a81a67ff43b63d834bd92f816c714afb3e66d7671a47e5cdb11b2fd80d`
