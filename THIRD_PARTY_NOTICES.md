@@ -4,10 +4,28 @@
 commercial license; see [`LICENSING.md`](LICENSING.md)). It relies on the third-party
 open-source components listed below.
 
-`nirs4all-datasets` does **not** vendor these components — they are installed separately from
-their official distributions — but their licenses are acknowledged here as a courtesy and
+The Python dependencies below are installed separately from their official distributions;
+their licenses are acknowledged here as a courtesy and
 for compliance. Licenses are reported on a best-effort basis; the authoritative text
 always ships with each upstream project (linked).
+
+## Bundled catalogue browser UI
+
+The static catalogue progressively mounts the real `DatasetPreviewCard` from the locally
+accepted `nirs4all-ui` version `0.2.2-local.20261107.1`. This is an **unpublished local
+development artifact**, not a registry release. Its IIFE, CSS, upstream notices and license
+tree live in [`src/nirs4all_datasets/site/ui_assets/nirs4all-ui/`](src/nirs4all_datasets/site/ui_assets/nirs4all-ui/)
+and are copied unchanged to the generated site's `vendor/nirs4all-ui/` directory.
+
+The UI is licensed under `CeCILL-2.1 OR AGPL-3.0-or-later`, with an optional commercial
+license described in its bundled `LICENSING.md`. The browser IIFE includes **React 19.2.7,
+React DOM 19.2.7 and Scheduler 0.27.0**, under MIT, copyright Meta Platforms, Inc. and
+affiliates. Their exact notices are retained in the UI's `THIRD_PARTY_NOTICES.md` and
+`LICENSES/THIRD-PARTY/{react,react-dom,scheduler}.LICENSE.txt`. Retain these files when
+redistributing the site. `PROVENANCE.json` records the accepted archive and file hashes;
+see [the source maintenance notes](docs/maintenance/site_ui_browser.md).
+
+## Separately installed Python dependencies
 
 | Component | License (SPDX) | Copyright | Upstream |
 |---|---|---|---|

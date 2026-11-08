@@ -12,6 +12,7 @@ from .escape import esc, num
 from .explanations import METRIC_HELP, PANEL_HELP
 from .icons import icon, signal_icon_key
 from .model import DatasetView
+from .previews import _declared_int
 
 _TIERS = ("public", "private", "anonymized")
 _TIER_LABEL = {"public": "Open redistribution", "private": "Restricted redistribution", "anonymized": "Anonymized"}
@@ -242,10 +243,10 @@ def dataset_card(view: DatasetView) -> str:
     e = view.entry
     tier = view.tier
     tier_var = {"public": "var(--tier-public)", "private": "var(--tier-private)", "anonymized": "var(--tier-anonymized)"}.get(tier, "var(--teal)")
-    n_samples = e.get("n_samples")
-    n_features = e.get("n_features_total")
-    n_targets = e.get("n_targets") or 0
-    n_sources = e.get("n_sources") or 0
+    n_samples = _declared_int(e.get("n_samples"))
+    n_features = _declared_int(e.get("n_features_total"))
+    n_targets = _declared_int(e.get("n_targets"))
+    n_sources = _declared_int(e.get("n_sources"))
     family = e.get("spectro_family") or "—"
     domain = e.get("domain") or "—"
 
@@ -264,7 +265,7 @@ def dataset_card(view: DatasetView) -> str:
     rb = retrieval_badge(e.get("retrieval_status"))
     if rb:
         badges.append(rb)
-    if n_sources > 1:
+    if n_sources is not None and n_sources > 1:
         badges.append(badge(f"{n_sources} sources", "info"))
     if n_targets == 0:
         badges.append(badge("metadata-only", "neutral"))
@@ -280,23 +281,27 @@ def dataset_card(view: DatasetView) -> str:
     data_attrs = (
         f'data-name="{esc(view.name.lower())} {esc(view.id)} {esc(domain.lower())} {esc(" ".join(str(t).lower() for t in e.get("targets") or []))}" '
         f'data-tier="{esc(tier)}" data-access="{"open" if view.has_open_retrieval else "conditional"}" data-family="{esc(family)}" data-domain="{esc(domain)}" '
-        f'data-target="{"yes" if n_targets > 0 else "no"}" data-multi="{"yes" if n_sources > 1 else "no"}" '
-        f'data-samples="{n_samples if isinstance(n_samples, int) else 0}" '
-        f'data-features="{n_features if isinstance(n_features, int) else 0}"'
+        f'data-target="{"" if n_targets is None else "yes" if n_targets > 0 else "no"}" '
+        f'data-multi="{"" if n_sources is None else "yes" if n_sources > 1 else "no"}" '
+        f'data-samples="{n_samples if n_samples is not None else 0}" '
+        f'data-features="{n_features if n_features is not None else 0}"'
     )
     return f"""
 <article class="ds-card" style="--tier:{tier_var}" {data_attrs}>
   <h3><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a></h3>
-  <div class="ds-domain">{esc(domain)} &middot; {esc(family)}</div>
   {panel_intro("Dataset summary", text="Compare source, sample and target counts; open this card for variables, provenance and access instructions.", guide=False)}
   {icons_html}
-  <div class="ds-meta">
-    <div>Samples <b>{num(n_samples) if n_samples is not None else "—"}</b></div>
-    <div>Wavelengths <b>{num(n_features) if n_features is not None else "—"}</b></div>
-    <div>Targets <b>{num(n_targets)}</b></div>
-    <div>Sources <b>{num(n_sources)}</b></div>
+  <div class="ds-preview-fallback">
+    <div class="ds-domain">{esc(domain)} &middot; {esc(family)}</div>
+    <div class="ds-meta">
+      <div>Samples <b>{num(n_samples)}</b></div>
+      <div>Spectral variables <b>{num(n_features)}</b></div>
+      <div>Targets <b>{num(n_targets)}</b></div>
+      <div>Sources <b>{num(n_sources)}</b></div>
+    </div>
+    <div class="ds-badges">{"".join(badges)}</div>
   </div>
-  <div class="ds-badges">{"".join(badges)}</div>
+  <div class="ds-preview-host" data-preview-id="{esc(view.id)}" hidden></div>
 </article>
 """
 

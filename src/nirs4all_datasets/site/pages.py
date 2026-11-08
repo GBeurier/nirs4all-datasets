@@ -14,9 +14,10 @@ from nirs4all_datasets.qualify import metrics as QMETRICS
 
 from . import charts
 from . import components as C
-from .escape import esc, locator_link, num
+from .escape import esc, inline_json, locator_link, num
 from .explanations import COMPUTED_METRIC_HELP, GUIDE_SECTIONS, METRIC_HELP, PROFILE_HELP
 from .model import Catalog, DatasetView
+from .previews import preview_view
 from .theme import SITE_URL, page
 
 
@@ -341,6 +342,7 @@ def _icon_legend() -> str:
 def render_catalog(catalog: Catalog) -> str:
     datasets = catalog.datasets
     cards = "".join(C.dataset_card(v) for v in datasets)
+    previews = inline_json({v.id: preview_view(v) for v in datasets})
     families = sorted({str(v.entry.get("spectro_family")) for v in datasets if v.entry.get("spectro_family")})
     domains = sorted({str(v.entry.get("domain")) for v in datasets if v.entry.get("domain")})
     tiers = sorted({v.tier for v in datasets})
@@ -381,7 +383,12 @@ def render_catalog(catalog: Catalog) -> str:
         title="Catalog - nirs4all-datasets",
         rel="",
         body=body,
-        scripts=_CATALOG_JS,
+        scripts=(
+            f'<script type="application/json" id="ds-preview-data">{previews}</script>'
+            '<link rel="stylesheet" href="vendor/nirs4all-ui/browser.css">'
+            '<script src="vendor/nirs4all-ui/nirs4all-ui-browser.iife.js"></script>'
+            + _PREVIEW_JS + _CATALOG_JS
+        ),
         active="catalog",
         path="catalog.html",
         description="Search and filter the nirs4all catalog of public, private, and anonymized NIRS reference datasets.",
@@ -393,6 +400,35 @@ def render_catalog(catalog: Catalog) -> str:
             "isPartOf": {"@type": "DataCatalog", "name": "nirs4all-datasets", "url": f"{SITE_URL}/"},
         },
     )
+
+
+# Enhance only complete shared-component mounts; all failure paths retain static content.
+_PREVIEW_JS = """
+<script>
+(function(){
+  var ui=window.Nirs4allUIBrowser;
+  if(!ui||typeof ui.mountDatasetPreview!=='function')return;
+  var views;
+  try{views=JSON.parse(document.getElementById('ds-preview-data').textContent);}
+  catch(error){return;}
+  if(!views||typeof views!=='object'||Array.isArray(views))return;
+  document.querySelectorAll('.ds-preview-host').forEach(function(host){
+    var fallback=host.parentElement.querySelector('.ds-preview-fallback');
+    var id=host.getAttribute('data-preview-id');
+    if(!fallback||!Object.prototype.hasOwnProperty.call(views,id))return;
+    var view=views[id];
+    if(!view||typeof view!=='object'||!Array.isArray(view.stats)||!Array.isArray(view.badges))return;
+    try{
+      ui.mountDatasetPreview(host,{view:view,className:'ds-preview'});
+      if(host.querySelector('.n4ui-b-card')){
+        host.hidden=false;
+        fallback.hidden=true;
+      }else{host.replaceChildren();}
+    }catch(error){host.replaceChildren();}
+  });
+})();
+</script>
+"""
 
 
 # Small vanilla-JS filter/sort over the rendered cards (UI only, not a chart lib).

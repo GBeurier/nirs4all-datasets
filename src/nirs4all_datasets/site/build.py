@@ -8,6 +8,8 @@ matplotlib import, and **no dataset bytes are ever written** (the canonical Parq
 from __future__ import annotations
 
 import shutil
+from importlib.resources import files
+from importlib.resources.abc import Traversable
 from pathlib import Path
 
 from . import pages
@@ -41,6 +43,7 @@ def build_site(root: str | Path, out: str | Path) -> Path:
     (out / "dataset").mkdir()
 
     catalog: Catalog = load_catalog(root)
+    _copy_ui_assets(out)
 
     (out / "index.html").write_text(pages.render_index(catalog), encoding="utf-8")
     (out / "catalog.html").write_text(pages.render_catalog(catalog), encoding="utf-8")
@@ -53,6 +56,32 @@ def build_site(root: str | Path, out: str | Path) -> Path:
     _write_seo(catalog, out)
     _copy_brand(root, out)
     return out
+
+
+def _copy_ui_assets(out: Path) -> None:
+    """Copy bundled browser resources without Node, including from a non-filesystem package.
+
+    Read Traversables directly: directory ``as_file`` support starts at Python 3.12, while
+    this package supports Python 3.11. Missing assets are an installation/packaging defect.
+    """
+    source = files("nirs4all_datasets.site").joinpath("ui_assets/nirs4all-ui")
+    required = ("nirs4all-ui-browser.iife.js", "browser.css", "LICENSE", "LICENSING.md", "THIRD_PARTY_NOTICES.md", "PROVENANCE.json")
+    missing = [name for name in required if not source.joinpath(name).is_file()]
+    if not source.joinpath("LICENSES").is_dir():
+        missing.append("LICENSES/")
+    if missing:
+        raise FileNotFoundError(f"Missing bundled nirs4all-ui site resources: {', '.join(missing)}. Reinstall a package containing site/ui_assets/nirs4all-ui/.")
+
+    def copy_tree(src: Traversable, dst: Path) -> None:
+        dst.mkdir(parents=True, exist_ok=True)
+        for child in src.iterdir():
+            target = dst / child.name
+            if child.is_dir():
+                copy_tree(child, target)
+            else:
+                target.write_bytes(child.read_bytes())
+
+    copy_tree(source, out / "vendor" / "nirs4all-ui")
 
 
 def _write_seo(catalog: Catalog, out: Path) -> None:
