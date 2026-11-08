@@ -7,16 +7,23 @@ private serves no byte download, no dataset bytes written), and the cardless "ca
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import re
+import subprocess
+import zipfile
+from importlib.resources import files
 from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree
 
+import pytest
 import yaml
 
 from nirs4all_datasets.site import build_site, charts, pages
 from nirs4all_datasets.site import components as C
-from nirs4all_datasets.site.model import DatasetView
+from nirs4all_datasets.site.model import Catalog, DatasetView, load_catalog
+from nirs4all_datasets.site.previews import preview_view
 
 
 # =============================================================================
@@ -461,7 +468,13 @@ def test_no_dataset_bytes_written(tmp_path: Path) -> None:
         if f.suffix.lower() in {".parquet", ".csv"}:
             leaked.append(str(f.relative_to(out)))
         elif f.suffix.lower() == ".json":
-            # only public card/croissant metadata under data/ is permitted (no bytes)
+            if f.relative_to(out).as_posix() == "vendor/nirs4all-ui/PROVENANCE.json":
+                provenance = json.loads(f.read_text(encoding="utf-8"))
+                assert provenance["package"]["name"] == "nirs4all-ui"
+                assert provenance["package"]["version"] == "0.2.2-local.20261107.2"
+                assert provenance["no_dataset_content"] is True
+                continue
+            # All other JSON must be public card/croissant metadata under data/ (no bytes).
             if not (f.parent.name == "data" and f.name.endswith((".card.json", ".croissant.json"))):
                 leaked.append(str(f.relative_to(out)))
     assert not leaked, f"dataset bytes leaked into the site: {leaked}"
@@ -692,3 +705,174 @@ def test_multi_source_database_offers_one_tab_per_source_with_its_coverage() -> 
 def test_single_source_page_has_no_source_tabs() -> None:
     view = DatasetView(entry={"id": "d"}, tier="public", card={"sources": [{"source_id": "X", "spectral": {}}]}, has_card=True, show_value_stats=True, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=True, asset_dataset_id="d")
     assert "source-tab" not in pages._sources_panel(view, "")
+
+
+def _preview_dataset(entry: dict[str, Any], *, tier: str = "public", card: dict[str, Any] | None = None, has_card: bool = False) -> DatasetView:
+    return DatasetView(entry=entry, tier=tier, card=card, has_card=has_card, show_value_stats=False, show_variable_plots=False, show_byte_download=False, show_metadata_downloads=False, asset_dataset_id="")
+
+
+@pytest.mark.parametrize(("value", "count", "label"), [(None, None, "—"), (0, 0, "0"), (1234, 1234, "1,234"), (True, None, "—"), (False, None, "—"), ("12", None, "—"), (12.0, None, "—")])
+def test_preview_counts_and_fallback_distinguish_unknown_zero_and_positive(value: Any, count: int | None, label: str) -> None:
+    view = _preview_dataset({"id": "counts", "n_samples": value, "n_features_total": value, "n_targets": value, "n_sources": value})
+    projected = preview_view(view)
+    assert [projected[key] for key in ("sampleCount", "featureCount", "targetCount")] == [count] * 3
+    assert [stat["value"] for stat in projected["stats"]] == [label] * 3
+    assert {stat["tone"] for stat in projected["stats"]} == {"muted" if count is None else "default"}
+    badges = {badge["id"]: badge["label"] for badge in projected["badges"]}
+    assert ("metadata-only" in badges) == (count == 0)
+    assert ("sources" in badges) == (count is not None)
+    if count is not None:
+        assert badges["sources"] == f"{label} sources"
+    assert projected["stats"][1]["detail"] == ("total across sources" if count is not None and count > 1 else None)
+    fallback = C.dataset_card(view)
+    assert ("metadata-only" in fallback) == (count == 0)
+    assert f'data-target="{"" if count is None else "yes" if count > 0 else "no"}"' in fallback
+    assert f'data-multi="{"" if count is None else "yes" if count > 1 else "no"}"' in fallback
+    for name in ("Samples", "Spectral variables", "Targets", "Sources"):
+        assert f"{name} <b>{label}</b>" in fallback
+    assert "Wavelengths" not in fallback
+
+
+def test_preview_is_a_whitelist_without_card_or_axis_inference() -> None:
+    entry = {
+        "id": "projection", "domain": "A & B", "spectro_family": "MIR", "task": "classification+regression",
+        "n_sources": 1, "has_split": True, "health": {"degraded": True, "private_detail": "HEALTH_SECRET"},
+        "name": "NAME_SECRET", "description": "DESCRIPTION_SECRET", "targets": ["TARGET_SECRET"],
+        "origin_sources": [{"locator": "ORIGIN_SECRET"}], "credentials": "TOKEN_SECRET",
+        "axis_unit": "nm", "axis_min": 1000, "axis_max": 2000, "splits": [{"train": 60, "test": 20}],
+    }
+    card = {"identity": {"name": "CARD_SECRET"}, "inventory": {"n_samples": 999}, "sources": [{"axis_unit": "cm-1"}]}
+    projected = preview_view(_preview_dataset(entry, card=card))
+    assert set(projected) == {
+        "id", "title", "description", "taskKind", "taskLabel", "sampleCount", "sampleCountLabel", "featureCount", "featureCountLabel",
+        "targetCount", "targetCountLabel", "classCount", "classCountLabel", "spectralRangeLabel", "splitCounts", "splitSummaryLabel", "tags", "badges", "stats",
+    }
+    assert projected["title"] == "A & B · MIR"  # React, rather than Python, escapes this text.
+    assert projected["taskKind"] == "unknown" and projected["taskLabel"] == "classification+regression"
+    for key in ("description", "sampleCount", "sampleCountLabel", "featureCount", "featureCountLabel", "targetCount", "targetCountLabel", "classCount", "classCountLabel", "spectralRangeLabel", "splitSummaryLabel"):
+        assert projected[key] is None
+    assert projected["splitCounts"] == [] and projected["tags"] == []
+    badges = {badge["id"]: badge["label"] for badge in projected["badges"]}
+    assert badges["sources"] == "1 source"
+    assert {"native-split", "card-pending", "origin-degraded"} <= badges.keys()
+    assert "metadata-only" not in badges
+    serialized = json.dumps(projected)
+    assert "SECRET" not in serialized and '"dataset"' not in serialized
+    assert "nm" not in serialized and "cm-1" not in serialized
+    missing = preview_view(_preview_dataset({"id": "missing"}))
+    assert "sources" not in {badge["id"] for badge in missing["badges"]}
+    assert all(stat["value"] == "—" for stat in missing["stats"])
+
+
+def test_preview_presentation_flags_keep_access_and_card_states_separate() -> None:
+    entry = {"id": "flags", "retrieval_status": "missing_delegate", "retrieval_public_retrievable": True, "is_stale": True}
+    stale = preview_view(_preview_dataset(entry, tier="private", has_card=True))
+    assert [badge["id"] for badge in stale["badges"]] == ["tier-private", "open-access", "retrieval-missing_delegate", "card-stale"]
+    assert stale["badges"][2]["label"] == "raw source available · assembly incomplete"
+    pending = preview_view(_preview_dataset(entry, tier="private"))
+    assert pending["badges"][-1]["id"] == "card-pending"
+    anonymized = preview_view(_preview_dataset(entry, tier="anonymized"))
+    assert "open-access" not in {badge["id"] for badge in anonymized["badges"]}
+
+
+def test_preview_anonymized_entry_uses_public_descriptor_and_public_card(tmp_path: Path, descriptor: Any) -> None:
+    from nirs4all_datasets.catalog import catalog_entry
+    from nirs4all_datasets.qualify.anonymize import public_card
+    from nirs4all_datasets.schema import Tier
+
+    original = descriptor.model_copy(update={"tier": Tier.ANONYMIZED, "name": "ORIGINAL_NAME", "domain": "ORIGINAL_DOMAIN", "description": "ORIGINAL_DESCRIPTION"})
+    entry = catalog_entry(tmp_path, original)
+    safe_card = public_card(_card(original.id, name=original.name, description=original.description, target_name="ORIGINAL_TARGET"), Tier.ANONYMIZED)
+    view = _preview_dataset(entry, tier="anonymized", card=safe_card, has_card=True)
+    html = pages.render_catalog(Catalog(root=tmp_path, schema_version="2.0", summary={}, datasets=[view]))
+    block = re.findall(r'<script type="application/json" id="ds-preview-data">(.*?)</script>', html, re.S)
+    assert len(block) == 1
+    payload = json.loads(block[0])[original.id]
+    assert payload["title"].startswith("— · ") and payload["description"] is None
+    for secret in ("ORIGINAL_NAME", "ORIGINAL_DOMAIN", "ORIGINAL_DESCRIPTION", "ORIGINAL_TARGET"):
+        assert secret not in html and secret not in json.dumps(payload)
+    assert original.name == "ORIGINAL_NAME" and original.domain == "ORIGINAL_DOMAIN"
+
+
+def test_catalog_preview_json_hosts_headings_and_filter_hooks(tmp_path: Path) -> None:
+    catalog = load_catalog(_build_fixture(tmp_path))
+    # Script-context metacharacters must round-trip as text without becoming markup.
+    catalog.datasets[0].entry["domain"] = '</script><!--<img src=x onerror="bad"> & science'
+    html = pages.render_catalog(catalog)
+    blocks = re.findall(r'<script type="application/json" id="ds-preview-data">(.*?)</script>', html, re.S)
+    assert len(blocks) == 1 and "</script>" not in blocks[0] and "<!--" not in blocks[0]
+    payload = json.loads(blocks[0])
+    assert set(payload) == {view.id for view in catalog.datasets}
+    assert payload[catalog.datasets[0].id]["title"].startswith(catalog.datasets[0].entry["domain"])
+    cards = re.findall(r'<article class="ds-card".*?</article>', html, re.S)
+    assert len(cards) == len(catalog.datasets)
+    for card, view in zip(cards, catalog.datasets, strict=True):
+        assert card.count('<h3>') == 1 and f'<h3><a href="dataset/{view.id}.html">' in card
+        assert card.count('class="ds-preview-host"') == 1 and card.count('class="ds-preview-fallback"') == 1
+        assert f'data-preview-id="{view.id}" hidden></div>' in card
+        assert '<div class="ds-preview-fallback" hidden' not in card
+        assert card.index('</h3>') < card.index('class="ds-preview-fallback"')
+        for attr in ("name", "tier", "access", "family", "domain", "target", "multi", "samples", "features"):
+            assert f'data-{attr}=' in card
+        assert f'data-tier="{view.tier}"' in card
+        assert 'data-target="yes"' in card
+        assert f'data-multi="{"yes" if view.entry["n_sources"] > 1 else "no"}"' in card
+    assert 'id="cards"' in html and "grid.appendChild(c)" in html
+    assert "querySelector('h3').textContent" in html
+    assert "ui.mountDatasetPreview(host,{view:view,className:'ds-preview'})" in html
+    assert "host.querySelector('.n4ui-b-card')" in html
+    assert html.index("host.querySelector('.n4ui-b-card')") < html.index("fallback.hidden=true")
+    assert "host.replaceChildren()" in html
+    for tag in ('<link rel="stylesheet" href="vendor/nirs4all-ui/browser.css">', '<script src="vendor/nirs4all-ui/nirs4all-ui-browser.iife.js"></script>'):
+        assert tag in html
+    assert 'type="module"' not in html and "fetch(" not in html
+    assert "ds-preview-data" not in pages.render_index(catalog)
+    assert "nirs4all-ui-browser.iife.js" not in pages.render_dataset(catalog.datasets[0])
+
+
+def test_site_copies_ui_resources_and_provenance_without_subprocess(tmp_path: Path, monkeypatch: Any) -> None:
+    def forbidden(*args: Any, **kwargs: Any) -> None:
+        raise AssertionError("Site building must not invoke subprocesses or Node")
+
+    monkeypatch.setattr(subprocess, "run", forbidden)
+    monkeypatch.setattr(subprocess, "Popen", forbidden)
+    out = build_site(_build_fixture(tmp_path), tmp_path / "site")
+    source = files("nirs4all_datasets.site").joinpath("ui_assets/nirs4all-ui")
+    copied = out / "vendor" / "nirs4all-ui"
+    provenance = json.loads((copied / "PROVENANCE.json").read_text())
+    assert provenance["publication"] == "unpublished-local-development"
+    assert provenance["package"]["version"] == "0.2.2-local.20261107.2"
+    assert provenance["package"]["tarball_sha256"] == "237a3bf306bdb6fec5088783c425381bcf125540ba7ad25e1aec0604198d7728"
+    assert {p.relative_to(copied).as_posix() for p in copied.rglob("*") if p.is_file()} == set(provenance["files"]) | {"PROVENANCE.json"}
+    for name, record in provenance["files"].items():
+        data = (copied / name).read_bytes()
+        assert data == source.joinpath(name).read_bytes()
+        assert hashlib.sha256(data).hexdigest() == record["sha256"]
+        assert len(data) == record["bytes"]
+    assert (copied / "PROVENANCE.json").read_bytes() == source.joinpath("PROVENANCE.json").read_bytes()
+    assert {"nirs4all-ui-browser.iife.js", "browser.css", "LICENSE", "LICENSING.md", "THIRD_PARTY_NOTICES.md"} <= provenance["files"].keys()
+    for name in ("react", "react-dom", "scheduler"):
+        assert f"LICENSES/THIRD-PARTY/{name}.LICENSE.txt" in provenance["files"]
+
+
+def test_site_ui_resource_copy_supports_non_filesystem_packages(tmp_path: Path, monkeypatch: Any) -> None:
+    from nirs4all_datasets.site import build
+
+    payloads = {name: f"fixture {name}".encode() for name in ("nirs4all-ui-browser.iife.js", "browser.css", "LICENSE", "LICENSING.md", "THIRD_PARTY_NOTICES.md", "PROVENANCE.json", "LICENSES/THIRD-PARTY/react.LICENSE.txt")}
+    archive_path = tmp_path / "resources.zip"
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        for name, data in payloads.items():
+            archive.writestr(f"package/ui_assets/nirs4all-ui/{name}", data)
+    with zipfile.ZipFile(archive_path) as archive:
+        monkeypatch.setattr(build, "files", lambda _: zipfile.Path(archive, "package/"))
+        build._copy_ui_assets(tmp_path / "out")
+    copied = tmp_path / "out" / "vendor" / "nirs4all-ui"
+    assert {p.relative_to(copied).as_posix(): p.read_bytes() for p in copied.rglob("*") if p.is_file()} == payloads
+
+
+def test_site_reports_missing_ui_package_resources(tmp_path: Path, monkeypatch: Any) -> None:
+    from nirs4all_datasets.site import build
+
+    monkeypatch.setattr(build, "files", lambda _: tmp_path)
+    with pytest.raises(FileNotFoundError, match="Missing bundled nirs4all-ui site resources:.*browser.css"):
+        build._copy_ui_assets(tmp_path / "out")

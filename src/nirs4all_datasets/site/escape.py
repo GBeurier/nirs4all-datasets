@@ -21,7 +21,7 @@ def esc(value: Any) -> str:
 
 def inline_json(obj: Any) -> str:
     """JSON for embedding inside a ``<script>`` tag (neutralizes ``</script>`` and HTML comments)."""
-    return json.dumps(obj, allow_nan=False, ensure_ascii=False).replace("</", "<\\/").replace("<!--", "<\\!--")
+    return json.dumps(obj, allow_nan=False, ensure_ascii=False).replace("</", "<\\/").replace("<!--", "\\u003c!--")
 
 
 def num(value: Any, nd: int = 4) -> str:

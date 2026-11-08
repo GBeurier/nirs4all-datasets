@@ -305,6 +305,8 @@ svg .barm:hover, svg .seg:hover, svg .pt:hover { opacity: .86; filter: drop-shad
 .ds-card h3 { font-family: var(--display); font-size: 1.06rem; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
 .ds-card h3 a { color: var(--text); }
 .ds-card h3 a:hover { color: var(--teal-d); }
+.ds-preview-fallback[hidden], .ds-preview-host[hidden] { display: none; }
+.ds-card .ds-preview .n4ui-b-card-title { font-size: .76rem; color: var(--teal-d); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 .ds-card .ds-domain { font-size: .76rem; color: var(--teal-d); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; margin-bottom: 12px; }
 .ds-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin: 10px 0 14px; font-size: .82rem; }
 .ds-meta div { color: var(--text-3); }
