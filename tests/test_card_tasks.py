@@ -18,7 +18,9 @@ from nirs4all_datasets.site.pages import _variable_card
 
 
 def test_many_mixed_targets_in_real_card(canonical_dataset, tmp_path: Path) -> None:
-    pytest.importorskip("nirs4all_io.infer.detectors")
+    nirs4all_io = pytest.importorskip("nirs4all_io")
+    if not callable(getattr(nirs4all_io, "detect_task_type", None)):
+        pytest.skip("installed nirs4all_io does not expose detect_task_type")
     targets = {**{f"trait_{i}": "numeric" for i in range(12)}, "continuous": "numeric", "category": "categorical"}
     dataset_dir, descriptor = canonical_dataset("mixed_targets", targets=targets)
     path = dataset_dir / "canonical" / "variables.parquet"
@@ -93,7 +95,7 @@ def test_small_numeric_samples_and_optional_detector(monkeypatch) -> None:
     original_import = builtins.__import__
 
     def without_io(name, *args, **kwargs):
-        if name == "nirs4all_io.infer.detectors":
+        if name == "nirs4all_io" and "detect_task_type" in (args[2] if len(args) > 2 else kwargs.get("fromlist") or ()):
             raise ImportError("optional IO unavailable")
         return original_import(name, *args, **kwargs)
 
@@ -108,6 +110,27 @@ def test_small_numeric_samples_and_optional_detector(monkeypatch) -> None:
     assert card_task_kinds({"variables": [continuous]}, [variable.name]) == {"regression"}
 
 
+def test_binary_target_uses_public_io_detector_without_private_module(monkeypatch) -> None:
+    import sys
+    import types
+
+    calls: list[tuple[int, float]] = []
+
+    def detect_task_type(y, threshold=0.05):  # public API shape: (task_token, confidence)
+        calls.append((len(y), threshold))
+        return "binary", 0.9
+
+    monkeypatch.setitem(sys.modules, "nirs4all_io", types.SimpleNamespace(detect_task_type=detect_task_type))
+    monkeypatch.setitem(sys.modules, "nirs4all_io.infer", None)
+    monkeypatch.setitem(sys.modules, "nirs4all_io.infer.detectors", None)
+    variable = Variable(name="presence", role="target", type="numeric")
+    warnings: list[str] = []
+    section = _variable_section(variable, pd.Series([0, 0, 1]), warnings)
+    assert calls == [(3, 0.05)]
+    assert section["task_type"] == "classification"
+    assert not any("task inference unavailable" in message for message in warnings)
+
+
 def test_unavailable_task_is_not_presented_as_regression(monkeypatch, canonical_dataset) -> None:
     import builtins
 
@@ -120,7 +143,7 @@ def test_unavailable_task_is_not_presented_as_regression(monkeypatch, canonical_
     original_import = builtins.__import__
 
     def without_io(name, *args, **kwargs):
-        if name == "nirs4all_io.infer.detectors":
+        if name == "nirs4all_io" and "detect_task_type" in (args[2] if len(args) > 2 else kwargs.get("fromlist") or ()):
             raise ImportError("optional IO unavailable")
         return original_import(name, *args, **kwargs)
 

@@ -414,7 +414,7 @@ def _variable_section(var: Variable, values: pd.Series, warnings: list[str], *, 
         finite = finite[np.isfinite(finite)]
         if finite.size >= 3 and set(finite.tolist()) == {0.0, 1.0}:
             try:
-                from nirs4all_io.infer.detectors import detect_task_type
+                from nirs4all_io import detect_task_type
 
                 if detect_task_type(finite)[0] == "binary":
                     section["task_type"] = "classification"
