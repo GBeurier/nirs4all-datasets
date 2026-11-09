@@ -214,14 +214,15 @@ additionally requires a plain `vX.Y.Z`.
 internal crate carries an explicit `version` in the root
 `[workspace.dependencies]` (alongside `path`) so each published crate resolves its
 in-tree dependency from crates.io; the workflow's `sleep 30` lets the sparse index
-catch up between crates. A downstream crate's `cargo publish --dry-run` only fully
-verifies once its dependency is actually on crates.io — so the dispatch dry-run
-reports the leaf crate cleanly and the downstream crates show "no matching package
-… on crates.io index" until the real leaf-first publish lands them. One-time:
-generate a crates.io API token with publish-new + publish-update scope and add it
-as the GitHub Actions secret `CARGO_REGISTRY_TOKEN`. Validate first with the
-`workflow_dispatch` dry-run (`dry_run = true` runs `cargo publish --dry-run` for
-every crate). The real publish fires only on a non-pre-release `vX.Y.Z` tag;
+catch up between crates. The dispatch dry-run verifies core with `cargo publish
+--dry-run` against crates.io, then runs `cargo package --workspace` to assemble
+and build all three packages together. Workspace packaging can resolve the new
+core from the packages being prepared; it does not prove that the new core is
+already available on crates.io or that downstream publish dry-runs would pass.
+One-time: generate a crates.io API token with publish-new + publish-update scope
+and add it as the GitHub Actions secret `CARGO_REGISTRY_TOKEN`. Validate first
+with the `workflow_dispatch` dry-run (`dry_run = true`). The real publish fires
+only on a non-pre-release `vX.Y.Z` tag;
 crates.io is immutable, so a bad version can only be **yanked**, never replaced.
 
 > The pyo3 binding crate `nirs4all-datasets-py` (`bindings/python`) is **excluded

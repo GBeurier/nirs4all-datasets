@@ -2,8 +2,8 @@
 # Publish the Rust workspace crates to crates.io for every release tag.
 #
 # crates.io is IMMUTABLE (a version can only be yanked, never replaced), so this
-# only publishes on a non-pre-release vX.Y.Z tag, and a workflow_dispatch dry-run
-# (cargo publish --dry-run) is the way to validate first.
+# only publishes on a non-pre-release vX.Y.Z tag. A workflow_dispatch dry-run
+# verifies core against crates.io and packages the full workspace locally.
 #
 # Crates are published leaf-first (core -> capi -> cli): each crate's path+version
 # deps resolve to the just-published crates.io version of the one before it, with
@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'cargo publish --dry-run only (no upload)'
+        description: 'Verify core publish and package the workspace (no upload)'
         required: false
         default: 'true'
   push:
@@ -40,6 +40,7 @@ jobs:
       - name: Checkout sibling Rust deps
         run: scripts/ensure_rust_deps.sh
       - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
 
       - name: Require the exact published V1 dependency train
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == 'false' }}
@@ -51,12 +52,18 @@ jobs:
           DRY: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run != 'false') && '1' || '' }}
         run: |
           set -euo pipefail
+          if [ -n "${DRY}" ]; then
+            echo "::group::core registry publish dry-run"
+            cargo publish -p nirs4all-datasets-core --dry-run --allow-dirty
+            echo "::endgroup::"
+            echo "::group::package and verify all workspace crates"
+            cargo package --workspace --allow-dirty
+            echo "::endgroup::"
+            exit 0
+          fi
           publish() {
             crate="$1"
             echo "::group::publish ${crate} (dry=${DRY:-0})"
-            if [ -n "${DRY}" ]; then
-              cargo publish -p "${crate}" --dry-run --allow-dirty
-            else
               # crates.io is immutable: tolerate an already-uploaded version on
               # a resumed run, but fail on any other error.
               if ! cargo publish -p "${crate}" 2>&1 | tee /tmp/pub.log; then
@@ -65,7 +72,6 @@ jobs:
               fi
               # Let the sparse index catch up before the next crate resolves it.
               sleep 30
-            fi
             echo "::endgroup::"
           }
           publish nirs4all-datasets-core
