@@ -269,9 +269,9 @@ checksum = "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04"
 
 [[package]]
 name = "calamine"
-version = "0.37.0"
+version = "0.38.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9ca341b94bc4b29e08970b1a03914fad2dfe177e2ecb67fcd6de9046004aafb"
+checksum = "f431b67cba6122a1f7d26b7adafc71bbdf07026095fe811f5efc025d8748e1d8"
 dependencies = [
  "atoi_simd",
  "byteorder",
@@ -1320,7 +1320,7 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-datasets-capi"
-version = "0.3.18"
+version = "0.3.19"
 dependencies = [
  "cbindgen",
  "nirs4all-datasets-core",
@@ -1329,7 +1329,7 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-datasets-cli"
-version = "0.3.18"
+version = "0.3.19"
 dependencies = [
  "clap",
  "nirs4all-datasets-core",
@@ -1338,11 +1338,11 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-datasets-core"
-version = "0.3.18"
+version = "0.3.19"
 dependencies = [
  "directories",
  "hex",
- "nirs4all-formats",
+ "nirs4all-formats 0.2.16",
  "nirs4all-io",
  "serde",
  "serde_json",
@@ -1355,7 +1355,7 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-formats"
-version = "0.2.14"
+version = "0.2.16"
 dependencies = [
  "arrow-array",
  "arrow-schema",
@@ -1366,7 +1366,7 @@ dependencies = [
  "flate2",
  "lzma-rs",
  "matfile",
- "nirs4all-formats-core",
+ "nirs4all-formats-core 0.2.16",
  "nirs4all-hdf5-reader",
  "nirs4all-netcdf-reader",
  "parquet",
@@ -1380,8 +1380,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "nirs4all-formats"
+version = "0.2.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c072dc98c1f054b3ea47f44371adb1d4f2741901016811dc8d53d2168ec80bd3"
+dependencies = [
+ "calamine",
+ "cfb",
+ "flate2",
+ "nirs4all-formats-core 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quick-xml",
+ "serde",
+ "serde_json",
+ "sha2 0.11.1",
+ "zip",
+]
+
+[[package]]
 name = "nirs4all-formats-core"
-version = "0.2.14"
+version = "0.2.16"
+dependencies = [
+ "serde",
+ "serde_json",
+ "sha2 0.11.1",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nirs4all-formats-core"
+version = "0.2.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6862024cf9ddcaa51586b59943f7768ec35c682f3af58108fe878a6222fee82e"
 dependencies = [
  "serde",
  "serde_json",
@@ -1408,20 +1437,19 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-io"
-version = "0.2.14"
+version = "0.3.1"
 dependencies = [
  "arrow-array",
  "arrow-schema",
  "bytes",
- "calamine",
  "cap-std",
  "csv",
  "flate2",
  "glob",
  "indexmap",
+ "nirs4all-formats 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "nirs4all-io-core",
  "parquet",
- "quick-xml",
  "regex",
  "same-file",
  "serde",
@@ -1433,7 +1461,7 @@ dependencies = [
 
 [[package]]
 name = "nirs4all-io-core"
-version = "0.2.14"
+version = "0.3.1"
 dependencies = [
  "csv",
  "indexmap",
