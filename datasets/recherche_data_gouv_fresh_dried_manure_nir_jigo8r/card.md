@@ -1,4 +1,4 @@
-# Datasheet — Recherche Data Gouv fresh dried poultry cattle manure NIR
+# Datasheet — Poultry + cattle manure — fresh + dried NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 3 fields, Y: 8 fields, passport: 24 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 3 fields, Y: 8 fields, measurements: 0 fields, passport: 24 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c72a06102d2d8668d0488d9e9428854bf88b58bbd49e08d5a63deda3e78ebe0d`
-- **Processing hash:** `9ee7061d6cb278ac691176f417dd49015c8af202e32f73249157d88ad4f94667` | **metadata hash:** `d56276e91643817878c022f4a65e06caa224d88f3f4e1ca9f4b9cf27210bab3a`
+- **Processing hash:** `9ee7061d6cb278ac691176f417dd49015c8af202e32f73249157d88ad4f94667` | **metadata hash:** `a30886e8f326f08d9fa5e22bb8845c52132a1414cc0ae3ea1636ff6afe9240bc`

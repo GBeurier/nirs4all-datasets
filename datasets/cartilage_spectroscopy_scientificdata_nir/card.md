@@ -1,4 +1,4 @@
-# Datasheet — Cartilage spectroscopy Scientific Data NIR
+# Datasheet — Articular cartilage — NIR spectroscopy
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -58,7 +58,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 12 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 12 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,4 +80,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `7a682029ad5b6289693b114d3292e2062a0d34f46725443664df75bb3fed9d23`
-- **Processing hash:** `42e744ce1af71463b914405aef440225393176abf9a57521975b0d34a9e5a8f7` | **metadata hash:** `61448173d78651a96754a3059dd287a93a3d823bdcd53204d3144591d2fd362b`
+- **Processing hash:** `42e744ce1af71463b914405aef440225393176abf9a57521975b0d34a9e5a8f7` | **metadata hash:** `7ac7f9f5b2ae9e7f069603c68b2387cd5aad0f5e5d85ac0cd39cc4ba3e566178`

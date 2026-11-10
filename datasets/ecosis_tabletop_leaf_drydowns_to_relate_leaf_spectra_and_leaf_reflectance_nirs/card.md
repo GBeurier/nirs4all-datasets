@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Tabletop leaf drydowns to relate leaf spectra and leaf water (Santa Barbara, CA) (reflectance)
+# Datasheet — Santa Barbara leaves — tabletop drydown reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -82,7 +82,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Drying follow-up: repeated observations cover different water states/times.
-- **Curated views:** M: 1 fields, Y: 9 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 9 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -104,4 +104,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d81c196ae8cc9b37f613026545474078c4d35e365e5a8623df0574d1b0142622`
-- **Processing hash:** `f25dfcfc8632ba419b0493585aeb1eb938e2f54021dfa0e4b5bcc3de4ec3c128` | **metadata hash:** `ff83b68ea9163609ac2efdd1e06d9e08a7bc7e6944cd9faee7dfe833ca6b8f23`
+- **Processing hash:** `f25dfcfc8632ba419b0493585aeb1eb938e2f54021dfa0e4b5bcc3de4ec3c128` | **metadata hash:** `bc7893683c19d1848ef1612a1552d94aafc2a92e8f33e85557319ef4c75173c5`

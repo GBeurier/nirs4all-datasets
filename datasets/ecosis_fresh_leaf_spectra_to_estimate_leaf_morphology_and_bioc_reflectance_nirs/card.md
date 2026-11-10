@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Fresh Leaf Spectra to Estimate Leaf Morphology and Biochemistry for Northern Temperate Forests (reflectance)
+# Datasheet — Northern temperate forests — fresh-leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -93,7 +93,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 6 fields, Y: 1 fields, passport: 40 fields, measurements: 3 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 6 fields, Y: 1 fields, measurements: 3 fields, passport: 40 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -117,4 +117,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `16c873887113c65389146a75dd26724ddc4c944d70c7b1ffb0c956609d122fc8`
-- **Processing hash:** `086c67909cd9f0e248e32b06c13f80711276e3bdefe27fd29344ba45328d895c` | **metadata hash:** `21c6a64728904962fe56924de0b1eb6b9ebd0f8a4e6578b0e5186e836ef068a2`
+- **Processing hash:** `086c67909cd9f0e248e32b06c13f80711276e3bdefe27fd29344ba45328d895c` | **metadata hash:** `fdea084fd87ed2f6ba54339bf8edbc92191ac2c11ae92113dad68b215846f8b2`

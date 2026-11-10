@@ -1,4 +1,4 @@
-# Datasheet — Tobacco leaf NIR spectra and chemical components
+# Datasheet — Tobacco leaves — chemical composition, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Source tobacco sample; grouped by the source column retained in M. Exported multiplicity does not prove the number of scans averaged upstream.
-- **Curated views:** M: 2 fields, Y: 13 fields, passport: 6 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 13 fields, measurements: 1 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `49843b5c36ea5780380ae51d16110ab1db27c426436747e7ca94079c39c1eeae`
-- **Processing hash:** `1b91567134edbf7baadfb2ab8fad6f953c258953794029700fe0919997a07094` | **metadata hash:** `5af4f517a21587f9afa0b6c2cc6c30c683cd9d952352e82fd75cb4bf9cb5ca88`
+- **Processing hash:** `1b91567134edbf7baadfb2ab8fad6f953c258953794029700fe0919997a07094` | **metadata hash:** `338886cedcb1d2809c52c063c7eeeea2f7ac19f40cada2ceef1bf9fb6e32b700`

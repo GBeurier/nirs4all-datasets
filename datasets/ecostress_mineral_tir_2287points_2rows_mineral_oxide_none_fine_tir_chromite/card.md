@@ -1,4 +1,4 @@
-# Datasheet — ECOSTRESS mineral tir axis cbf25a1b
+# Datasheet — ECOSTRESS chromite — 2.0795–25.0442 µm transmittance (2287 bands)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -123,4 +123,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `8b06c448d61e5a1d6c7764f9a18e0092d07840aaf38dc62b27801fdc71bf75cc`
-- **Processing hash:** `79f0df3bc5caeaebc3a3af857002f10ffed524eb17a61f9d29cfcfc6a02e4537` | **metadata hash:** `71c75ff798f10bb38663912aca7c7682bdded72a2bab7a100a8f3644308921bb`
+- **Processing hash:** `79f0df3bc5caeaebc3a3af857002f10ffed524eb17a61f9d29cfcfc6a02e4537` | **metadata hash:** `b063309295dbb6a98bd26c5d01c5da648f156c46192d918c983602b85f8334c6`

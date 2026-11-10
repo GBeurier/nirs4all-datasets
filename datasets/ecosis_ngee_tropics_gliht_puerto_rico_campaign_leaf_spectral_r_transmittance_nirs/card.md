@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Tropics GLiHT Puerto Rico Campaign Leaf Spectral Reflectance and Transmittance March 2017 (transmittance)
+# Datasheet — NGEE Tropics GLiHT Puerto Rico 2017 — leaf transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 8 fields, passport: 48 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 8 fields, measurements: 2 fields, passport: 48 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -123,4 +123,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d67338b6ec53448fd434859835b5244429260f8cea46b12b9ae0b7e508526749`
-- **Processing hash:** `2ccb901f7d537915100a87a3e8ad28531c7505f90fc53e330374ac0d1da0db1e` | **metadata hash:** `875eb2a9863ccae9131532b4f0d8dbeefb9aef355c6964f75489905c8bcd5ccc`
+- **Processing hash:** `2ccb901f7d537915100a87a3e8ad28531c7505f90fc53e330374ac0d1da0db1e` | **metadata hash:** `be0ba8ec2ffb9312c7c3642a5972561ccf4a738b8a5ae4bafb0dd0b19a8756a3`

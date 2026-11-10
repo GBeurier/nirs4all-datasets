@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Calcareous grassland species over growing season at the leaf level (reflectance)
+# Datasheet — Calcareous grassland — seasonal leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -90,7 +90,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 1 fields, Y: 3 fields, passport: 42 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 1 fields, passport: 42 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -112,4 +112,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d8f9b65b6416a07bc5e647385df4c0d022d00a5b7955a28b4378ae803ff332f9`
-- **Processing hash:** `dce566ca1d7150b82e4b925720f595766819c7c8b59c4d7ce1f4f269222bdb88` | **metadata hash:** `31a73feae02915165a537c4b028ca2b4ba051a0e01fb5d1edd9dd47a2438b436`
+- **Processing hash:** `dce566ca1d7150b82e4b925720f595766819c7c8b59c4d7ce1f4f269222bdb88` | **metadata hash:** `31c99ab944a856d3f7439ef4f856e13dfd41aa66a2340796f68b453d1df37ce0`

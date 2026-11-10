@@ -1,4 +1,4 @@
-# Datasheet — Nirpy Research milk NIR classification
+# Datasheet — Milk — NIR (Nirpy)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -60,7 +60,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Date/column-index-like identifier, physical identity not established; literal counting is rejected. Each label is reused in 9 different Y classes; the former 9/11 values did not describe replicates of the same milk.
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -82,4 +82,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `d2c2c2371456639e9436aff3939ce90a96f11620cdc06a8ac418d0bac170a7a3`
-- **Processing hash:** `d029880d538a0733aaba3abed45c156bd63964d9bf68b09b2bfb993964626b46` | **metadata hash:** `e09083d23938332ed6dde51301874ade38d47b75f151ae121759c987c156239f`
+- **Processing hash:** `d029880d538a0733aaba3abed45c156bd63964d9bf68b09b2bfb993964626b46` | **metadata hash:** `99241c618a47701e60f1521e4f8c41c8e596eaac97a704bd8d72af311c0f0a8d`

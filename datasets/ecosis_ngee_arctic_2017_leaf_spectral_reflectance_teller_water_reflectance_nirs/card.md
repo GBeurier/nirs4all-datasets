@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NGEE Arctic 2017 Leaf Spectral Reflectance Teller Watershed Seward Peninsula Alaska (reflectance)
+# Datasheet — NGEE Arctic Teller 2017 — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -100,7 +100,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 2 fields, Y: 8 fields, passport: 45 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 8 fields, measurements: 1 fields, passport: 45 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -122,4 +122,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ac11e56844b879b142df1e418328c33884770496fae199d7faf2c90bab02b0f7`
-- **Processing hash:** `499dbff7511cdab9fd933083dd763659d87c4da9867fb51030e99d90560f9272` | **metadata hash:** `a18a37f64ce940ca71ba396c85d59c0e1c233e61a25db4e5225b96d5d05dddee`
+- **Processing hash:** `499dbff7511cdab9fd933083dd763659d87c4da9867fb51030e99d90560f9272` | **metadata hash:** `f1541f93b89598aaef57d30d792c287aba356056089341a9a48a06ad6c58fed6`

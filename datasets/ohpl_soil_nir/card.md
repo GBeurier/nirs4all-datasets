@@ -1,4 +1,4 @@
-# Datasheet — Soil organic matter OHPL NIR
+# Datasheet — Soils — organic matter, NIR (OHPL)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -49,7 +49,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 5 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 5 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -71,4 +71,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `debc1a6c79964ce6e47bae4308ca40ebe081e66020c7e2f2369bc1df0d2ba9d5`
-- **Processing hash:** `47a21946e13512639f36a0e0b14b4b6cf0156a411564545d56540999719c76cc` | **metadata hash:** `6d21d65140607b526a2592576f376fe30ff64170784345669245fea8afaa52d7`
+- **Processing hash:** `47a21946e13512639f36a0e0b14b4b6cf0156a411564545d56540999719c76cc` | **metadata hash:** `bdfdb28a412310f40940d328c274c35582d40e71b8fa308214c45b8ccb07bda4`

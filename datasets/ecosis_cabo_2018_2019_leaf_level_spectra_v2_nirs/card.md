@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS CABO 2018-2019 leaf-level spectra v2, reflectance and transmittance
+# Datasheet — CABO leaves 2018–2019 — reflectance + transmittance, v2
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -128,7 +128,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 49 fields, passport: 24 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 7 fields, Y: 49 fields, measurements: 0 fields, passport: 24 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -161,4 +161,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `3dd80877f78b08f75e369e6c76e9237937ddeca1a2877760af90fa9d8df566eb`
-- **Processing hash:** `82cf51508ec0f8fe3e4e90a23a85dcd3e31549ee4cee49b4e576cdc43a15611f` | **metadata hash:** `4e108b6c7570b81c2e3c2154ed138acdaa25d4aa73d16fecb8e1e82f6df75a22`
+- **Processing hash:** `82cf51508ec0f8fe3e4e90a23a85dcd3e31549ee4cee49b4e576cdc43a15611f` | **metadata hash:** `4d48a5c9c1c52afb886bcc62a16af6692c2ee668425f60897a2f5e70177d79e8`

@@ -1,4 +1,4 @@
-# Datasheet — Bird NNReflectance spectra
+# Datasheet — Birds — NNReflectance series
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -53,7 +53,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -75,4 +75,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `0104fd678f41da5e9f30a1807642a2c16bbd15ae325d1fe3c620c1e8040fa0ce`
-- **Processing hash:** `03d18c5c7acf82a8bd8ba04b41356fa50486791dfdfdfa9213779fe5fc2e06d8` | **metadata hash:** `c83d37205cb8c104fe54e8eae4d486ec167de98bb33a90d93bd756529128bafa`
+- **Processing hash:** `03d18c5c7acf82a8bd8ba04b41356fa50486791dfdfdfa9213779fe5fc2e06d8` | **metadata hash:** `a9fb02d645175fc19fc2c47373081eeafe03082d861dc445495f00f81c103e74`

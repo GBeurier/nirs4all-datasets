@@ -1,4 +1,4 @@
-# Datasheet — GitHub spectral-network Streptanthus leaf reflectance VIS-NIR
+# Datasheet — Streptanthus leaves — Vis-NIR reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -63,7 +63,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 19 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 19 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -85,4 +85,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `f55eb4696e25dfa2f8285907a23b6e9193e1068ec79c188fe8b25636a4276617`
-- **Processing hash:** `ac150d3ef23487b56fc2f7c65ea32169c3a10b37388c0673947a5cc7a13331a0` | **metadata hash:** `9d9c00c94620d49206fb1ba0f8019f251239d583e14273f710f1e83ff4299cec`
+- **Processing hash:** `ac150d3ef23487b56fc2f7c65ea32169c3a10b37388c0673947a5cc7a13331a0` | **metadata hash:** `e9f6ebbf0488b1e288428a8f6282778270dbf8906d8827a353b070f24c77ec7a`

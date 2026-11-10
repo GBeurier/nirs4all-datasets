@@ -1,4 +1,4 @@
-# Datasheet — Mendeley cocoa beans moisture fat NIR
+# Datasheet — Cocoa beans — moisture and fat, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -89,4 +89,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `c5b3d89f4e2b075b311859ec50859dd22c6048aafc9e1dd514614834ba6a6512`
-- **Processing hash:** `75241cbf5e6998fcd9b4810964b0b2c9ecbc1b5f6c3253aaed161ae48e6d371c` | **metadata hash:** `2b83b7ad1b92d282c094fe3768f646696810e5ec40fe990c15ee8f4daa1757ec`
+- **Processing hash:** `75241cbf5e6998fcd9b4810964b0b2c9ecbc1b5f6c3253aaed161ae48e6d371c` | **metadata hash:** `875bc751fbd97043d910edb508e816461f4434779e4c922b06c1c9340f06a346`

@@ -1,4 +1,4 @@
-# Datasheet — ossl kellogg visnir soil all y
+# Datasheet — OSSL Kellogg soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 9 fields, Y: 43 fields, passport: 49 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 9 fields, Y: 43 fields, measurements: 1 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `53fbc1a0884931b3ee53ae45349a47d2c4320c100945693688e7265c34412572`
-- **Processing hash:** `cc103e700b0eda0e4ca79758d6f9f237548343055c793774c829c4971ccdc01e` | **metadata hash:** `a7b194ccf80b950cbf71c31a31cf2bdb672e8a60d44ce8c620964ea16ab39072`
+- **Processing hash:** `cc103e700b0eda0e4ca79758d6f9f237548343055c793774c829c4971ccdc01e` | **metadata hash:** `0071bf2be9d6dcb7c4336dce1b0a24a8400f6727e9e40a8755da0b4b133c18ca`

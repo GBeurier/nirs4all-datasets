@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Dessain project reflectance spectra (reflectance)
+# Datasheet — Dessain project — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -109,7 +109,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 31 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 31 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -135,4 +135,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `b9e92da07b7bdb5d566db572131e851c94dc69e5ff7ac607a8059041df60f418`
-- **Processing hash:** `ee32c4f48ff76bc3ecbad5c4c1bed9dea1d4c81cff2ea840103647b5d3142366` | **metadata hash:** `5ee7532f67b284281b3785ac13a7ca471a8fca6612e9246c203c8cd2cce2b1f1`
+- **Processing hash:** `ee32c4f48ff76bc3ecbad5c4c1bed9dea1d4c81cff2ea840103647b5d3142366` | **metadata hash:** `350334212bf43d0df7c5f72780aef45fde26331131e0226551e37073695c89eb`

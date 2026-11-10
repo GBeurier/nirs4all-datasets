@@ -1,4 +1,4 @@
-# Datasheet — Dryad walnut kernel moisture NIR
+# Datasheet — Walnut kernels — moisture, NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `23de8d3f5120ec8739fa3937466dd5dcbba82611812e64b86b76be10ea8ae51f`
-- **Processing hash:** `4543537a9364c9f51a0a73981f49d7da8bf8039892ee7e0109d2f752e624e420` | **metadata hash:** `f8ef3b9dc0e3b739f0cdba59f402592159b8878bc846c74d00b1c74d9651a36e`
+- **Processing hash:** `4543537a9364c9f51a0a73981f49d7da8bf8039892ee7e0109d2f752e624e420` | **metadata hash:** `a39d3bf12c5bc10a8740a01b189ca4910559f2e5715654e2dfac0d7d5e74c613`

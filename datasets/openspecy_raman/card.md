@@ -1,4 +1,4 @@
-# Datasheet — OpenSpecy RAMAN spectral library subset
+# Datasheet — OpenSpecy library — Raman subset
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 5 fields, passport: 17 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 5 fields, measurements: 0 fields, passport: 17 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `eee9f9369559ac9395c348ed67c322ac78be5b4fc4912105df5b7f53b4c9fdd0`
-- **Processing hash:** `c379081cbdd8b798fdc56bb15fdd5c34a32040c6856428f7714d5ea5fc75d044` | **metadata hash:** `2a0feaa701bff5bf9c6b83ef3f6d03daca0933842e512ff0e60c4015f3fe1ea2`
+- **Processing hash:** `c379081cbdd8b798fdc56bb15fdd5c34a32040c6856428f7714d5ea5fc75d044` | **metadata hash:** `2f72bffe26e3d2caffd75ca17910f76b524547c7c90edbcabfa34549b96c659a`

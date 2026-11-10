@@ -1,4 +1,4 @@
-# Datasheet — Zenodo TwinSpectra soil NIR, ASD FieldSpec and MicroNIR
+# Datasheet — TwinSpectra soils — ASD FieldSpec + MicroNIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 23 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 23 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `6a3812c17d55334525e3bd483fe94a6edb4979f68d29a2a89b8901958e38f321`
-- **Processing hash:** `66d2540a3fe0a6fac24376cecf264c78010704b43702fb5a96ba0c7468ff2edf` | **metadata hash:** `eadd30287fc0055fb26c39dbefc3c0879676a077025f1289b513722112b796c3`
+- **Processing hash:** `66d2540a3fe0a6fac24376cecf264c78010704b43702fb5a96ba0c7468ff2edf` | **metadata hash:** `047f0a09dae39848669529ed882c5ee3221dfcd544d879fb4d863189032c9203`

@@ -1,4 +1,4 @@
-# Datasheet — ossl afsis1 visnir soil all y
+# Datasheet — OSSL AfSIS-I soils — Vis-NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -140,7 +140,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 20 fields, passport: 77 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 20 fields, measurements: 1 fields, passport: 77 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -162,4 +162,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `850d79c7006850b2191f0df463a3c898daac35d9f8e696e6accf46e6071a3d31`
-- **Processing hash:** `5fd717892f95ca088e3c8cf228e511b43a327cb010fefdefa32d09fe86371ffa` | **metadata hash:** `31da9ce41c4111aafee83bcd1bd1be8e628d8e3f65412dc514319d64564ae15a`
+- **Processing hash:** `5fd717892f95ca088e3c8cf228e511b43a327cb010fefdefa32d09fe86371ffa` | **metadata hash:** `69561e8ca4922d4541c1a56ebf6440aa695197d7c1aa34cb1387bbbb002080d9`

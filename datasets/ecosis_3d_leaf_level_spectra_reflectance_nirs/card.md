@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS 3D LMA Leaf Level Spectra (reflectance)
+# Datasheet — 3D LMA experiment — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -75,7 +75,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, passport: 31 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 1 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -97,4 +97,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `441072e54313804bb9866e8f63dca7a91e2a06d88a22ca0859c90ed88558ccc5`
-- **Processing hash:** `ca1d6d56a9e348299d94209e16731130822b26cd64dd569ff5eb869efcdf811c` | **metadata hash:** `fd38da473afc39d72c194c81304b4512764e92594536c241f132e9b5c220b549`
+- **Processing hash:** `ca1d6d56a9e348299d94209e16731130822b26cd64dd569ff5eb869efcdf811c` | **metadata hash:** `fa7fc5a6f4dc8eb747de6a29172b4f93e2c049553dd2f286a45545ad732d808f`

@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Greater Cape Floristic Region Leaf Spectral Library (reflectance)
+# Datasheet — Greater Cape Floristic Region — leaf reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -85,7 +85,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 5 fields, Y: 3 fields, passport: 33 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 3 fields, measurements: 0 fields, passport: 33 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -109,4 +109,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `8529de6c2591ff8c45947621efd6c910c0c07a3483dd43eca4ccee3cba865a44`
-- **Processing hash:** `1c7288b7c32c02bc0aa2f8ba847ec2c2f2ac1cf86fd5ad849c7a2038b45f4c25` | **metadata hash:** `b047071dcb15b33e6466930037265f60afa5a0449b8b60a758597a5f297a7d02`
+- **Processing hash:** `1c7288b7c32c02bc0aa2f8ba847ec2c2f2ac1cf86fd5ad849c7a2038b45f4c25` | **metadata hash:** `c7f4b171359152998ec348a032b6c7c2475dbebcc7175db133ddc4f0f40dadf3`

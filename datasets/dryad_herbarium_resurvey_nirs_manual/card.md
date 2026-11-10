@@ -1,4 +1,4 @@
-# Datasheet — Herbarium resurvey NIRS spectra
+# Datasheet — Herbarium resurvey — NIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 1229 source identifiers and 1229 distinct spectral vectors for 2718 rows: each spectrum is copied into 2–3 calibration/prediction folders. The 1489 additional rows do not demonstrate repeated acquisitions.
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 8 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 8 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9b8533048cb69f7df080f5786981249c67e6b992a5c75a3fa28730b6df9b5b99`
-- **Processing hash:** `e3a84581a7cafa22d13d7888a6a0d1bcef69096df9246808e6c31cfe6c83f889` | **metadata hash:** `026c677222455872abdf3f57f5e031722226384929daf6aeb6e6a15d203c7f0a`
+- **Processing hash:** `e3a84581a7cafa22d13d7888a6a0d1bcef69096df9246808e6c31cfe6c83f889` | **metadata hash:** `b3e5bbd4cfef6e82366280096e82663166ae3b4dd11e7576679188cfbc06ccf2`

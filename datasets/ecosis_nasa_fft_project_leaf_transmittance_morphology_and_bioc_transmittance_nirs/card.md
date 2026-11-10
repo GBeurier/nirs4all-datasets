@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS NASA FFT Project Leaf Transmittance Morphology and Biochemistry for Northern Temperate Forests (transmittance)
+# Datasheet — NASA FFT temperate forest leaves — transmittance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -112,7 +112,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 10 fields, Y: 11 fields, passport: 41 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 10 fields, Y: 11 fields, measurements: 2 fields, passport: 41 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -135,4 +135,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9cf5ba7f83ad131c5fa11dac4ed6ad65acc9a1ec1e6bc9318461b08694b84091`
-- **Processing hash:** `deab7456cc14444041295b51d84ca1399205d246e4f40cdcf92285f63e4e5850` | **metadata hash:** `a428d4f9f6b724bbe0509dd82ca0aa0f7d6f76ce7e574d9e2f2aabe53d3c2c17`
+- **Processing hash:** `deab7456cc14444041295b51d84ca1399205d246e4f40cdcf92285f63e4e5850` | **metadata hash:** `749db1e6ae75f9773e437cd75c4d5f708218abfe7285be38e707bed7b0cc3fb4`

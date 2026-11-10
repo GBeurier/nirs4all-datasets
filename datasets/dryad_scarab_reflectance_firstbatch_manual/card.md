@@ -1,4 +1,4 @@
-# Datasheet — Scarab first batch reflectance spectra
+# Datasheet — Scarabs — reflectance, first batch
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ab2e24580ff9d9c3bfa561f7f68f0b014d2eef0db3d061c1309cef19df09bcba`
-- **Processing hash:** `26fb64f6c380edd7c1c9b6b18d5d59e1af7b250f2611a6a9328507407a85703f` | **metadata hash:** `235ea80c1b87dc07c611e51dea50424d9065d5f36f9ff3320fc95da5acac0232`
+- **Processing hash:** `26fb64f6c380edd7c1c9b6b18d5d59e1af7b250f2611a6a9328507407a85703f` | **metadata hash:** `9c208c0a162e903b6c578fb28486367e7d3239e98c257a56e1742567c0ce3a41`

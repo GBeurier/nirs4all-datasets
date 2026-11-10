@@ -1,4 +1,4 @@
-# Datasheet — OpenSpecy FTIR spectral library subset
+# Datasheet — OpenSpecy library — FTIR subset
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -68,7 +68,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 0 fields, Y: 5 fields, passport: 17 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 5 fields, measurements: 0 fields, passport: 17 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -90,4 +90,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `44fc317d1b9fb4d889fb89f972f72b99733a7f31c599fe7572e671764a05db57`
-- **Processing hash:** `aa31989b185f2df7fcbf0abd3a03227fa65fb8d31d98a5e9cae5da43e1595555` | **metadata hash:** `7a4c8ed82e5c8ef68be46d1185b82d213d2b5ce26a81b6fce8df527a04e194cc`
+- **Processing hash:** `aa31989b185f2df7fcbf0abd3a03227fa65fb8d31d98a5e9cae5da43e1595555` | **metadata hash:** `9dec963bcde0d8a5048f9906dbfc5584d58007256b9c7d788f827054ba0ece29`

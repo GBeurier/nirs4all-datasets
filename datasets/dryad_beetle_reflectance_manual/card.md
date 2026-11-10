@@ -1,4 +1,4 @@
-# Datasheet — Beetle reflectance spectra
+# Datasheet — Beetles — reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -52,7 +52,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 6 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,4 +74,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `9993029ae51e4a70459392b5d4f64bc956651b83833b50f40edf25be87e71663`
-- **Processing hash:** `7765ff4c370d8474bc9fa82ceff907edd3831858e2787641a20922d74e359aad` | **metadata hash:** `f2f94ebbbca7cf685f0bf95c0eceeeffcd98d869fcf7436405eff1008e5862af`
+- **Processing hash:** `7765ff4c370d8474bc9fa82ceff907edd3831858e2787641a20922d74e359aad` | **metadata hash:** `890d100a1231c746371856e11030c61ac90b7d539f859e416dcc3500654282f7`

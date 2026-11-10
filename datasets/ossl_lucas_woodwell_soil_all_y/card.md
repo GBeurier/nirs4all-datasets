@@ -1,4 +1,4 @@
-# Datasheet — OSSL LUCAS Woodwell soil vis-NIR and MIR
+# Datasheet — OSSL LUCAS Woodwell soils — Vis-NIR + MIR
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -86,7 +86,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 12 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -108,4 +108,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.1.0 | **schema/protocol:** 2.0
 - **Content hash:** `da6ec347d3d8b4336669ec1c3f06080ecbe640e2e9098270f6decd1f9be1a7e1`
-- **Processing hash:** `0550362e7ed6628a8657b36e355b0fd898933be52896372a95767206a0c16adb` | **metadata hash:** `6e48b2b2e2ee3b00582c41c6439ec14b73e40fdee74383b124552a6802501f41`
+- **Processing hash:** `0550362e7ed6628a8657b36e355b0fd898933be52896372a95767206a0c16adb` | **metadata hash:** `55d6bd7f93a3b8c2f879b52ac86b76278668a2a9e452d48a2b6907de58e736f7`

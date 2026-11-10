@@ -1,4 +1,4 @@
-# Datasheet — EcoSIS Fresh and Dry Spectra of Several Plant Tissues and Chemical and Phenological Constituents (Sample_category)
+# Datasheet — Plant tissues — fresh + dry reflectance (EcoSIS)
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -79,7 +79,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 2 fields, Y: 1 fields, passport: 32 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 1 fields, measurements: 2 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -101,4 +101,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `b33b9e32a81e2ce3fa678743ea6c3ebae3590450c31e773180f4578df01d1e73`
-- **Processing hash:** `68cb2fa5cc1f543343bba670b4d1d6a75db1968daf2aed1f005a567ff14fc3d6` | **metadata hash:** `4ae3067ca8733f3b9904e62678457c141584a28833a5d29d10b3435ff943901b`
+- **Processing hash:** `68cb2fa5cc1f543343bba670b4d1d6a75db1968daf2aed1f005a567ff14fc3d6` | **metadata hash:** `b41be36f6f1d2364e27a6fc82d408739cdca19800079ac54258570a5f1e85483`

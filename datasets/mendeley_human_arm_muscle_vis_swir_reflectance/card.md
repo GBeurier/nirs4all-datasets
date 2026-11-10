@@ -1,4 +1,4 @@
-# Datasheet — Mendeley human arm muscle Vis-SWIR reflectance
+# Datasheet — Human arm muscle — Vis-SWIR reflectance
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -80,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra each. The scan suffix of the exported sample_id is removed only for this verified contract.
-- **Curated views:** M: 5 fields, Y: 2 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 2 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,4 +102,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `885348b13af4d48f0d3a06e31751bab7097daf09160e504134fa93dc54864efa`
-- **Processing hash:** `bac1500428cfe509b4676e35baf604334c31d3015372ba3feb2d4ef51a6836e7` | **metadata hash:** `bf756b766eb707ce195ebfadd10c61877db1a3bca102f2cc1e792b44853da5fb`
+- **Processing hash:** `bac1500428cfe509b4676e35baf604334c31d3015372ba3feb2d4ef51a6836e7` | **metadata hash:** `2a1c965a70037d1b06b56faec173b0dfd907c86c2f738fe8aa45fb10bfc7f65f`

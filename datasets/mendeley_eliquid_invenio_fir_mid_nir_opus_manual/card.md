@@ -1,4 +1,4 @@
-# Datasheet — E-liquid Invenio-R FIR/MID/NIR OPUS transmittance spectra
+# Datasheet — E-liquids — FIR + MIR + NIR transmittance, Invenio-R
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -59,7 +59,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Original sample identifier retained under a prefixed/equivalent name
-- **Curated views:** M: 0 fields, Y: 0 fields, passport: 14 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 0 fields, Y: 0 fields, measurements: 0 fields, passport: 14 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,4 +81,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `ed1d3852616e314fa456d6fc48725dd97c7a2a0a2eb1deb7682e06db8987b708`
-- **Processing hash:** `8821cbde2283edd02d5ac0fe7705d45257ef8ba68f1bdccf0c319e18eccd4fa3` | **metadata hash:** `1431ba757025de086a98bf8d068985152fd349d32f9ca7c434bcdcb7ecd1ec48`
+- **Processing hash:** `8821cbde2283edd02d5ac0fe7705d45257ef8ba68f1bdccf0c319e18eccd4fa3` | **metadata hash:** `687ba3c730547f4d6d06a3e0bbb57e562f89bd0704bc1e7ac0d6a4a3a576a512`

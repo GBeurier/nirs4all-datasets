@@ -1,4 +1,4 @@
-# Datasheet — Frog spectral reflectance grouped means
+# Datasheet — Frogs — reflectance, grouped means
 
 _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru et al. 2021)._
 
@@ -56,7 +56,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: Undetermined
-- **Curated views:** M: 2 fields, Y: 0 fields, passport: 6 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 2 fields, Y: 0 fields, measurements: 2 fields, passport: 6 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,4 +78,4 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 - **Content version:** 1.2.0 | **schema/protocol:** 2.0
 - **Content hash:** `5a2d762f7d1f90d068fc96f0266c5dd8b078f38c274ec2697366f08053f28e8c`
-- **Processing hash:** `40d417dba5a2f0a3f1c628045c1c0385b09c7934814b2d57ee8d51ca040dd6f1` | **metadata hash:** `aa5410c0ed12f2f40d27f4e97413e0b577490638aee684d72ed99c7860409efd`
+- **Processing hash:** `40d417dba5a2f0a3f1c628045c1c0385b09c7934814b2d57ee8d51ca040dd6f1` | **metadata hash:** `f721ba5369065f56937f67379a042e2453f0be8b47d46b477b652f467bc557b0`
