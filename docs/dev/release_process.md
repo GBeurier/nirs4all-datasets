@@ -41,7 +41,7 @@ IO 0.1.12 / Formats 0.2.9 dependency train and source archives. Its R package
 already reports 0.3.10; R-universe now follows this immutable tag.
 
 The release commits are integrated into main together with the subsequent
-maintenance commits. The current proposed train is Datasets 0.3.19, Formats 0.2.16,
+maintenance commits. The current proposed train is Datasets 0.3.20, Formats 0.2.16,
 IO 0.3.1, and DMD 0.2.16. These upstream versions are now available on
 crates.io. The lockfiles use the declared owner versions and their resolved
 registry dependencies. The ignored R vendor bundle was generated during local
@@ -120,7 +120,7 @@ Run these before tagging or publishing anything:
    Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
    manifest all agree. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.19, Formats 0.2.16, and IO 0.3.1,
+   the current source train: Datasets 0.3.20, Formats 0.2.16, and IO 0.3.1,
    then verifies those exact crates plus IO's DMD 0.2.16 prerequisite on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not
@@ -255,12 +255,14 @@ R-universe builds binaries (Windows/macOS/Linux) straight from Git — no review
 submission. Users then
 `install.packages("nirs4alldatasets", repos = "https://gbeurier.r-universe.dev")`.
 
-- **Registry repo**: public `GBeurier/GBeurier.r-universe.dev` with a
-  `packages.json` entry:
+- **Registry repo**: public `GBeurier/GBeurier.r-universe.dev`. Its
+  `packages.json` entry pins the package to one commit through the `branch` field:
   ```json
-  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "subdir": "bindings/r/nirs4alldatasets" }
+  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "branch": "<release commit SHA>", "subdir": "bindings/r/nirs4alldatasets" }
   ```
-  No `branch` field → it tracks the default branch.
+  R-universe does not follow `main`: it keeps serving the pinned commit until the
+  pin moves. After each release, once `release-r.yml` is green on the tag, set
+  `branch` to the tagged commit in the registry repository.
 - **GitHub App** (one manual browser step): install
   <https://github.com/apps/r-universe> on the `GBeurier` account.
 - **Verify**: watch <https://gbeurier.r-universe.dev> (it *shows* the

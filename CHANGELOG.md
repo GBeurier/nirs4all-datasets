@@ -5,7 +5,27 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
-## [Unreleased]
+## [0.3.20] - 2026-11-17
+
+- The R package installs again on Windows with Rust 1.100 and later: `Makevars.win`
+  links `-lsynchronization`, which the Rust standard library now requires from the
+  final linker on the GNU and GNU-LLVM Windows targets (`undefined reference to
+  WakeByAddressSingle`, no DLL created). No other platform or binding changes.
+- CI runs the Windows `R CMD check --as-cran` on every pull request and on `main`,
+  with the same vendored, offline steps as the R release workflow, so a toolchain
+  break is seen before a release tag; a failed R check prints the end of
+  `00install.out`.
+- Every descriptor has a unique English display name built from the material or
+  collection, the experimental context and the spectral measurement. Dataset ids
+  and download contracts are unchanged: the 241 existing entries of
+  `catalog/index.json` differ in their `name` field only, and
+  `catalog/documentation/dataset-display-names-20261105.csv` maps each previous name
+  to the revised one.
+- Restore the Lyonia petal and window UV-Vis-NIR transmittance record as a
+  documented-only descriptor, and reconcile the documentary source inventory with
+  the origin records (`catalog/documentation/`).
+
+## [0.3.19] - 2026-11-09
 
 - Manage the catalog by origin database: a dataset is now the samples of one
   published record with all their variables. Upstream per-target leaves (the same
