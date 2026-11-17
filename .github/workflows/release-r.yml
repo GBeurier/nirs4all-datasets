@@ -121,12 +121,12 @@ jobs:
           error-on: '"warning"'
           upload-snapshots: true
 
-      - name: Upload check artifacts on failure
+      # check-r-package already uploads the check directory; the job log only
+      # says "Installation failed", so print the compiler/linker output here.
+      - name: Show the install log on failure
         if: failure()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: rcheck-${{ matrix.cfg.label }}
-          path: bindings/r/nirs4alldatasets.Rcheck/
+        shell: bash
+        run: tail -n 80 bindings/r/nirs4alldatasets/check/*.Rcheck/00install.out
 
   # =========================================================================
   # Build the self-contained source tarball that the maintainer uploads to CRAN

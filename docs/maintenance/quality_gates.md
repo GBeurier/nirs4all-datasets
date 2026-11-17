@@ -20,7 +20,7 @@ Optional local hooks (`pre-commit` fetched on demand): `uvx pre-commit run --all
 
 | workflow | trigger | gate |
 |---|---|---|
-| `ci.yml` | push/PR `main`, `rc/**` | Rust build + tests, WASM build, `npm pack --dry-run` |
+| `ci.yml` | push/PR `main`, `rc/**` | Rust build + tests, WASM build, `npm pack --dry-run`, Windows `R CMD check --as-cran` |
 | `abi-check.yml` | push/PR | C ABI snapshot diff |
 | `docs.yml` | push/PR | docs build + Pages |
 | `version-guard.yml` / `version-sync.yml` | push/PR | manifest not ahead of tag; cross-manifest version sync |
