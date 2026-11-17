@@ -111,3 +111,49 @@ jobs:
         run: uv run --no-sync python -m pytest -m "not network"
       - name: R build recipes (native, Windows ARM64, WebR)
         run: uv run --no-sync python -m pytest -q bindings/r/tests
+
+  # The Windows build links the Rust static library with the Rtools linker, so it
+  # depends on the current stable Rust and Rtools, not only on this tree. Run the
+  # same vendored, offline R CMD check as the Windows leg of release-r.yml on every
+  # pull request so a break is seen before a release tag.
+  r-windows:
+    name: R CMD check (Windows)
+    runs-on: windows-2022
+    env:
+      R_KEEP_PKG_SOURCE: yes
+      # The build is offline; disable the incoming-feasibility URL check.
+      _R_CHECK_CRAN_INCOMING_REMOTE_: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
+      - name: Checkout sibling Rust deps
+        shell: bash
+        run: scripts/ensure_rust_deps.sh
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
+        with:
+          r-version: "release"
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
+        with:
+          working-directory: bindings/r/nirs4alldatasets
+          extra-packages: |
+            any::rcmdcheck
+      # N4DS_R_VENDOR=1 is scoped to this step, where crates/ is reachable; the
+      # check then installs offline from the bundled copy (see release-r.yml).
+      - name: Vendor the Rust core into the R package
+        shell: bash
+        run: cd bindings/r/nirs4alldatasets && N4DS_R_VENDOR=1 ./configure
+      - name: R CMD check --as-cran
+        uses: r-lib/actions/check-r-package@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
+        env:
+          CARGO_NET_OFFLINE: "true"
+        with:
+          working-directory: bindings/r/nirs4alldatasets
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"warning"'
+      # The job log only says "Installation failed"; the compiler/linker output
+      # is in 00install.out.
+      - name: Show the install log on failure
+        if: failure()
+        shell: bash
+        run: tail -n 80 bindings/r/nirs4alldatasets/check/*.Rcheck/00install.out

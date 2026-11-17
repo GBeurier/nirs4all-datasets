@@ -53,10 +53,15 @@ PKG_CPPFLAGS = -I$(CURDIR)
 # libgcc_eh.a — the unwinder (_Unwind_*), __gcc_personality_seh0, and __chkstk are
 # all merged into libgcc.a, so -lgcc (not -lgcc_eh) resolves them. The LLVM
 # gnullvm target instead reports -lunwind in rustc's native-static-libs.
+# -lsynchronization supplies WaitOnAddress/WakeByAddress*: Rust >= 1.100 no longer
+# embeds those imports in the static library and lists the library in
+# native-static-libs for both the gnu and gnullvm targets. Without it the DLL link
+# fails with "undefined reference to `WakeByAddressSingle'"; it is harmless with
+# older Rust.
 # System libs MUST come AFTER the archive (mingw ld is order-sensitive).
 RUST_UNWIND_LIB = $(if $(filter %-windows-gnullvm,$(TARGET)),-lunwind,-lgcc)
 PKG_LIBS = $(STATLIB) \
-  -lkernel32 -ladvapi32 -lntdll -luserenv -lws2_32 -lbcrypt -lcrypt32 -lsecur32 -lncrypt -ldbghelp -lole32 -lshell32 $(RUST_UNWIND_LIB)
+  -lkernel32 -ladvapi32 -lntdll -luserenv -lws2_32 -lbcrypt -lcrypt32 -lsecur32 -lncrypt -ldbghelp -lole32 -lshell32 -lsynchronization $(RUST_UNWIND_LIB)
 
 all: $(SHLIB) rust_clean
 
