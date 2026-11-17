@@ -25,8 +25,9 @@ def test_sibling_checkout_selection(tmp_path: Path, ci: bool, ref: str, expected
     checkout = tmp_path / "nirs4all-datasets"
     (checkout / "scripts").mkdir(parents=True)
     shutil.copy(ROOT / "scripts/ensure_rust_deps.sh", checkout / "scripts/ensure_rust_deps.sh")
-    (checkout / "Cargo.toml").write_text(
-        '[workspace.dependencies]\nnirs4all-formats = { version = "0.2.11" }\nnirs4all-io = { version = "0.2.6" }\n', encoding="utf-8"
+    (checkout / "release").mkdir()
+    (checkout / "release/train-v1.toml").write_text(
+        '[dependencies]\nnirs4all-formats = "0.2.11"\nnirs4all-io = "0.2.6" # exact train\n\n[prerequisites]\nnirs4all-io = "9.9.9"\n', encoding="utf-8"
     )
     for name, version in (("nirs4all-formats", "0.2.11"), ("nirs4all-io", "0.2.6")):
         repo = tmp_path / name

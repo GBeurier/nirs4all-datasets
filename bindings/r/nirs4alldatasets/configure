@@ -246,21 +246,23 @@ command -v python3 >/dev/null 2>&1 || {
 
 echo "nirs4alldatasets configure: CRAN/R-universe self-contained build — vendoring the Rust core from the checkout"
 
+# Exact sibling versions come from the source train; Cargo.toml only carries
+# minor-level ranges.
 read_dependency_version() {
     dep="$1"
-    python3 - "$REPO/Cargo.toml" "$dep" <<'PY'
+    python3 - "$REPO/release/train-v1.toml" "$dep" <<'PY'
 import re
 import sys
 
-manifest = sys.argv[1]
+contract = sys.argv[1]
 dep = sys.argv[2]
-text = open(manifest, encoding="utf-8").read()
-match = re.search(
-    r"(?m)^\s*" + re.escape(dep) + r'\s*=\s*\{[^\n]*version\s*=\s*"([^"]+)"',
-    text,
+text = open(contract, encoding="utf-8").read()
+section = re.search(r"(?ms)^\[dependencies\]\s*$(.*?)(?=^\[|\Z)", text)
+match = section and re.search(
+    r"(?m)^\s*" + re.escape(dep) + r'\s*=\s*"([^"]+)"', section.group(1)
 )
 if not match:
-    sys.exit(f"configure: could not read {dep} version from {manifest}")
+    sys.exit(f"configure: could not read the exact {dep} train version from {contract}")
 print(match.group(1))
 PY
 }

@@ -2,8 +2,10 @@
 """Fail closed when Datasets manifests, locks, or upstream releases drift.
 
 The normal check is offline and verifies that every tracked consumer surface is
-consistent with the root Cargo manifest.  ``--release`` additionally enforces
-the exact V1 train declared in ``release/train-v1.toml``.  ``--check-registry``
+consistent with the exact source train declared in ``release/train-v1.toml``:
+manifests depend on the sibling owners at minor granularity (Cargo ``"0.2"``,
+Python ``>=0.2,<0.3``) and the lockfiles resolve the exact train versions.
+``--release`` additionally checks the contract schema and release tag.  ``--check-registry``
 proves that each required upstream crate/version is actually on crates.io; it is
 intended for publishing jobs, not ordinary development CI.
 """
@@ -22,7 +24,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-_REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<version>[0-9A-Za-z.+-]+)$")
+_REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<floor>[0-9]+\.[0-9]+),<(?P<ceiling>[0-9]+(?:\.[0-9]+)?)$")
 _PROJECT_LICENSE = "CECILL-2.1 OR AGPL-3.0-or-later"
 _R_PROJECT_LICENSE = "CeCILL-2.1 | AGPL (>= 3)"
 _BINDING_MANIFESTS = ("bindings/python/Cargo.toml", "bindings/wasm/Cargo.toml")
@@ -57,7 +59,7 @@ def _toml(path: Path) -> dict[str, Any]:
 def _dependency_version(value: object, *, label: str) -> str:
     if not isinstance(value, dict) or not isinstance(value.get("version"), str):
         raise ValueError(f"{label} must be a dependency table with an explicit version")
-    return value["version"]
+    return str(value["version"])
 
 
 def _package_version(lock: dict[str, Any], name: str, *, label: str) -> str:
@@ -69,6 +71,19 @@ def _package_version(lock: dict[str, Any], name: str, *, label: str) -> str:
     return str(versions.pop())
 
 
+def minor_range(version: str) -> str:
+    """Return the Cargo minor-level caret requirement (``0.2``) for an exact version."""
+    major, minor = version.split(".")[:2]
+    return f"{major}.{minor}"
+
+
+def python_minor_range(version: str) -> str:
+    """Return the PEP 440 minor-level range (``>=0.2,<0.3``; ``>=1.3,<2``) for an exact version."""
+    major, minor = (int(part) for part in version.split(".")[:2])
+    ceiling = f"0.{minor + 1}" if major == 0 else str(major + 1)
+    return f">={major}.{minor},<{ceiling}"
+
+
 def _python_extra_versions(pyproject: dict[str, Any]) -> dict[str, str]:
     values = pyproject.get("project", {}).get("optional-dependencies", {}).get("io", [])
     parsed: dict[str, str] = {}
@@ -77,7 +92,7 @@ def _python_extra_versions(pyproject: dict[str, Any]) -> dict[str, str]:
             continue
         match = _REQ_RE.fullmatch(value)
         if match:
-            parsed[match.group("name").lower().replace("_", "-")] = match.group("version")
+            parsed[match.group("name").lower().replace("_", "-")] = f">={match.group('floor')},<{match.group('ceiling')}"
     return parsed
 
 
@@ -90,10 +105,14 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
 
     workspace_version = str(cargo["workspace"]["package"]["version"])
     dependencies = cargo["workspace"]["dependencies"]
-    upstream = {
-        "nirs4all-formats": _dependency_version(dependencies["nirs4all-formats"], label="Cargo.toml nirs4all-formats"),
-        "nirs4all-io": _dependency_version(dependencies["nirs4all-io"], label="Cargo.toml nirs4all-io"),
-    }
+    train = contract.get("dependencies", {})
+    upstream = {name: str(train[name]) for name in ("nirs4all-formats", "nirs4all-io")}
+    for name, version in upstream.items():
+        result.expect(
+            f"Cargo.toml {name} minor range",
+            _dependency_version(dependencies[name], label=f"Cargo.toml {name}"),
+            minor_range(version),
+        )
 
     result.expect("pyproject.toml project.version", pyproject["project"]["version"], workspace_version)
     result.expect("release/train-v1.toml release_version", contract.get("release_version"), workspace_version)
@@ -120,7 +139,7 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
 
     extra_versions = _python_extra_versions(pyproject)
     for name, version in upstream.items():
-        result.expect(f"pyproject.toml io extra {name}", extra_versions.get(name), version)
+        result.expect(f"pyproject.toml io extra {name}", extra_versions.get(name), python_minor_range(version))
 
     lock_specs = {
         "Cargo.lock": {
@@ -163,14 +182,11 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
         workspace_version,
     )
     for name, version in upstream.items():
-        result.expect(f"R vendored {name}", _dependency_version(r_dependencies[name], label=f"R {name}"), version)
-        result.expect(f"R vendored {name}-core", _dependency_version(r_dependencies[f"{name}-core"], label=f"R {name}-core"), version)
+        result.expect(f"R vendored {name}", _dependency_version(r_dependencies[name], label=f"R {name}"), minor_range(version))
+        result.expect(f"R vendored {name}-core", _dependency_version(r_dependencies[f"{name}-core"], label=f"R {name}-core"), minor_range(version))
 
     if enforce_contract:
         result.expect("release/train-v1.toml schema_version", contract.get("schema_version"), 1)
-        contract_dependencies = contract.get("dependencies", {})
-        for name, version in upstream.items():
-            result.expect(f"V1 train dependency {name}", version, contract_dependencies.get(name))
 
         tag = os.environ.get("GITHUB_REF_NAME", "")
         if tag.startswith("v"):

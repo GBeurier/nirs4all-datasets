@@ -34,6 +34,34 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 > CI (the GitHub Actions macOS runner has cargo on `PATH`); validate the R macOS
 > build on `mac-builder.r-project.org` before submitting. See *R → CRAN* below.
 
+## Cross-repository version constraints
+
+nirs4all packages from different repositories depend on each other at **minor**
+granularity, never more precisely: Rust `"0.3"` (`>=0.3.0, <0.4.0`; `"1.3"` for
+1.x), Python `>=0.3,<0.4` (`>=1.3,<2` for 1.x), npm `^0.3.0` (`^1.3.0`), R
+`pkg (>= 0.3.0), pkg (< 0.4.0)`. Here: Cargo `nirs4all-formats = "0.2"` and
+`nirs4all-io = "0.3"` (root, Python binding and vendored R manifests), Python
+`nirs4all-formats>=0.2,<0.3`, `nirs4all-io>=0.3,<0.4`,
+`nirs4all-methods>=1.3,<2` and `nirs4all>=0.9,<2` extras. Exact, reproducible
+versions live only in lockfiles and in `release/train-v1.toml`, the exact
+source train that CI and the R vendoring check out next to this repository.
+This repository's own crates and bindings stay in lockstep through
+`scripts/bump_version.sh`.
+
+In return, a **patch** release of `nirs4all-datasets` is backward compatible and
+changes no wire format, byte contract, persisted schema (descriptors, catalog,
+manifests), `.n4a` payload semantics, C ABI or shared fixture; any such change
+needs at least a **minor** release (for 0.x, every minor is breaking). A
+consumer needing a fix from a specific patch gets it from its lockfile and the
+release order, not from a patch floor. The full policy is
+`docs/contracts/release/VERSION_CONSTRAINTS.md` in `nirs4all-ecosystem`.
+
+Enforcement: `scripts/check_release_train.py` refuses a manifest requirement
+more precise than the minor of the train and lockfiles that do not resolve the
+exact train; `scripts/bump_version.sh --check` keeps internal lockstep; the
+C ABI symbol snapshots are checked independently. A guard that fails when a
+contract file changes without a minor bump is not automated yet.
+
 ## Release integration checkpoint — 6 October 2026
 
 The published `v0.3.10` tag remains at `007d7aaf`, with its original
@@ -117,8 +145,9 @@ Run these before tagging or publishing anything:
 0. **Exact V1 dependency train** — the machine-readable contract is
    [`release/train-v1.toml`](../../release/train-v1.toml). The offline check
    `python scripts/check_release_train.py` proves that the root Cargo manifest,
-   Python `[io]` extra, Python/WASM lockfiles, root lockfile, and vendored R
-   manifest all agree. The publishing check is stricter:
+   Python `[io]` extra and vendored R manifest declare the minor-level ranges of
+   that train (Cargo `"0.2"`/`"0.3"`, Python `>=0.2,<0.3`/`>=0.3,<0.4`) and that
+   the Python/WASM lockfiles and root lockfile resolve its exact versions. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
    the current source train: Datasets 0.3.19, Formats 0.2.16, and IO 0.3.1,
    then verifies those exact crates plus IO's DMD 0.2.16 prerequisite on crates.io. It deliberately remains
@@ -127,8 +156,9 @@ Run these before tagging or publishing anything:
    evidence that a downstream registry artifact can resolve. Every automated
    public-publish/upload path runs this fail-closed gate, while ordinary dry-run
    artifact builds remain usable during staging. On a Datasets release tag,
-   `scripts/ensure_rust_deps.sh` also checks out each sibling's exact dependency
-   tag from the root manifest and rejects a tag/version mismatch; moving sibling
+   `scripts/ensure_rust_deps.sh` (and the R `configure` vendoring) also checks
+   out each sibling's exact dependency tag from `release/train-v1.toml` and
+   rejects a tag/version mismatch; moving sibling
    default branches are never release inputs. The immutable `v0.3.10` artifacts
    retain their original IO 0.1.12 / Formats 0.2.9 train. A future publication of
    the current dependency train must bump the package version and update the

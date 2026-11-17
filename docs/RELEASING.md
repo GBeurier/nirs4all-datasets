@@ -14,7 +14,9 @@ the catalog-specific flows.
 
 For the current source train, public release is fail-closed on the exact contract in
 [`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.19 consumes
-Formats 0.2.16 and IO 0.3.1. This integrated main train differs from the immutable
+Formats 0.2.16 and IO 0.3.1. The manifests themselves declare minor-level ranges
+(`"0.2"`/`"0.3"`, `>=0.2,<0.3`/`>=0.3,<0.4`); the train and the lockfiles carry the
+exact versions (see "Cross-repository version constraints" in the release process). This integrated main train differs from the immutable
 `v0.3.10` tag at `007d7aaf`, whose existing artifacts retain Formats 0.2.9 / IO 0.1.12.
 Publishing the refreshed dependency train requires a new package version and an
 updated contract; it does not replace those existing artifacts. Run the offline
