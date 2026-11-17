@@ -4,7 +4,8 @@
 # Ensure sibling Rust reader repos are present for local/CI builds.
 # nirs4all-datasets keeps path+version dependencies so local development uses
 # the checked-out sibling crates, while cargo publish can still resolve the
-# version requirement from crates.io.
+# minor-level version requirement from crates.io. The exact sibling versions
+# (the source train CI checks out) live in release/train-v1.toml.
 
 set -euo pipefail
 
@@ -30,10 +31,19 @@ resolve_ref() {
 read_dependency_version() {
     local name="$1"
     local value
-    value=$(sed -nE "/^${name}[[:space:]]*=/s/.*version[[:space:]]*=[[:space:]]*\"=?([^\"]+)\".*/\1/p" \
-        "${ROOT}/Cargo.toml" | head -n1 || true)
+    value=$(awk -v name="${name}" '
+        /^\[dependencies\]$/ { in_dependencies = 1; next }
+        in_dependencies && /^\[/ { exit }
+        in_dependencies && $1 == name {
+            value = $0
+            sub(/^[^"]*"/, "", value)
+            sub(/".*$/, "", value)
+            print value
+            exit
+        }
+    ' "${ROOT}/release/train-v1.toml")
     if [[ -z "${value}" ]]; then
-        echo "error: cannot read the explicit ${name} version from ${ROOT}/Cargo.toml" >&2
+        echo "error: cannot read the exact ${name} train version from ${ROOT}/release/train-v1.toml" >&2
         return 2
     fi
     printf '%s\n' "${value}"

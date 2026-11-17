@@ -34,9 +34,29 @@ def test_r_vendor_default_zip_features_are_rejected(monkeypatch: Any) -> None:
     assert result.errors[0].startswith("R vendored zip dependency/features:")
 
 
-def test_python_extra_parser_requires_explicit_minimums() -> None:
-    pyproject = {"project": {"optional-dependencies": {"io": ["nirs4all-io>=0.1.12", "nirs4all-formats>=0.2.9", "other~=1.0"]}}}
-    assert release_train._python_extra_versions(pyproject) == {"nirs4all-io": "0.1.12", "nirs4all-formats": "0.2.9"}
+def test_python_extra_parser_reads_minor_level_ranges_only() -> None:
+    pyproject = {"project": {"optional-dependencies": {"io": ["nirs4all-io>=0.3,<0.4", "nirs4all-formats>=0.2.16", "other~=1.0"]}}}
+    assert release_train._python_extra_versions(pyproject) == {"nirs4all-io": ">=0.3,<0.4"}
+
+
+def test_minor_level_ranges_follow_the_exact_train() -> None:
+    assert release_train.minor_range("0.2.16") == "0.2"
+    assert release_train.python_minor_range("0.3.1") == ">=0.3,<0.4"
+    assert release_train.python_minor_range("1.3.18") == ">=1.3,<2"
+
+
+def test_patch_precise_manifest_requirement_is_rejected(monkeypatch: Any) -> None:
+    original = release_train._toml
+
+    def changed_manifest(path: Path) -> dict[str, Any]:
+        value = original(path)
+        if path == ROOT / "Cargo.toml":
+            value["workspace"]["dependencies"]["nirs4all-io"]["version"] = "=0.3.1"
+        return value
+
+    monkeypatch.setattr(release_train, "_toml", changed_manifest)
+    result, _, _ = release_train.check_tree(ROOT, enforce_contract=False)
+    assert result.errors == ["Cargo.toml nirs4all-io minor range: found '=0.3.1', expected '0.3'"]
 
 
 def test_result_reports_drift_without_short_circuiting() -> None:
