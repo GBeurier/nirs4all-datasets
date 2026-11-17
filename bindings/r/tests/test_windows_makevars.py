@@ -121,6 +121,8 @@ def test_recorded_artifact_is_the_library_used_by_r(tmp_path: Path, service: boo
     else:
         assert "-lgcc" in link_flags
         assert "-lunwind" not in link_flags
+    # Rust >= 1.100 lists synchronization (WaitOnAddress/WakeByAddress*) for both targets.
+    assert "-lsynchronization" in link_flags
 
 
 def test_cargo_failure_cannot_be_reported_as_a_successful_r_library(tmp_path: Path):
