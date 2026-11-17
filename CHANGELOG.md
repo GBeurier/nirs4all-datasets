@@ -7,6 +7,15 @@ surface is stable in shape but may still change before `1.0`.
 
 ## [Unreleased]
 
+- The R package installs again on Windows with Rust 1.100 and later: `Makevars.win`
+  links `-lsynchronization`, which the Rust standard library now requires from the
+  final linker on the GNU and GNU-LLVM Windows targets (`undefined reference to
+  WakeByAddressSingle`, no DLL created). No other platform or binding changes, and
+  no version change: the fix is delivered through the R-universe registry pin.
+- CI runs the Windows `R CMD check --as-cran` on every pull request and on `main`,
+  with the same vendored, offline steps as the R release workflow, so a toolchain
+  break is seen before a release tag; a failed R check prints the end of
+  `00install.out`.
 - Manage the catalog by origin database: a dataset is now the samples of one
   published record with all their variables. Upstream per-target leaves (the same
   spectra, one target each) and per-instrument leaves (the same samples, one block
