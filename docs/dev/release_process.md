@@ -69,7 +69,7 @@ IO 0.1.12 / Formats 0.2.9 dependency train and source archives. Its R package
 already reports 0.3.10; R-universe now follows this immutable tag.
 
 The release commits are integrated into main together with the subsequent
-maintenance commits. The current train is Datasets 0.3.20, Formats 0.2.19 and
+maintenance commits. The current train is Datasets 0.3.21, Formats 0.2.19 and
 IO 0.3.6. The selected IO facade/core requires no additional DMD prerequisite. These upstream versions are now available on
 crates.io. The lockfiles use the declared owner versions and their resolved
 registry dependencies. The ignored R vendor bundle was generated during local
@@ -149,7 +149,7 @@ Run these before tagging or publishing anything:
    that train (Cargo `"0.2"`/`"0.3"`, Python `>=0.2,<0.3`/`>=0.3,<0.4`) and that
    the Python/WASM lockfiles and root lockfile resolve its exact versions. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.20, Formats 0.2.19, and IO 0.3.6,
+   the current source train: Datasets 0.3.21, Formats 0.2.19, and IO 0.3.6,
    then verifies those exact crates plus the selected IO facade/core dependency closure on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not

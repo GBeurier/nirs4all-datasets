@@ -5,6 +5,17 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.21] - 2026-11-18
+
+- Lead the catalog overview with spectroscopy technique completeness: 241 of 242
+  datasets have an identified family; Rock is the sole unknown technique. Keep
+  uncalibrated physical axes separate in the coverage panel, with accessible
+  counts, tables and links. Preserve existing API and filter identifiers.
+- Restore the source-documented wavelength grids for NIRPY coffee, peach Brix and
+  plum Brix/firmness. Apply the exact author-provided channel mapping only to the
+  verified standardized raw bytes. Rebuild canonical outputs and qualification;
+  preserve measured values, raw channel indices, identities, targets and partitions.
+
 ## [0.3.20] - 2026-11-18
 
 - Correct spectroscopy classification and declared units. Normalize explicitly declared

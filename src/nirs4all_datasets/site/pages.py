@@ -59,6 +59,31 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     HALF, WIDE = 500, 1040
     cards: list[str] = []
 
+    if by_family:
+        total = sum(by_family.values())
+        unknown = by_family.get("other", 0)
+        classified = total - unknown
+        family_counts = [(C.family_label(family), count) for family, count in by_family.items()]
+        unknown_views = [view for view in datasets if view.entry.get("spectro_family") == "other"]
+        details = (
+            f'<p><strong>{classified} of {total} datasets have an identified spectroscopy technique; '
+            f'{unknown} unknown ({unknown / total * 100:.1f}%).</strong> '
+            'An uncalibrated wavelength axis does not make a known technique unknown.</p>'
+            '<p>' + esc("; ".join(f"{family}: {count}" for family, count in family_counts)) + ' datasets.</p>'
+            '<details><summary>View spectroscopy family data</summary><table class="data"><caption>Datasets by spectroscopy family</caption>'
+            '<thead><tr><th scope="col">Family</th><th scope="col">Datasets</th></tr></thead><tbody>'
+            + "".join(f'<tr><th scope="row">{esc(family)}</th><td>{count}</td></tr>' for family, count in family_counts)
+            + '</tbody></table></details>'
+        )
+        if unknown_views:
+            details += '<details><summary>Datasets with an unknown technique</summary><ul>' + "".join(
+                f'<li><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a></li>' for view in unknown_views
+            ) + '</ul></details>'
+        cards.append(C.viz_card(
+            "Spectroscopy family", "One category per dataset: VSWIR groups with NIR and TIR with MIR; mixed combines source families. Wavelength-axis calibration is reported separately below.",
+            charts.donut_chart(family_counts, title="Datasets by spectroscopy family", width=HALF) + details,
+        ))
+
     if datasets:
         coverage = _wavelength_coverage(datasets)
         total = sum(coverage.values())
@@ -74,17 +99,17 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             '<thead><tr><th scope="col">Coverage</th><th scope="col">Datasets</th><th scope="col">Share</th></tr></thead>'
             f'<tbody>{rows}</tbody></table></details>'
         )
-        unavailable = [view for view in datasets if _coverage_category(view) == "Axis unavailable"]
+        unavailable = [view for view in datasets if _coverage_category(view) == "Axis not established"]
         if unavailable:
-            details += '<details><summary>Datasets with unavailable optical axes</summary><ul>' + "".join(
-                f'<li><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a> — declared family: {esc(view.entry.get("spectro_family") or "other")}</li>'
+            details += '<details><summary>Datasets with unestablished optical axes</summary><ul>' + "".join(
+                f'<li><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a> — technique: {esc(C.family_label(view.entry.get("spectro_family") or "other"))}</li>'
                 for view in unavailable
             ) + '</ul></details>'
         cards.append(C.viz_card(
             "Wavelength coverage",
             "One category per dataset: NIR 780–2,500 nm, MIR >2,500–25,000 nm; mixed covers both. "
             "Wavenumbers are converted to nm. Raman shifts have separate categories and are never converted to optical wavelengths. "
-            "Axis unavailable means that an absolute optical range cannot be established; it does not mean the technique is unknown. "
+            "Axis not established means that an absolute optical range cannot be established; it does not mean the technique is unknown. "
             "Declared descriptor axes are used when a measured card is pending.",
             charts.donut_chart(list(coverage.items()), title="Datasets by wavelength coverage", width=HALF) + details,
         ))
@@ -119,16 +144,6 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             "Datasets by domain", "Compare dataset counts in up to 14 of the most represented application domains.",
             charts.bar_chart(list(by_domain.items()), title="Datasets by domain", top_n=14, width=WIDE),
             wide=True,
-        ))
-    if by_family:
-        cards.append(C.viz_card(
-            "Spectroscopy family", "Declared technique per source: VSWIR groups with NIR and TIR with MIR. Broad source labels use their known optical range; mixed combines families. This differs from wavelength coverage.",
-            charts.donut_chart(list(by_family.items()), title="Datasets by spectroscopy family", width=HALF)
-            + '<p>' + esc("; ".join(f"{family}: {count}" for family, count in by_family.items())) + ' datasets.</p>'
-            + '<details><summary>View spectroscopy family data</summary><table class="data"><caption>Datasets by spectroscopy family</caption>'
-            + '<thead><tr><th scope="col">Family</th><th scope="col">Datasets</th></tr></thead><tbody>'
-            + "".join(f'<tr><th scope="row">{esc(family)}</th><td>{count}</td></tr>' for family, count in by_family.items())
-            + '</tbody></table></details>',
         ))
     if by_tier:
         cards.append(C.viz_card(
@@ -197,13 +212,13 @@ def _coverage_category(view: DatasetView) -> str:
     if bands == {"NIR", "MIR"}:
         return "Mixed"
     if unknown:
-        return "Axis unavailable"
+        return "Axis not established"
     return next(iter(bands)) if bands else "Other"
 
 
 def _wavelength_coverage(datasets: list[DatasetView]) -> dict[str, int]:
     """Count known optical coverage independently from declared spectroscopy technique."""
-    counts = {"NIR": 0, "MIR": 0, "Mixed": 0, "Other": 0, "Raman": 0, "Raman + optical": 0, "Axis unavailable": 0}
+    counts = {"NIR": 0, "MIR": 0, "Mixed": 0, "Other": 0, "Raman": 0, "Raman + optical": 0, "Axis not established": 0}
     for view in datasets:
         counts[_coverage_category(view)] += 1
     return counts
@@ -237,7 +252,7 @@ def _dataset_scatter_points(datasets: list[DatasetView]) -> list[dict[str, Any]]
             "samples": v.entry.get("n_samples"),
             "features": v.entry.get("n_features_total"),
             "targets": v.entry.get("n_targets") or 0,
-            "family": v.entry.get("spectro_family") or "unknown",
+            "family": C.family_label(v.entry.get("spectro_family") or "unknown"),
             "tier": v.tier,
             "risk": risk,
             "href": f"dataset/{v.id}.html",
@@ -345,6 +360,8 @@ def render_catalog(catalog: Catalog) -> str:
     def opts(values: list[str]) -> str:
         return "".join(f'<option value="{esc(x)}">{esc(x)}</option>' for x in values)
 
+    family_options = "".join(f'<option value="{esc(value)}">{esc(C.family_label(value))}</option>' for value in families)
+
     body = f"""
 {C.nav("", "catalog")}
 <section class="section-tight section-paper" style="padding-top:84px">
@@ -358,7 +375,7 @@ def render_catalog(catalog: Catalog) -> str:
       <input id="q" type="search" placeholder="Search name, id, domain, target…" aria-label="Search datasets">
       <select id="f-access" aria-label="Filter by source access"><option value="">any source access</option><option value="open">open original source</option><option value="conditional">manual, token or undocumented</option></select>
       <select id="f-tier" aria-label="Filter by redistribution tier"><option value="">all redistribution tiers</option>{''.join(f'<option value="{esc(t)}">{esc({"public": "open redistribution", "private": "restricted redistribution", "anonymized": "anonymized"}.get(t, t))}</option>' for t in tiers)}</select>
-      <select id="f-family" aria-label="Filter by family"><option value="">all families</option>{opts(families)}</select>
+      <select id="f-family" aria-label="Filter by family"><option value="">all families</option>{family_options}</select>
       <select id="f-domain" aria-label="Filter by domain"><option value="">all domains</option>{opts(domains)}</select>
       <select id="f-target" aria-label="Filter by target"><option value="">target or not</option><option value="yes">has target</option><option value="no">metadata-only</option></select>
       <select id="f-multi" aria-label="Filter by sources"><option value="">any sources</option><option value="yes">multi-source</option><option value="no">single-source</option></select>
@@ -1263,7 +1280,7 @@ def render_dataset(view: DatasetView) -> str:
     rel = "../"
     e = view.entry
     domain = e.get("domain") or ""
-    family = e.get("spectro_family") or ""
+    family = C.family_label(e.get("spectro_family") or "")
 
     badges = [C.tier_badge(view.tier)]
     if view.has_open_retrieval:

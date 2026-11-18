@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | Nirpy Research plums Brix and firmness NIR | *Not specified.* | NIR | 0–599 index | 40 | 600 |
+| X | Nirpy Research plums Brix and firmness NIR | *Not specified.* | NIR | 1102–2300 nm | 40 | 600 |
 
 ### Variables (Y / metadata)
 
@@ -60,8 +60,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 2 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The dataset author's analysis specifies 1102 to 2300 nm in 2 nm steps for these 600 ordered channels. All canonical feature values match the pinned original source at float32 precision. Restore wavelength labels only for the verified standardized raw SHA-256; preserve raw indices, measured values, identities, targets and partitions. Evidence: https://nirpyresearch.com/wavelength-band-selection-with-simulated-annealing/, https://raw.githubusercontent.com/nevernervous78/nirpyresearch/97a5d7dd1fe72472d9b3a070c53c712f16fc1e2f/data/NIRplums_brix_firmness.csv
+- **Curated views:** M: 0 fields, Y: 2 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -81,6 +81,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `6a13c0c17559f6375da07d19b158523b94db41d8d212e7ea1ac3c6850540d8b8`
-- **Processing hash:** `4d4e6ed7a0be57ab782fab30f7382a586461c1a315087e66f973521f54e85d01` | **metadata hash:** `d72f606b51b19d35a4c260017b65312dac7552d44eeca97fcbcc9f5b3904c33e`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `1208f6a924115405d4cd63b28ebe3693306f6ecd3a11baa1c94fe0dd331af8b0`
+- **Processing hash:** `4fac2a1cb77d2a8e71cda013194f10637f3a02fac70568bb63880dd08d1ecd82` | **metadata hash:** `157915a8c4226226a75465ced48b9967d33f556a15e0ba93ca644e2c4a21d190`

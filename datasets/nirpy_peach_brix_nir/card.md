@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | Nirpy Research peach Brix NIR | *Not specified.* | NIR | 1–600 index | 50 | 600 |
+| X | Nirpy Research peach Brix NIR | *Not specified.* | NIR | 1100–2298 nm | 50 | 600 |
 
 ### Variables (Y / metadata)
 
@@ -59,8 +59,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The dataset author's analysis specifies 1100 to 2298 nm in 2 nm steps for these 600 ordered channels. All canonical feature values match the pinned original source at float32 precision. Restore wavelength labels only for the verified standardized raw SHA-256; preserve raw indices, measured values, identities, targets and partitions. Evidence: https://nirpyresearch.com/variable-selection-method-pls-python/, https://raw.githubusercontent.com/nevernervous78/nirpyresearch/97a5d7dd1fe72472d9b3a070c53c712f16fc1e2f/data/peach_spectra_brix.csv
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,6 +80,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `7e6e52b7301bb79ea1ec399c83e8b18e9a2ebf73e9b6d00d62b817d252d12545`
-- **Processing hash:** `d08d2d5fe3aee5ae5b9af8cdc15ab3edab3bc073ecd33814e4cf2bd6753f6c1f` | **metadata hash:** `5c1db205d6826b46d68d35a05bb43e1c8efd613ecc0f8aece0a2b5ba3c515515`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `60b15a2c648c1aea59e48a67a5f40df9b23c897b29568ec6dd2c4066ab752a7e`
+- **Processing hash:** `beb2e152edfc89a2bd2d56eb561b516dd7386692d594c943a8cdb7c135af1e1e` | **metadata hash:** `a2e17dd7ccf248d74f5237badfde3d4cd856d91eb3fc5c72fcbca39de62e6fe7`

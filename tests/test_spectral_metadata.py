@@ -118,3 +118,52 @@ def test_micrometer_repair_is_idempotent_with_existing_evidence(tmp_path, v2_lea
     updated = repair.corrected_descriptor(descriptor, card)
     assert updated == descriptor
     assert repair.corrected_descriptor(updated, card) == updated
+
+
+@pytest.mark.parametrize(("dataset_id", "index_start", "count", "first", "last"), [
+    ("nirpy_coffee_classification_nir", 1, 601, 1100, 2300),
+    ("nirpy_peach_brix_nir", 1, 600, 1100, 2298),
+    ("nirpy_plums_brix_firmness_nir", 0, 600, 1102, 2300),
+])
+def test_source_verified_nirpy_axis_mapping(tmp_path, dataset_id, index_start, count, first, last):
+    from nirs4all_datasets.bootstrap import _spectral_metadata
+    from nirs4all_datasets.canonical import _convert_source
+    from nirs4all_datasets.manifest import sha256_file
+    from nirs4all_datasets.schema import DatasetDescriptor
+    from scripts.repair_spectral_metadata import corrected_descriptor
+
+    metadata = _spectral_metadata()
+    correction = metadata[dataset_id]["X"]
+    card = {"dataset_id": dataset_id, "spectral_blocks": [{"block_id": "X", **correction["expected"]}]}
+    source = _build_sources(card, [])[0]
+    assert (source.axis_unit.value, source.axis_min, source.axis_max, source.axis_resolution) == ("nm", first, last, 2)
+    descriptor = DatasetDescriptor(id=dataset_id, name="Indexed source", description="Source-backed wavelength recovery", sources=[{"source_id": "X", "axis_unit": "index", "axis_min": index_start, "axis_max": index_start + count - 1}], provenance={"contributor": "Source"}, governance={"license": "CC0-1.0"})
+    updated = corrected_descriptor(descriptor, card)
+    assert (updated.sources[0].axis_unit.value, updated.sources[0].axis_min, updated.sources[0].axis_max) == ("nm", first, last)
+    assert corrected_descriptor(updated, card) == updated
+
+    raw = tmp_path / "X.csv"
+    headers = [str(index_start + i) for i in range(count)]
+    values = np.arange(count, dtype=np.float32) / 10
+    pd.DataFrame({"observation_id": ["o1"], **{header: [value] for header, value in zip(headers, values, strict=True)}}).to_csv(raw, sep=";", index=False)
+    original = raw.read_bytes()
+    canonical = tmp_path / "canonical"
+    (canonical / "sources").mkdir(parents=True)
+    # Production pins the real standardized source bytes. Bind only this synthetic fixture here.
+    mapping = {**correction["axis_mapping"], "raw_sha256": sha256_file(raw)}
+    result = _convert_source(raw, "X", None, False, "sample_id", canonical, axis_mapping=mapping)
+    frame = pd.read_parquet(canonical / "sources/X.parquet")
+    assert list(frame.columns[2:]) == [str(value) for value in range(first, last + 1, 2)]
+    np.testing.assert_array_equal(frame.iloc[0, 2:].to_numpy(dtype=np.float32), values)
+    assert frame["observation_id"].tolist() == frame["sample_id"].tolist() == ["o1"]
+    assert raw.read_bytes() == original
+    assert (result[0]["axis_min"], result[0]["axis_max"]) == (first, last)
+    with raw.open("a") as stream:
+        stream.write("\n")
+    with pytest.raises(ValueError, match="verified original raw bytes"):
+        _convert_source(raw, "X", None, False, "sample_id", canonical, axis_mapping=mapping)
+    changed = original.decode().replace(f";{index_start};", ";wrong_channel;", 1)
+    raw.write_text(changed)
+    mapping = {**mapping, "raw_sha256": sha256_file(raw)}
+    with pytest.raises(ValueError, match="ordered channel headers"):
+        _convert_source(raw, "X", None, False, "sample_id", canonical, axis_mapping=mapping)

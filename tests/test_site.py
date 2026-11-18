@@ -221,7 +221,7 @@ def test_wavelength_coverage_uses_all_sources_and_declared_units() -> None:
         view(source(0, 1000, "cm-1")),
         view(source(float("nan"), 1000, "nm")),
         view(),
-    ]) == {"NIR": 2, "MIR": 1, "Mixed": 2, "Other": 1, "Raman": 1, "Raman + optical": 0, "Axis unavailable": 5}
+    ]) == {"NIR": 2, "MIR": 1, "Mixed": 2, "Other": 1, "Raman": 1, "Raman + optical": 0, "Axis not established": 5}
 
 
 def test_wavelength_coverage_has_visible_equivalent_data(tmp_path: Path) -> None:
@@ -229,8 +229,23 @@ def test_wavelength_coverage_has_visible_equivalent_data(tmp_path: Path) -> None
     index = (out / "index.html").read_text(encoding="utf-8")
     assert "View wavelength coverage data" in index
     assert '<th scope="row">NIR</th><td>3</td><td>75.0%</td>' in index
-    assert '<th scope="row">Axis unavailable</th><td>1</td><td>25.0%</td>' in index
+    assert '<th scope="row">Axis not established</th><td>1</td><td>25.0%</td>' in index
     assert "Wavenumbers are converted to nm" in index
+
+
+def test_known_techniques_with_uncalibrated_axes_are_not_counted_as_unknown() -> None:
+    def view(dataset_id: str, family: str) -> DatasetView:
+        return DatasetView(_entry(dataset_id, family=family), "public", {"sources": [{"modality": family, "axis_unit": "index", "axis_min": 1, "axis_max": 100}]}, True, True, True, False, True, dataset_id)
+
+    views = [view("nir_index", "NIR"), view("mir_synthetic", "MIR"), view("rock", "other")]
+    html = pages._dataviz({"by_spectro_family": {"NIR": 1, "MIR": 1, "other": 1}}, views)
+    assert "2 of 3 datasets have an identified spectroscopy technique; 1 unknown (33.3%)" in html
+    assert html.index("Spectroscopy family") < html.index("Wavelength coverage")
+    assert '<th scope="row">Unknown technique</th><td>1</td>' in html
+    assert '<th scope="row">Axis not established</th><td>3</td><td>100.0%</td>' in html
+    assert C.family_label("other") == "Unknown technique"
+    assert 'data-family="other"' in C.dataset_card(views[-1])
+    assert preview_view(views[-1])["title"].endswith(" · Unknown technique")
 
 
 def test_catalog_lists_all_datasets_with_tier_badges(tmp_path: Path) -> None:
