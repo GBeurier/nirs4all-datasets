@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 226–1101 none | 1004 | 1751 |
+| X | recovered_spectra | unknown | UV-Vis | 226–1101 nm | 1004 | 1751 |
 
 ### Variables (Y / metadata)
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 500, train: 504
+- **original** (documented, not applied): train: 504, test: 500
 
 ## Collection process
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The common source study uses a StellarNet BLACKComet-SR spectrometer with 226 to 1101.5 nm coverage. This catalog keeps the provided axis and does not reconstruct missing coordinates or alter the declared partitions. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=EthanolConcentration, https://www.timeseriesclassification.com/description.php?Dataset=EthanolLevel
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `9da9f21a3049ea87af094651611a6eced28256b30d93cfd42460e2e00bad931e`
-- **Processing hash:** `6fb641f27c33647182f537242aabb09529c78290964079e2939274b1b9c63a13` | **metadata hash:** `ecfc1042890df39d127e8d9f09ee9a974fb430a4f93f2494f41e321b53721be2`
+- **Processing hash:** `0f5049fcefe9cd68972685a3f820fbca9dd431160117a48447c58e81ef0ae774` | **metadata hash:** `c59d4cb1b598bfdf90311f0be11d7e45744272f628696ea3ce216d9049f5c3c4`

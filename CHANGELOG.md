@@ -5,7 +5,19 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
-## [Unreleased]
+## [0.3.20] - 2026-11-18
+
+- Correct spectroscopy classification and declared units. Normalize explicitly declared
+  micrometer coordinates to nanometres in canonical spectral headers and descriptors,
+  retaining raw bundles and measurement values. Apply source-evidenced OSSL MIR/Vis-NIR,
+  cartilage, malaria and legacy EcoSIS unit corrections. Classify UCR/UEA FTIR as MIR
+  while leaving reconstructed UCR grids without physical units. Unknown techniques no longer
+  default to NIR, and Vis-SWIR no longer matches the generic IR label.
+- Separate spectroscopy-family and wavelength-coverage summaries, identify Raman
+  shifts independently, and list unavailable optical axes explicitly. Descriptor-only
+  candidates contribute declared axes without pretending a measured card exists.
+- Deliver the documentary names and Lyonia descriptor added after 0.3.19; the bundled
+  catalog and public website now use the same 242-entry baseline.
 
 - The R package installs again on Windows with Rust 1.100 and later: `Makevars.win`
   links `-lsynchronization`, which the Rust standard library now requires from the
@@ -16,6 +28,9 @@ surface is stable in shape but may still change before `1.0`.
   with the same vendored, offline steps as the R release workflow, so a toolchain
   break is seen before a release tag; a failed R check prints the end of
   `00install.out`.
+
+## [0.3.19] - 2026-11-09
+
 - Manage the catalog by origin database: a dataset is now the samples of one
   published record with all their variables. Upstream per-target leaves (the same
   spectra, one target each) and per-instrument leaves (the same samples, one block

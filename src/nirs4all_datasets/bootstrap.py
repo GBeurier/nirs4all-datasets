@@ -19,6 +19,7 @@ import hashlib
 import json
 import re
 import shutil
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -85,21 +86,22 @@ _CLF_NAME_RE = re.compile(
 )
 _NA_TOKENS = frozenset({"", "nan", "na", "null", "none", "n/a", "<na>", "."})
 
-# ``spectroscopy_type`` tokens -> Modality. Checked most-specific first; default NIR.
+# Explicit technique tokens; unknown declarations must not silently become NIR.
 _MODALITY_MAP: tuple[tuple[str, Modality], ...] = (
     ("raman", Modality.RAMAN),
     ("ftir", Modality.MIR),
     ("mir", Modality.MIR),
     ("tir", Modality.TIR),
-    ("ecostress", Modality.OTHER),
-    ("vswir", Modality.VSWIR),
     ("vis-nir", Modality.NIR),
     ("visnir", Modality.NIR),
+    ("vswir", Modality.VSWIR),
+    ("vis-swir", Modality.VSWIR),
+    ("swir", Modality.VSWIR),
     ("uv-vis", Modality.UV_VIS),
     ("uvvis", Modality.UV_VIS),
     ("hyperspectral", Modality.HYPERSPECTRAL),
     ("nir", Modality.NIR),
-    ("ir", Modality.MIR),
+    ("nit", Modality.NIR),
 )
 
 # License names / URLs observed in v2.0 cards -> open SPDX. Substring match on the lower-cased value;
@@ -203,15 +205,47 @@ def _dir_fingerprint(path: Path) -> str:
 
 
 def _v2_axis_unit(block: dict[str, Any]) -> AxisUnit:
-    """Map one v2.0 spectral block's ``axis_unit`` onto our enum (only nm/cm-1 are representable)."""
+    """Map declared units, normalizing explicit micrometer axes to the supported nm representation."""
     unit = str(block.get("axis_unit") or "").strip().lower()
     if "cm-1" in unit or "cm^-1" in unit or "wavenumber" in unit:
         return AxisUnit.WAVENUMBER
     if unit in ("nm", "nanometer", "nanometers") or "wavelength (nm)" in unit:
         return AxisUnit.WAVELENGTH
+    if _v2_axis_scale(block) != 1:
+        return AxisUnit.WAVELENGTH
     if unit == "index":
         return AxisUnit.INDEX
-    return AxisUnit.NONE  # micrometers / unknown -> not representable; declared honestly as none
+    return AxisUnit.NONE
+
+
+def _v2_axis_scale(block: dict[str, Any]) -> int:
+    """Exact um-to-nm scale for an explicit native unit, otherwise preserve the original numbers."""
+    unit = str(block.get("axis_unit") or "").strip().lower()
+    return 1000 if re.search(r"(?<![a-z])(?:[uµμ]m|microns?|micromet(?:er|re)s?)(?![a-z])", unit) else 1
+
+
+@lru_cache(maxsize=1)
+def _spectral_metadata() -> dict[str, Any]:
+    """Reviewed dataset/source declarations with their source evidence."""
+    data: dict[str, Any] = json.loads(Path(__file__).with_name("spectral_metadata.json").read_text(encoding="utf-8"))["datasets"]
+    return data
+
+
+def _spectral_blocks(card: dict[str, Any]) -> list[dict[str, Any]]:
+    """Apply reviewed source metadata without changing the supplied standardized bundle."""
+    overrides = _spectral_metadata().get(slugify(card.get("dataset_id") or ""), {})
+    blocks = []
+    for original in card.get("spectral_blocks") or []:
+        block = dict(original)
+        source_id = str(block.get("block_id") or Path(str(block.get("x_file") or "X.csv")).stem)
+        correction = overrides.get(source_id)
+        if correction:
+            for key, value in correction["expected"].items():
+                if block.get(key) not in (value, correction["declared"].get(key, value)):
+                    raise ValueError(f"{card.get('dataset_id')}/{source_id}: reviewed spectral metadata no longer matches {key}")
+            block.update(correction["declared"])
+        blocks.append(block)
+    return blocks
 
 
 def _v2_signal_type(block: dict[str, Any]) -> SignalType:
@@ -227,12 +261,12 @@ def _v2_signal_type(block: dict[str, Any]) -> SignalType:
 
 
 def _v2_modality(spectroscopy_type: Any) -> Modality:
-    """Map a card ``spectroscopy_type`` (e.g. ``"NIR/VIS-NIR"``, ``"Raman"``) onto a :class:`Modality` (default NIR)."""
+    """Map a card ``spectroscopy_type`` (e.g. ``"NIR/VIS-NIR"``, ``"Raman"``) onto a :class:`Modality` (unknown remains other)."""
     low = str(spectroscopy_type or "").lower()
     for token, modality in _MODALITY_MAP:
-        if token in low:
+        if re.search(r"(?<![a-z0-9])" + re.escape(token).replace(r"\-", r"[-_\s]*") + r"(?![a-z0-9])", low):
             return modality
-    return Modality.NIR
+    return Modality.MIR if re.fullmatch(r"(?:(?:ft|atr)[-\s]*)?ir", low.strip()) else Modality.OTHER
 
 
 def _to_float(value: Any) -> float | None:
@@ -426,15 +460,16 @@ def _open_spdx(card: dict[str, Any]) -> str | None:
 
 def _build_sources(card: dict[str, Any], warnings: list[str]) -> list[Source]:
     """One :class:`Source` per ``spectral_blocks[]`` entry; fall back to a single ``X`` source + warn."""
-    blocks = card.get("spectral_blocks") or []
+    blocks = _spectral_blocks(card)
     sources: list[Source] = []
     for block in blocks:
         block_id = str(block.get("block_id") or Path(str(block.get("x_file") or "X.csv")).stem).strip() or "X"
         native_unit = str(block.get("axis_unit") or "").strip()
-        if native_unit.lower() in {"um", "µm", "μm"} or "micrometer" in native_unit.lower() or "micrometre" in native_unit.lower():
+        scale = _v2_axis_scale(block)
+        if scale != 1:
             warnings.append(
-                f"{block_id}: native axis unit is {native_unit!r} (micrometers), which is not supported by the axis unit enum; "
-                "axis values remain in micrometers. Multiply by 1000 to convert to nm."
+                f"{block_id}: native axis unit {native_unit!r} is normalized to nm (multiply coordinates by 1000); "
+                "original axis headers and measured values remain unchanged in the raw bundle."
             )
         n_rows = block.get("n_rows")
         n_vars = block.get("n_spectral_variables")
@@ -446,9 +481,9 @@ def _build_sources(card: dict[str, Any], warnings: list[str]) -> list[Source]:
                 modality=_v2_modality(block.get("spectroscopy_type") or card.get("spectral_data_summary", {}).get("spectroscopy_type")),
                 axis_unit=_v2_axis_unit(block),
                 signal_type=_v2_signal_type(block),
-                axis_min=_to_float(block.get("axis_min")),
-                axis_max=_to_float(block.get("axis_max")),
-                axis_resolution=_to_float(block.get("axis_resolution")),
+                axis_min=value * scale if (value := _to_float(block.get("axis_min"))) is not None else None,
+                axis_max=value * scale if (value := _to_float(block.get("axis_max"))) is not None else None,
+                axis_resolution=value * scale if (value := _to_float(block.get("axis_resolution"))) is not None else None,
                 n_observations=int(n_rows) if isinstance(n_rows, (int, float)) else None,
                 n_variables=int(n_vars) if isinstance(n_vars, (int, float)) else None,
             )

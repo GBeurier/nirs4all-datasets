@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | soil all | source instruments vary by sample | other | 0.4–14.98 none | 4 | 2868 |
+| X | soil all | source instruments vary by sample | other | 400–1.498e+04 nm | 4 | 2868 |
 
 ### Variables (Y / metadata)
 
@@ -99,8 +99,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'Wavelength (micrometers)' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.
-- **Curated views:** M: 1 fields, Y: 3 fields, measurements: 4 fields, passport: 49 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M. The key is the source specimen number; preparations, geometries, and instruments may differ. No grouping by material name.; X: native axis unit 'Wavelength (micrometers)' is normalized to nm (multiply coordinates by 1000); original axis headers and measured values remain unchanged in the raw bundle.
+- **Curated views:** M: 1 fields, Y: 3 fields, passport: 49 fields, measurements: 4 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `85a954d1d1e66ae942ee76e20b148376497f4234718a22360c8c2828ff850b8b`
-- **Processing hash:** `40e644cb728617a5f69f986c28c46d4e92c0cb4a4f0988d02834d95fa2fae47b` | **metadata hash:** `8ab5bcd6964f39727dda13fa8e077e26a03aa84702030663617158b524ce84cc`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `17a715fecd183fd3a35fe3c5b8510e8429b4061f4a75e04de4168c7d00e33370`
+- **Processing hash:** `5855643178ada89aeefe72d26d744e5bb980609ea2f48bba759b246de17cec75` | **metadata hash:** `bb343e85fe41d3646e44f3b4e8c83689679a98cd9ee93cad387f714a2a41d3cf`

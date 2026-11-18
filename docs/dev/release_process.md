@@ -288,9 +288,11 @@ submission. Users then
 - **Registry repo**: public `GBeurier/GBeurier.r-universe.dev` with a
   `packages.json` entry:
   ```json
-  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "subdir": "bindings/r/nirs4alldatasets" }
+  { "package": "nirs4alldatasets", "url": "https://github.com/GBeurier/nirs4all-datasets", "branch": "<exact release commit>", "subdir": "bindings/r/nirs4alldatasets" }
   ```
-  No `branch` field → it tracks the default branch.
+- The registry pins the package to an exact commit. After each qualified release,
+  advance only its `branch` field to that release commit and verify the served
+  R-universe package and checks. Preserve unrelated package pins.
 - **GitHub App** (one manual browser step): install
   <https://github.com/apps/r-universe> on the `GBeurier` account.
 - **Verify**: watch <https://gbeurier.r-universe.dev> (it *shows* the

@@ -40,7 +40,7 @@ def make_v2_leaf(
         obs = block_obs[b]
         rows = [f"{o};0.1;0.2" for o in obs]
         (leaf / f"{b}.csv").write_text("observation_id;1100;1102\n" + "\n".join(rows) + "\n", encoding="utf-8")
-        spectral_blocks.append({"block_id": b, "x_file": f"{b}.csv", "instrument_name": f"inst_{b}", "axis_unit": "nm", "axis_min": "1100", "axis_max": "1102", "n_rows": len(obs), "n_spectral_variables": 2})
+        spectral_blocks.append({"block_id": b, "x_file": f"{b}.csv", "instrument_name": f"inst_{b}", "spectroscopy_type": "NIR", "axis_unit": "nm", "axis_min": "1100", "axis_max": "1102", "n_rows": len(obs), "n_spectral_variables": 2})
 
     # Y.csv (per observation, like the real corpus). Numeric targets get varying numeric values (so
     # std/quantiles are exercised), categorical targets get two classes. Omit targets -> header only.

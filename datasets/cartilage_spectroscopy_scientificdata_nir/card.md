@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | cartilage_spectra | source_export | NIR | 700–1150 none | 2605 | 812 |
+| X | cartilage_spectra | source_export | NIR | 700–1150 nm | 2605 | 812 |
 
 ### Variables (Y / metadata)
 
@@ -57,8 +57,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 12 fields, measurements: 0 fields, passport: 7 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.; Spectral declaration for X: The original paper Table 1 declares absorption spectra from 700 to 1150 nm. Existing 700.03 to 1149.95 coordinates are retained. Evidence: https://pmc.ncbi.nlm.nih.gov/articles/PMC6717194/
+- **Curated views:** M: 0 fields, Y: 12 fields, passport: 7 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -78,6 +78,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `7a682029ad5b6289693b114d3292e2062a0d34f46725443664df75bb3fed9d23`
-- **Processing hash:** `42e744ce1af71463b914405aef440225393176abf9a57521975b0d34a9e5a8f7` | **metadata hash:** `7ac7f9f5b2ae9e7f069603c68b2387cd5aad0f5e5d85ac0cd39cc4ba3e566178`
+- **Processing hash:** `68fb976a6dd43dffa1748d71b79138b4125e152018f89cbd9de40b0a71040fea` | **metadata hash:** `447c56c37ff50e458dbcbc7aaa128ca385bf6a4587e79cf30bc259002f4cb613`

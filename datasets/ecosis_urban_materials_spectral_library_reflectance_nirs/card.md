@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | Filtered Asphalt Brick Spectra.xlsx | Ocean Optics JAZ-EL350 | NIR | 0.45–0.95 none | 60 | 256 |
+| X | Filtered Asphalt Brick Spectra.xlsx | Ocean Optics JAZ-EL350 | NIR | 450–950 nm | 60 | 256 |
 
 ### Variables (Y / metadata)
 
@@ -63,8 +63,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; X: native axis unit 'um' is normalized to nm (multiply coordinates by 1000); original axis headers and measured values remain unchanged in the raw bundle.
+- **Curated views:** M: 4 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -84,6 +84,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `a82ff49df33da7106fc428460ce8508f2e75d7893b43b04606b4fc133994194c`
-- **Processing hash:** `37b5ba17e897bf76fa745801ee3ee9b7177d6370a30feac22739b38ad9a68df3` | **metadata hash:** `5792177635147cbaa9c0d3b63bd5c16b3fef08b41f4e5afa7217bcd7084f3f7d`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `f7f90d9a19d06d7141f7a545bf351bd898363fea52583353a6efb06d2c969eb3`
+- **Processing hash:** `42356e31e18649d01b260245c8e4ede4ee4fc6c576190fb51b56edf38da36720` | **metadata hash:** `c78a7ea183be84b8b7356e7649dbc486446aa528535a32e9d6bcefcb262bf231`

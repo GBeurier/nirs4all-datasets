@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | reflectance | ASD FieldSpec 4 Standard-Res | MIR | 450–2500 nm | 2000 | 2051 |
+| X | reflectance | ASD FieldSpec 4 Standard-Res | VSWIR | 450–2500 nm | 2000 | 2051 |
 
 ### Variables (Y / metadata)
 
@@ -80,7 +80,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Preprocessing / cleaning / labeling
 
 - **Conversion warnings:** Curation identity contract: 20 subjects, 40 subject × arm-side units, 50 spectra each. The scan suffix of the exported sample_id is removed only for this verified contract.
-- **Curated views:** M: 5 fields, Y: 2 fields, measurements: 0 fields, passport: 31 fields. Original variables and the versioned mapping are retained separately.
+- **Curated views:** M: 5 fields, Y: 2 fields, passport: 31 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -100,6 +100,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `885348b13af4d48f0d3a06e31751bab7097daf09160e504134fa93dc54864efa`
-- **Processing hash:** `bac1500428cfe509b4676e35baf604334c31d3015372ba3feb2d4ef51a6836e7` | **metadata hash:** `2a1c965a70037d1b06b56faec173b0dfd907c86c2f738fe8aa45fb10bfc7f65f`
+- **Processing hash:** `e91a6497e9ea4190300942ac58d741b6e3bd8529ce4de8f561c54123385042a0` | **metadata hash:** `39c172ce6e3916154b5cfcae1f7d9737c1426eed4c57a0f63bd4c626f4fcab20`

@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | black PMMA UV-Vis-NIR transmissivity | *Not specified.* | NIR | 0.25–2.6 none | 2 | 2351 |
+| X | black PMMA UV-Vis-NIR transmissivity | *Not specified.* | NIR | 250–2600 nm | 2 | 2351 |
 
 ### Variables (Y / metadata)
 
@@ -54,7 +54,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -65,8 +65,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** X: native axis unit is 'um' (micrometers), which is not supported by the axis unit enum; axis values remain in micrometers. Multiply by 1000 to convert to nm.; Corrected inherited sample_temperature_C target to film_thickness_um: original files are Transmissivity_50µm_UV-Vis-NIR.xlsx and Transmissivity_73µm_UV-Vis-NIR.xlsx; their sheets contain no temperature measurement.; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Corrected inherited sample_temperature_C target to film_thickness_um: original files are Transmissivity_50µm_UV-Vis-NIR.xlsx and Transmissivity_73µm_UV-Vis-NIR.xlsx; their sheets contain no temperature measurement.; Curation identity contract: Sample identifier declared in M; X: native axis unit 'um' is normalized to nm (multiply coordinates by 1000); original axis headers and measured values remain unchanged in the raw bundle.
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -86,6 +86,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `e5e2cf96120f2f20091459ef4970569907c487f159eb49db0eda47d5d5bbc087`
-- **Processing hash:** `528923e295ba83a64c2092e38ed0131621414b8e192ea4ea06768e77c6758060` | **metadata hash:** `e3a7846b7088c984b515aa6553e77fbd1cbcbac85ff37efed36b7062317fa322`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `19af2319104163c4499f3cf7e28d063ae0ae8a3218fa4d50992b7d0d7494630a`
+- **Processing hash:** `e0f171a2387f512131ad4a26ae0cad9da47aeb567fab9c9a381c9e18cb7f26d8` | **metadata hash:** `aa64067c4eaec335dbfd511b17affeb1bdb24c9a168408b93c1ab753cc8f9a23`

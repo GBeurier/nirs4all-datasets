@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 799–1897 none | 60 | 570 |
+| X | recovered_spectra | unknown | MIR | 799–1897 none | 60 | 570 |
 
 ### Variables (Y / metadata)
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 30, train: 30
+- **original** (documented, not applied): train: 30, test: 30
 
 ## Collection process
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The archive documents the spectroscopy technique, but the standardized numeric headers do not establish original per-channel coordinates. Preserve all channel labels without assigning a physical unit; no grid is reconstructed. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=OliveOil
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `9b49feb7bbeadb03cd3fbc1c0406d6e828237d430e222ed13daf8ce0d8672f64`
-- **Processing hash:** `04efd04890771ef92549d12a14c4f38b037d5f9deb883e2769f5303a39d54e1a` | **metadata hash:** `e64bd35601b280e30e8ba8e01a2234a0336052ade28f99c92f833d1a253fd3c4`
+- **Processing hash:** `61ad837e453601b1beaefc8b913bf137ec899760a10b0aec2ccb6d7b43546661` | **metadata hash:** `871b476e195e740e15c313a35b55d31a1da4c814764cfa7afc1ac9a73729b557`

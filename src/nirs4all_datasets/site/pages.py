@@ -11,6 +11,8 @@ import math
 from typing import Any
 
 from nirs4all_datasets.qualify import metrics as QMETRICS
+from nirs4all_datasets.spectroscopy import optical_bands
+from nirs4all_datasets.spectroscopy import wavelength_range_nm as _wavelength_range_nm
 
 from . import charts
 from . import components as C
@@ -68,14 +70,22 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
         details = (
             f'<p>{esc(summary_text)} datasets.</p>'
             '<details><summary>View wavelength coverage data</summary>'
-            '<table><caption>Datasets by wavelength coverage</caption>'
+            '<table class="data"><caption>Datasets by wavelength coverage</caption>'
             '<thead><tr><th scope="col">Coverage</th><th scope="col">Datasets</th><th scope="col">Share</th></tr></thead>'
             f'<tbody>{rows}</tbody></table></details>'
         )
+        unavailable = [view for view in datasets if _coverage_category(view) == "Axis unavailable"]
+        if unavailable:
+            details += '<details><summary>Datasets with unavailable optical axes</summary><ul>' + "".join(
+                f'<li><a href="dataset/{esc(view.id)}.html">{esc(view.name)}</a> — declared family: {esc(view.entry.get("spectro_family") or "other")}</li>'
+                for view in unavailable
+            ) + '</ul></details>'
         cards.append(C.viz_card(
             "Wavelength coverage",
             "One category per dataset: NIR 780–2,500 nm, MIR >2,500–25,000 nm; mixed covers both. "
-            "Wavenumbers are converted to nm; missing or unsupported ranges are unclassified.",
+            "Wavenumbers are converted to nm. Raman shifts have separate categories and are never converted to optical wavelengths. "
+            "Axis unavailable means that an absolute optical range cannot be established; it does not mean the technique is unknown. "
+            "Declared descriptor axes are used when a measured card is pending.",
             charts.donut_chart(list(coverage.items()), title="Datasets by wavelength coverage", width=HALF) + details,
         ))
     scatter_points = _dataset_scatter_points(datasets)
@@ -112,8 +122,13 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
         ))
     if by_family:
         cards.append(C.viz_card(
-            "Spectroscopy family", "Single-modality family per dataset (mixed when heterogeneous)",
-            charts.donut_chart(list(by_family.items()), title="Datasets by spectroscopy family", width=HALF),
+            "Spectroscopy family", "Declared technique per source: VSWIR groups with NIR and TIR with MIR. Broad source labels use their known optical range; mixed combines families. This differs from wavelength coverage.",
+            charts.donut_chart(list(by_family.items()), title="Datasets by spectroscopy family", width=HALF)
+            + '<p>' + esc("; ".join(f"{family}: {count}" for family, count in by_family.items())) + ' datasets.</p>'
+            + '<details><summary>View spectroscopy family data</summary><table class="data"><caption>Datasets by spectroscopy family</caption>'
+            + '<thead><tr><th scope="col">Family</th><th scope="col">Datasets</th></tr></thead><tbody>'
+            + "".join(f'<tr><th scope="row">{esc(family)}</th><td>{count}</td></tr>' for family, count in by_family.items())
+            + '</tbody></table></details>',
         ))
     if by_tier:
         cards.append(C.viz_card(
@@ -162,55 +177,35 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     return f'<div class="viz-grid">{"".join(cards)}</div>'
 
 
-def _wavelength_range_nm(source: dict[str, Any]) -> tuple[float, float] | None:
-    """Convert a declared wavelength or absolute wavenumber range to nanometres."""
-    # Raman axes usually represent shifts, not absolute optical wavenumbers.
-    if str(source.get("modality") or "").strip().lower() == "raman":
-        return None
-    try:
-        raw_lo, raw_hi = source.get("axis_min"), source.get("axis_max")
-        if raw_lo is None or raw_hi is None or isinstance(raw_lo, bool) or isinstance(raw_hi, bool):
-            return None
-        lo, hi = sorted((float(raw_lo), float(raw_hi)))
-    except (TypeError, ValueError):
-        return None
-    if not (math.isfinite(lo) and math.isfinite(hi) and lo > 0):
-        return None
-    unit = str(source.get("axis_unit") or "").strip().lower()
-    if unit == "nm":
-        return lo, hi
-    if unit in {"cm-1", "cm^-1", "cm⁻¹", "1/cm"}:
-        result = (1e7 / hi, 1e7 / lo)
-        return result if all(math.isfinite(value) for value in result) else None
-    return None
+def _coverage_sources(view: DatasetView) -> list[dict[str, Any]]:
+    """Fresh measured card axes, or the public descriptor's declared axes when no card exists."""
+    return (view.card or {}).get("sources") or view.declared_sources or []
+
+
+def _coverage_category(view: DatasetView) -> str:
+    """One coverage category per dataset; keep Raman and incomplete optical axes explicit."""
+    sources = _coverage_sources(view)
+    raman = [source for source in sources if str(source.get("modality") or "").lower() == "raman"]
+    optical = [source for source in sources if source not in raman]
+    if raman:
+        return "Raman + optical" if optical else "Raman"
+    bands: set[str] = set()
+    unknown = not optical
+    for source in optical:
+        unknown |= _wavelength_range_nm(source) is None
+        bands.update(optical_bands(source))
+    if bands == {"NIR", "MIR"}:
+        return "Mixed"
+    if unknown:
+        return "Axis unavailable"
+    return next(iter(bands)) if bands else "Other"
 
 
 def _wavelength_coverage(datasets: list[DatasetView]) -> dict[str, int]:
-    """Count datasets by NIR/MIR overlap across all sources, without guessing missing units."""
-    counts = {"NIR": 0, "MIR": 0, "Mixed": 0, "Other": 0, "Unclassified": 0}
+    """Count known optical coverage independently from declared spectroscopy technique."""
+    counts = {"NIR": 0, "MIR": 0, "Mixed": 0, "Other": 0, "Raman": 0, "Raman + optical": 0, "Axis unavailable": 0}
     for view in datasets:
-        sources = (view.card or {}).get("sources") or []
-        nir = mir = False
-        unknown = not sources
-        for source in sources:
-            span = _wavelength_range_nm(source)
-            if span is None:
-                unknown = True
-                continue
-            lo, hi = span
-            nir |= hi >= 780 and (lo < 2500 or lo == hi == 2500)
-            mir |= hi > 2500 and lo <= 25000
-        if nir and mir:
-            category = "Mixed"
-        elif unknown:
-            category = "Unclassified"
-        elif nir:
-            category = "NIR"
-        elif mir:
-            category = "MIR"
-        else:
-            category = "Other"
-        counts[category] += 1
+        counts[_coverage_category(view)] += 1
     return counts
 
 

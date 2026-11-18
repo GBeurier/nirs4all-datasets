@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 400–4000 none | 111 | 234 |
+| X | recovered_spectra | unknown | MIR | 400–4000 none | 111 | 234 |
 
 ### Variables (Y / metadata)
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 54, train: 57
+- **original** (documented, not applied): train: 57, test: 54
 
 ## Collection process
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The archive documents the spectroscopy technique, but the standardized numeric headers do not establish original per-channel coordinates. Preserve all channel labels without assigning a physical unit; no grid is reconstructed. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=Wine
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `cbe59cf2c9c175969d47ea838d618e8ba8428ed8cb6bb34cbde6136e317f836c`
-- **Processing hash:** `1fa001b65383c3515390d0ba92e37214800e2f97e4b972f6a8c7919d0e3759bc` | **metadata hash:** `bf230382857dfd642da9d8561e54e4a37e2d94e486e6c0832efdb29d778171f2`
+- **Processing hash:** `190e21e0f3b1161ee9c5dcfeed7a879f92983bf2edd5d2b1f660c794226d96d7` | **metadata hash:** `86b6d0b726477098df4283d270a3f718ed9b2fb1d42a2cb66346d5b2566f378d`

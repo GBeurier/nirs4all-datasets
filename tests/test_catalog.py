@@ -274,3 +274,24 @@ def test_get_card(fleet: tuple[Path, dict[str, DatasetDescriptor]]) -> None:
     assert card["identity"]["id"] == "wheat"
     assert card["alignment"]["n_samples"] == 2
     assert get_card(root, "missing") is None
+
+
+def test_card_pending_coverage_reads_public_descriptor_without_index_schema_change(fleet):
+    from nirs4all_datasets.catalog import build_catalog
+    from nirs4all_datasets.schema import AxisUnit
+    from nirs4all_datasets.site.model import load_catalog
+    from nirs4all_datasets.site.pages import _coverage_category
+
+    root, descriptors = fleet
+    (root / "datasets/wheat/card.json").unlink()
+    descriptor = descriptors["wheat"]
+    descriptor.sources[0].axis_unit = AxisUnit.WAVELENGTH
+    descriptor.sources[0].axis_min = 900
+    descriptor.sources[0].axis_max = 1700
+    from nirs4all_datasets.bootstrap import _write_descriptor
+    _write_descriptor(descriptor, root / "catalog/datasets/wheat.yaml")
+    catalog = build_catalog(root)
+    assert all("sources" not in entry for entry in catalog["datasets"])
+    view = next(view for view in load_catalog(root).datasets if view.id == "wheat")
+    assert view.card is None
+    assert _coverage_category(view) == "NIR"

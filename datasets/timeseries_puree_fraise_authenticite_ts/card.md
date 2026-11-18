@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 400–4000 none | 983 | 235 |
+| X | recovered_spectra | unknown | MIR | 400–4000 none | 983 | 235 |
 
 ### Variables (Y / metadata)
 
@@ -47,7 +47,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 370, train: 613
+- **original** (documented, not applied): train: 613, test: 370
 
 ## Collection process
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The archive documents the spectroscopy technique, but the standardized numeric headers do not establish original per-channel coordinates. Preserve all channel labels without assigning a physical unit; no grid is reconstructed. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=Strawberry
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `73356e602376b7b5c969ac7523797f1eedd49081bc5aeb5e4e212bdad66387a1`
-- **Processing hash:** `cb6f8e80ff17b7958bbe5bc1650f61336173db0785be1d45019a1e4fe4118830` | **metadata hash:** `77b959d3e04deab81478a673328531a5eb88240dfa5edc936470a2df6a423dea`
+- **Processing hash:** `968d9475a16279189748d7fb0da62d80e2332247ef160c499e9ebd50a116f208` | **metadata hash:** `9d3def8641e8231127852e4b2fbd99abc56f77971da42aebc6ddf4b301e74160`

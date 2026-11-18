@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 226–1101 none | 1572 | 1751 |
+| X | recovered_spectra | unknown | UV-Vis | 226–1101 nm | 1572 | 1751 |
 
 ### Variables (Y / metadata)
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.; Spectral declaration for X: The common source study uses a StellarNet BLACKComet-SR spectrometer with 226 to 1101.5 nm coverage. This catalog keeps the provided axis and does not reconstruct missing coordinates or alter the declared partitions. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=EthanolConcentration, https://www.timeseriesclassification.com/description.php?Dataset=EthanolLevel
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `f1606edff0850c4105db431dba87cecaf7037f5536bbd7edb551080f0f8ba6e3`
-- **Processing hash:** `67a511d198e2d41066aa29e30eded98154f3bb3974a3210c0ee742f37f318e0c` | **metadata hash:** `01fe96ebe787ffe861b235def9e870d4dab50ddd8bf17418ea992c8bcecfde4f`
+- **Processing hash:** `84059ce60f4ba2ababdb472c1253818ec3fb296e2c147a2ab80fc2d9a4675fa1` | **metadata hash:** `aa45ec63693d1d81f7db5df2ba09df9e9f5307d7f218d33bf15b8cf6466b3cd9`

@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 0.4–14.01 none | 70 | 2844 |
+| X | recovered_spectra | unknown | other | 0.4–14.01 none | 70 | 2844 |
 
 ### Variables (Y / metadata)
 
@@ -62,8 +62,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 21 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The archive documents the spectroscopy technique, but the standardized numeric headers do not establish original per-channel coordinates. Preserve all channel labels without assigning a physical unit; no grid is reconstructed. Evidence: https://www.timeseriesclassification.com/description.php?Dataset=Rock
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 21 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -83,6 +83,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `b0affc5f9f49e8f55e039c6e7608a822313a4d8cc5ee3f48730ed9f75793f9ba`
-- **Processing hash:** `38d20f95861ad1bc217c97c0fa65cc10ec4bbfe8b8cd2ca56c91d1edb027561a` | **metadata hash:** `6f57cb2a32bc0c70c286d44453e16a062ee590544921f3c6e07ce5bec0390afe`
+- **Processing hash:** `49812847f6fd7a75e8ad485a8804a9e37e0e0c1f2c950773ee8f921aa7ee4ba6` | **metadata hash:** `2bcd72411a3b5c7b7eaa032b2b6f55cc5c91b922a7cbe10462ed2ef54551a244`

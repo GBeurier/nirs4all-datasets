@@ -84,8 +84,8 @@ HERO_MARKUP = """
   </svg>
   <div class="container hero-content">
     <div class="hero-badge"><span class="dot"></span> DOI-pinned · checksum-verified · pooch-style on-demand</div>
-    <h1 class="hero-tagline">A reproducible bank of <em>raw NIRS</em> reference datasets</h1>
-    <p class="hero-sub">Curated near-infrared spectroscopy datasets — provenance-rich, license-aware, and
+    <h1 class="hero-tagline">A reproducible bank of <em>spectroscopy</em> reference datasets</h1>
+    <p class="hero-sub">Curated NIR, MIR, Raman and mixed spectroscopy datasets — provenance-rich, license-aware, and
     citable. Each is described by a full identity card; the bytes stay at their licensed origin and are
     fetched on demand, verified, and cached.</p>
     <div class="hero-ctas">
