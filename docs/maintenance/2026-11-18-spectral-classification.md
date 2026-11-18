@@ -88,7 +88,7 @@ replaced before the final artifact freeze.
 
 Local checks executed during this batch:
 
-- `python -m pytest -q -o addopts='' -m 'not network'`: 811 passed,
+- `python -m pytest -q -o addopts='' -m 'not network'`: 812 passed,
   1 skipped (optional Preflight executable), 37 network cases deselected.
   Descriptor coverage also has a regression ensuring the persisted catalog
   entry schema remains unchanged.

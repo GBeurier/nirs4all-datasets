@@ -48,8 +48,11 @@ def corrected_descriptor(descriptor: DatasetDescriptor, card: dict[str, Any]) ->
         if _v2_axis_scale(block) != 1:
             source.axis_min, source.axis_max = proposed.axis_min, proposed.axis_max
             source.axis_resolution = proposed.axis_resolution
-            updated.provenance.warnings = [warning for warning in updated.provenance.warnings if not warning.startswith(f"{source.source_id}: native axis unit")]
-            updated.provenance.warnings.extend(warning for warning in warnings if warning.startswith(f"{source.source_id}: native axis unit"))
+            prefix = f"{source.source_id}: native axis unit"
+            native_warnings = [warning for warning in warnings if warning.startswith(prefix)]
+            if [warning for warning in updated.provenance.warnings if warning.startswith(prefix)] != native_warnings:
+                updated.provenance.warnings = [warning for warning in updated.provenance.warnings if not warning.startswith(prefix)]
+                updated.provenance.warnings.extend(native_warnings)
         if source.source_id in reviewed or str(block.get("spectroscopy_type") or "").lower() == "vis-swir":
             source.modality = proposed.modality
         if correction := reviewed.get(source.source_id):

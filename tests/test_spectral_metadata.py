@@ -101,3 +101,20 @@ def test_legacy_ecosis_wrong_nm_label_uses_reviewed_native_micrometers() -> None
     ]}
     source = _build_sources(card, [])[0]
     assert (source.axis_min, source.axis_max, source.axis_unit.value) == (400, 2500, "nm")
+
+
+def test_micrometer_repair_is_idempotent_with_existing_evidence(tmp_path, v2_leaf):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("repair_spectral_metadata", Path(__file__).parents[1] / "scripts/repair_spectral_metadata.py")
+    repair = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(repair)
+    leaf = v2_leaf(tmp_path / "source")
+    card = json.loads((leaf / "dataset_card.json").read_text())
+    card["spectral_blocks"][0].update(axis_unit="um", axis_min="0.4", axis_max="2.5")
+    (leaf / "dataset_card.json").write_text(json.dumps(card))
+    descriptor, _ = build_descriptor_from_card(leaf)
+    descriptor.provenance.warnings.append("Spectral declaration for X1: existing reviewed evidence")
+    updated = repair.corrected_descriptor(descriptor, card)
+    assert updated == descriptor
+    assert repair.corrected_descriptor(updated, card) == updated
