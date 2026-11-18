@@ -36,29 +36,42 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 
 ## Cross-repository version constraints
 
-nirs4all packages from different repositories depend on each other at **minor**
-granularity, never more precisely: Rust `"0.3"` (`>=0.3.0, <0.4.0`; `"1.3"` for
-1.x), Python `>=0.3,<0.4` (`>=1.3,<2` for 1.x), npm `^0.3.0` (`^1.3.0`), R
-`pkg (>= 0.3.0), pkg (< 0.4.0)`. Here: Cargo `nirs4all-formats = "0.2"` and
+Versions are `X.Y.Z`. A patch (`Z`) carries fixes and purely additive,
+backward-compatible features: existing outputs, wire formats, schemas and ABI
+symbols are unchanged. A minor (`Y`) carries any compatibility break: a changed
+or removed API signature, an ABI break or ABI version change, a wire, byte,
+schema or fixture change, renamed ids or changed numerical results of existing
+operations. The package that bumps classifies its change.
+
+Dependencies on packages from other nirs4all repositories accept every patch of
+one tested series, `>=X.Y[.Z],<X.(Y+1)`. A patch floor is allowed when a fix or
+feature from that patch is required; moving to a new series is an explicit,
+tested decision of the consumer. For 1.x packages the upper bound is the next
+minor, never `<2` (npm `~1.4.1`, Cargo `">=1.4.1, <1.5"`, Python
+`>=1.4.1,<1.5`); for 0.x the caret forms
+(`"0.3"`, `^0.3.0`) already stop at the next minor; R declares a lower bound
+and documents the series.
+
+Here: Cargo `nirs4all-formats = "0.2"` and
 `nirs4all-io = "0.3"` (root, Python binding and vendored R manifests), Python
 `nirs4all-formats>=0.2,<0.3`, `nirs4all-io>=0.3,<0.4`,
-`nirs4all-methods>=1.3,<2` and `nirs4all>=0.9,<2` extras. Exact, reproducible
+`nirs4all-methods>=1.3,<2` and `nirs4all>=0.9,<2` extras (the ranges ending
+at `<2` predate this rule and are aligned at the next release). Exact, reproducible
 versions live only in lockfiles and in `release/train-v1.toml`, the exact
 source train that CI and the R vendoring check out next to this repository.
 This repository's own crates and bindings stay in lockstep through
 `scripts/bump_version.sh`.
 
-In return, a **patch** release of `nirs4all-datasets` is backward compatible and
-changes no wire format, byte contract, persisted schema (descriptors, catalog,
-manifests), `.n4a` payload semantics, C ABI or shared fixture; any such change
-needs at least a **minor** release (for 0.x, every minor is breaking). A
-consumer needing a fix from a specific patch gets it from its lockfile and the
-release order, not from a patch floor. The full policy is
+A **patch** release of `nirs4all-datasets` therefore changes no output, wire
+format, byte contract, persisted schema (descriptors, catalog, manifests),
+`.n4a` payload semantics, C ABI or shared fixture; any such change needs a
+**minor** release. The full policy is
 `docs/contracts/release/VERSION_CONSTRAINTS.md` in `nirs4all-ecosystem`.
 
 Enforcement: `scripts/check_release_train.py` refuses a manifest requirement
-more precise than the minor of the train and lockfiles that do not resolve the
-exact train; `scripts/bump_version.sh --check` keeps internal lockstep; the
+more precise than the minor of the train (written for the previous minor-only
+form; it is updated at the next release to accept a patch floor) and lockfiles
+that do not resolve the exact train; `scripts/bump_version.sh --check` keeps internal lockstep; the
 C ABI symbol snapshots are checked independently. A guard that fails when a
 contract file changes without a minor bump is not automated yet.
 
