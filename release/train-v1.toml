@@ -6,14 +6,11 @@ schema_version = 1
 release_version = "0.3.20"
 
 [dependencies]
-nirs4all-formats = "0.2.16"
-nirs4all-io = "0.3.1" # Exact public version required by the registry gate.
+nirs4all-formats = "0.2.19"
+nirs4all-io = "0.3.6" # Exact public version required by the registry gate.
 
 [prerequisites]
-dag-ml-data = "0.2.16"
+# No additional runtime crate is required by the selected IO facade/core.
 
 [registries]
-# These are the exact crates consumed by nirs4all-datasets.  nirs4all-io's own
-# current source also depends on dag-ml-data 0.2.16, so verify that prerequisite
-# explicitly rather than accepting a local/path-only IO tree.
-crates_io = ["dag-ml-data", "nirs4all-formats", "nirs4all-io"]
+crates_io = ["nirs4all-formats", "nirs4all-io"]

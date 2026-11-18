@@ -13,6 +13,9 @@ surface is stable in shape but may still change before `1.0`.
   cartilage, malaria and legacy EcoSIS unit corrections. Classify UCR/UEA FTIR as MIR
   while leaving reconstructed UCR grids without physical units. Unknown techniques no longer
   default to NIR, and Vis-SWIR no longer matches the generic IR label.
+- Align the exact Rust source train with published Formats 0.2.19 and IO 0.3.6
+  so crates.io packaging does not combine the new IO facade with an older Formats API.
+  Minor-level consumer requirements remain unchanged.
 - Separate spectroscopy-family and wavelength-coverage summaries, identify Raman
   shifts independently, and list unavailable optical axes explicitly. Descriptor-only
   candidates contribute declared axes without pretending a measured card exists.

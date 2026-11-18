@@ -81,7 +81,7 @@ cache; only converted coordinate headers differ. Raw files match their former
 manifest hashes. All 242 descriptors validate, and no catalog entry is stale.
 Sample/source/target totals remain 258793 / 279 / 1671.
 
-Qualification used published SDK 1.4.16, IO 0.3.6, Formats 0.2.16 and Methods
+Qualification used the published Python wheels SDK 1.4.16, IO 0.3.6, Formats 0.2.16 and Methods
 1.3.19 in an isolated environment. All previously available PCA and outlier
 sections remain computed; a preliminary environment without the SDK was
 replaced before the final artifact freeze.
@@ -104,7 +104,15 @@ Local checks executed during this batch:
 
 These are local results, not blanket scientific validation of every dataset or
 claims about unexecuted network origins. R/Octave native checks and other
-platforms use their established CI/release lanes. The server's separate private
+platforms use their established CI/release lanes.
+
+The crates.io dry run exposed IO 0.3.6 being selected with the older Formats
+0.2.16 source train, which lacks its multimodal decoder entry point. The final
+Rust train and native binding locks use published Formats 0.2.19 and IO 0.3.6;
+minor-level dependency requirements remain unchanged. No extra DMD prerequisite
+is required by this selected facade/core.
+
+The server's separate private
 hosted-content cohort and CIRAD network/TLS acceptance are independent of this
 curated-catalog correction.
 
