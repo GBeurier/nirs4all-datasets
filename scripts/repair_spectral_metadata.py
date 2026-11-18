@@ -43,7 +43,7 @@ def corrected_descriptor(descriptor: DatasetDescriptor, card: dict[str, Any]) ->
         # correction (notably ChEMBL mode indices), more authoritative than the exporter.
         if source.source_id in reviewed or (proposed.axis_unit is not AxisUnit.NONE and (source.axis_unit is AxisUnit.NONE or _v2_axis_scale(block) != 1)):
             source.axis_unit = proposed.axis_unit
-        if source.source_id in reviewed and proposed.axis_unit is AxisUnit.NONE:
+        if source.source_id in reviewed:
             source.axis_min, source.axis_max, source.axis_resolution = proposed.axis_min, proposed.axis_max, proposed.axis_resolution
         if _v2_axis_scale(block) != 1:
             source.axis_min, source.axis_max = proposed.axis_min, proposed.axis_max

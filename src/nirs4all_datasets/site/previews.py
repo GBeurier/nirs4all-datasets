@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .model import DatasetView
+from .model import DatasetView, family_label
 
 
 def _declared_int(value: Any) -> int | None:
@@ -63,7 +63,7 @@ def preview_view(view: DatasetView) -> dict[str, Any]:
     ]
     return {
         "id": str(entry["id"]),
-        "title": f"{entry.get('domain') or '—'} · {entry.get('spectro_family') or '—'}",
+        "title": f"{entry.get('domain') or '—'} · {family_label(entry.get('spectro_family') or '—')}",
         "description": None,
         "taskKind": "unknown",
         "taskLabel": entry.get("task") or "",

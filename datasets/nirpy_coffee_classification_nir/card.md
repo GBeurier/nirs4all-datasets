@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | Nirpy Research coffee classification NIR | *Not specified.* | NIR | 1–601 index | 70 | 601 |
+| X | Nirpy Research coffee classification NIR | *Not specified.* | NIR | 1100–2300 nm | 70 | 601 |
 
 ### Variables (Y / metadata)
 
@@ -59,8 +59,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 0 fields, Y: 1 fields, measurements: 0 fields, passport: 16 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: The dataset author's analysis specifies 1100 to 2300 nm in 2 nm steps for these 601 ordered channels. All canonical feature values match the pinned original source at float32 precision. Restore wavelength labels only for the verified standardized raw SHA-256; preserve raw indices, measured values, identities, targets and partitions. Evidence: https://nirpyresearch.com/analysis-ground-coffee-nir-spectroscopy/, https://raw.githubusercontent.com/nevernervous78/nirpyresearch/97a5d7dd1fe72472d9b3a070c53c712f16fc1e2f/data/coffee_classification.csv
+- **Curated views:** M: 0 fields, Y: 1 fields, passport: 16 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -80,6 +80,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `bdc6b9e8855fb7555a953ad960c8136167a9e9687f2cca12ffce10a9dbf9dab5`
-- **Processing hash:** `fa8f93463d1712608e736ee9a068820d4adc59e6872590f780b0b5d5eb52d9ec` | **metadata hash:** `2627f18a86af578a54b5e9643ea1322eca713626671560acbb6bf0046194c39d`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `7e40e9b05a9ea4b37d973eaf2ff9872f6215da347f06474feb52ea9f99a978e0`
+- **Processing hash:** `025186d7153730b4e47a1acb9bb715da08ffaf2631ec3a3f4e1c744ff7ac610f` | **metadata hash:** `4998b14dc3e5f7df005e034b6ddaccaf6c596e9fa3465441b5bee95683808b55`

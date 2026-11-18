@@ -155,7 +155,7 @@ def _sample_for(obs: pd.Series, m: pd.DataFrame | None, has_sample: bool, ids_sa
     return mapped.fillna(obs_str).astype(str), n_orphans
 
 
-def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, canonical: Path, *, axis_scale: int = 1) -> tuple[dict[str, Any] | None, str | None, int, set[str], list[str]]:
+def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, canonical: Path, *, axis_scale: int = 1, axis_mapping: dict[str, Any] | None = None) -> tuple[dict[str, Any] | None, str | None, int, set[str], list[str]]:
     """Convert one X block to ``canonical/sources/<source_id>.parquet``.
 
     Reads spectral columns as float32 (chunked for large files), prepends ``observation_id`` (str) and
@@ -172,6 +172,14 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
         warnings.append(f"{path.name}: first column is {cols[0] if cols else '<none>'!r}, expected {_OBS_KEY!r}; skipping this block.")
         return None, None, 0, set(), warnings
     spectral_cols = list(cols[1:])
+    mapped_headers: list[str] | None = None
+    if axis_mapping is not None:
+        if axis_scale != 1 or sha256_file(path) != axis_mapping["raw_sha256"]:
+            raise ValueError(f"{path.name}: reviewed axis mapping requires the verified original raw bytes and unscaled indices")
+        expected = [str(axis_mapping["index_start"] + i) for i in range(axis_mapping["count"])]
+        if spectral_cols != expected:
+            raise ValueError(f"{path.name}: reviewed axis mapping no longer matches the ordered channel headers")
+        mapped_headers = [str(axis_mapping["coordinate_start_nm"] + i * axis_mapping["step_nm"]) for i in range(axis_mapping["count"])]
     dtypes: dict[str, Any] = {_OBS_KEY: str} | dict.fromkeys(spectral_cols, "float32")
 
     obs_chunks: list[pd.Series] = []
@@ -182,6 +190,10 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
         spectral_chunks.append(chunk[spectral_cols])
     obs = pd.concat(obs_chunks, ignore_index=True) if obs_chunks else pd.Series([], dtype=str, name=_OBS_KEY)
     spectral = pd.concat(spectral_chunks, ignore_index=True) if spectral_chunks else pd.DataFrame(columns=spectral_cols)
+    if mapped_headers is not None:
+        spectral.columns = mapped_headers
+        spectral_cols = mapped_headers
+        warnings.append(f"{source_id}: wavelength headers restored from the reviewed source-specific mapping; raw bytes, channel order and measured values are unchanged.")
     if axis_scale != 1:
         # Change coordinate units only: channel order, measured values and raw CSV stay untouched.
         normalized = [str(Decimal(column) * axis_scale) for column in spectral_cols]
@@ -430,9 +442,12 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
                 native_blocks[source_id] = {"axis_unit": declaration["native_axis_unit"]}
     for source_id, path in x_files.items():
         scale = _v2_axis_scale(native_blocks.get(source_id, {}))
+        mapping = native_blocks.get(source_id, {}).get("axis_mapping")
         if scale != 1 and unit_by_id.get(source_id) != "nm":
             raise ValueError(f"{source_id}: micrometer coordinates require a descriptor normalized to nm")
-        entry, sha, n_rows, src_samples, src_warnings = _convert_source(path, source_id, m, has_sample, ids_sample, canonical, axis_scale=scale)
+        if mapping is not None and unit_by_id.get(source_id) != "nm":
+            raise ValueError(f"{source_id}: reviewed wavelength mapping requires a descriptor in nm")
+        entry, sha, n_rows, src_samples, src_warnings = _convert_source(path, source_id, m, has_sample, ids_sample, canonical, axis_scale=scale, axis_mapping=mapping)
         warnings.extend(src_warnings)
         if entry is None or sha is None:
             continue

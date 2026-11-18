@@ -244,6 +244,8 @@ def _spectral_blocks(card: dict[str, Any]) -> list[dict[str, Any]]:
                 if block.get(key) not in (value, correction["declared"].get(key, value)):
                     raise ValueError(f"{card.get('dataset_id')}/{source_id}: reviewed spectral metadata no longer matches {key}")
             block.update(correction["declared"])
+            if "axis_mapping" in correction:
+                block["axis_mapping"] = correction["axis_mapping"]
         blocks.append(block)
     return blocks
 

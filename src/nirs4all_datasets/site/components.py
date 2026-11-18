@@ -11,7 +11,7 @@ from typing import Any
 from .escape import esc, num
 from .explanations import METRIC_HELP, PANEL_HELP
 from .icons import icon, signal_icon_key
-from .model import DatasetView
+from .model import DatasetView, family_label
 from .previews import _declared_int
 
 _TIERS = ("public", "private", "anonymized")
@@ -292,7 +292,7 @@ def dataset_card(view: DatasetView) -> str:
   {panel_intro("Dataset summary", text="Compare source, sample and target counts; open this card for variables, provenance and access instructions.", guide=False)}
   {icons_html}
   <div class="ds-preview-fallback">
-    <div class="ds-domain">{esc(domain)} &middot; {esc(family)}</div>
+    <div class="ds-domain">{esc(domain)} &middot; {esc(family_label(family))}</div>
     <div class="ds-meta">
       <div>Samples <b>{num(n_samples)}</b></div>
       <div>Spectral variables <b>{num(n_features)}</b></div>

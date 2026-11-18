@@ -26,6 +26,11 @@ import yaml
 PUBLIC, PRIVATE, ANONYMIZED = "public", "private", "anonymized"
 
 
+def family_label(value: str) -> str:
+    """Display an unspecified technique without changing its stable catalog identifier."""
+    return "Unknown technique" if value == "other" else value
+
+
 @dataclass
 class DatasetView:
     """A tier-resolved view of one dataset: the index entry + the card the tier permits + flags."""

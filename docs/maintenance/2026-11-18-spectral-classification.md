@@ -129,3 +129,68 @@ python -m nirs4all_datasets.cli site --root . --out site
 The source cache and output tree must be separate. The script is a dry run unless
 `--write` is supplied; descriptor-only candidates remain unqualified. Raw payloads
 and canonical caches stay outside Git and are not uploaded by this workflow.
+
+## 0.3.21 follow-up: one unknown technique
+
+The 0.3.20 results above remain the historical release record. The follow-up
+makes the actual technique classification the first overview panel: **241 of
+242 datasets have an identified technique; Rock is the sole unknown (0.4%)**.
+The family counts remain NIR 153, MIR 20, Raman 14, mixed 52, UV-Vis 2 and
+unspecified 1. The stable API/filter identifier `other` is displayed as
+`Unknown technique`, including shared-component previews and scatter tooltips.
+Visible summaries, equivalent data tables and linked dataset lists distinguish
+technique completeness from physical-axis documentation.
+
+The analysis used SDK 1.4.16, IO 0.3.6 and Methods 1.3.19 on all 17 spectral
+blocks of the 14 datasets without established axes. Every dataset has measured
+values. Seven are NIR, six are MIR, and only Rock lacks a verified technique.
+Unit heuristics alone are insufficient: they propose nm for the synthetic UCR
+MIR grids, and must not be accepted as physical calibration.
+
+Matching the original author's source files and analysis identifies three
+recoverable NIRPY wavelength grids:
+
+| Dataset | Wavelength grid | Channels |
+| --- | --- | ---: |
+| Coffee classification | 1100 through 2300 nm, step 2 nm | 601 |
+| Peach Brix | 1100 through 2298 nm, step 2 nm | 600 |
+| Plums Brix/firmness | 1102 through 2300 nm, step 2 nm | 600 |
+
+Each original feature matrix matches the existing canonical values exactly at
+float32 precision. The historical peach file named in the article also matches
+the renamed current source. The packaged source metadata links the author's
+analysis and the original CSV pinned to commit
+`97a5d7dd1fe72472d9b3a070c53c712f16fc1e2f`. In particular, the plums article
+explicitly uses `wl = np.linspace(1102, 2300, 600)`; the different peach start
+must not be copied onto that source.
+
+Conversion applies these source-specific mappings only to the verified exact
+standardized raw SHA-256 and ordered index headers. It changes canonical column
+labels and declared min/max/resolution, preserving raw bytes, float32 values,
+channel order, observation/sample identity, variables, metadata and partitions.
+The three datasets were actually rebuilt and requalified with converter
+`0.3.21+curation.1`; their content versions advance by one patch. Independent
+comparison of the rebuilt payloads and every non-spectral Parquet table confirms
+exact preservation. All manifest file hashes match the new files, all cards
+match their descriptors, and no catalog entry is stale. A second repair selects
+no datasets, and catalog/index regeneration is byte-identical.
+
+Physical-axis coverage is now NIR 127, MIR 9, mixed 80, Raman 14,
+Raman with optical sources 1, and axis not established 11. These eleven are
+reported separately: the six known UCR MIR datasets, Dryad tree tissue, NIRPY
+milk and milk powder, Grapevine, and Rock. No unverified units are assigned to
+those sources; this does not undo their known techniques.
+
+Executed local checks for this follow-up:
+
+- Full non-network Python suite: 816 passed, one optional Preflight executable
+  skipped, 37 network cases deselected. The final affected source/site suites
+  also pass all 76 cases after the presentation consistency fixes.
+- Rust workspace: 46 tests passed, including the C ABI snapshot checks;
+  rustfmt and clippy with warnings denied passed.
+- Ruff, mypy, 242-descriptor publication validation, version synchronization
+  and the exact public dependency train passed.
+
+The established CI/release lanes qualify the other binding/platform artifacts.
+The hosted CIRAD service cohort remains an independent deployment; this batch
+does not assert that it was redeployed or that its connectivity is restored.
