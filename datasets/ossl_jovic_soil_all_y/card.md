@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X_mir | recovered_spectra | unknown | NIR | 600–4000 none | 45 | 1701 |
+| X_mir | recovered_spectra | unknown | MIR | 600–4000 cm-1 | 45 | 1701 |
 | X_visnir | recovered_spectra | unknown | NIR | 350–2500 nm | 135 | 1076 |
 
 ### Variables (Y / metadata)
@@ -81,8 +81,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 8 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M; Spectral declaration for X_visnir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545; Spectral declaration for X_mir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545
+- **Curated views:** M: 4 fields, Y: 8 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -102,6 +102,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.1.1 | **schema/protocol:** 2.0
 - **Content hash:** `38d1d53105ca22dcadab899edac7d21e599712ff1408e70321f5f980d816a9d0`
-- **Processing hash:** `3ad5a399829c13b5d2bfa0d542604df41ac056bf6c7f1ebbe7692e4a820bceb3` | **metadata hash:** `275c76cdabcc99f2f9f83395fde8935549d2d712bfbe53889f5f1b36be4052ab`
+- **Processing hash:** `586d1b868e001bff840417d6e8f3741fb3a75b1a055c8076acce96c379f2d24a` | **metadata hash:** `e8a44e2810db9765bb6667eacae1eba737d1641fd2a572d331a537ca96c4bce4`

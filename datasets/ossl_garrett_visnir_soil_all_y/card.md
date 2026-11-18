@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | recovered_spectra | unknown | NIR | 350–2500 none | 184 | 1076 |
+| X | recovered_spectra | unknown | NIR | 350–2500 nm | 184 | 1076 |
 
 ### Variables (Y / metadata)
 
@@ -139,8 +139,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 7 fields, Y: 27 fields, measurements: 1 fields, passport: 67 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; Spectral declaration for X: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545
+- **Curated views:** M: 7 fields, Y: 27 fields, passport: 67 fields, measurements: 1 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -160,6 +160,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
 - **Content hash:** `183e4e16638ba417a28a4d9644dd88e998e745dd088061d9204e5b37ae065e53`
-- **Processing hash:** `7e49c8acb5608026a1ad6bf508aabaac4677e6267ffedaf8f455e388a77645ff` | **metadata hash:** `1c03abb1b8026f739c70700ba80e93a5c2eff9ab35735781201c7aba93aa2702`
+- **Processing hash:** `8b6b02524398d3450ae1d7b6ee327836d0d1ea860e88fb2744138529aaf23046` | **metadata hash:** `7db3cc534efd445bc60e49fcd9f2d3fa4fcb50638ea21f8f50927c21c72c1ea5`

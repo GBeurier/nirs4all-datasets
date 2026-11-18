@@ -109,8 +109,8 @@ ds.split("original")                     # the native split labels, if the sourc
 ds.to_nirs4all()                         # hand off to nirs4all for modelling
 ```
 
-The installed package includes the 241-entry catalog and origin-loading recipes for
-all 95 public datasets. Run from any directory; no checkout or CIRAD source bundle
+The installed package includes the 242-entry catalog and origin-loading recipes for
+95 reproducible public-origin recipes. Run from any directory; no checkout or CIRAD source bundle
 is needed. The malaria database requires an explicit optional guestbook profile.
 See [public-origin loading](docs/PUBLIC_ORIGIN_LOADING.md) for the profile option,
 provider limits, and the native ChEMBL peak-list representation.

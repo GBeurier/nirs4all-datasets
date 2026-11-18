@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | elvidge_spectra_values | Beckman UV-5240 Spectrophotometer | NIR | 0.4–2.5 nm | 75 | 826 |
+| X | elvidge_spectra_values | Beckman UV-5240 Spectrophotometer | NIR | 400–2500 nm | 75 | 826 |
 
 ### Variables (Y / metadata)
 
@@ -67,7 +67,7 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 ## Collection process
 
 - **Reference method:** *Not specified.*
-- **Conversion status:** partial
+- **Conversion status:** ok
 
 ### Origin sources (where the bytes live)
 
@@ -78,8 +78,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 2 fields, Y: 1 fields, measurements: 2 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.; X: native axis unit 'um' is normalized to nm (multiply coordinates by 1000); original axis headers and measured values remain unchanged in the raw bundle.; Spectral declaration for X: The Elvidge EcoSIS resource records its native optical axis in micrometers. The standardized card incorrectly called the unchanged 0.4-2.5 coordinates nm. Normalize canonical coordinates to nm while retaining the original numeric raw headers and every measurement. Evidence: https://data.ecosis.org/dataset/fresh-and-dry-spectra-of-several-plant-tissues-and-chemical-and-phenological-constituents, https://ris.utwente.nl/ws/files/276844036/Plant_phenolics_and_absorption_features_in_vegetation_reflectance_spectra_near_1.66_m.pdf
+- **Curated views:** M: 2 fields, Y: 1 fields, passport: 32 fields, measurements: 2 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -99,6 +99,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.2.0 | **schema/protocol:** 2.0
-- **Content hash:** `b33b9e32a81e2ce3fa678743ea6c3ebae3590450c31e773180f4578df01d1e73`
-- **Processing hash:** `68cb2fa5cc1f543343bba670b4d1d6a75db1968daf2aed1f005a567ff14fc3d6` | **metadata hash:** `b41be36f6f1d2364e27a6fc82d408739cdca19800079ac54258570a5f1e85483`
+- **Content version:** 1.2.1 | **schema/protocol:** 2.0
+- **Content hash:** `443705aab062304d58c96549c5d807002e9d09dd9ac8df7943079ffc82937abf`
+- **Processing hash:** `eb8422369390f25415b705d5069e8ff412826069997ffc4e4a7c6db5faac9ec8` | **metadata hash:** `684ba7e1458e45e0d23a8f1ef3557e654dd61ed13680dfdc8117041b8595e20e`

@@ -20,8 +20,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X_mir | recovered_spectra | unknown | NIR | 600–4000 none | 589 | 1701 |
-| X_visnir | recovered_spectra | unknown | NIR | 350–2500 none | 589 | 1076 |
+| X_mir | recovered_spectra | unknown | MIR | 600–4000 cm-1 | 589 | 1701 |
+| X_visnir | recovered_spectra | unknown | NIR | 350–2500 nm | 589 | 1076 |
 
 ### Variables (Y / metadata)
 
@@ -85,8 +85,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M
-- **Curated views:** M: 4 fields, Y: 12 fields, measurements: 0 fields, passport: 32 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M; Spectral declaration for X_visnir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545; Spectral declaration for X_mir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545
+- **Curated views:** M: 4 fields, Y: 12 fields, passport: 32 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -106,6 +106,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.1.1 | **schema/protocol:** 2.0
 - **Content hash:** `da6ec347d3d8b4336669ec1c3f06080ecbe640e2e9098270f6decd1f9be1a7e1`
-- **Processing hash:** `0550362e7ed6628a8657b36e355b0fd898933be52896372a95767206a0c16adb` | **metadata hash:** `55d6bd7f93a3b8c2f879b52ac86b76278668a2a9e452d48a2b6907de58e736f7`
+- **Processing hash:** `51f548cb46f2c9e56263d5b59d327febe45540693624210292b276d172ee951b` | **metadata hash:** `fdcbaffced580914e3c6e8b81bcdd5dbfd8cb5d4602fce44be296be36c31645e`

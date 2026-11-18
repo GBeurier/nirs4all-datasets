@@ -326,7 +326,7 @@ class Source(BaseModel):
     name: str | None = None
     vendor: str | None = None
     instrument_name: str | None = None
-    modality: Modality = Modality.NIR
+    modality: Modality = Modality.OTHER
     axis_unit: AxisUnit = AxisUnit.NONE
     axis_min: float | None = None
     axis_max: float | None = None

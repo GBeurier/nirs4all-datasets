@@ -68,16 +68,17 @@ def test_declared_signal_and_wavenumber(tmp_path: Path, v2_leaf: Any) -> None:
     assert source.signal_type.value == "reflectance%"
 
 
-def test_micrometer_axis_preserves_native_unit_warning(tmp_path: Path, v2_leaf: Any) -> None:
+def test_micrometer_axis_normalizes_coordinates_and_records_provenance(tmp_path: Path, v2_leaf: Any) -> None:
     leaf = v2_leaf(tmp_path / "ds")
     path = leaf / "dataset_card.json"
     card = json.loads(path.read_text())
     card["spectral_blocks"][0].update(axis_unit="Wavelength (micrometers)", axis_min="0.4", axis_max="2.5")
     path.write_text(json.dumps(card))
     desc, warnings = build_descriptor_from_card(leaf)
-    assert desc.sources[0].axis_unit.value == "none"
-    assert desc.sources[0].axis_min == 0.4
-    assert any("Wavelength (micrometers)" in w and "Multiply by 1000" in w for w in warnings)
+    assert desc.sources[0].axis_unit.value == "nm"
+    assert desc.sources[0].axis_min == 400
+    assert desc.sources[0].axis_max == 2500
+    assert any("Wavelength (micrometers)" in w and "multiply coordinates by 1000" in w for w in warnings)
     assert warnings == desc.provenance.warnings
 
 

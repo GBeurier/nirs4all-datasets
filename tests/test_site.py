@@ -221,7 +221,7 @@ def test_wavelength_coverage_uses_all_sources_and_declared_units() -> None:
         view(source(0, 1000, "cm-1")),
         view(source(float("nan"), 1000, "nm")),
         view(),
-    ]) == {"NIR": 2, "MIR": 1, "Mixed": 2, "Other": 1, "Unclassified": 6}
+    ]) == {"NIR": 2, "MIR": 1, "Mixed": 2, "Other": 1, "Raman": 1, "Raman + optical": 0, "Axis unavailable": 5}
 
 
 def test_wavelength_coverage_has_visible_equivalent_data(tmp_path: Path) -> None:
@@ -229,7 +229,7 @@ def test_wavelength_coverage_has_visible_equivalent_data(tmp_path: Path) -> None
     index = (out / "index.html").read_text(encoding="utf-8")
     assert "View wavelength coverage data" in index
     assert '<th scope="row">NIR</th><td>3</td><td>75.0%</td>' in index
-    assert '<th scope="row">Unclassified</th><td>1</td><td>25.0%</td>' in index
+    assert '<th scope="row">Axis unavailable</th><td>1</td><td>25.0%</td>' in index
     assert "Wavenumbers are converted to nm" in index
 
 

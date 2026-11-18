@@ -1,6 +1,6 @@
 # Release checklist — nirs4all-datasets
 
-**Multi-registry, immutable fan-out.** A single `vX.Y.Z` tag fans out to PyPI, crates.io, npm, CRAN (R),
+**Multi-registry, immutable fan-out.** A single `vX.Y.Z` tag fans out to PyPI, crates.io, npm, R release artifacts,
 and MATLAB via the tag-triggered `release-*` workflows. crates.io/PyPI/npm are **yank-only** — a mistagged
 release permanently burns a version number. Branch pushes to `main` never publish.
 
@@ -26,4 +26,4 @@ release permanently burns a version number. Branch pushes to `main` never publis
 ## Post-release
 
 - [ ] `pip install nirs4all-datasets==X.Y.Z` in a clean venv; smoke `n4a-datasets --help`.
-- [ ] Verify the version appears on each registry (PyPI/crates/npm/CRAN).
+- [ ] Verify the version appears on each registry (PyPI/crates/npm/R-universe).

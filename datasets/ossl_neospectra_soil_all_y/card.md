@@ -20,8 +20,8 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X_mir | recovered_spectra | unknown | NIR | 600–4000 none | 1976 | 1701 |
-| X_nir | recovered_spectra | unknown | NIR | 1350–2550 none | 8151 | 601 |
+| X_mir | recovered_spectra | unknown | MIR | 600–4000 cm-1 | 1976 | 1701 |
+| X_nir | recovered_spectra | unknown | NIR | 1350–2550 nm | 8151 | 601 |
 
 ### Variables (Y / metadata)
 
@@ -100,8 +100,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.
-- **Curated views:** M: 10 fields, Y: 23 fields, measurements: 0 fields, passport: 30 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** OSSL design enrichment pending: supply the original soilsite file (NIRS4ALL_OSSL_SOILSITE or --soilsite).; Curation identity contract: Sample identifier declared in M; frequencies of this identifier describe exported rows without establishing technical replicates.; Spectral declaration for X_nir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545; Spectral declaration for X_mir: OSSL declares MIR coordinates in cm-1, VisNIR and NeoSpectra in nm. The retained source block and expected coordinate grid identify the matching exported measurement; no axes are reconstructed. Evidence: https://docs.soilspectroscopy.org/db-desc.html, https://doi.org/10.1371/journal.pone.0296545
+- **Curated views:** M: 10 fields, Y: 23 fields, passport: 30 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -121,6 +121,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.1.1 | **schema/protocol:** 2.0
 - **Content hash:** `5c7f05f7eb2f0b463deef9be81410a5f57b1a32264a6a676c3c98468b0abc0fc`
-- **Processing hash:** `2db467dcbfe0900066be5519de6cf605d2d525c6467a4fae22bd2869a81eebcf` | **metadata hash:** `dfe8e2b6d22c3b12c9075a57b7e41c4368c5373d864342a36db82f426563f84f`
+- **Processing hash:** `341c6a309116bdf363d04d8f16bb6e878015f2df66b478e1bb811d1d17adfbb8` | **metadata hash:** `89bd5ae9a9e11bed431d639a2e61528b68f7e44991ea970add3eacf38a46fe5c`

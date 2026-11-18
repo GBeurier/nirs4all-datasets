@@ -40,6 +40,7 @@ class DatasetView:
     show_byte_download: bool  # always False — bytes never served
     show_metadata_downloads: bool  # card.json / croissant.json links (public only)
     asset_dataset_id: str  # which datasets/<id>/assets to copy from (empty => copy none)
+    declared_sources: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def id(self) -> str:
@@ -126,6 +127,15 @@ def _dataset_view(root: Path, entry: dict[str, Any]) -> DatasetView:
                 entry = {**entry, "task": "+".join(sorted(tasks)) or None}
         asset_id = dataset_id if (card is not None and tier != ANONYMIZED) else ""
 
+    declared_sources = []
+    descriptor_path = root / "catalog/datasets" / f"{dataset_id}.yaml"
+    if card is None and descriptor_path.is_file():
+        from nirs4all_datasets.qualify.anonymize import public_descriptor
+        from nirs4all_datasets.schema import DatasetDescriptor
+
+        descriptor = public_descriptor(DatasetDescriptor(**yaml.safe_load(descriptor_path.read_text(encoding="utf-8"))))
+        declared_sources = [source.model_dump(mode="json") for source in descriptor.sources]
+
     return DatasetView(
         entry=entry,
         tier=tier,
@@ -136,6 +146,7 @@ def _dataset_view(root: Path, entry: dict[str, Any]) -> DatasetView:
         show_byte_download=False,
         show_metadata_downloads=(tier == PUBLIC),
         asset_dataset_id=asset_id,
+        declared_sources=declared_sources,
     )
 
 

@@ -33,6 +33,7 @@ import json
 import re
 import shutil
 from dataclasses import dataclass, field
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
@@ -41,7 +42,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from nirs4all_datasets import __version__ as _PKG_VERSION
-from nirs4all_datasets.bootstrap import _metadata_aliases, _original_sample_alias
+from nirs4all_datasets.bootstrap import _metadata_aliases, _original_sample_alias, _spectral_blocks, _v2_axis_scale
 from nirs4all_datasets.curation import is_provenance_column, normalize_variable
 from nirs4all_datasets.manifest import sha256_file
 from nirs4all_datasets.schema import AlignmentLevel, ConversionStatus, DatasetDescriptor, VarType
@@ -154,7 +155,7 @@ def _sample_for(obs: pd.Series, m: pd.DataFrame | None, has_sample: bool, ids_sa
     return mapped.fillna(obs_str).astype(str), n_orphans
 
 
-def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, canonical: Path) -> tuple[dict[str, Any] | None, str | None, int, set[str], list[str]]:
+def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_sample: bool, ids_sample: str, canonical: Path, *, axis_scale: int = 1) -> tuple[dict[str, Any] | None, str | None, int, set[str], list[str]]:
     """Convert one X block to ``canonical/sources/<source_id>.parquet``.
 
     Reads spectral columns as float32 (chunked for large files), prepends ``observation_id`` (str) and
@@ -181,6 +182,13 @@ def _convert_source(path: Path, source_id: str, m: pd.DataFrame | None, has_samp
         spectral_chunks.append(chunk[spectral_cols])
     obs = pd.concat(obs_chunks, ignore_index=True) if obs_chunks else pd.Series([], dtype=str, name=_OBS_KEY)
     spectral = pd.concat(spectral_chunks, ignore_index=True) if spectral_chunks else pd.DataFrame(columns=spectral_cols)
+    if axis_scale != 1:
+        # Change coordinate units only: channel order, measured values and raw CSV stay untouched.
+        normalized = [str(Decimal(column) * axis_scale) for column in spectral_cols]
+        if len(set(normalized)) != len(normalized):
+            raise ValueError(f"{path.name}: axis normalization creates duplicate coordinates")
+        spectral.columns = normalized
+        spectral_cols = normalized
     if obs.str.strip().eq("").any() or not obs.is_unique:
         raise ValueError(f"{path.name}: observation_id must be nonempty and unique within the spectral source")
 
@@ -411,12 +419,26 @@ def build_canonical(leaf_dir: str | Path, descriptor: DatasetDescriptor, out_dir
     source_entries: list[dict[str, Any]] = []
     spectral_samples: set[str] = set()
     unit_by_id = {s.source_id: s.axis_unit.value for s in descriptor.sources}
+    native_blocks: dict[str, dict[str, Any]] = {}
+    card_path = leaf / "dataset_card.json"
+    if card_path.is_file():
+        native_blocks = {str(block.get("block_id") or Path(str(block.get("x_file") or "X.csv")).stem): block for block in _spectral_blocks(json.loads(card_path.read_text(encoding="utf-8")))}
+    layout_path = leaf / "pull-layout.json"
+    if layout_path.is_file():
+        for source_id, declaration in json.loads(layout_path.read_text(encoding="utf-8")).get("sources", {}).items():
+            if "native_axis_unit" in declaration:
+                native_blocks[source_id] = {"axis_unit": declaration["native_axis_unit"]}
     for source_id, path in x_files.items():
-        entry, sha, n_rows, src_samples, src_warnings = _convert_source(path, source_id, m, has_sample, ids_sample, canonical)
+        scale = _v2_axis_scale(native_blocks.get(source_id, {}))
+        if scale != 1 and unit_by_id.get(source_id) != "nm":
+            raise ValueError(f"{source_id}: micrometer coordinates require a descriptor normalized to nm")
+        entry, sha, n_rows, src_samples, src_warnings = _convert_source(path, source_id, m, has_sample, ids_sample, canonical, axis_scale=scale)
         warnings.extend(src_warnings)
         if entry is None or sha is None:
             continue
         entry["axis_unit"] = unit_by_id.get(source_id)
+        if scale != 1:
+            entry["axis_conversion"] = {"native_unit": "um", "unit": "nm", "scale": scale}
         source_entries.append(entry)
         hashes[f"sources/{source_id}.parquet"] = sha
         row_counts[source_id] = n_rows

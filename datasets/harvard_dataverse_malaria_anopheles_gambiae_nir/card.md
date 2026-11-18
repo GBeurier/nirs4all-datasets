@@ -20,7 +20,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 | ID | Name | Instrument | Modality | Axis | Observations | Wavelengths |
 | --- | --- | --- | --- | --- | --- | --- |
-| X | malaria_nir | NIR | NIR | 350–2500 none | 562 | 2151 |
+| X | malaria_nir | NIR | NIR | 350–2500 nm | 562 | 2151 |
 
 ### Variables (Y / metadata)
 
@@ -40,7 +40,7 @@ _Generated from the dataset card and descriptor (Datasheets for Datasets, Gebru 
 
 Splits are **documented, never auto-applied** (the supervised task is a consumer choice).
 
-- **original** (documented, not applied): test: 197, train: 365
+- **original** (documented, not applied): train: 365, test: 197
 
 ## Collection process
 
@@ -53,8 +53,8 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Preprocessing / cleaning / labeling
 
-- **Conversion warnings:** Curation identity contract: 274 ID strings for 333 rows; ID1/ID2 may collide after concatenation. Mosquito identity and reacquisitions are not established by the available reconstruction script.
-- **Curated views:** M: 1 fields, Y: 1 fields, measurements: 0 fields, passport: 13 fields. Original variables and the versioned mapping are retained separately.
+- **Conversion warnings:** Curation identity contract: 274 ID strings for 333 rows; ID1/ID2 may collide after concatenation. Mosquito identity and reacquisitions are not established by the available reconstruction script.; Spectral declaration for X: Source Labspec 4i visible/NIR spectra are measured in nanometres; retain every existing channel and original boundary. Evidence: https://doi.org/10.7910/DVN/YD34OX, https://doi.org/10.1186/s12936-019-2719-9
+- **Curated views:** M: 1 fields, Y: 1 fields, passport: 13 fields, measurements: 0 fields. Original variables and the versioned mapping are retained separately.
 
 ## Uses
 
@@ -74,6 +74,6 @@ Splits are **documented, never auto-applied** (the supervised task is a consumer
 
 ## Maintenance
 
-- **Content version:** 1.1.0 | **schema/protocol:** 2.0
+- **Content version:** 1.1.1 | **schema/protocol:** 2.0
 - **Content hash:** `5c4185984d596f73ed1aaa1c00933b838befe06da4fc0db171265a092a7821d3`
-- **Processing hash:** `21a1363144ceaf5795dff0c6d97c9a1408bb7171d554687914fb4ceb5fdbfd2e` | **metadata hash:** `e9365c91245f8526b78b3a2e8f08caf6532699a3f0db52fc28b4e8c14f313f36`
+- **Processing hash:** `7b53ee1e9b359f3d376988c6afe9e8bf5c727f27fc3e05d4a8bab51d51688c32` | **metadata hash:** `ec4e1fc8ee16bf9b396ee049b0a15fc5cf914adcf5b0179a754bf3ef226b8d5f`

@@ -39,6 +39,21 @@ def test_chicken_keeps_three_classes_and_wavelengths(tmp_path: Path) -> None:
     assert context.metadata["original_sample_id"].tolist() == [42, 42]
 
 
+def test_pmma_origin_records_micrometers_for_canonical_conversion(tmp_path: Path) -> None:
+    import json
+
+    names = [f"Transmissivity_{thickness}µm_UV-Vis-NIR.xlsx" for thickness in (50, 73)]
+    for name in names:
+        pd.DataFrame({"Wavelength (µm)": [0.25, 2.6], "Transmissivity (%)": [12.5, 17.5]}).to_excel(tmp_path / name, index=False)
+    context = TableContext(tmp_path)
+    context.provider_files = lambda *args: [{"name": name, "url": f"https://example.test/{name}"} for name in names]
+    leaf = mendeley.build(SimpleNamespace(id="mendeley_black_pmma_transmissivity_uvvisnir"), context)
+    assert context.sources["X"].columns.tolist()[1:] == ["0.25", "2.6"]
+    assert context.sources["X"].iloc[0, 1:].tolist() == [12.5, 17.5]
+    assert json.loads((leaf / "pull-layout.json").read_text())["sources"]["X"]["native_axis_unit"] == "um"
+    assert not (tmp_path / "X.csv").exists()  # The fake context records tables without hiding a conversion.
+
+
 def test_dryad_beetle_transposes_axis_and_preserves_labels(tmp_path: Path) -> None:
     pd.DataFrame({"wl": [400, 401], "one": [1.0, 2.0], "two": [3.0, 4.0]}).to_csv(tmp_path / "1_Reflectancedata.csv", index=False)
     context = TableContext(tmp_path)

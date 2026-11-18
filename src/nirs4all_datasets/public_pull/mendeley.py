@@ -189,7 +189,9 @@ def _build_pmma(descriptor: DatasetDescriptor, context: PullContext) -> Path:
     x.insert(0, "observation_id", ids)
     targets = pd.DataFrame({"observation_id": ids, "film_thickness_um": [50, 73]})
     metadata = pd.DataFrame({"observation_id": ids, "sample_id": ["black_PMMA_50um", "black_PMMA_73um"]})
-    return context.write_tables({"X": x}, targets=targets, metadata=metadata)
+    leaf = context.write_tables({"X": x}, targets=targets, metadata=metadata)
+    (leaf / "pull-layout.json").write_text(json.dumps({"sources": {"X": {"native_axis_unit": "um"}}}), encoding="utf-8")
+    return leaf
 
 
 def _build_specialty_coffee(descriptor: DatasetDescriptor, context: PullContext) -> Path:

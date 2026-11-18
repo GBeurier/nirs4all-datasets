@@ -37,9 +37,10 @@ def descriptor_paths(root: str | Path) -> list[Path]:
 
 
 def _spectro_family(descriptor: DatasetDescriptor) -> str:
-    """Honest spectroscopy family: the single source modality, or ``mixed`` when heterogeneous."""
-    modalities = sorted({s.modality.value for s in descriptor.sources})
-    return modalities[0] if len(modalities) == 1 else "mixed"
+    """Declared technique families, with known ranges refining broad source labels."""
+    from nirs4all_datasets.spectroscopy import spectroscopy_family
+
+    return spectroscopy_family([source.model_dump(mode="json") for source in descriptor.sources])
 
 
 def catalog_entry(root: str | Path, descriptor: DatasetDescriptor, *, health: dict[str, Any] | None = None) -> dict[str, Any]:
