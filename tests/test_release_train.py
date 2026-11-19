@@ -42,7 +42,26 @@ def test_python_extra_parser_reads_minor_level_ranges_only() -> None:
 def test_minor_level_ranges_follow_the_exact_train() -> None:
     assert release_train.minor_range("0.2.16") == "0.2"
     assert release_train.python_minor_range("0.3.1") == ">=0.3,<0.4"
-    assert release_train.python_minor_range("1.3.18") == ">=1.3,<2"
+    assert release_train.python_minor_range("1.3.18") == ">=1.3,<1.4"
+    assert release_train.minor_range("1.5.0") == ">=1.5, <1.6"
+
+
+def test_optional_owner_patch_floors_and_minor_bounds(monkeypatch: Any) -> None:
+    """Reject next-minor admission while accepting required owner patch floors."""
+    original = release_train._toml
+
+    def changed_manifest(path: Path) -> dict[str, Any]:
+        value = original(path)
+        if path == ROOT / "pyproject.toml":
+            value["project"]["optional-dependencies"]["methods"][0] = "nirs4all-methods>=1.5.0,<2"
+        return value
+
+    assert release_train._python_extra_versions({"project": {"optional-dependencies": {"methods": ["nirs4all-methods>=1.5.1,<1.6"]}}}, "methods") == {
+        "nirs4all-methods": ">=1.5.1,<1.6"
+    }
+    monkeypatch.setattr(release_train, "_toml", changed_manifest)
+    result, _, _ = release_train.check_tree(ROOT, enforce_contract=False)
+    assert result.errors == ["pyproject.toml methods extra nirs4all-methods tested series: found '>=1.5,<2', expected '>=1.5,<1.6'"]
 
 
 def test_patch_precise_manifest_requirement_is_rejected(monkeypatch: Any) -> None:

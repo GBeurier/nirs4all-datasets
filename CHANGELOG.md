@@ -5,6 +5,15 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.22] - 2026-11-19
+
+### Changed
+
+- Select the tested Methods 1.5 series for optional native roughness qualification
+  and SDK 1.6 for the optional SDK bridge. Roughness values and the existing
+  protocol-specific dataset PCA implementation are unchanged; cards retain their
+  original producer provenance until explicitly recomputed from their inputs.
+
 ## [0.3.21] - 2026-11-18
 
 - Lead the catalog overview with spectroscopy technique completeness: 241 of 242

@@ -36,24 +36,24 @@ the per-surface workflows are `release-crates.yml`, `release-r.yml`,
 
 ## Cross-repository version constraints
 
-nirs4all packages from different repositories depend on each other at **minor**
-granularity, never more precisely: Rust `"0.3"` (`>=0.3.0, <0.4.0`; `"1.3"` for
-1.x), Python `>=0.3,<0.4` (`>=1.3,<2` for 1.x), npm `^0.3.0` (`^1.3.0`), R
-`pkg (>= 0.3.0), pkg (< 0.4.0)`. Here: Cargo `nirs4all-formats = "0.2"` and
-`nirs4all-io = "0.3"` (root, Python binding and vendored R manifests), Python
-`nirs4all-formats>=0.2,<0.3`, `nirs4all-io>=0.3,<0.4`,
-`nirs4all-methods>=1.3,<2` and `nirs4all>=0.9,<2` extras. Exact, reproducible
-versions live only in lockfiles and in `release/train-v1.toml`, the exact
-source train that CI and the R vendoring check out next to this repository.
-This repository's own crates and bindings stay in lockstep through
-`scripts/bump_version.sh`.
+nirs4all packages from different repositories accept one tested minor series:
+Rust `"0.3"` (`>=0.3.0, <0.4.0`; use `">=1.5, <1.6"` for 1.x), Python
+`>=0.3,<0.4` (`>=1.5,<1.6` for 1.x), npm `^0.3.0` (`~1.5.0` for 1.x).
+R uses a lower bound with its tested minor series documented. Here: Cargo
+`nirs4all-formats = "0.2"` and `nirs4all-io = "0.3"` (root, Python binding
+and vendored R manifests), Python `nirs4all-formats>=0.2,<0.3`,
+`nirs4all-io>=0.3,<0.4`, `nirs4all-methods>=1.5.0,<1.6` and
+`nirs4all>=1.6,<1.7` extras. A patch floor is allowed when that patch's fix or
+feature is required. Exact versions live in lockfiles and
+`release/train-v1.toml`, the source train CI and R vendoring select next to
+this repository. This repository's own crates and bindings stay in lockstep
+through `scripts/bump_version.sh`.
 
 In return, a **patch** release of `nirs4all-datasets` is backward compatible and
 changes no wire format, byte contract, persisted schema (descriptors, catalog,
 manifests), `.n4a` payload semantics, C ABI or shared fixture; any such change
 needs at least a **minor** release (for 0.x, every minor is breaking). A
-consumer needing a fix from a specific patch gets it from its lockfile and the
-release order, not from a patch floor. The full policy is
+consumer may declare a patch floor when that patch's fix or feature is required. The full policy is
 `docs/contracts/release/VERSION_CONSTRAINTS.md` in `nirs4all-ecosystem`.
 
 Enforcement: `scripts/check_release_train.py` refuses a manifest requirement
@@ -69,7 +69,7 @@ IO 0.1.12 / Formats 0.2.9 dependency train and source archives. Its R package
 already reports 0.3.10; R-universe now follows this immutable tag.
 
 The release commits are integrated into main together with the subsequent
-maintenance commits. The current train is Datasets 0.3.21, Formats 0.2.19 and
+maintenance commits. The current train is Datasets 0.3.22, Formats 0.2.19 and
 IO 0.3.6. The selected IO facade/core requires no additional DMD prerequisite. These upstream versions are now available on
 crates.io. The lockfiles use the declared owner versions and their resolved
 registry dependencies. The ignored R vendor bundle was generated during local
@@ -149,7 +149,7 @@ Run these before tagging or publishing anything:
    that train (Cargo `"0.2"`/`"0.3"`, Python `>=0.2,<0.3`/`>=0.3,<0.4`) and that
    the Python/WASM lockfiles and root lockfile resolve its exact versions. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
-   the current source train: Datasets 0.3.21, Formats 0.2.19, and IO 0.3.6,
+   the current source train: Datasets 0.3.22, Formats 0.2.19, and IO 0.3.6,
    then verifies those exact crates plus the selected IO facade/core dependency closure on crates.io. It deliberately remains
    **HOLD** until the upstream
    release order has completed; a sibling checkout or path dependency is not
