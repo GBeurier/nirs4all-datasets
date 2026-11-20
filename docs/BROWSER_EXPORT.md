@@ -124,7 +124,11 @@ Each source asset:
   "dataset_id": "barley_moisture_perten",
   "source_id": "X",
   "provenance": {
-    "dataset": {"id": "…", "name": "…", "tier": "public", "license": "…", "citation": "…", "doi": null, "permitted_use": "…", "access_policy": "…"},
+    "dataset": {
+      "id": "…", "name": "…", "tier": "public", "license": "…", "citation": "…", "doi": null, "permitted_use": "…", "access_policy": "…",
+      "ids": {"observation_id": "observation_id", "sample_id": "sample_id", "sample_id_available": false},
+      "alignment_level": "observation"
+    },
     "origin_sources": [{"kind": "…", "mode": "…", "locator": "…", "access": "open", "license": null, "title": "…"}],
     "publications": [],
     "source": {"source_id": "X", "name": "…", "instrument_name": "…", "modality": "NIR", "axis_unit": "nm", "signal_type": "auto"},
@@ -147,6 +151,11 @@ Each source asset:
 declared target and metadata column, the `observation_id` and `sample_id` identity columns,
 feature headers and axis units. Its wire version is the IO-owned `assembled_schema_version`,
 which is always 3 here.
+
+`provenance.dataset.ids` and `alignment_level` preserve the descriptor's identity semantics.
+When `sample_id_available` is false, `sample_id` values are per-observation placeholders, not
+established physical specimen identities. A browser host must retain this distinction when
+offering grouping, repetition aggregation or group-aware validation.
 
 In schema 3, numeric blocks carry `dtype`, little-endian `data_bytes_hex`, a per-cell
 `validity` mask and `precision`. Targets are typed columns (`numeric`, `classification_string`,

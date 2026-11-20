@@ -88,8 +88,11 @@ def _no_acquisition(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr("nirs4all_datasets.access.get", forbidden)
 
 
-def test_exports_catalog_and_one_asset_per_explicit_source(canonical_dataset: Any, tmp_path: Path, fake_io: _FakeIO) -> None:
-    root, desc = _registry(canonical_dataset, tmp_path, blocks=("X1", "X2"), sample_of={"o1": "s1", "o2": "s2"}, split={"o1": "cal", "o2": "val"})
+@pytest.mark.parametrize("sample_id_available", [True, False])
+def test_exports_catalog_and_one_asset_per_explicit_source(canonical_dataset: Any, tmp_path: Path, fake_io: _FakeIO, sample_id_available: bool) -> None:
+    sample_of = {"o1": "s1", "o2": "s2"} if sample_id_available else None
+    root, desc = _registry(canonical_dataset, tmp_path, blocks=("X1", "X2"), sample_of=sample_of, split={"o1": "cal", "o2": "val"})
+    assert desc.ids.sample_id_available is sample_id_available
     out = tmp_path / "export"
 
     catalog = export([desc.id], out, root=root)
@@ -107,6 +110,9 @@ def test_exports_catalog_and_one_asset_per_explicit_source(canonical_dataset: An
         assert asset["schema"] == SOURCE_SCHEMA and asset["dataset_id"] == desc.id and asset["source_id"] == source["id"]
         assert asset["assembled"]["blocks"]["train"]["n_samples"] == 2
         provenance = asset["provenance"]
+        assert provenance["dataset"]["ids"] == desc.ids.model_dump(mode="json")
+        assert provenance["dataset"]["ids"]["sample_id_available"] is sample_id_available
+        assert provenance["dataset"]["alignment_level"] == ("sample" if sample_id_available else "observation")
         assert provenance["materialization"]["operation"] == "nirs4all_io.assembled_full"
         assert provenance["native_splits"] == {"exposed_as_metadata": ["split_original"], "applied": False, "note": provenance["native_splits"]["note"]}
         assert all(not Path(item["path"]).is_absolute() for item in provenance["materialization"]["inputs"])

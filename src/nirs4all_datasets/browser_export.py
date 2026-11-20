@@ -209,6 +209,8 @@ def _provenance(dataset: Any, source_id: str, spec: dict[str, Any], full: dict[s
             "id": descriptor.id,
             "name": descriptor.name,
             "tier": descriptor.tier.value,
+            "ids": descriptor.ids.model_dump(mode="json"),
+            "alignment_level": descriptor.alignment_level.value,
             "license": descriptor.governance.license,
             "citation": descriptor.citation,
             "doi": descriptor.dataverse.doi,
