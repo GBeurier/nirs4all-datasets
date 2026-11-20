@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: CECILL-2.1 OR AGPL-3.0-or-later
 # Excluded from the cargo workspace (built by wasm-pack). Depends on the core with
-# default features OFF — only the pure resolve/hash surface compiles to wasm32.
+# default features OFF — pure resolve/hash and filesystem-free origin recipes.
 [package]
 name = "nirs4all-datasets-wasm"
-version = "0.3.22"
+version = "0.3.23"
 edition = "2021"
 license = "CECILL-2.1 OR AGPL-3.0-or-later"
 authors = ["Gregory Beurier <gregory.beurier@cirad.fr>"]
@@ -14,5 +14,8 @@ description = "WASM (wasm-bindgen) binding over nirs4all-datasets-core: resolve 
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-nirs4all-datasets-core = { path = "../../crates/nirs4all-datasets-core", default-features = false }
+nirs4all-datasets-core = { path = "../../crates/nirs4all-datasets-core", default-features = false, features = ["browser"] }
 wasm-bindgen = "0.2"
+js-sys = "0.3"
+serde_json = "1.0"
+serde-wasm-bindgen = "0.6"
