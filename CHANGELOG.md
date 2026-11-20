@@ -5,6 +5,23 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.3.23] - 2026-11-20
+
+### Added
+
+- Add a separate filesystem-free public-origin WASM API: embedded public
+  metadata, explicit recipe applicability, original resource plans and an IO
+  materialization handoff. The host downloads original bytes; no dataset assets
+  are rehosted. The initial profile supports selected single-table EcoSIS
+  recipes and the existing Zenodo NeoSpectra soil recipe; other operations carry
+  named refusals. Preserve axes, target maps, observation/sample identity,
+  metadata and missing cells. Observed hashes remain distinct from origin pins.
+- Ship the exact locked WASM license texts and their hash inventory, including
+  the IO owner notices. Run the optional browser feature in Rust CI.
+
+Existing resolve/download contracts, catalog/index.json, C ABI, wire schemas,
+fixtures and native numerical paths are unchanged. This is an additive patch.
+
 ## [0.3.22] - 2026-11-19
 
 ### Changed

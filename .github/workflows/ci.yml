@@ -22,9 +22,11 @@ jobs:
       - name: Format
         run: cargo fmt --all --check
       - name: Clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
       - name: Test
-        run: cargo test --workspace
+        run: cargo test --workspace --all-features
+      - name: Check embedded public origin metadata
+        run: python3 scripts/generate_browser_origin_metadata.py --check
       - name: Build core (no default features)
         run: cargo build -p nirs4all-datasets-core --no-default-features
 
@@ -67,11 +69,15 @@ jobs:
           node -e 'const p = require("./package.json"); if (p.name !== "@nirs4all/datasets-wasm") throw new Error(p.name)'
       - name: Smoke-test Node WASM package
         run: node bindings/wasm/tests/node_smoke.cjs
+      - name: Stage the locked WASM license closure
+        run: python3 scripts/stage_wasm_package.py bindings/wasm/pkg-node
       - name: npm pack dry-run
         working-directory: bindings/wasm/pkg-node
         run: npm pack --dry-run
       - name: Build browser WASM package
         run: wasm-pack build bindings/wasm --release --target web --out-dir pkg-web --scope nirs4all
+      - name: Stage the browser WASM license closure
+        run: python3 scripts/stage_wasm_package.py bindings/wasm/pkg-web
 
   python:
     name: Python green gate

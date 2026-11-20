@@ -25,6 +25,15 @@ affiliates. Their exact notices are retained in the UI's `THIRD_PARTY_NOTICES.md
 redistributing the site. `PROVENANCE.json` records the accepted archive and file hashes;
 see [the source maintenance notes](docs/maintenance/site_ui_browser.md).
 
+## Bundled WASM dependency notices
+
+The WASM package separately bundles the exact license texts of its locked Rust
+dependency closure under `LICENSES/THIRD-PARTY/`, including the IO owner notices.
+`nirs4all-datasets-wasm.licenses.json` names each package/version, declared license
+expression and actual text hash. This inventory includes build dependencies;
+it does not assert that every inventoried package is present in the final binary.
+The owner staging script refuses a changed closure until its licenses are audited.
+
 ## Separately installed Python dependencies
 
 | Component | License (SPDX) | Copyright | Upstream |
