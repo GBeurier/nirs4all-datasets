@@ -122,6 +122,33 @@ fn reason(entry: &Value, recipe: Option<&Value>) -> Option<String> {
     {
         return Some("The descriptor declares sample identity but the recipe names no original sample column".into());
     }
+    let mut output_names = HashSet::from(["observation_id", "sample_id"]);
+    let target_names = descriptor["variables"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|variable| variable["role"] == "target")
+        .filter_map(|variable| variable["name"].as_str());
+    for name in target_names
+        .chain(
+            recipe["metadata_columns"]
+                .as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str),
+        )
+        .chain(
+            recipe["metadata_constants"]
+                .as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str),
+        )
+    {
+        if !output_names.insert(name) {
+            return Some(format!("{PROFILE} cannot represent the declared target/metadata output-name collision {name:?} in one table"));
+        }
+    }
     None
 }
 
@@ -184,6 +211,10 @@ pub fn resolve_browser_plan(dataset_id: &str, source_id: &str) -> Result<Value> 
     if recipe.unwrap()["generated_observation_identity"] == true {
         proof["identity_policy"] = json!("owner-recipe-generated-observation");
         proof["catalog_declared_ids"] = entry["descriptor"]["ids"].clone();
+        proof["catalog_declared_alignment_level"] = entry["descriptor"]["alignment_level"].clone();
+    } else if descriptor["ids"]["sample_id_available"] == false {
+        proof["identity_policy"] = json!("descriptor-declares-no-sample-identity");
+        proof["recipe_sample_column"] = recipe.unwrap()["sample_column"].clone();
     }
     Ok(
         json!({"schema": "nirs4all.datasets.public-origin-plan.v1", "dataset_id": dataset_id,
@@ -368,6 +399,14 @@ pub fn prepare_browser_dataset(plan: &Value, files: &[BrowserFile]) -> Result<Br
     metadata_names.extend(constants.keys().cloned());
     let mut extra = Vec::new();
     for column in &frame.columns {
+        // The native soil recipe already projected these to aliased Y/M.
+        // Re-emitting them would leak unmarked copies of targets into metadata.
+        if prefix_aliases
+            .values()
+            .any(|original| original.as_str() == Some(&column.name))
+        {
+            continue;
+        }
         if axis.iter().any(|(_, original)| original == &column.name) {
             continue;
         }
@@ -531,6 +570,27 @@ mod tests {
             }
         }
         assert!(resolve_browser_plan("corn_eigenvector_nir", "X1").is_err());
+        for id in [
+            "ecosis_dessain_project_reflectance_spectra_reflectance_nirs",
+            "ecosis_intact_and_ground_leaf_litter_spectra_from_cedar_creek_reflectance_nirs",
+        ] {
+            assert!(resolve_browser_plan(id, "X")
+                .unwrap_err()
+                .to_string()
+                .contains("output-name collision"));
+            let catalogue = browser_catalog();
+            let source = &catalogue["datasets"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|entry| entry["id"] == id)
+                .unwrap()["sources"][0];
+            assert_eq!(source["status"], "unsupported");
+            assert!(source["reason"]
+                .as_str()
+                .unwrap()
+                .contains("output-name collision"));
+        }
     }
 
     #[test]
@@ -568,6 +628,11 @@ mod tests {
         assert_eq!(metadata.numeric_column_f64("PLOT"), [1.0, 2.0]);
         assert_eq!(prepared.provenance["ids"]["sample_id_available"], false);
         assert_eq!(prepared.provenance["alignment_level"], "observation");
+        assert_eq!(
+            prepared.provenance["identity_policy"],
+            "descriptor-declares-no-sample-identity"
+        );
+        assert_eq!(prepared.provenance["recipe_sample_column"], "Experiment");
         assert_eq!(
             prepared.provenance["downloads"][0]["integrity"],
             "observed-unpinned"
@@ -678,10 +743,29 @@ mod tests {
             metadata.str_column("id_layer_uuid_txt"),
             ["same-layer", "same-layer"]
         );
+        assert_eq!(
+            metadata.column_names().into_iter().collect::<HashSet<_>>(),
+            [
+                "dataset_id",
+                "observation_id",
+                "sample_id",
+                "id_layer_uuid_txt",
+                "dataset_code_ascii_txt",
+                "id_scan_local_c",
+                "origin_url"
+            ]
+            .into_iter()
+            .map(str::to_string)
+            .collect()
+        );
         assert_eq!(prepared.provenance["ids"]["sample_id_available"], false);
         assert_eq!(
             prepared.provenance["identity_policy"],
             "owner-recipe-generated-observation"
+        );
+        assert_eq!(
+            prepared.provenance["catalog_declared_alignment_level"],
+            "sample"
         );
         let censored = String::from_utf8(original).unwrap().replacen(
             "same-layer,source,1,1,",
