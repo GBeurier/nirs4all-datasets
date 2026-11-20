@@ -77,7 +77,7 @@ does not change either repository or claim to complete those integrations.
   artifacts. Never edit old manifests or hashes to make stale data appear
   current. A code change or a passing test alone does not rebuild the catalog.
 - The bandwise extension is published in Methods 1.3.11, and the `methods` extra
-  requires `nirs4all-methods>=1.3.11` and scikit-learn; the global procedure
+  selects `nirs4all-methods>=1.5.0,<1.6` and scikit-learn; the global procedure
   alone is available since 1.3.10.
 
 ## Verified local reconstruction — 2026-10-30

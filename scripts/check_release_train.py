@@ -24,7 +24,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-_REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<floor>[0-9]+\.[0-9]+),<(?P<ceiling>[0-9]+(?:\.[0-9]+)?)$")
+_REQ_RE = re.compile(r"^(?P<name>[A-Za-z0-9_.-]+)>=(?P<floor>[0-9]+\.[0-9]+(?:\.[0-9]+)?),<(?P<ceiling>[0-9]+(?:\.[0-9]+)?)$")
 _PROJECT_LICENSE = "CECILL-2.1 OR AGPL-3.0-or-later"
 _R_PROJECT_LICENSE = "CeCILL-2.1 | AGPL (>= 3)"
 _BINDING_MANIFESTS = ("bindings/python/Cargo.toml", "bindings/wasm/Cargo.toml")
@@ -72,20 +72,20 @@ def _package_version(lock: dict[str, Any], name: str, *, label: str) -> str:
 
 
 def minor_range(version: str) -> str:
-    """Return the Cargo minor-level caret requirement (``0.2``) for an exact version."""
-    major, minor = version.split(".")[:2]
-    return f"{major}.{minor}"
+    """Return a Cargo requirement restricted to one tested minor series."""
+    major, minor = (int(part) for part in version.split(".")[:2])
+    return f"0.{minor}" if major == 0 else f">={major}.{minor}, <{major}.{minor + 1}"
 
 
 def python_minor_range(version: str) -> str:
-    """Return the PEP 440 minor-level range (``>=0.2,<0.3``; ``>=1.3,<2``) for an exact version."""
+    """Return the PEP 440 range restricted to one tested minor series."""
     major, minor = (int(part) for part in version.split(".")[:2])
-    ceiling = f"0.{minor + 1}" if major == 0 else str(major + 1)
+    ceiling = f"{major}.{minor + 1}"
     return f">={major}.{minor},<{ceiling}"
 
 
-def _python_extra_versions(pyproject: dict[str, Any]) -> dict[str, str]:
-    values = pyproject.get("project", {}).get("optional-dependencies", {}).get("io", [])
+def _python_extra_versions(pyproject: dict[str, Any], extra: str = "io") -> dict[str, str]:
+    values = pyproject.get("project", {}).get("optional-dependencies", {}).get(extra, [])
     parsed: dict[str, str] = {}
     for value in values:
         if not isinstance(value, str):
@@ -140,6 +140,13 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
     extra_versions = _python_extra_versions(pyproject)
     for name, version in upstream.items():
         result.expect(f"pyproject.toml io extra {name}", extra_versions.get(name), python_minor_range(version))
+
+    for extra, name in (("methods", "nirs4all-methods"), ("nirs4all", "nirs4all")):
+        requirement = _python_extra_versions(pyproject, extra).get(name)
+        match = _REQ_RE.fullmatch(name + requirement) if requirement else None
+        expected = python_minor_range(match.group("floor")) if match else None
+        actual = f">={'.'.join(match.group('floor').split('.')[:2])},<{match.group('ceiling')}" if match else requirement
+        result.expect(f"pyproject.toml {extra} extra {name} tested series", actual, expected or "a bounded minor series")
 
     lock_specs = {
         "Cargo.lock": {

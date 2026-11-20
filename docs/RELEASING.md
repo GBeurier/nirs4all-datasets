@@ -13,7 +13,7 @@ this page only summarizes
 the catalog-specific flows.
 
 For the current source train, public release is fail-closed on the exact contract in
-[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.21 consumes
+[`release/train-v1.toml`](../release/train-v1.toml): Datasets 0.3.22 consumes
 Formats 0.2.19 and IO 0.3.6. The manifests themselves declare minor-level ranges
 (`"0.2"`/`"0.3"`, `>=0.2,<0.3`/`>=0.3,<0.4`); the train and the lockfiles carry the
 exact versions (see "Cross-repository version constraints" in the release process). This integrated main train differs from the immutable
@@ -59,11 +59,11 @@ registries.
 ### Cut a release
 
 ```bash
-scripts/bump_version.sh --bump 0.3.21
+scripts/bump_version.sh --bump 0.3.22
 scripts/bump_version.sh --check
 python scripts/check_release_train.py --release --check-registry
-git commit -am "chore(release): bump datasets to 0.3.21"
-git tag v0.3.21
+git commit -am "chore(release): bump datasets to 0.3.22"
+git tag v0.3.22
 git push origin main --tags
 ```
 
