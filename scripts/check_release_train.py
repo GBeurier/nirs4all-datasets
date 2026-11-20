@@ -167,6 +167,7 @@ def check_tree(root: Path, *, enforce_contract: bool) -> tuple[CheckResult, dict
         "bindings/wasm/Cargo.lock": {
             "nirs4all-datasets-core": workspace_version,
             "nirs4all-datasets-wasm": workspace_version,
+            "nirs4all-io-core": upstream["nirs4all-io"],
         },
     }
     for relative, packages in lock_specs.items():
