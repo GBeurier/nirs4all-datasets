@@ -20,6 +20,8 @@ net = ["dep:ureq", "dep:directories", "dep:zip"]
 # every language binding sees the same decoded payloads. It is separate from `net`
 # so metadata-only targets can still build a pure resolve core.
 prepare = ["net", "dep:nirs4all-formats", "dep:nirs4all-io"]
+# Browser origin recipes use the existing filesystem-free IO table reader.
+browser = ["dep:nirs4all-io-core", "dep:csv"]
 
 [dependencies]
 serde = { workspace = true }
@@ -31,6 +33,8 @@ directories = { workspace = true, optional = true }
 zip = { workspace = true, optional = true }
 nirs4all-formats = { workspace = true, optional = true }
 nirs4all-io = { workspace = true, optional = true }
+nirs4all-io-core = { workspace = true, optional = true }
+csv = { version = "1.4", optional = true }
 
 # WebR has a virtual filesystem but no blocking native socket transport. Keep
 # cache/verification/preparation without linking a native TLS crypto provider.

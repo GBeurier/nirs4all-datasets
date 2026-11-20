@@ -30,6 +30,8 @@
 //! JSON-on-the-wire wrappers over [`resolve`], [`fetch`], and [`verify_cached`].
 
 // Always available (pure, portable — these compile on wasm32-unknown-unknown too).
+#[cfg(feature = "browser")]
+pub mod browser;
 pub mod error;
 pub mod hash;
 pub mod http;

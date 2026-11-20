@@ -132,6 +132,9 @@ jobs:
             console.log("package.json ->", p.name, p.version);
           '
 
+      - name: Stage the locked WASM license closure
+        run: python3 scripts/stage_wasm_package.py bindings/wasm/pkg-node
+
       - name: Smoke-test the Node WASM module
         # The committed Node smoke test (bindings/wasm/tests/node_smoke.cjs)
         # requires the package at ../pkg; mirror the freshly built pkg-node there

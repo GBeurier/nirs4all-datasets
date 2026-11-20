@@ -52,6 +52,23 @@ assert.strictEqual(
 
 assert.throws(() => wasm.resolve(index, "nope"));
 
+// Actual WASM owner API, with a deliberately tiny synthetic original table.
+const canopy = "canopy_treatment_2009_2016_to_cedar_ecosis";
+const catalog = JSON.parse(wasm.browserCatalog());
+assert.strictEqual(catalog.schema, "nirs4all.datasets.public-origin-catalog.v1");
+assert(catalog.datasets.every(item => item.tier === "public"));
+const plan = wasm.resolveBrowserPlan(canopy, "X");
+const original = new TextEncoder().encode("Experiment,Treatment, 485 (nm) wavelength ,560 (nm) wavelength ,660 (nm) wavelength,830 (nm) wavelength,1650 (nm) wavelength ,PLOT,Note\ne244,Control,-0.0,0.2,,0.4,0.5,1,first\ne244,Insecticide,0.6,0.7,0.8,0.9,1.0,2,second\n");
+const prepared = wasm.prepareBrowserDataset(plan, [{name: "e244_multispec_raw_data.csv", bytes: original}]);
+assert(prepared.files[0].bytes instanceof Uint8Array);
+assert.strictEqual(prepared.spec.params.na.policy, "ignore");
+assert.strictEqual(prepared.spec.sample_index.observation_id, "observation_id");
+assert.strictEqual(prepared.provenance.ids.sample_id_available, false);
+assert.strictEqual(prepared.provenance.alignment_level, "observation");
+assert.strictEqual(prepared.provenance.downloads[0].sha256, wasm.sha256(original));
+assert.strictEqual(prepared.provenance.downloads[0].integrity, "observed-unpinned");
+assert.throws(() => wasm.resolveBrowserPlan("corn_eigenvector_nir", "X1"));
+
 const bridgeIndex = readFileSync(path.join(repoRoot, "tests/goldens/nonpython_bridge/index.json"), "utf8");
 const bridgeExpected = JSON.parse(readFileSync(path.join(repoRoot, "tests/goldens/nonpython_bridge/resolved_contract.json"), "utf8"));
 const bridgeResolved = JSON.parse(wasm.resolve(bridgeIndex, "bridge_native"));

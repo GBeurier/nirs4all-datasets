@@ -9,6 +9,9 @@
 
 use wasm_bindgen::prelude::*;
 
+use nirs4all_datasets_core::browser::{
+    browser_catalog, prepare_browser_dataset, resolve_browser_plan, BrowserFile,
+};
 use nirs4all_datasets_core::hash::sha256_hex_bytes;
 use nirs4all_datasets_core::resolve_json;
 
@@ -31,4 +34,54 @@ pub fn resolve(index_json: &str, dataset_id: &str) -> Result<String, JsValue> {
 #[wasm_bindgen]
 pub fn sha256(bytes: &[u8]) -> String {
     sha256_hex_bytes(bytes)
+}
+
+/// Embedded public metadata with explicit supported/unsupported origin profiles.
+#[wasm_bindgen(js_name = browserCatalog)]
+pub fn browser_catalog_json() -> String {
+    browser_catalog().to_string()
+}
+
+/// Resolve one source to its owner plan; no network request is made.
+#[wasm_bindgen(js_name = resolveBrowserPlan)]
+pub fn browser_plan(dataset_id: &str, source_id: &str) -> Result<String, JsValue> {
+    resolve_browser_plan(dataset_id, source_id)
+        .map(|value| value.to_string())
+        .map_err(|error| JsValue::from_str(&error.to_string()))
+}
+
+/// Apply the declared origin recipe, then return IO's exact in-memory inputs.
+#[wasm_bindgen(js_name = prepareBrowserDataset)]
+pub fn prepare_browser(plan_json: &str, files: JsValue) -> Result<JsValue, JsValue> {
+    let plan =
+        serde_json::from_str(plan_json).map_err(|error| JsValue::from_str(&error.to_string()))?;
+    let files: Vec<BrowserFile> = serde_wasm_bindgen::from_value(files)
+        .map_err(|error| JsValue::from_str(&error.to_string()))?;
+    let prepared = prepare_browser_dataset(&plan, &files)
+        .map_err(|error| JsValue::from_str(&error.to_string()))?;
+    let output = js_sys::Object::new();
+    let files = js_sys::Array::new();
+    for file in prepared.files {
+        let value = js_sys::Object::new();
+        js_sys::Reflect::set(&value, &"name".into(), &file.name.into())?;
+        js_sys::Reflect::set(
+            &value,
+            &"bytes".into(),
+            &js_sys::Uint8Array::from(file.bytes.as_slice()),
+        )?;
+        files.push(&value);
+    }
+    js_sys::Reflect::set(&output, &"files".into(), &files)?;
+    js_sys::Reflect::set(&output, &"record_sets".into(), &js_sys::Array::new())?;
+    js_sys::Reflect::set(
+        &output,
+        &"spec".into(),
+        &js_sys::JSON::parse(&prepared.spec.to_string())?,
+    )?;
+    js_sys::Reflect::set(
+        &output,
+        &"provenance".into(),
+        &js_sys::JSON::parse(&prepared.provenance.to_string())?,
+    )?;
+    Ok(output.into())
 }
