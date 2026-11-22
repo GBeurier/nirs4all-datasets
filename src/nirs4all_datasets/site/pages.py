@@ -48,6 +48,7 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     # ``by_domain`` counts the descriptor ``domain`` field, which holds the identifier prefix naming the
     # source collection/publisher (bootstrap), not a scientific application domain.
     by_source = summary.get("by_domain") or {}
+    by_application_domain = summary.get("by_application_domain") or {}
     by_family = summary.get("by_spectro_family") or {}
     by_tier = summary.get("by_tier") or {}
     by_retrieval = summary.get("by_retrieval_status") or {}
@@ -148,6 +149,18 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             "named by each dataset identifier's prefix (for example ecosis, ecostress, dryad or mendeley). "
             "A few single-dataset identifiers begin with a material name instead. Origin kinds describe the retrieval route separately.",
             charts.bar_chart(list(by_source.items()), title="Datasets by source", top_n=14, width=WIDE),
+            wide=True,
+        ))
+    if by_application_domain:
+        domain_rows = "".join(f'<tr><th scope="row">{esc(domain)}</th><td>{count}</td></tr>' for domain, count in by_application_domain.items())
+        cards.append(C.viz_card(
+            "Datasets by domain",
+            "Scientific application domain, one primary domain per dataset. Provisional: domains are curated from the reviewed "
+            "dataset names (and declared targets where noted), not declared by the origins; secondary domains are not counted.",
+            charts.bar_chart(list(by_application_domain.items()), title="Datasets by domain", width=WIDE)
+            + '<details><summary>View domain data</summary><table class="data"><caption>Datasets by primary application domain</caption>'
+            '<thead><tr><th scope="col">Domain</th><th scope="col">Datasets</th></tr></thead>'
+            f'<tbody>{domain_rows}</tbody></table></details>',
             wide=True,
         ))
     if by_tier:
@@ -298,7 +311,7 @@ def render_index(catalog: Catalog) -> str:
 </section>
 <section class="section section-aurora">
   <div class="container">
-    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Compare dataset sizes, spectral coverage, source collections and available property profiles. Missing statistics are omitted; redistribution tier does not determine source availability.")}
+    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Compare dataset sizes, spectral coverage, sources, application domains and available property profiles. Missing statistics are omitted; redistribution tier does not determine source availability.")}
     {_dataviz(summary, datasets)}
   </div>
 </section>

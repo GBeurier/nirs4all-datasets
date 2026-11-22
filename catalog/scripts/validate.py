@@ -7,6 +7,8 @@ CI gate (mirrors ``nirs4all-methods/catalog/scripts/validate.py``):
   ``id`` matches its filename and is unique;
 * every ``subsets/<id>.yaml`` parses and references a known parent;
 * every ``cards/<id>/manifest.json`` (if present) parses as a :class:`Manifest`.
+* every descriptor has one curated primary application domain from the closed list in
+  ``catalog/application_domains.yaml``.
 
 Usage::
 
@@ -27,6 +29,7 @@ sys.path.insert(0, str(REPO / "src"))
 import yaml  # noqa: E402
 from pydantic import ValidationError  # noqa: E402
 
+from nirs4all_datasets.catalog import application_domain_errors, load_application_domains  # noqa: E402
 from nirs4all_datasets.schema import DatasetDescriptor, Manifest, Subset, Tier  # noqa: E402
 
 
@@ -104,6 +107,8 @@ def main(argv: list[str]) -> int:
     descriptors, errors = validate_descriptors(REPO, check_publish=args.check_publish)
     errors += validate_subsets(REPO, set(descriptors))
     errors += validate_manifests(REPO, set(descriptors))
+    domains = load_application_domains(REPO)
+    errors += ["catalog/application_domains.yaml is missing."] if domains is None else [f"application_domains.yaml: {e}" for e in application_domain_errors(domains, set(descriptors))]
 
     if errors:
         print(f"FAIL: {len(errors)} catalog error(s):", file=sys.stderr)

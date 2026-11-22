@@ -161,6 +161,7 @@ def _build_fixture(tmp_path: Path) -> Path:
         "n_with_targets": 4, "n_metadata_only": 0, "n_with_split": 4, "n_degraded": 0,
         "by_tier": {"public": 2, "private": 1, "anonymized": 1},
         "by_spectro_family": {"NIR": 4}, "by_domain": {"corn": 1, "wheat": 1, "grass": 1, "soil": 1},
+        "by_application_domain": {"Agriculture": 2, "Soil science": 1, "Undisclosed": 1},
         "license_mix": {"CC-BY-4.0": 3, "LicenseRef-not-cleared": 1}, "origin_kinds": {"zenodo": 4},
         "samples": {"min": 80, "median": 80, "max": 80, "total": 320},
         "features": {"min": 700, "median": 700, "max": 700, "total": 2800},
@@ -182,9 +183,10 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert ">320<" in index or "320" in index  # total samples KPI value
     # multiple inline SVG charts, each accessible
     assert index.count('role="img"') >= 5
-    for label in ("Datasets by source", "Datasets by access tier", "Datasets by wavelength coverage", "Samples versus features"):
+    for label in ("Datasets by source", "Datasets by domain", "Datasets by access tier", "Datasets by wavelength coverage", "Samples versus features"):
         assert f'aria-label="{label}"' in index
-    assert "source collections" in index and "Datasets by domain" not in index  # identifier prefixes are sources, not scientific domains
+    assert "source collections" in index  # identifier prefixes are sources, not scientific domains
+    assert "curated from the reviewed dataset names" in index and "<th scope=\"row\">Soil science</th><td>1</td>" in index
     assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
     assert '<link rel="canonical" href="https://datasets.nirs4all.org/">' in index
     assert '"@type":"DataCatalog"' in index
