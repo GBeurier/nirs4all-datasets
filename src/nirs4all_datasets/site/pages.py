@@ -29,7 +29,7 @@ from .theme import SITE_URL, page
 def _index_kpis(summary: dict[str, Any], datasets: list[DatasetView]) -> list[tuple[str, str]]:
     n = summary.get("n_datasets") or len(datasets)
     samples = (summary.get("samples") or {}).get("total")
-    domains = len(summary.get("by_domain") or {})
+    source_collections = len(summary.get("by_domain") or {})
     n_public = (summary.get("by_tier") or {}).get("public", 0)
     retrieval = summary.get("by_retrieval_status") or {}
     n_retrievable = (retrieval.get("raw_reproducible") or 0) + (retrieval.get("canonical_verified") or 0)
@@ -37,7 +37,7 @@ def _index_kpis(summary: dict[str, Any], datasets: list[DatasetView]) -> list[tu
         (num(n), "datasets"),
         (num(samples) if samples else "—", "total samples"),
         (num(summary.get("total_sources") or 0), "spectral sources"),
-        (num(domains), "domains"),
+        (num(source_collections), "source collections"),
         (num(n_retrievable), "reproducible routes"),
         (num(n_public), "open redistribution"),
     ]
@@ -45,7 +45,10 @@ def _index_kpis(summary: dict[str, Any], datasets: list[DatasetView]) -> list[tu
 
 def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
     """The whole-bank dataviz grid, built entirely from the index ``summary`` (+ axis ranges from views)."""
-    by_domain = summary.get("by_domain") or {}
+    # ``by_domain`` counts the descriptor ``domain`` field, which holds the identifier prefix naming the
+    # source collection/publisher (bootstrap), not a scientific application domain.
+    by_source = summary.get("by_domain") or {}
+    by_application_domain = summary.get("by_application_domain") or {}
     by_family = summary.get("by_spectro_family") or {}
     by_tier = summary.get("by_tier") or {}
     by_retrieval = summary.get("by_retrieval_status") or {}
@@ -139,10 +142,25 @@ def _dataviz(summary: dict[str, Any], datasets: list[DatasetView]) -> str:
             "Property profiles", "Profiles with the highest mean available scores (0 center, 1 outer ring)",
             charts.radar_profiles(radar_profiles, title="Dataset property profiles", width=HALF) + details,
         ))
-    if by_domain:
+    if by_source:
         cards.append(C.viz_card(
-            "Datasets by domain", "Compare dataset counts in up to 14 of the most represented application domains.",
-            charts.bar_chart(list(by_domain.items()), title="Datasets by domain", top_n=14, width=WIDE),
+            "Datasets by source",
+            "Compare dataset counts for up to 14 of the most represented source collections: the repository, library or publisher "
+            "named by each dataset identifier's prefix (for example ecosis, ecostress, dryad or mendeley). "
+            "A few single-dataset identifiers begin with a material name instead. Origin kinds describe the retrieval route separately.",
+            charts.bar_chart(list(by_source.items()), title="Datasets by source", top_n=14, width=WIDE),
+            wide=True,
+        ))
+    if by_application_domain:
+        domain_rows = "".join(f'<tr><th scope="row">{esc(domain)}</th><td>{count}</td></tr>' for domain, count in by_application_domain.items())
+        cards.append(C.viz_card(
+            "Datasets by domain",
+            "Scientific application domain, one primary domain per dataset. Provisional: domains are curated from the reviewed "
+            "dataset names (and declared targets where noted), not declared by the origins; secondary domains are not counted.",
+            charts.bar_chart(list(by_application_domain.items()), title="Datasets by domain", width=WIDE)
+            + '<details><summary>View domain data</summary><table class="data"><caption>Datasets by primary application domain</caption>'
+            '<thead><tr><th scope="col">Domain</th><th scope="col">Datasets</th></tr></thead>'
+            f'<tbody>{domain_rows}</tbody></table></details>',
             wide=True,
         ))
     if by_tier:
@@ -293,7 +311,7 @@ def render_index(catalog: Catalog) -> str:
 </section>
 <section class="section section-aurora">
   <div class="container">
-    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Compare dataset sizes, spectral coverage and available property profiles. Missing statistics are omitted; redistribution tier does not determine source availability.")}
+    {C.section_head("Whole-bank dataviz", "What's <em>inside</em> the bank", "Compare dataset sizes, spectral coverage, sources, application domains and available property profiles. Missing statistics are omitted; redistribution tier does not determine source availability.")}
     {_dataviz(summary, datasets)}
   </div>
 </section>
@@ -372,11 +390,11 @@ def render_catalog(catalog: Catalog) -> str:
 <section class="section" style="padding-top:32px">
   <div class="container">
     <div class="controls">
-      <input id="q" type="search" placeholder="Search name, id, domain, target…" aria-label="Search datasets">
+      <input id="q" type="search" placeholder="Search name, id, source collection, target…" aria-label="Search datasets">
       <select id="f-access" aria-label="Filter by source access"><option value="">any source access</option><option value="open">open original source</option><option value="conditional">manual, token or undocumented</option></select>
       <select id="f-tier" aria-label="Filter by redistribution tier"><option value="">all redistribution tiers</option>{''.join(f'<option value="{esc(t)}">{esc({"public": "open redistribution", "private": "restricted redistribution", "anonymized": "anonymized"}.get(t, t))}</option>' for t in tiers)}</select>
       <select id="f-family" aria-label="Filter by family"><option value="">all families</option>{family_options}</select>
-      <select id="f-domain" aria-label="Filter by domain"><option value="">all domains</option>{opts(domains)}</select>
+      <select id="f-domain" aria-label="Filter by source collection"><option value="">all source collections</option>{opts(domains)}</select>
       <select id="f-target" aria-label="Filter by target"><option value="">target or not</option><option value="yes">has target</option><option value="no">metadata-only</option></select>
       <select id="f-multi" aria-label="Filter by sources"><option value="">any sources</option><option value="yes">multi-source</option><option value="no">single-source</option></select>
       <select id="f-sort" aria-label="Sort"><option value="name">A → Z</option><option value="samples">most samples</option><option value="features">most wavelengths</option></select>
@@ -1327,7 +1345,7 @@ def render_dataset(view: DatasetView) -> str:
     else:
         kpis = ""
         rows = _kv([
-            ("Domain", domain),
+            ("Source collection", domain),
             ("Family", family),
             ("Retrieval", e.get("retrieval_status")),
             ("Sources", num(e.get("n_sources") or 0)),

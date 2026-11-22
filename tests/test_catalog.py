@@ -234,6 +234,22 @@ def test_build_catalog_writes_index(fleet: tuple[Path, dict[str, DatasetDescript
     assert loaded["summary"]["n_datasets"] == 3
 
 
+def test_build_catalog_counts_primary_domains(fleet: tuple[Path, dict[str, DatasetDescriptor]]) -> None:
+    root, _ = fleet
+    mapping = {
+        "domains": ["Agriculture", "Soil science"],
+        "datasets": {
+            "wheat": {"primary": "Agriculture", "secondary": ["Soil science"], "evidence": "name"},
+            "barley": {"primary": "Agriculture", "evidence": "name"},
+            "soil": {"primary": "Soil science", "evidence": "name"},
+        },
+    }
+    (root / "catalog" / "application_domains.yaml").write_text(yaml.safe_dump(mapping), encoding="utf-8")
+    catalog = build_catalog(root, write=False)
+    assert catalog["summary"]["by_application_domain"] == {"Agriculture": 2, "Soil science": 1}  # secondary domains are not counted
+    assert {e["id"]: e["application_domain"] for e in catalog["datasets"]} == {"wheat": "Agriculture", "barley": "Agriculture", "soil": "Soil science"}
+
+
 def test_build_catalog_no_write(fleet: tuple[Path, dict[str, DatasetDescriptor]]) -> None:
     root, _ = fleet
     (root / "catalog" / "datasets.yaml").unlink(missing_ok=True)

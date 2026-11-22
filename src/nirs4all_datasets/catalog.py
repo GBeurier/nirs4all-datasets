@@ -36,6 +36,46 @@ def descriptor_paths(root: str | Path) -> list[Path]:
     return sorted((Path(root) / "catalog" / "datasets").glob("*.yaml"))
 
 
+APPLICATION_DOMAINS_FILE = Path("catalog") / "application_domains.yaml"
+NOT_CURATED = "Not curated"
+UNDISCLOSED = "Undisclosed"
+
+
+def load_application_domains(root: str | Path) -> dict[str, Any] | None:
+    """Read the curated ``catalog/application_domains.yaml`` (closed domain list + per-dataset entries), or ``None``."""
+    path = Path(root) / APPLICATION_DOMAINS_FILE
+    if not path.exists():
+        return None
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        raise ValueError(f"{path}: top-level YAML must be a mapping.")
+    return data
+
+
+def application_domain_errors(mapping: dict[str, Any], dataset_ids: set[str]) -> list[str]:
+    """Coverage and closed-list errors: every catalog dataset needs exactly one known primary domain."""
+    allowed = set(mapping.get("domains") or [])
+    entries = mapping.get("datasets") or {}
+    errors = [f"{dataset_id}: no curated application domain." for dataset_id in sorted(dataset_ids - set(entries))]
+    errors += [f"{dataset_id}: curated application domain for an unknown dataset." for dataset_id in sorted(set(entries) - dataset_ids)]
+    for dataset_id, entry in sorted(entries.items()):
+        domains = [entry.get("primary"), *(entry.get("secondary") or [])] if isinstance(entry, dict) else [None]
+        errors += [f"{dataset_id}: domain {domain!r} is not in the closed list." for domain in domains if domain not in allowed]
+        if isinstance(entry, dict) and not entry.get("evidence"):
+            errors.append(f"{dataset_id}: application domain has no evidence.")
+    return errors
+
+
+def _application_domain(mapping: dict[str, Any] | None, entry: dict[str, Any]) -> str | None:
+    """Curated primary domain for the index entry; masked for the anonymized tier like the descriptor domain."""
+    if mapping is None:
+        return None
+    if entry.get("tier") == "anonymized":
+        return UNDISCLOSED
+    curated = (mapping.get("datasets") or {}).get(entry["id"])
+    return str(curated["primary"]) if isinstance(curated, dict) and curated.get("primary") else NOT_CURATED
+
+
 def _spectro_family(descriptor: DatasetDescriptor) -> str:
     """Declared technique families, with known ranges refining broad source labels."""
     from nirs4all_datasets.spectroscopy import spectroscopy_family
@@ -170,6 +210,7 @@ def bank_summary(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "by_tier": _counter(e["tier"] for e in entries),
         "by_spectro_family": _counter(e["spectro_family"] for e in entries),
         "by_domain": _counter((e.get("domain") or "unknown") for e in entries),
+        "by_application_domain": _counter(e["application_domain"] for e in entries if e.get("application_domain")),
         "by_retrieval_status": _counter(e.get("retrieval_status") or "unknown" for e in entries),
         "license_mix": _counter(e["license"] for e in entries),
         "origin_kinds": _counter(k for e in entries for k in e.get("origin_kinds", [])),
@@ -190,6 +231,10 @@ def build_catalog(root: str | Path, *, write: bool = True) -> dict[str, Any]:
         catalog_entry(root, DatasetDescriptor(**(yaml.safe_load(p.read_text(encoding="utf-8")) or {})), health=health_map.get(p.stem))
         for p in descriptor_paths(root)
     ]
+    domains = load_application_domains(root)
+    if domains is not None:
+        for entry in entries:
+            entry["application_domain"] = _application_domain(domains, entry)
     catalog = {"schema_version": SCHEMA_VERSION, "n_datasets": len(entries), "summary": bank_summary(entries), "datasets": entries}
     if write:
         from nirs4all_datasets.index import build_index  # lazy: avoid a module-load cycle (index imports catalog)
