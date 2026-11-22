@@ -182,8 +182,9 @@ def test_index_has_hero_kpis_and_dataviz(tmp_path: Path) -> None:
     assert ">320<" in index or "320" in index  # total samples KPI value
     # multiple inline SVG charts, each accessible
     assert index.count('role="img"') >= 5
-    for label in ("Datasets by domain", "Datasets by access tier", "Datasets by wavelength coverage", "Samples versus features"):
+    for label in ("Datasets by source", "Datasets by access tier", "Datasets by wavelength coverage", "Samples versus features"):
         assert f'aria-label="{label}"' in index
+    assert "source collections" in index and "Datasets by domain" not in index  # identifier prefixes are sources, not scientific domains
     assert "data-goatcounter-settings='{\"path\": \"/datasets\"}'" in index
     assert '<link rel="canonical" href="https://datasets.nirs4all.org/">' in index
     assert '"@type":"DataCatalog"' in index
