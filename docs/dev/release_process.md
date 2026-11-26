@@ -145,7 +145,7 @@ Run these before tagging or publishing anything:
    [`release/train-v1.toml`](../../release/train-v1.toml). The offline check
    `python scripts/check_release_train.py` proves that the root Cargo manifest,
    Python `[io]` extra and vendored R manifest declare the minor-level ranges of
-   that train (Cargo `"0.2"`/`"0.3"`, Python `>=0.2,<0.3`/`>=0.3,<0.4`) and that
+   that train (Cargo `"0.3"`/`"0.4"`, Python `>=0.3,<0.4`/`>=0.4,<0.5`) and that
    the Python/WASM lockfiles and root lockfile resolve its exact versions. The publishing check is stricter:
    `python scripts/check_release_train.py --release --check-registry` requires
    the current source train: Datasets 0.4.0, Formats 0.3.1, and IO 0.4.0,
