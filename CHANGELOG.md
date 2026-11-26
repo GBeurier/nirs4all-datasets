@@ -7,7 +7,7 @@ surface is stable in shape but may still change before `1.0`.
 
 ## [0.4.0] - 2026-11-26
 
-- Admit Formats 0.3 and IO 0.4 for the origin reader and SDK 1.7 for the optional dataset bridge. An unreported WinISI constituent encoded as zero now yields a missing target.
+- Admit Formats 0.3 and IO 0.4 for the origin reader and SDK 1.7 for the optional dataset bridge. When rebuilding from original WinISI or ISIscan files, the reader treats every constituent encoded as zero as missing. These formats do not distinguish an observed zero from a missing measurement.
 
 ## [0.3.23] - 2026-11-20
 
