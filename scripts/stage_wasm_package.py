@@ -9,7 +9,7 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_CLOSURE = "0c80e92d98cd47fad8d560beb71b24b2ea472aeda84b2e19e857ce6fce89dbca"
+EXPECTED_CLOSURE = "2b64001695ebe0e00bc066e2999697a0455a349d726550f083d6805994754b6e"
 
 
 def digest(data: bytes) -> str:

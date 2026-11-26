@@ -5,6 +5,10 @@ All notable changes to **nirs4all-datasets** are documented here. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the public
 surface is stable in shape but may still change before `1.0`.
 
+## [0.4.0] - 2026-11-26
+
+- Admit Formats 0.3 and IO 0.4 for the origin reader and SDK 1.7 for the optional dataset bridge. When rebuilding from original WinISI or ISIscan files, the reader treats every constituent encoded as zero as missing. These formats do not distinguish an observed zero from a missing measurement.
+
 ## [0.3.23] - 2026-11-20
 
 ### Added

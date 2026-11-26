@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_tracked_dependency_surfaces_are_consistent() -> None:
     result, _, upstream = release_train.check_tree(ROOT, enforce_contract=False)
     assert result.errors == []
-    assert upstream == {"nirs4all-formats": "0.2.19", "nirs4all-io": "0.3.6"}
+    assert upstream == {"nirs4all-formats": "0.3.1", "nirs4all-io": "0.4.0"}
     assert "pyproject.toml project.license = CECILL-2.1 OR AGPL-3.0-or-later" in result.checked
     assert "pyproject.toml commercial license packaging = True" in result.checked
 
@@ -70,12 +70,12 @@ def test_patch_precise_manifest_requirement_is_rejected(monkeypatch: Any) -> Non
     def changed_manifest(path: Path) -> dict[str, Any]:
         value = original(path)
         if path == ROOT / "Cargo.toml":
-            value["workspace"]["dependencies"]["nirs4all-io"]["version"] = "=0.3.1"
+            value["workspace"]["dependencies"]["nirs4all-io"]["version"] = "=0.4.0"
         return value
 
     monkeypatch.setattr(release_train, "_toml", changed_manifest)
     result, _, _ = release_train.check_tree(ROOT, enforce_contract=False)
-    assert result.errors == ["Cargo.toml nirs4all-io minor range: found '=0.3.1', expected '0.3'"]
+    assert result.errors == ["Cargo.toml nirs4all-io minor range: found '=0.4.0', expected '0.4'"]
 
 
 def test_result_reports_drift_without_short_circuiting() -> None:
@@ -92,7 +92,7 @@ def test_v1_contract_declares_final_dependency_train() -> None:
     assert result.errors == []
     assert f"release/train-v1.toml release_version = {workspace_version}" in result.checked
     assert contract["release_version"] == workspace_version
-    assert contract["dependencies"] == {"nirs4all-formats": "0.2.19", "nirs4all-io": "0.3.6"}
+    assert contract["dependencies"] == {"nirs4all-formats": "0.3.1", "nirs4all-io": "0.4.0"}
     assert contract["prerequisites"] == {}
 
 
