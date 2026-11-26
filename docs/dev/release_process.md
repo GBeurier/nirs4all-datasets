@@ -43,7 +43,7 @@ R uses a lower bound with its tested minor series documented. Here: Cargo
 `nirs4all-formats = "0.2"` and `nirs4all-io = "0.3"` (root, Python binding
 and vendored R manifests), Python `nirs4all-formats>=0.2,<0.3`,
 `nirs4all-io>=0.3,<0.4`, `nirs4all-methods>=1.5.0,<1.6` and
-`nirs4all>=1.6,<1.7` extras. A patch floor is allowed when that patch's fix or
+`nirs4all>=1.7,<1.8` extras. A patch floor is allowed when that patch's fix or
 feature is required. Exact versions live in lockfiles and
 `release/train-v1.toml`, the source train CI and R vendoring select next to
 this repository. This repository's own crates and bindings stay in lockstep

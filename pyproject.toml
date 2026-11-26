@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "nirs4all-datasets"
-version = "0.3.23"
+version = "0.4.0"
 description = "A citable, reproducible bank of raw NIRS reference datasets — multi-source/multi-target, tier-governed, with on-demand checksum-verified access from each dataset's origin."
 authors = [
     { name = "Gregory Beurier", email = "gregory.beurier@cirad.fr" },
@@ -70,14 +70,14 @@ methods = ["nirs4all-methods>=1.5.0,<1.6", "scikit-learn>=1.3"]
 # nirs4all imports are lazy and degrade gracefully (PCA -> None + a card warning; to_nirs4all -> a clear
 # error if nirs4all is absent). Install it to qualify cards and to hand datasets to nirs4all.
 nirs4all = [
-    "nirs4all>=1.6,<1.7",
+    "nirs4all>=1.7,<1.8",
 ]
 # Read vendor instrument files + assemble a dataset from an OPEN origin's RAW bytes, delegated to the
 # ecosystem readers (never re-implemented here): nirs4all-io owns assembly, nirs4all-formats the
 # vendor decoders. Needed only by the (opt-in) "reproduce from origin" acquisition path.
 io = [
-    "nirs4all-io>=0.3,<0.4",
-    "nirs4all-formats>=0.2,<0.3",
+    "nirs4all-io>=0.4,<0.5",
+    "nirs4all-formats>=0.3,<0.4",
 ]
 dev = [
     "pytest>=7.4.0",

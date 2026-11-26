@@ -38,7 +38,7 @@ numerical methods, modelling objects, and origin file reads to the ecosystem lib
 : ```bash
   pip install "nirs4all-datasets[nirs4all]"
   ```
-  Pulls in [`nirs4all`](https://nirs4all.readthedocs.io/en/latest/) (`>=1.6,<1.7`). Needed for the
+  Pulls in [`nirs4all`](https://nirs4all.readthedocs.io/en/latest/) (`>=1.7,<1.8`). Needed for the
   nirs4all-powered parts of card qualification (PCA projection, the outlier filter, signal detection)
   and to hand a dataset to nirs4all via `NirsDataset.to_nirs4all()`. Without it, those nirs4all-backed
   metrics become `None` with a card warning and `to_nirs4all()` raises a clear error; the
